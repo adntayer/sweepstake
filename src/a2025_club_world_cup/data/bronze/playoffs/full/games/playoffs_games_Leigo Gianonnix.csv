@@ -1,0 +1,16 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,playoff
+2025-06-28,13h,Palmeiras,,1.0,x,0.0,,Atlético de Madrid,Leigo Gianonnix,oitavas
+2025-06-28,17h,Bayern de Munique,,2.0,x,0.0,,Flamengo,Leigo Gianonnix,oitavas
+2025-06-29,13h,Paris Saint-Germain,,3.0,x,0.0,,Porto,Leigo Gianonnix,oitavas
+2025-06-29,17h,Chelsea,3.0,1.0,x,1.0,4.0,Benfica,Leigo Gianonnix,oitavas
+2025-06-30,16h,Internazionale,,3.0,x,0.0,,Fluminense,Leigo Gianonnix,oitavas
+2025-06-30,22h,Manchester City,,2.0,x,0.0,,Al-Hilal,Leigo Gianonnix,oitavas
+2025-07-01,16h,Real Madrid,,2.0,x,1.0,,Juventus,Leigo Gianonnix,oitavas
+2025-07-01,22h,Borussia Dortmund,,2.0,x,0.0,,River Plate,Leigo Gianonnix,oitavas
+2025-07-04,16h,Internazionale,5.0,2.0,x,2.0,3.0,Manchester City,Leigo Gianonnix,quartas
+2025-07-04,22h,Palmeiras,,2.0,x,1.0,,Bayern de Munique,Leigo Gianonnix,quartas
+2025-07-05,13h,Paris Saint-Germain,,3.0,x,0.0,,Benfica,Leigo Gianonnix,quartas
+2025-07-05,17h,Borussia Dortmund,,1.0,x,2.0,,Real Madrid,Leigo Gianonnix,quartas
+2025-07-08,16h,Palmeiras,,1.0,x,0.0,,Internazionale,Leigo Gianonnix,semi
+2025-07-09,16h,Paris Saint-Germain,,1.0,x,2.0,,Real Madrid,Leigo Gianonnix,semi
+2025-07-13,16h,Palmeiras,,1.0,x,0.0,,Real Madrid,Leigo Gianonnix,final

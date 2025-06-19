@@ -1,0 +1,16 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,playoff
+2025-06-28,13h,Porto,,0.0,x,2.0,,Atlético de Madrid,Thales Oliveira,oitavas
+2025-06-28,17h,Bayern de Munique,,3.0,x,0.0,,Flamengo,Thales Oliveira,oitavas
+2025-06-29,13h,Paris Saint-Germain,,3.0,x,0.0,,Palmeiras,Thales Oliveira,oitavas
+2025-06-29,17h,Chelsea,,2.0,x,1.0,,Benfica,Thales Oliveira,oitavas
+2025-06-30,16h,Internazionale,,3.0,x,0.0,,Fluminense,Thales Oliveira,oitavas
+2025-06-30,22h,Manchester City,,2.0,x,0.0,,Al-Hilal,Thales Oliveira,oitavas
+2025-07-01,16h,Real Madrid,,2.0,x,1.0,,Juventus,Thales Oliveira,oitavas
+2025-07-01,22h,Borussia Dortmund,,3.0,x,0.0,,River Plate,Thales Oliveira,oitavas
+2025-07-04,16h,Internazionale,,0.0,x,1.0,,Manchester City,Thales Oliveira,quartas
+2025-07-04,22h,Atlético de Madrid,,0.0,x,2.0,,Bayern de Munique,Thales Oliveira,quartas
+2025-07-05,13h,Paris Saint-Germain,,2.0,x,1.0,,Chelsea,Thales Oliveira,quartas
+2025-07-05,17h,Borussia Dortmund,,1.0,x,2.0,,Real Madrid,Thales Oliveira,quartas
+2025-07-08,16h,Bayern de Munique,,2.0,x,1.0,,Manchester City,Thales Oliveira,semi
+2025-07-09,16h,Paris Saint-Germain,,2.0,x,3.0,,Real Madrid,Thales Oliveira,semi
+2025-07-13,16h,Bayern de Munique,,1.0,x,2.0,,Real Madrid,Thales Oliveira,final

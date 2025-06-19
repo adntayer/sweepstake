@@ -1,0 +1,88 @@
+[project]
+name = "bolao"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "markdown>=3.8.2",
+    "matplotlib>=3.10.3",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.0",
+    "requests>=2.32.3",
+    "ruff>=0.11.13",
+    "streamlit>=1.45.1",
+    "tabulate>=0.9.0",
+    "xlrd>=2.0.1",
+]
+
+[project.scripts]
+ss = "cli:main"
+
+[tool.ruff]
+fix = true
+
+# Files and folders to exclude
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".venv",
+    "venv",
+    "*.csv",
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = 600
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = false
+
+
+[tool.ruff.lint]
+# Enable selected rule sets
+# https://docs.astral.sh/ruff/rules
+select = [
+    "E",    # pycodestyle: style errors (e.g., indentation, spacing)
+    "W",    # pycodestyle: style warnings (less severe than E)
+    "F",    # pyflakes: logical errors like undefined names
+    "I",    # isort: checks for correct import order
+    "N",    # pep8-naming: enforces PEP8 naming conventions
+    "UP",   # pyupgrade: suggests Python syntax upgrades for newer versions
+    "B",    # flake8-bugbear: finds likely bugs and design problems
+    "YTT",  # flake8-2020: flags outdated Python 2/3 version checks
+    "A",    # flake8-builtins: prevents shadowing Python built-in names
+    "COM",  # flake8-commas: enforces trailing commas in multi-line structures
+    "C4",   # flake8-comprehensions: suggests improvements to comprehensions
+    "T10",  # flake8-debugger: detects use of debugger like `pdb`
+    "ISC",  # flake8-implicit-str-concat: avoids implicit string concatenation
+    "INP",  # flake8-no-pep420: disallows implicit namespace packages (PEP 420)
+    "PIE",  # flake8-pie: various code quality checks and suggestions
+    "Q",    # flake8-quotes: enforces consistent quote style
+    "RSE",  # flake8-raise: ensures proper use of `raise` statements
+    "RET",  # flake8-return: enforces consistency in return statements
+    "SIM",  # flake8-simplify: suggests simpler or more readable code
+    "TID",  # flake8-tidy-imports: checks for tidy and controlled imports
+    "PD",   # pandas-vet: catches common pandas mistakes
+    "PERF", # perflint: detects performance anti-patterns
+    "PLW",  # pylint warnings: enables pylint-compatible warnings (if supported)
+]
+
+# Optional: exclude some rules
+ignore = [
+    "E501",     # Line too long (delegated to autoformatter like Black)
+    "C90",      # McCabe complexity (often better handled by manual review)
+    "COM812",   # Trailing comma in single-element tuple (often stylistic)
+    "SIM108",   # Use ternary instead of if-else (may reduce readability)
+    "PD002",    # Use `.to_numpy()` instead of `.values` (may be overly strict)
+    "PD011",    # Avoid `.isin(range())` (false positives in some cases)
+    "PD901",    # Avoid using pandas `.df` as variable name (may conflict with common usage)
+    "PLW0603",  # Using `global` (sometimes necessary in scripts or legacy code)
+    "B007",     # Loop control variable not used (can be intentional in some idioms)
+    "C408",     # Unnecessary `dict()` call (can be stylistic preference)
+    "N805",     # First argument of method should be `self` (false positives in classmethods or staticmethods)
+    "PD010",    # PD010 `.pivot_table` is preferred to `.pivot` or `.unstack`; provides same functionality
+]
