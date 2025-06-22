@@ -12,9 +12,6 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - name: Get current date
         id: date
