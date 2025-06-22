@@ -1,0 +1,29 @@
+date,hour,match,home_team,away_team,resultado_bol_placar,resultado_bol_time,resultado_real_placar,resultado_real_time,criterio,pontos,valido,who,1-Placar exato,2-Vencedor + gols de um time,3-Vencedor correto,4-Gols de um time,5-Nenhum acerto,9-Sem jogo
+2025-06-14,21h,al_ahly-vs-inter_miami,Al Ahly,Inter Miami,1 x 2,Inter Miami,0 x 0,empate,5-Nenhum acerto,0,1,João Henrique,False,False,False,False,True,False
+2025-06-15,13h,bayern_de_munique-vs-auckland_city,Bayern de Munique,Auckland City,3 x 0,Bayern de Munique,10 x 0,Bayern de Munique,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-15,16h,paris_saint-germain-vs-atlético_de_madrid,Paris Saint-Germain,Atlético de Madrid,2 x 1,Paris Saint-Germain,4 x 0,Paris Saint-Germain,3-Vencedor correto,5,1,João Henrique,False,False,True,False,False,False
+2025-06-15,19h,palmeiras-vs-porto,Palmeiras,Porto ,1 x 2,Porto ,0 x 0,empate,5-Nenhum acerto,0,1,João Henrique,False,False,False,False,True,False
+2025-06-15,23h,botafogo-vs-seattle_sounders,Botafogo,Seattle Sounders,1 x 0,Botafogo,2 x 1,Botafogo,3-Vencedor correto,5,1,João Henrique,False,False,True,False,False,False
+2025-06-16,16h,chelsea-vs-los_angeles_fc,Chelsea,Los Angeles FC,2 x 0,Chelsea,2 x 0,Chelsea,1-Placar exato,12,1,João Henrique,True,False,False,False,False,False
+2025-06-16,19h,boca_juniors-vs-benfica,Boca Juniors,Benfica,1 x 0,Boca Juniors,2 x 2,empate,5-Nenhum acerto,0,1,João Henrique,False,False,False,False,True,False
+2025-06-16,22h,flamengo-vs-espérance,Flamengo,Espérance,1 x 0,Flamengo,2 x 0,Flamengo,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-17,13h,fluminense-vs-borussia_dortmund,Fluminense,Borussia Dortmund,0 x 2,Borussia Dortmund,0 x 0,empate,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-17,16h,river_plate-vs-urawa_reds,River Plate,Urawa Reds,2 x 1,River Plate,3 x 1,River Plate,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-17,19h,ulsan_hd-vs-mamelodi_sundowns,Ulsan HD,Mamelodi Sundowns,1 x 1,empate,0 x 1,Mamelodi Sundowns,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-17,22h,monterrey-vs-internazionale,Monterrey,Internazionale,1 x 2,Internazionale,1 x 1,empate,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-18,13h,manchester_city-vs-wydad_casablanca,Manchester City,Wydad Casablanca,1 x 0,Manchester City,2 x 0,Manchester City,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-18,16h,real_madrid-vs-al-hilal,Real Madrid,Al-Hilal,2 x 1,Real Madrid,1 x 1,empate,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-18,19h,pachuca-vs-rb_salzburg,Pachuca,RB Salzburg,0 x 1,RB Salzburg,1 x 2,RB Salzburg,3-Vencedor correto,5,1,João Henrique,False,False,True,False,False,False
+2025-06-18,22h,al-ain-vs-juventus,Al-Ain,Juventus,0 x 2,Juventus,0 x 5,Juventus,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-19,13h,palmeiras-vs-al_ahly,Palmeiras,Al Ahly,1 x 0,Palmeiras,2 x 0,Palmeiras,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-19,16h,inter_miami-vs-porto,Inter Miami,Porto ,2 x 1,Inter Miami,2 x 1,Inter Miami,1-Placar exato,12,1,João Henrique,True,False,False,False,False,False
+2025-06-19,19h,seattle_sounders-vs-atlético_de_madrid,Seattle Sounders,Atlético de Madrid,1 x 3,Atlético de Madrid,1 x 3,Atlético de Madrid,1-Placar exato,12,1,João Henrique,True,False,False,False,False,False
+2025-06-19,22h,paris_saint-germain-vs-botafogo,Paris Saint-Germain,Botafogo,2 x 1,Paris Saint-Germain,0 x 1,Botafogo,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-20,13h,benfica-vs-auckland_city,Benfica,Auckland City,2 x 0,Benfica,6 x 0,Benfica,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-20,15h,flamengo-vs-chelsea,Flamengo,Chelsea,1 x 1,empate,3 x 1,Flamengo,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-20,19h,los_angeles_fc-vs-espérance,Los Angeles FC,Espérance,2 x 1,Los Angeles FC,0 x 1,Espérance,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-20,22h,bayern_de_munique-vs-boca_juniors,Bayern de Munique,Boca Juniors,1 x 0,Bayern de Munique,2 x 1,Bayern de Munique,3-Vencedor correto,5,1,João Henrique,False,False,True,False,False,False
+2025-06-21,13h,mamelodi_sundowns-vs-borussia_dortmund,Mamelodi Sundowns,Borussia Dortmund,0 x 4,Borussia Dortmund,3 x 4,Borussia Dortmund,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-21,16h,internazionale-vs-urawa_reds,Internazionale,Urawa Reds,2 x 0,Internazionale,2 x 1,Internazionale,2-Vencedor + gols de um time,7,1,João Henrique,False,True,False,False,False,False
+2025-06-21,19h,fluminense-vs-ulsan_hd,Fluminense,Ulsan HD,1 x 1,empate,4 x 2,Fluminense,5-Nenhum acerto,0,1,João Henrique,False,False,False,False,True,False
+2025-06-21,22h,river_plate-vs-monterrey,River Plate,Monterrey,2 x 1,River Plate,0 x 0,empate,5-Nenhum acerto,0,1,João Henrique,False,False,False,False,True,False

@@ -1,0 +1,16 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,playoff
+2025-06-28,13h,Palmeiras,,0.0,x,1.0,,Atlético de Madrid,Leo Fernandes,oitavas
+2025-06-28,17h,Bayern de Munique,1.0,1.0,x,1.0,0.0,Flamengo,Leo Fernandes,oitavas
+2025-06-29,13h,Paris Saint-Germain,,3.0,x,0.0,,Porto,Leo Fernandes,oitavas
+2025-06-29,17h,Chelsea,,2.0,x,1.0,,Benfica,Leo Fernandes,oitavas
+2025-06-30,16h,Internazionale,,1.0,x,0.0,,Fluminense,Leo Fernandes,oitavas
+2025-06-30,22h,Manchester City,,3.0,x,1.0,,Pachuca,Leo Fernandes,oitavas
+2025-07-01,16h,Real Madrid,,2.0,x,1.0,,Juventus,Leo Fernandes,oitavas
+2025-07-01,22h,Borussia Dortmund,3.0,1.0,x,1.0,2.0,River Plate,Leo Fernandes,oitavas
+2025-07-04,16h,Internazionale,,2.0,x,6.0,,Manchester City,Leo Fernandes,quartas
+2025-07-04,22h,Atlético de Madrid,2.0,1.0,x,1.0,4.0,Bayern de Munique,Leo Fernandes,quartas
+2025-07-05,13h,Paris Saint-Germain,,2.0,x,1.0,,Chelsea,Leo Fernandes,quartas
+2025-07-05,17h,Borussia Dortmund,,1.0,x,2.0,,Real Madrid,Leo Fernandes,quartas
+2025-07-08,16h,Bayern de Munique,1.0,2.0,x,2.0,2.0,Manchester City,Leo Fernandes,semi
+2025-07-09,16h,Paris Saint-Germain,,3.0,x,1.0,,Real Madrid,Leo Fernandes,semi
+2025-07-13,16h,Manchester City,0.0,1.0,x,1.0,1.0,Paris Saint-Germain,Leo Fernandes,final
