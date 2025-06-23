@@ -31,8 +31,8 @@ date,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match
 2025-06-22 16h,Real Madrid,,3,x,1,,Pachuca,real_madrid-vs-pachuca
 2025-06-22 19h,RB Salzburg,,0,x,0,,Al-Hilal,rb_salzburg-vs-al-hilal
 2025-06-22 22h,Manchester City,,6,x,0,,Al-Ain,manchester_city-vs-al-ain
-2025-06-23 16h,Atlético de Madrid,,,x,,,Botafogo,atlético_de_madrid-vs-botafogo
-2025-06-23 16h,Seattle Sounders,,,x,,,Paris Saint-Germain,seattle_sounders-vs-paris_saint-germain
+2025-06-23 16h,Atlético de Madrid,,1,x,0,,Botafogo,atlético_de_madrid-vs-botafogo
+2025-06-23 16h,Seattle Sounders,,0,x,2,,Paris Saint-Germain,seattle_sounders-vs-paris_saint-germain
 2025-06-23 22h,Porto,,,x,,,Al Ahly,porto-vs-al_ahly
 2025-06-23 22h,Inter Miami,,,x,,,Palmeiras,inter_miami-vs-palmeiras
 2025-06-24 16h,Auckland City,,,x,,,Boca Juniors,auckland_city-vs-boca_juniors
@@ -47,4 +47,3 @@ date,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match
 2025-06-26 16h,Wydad Casablanca,,,x,,,Al-Ain,wydad_casablanca-vs-al-ain
 2025-06-26 22h,RB Salzburg,,,x,,,Real Madrid,rb_salzburg-vs-real_madrid
 2025-06-26 22h,Al-Hilal,,,x,,,Pachuca,al-hilal-vs-pachuca
- 
