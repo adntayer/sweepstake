@@ -2,6 +2,7 @@
 import os
 import re
 from datetime import datetime, timedelta
+from glob import glob
 
 import pandas as pd
 import pytz
@@ -11,41 +12,50 @@ from src.services.printing import print_colored
 
 def generate_links(base_dir):
     links = []
-    for root, _, files in os.walk(base_dir):
-        for e, file in enumerate(files, 1):
-            if file.endswith(".html") and file != "index.html":
-                path = os.path.join(root, file).replace("\\", "/")
-                href = path.replace("src/a2025_club_world_cup/docs/html/", "")
-                label = path.split("/")[-1].replace(".html", "")
-                links.append(f'<li>{e:2} -->> <a href="{href}">{label}</a></li><br>')
+    list_files = sorted(glob(base_dir, recursive=True))
+    for e, file in enumerate(list_files, 1):
+        if file != "index.html":
+            href = file.replace("\\", "/").replace(
+                "src/a2025_club_world_cup/docs/html/", ""
+            )
+            label = (
+                file.replace("\\", "/")
+                .split("/")[-1]
+                .replace(".html", "")
+                .replace("_", " ")
+                .replace("-vs-", " vs ")
+                .replace("h ", "h | ")
+            )
+            links.append(f'<li>{e:2} -->> <a href="{href}">{label}</a></li><br>')
+
     return sorted(links)
 
 
-def get_upcomming_games(links_html):
+def get_upcomming_gamonth(links_html):
     tz_sp = pytz.timezone("America/Sao_Paulo")
-    agora = datetime.now(tz_sp) - timedelta(minutes=60 * 3)
+    now = datetime.now(tz_sp) - timedelta(minutes=60 * 3)
 
-    jogos_futuros = []
-    for item in links_html:
+    list_next_gamonth = []
+    for item in sorted(links_html):
         match = re.search(r"(\d{4})-(\d{2})-(\d{2})_(\d{2})h", item)
         if match:
-            ano, mes, dia, hora = map(int, match.groups())
-            data_jogo = tz_sp.localize(datetime(ano, mes, dia, hora))
-            if data_jogo > agora:
-                jogos_futuros.append(item)
+            year, month, day, hour = map(int, match.groups())
+            data_jogo = tz_sp.localize(datetime(year, month, day, hour))
+            if data_jogo > now:
+                list_next_gamonth.append(item)
 
-    return sorted(jogos_futuros)
+    return sorted(list_next_gamonth)
 
 
 def create_index_html():
     print_colored("creting index", "sand")
     base_path = os.path.join("src", "a2025_club_world_cup", "docs", "html")
 
-    df_games_official = pd.read_csv(
+    df_gamonth_official = pd.read_csv(
         os.path.join("src", "a2025_club_world_cup", "data", "jogos_1afase.csv"), sep=","
     )
-    df_games_official.dropna(subset=["home_goals"], inplace=True)
-    df_games_official_last_one = df_games_official.tail(1)
+    df_gamonth_official.dropna(subset=["home_goals"], inplace=True)
+    df_gamonth_official_last_one = df_gamonth_official.tail(1)
     (
         last_game_data,
         last_game_home,
@@ -56,23 +66,23 @@ def create_index_html():
         _,
         last_game_away,
         _,
-    ) = df_games_official_last_one.values[0]
+    ) = df_gamonth_official_last_one.values[0]
     last_game_home_goals = int(last_game_home_goals)
     last_game_away_goals = int(last_game_away_goals)
 
-    links_boleiros = generate_links(os.path.join(base_path, "boleiros"))
-    links_1afase = generate_links(os.path.join(base_path, "jogos", "1afase"))
-    links_oitavas = []  # generate_links(os.path.join(base_path, "jogos", "oitavas"))
-    links_quartas = []  # generate_links(os.path.join(base_path, "jogos", "quartas"))
-    links_semi = []  # generate_links(os.path.join(base_path, "jogos", "semi"))
-    links_final = []  # generate_links(os.path.join(base_path, "jogos", "final"))
+    links_boleiros = generate_links(os.path.join(base_path, "boleiros", "*.html"))
+    links_1afase = generate_links(os.path.join(base_path, "jogos", "1afase", "*.html"))
+    links_oitavas = []  # generate_links(os.path.join(base_path, "jogos", "oitavas", "*.html"))
+    links_quartas = []  # generate_links(os.path.join(base_path, "jogos", "quartas", "*.html"))
+    links_semi = []  # generate_links(os.path.join(base_path, "jogos", "semi", "*.html"))
+    links_final = []  # generate_links(os.path.join(base_path, "jogos", "final", "*.html"))
     tz_sp = pytz.timezone("America/Sao_Paulo")
     now_sp = datetime.now(tz_sp).strftime("%d/%m/%Y %H:%M:%S")
     list_all_links = (
         links_1afase + links_oitavas + links_quartas + links_semi + links_final
     )
-    list_upcomming_games = get_upcomming_games(list_all_links)
-    list_upcomming_games = list_upcomming_games[:4]
+    list_upcomming_gamonth = get_upcomming_gamonth(list_all_links)
+    list_upcomming_gamonth = list_upcomming_gamonth[:4]
 
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -140,7 +150,7 @@ def create_index_html():
     <div class="section">
         <p></p>
         <h2>🕒 Próximos jogos</h2>
-        <ul>{"".join(list_upcomming_games)}</ul>
+        <ul>{"".join(list_upcomming_gamonth)}</ul>
     </div>
 
     <div class="section flex-container">
