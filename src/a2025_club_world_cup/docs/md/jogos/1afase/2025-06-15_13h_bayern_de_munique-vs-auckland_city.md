@@ -2,7 +2,7 @@
 
 # bayern_de_munique-vs-auckland_city
 
-_atualizado às 22/06/2025 19:38:57_
+_atualizado às 22/06/2025 22:16:19_
 
 ## pré jogo
 

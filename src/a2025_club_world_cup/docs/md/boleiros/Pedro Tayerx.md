@@ -2,12 +2,13 @@
 
 # Pedro Tayerx
 
-_atualizado às 22/06/2025 19:38:57_
+_atualizado às 22/06/2025 22:16:19_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 22.Jun.2025 |       1 |        7 |     7   |             0   |                  89 |                0 |                              1 |                    0 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       10 |     2.5 |             2.9 |                  82 |                0 |                              0 |                    2 |                   0 |                 2 |
 | 20.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                  72 |                0 |                              1 |                    1 |                   1 |                 1 |
 | 19.Jun.2025 |       4 |       12 |     3   |             3.6 |                  59 |                0 |                              1 |                    1 |                   0 |                 2 |
@@ -23,6 +24,7 @@ Artilheiro: **Guirassy**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 2 x 1          | Juventus            | 4 x 1         | Juventus            |        7 | 2-Vencedor + gols de um time |                  89 |
 |  28 | 21.Jun.2025 | 22h    | River Plate         | Monterrey          | 1 x 2          | Monterrey           | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                  82 |
 |  27 | 21.Jun.2025 | 19h    | Fluminense          | Ulsan HD           | 0 x 3          | Ulsan HD            | 4 x 2         | Fluminense          |        0 | 5-Nenhum acerto              |                  82 |
 |  26 | 21.Jun.2025 | 16h    | Internazionale      | Urawa Reds         | 3 x 0          | Internazionale      | 2 x 1         | Internazionale      |        5 | 3-Vencedor correto           |                  82 |
