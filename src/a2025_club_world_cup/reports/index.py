@@ -3,6 +3,7 @@ import os
 import re
 from datetime import datetime, timedelta
 
+import pandas as pd
 import pytz
 
 from src.services.printing import print_colored
@@ -39,6 +40,25 @@ def get_upcomming_games(links_html):
 def create_index_html():
     print_colored("creting index", "sand")
     base_path = os.path.join("src", "a2025_club_world_cup", "docs", "html")
+
+    df_games_official = pd.read_csv(
+        os.path.join("src", "a2025_club_world_cup", "data", "jogos_1afase.csv"), sep=","
+    )
+    df_games_official.dropna(subset=["home_goals"], inplace=True)
+    df_games_official_last_one = df_games_official.tail(1)
+    (
+        last_game_data,
+        last_game_home,
+        _,
+        last_game_home_goals,
+        _,
+        last_game_away_goals,
+        _,
+        last_game_away,
+        _,
+    ) = df_games_official_last_one.values[0]
+    last_game_home_goals = int(last_game_home_goals)
+    last_game_away_goals = int(last_game_away_goals)
 
     links_boleiros = generate_links(os.path.join(base_path, "boleiros"))
     links_1afase = generate_links(os.path.join(base_path, "jogos", "1afase"))
@@ -112,6 +132,9 @@ def create_index_html():
         <h1>🏆 2025 Club World Cup</h1>
         <h2>📊 Overview</h2>
         <p><a href="overview.html">Veja um overview do bolão</a></p>
+        <br>
+        <h3> Último jogo com resultado </h3>
+        <h4>{last_game_data} || {last_game_home} <b>{last_game_home_goals}</b> x <b>{last_game_away_goals}</b> {last_game_away}  </h4>
     </div>
 
     <div class="section">
