@@ -1,5 +1,6 @@
 # python -m src.a2025_club_world_cup.processing.raw_to_bronze
 import os
+import shutil
 from glob import glob
 
 import pandas as pd
@@ -12,8 +13,17 @@ from src.services.printing import print_colored
 
 
 def main():
+    core_path = os.path.join("src", "a2025_club_world_cup", "data", "bronze")
+    if os.path.exists(core_path):
+        shutil.rmtree(core_path)
+        print_colored(
+            f"Folder '{core_path}' and its contents deleted successfully.", "green"
+        )
+    else:
+        print_colored(f"Folder '{core_path}' does not exist.", "gray")
+
     list_folder_paths = [
-        os.path.join("src", "a2025_club_world_cup", "data", "bronze"),
+        core_path,
         os.path.join("src", "a2025_club_world_cup", "data", "bronze", "1afase"),
         os.path.join(
             "src", "a2025_club_world_cup", "data", "bronze", "playoffs", "full", "games"
@@ -57,10 +67,6 @@ def main():
         df = parse_excel_1a_fase(path_excel)
         df_playoffs, df_striker = parse_excel_palyoffs_full(path_excel)
         who = df["who"].unique()[0]
-        os.makedirs(
-            os.path.join("src", "a2025_club_world_cup", "data", "bronze", "1afase"),
-            exist_ok=True,
-        )
         path_bronze_1afase = os.path.join(
             "src",
             "a2025_club_world_cup",
@@ -97,6 +103,7 @@ def main():
         "full",
         "playoffs_strikers.csv",
     )
+    df_strikers.sort_values(by=["boleiro"], inplace=True)
     df_strikers.to_csv(path_bronze_playoffs_striker, sep=",", decimal=".", index=False)
     print_colored("raw to bronze completed", "green")
 

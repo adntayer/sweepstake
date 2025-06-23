@@ -1,5 +1,6 @@
 # python -m src.a2025_club_world_cup.processing.bronze_to_silver
 import os
+import shutil
 from glob import glob
 
 import pandas as pd
@@ -9,12 +10,18 @@ from src.services.printing import print_colored
 
 def main():
     print_colored("bronze to silver", "sand")
+    core_path = os.path.join("src", "a2025_club_world_cup", "data", "silver")
+    if os.path.exists(core_path):
+        shutil.rmtree(core_path)
+        print_colored(
+            f"Folder '{core_path}' and its contents deleted successfully.", "green"
+        )
+    else:
+        print_colored(f"Folder '{core_path}' does not exist.", "gray")
+
     list_folder_paths = [
-        os.path.join("src", "a2025_club_world_cup", "data", "silver"),
+        core_path,
         os.path.join("src", "a2025_club_world_cup", "data", "silver", "1afase"),
-        os.path.join(
-            "src", "a2025_club_world_cup", "data", "silver", "playoffs", "full", "games"
-        ),
         os.path.join(
             "src",
             "a2025_club_world_cup",
@@ -35,9 +42,6 @@ def main():
         os.path.join(
             "src", "a2025_club_world_cup", "data", "silver", "playoffs", "final"
         ),
-        os.path.join(
-            "src", "a2025_club_world_cup", "data", "silver", "playoffs", "striker"
-        ),
     ]
     for path in list_folder_paths:
         os.makedirs(path, exist_ok=True)
@@ -50,6 +54,7 @@ def main():
         os.path.join("src", "a2025_club_world_cup", "data", "jogos_1afase.csv"), sep=","
     )
 
+    df_all = pd.DataFrame()
     for path_csv in list_csvs:
         df_boleiro = pd.read_csv(path_csv, sep=",")
         df_merge = df_boleiro.merge(df_games, on="match", suffixes=("_bol", "_real"))
@@ -109,21 +114,18 @@ def main():
                 "who",
             ]
         )
-        df_merge.sort_values(by=["date", "hour"], inplace=True)
-        os.makedirs(
-            os.path.join("src", "a2025_club_world_cup", "data", "silver", "1afase"),
-            exist_ok=True,
-        )
-        who = df_merge["who"].iloc[0]
-        output_path = os.path.join(
-            "src",
-            "a2025_club_world_cup",
-            "data",
-            "silver",
-            "1afase",
-            f"1afase_{who}.csv",
-        )
-        df_merge.to_csv(output_path, sep=",", decimal=".", index=False)
+        df_all = pd.concat([df_all, df_merge], ignore_index=True)
+
+    output_path = os.path.join(
+        "src",
+        "a2025_club_world_cup",
+        "data",
+        "silver",
+        "1afase",
+        "all_games.csv",
+    )
+    df_all.sort_values(by=["date", "hour", "who"], inplace=True)
+    df_all.to_csv(output_path, sep=",", decimal=".", index=False)
 
     df_playoff_pre_full = pd.DataFrame()
     list_csvs_playoffs = glob(
@@ -163,8 +165,7 @@ def main():
         "silver",
         "playoffs",
         "full",
-        "games",
-        "playoff_full_games.csv",
+        "playoffs_full_games.csv",
     )
     df_playoff_pre_full.to_csv(output_path, sep=",", decimal=".", index=False)
 
