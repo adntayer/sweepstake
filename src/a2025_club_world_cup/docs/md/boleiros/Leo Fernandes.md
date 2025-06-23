@@ -2,13 +2,13 @@
 
 # Leo Fernandes
 
-_atualizado às 22/06/2025 22:40:18_
+_atualizado às 22/06/2025 23:16:32_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 22.Jun.2025 |       1 |        5 |     5   |             0   |                 129 |                0 |                              0 |                    1 |                   0 |                 0 |
+| 22.Jun.2025 |       3 |       17 |     5.7 |             1.2 |                 141 |                0 |                              1 |                    2 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       22 |     5.5 |             1   |                 124 |                0 |                              1 |                    3 |                   0 |                 0 |
 | 20.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                 102 |                0 |                              1 |                    1 |                   1 |                 1 |
 | 19.Jun.2025 |       4 |       17 |     4.2 |             5.7 |                  89 |                1 |                              0 |                    1 |                   0 |                 2 |
@@ -24,6 +24,8 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  31 | 22.Jun.2025 | 19h    | RB Salzburg         | Al-Hilal           | 1 x 1          | empate              | 0 x 0         | empate              |        5 | 3-Vencedor correto           |                 141 |
+|  30 | 22.Jun.2025 | 16h    | Real Madrid         | Pachuca            | 2 x 1          | Real Madrid         | 3 x 1         | Real Madrid         |        7 | 2-Vencedor + gols de um time |                 136 |
 |  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 2 x 0          | Juventus            | 4 x 1         | Juventus            |        5 | 3-Vencedor correto           |                 129 |
 |  28 | 21.Jun.2025 | 22h    | River Plate         | Monterrey          | 1 x 1          | empate              | 0 x 0         | empate              |        5 | 3-Vencedor correto           |                 124 |
 |  27 | 21.Jun.2025 | 19h    | Fluminense          | Ulsan HD           | 2 x 1          | Fluminense          | 4 x 2         | Fluminense          |        5 | 3-Vencedor correto           |                 119 |
