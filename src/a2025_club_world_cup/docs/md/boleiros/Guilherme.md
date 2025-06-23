@@ -2,7 +2,7 @@
 
 # Guilherme
 
-_atualizado às 23/06/2025 00:17:48_
+_atualizado às 23/06/2025 00:26:56_
 
 ## resumo
 
