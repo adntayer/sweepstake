@@ -284,7 +284,6 @@ def main():
         with open(path_game_xray, "w", encoding="utf-8") as f:
             f.write("# Visão Geral dos Jogos - 1ª Fase\n\n")
             f.write(f"# {match}\n\n")
-            f.write(f"_atualizado às {now_sp}_\n\n")
             f.write("## pré jogo\n\n")
             f.write("### time\n\n")
             f.write(df_pre_result_time.to_markdown(index=False))
