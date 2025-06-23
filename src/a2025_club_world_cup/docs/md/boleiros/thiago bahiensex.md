@@ -2,12 +2,13 @@
 
 # thiago bahiensex
 
-_atualizado às 22/06/2025 19:38:57_
+_atualizado às 22/06/2025 22:16:19_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 22.Jun.2025 |       1 |        5 |     5   |             0   |                 119 |                0 |                              0 |                    1 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       18 |     4.5 |             2.5 |                 114 |                0 |                              1 |                    2 |                   1 |                 0 |
 | 20.Jun.2025 |       4 |       14 |     3.5 |             3   |                  96 |                0 |                              1 |                    1 |                   2 |                 0 |
 | 19.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                  82 |                0 |                              1 |                    1 |                   1 |                 1 |
@@ -23,6 +24,7 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 2 x 0          | Juventus            | 4 x 1         | Juventus            |        5 | 3-Vencedor correto           |                 119 |
 |  28 | 21.Jun.2025 | 22h    | River Plate         | Monterrey          | 1 x 0          | River Plate         | 0 x 0         | empate              |        1 | 4-Gols de um time            |                 114 |
 |  27 | 21.Jun.2025 | 19h    | Fluminense          | Ulsan HD           | 1 x 0          | Fluminense          | 4 x 2         | Fluminense          |        5 | 3-Vencedor correto           |                 113 |
 |  26 | 21.Jun.2025 | 16h    | Internazionale      | Urawa Reds         | 3 x 1          | Internazionale      | 2 x 1         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 108 |

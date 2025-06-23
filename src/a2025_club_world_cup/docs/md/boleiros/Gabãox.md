@@ -2,12 +2,13 @@
 
 # Gabãox
 
-_atualizado às 22/06/2025 19:38:57_
+_atualizado às 22/06/2025 22:16:19_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 22.Jun.2025 |       1 |        5 |     5   |             0   |                 137 |                0 |                              0 |                    1 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       22 |     5.5 |             4.9 |                 132 |                1 |                              0 |                    2 |                   0 |                 1 |
 | 20.Jun.2025 |       4 |       19 |     4.8 |             5.2 |                 110 |                1 |                              0 |                    1 |                   2 |                 0 |
 | 19.Jun.2025 |       4 |       22 |     5.5 |             4.9 |                  91 |                1 |                              0 |                    2 |                   0 |                 1 |
@@ -23,6 +24,7 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 3 x 0          | Juventus            | 4 x 1         | Juventus            |        5 | 3-Vencedor correto           |                 137 |
 |  28 | 21.Jun.2025 | 22h    | River Plate         | Monterrey          | 3 x 1          | River Plate         | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 132 |
 |  27 | 21.Jun.2025 | 19h    | Fluminense          | Ulsan HD           | 2 x 1          | Fluminense          | 4 x 2         | Fluminense          |        5 | 3-Vencedor correto           |                 132 |
 |  26 | 21.Jun.2025 | 16h    | Internazionale      | Urawa Reds         | 2 x 1          | Internazionale      | 2 x 1         | Internazionale      |       12 | 1-Placar exato               |                 127 |
