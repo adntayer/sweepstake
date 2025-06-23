@@ -1,6 +1,6 @@
 # Visão Geral dos Jogos - 1ª Fase
 
-_atualizado às 22/06/2025 22:16:19_
+_atualizado às 22/06/2025 22:40:18_
 
 _último jogo que tem resultado_
 

@@ -69,7 +69,9 @@ def main():
     df_criterios_onehot = pd.get_dummies(df_all["criterio"])
     df_all = pd.concat([df_all, df_criterios_onehot], axis=1)
 
-    df_all.sort_values(by=["date", "hour", "who"]).to_csv(output_path_all, sep=",", decimal=".", index=False)
+    df_all.sort_values(by=["date", "hour", "who"]).to_csv(
+        output_path_all, sep=",", decimal=".", index=False
+    )
 
     df_all.query("valido==1").sort_values(by=["date", "hour", "who"]).to_csv(
         output_path_valido, sep=",", decimal=".", index=False

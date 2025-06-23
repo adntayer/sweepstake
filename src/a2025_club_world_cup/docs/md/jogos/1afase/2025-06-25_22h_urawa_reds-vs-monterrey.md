@@ -2,8 +2,6 @@
 
 # urawa_reds-vs-monterrey
 
-_atualizado às 22/06/2025 22:16:19_
-
 ## pré jogo
 
 ### time

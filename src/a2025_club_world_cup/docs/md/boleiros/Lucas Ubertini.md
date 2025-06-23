@@ -2,7 +2,7 @@
 
 # Lucas Ubertini
 
-_atualizado às 22/06/2025 22:16:19_
+_atualizado às 22/06/2025 22:40:18_
 
 ## resumo
 

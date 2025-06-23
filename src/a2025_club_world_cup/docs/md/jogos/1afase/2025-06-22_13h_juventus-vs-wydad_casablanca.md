@@ -2,8 +2,6 @@
 
 # juventus-vs-wydad_casablanca
 
-_atualizado às 22/06/2025 22:16:19_
-
 ## pré jogo
 
 ### time
