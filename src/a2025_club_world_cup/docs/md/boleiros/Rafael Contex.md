@@ -2,13 +2,13 @@
 
 # Rafael Contex
 
-_atualizado às 22/06/2025 23:16:32_
+_atualizado às 23/06/2025 00:17:48_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 22.Jun.2025 |       3 |       20 |     6.7 |             5.5 |                 112 |                1 |                              1 |                    0 |                   1 |                 0 |
+| 22.Jun.2025 |       4 |       27 |     6.8 |             4.5 |                 119 |                1 |                              2 |                    0 |                   1 |                 0 |
 | 21.Jun.2025 |       4 |       16 |     4   |             2   |                  92 |                0 |                              0 |                    3 |                   1 |                 0 |
 | 20.Jun.2025 |       4 |       19 |     4.8 |             5.2 |                  76 |                1 |                              0 |                    1 |                   2 |                 0 |
 | 19.Jun.2025 |       4 |        8 |     2   |             3.4 |                  57 |                0 |                              1 |                    0 |                   1 |                 2 |
@@ -24,6 +24,7 @@ Artilheiro: **Harry Kane**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain             | 3 x 0          | Manchester City     | 6 x 0         | Manchester City     |        7 | 2-Vencedor + gols de um time |                 119 |
 |  31 | 22.Jun.2025 | 19h    | RB Salzburg         | Al-Hilal           | 1 x 0          | RB Salzburg         | 0 x 0         | empate              |        1 | 4-Gols de um time            |                 112 |
 |  30 | 22.Jun.2025 | 16h    | Real Madrid         | Pachuca            | 3 x 1          | Real Madrid         | 3 x 1         | Real Madrid         |       12 | 1-Placar exato               |                 111 |
 |  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 3 x 1          | Juventus            | 4 x 1         | Juventus            |        7 | 2-Vencedor + gols de um time |                  99 |

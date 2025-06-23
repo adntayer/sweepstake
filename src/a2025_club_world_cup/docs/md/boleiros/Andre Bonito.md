@@ -2,13 +2,13 @@
 
 # Andre Bonito
 
-_atualizado às 22/06/2025 23:16:32_
+_atualizado às 23/06/2025 00:17:48_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 22.Jun.2025 |       3 |       10 |     3.3 |             2.9 |                 129 |                0 |                              0 |                    2 |                   0 |                 1 |
+| 22.Jun.2025 |       4 |       15 |     3.8 |             2.5 |                 134 |                0 |                              0 |                    3 |                   0 |                 1 |
 | 21.Jun.2025 |       4 |       18 |     4.5 |             2.5 |                 119 |                0 |                              1 |                    2 |                   1 |                 0 |
 | 20.Jun.2025 |       4 |       11 |     2.8 |             2.6 |                 101 |                0 |                              0 |                    2 |                   1 |                 1 |
 | 19.Jun.2025 |       4 |       19 |     4.8 |             5.9 |                  90 |                1 |                              1 |                    0 |                   0 |                 2 |
@@ -24,6 +24,7 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain             | 3 x 1          | Manchester City     | 6 x 0         | Manchester City     |        5 | 3-Vencedor correto           |                 134 |
 |  31 | 22.Jun.2025 | 19h    | RB Salzburg         | Al-Hilal           | 1 x 2          | Al-Hilal            | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 129 |
 |  30 | 22.Jun.2025 | 16h    | Real Madrid         | Pachuca            | 2 x 0          | Real Madrid         | 3 x 1         | Real Madrid         |        5 | 3-Vencedor correto           |                 129 |
 |  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 2 x 0          | Juventus            | 4 x 1         | Juventus            |        5 | 3-Vencedor correto           |                 124 |

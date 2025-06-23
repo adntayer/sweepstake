@@ -2,13 +2,13 @@
 
 # thiago bahiensex
 
-_atualizado às 22/06/2025 23:16:32_
+_atualizado às 23/06/2025 00:17:48_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 22.Jun.2025 |       3 |       10 |     3.3 |             2.9 |                 124 |                0 |                              0 |                    2 |                   0 |                 1 |
+| 22.Jun.2025 |       4 |       17 |     4.2 |             3   |                 131 |                0 |                              1 |                    2 |                   0 |                 1 |
 | 21.Jun.2025 |       4 |       18 |     4.5 |             2.5 |                 114 |                0 |                              1 |                    2 |                   1 |                 0 |
 | 20.Jun.2025 |       4 |       14 |     3.5 |             3   |                  96 |                0 |                              1 |                    1 |                   2 |                 0 |
 | 19.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                  82 |                0 |                              1 |                    1 |                   1 |                 1 |
@@ -24,6 +24,7 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain             | 3 x 0          | Manchester City     | 6 x 0         | Manchester City     |        7 | 2-Vencedor + gols de um time |                 131 |
 |  31 | 22.Jun.2025 | 19h    | RB Salzburg         | Al-Hilal           | 1 x 2          | Al-Hilal            | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 124 |
 |  30 | 22.Jun.2025 | 16h    | Real Madrid         | Pachuca            | 2 x 0          | Real Madrid         | 3 x 1         | Real Madrid         |        5 | 3-Vencedor correto           |                 124 |
 |  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 2 x 0          | Juventus            | 4 x 1         | Juventus            |        5 | 3-Vencedor correto           |                 119 |

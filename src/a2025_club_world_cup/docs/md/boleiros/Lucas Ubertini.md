@@ -2,13 +2,13 @@
 
 # Lucas Ubertini
 
-_atualizado às 22/06/2025 23:16:32_
+_atualizado às 23/06/2025 00:17:48_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 22.Jun.2025 |       3 |       19 |     6.3 |             1.2 |                 128 |                0 |                              2 |                    1 |                   0 |                 0 |
+| 22.Jun.2025 |       4 |       26 |     6.5 |             1   |                 135 |                0 |                              3 |                    1 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       17 |     4.2 |             3   |                 109 |                0 |                              1 |                    2 |                   0 |                 1 |
 | 20.Jun.2025 |       4 |       20 |     5   |             5.6 |                  92 |                1 |                              1 |                    0 |                   1 |                 1 |
 | 19.Jun.2025 |       4 |        9 |     2.2 |             3.2 |                  72 |                0 |                              1 |                    0 |                   2 |                 1 |
@@ -24,6 +24,7 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante          | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:-------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain             | 4 x 0          | Manchester City     | 6 x 0         | Manchester City     |        7 | 2-Vencedor + gols de um time |                 135 |
 |  31 | 22.Jun.2025 | 19h    | RB Salzburg         | Al-Hilal           | 1 x 1          | empate              | 0 x 0         | empate              |        5 | 3-Vencedor correto           |                 128 |
 |  30 | 22.Jun.2025 | 16h    | Real Madrid         | Pachuca            | 3 x 0          | Real Madrid         | 3 x 1         | Real Madrid         |        7 | 2-Vencedor + gols de um time |                 123 |
 |  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca   | 2 x 1          | Juventus            | 4 x 1         | Juventus            |        7 | 2-Vencedor + gols de um time |                 116 |
