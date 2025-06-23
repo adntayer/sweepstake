@@ -18,7 +18,7 @@ def generate_links(base_dir):
                 href = path.replace("src/a2025_club_world_cup/docs/html/", "")
                 label = path.split("/")[-1].replace(".html", "")
                 links.append(f'<li>{e:2} -->> <a href="{href}">{label}</a></li><br>')
-    return links
+    return sorted(links)
 
 
 def get_upcomming_games(links_html):
@@ -34,7 +34,7 @@ def get_upcomming_games(links_html):
             if data_jogo > agora:
                 jogos_futuros.append(item)
 
-    return jogos_futuros
+    return sorted(jogos_futuros)
 
 
 def create_index_html():
