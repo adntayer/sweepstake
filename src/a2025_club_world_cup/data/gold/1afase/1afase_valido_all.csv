@@ -575,3 +575,35 @@ date,hour,match,home_team,away_team,resultado_bol_placar,resultado_bol_time,resu
 2025-06-23,22h,porto-vs-al_ahly,Porto,Al Ahly,2 x 0,Porto,4 x 4,empate,5-Nenhum acerto,0,1,Thales Oliveira,False,False,False,False,True,False
 2025-06-23,22h,inter_miami-vs-palmeiras,Inter Miami,Palmeiras,1 x 2,Palmeiras,2 x 2,empate,4-Gols de um time,1,1,thiago bahiensex,False,False,False,True,False,False
 2025-06-23,22h,porto-vs-al_ahly,Porto,Al Ahly,2 x 1,Porto,4 x 4,empate,5-Nenhum acerto,0,1,thiago bahiensex,False,False,False,False,True,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 3,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,Andre Bonito,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 0,empate,1 x 1,empate,3-Vencedor correto,5,1,Andre Bonito,False,False,True,False,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 3,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,André Tayer,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,2 x 2,empate,1 x 1,empate,3-Vencedor correto,5,1,André Tayer,False,False,True,False,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 2,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,Cesar Saraivax,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 3,Boca Juniors,1 x 1,empate,5-Nenhum acerto,0,1,Cesar Saraivax,False,False,False,False,True,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,2 x 2,empate,1 x 0,Benfica,5-Nenhum acerto,0,1,Frederico Soter,False,False,False,False,True,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 1,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,Frederico Soter,False,False,False,True,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 1,empate,1 x 0,Benfica,4-Gols de um time,1,1,Gabãox,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 1,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,Gabãox,False,False,False,True,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 3,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,Guilherme,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 1,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,Guilherme,False,False,False,True,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 2,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 2,Boca Juniors,1 x 1,empate,5-Nenhum acerto,0,1,João Henrique,False,False,False,False,True,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 2,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,Leigo Gianonnix,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,1 x 2,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,Leigo Gianonnix,False,False,False,True,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 2,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,Leo Fernandes,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 2,Boca Juniors,1 x 1,empate,5-Nenhum acerto,0,1,Leo Fernandes,False,False,False,False,True,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,0 x 4,Bayern de Munique,1 x 0,Benfica,5-Nenhum acerto,0,1,Lucas Ubertini,False,False,False,False,True,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 2,Boca Juniors,1 x 1,empate,5-Nenhum acerto,0,1,Lucas Ubertini,False,False,False,False,True,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 3,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,Marcelo,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 2,Boca Juniors,1 x 1,empate,5-Nenhum acerto,0,1,Marcelo,False,False,False,False,True,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,3 x 3,empate,1 x 0,Benfica,5-Nenhum acerto,0,1,Pedro Tayerx,False,False,False,False,True,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,2 x 0,Auckland City,1 x 1,empate,5-Nenhum acerto,0,1,Pedro Tayerx,False,False,False,False,True,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 2,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,RODRIGO ALBERNAZ,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,1 x 2,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,RODRIGO ALBERNAZ,False,False,False,True,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 3,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,Rafael Contex,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 1,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,Rafael Contex,False,False,False,True,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,0 x 2,Bayern de Munique,1 x 0,Benfica,5-Nenhum acerto,0,1,Thales Oliveira,False,False,False,False,True,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 1,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,Thales Oliveira,False,False,False,True,False,False
+2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 3,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,thiago bahiensex,False,False,False,True,False,False
+2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 2,Boca Juniors,1 x 1,empate,5-Nenhum acerto,0,1,thiago bahiensex,False,False,False,False,True,False

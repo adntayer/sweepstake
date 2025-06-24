@@ -2,12 +2,13 @@
 
 # Leigo Gianonnix
 
-_atualizado às 24/06/2025 00:03:49_
+_atualizado às 24/06/2025 18:04:54_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 24.Jun.2025 |       2 |        2 |     1   |             0   |                 159 |                0 |                              0 |                    0 |                   2 |                 0 |
 | 23.Jun.2025 |       4 |       14 |     3.5 |             4   |                 157 |                0 |                              2 |                    0 |                   0 |                 2 |
 | 22.Jun.2025 |       4 |       19 |     4.8 |             3.3 |                 143 |                0 |                              2 |                    1 |                   0 |                 1 |
 | 21.Jun.2025 |       4 |       22 |     5.5 |             1   |                 124 |                0 |                              1 |                    3 |                   0 |                 0 |
@@ -25,6 +26,8 @@ Artilheiro: **MBAPPÉ**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 2          | Bayern de Munique   | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 158 |
+|  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 1 x 2          | Boca Juniors        | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 159 |
 |  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 1 x 3          | Palmeiras           | 2 x 2         | empate              |        0 | 5-Nenhum acerto              |                 157 |
 |  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 1 x 0          | Porto               | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 157 |
 |  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 4          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time |                 150 |

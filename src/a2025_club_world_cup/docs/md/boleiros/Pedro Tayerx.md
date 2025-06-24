@@ -2,12 +2,13 @@
 
 # Pedro Tayerx
 
-_atualizado às 24/06/2025 00:03:49_
+_atualizado às 24/06/2025 18:04:54_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 24.Jun.2025 |       2 |        0 |     0   |             0   |                 113 |                0 |                              0 |                    0 |                   0 |                 2 |
 | 23.Jun.2025 |       4 |       14 |     3.5 |             4   |                 113 |                0 |                              2 |                    0 |                   0 |                 2 |
 | 22.Jun.2025 |       4 |       17 |     4.2 |             3   |                  99 |                0 |                              1 |                    2 |                   0 |                 1 |
 | 21.Jun.2025 |       4 |       10 |     2.5 |             2.9 |                  82 |                0 |                              0 |                    2 |                   0 |                 2 |
@@ -25,6 +26,8 @@ Artilheiro: **Guirassy**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 3 x 3          | empate              | 1 x 0         | Benfica             |        0 | 5-Nenhum acerto              |                 113 |
+|  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 2 x 0          | Auckland City       | 1 x 1         | empate              |        0 | 5-Nenhum acerto              |                 113 |
 |  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 4 x 1          | Inter Miami         | 2 x 2         | empate              |        0 | 5-Nenhum acerto              |                 113 |
 |  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 1 x 3          | Al Ahly             | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 113 |
 |  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 3          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time |                 106 |
