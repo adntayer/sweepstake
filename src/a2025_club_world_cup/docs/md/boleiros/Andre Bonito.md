@@ -2,13 +2,13 @@
 
 # Andre Bonito
 
-_atualizado às 23/06/2025 18:45:22_
+_atualizado às 24/06/2025 00:03:49_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 23.Jun.2025 |       2 |        8 |     4   |             4.2 |                 142 |                0 |                              1 |                    0 |                   1 |                 0 |
+| 23.Jun.2025 |       4 |       20 |     5   |             5.6 |                 154 |                1 |                              1 |                    0 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       15 |     3.8 |             2.5 |                 134 |                0 |                              0 |                    3 |                   0 |                 1 |
 | 21.Jun.2025 |       4 |       18 |     4.5 |             2.5 |                 119 |                0 |                              1 |                    2 |                   1 |                 0 |
 | 20.Jun.2025 |       4 |       11 |     2.8 |             2.6 |                 101 |                0 |                              0 |                    2 |                   1 |                 1 |
@@ -25,6 +25,8 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 2 x 2          | empate              | 2 x 2         | empate              |       12 | 1-Placar exato               |                 154 |
+|  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 2 x 0          | Porto               | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 154 |
 |  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 4          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time |                 141 |
 |  34 | 23.Jun.2025 | 16h    | Atlético de Madrid  | Botafogo            | 1 x 1          | empate              | 1 x 0         | Atlético de Madrid  |        1 | 4-Gols de um time            |                 142 |
 |  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain              | 3 x 1          | Manchester City     | 6 x 0         | Manchester City     |        5 | 3-Vencedor correto           |                 134 |

@@ -2,13 +2,13 @@
 
 # Gabãox
 
-_atualizado às 23/06/2025 18:45:22_
+_atualizado às 24/06/2025 00:03:49_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 23.Jun.2025 |       2 |       17 |     8.5 |             4.9 |                 171 |                1 |                              0 |                    1 |                   0 |                 0 |
+| 23.Jun.2025 |       4 |       18 |     4.5 |             5.4 |                 172 |                1 |                              0 |                    1 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       22 |     5.5 |             1   |                 154 |                0 |                              1 |                    3 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       22 |     5.5 |             4.9 |                 132 |                1 |                              0 |                    2 |                   0 |                 1 |
 | 20.Jun.2025 |       4 |       19 |     4.8 |             5.2 |                 110 |                1 |                              0 |                    1 |                   2 |                 0 |
@@ -25,6 +25,8 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 1 x 2          | Palmeiras           | 2 x 2         | empate              |        1 | 4-Gols de um time            |                 172 |
+|  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 3 x 1          | Porto               | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 172 |
 |  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 1 x 4          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        5 | 3-Vencedor correto           |                 159 |
 |  34 | 23.Jun.2025 | 16h    | Atlético de Madrid  | Botafogo            | 1 x 0          | Atlético de Madrid  | 1 x 0         | Atlético de Madrid  |       12 | 1-Placar exato               |                 171 |
 |  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain              | 4 x 1          | Manchester City     | 6 x 0         | Manchester City     |        5 | 3-Vencedor correto           |                 154 |

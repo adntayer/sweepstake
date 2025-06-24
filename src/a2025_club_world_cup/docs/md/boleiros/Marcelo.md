@@ -2,13 +2,13 @@
 
 # Marcelo
 
-_atualizado às 23/06/2025 18:45:22_
+_atualizado às 24/06/2025 00:03:49_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 23.Jun.2025 |       2 |       12 |     6   |             1.4 |                 175 |                0 |                              1 |                    1 |                   0 |                 0 |
+| 23.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                 176 |                0 |                              1 |                    1 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       18 |     4.5 |             2.5 |                 163 |                0 |                              1 |                    2 |                   1 |                 0 |
 | 21.Jun.2025 |       4 |       27 |     6.8 |             3.5 |                 145 |                1 |                              0 |                    3 |                   0 |                 0 |
 | 20.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                 118 |                0 |                              1 |                    1 |                   1 |                 1 |
@@ -25,6 +25,8 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 1 x 2          | Palmeiras           | 2 x 2         | empate              |        1 | 4-Gols de um time            |                 176 |
+|  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 1 x 0          | Porto               | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 176 |
 |  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 4          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time |                 170 |
 |  34 | 23.Jun.2025 | 16h    | Atlético de Madrid  | Botafogo            | 3 x 1          | Atlético de Madrid  | 1 x 0         | Atlético de Madrid  |        5 | 3-Vencedor correto           |                 175 |
 |  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain              | 3 x 1          | Manchester City     | 6 x 0         | Manchester City     |        5 | 3-Vencedor correto           |                 163 |

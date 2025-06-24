@@ -2,13 +2,13 @@
 
 # João Henrique
 
-_atualizado às 23/06/2025 18:45:22_
+_atualizado às 24/06/2025 00:03:49_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 23.Jun.2025 |       2 |       17 |     8.5 |             4.9 |                 161 |                1 |                              0 |                    1 |                   0 |                 0 |
+| 23.Jun.2025 |       4 |       22 |     5.5 |             4.9 |                 166 |                1 |                              0 |                    2 |                   0 |                 1 |
 | 22.Jun.2025 |       4 |       18 |     4.5 |             2.5 |                 144 |                0 |                              1 |                    2 |                   1 |                 0 |
 | 21.Jun.2025 |       4 |       14 |     3.5 |             4   |                 126 |                0 |                              2 |                    0 |                   0 |                 2 |
 | 20.Jun.2025 |       4 |       14 |     3.5 |             3   |                 112 |                0 |                              1 |                    1 |                   2 |                 0 |
@@ -25,6 +25,8 @@ Artilheiro: **Vinicius Jr.**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 3 x 1          | Inter Miami         | 2 x 2         | empate              |        0 | 5-Nenhum acerto              |                 161 |
+|  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 1 x 1          | empate              | 4 x 4         | empate              |        5 | 3-Vencedor correto           |                 166 |
 |  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 2          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |       12 | 1-Placar exato               |                 156 |
 |  34 | 23.Jun.2025 | 16h    | Atlético de Madrid  | Botafogo            | 2 x 1          | Atlético de Madrid  | 1 x 0         | Atlético de Madrid  |        5 | 3-Vencedor correto           |                 161 |
 |  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain              | 2 x 0          | Manchester City     | 6 x 0         | Manchester City     |        7 | 2-Vencedor + gols de um time |                 144 |

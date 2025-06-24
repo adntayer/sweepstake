@@ -2,13 +2,13 @@
 
 # Rafael Contex
 
-_atualizado às 23/06/2025 18:45:22_
+_atualizado às 24/06/2025 00:03:49_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 23.Jun.2025 |       2 |       14 |     7   |             0   |                 133 |                0 |                              2 |                    0 |                   0 |                 0 |
+| 23.Jun.2025 |       4 |       14 |     3.5 |             4   |                 133 |                0 |                              2 |                    0 |                   0 |                 2 |
 | 22.Jun.2025 |       4 |       27 |     6.8 |             4.5 |                 119 |                1 |                              2 |                    0 |                   1 |                 0 |
 | 21.Jun.2025 |       4 |       16 |     4   |             2   |                  92 |                0 |                              0 |                    3 |                   1 |                 0 |
 | 20.Jun.2025 |       4 |       19 |     4.8 |             5.2 |                  76 |                1 |                              0 |                    1 |                   2 |                 0 |
@@ -25,6 +25,8 @@ Artilheiro: **Harry Kane**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 4 x 0          | Inter Miami         | 2 x 2         | empate              |        0 | 5-Nenhum acerto              |                 133 |
+|  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 5 x 1          | Porto               | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 133 |
 |  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 5          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time |                 126 |
 |  34 | 23.Jun.2025 | 16h    | Atlético de Madrid  | Botafogo            | 2 x 0          | Atlético de Madrid  | 1 x 0         | Atlético de Madrid  |        7 | 2-Vencedor + gols de um time |                 133 |
 |  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain              | 3 x 0          | Manchester City     | 6 x 0         | Manchester City     |        7 | 2-Vencedor + gols de um time |                 119 |
