@@ -2,13 +2,13 @@
 
 # Gabãox
 
-_atualizado às 24/06/2025 18:04:54_
+_atualizado às 25/06/2025 00:12:38_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 24.Jun.2025 |       2 |        2 |     1   |             0   |                 174 |                0 |                              0 |                    0 |                   2 |                 0 |
+| 24.Jun.2025 |       4 |       10 |     2.5 |             3   |                 182 |                0 |                              1 |                    0 |                   3 |                 0 |
 | 23.Jun.2025 |       4 |       18 |     4.5 |             5.4 |                 172 |                1 |                              0 |                    1 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       22 |     5.5 |             1   |                 154 |                0 |                              1 |                    3 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       22 |     5.5 |             4.9 |                 132 |                1 |                              0 |                    2 |                   0 |                 1 |
@@ -26,6 +26,8 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 1 x 2          | Flamengo            | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 175 |
+|  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 1 x 3          | Chelsea             | 0 x 3         | Chelsea             |        7 | 2-Vencedor + gols de um time |                 182 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 1          | empate              | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 173 |
 |  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 0 x 1          | Boca Juniors        | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 174 |
 |  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 1 x 2          | Palmeiras           | 2 x 2         | empate              |        1 | 4-Gols de um time            |                 172 |

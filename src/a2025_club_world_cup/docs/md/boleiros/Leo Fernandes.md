@@ -2,13 +2,13 @@
 
 # Leo Fernandes
 
-_atualizado às 24/06/2025 18:04:54_
+_atualizado às 25/06/2025 00:12:38_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 24.Jun.2025 |       2 |        1 |     0.5 |             0.7 |                 164 |                0 |                              0 |                    0 |                   1 |                 1 |
+| 24.Jun.2025 |       4 |       14 |     3.5 |             5.7 |                 177 |                1 |                              0 |                    0 |                   2 |                 1 |
 | 23.Jun.2025 |       4 |       15 |     3.8 |             3.8 |                 163 |                0 |                              2 |                    0 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       24 |     6   |             1.2 |                 148 |                0 |                              2 |                    2 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       22 |     5.5 |             1   |                 124 |                0 |                              1 |                    3 |                   0 |                 0 |
@@ -26,6 +26,8 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 0 x 1          | Flamengo            | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 165 |
+|  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 3          | Chelsea             | 0 x 3         | Chelsea             |       12 | 1-Placar exato               |                 177 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 2          | Bayern de Munique   | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 164 |
 |  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 0 x 2          | Boca Juniors        | 1 x 1         | empate              |        0 | 5-Nenhum acerto              |                 164 |
 |  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 0 x 2          | Palmeiras           | 2 x 2         | empate              |        1 | 4-Gols de um time            |                 163 |

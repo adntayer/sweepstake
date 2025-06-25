@@ -2,13 +2,13 @@
 
 # RODRIGO ALBERNAZ
 
-_atualizado às 24/06/2025 18:04:54_
+_atualizado às 25/06/2025 00:12:38_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 24.Jun.2025 |       2 |        2 |     1   |             0   |                 157 |                0 |                              0 |                    0 |                   2 |                 0 |
+| 24.Jun.2025 |       4 |       10 |     2.5 |             3   |                 165 |                0 |                              1 |                    0 |                   3 |                 0 |
 | 23.Jun.2025 |       4 |       20 |     5   |             5.6 |                 155 |                1 |                              1 |                    0 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       22 |     5.5 |             1   |                 135 |                0 |                              1 |                    3 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       22 |     5.5 |             1   |                 113 |                0 |                              1 |                    3 |                   0 |                 0 |
@@ -26,6 +26,8 @@ Artilheiro: **Mbappe **
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 1 x 2          | Flamengo            | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 158 |
+|  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 2          | Chelsea             | 0 x 3         | Chelsea             |        7 | 2-Vencedor + gols de um time |                 165 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 2          | Bayern de Munique   | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 156 |
 |  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 1 x 2          | Boca Juniors        | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 157 |
 |  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 1 x 2          | Palmeiras           | 2 x 2         | empate              |        1 | 4-Gols de um time            |                 155 |
