@@ -607,3 +607,35 @@ date,hour,match,home_team,away_team,resultado_bol_placar,resultado_bol_time,resu
 2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 1,Boca Juniors,1 x 1,empate,4-Gols de um time,1,1,Thales Oliveira,False,False,False,True,False,False
 2025-06-24,16h,benfica-vs-bayern_de_munique,Benfica,Bayern de Munique,1 x 3,Bayern de Munique,1 x 0,Benfica,4-Gols de um time,1,1,thiago bahiensex,False,False,False,True,False,False
 2025-06-24,16h,auckland_city-vs-boca_juniors,Auckland City,Boca Juniors,0 x 2,Boca Juniors,1 x 1,empate,5-Nenhum acerto,0,1,thiago bahiensex,False,False,False,False,True,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 1,empate,1 x 1,empate,1-Placar exato,12,1,Andre Bonito,True,False,False,False,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,Andre Bonito,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 1,empate,1 x 1,empate,1-Placar exato,12,1,André Tayer,True,False,False,False,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,André Tayer,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,0 x 2,Flamengo,1 x 1,empate,5-Nenhum acerto,0,1,Cesar Saraivax,False,False,False,False,True,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,Cesar Saraivax,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 4,Flamengo,1 x 1,empate,4-Gols de um time,1,1,Frederico Soter,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 5,Chelsea,0 x 3,Chelsea,2-Vencedor + gols de um time,7,1,Frederico Soter,False,True,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 2,Flamengo,1 x 1,empate,4-Gols de um time,1,1,Gabãox,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,1 x 3,Chelsea,0 x 3,Chelsea,2-Vencedor + gols de um time,7,1,Gabãox,False,True,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 2,Flamengo,1 x 1,empate,4-Gols de um time,1,1,Guilherme,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,Guilherme,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,0 x 1,Flamengo,1 x 1,empate,4-Gols de um time,1,1,João Henrique,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,João Henrique,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,0 x 2,Flamengo,1 x 1,empate,5-Nenhum acerto,0,1,Leigo Gianonnix,False,False,False,False,True,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 4,Chelsea,0 x 3,Chelsea,2-Vencedor + gols de um time,7,1,Leigo Gianonnix,False,True,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,0 x 1,Flamengo,1 x 1,empate,4-Gols de um time,1,1,Leo Fernandes,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,Leo Fernandes,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,2 x 2,empate,1 x 1,empate,3-Vencedor correto,5,1,Lucas Ubertini,False,False,True,False,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,Lucas Ubertini,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,2 x 3,Flamengo,1 x 1,empate,5-Nenhum acerto,0,1,Marcelo,False,False,False,False,True,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,Marcelo,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,2 x 1,Los Angeles FC,1 x 1,empate,4-Gols de um time,1,1,Pedro Tayerx,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,1 x 2,Chelsea,0 x 3,Chelsea,3-Vencedor correto,5,1,Pedro Tayerx,False,False,True,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 2,Flamengo,1 x 1,empate,4-Gols de um time,1,1,RODRIGO ALBERNAZ,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 2,Chelsea,0 x 3,Chelsea,2-Vencedor + gols de um time,7,1,RODRIGO ALBERNAZ,False,True,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 2,Flamengo,1 x 1,empate,4-Gols de um time,1,1,Rafael Contex,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,Rafael Contex,True,False,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 3,Flamengo,1 x 1,empate,4-Gols de um time,1,1,Thales Oliveira,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 4,Chelsea,0 x 3,Chelsea,2-Vencedor + gols de um time,7,1,Thales Oliveira,False,True,False,False,False,False
+2025-06-24,22h,los_angeles_fc-vs-flamengo,Los Angeles FC,Flamengo,1 x 2,Flamengo,1 x 1,empate,4-Gols de um time,1,1,thiago bahiensex,False,False,False,True,False,False
+2025-06-24,22h,espérance-vs-chelsea,Espérance,Chelsea,0 x 3,Chelsea,0 x 3,Chelsea,1-Placar exato,12,1,thiago bahiensex,True,False,False,False,False,False

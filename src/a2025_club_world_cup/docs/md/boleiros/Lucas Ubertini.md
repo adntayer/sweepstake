@@ -2,13 +2,13 @@
 
 # Lucas Ubertini
 
-_atualizado às 24/06/2025 18:04:54_
+_atualizado às 25/06/2025 00:12:38_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 24.Jun.2025 |       2 |        0 |     0   |             0   |                 150 |                0 |                              0 |                    0 |                   0 |                 2 |
+| 24.Jun.2025 |       4 |       17 |     4.2 |             5.7 |                 167 |                1 |                              0 |                    1 |                   0 |                 2 |
 | 23.Jun.2025 |       4 |       15 |     3.8 |             2.5 |                 150 |                0 |                              0 |                    3 |                   0 |                 1 |
 | 22.Jun.2025 |       4 |       26 |     6.5 |             1   |                 135 |                0 |                              3 |                    1 |                   0 |                 0 |
 | 21.Jun.2025 |       4 |       17 |     4.2 |             3   |                 109 |                0 |                              1 |                    2 |                   0 |                 1 |
@@ -26,6 +26,8 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 2 x 2          | empate              | 1 x 1         | empate              |        5 | 3-Vencedor correto           |                 155 |
+|  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 3          | Chelsea             | 0 x 3         | Chelsea             |       12 | 1-Placar exato               |                 167 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 0 x 4          | Bayern de Munique   | 1 x 0         | Benfica             |        0 | 5-Nenhum acerto              |                 150 |
 |  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 0 x 2          | Boca Juniors        | 1 x 1         | empate              |        0 | 5-Nenhum acerto              |                 150 |
 |  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 1 x 1          | empate              | 2 x 2         | empate              |        5 | 3-Vencedor correto           |                 150 |

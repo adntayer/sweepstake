@@ -2,13 +2,13 @@
 
 # Thales Oliveira
 
-_atualizado às 24/06/2025 18:04:54_
+_atualizado às 25/06/2025 00:12:38_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 24.Jun.2025 |       2 |        1 |     0.5 |             0.7 |                 148 |                0 |                              0 |                    0 |                   1 |                 1 |
+| 24.Jun.2025 |       4 |        9 |     2.2 |             3.2 |                 156 |                0 |                              1 |                    0 |                   2 |                 1 |
 | 23.Jun.2025 |       4 |        8 |     2   |             3.4 |                 147 |                0 |                              1 |                    0 |                   1 |                 2 |
 | 22.Jun.2025 |       4 |       19 |     4.8 |             3.3 |                 139 |                0 |                              2 |                    1 |                   0 |                 1 |
 | 21.Jun.2025 |       4 |       19 |     4.8 |             3.3 |                 120 |                0 |                              2 |                    1 |                   0 |                 1 |
@@ -26,6 +26,8 @@ Artilheiro: **Harry Kane**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 1 x 3          | Flamengo            | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 149 |
+|  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 4          | Chelsea             | 0 x 3         | Chelsea             |        7 | 2-Vencedor + gols de um time |                 156 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 0 x 2          | Bayern de Munique   | 1 x 0         | Benfica             |        0 | 5-Nenhum acerto              |                 147 |
 |  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 0 x 1          | Boca Juniors        | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 148 |
 |  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 1 x 3          | Palmeiras           | 2 x 2         | empate              |        0 | 5-Nenhum acerto              |                 147 |
