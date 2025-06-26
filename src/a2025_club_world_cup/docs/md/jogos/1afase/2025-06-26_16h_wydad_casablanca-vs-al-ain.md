@@ -26,27 +26,31 @@
 
 ## pós jogo
 
-| criterio   |   # | g                    |
-|:-----------|----:|:---------------------|
-| 9-Sem jogo |  16 | ████████████████████ |
+| criterio                     |   # | g           |
+|:-----------------------------|----:|:------------|
+| 1-Placar exato               |   2 | ██          |
+| 2-Vencedor + gols de um time |   3 | ███         |
+| 3-Vencedor correto           |   1 | █           |
+| 4-Gols de um time            |   9 | ███████████ |
+| 5-Nenhum acerto              |   1 | █           |
 
 ## raio x
 
-| date        | h   | boleiro          | casa             | visitante   |   pontos | criteiro   | bol_placar   | bol_time         | real_placar   | real_time   |
-|:------------|:----|:-----------------|:-----------------|:------------|---------:|:-----------|:-------------|:-----------------|:--------------|:------------|
-| 26.Jun.2025 | 16h | thiago bahiensex | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 2        | Al-Ain           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Thales Oliveira  | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 0 x 1        | Al-Ain           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Rafael Contex    | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | RODRIGO ALBERNAZ | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Pedro Tayerx     | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 3        | Al-Ain           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Marcelo          | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Lucas Ubertini   | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 2 x 0        | Wydad Casablanca | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Leo Fernandes    | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Leigo Gianonnix  | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | João Henrique    | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Guilherme        | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 0        | Wydad Casablanca | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Gabãox           | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 3        | Al-Ain           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Frederico Soter  | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 2        | Al-Ain           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Cesar Saraivax   | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | André Tayer      | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 1 x 1        | empate           | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Andre Bonito     | Wydad Casablanca | Al-Ain      |        0 | 9-Sem jogo | 0 x 2        | Al-Ain           | <NA> x <NA>   | empate      |
+| date        | h   | boleiro          | casa             | visitante   |   pontos | criteiro                     | bol_placar   | bol_time         | real_placar   | real_time   |
+|:------------|:----|:-----------------|:-----------------|:------------|---------:|:-----------------------------|:-------------|:-----------------|:--------------|:------------|
+| 26.Jun.2025 | 16h | thiago bahiensex | Wydad Casablanca | Al-Ain      |       12 | 1-Placar exato               | 1 x 2        | Al-Ain           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Frederico Soter  | Wydad Casablanca | Al-Ain      |       12 | 1-Placar exato               | 1 x 2        | Al-Ain           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Pedro Tayerx     | Wydad Casablanca | Al-Ain      |        7 | 2-Vencedor + gols de um time | 1 x 3        | Al-Ain           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Gabãox           | Wydad Casablanca | Al-Ain      |        7 | 2-Vencedor + gols de um time | 1 x 3        | Al-Ain           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Andre Bonito     | Wydad Casablanca | Al-Ain      |        7 | 2-Vencedor + gols de um time | 0 x 2        | Al-Ain           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Thales Oliveira  | Wydad Casablanca | Al-Ain      |        5 | 3-Vencedor correto           | 0 x 1        | Al-Ain           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Rafael Contex    | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | RODRIGO ALBERNAZ | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Marcelo          | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Leo Fernandes    | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Leigo Gianonnix  | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | João Henrique    | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Guilherme        | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 0        | Wydad Casablanca | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Cesar Saraivax   | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | André Tayer      | Wydad Casablanca | Al-Ain      |        1 | 4-Gols de um time            | 1 x 1        | empate           | 1 x 2         | Al-Ain      |
+| 26.Jun.2025 | 16h | Lucas Ubertini   | Wydad Casablanca | Al-Ain      |        0 | 5-Nenhum acerto              | 2 x 0        | Wydad Casablanca | 1 x 2         | Al-Ain      |

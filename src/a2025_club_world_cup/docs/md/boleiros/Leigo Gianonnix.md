@@ -2,12 +2,13 @@
 
 # Leigo Gianonnix
 
-_atualizado às 26/06/2025 00:05:30_
+_atualizado às 26/06/2025 18:12:14_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 26.Jun.2025 |       2 |        8 |     4   |             4.2 |                 196 |                0 |                              1 |                    0 |                   1 |                 0 |
 | 25.Jun.2025 |       4 |       22 |     5.5 |             3   |                 188 |                0 |                              3 |                    0 |                   1 |                 0 |
 | 24.Jun.2025 |       4 |        9 |     2.2 |             3.2 |                 166 |                0 |                              1 |                    0 |                   2 |                 1 |
 | 23.Jun.2025 |       4 |       14 |     3.5 |             4   |                 157 |                0 |                              2 |                    0 |                   0 |                 2 |
@@ -27,6 +28,8 @@ Artilheiro: **MBAPPÉ**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 2 x 3          | Manchester City     | 2 x 5         | Manchester City     |        7 | 2-Vencedor + gols de um time |                 195 |
+|  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 1 x 1          | empate              | 1 x 2         | Al-Ain              |        1 | 4-Gols de um time            |                 196 |
 |  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 1          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 181 |
 |  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 0 x 1          | Monterrey           | 0 x 4         | Monterrey           |        7 | 2-Vencedor + gols de um time |                 188 |
 |  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 0 x 1          | Fluminense          | 0 x 0         | empate              |        1 | 4-Gols de um time            |                 167 |
