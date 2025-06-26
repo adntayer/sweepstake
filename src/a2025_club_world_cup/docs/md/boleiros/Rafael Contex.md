@@ -2,12 +2,13 @@
 
 # Rafael Contex
 
-_atualizado às 26/06/2025 00:05:30_
+_atualizado às 26/06/2025 18:12:14_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 26.Jun.2025 |       2 |        2 |     1   |             0   |                 177 |                0 |                              0 |                    0 |                   2 |                 0 |
 | 25.Jun.2025 |       4 |       27 |     6.8 |             4.5 |                 175 |                1 |                              2 |                    0 |                   1 |                 0 |
 | 24.Jun.2025 |       4 |       15 |     3.8 |             5.5 |                 148 |                1 |                              0 |                    0 |                   3 |                 0 |
 | 23.Jun.2025 |       4 |       14 |     3.5 |             4   |                 133 |                0 |                              2 |                    0 |                   0 |                 2 |
@@ -27,6 +28,8 @@ Artilheiro: **Harry Kane**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 2 x 2          | empate              | 2 x 5         | Manchester City     |        1 | 4-Gols de um time            |                 176 |
+|  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 1 x 1          | empate              | 1 x 2         | Al-Ain              |        1 | 4-Gols de um time            |                 177 |
 |  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 0          | Internazionale      | 2 x 0         | Internazionale      |       12 | 1-Placar exato               |                 168 |
 |  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 0 x 1          | Monterrey           | 0 x 4         | Monterrey           |        7 | 2-Vencedor + gols de um time |                 175 |
 |  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 0 x 1          | Fluminense          | 0 x 0         | empate              |        1 | 4-Gols de um time            |                 149 |

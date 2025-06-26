@@ -2,12 +2,13 @@
 
 # Gabãox
 
-_atualizado às 26/06/2025 00:05:30_
+_atualizado às 26/06/2025 18:12:14_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 26.Jun.2025 |       2 |       12 |     6   |             1.4 |                 214 |                0 |                              1 |                    1 |                   0 |                 0 |
 | 25.Jun.2025 |       4 |       20 |     5   |             5.6 |                 202 |                1 |                              1 |                    0 |                   1 |                 1 |
 | 24.Jun.2025 |       4 |       10 |     2.5 |             3   |                 182 |                0 |                              1 |                    0 |                   3 |                 0 |
 | 23.Jun.2025 |       4 |       18 |     4.5 |             5.4 |                 172 |                1 |                              0 |                    1 |                   1 |                 1 |
@@ -27,6 +28,8 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 1 x 2          | Manchester City     | 2 x 5         | Manchester City     |        5 | 3-Vencedor correto           |                 207 |
+|  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 1 x 3          | Al-Ain              | 1 x 2         | Al-Ain              |        7 | 2-Vencedor + gols de um time |                 214 |
 |  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 0          | Internazionale      | 2 x 0         | Internazionale      |       12 | 1-Placar exato               |                 202 |
 |  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 1 x 1          | empate              | 0 x 4         | Monterrey           |        0 | 5-Nenhum acerto              |                 202 |
 |  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 0 x 1          | Fluminense          | 0 x 0         | empate              |        1 | 4-Gols de um time            |                 183 |

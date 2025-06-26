@@ -2,12 +2,13 @@
 
 # Andre Bonito
 
-_atualizado às 26/06/2025 00:05:30_
+_atualizado às 26/06/2025 18:12:14_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 26.Jun.2025 |       2 |        7 |     3.5 |             4.9 |                 210 |                0 |                              1 |                    0 |                   0 |                 1 |
 | 25.Jun.2025 |       4 |       19 |     4.8 |             3.3 |                 203 |                0 |                              2 |                    1 |                   0 |                 1 |
 | 24.Jun.2025 |       4 |       30 |     7.5 |             5.4 |                 184 |                2 |                              0 |                    1 |                   1 |                 0 |
 | 23.Jun.2025 |       4 |       20 |     5   |             5.6 |                 154 |                1 |                              1 |                    0 |                   1 |                 1 |
@@ -27,6 +28,8 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 1 x 1          | empate              | 2 x 5         | Manchester City     |        0 | 5-Nenhum acerto              |                 203 |
+|  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 0 x 2          | Al-Ain              | 1 x 2         | Al-Ain              |        7 | 2-Vencedor + gols de um time |                 210 |
 |  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 1          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 196 |
 |  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 0 x 2          | Monterrey           | 0 x 4         | Monterrey           |        7 | 2-Vencedor + gols de um time |                 203 |
 |  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 1 x 3          | Fluminense          | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 184 |

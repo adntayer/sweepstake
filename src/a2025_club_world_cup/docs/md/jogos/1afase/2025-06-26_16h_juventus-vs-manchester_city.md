@@ -26,27 +26,30 @@
 
 ## pós jogo
 
-| criterio   |   # | g                    |
-|:-----------|----:|:---------------------|
-| 9-Sem jogo |  16 | ████████████████████ |
+| criterio                     |   # | g           |
+|:-----------------------------|----:|:------------|
+| 2-Vencedor + gols de um time |   1 | █           |
+| 3-Vencedor correto           |   9 | ███████████ |
+| 4-Gols de um time            |   4 | █████       |
+| 5-Nenhum acerto              |   2 | ██          |
 
 ## raio x
 
-| date        | h   | boleiro          | casa     | visitante       |   pontos | criteiro   | bol_placar   | bol_time        | real_placar   | real_time   |
-|:------------|:----|:-----------------|:---------|:----------------|---------:|:-----------|:-------------|:----------------|:--------------|:------------|
-| 26.Jun.2025 | 16h | thiago bahiensex | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 3        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Thales Oliveira  | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Rafael Contex    | Juventus | Manchester City |        0 | 9-Sem jogo | 2 x 2        | empate          | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | RODRIGO ALBERNAZ | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Pedro Tayerx     | Juventus | Manchester City |        0 | 9-Sem jogo | 2 x 1        | Juventus        | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Marcelo          | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Lucas Ubertini   | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Leo Fernandes    | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Leigo Gianonnix  | Juventus | Manchester City |        0 | 9-Sem jogo | 2 x 3        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | João Henrique    | Juventus | Manchester City |        0 | 9-Sem jogo | 2 x 2        | empate          | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Guilherme        | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Gabãox           | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Frederico Soter  | Juventus | Manchester City |        0 | 9-Sem jogo | 3 x 2        | Juventus        | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Cesar Saraivax   | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 2        | Manchester City | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | André Tayer      | Juventus | Manchester City |        0 | 9-Sem jogo | 2 x 2        | empate          | <NA> x <NA>   | empate      |
-| 26.Jun.2025 | 16h | Andre Bonito     | Juventus | Manchester City |        0 | 9-Sem jogo | 1 x 1        | empate          | <NA> x <NA>   | empate      |
+| date        | h   | boleiro          | casa     | visitante       |   pontos | criteiro                     | bol_placar   | bol_time        | real_placar   | real_time       |
+|:------------|:----|:-----------------|:---------|:----------------|---------:|:-----------------------------|:-------------|:----------------|:--------------|:----------------|
+| 26.Jun.2025 | 16h | Leigo Gianonnix  | Juventus | Manchester City |        7 | 2-Vencedor + gols de um time | 2 x 3        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | thiago bahiensex | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 3        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Thales Oliveira  | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | RODRIGO ALBERNAZ | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Marcelo          | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Lucas Ubertini   | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Leo Fernandes    | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Guilherme        | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Gabãox           | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Cesar Saraivax   | Juventus | Manchester City |        5 | 3-Vencedor correto           | 1 x 2        | Manchester City | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Rafael Contex    | Juventus | Manchester City |        1 | 4-Gols de um time            | 2 x 2        | empate          | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Pedro Tayerx     | Juventus | Manchester City |        1 | 4-Gols de um time            | 2 x 1        | Juventus        | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | João Henrique    | Juventus | Manchester City |        1 | 4-Gols de um time            | 2 x 2        | empate          | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | André Tayer      | Juventus | Manchester City |        1 | 4-Gols de um time            | 2 x 2        | empate          | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Frederico Soter  | Juventus | Manchester City |        0 | 5-Nenhum acerto              | 3 x 2        | Juventus        | 2 x 5         | Manchester City |
+| 26.Jun.2025 | 16h | Andre Bonito     | Juventus | Manchester City |        0 | 5-Nenhum acerto              | 1 x 1        | empate          | 2 x 5         | Manchester City |
