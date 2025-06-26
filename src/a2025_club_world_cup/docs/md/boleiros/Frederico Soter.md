@@ -2,12 +2,13 @@
 
 # Frederico Soter
 
-_atualizado às 25/06/2025 00:12:38_
+_atualizado às 26/06/2025 00:05:30_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 25.Jun.2025 |       4 |       17 |     4.2 |             3   |                 143 |                0 |                              1 |                    2 |                   0 |                 1 |
 | 24.Jun.2025 |       4 |        9 |     2.2 |             3.2 |                 126 |                0 |                              1 |                    0 |                   2 |                 1 |
 | 23.Jun.2025 |       4 |       10 |     2.5 |             2.9 |                 117 |                0 |                              0 |                    2 |                   0 |                 2 |
 | 22.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                 107 |                0 |                              1 |                    1 |                   1 |                 1 |
@@ -26,6 +27,10 @@ Artilheiro: **Dembele **
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 1          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 143 |
+|  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 2 x 2          | empate              | 0 x 4         | Monterrey           |        0 | 5-Nenhum acerto              |                 143 |
+|  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 1 x 1          | empate              | 0 x 0         | empate              |        5 | 3-Vencedor correto           |                 131 |
+|  42 | 25.Jun.2025 | 16h    | Borussia Dortmund   | Ulsan HD            | 3 x 1          | Borussia Dortmund   | 1 x 0         | Borussia Dortmund   |        5 | 3-Vencedor correto           |                 136 |
 |  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 1 x 4          | Flamengo            | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 119 |
 |  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 5          | Chelsea             | 0 x 3         | Chelsea             |        7 | 2-Vencedor + gols de um time |                 126 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 2 x 2          | empate              | 1 x 0         | Benfica             |        0 | 5-Nenhum acerto              |                 117 |

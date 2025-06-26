@@ -2,12 +2,13 @@
 
 # Leo Fernandes
 
-_atualizado às 25/06/2025 00:12:38_
+_atualizado às 26/06/2025 00:05:30_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 25.Jun.2025 |       4 |       22 |     5.5 |             3   |                 199 |                0 |                              3 |                    0 |                   1 |                 0 |
 | 24.Jun.2025 |       4 |       14 |     3.5 |             5.7 |                 177 |                1 |                              0 |                    0 |                   2 |                 1 |
 | 23.Jun.2025 |       4 |       15 |     3.8 |             3.8 |                 163 |                0 |                              2 |                    0 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       24 |     6   |             1.2 |                 148 |                0 |                              2 |                    2 |                   0 |                 0 |
@@ -26,6 +27,10 @@ Artilheiro: **Mbappe**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 1 x 0          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 192 |
+|  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 0 x 1          | Monterrey           | 0 x 4         | Monterrey           |        7 | 2-Vencedor + gols de um time |                 199 |
+|  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 0 x 1          | Fluminense          | 0 x 0         | empate              |        1 | 4-Gols de um time            |                 178 |
+|  42 | 25.Jun.2025 | 16h    | Borussia Dortmund   | Ulsan HD            | 2 x 0          | Borussia Dortmund   | 1 x 0         | Borussia Dortmund   |        7 | 2-Vencedor + gols de um time |                 185 |
 |  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 0 x 1          | Flamengo            | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 165 |
 |  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 3          | Chelsea             | 0 x 3         | Chelsea             |       12 | 1-Placar exato               |                 177 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 2          | Bayern de Munique   | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 164 |
