@@ -2,12 +2,13 @@
 
 # thiago bahiensex
 
-_atualizado às 25/06/2025 00:12:38_
+_atualizado às 26/06/2025 00:05:30_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+| 25.Jun.2025 |       4 |        7 |     1.8 |             3.5 |                 170 |                0 |                              1 |                    0 |                   0 |                 3 |
 | 24.Jun.2025 |       4 |       14 |     3.5 |             5.7 |                 163 |                1 |                              0 |                    0 |                   2 |                 1 |
 | 23.Jun.2025 |       4 |       18 |     4.5 |             5.4 |                 149 |                1 |                              0 |                    1 |                   1 |                 1 |
 | 22.Jun.2025 |       4 |       17 |     4.2 |             3   |                 131 |                0 |                              1 |                    2 |                   0 |                 1 |
@@ -26,6 +27,10 @@ Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 1 x 1          | empate              | 2 x 0         | Internazionale      |        0 | 5-Nenhum acerto              |                 170 |
+|  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 1 x 1          | empate              | 0 x 4         | Monterrey           |        0 | 5-Nenhum acerto              |                 170 |
+|  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 1 x 2          | Fluminense          | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 163 |
+|  42 | 25.Jun.2025 | 16h    | Borussia Dortmund   | Ulsan HD            | 2 x 0          | Borussia Dortmund   | 1 x 0         | Borussia Dortmund   |        7 | 2-Vencedor + gols de um time |                 170 |
 |  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 1 x 2          | Flamengo            | 1 x 1         | empate              |        1 | 4-Gols de um time            |                 151 |
 |  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 3          | Chelsea             | 0 x 3         | Chelsea             |       12 | 1-Placar exato               |                 163 |
 |  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 3          | Bayern de Munique   | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 150 |
