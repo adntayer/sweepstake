@@ -2,13 +2,13 @@
 
 # Pedro Tayerx
 
-_atualizado às 26/06/2025 18:12:14_
+_atualizado às 27/06/2025 00:30:28_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 26.Jun.2025 |       2 |        8 |     4   |             4.2 |                 140 |                0 |                              1 |                    0 |                   1 |                 0 |
+| 26.Jun.2025 |       4 |        9 |     2.2 |             3.2 |                 141 |                0 |                              1 |                    0 |                   2 |                 1 |
 | 25.Jun.2025 |       4 |       13 |     3.2 |             3.3 |                 132 |                0 |                              1 |                    1 |                   1 |                 1 |
 | 24.Jun.2025 |       4 |        6 |     1.5 |             2.4 |                 119 |                0 |                              0 |                    1 |                   1 |                 2 |
 | 23.Jun.2025 |       4 |       14 |     3.5 |             4   |                 113 |                0 |                              2 |                    0 |                   0 |                 2 |
@@ -28,6 +28,8 @@ Artilheiro: **Guirassy**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  47 | 26.Jun.2025 | 22h    | RB Salzburg         | Real Madrid         | 3 x 3          | empate              | 0 x 3         | Real Madrid         |        1 | 4-Gols de um time            |                 141 |
+|  48 | 26.Jun.2025 | 22h    | Al-Hilal            | Pachuca             | 1 x 2          | Pachuca             | 2 x 0         | Al-Hilal            |        0 | 5-Nenhum acerto              |                 141 |
 |  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 2 x 1          | Juventus            | 2 x 5         | Manchester City     |        1 | 4-Gols de um time            |                 133 |
 |  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 1 x 3          | Al-Ain              | 1 x 2         | Al-Ain              |        7 | 2-Vencedor + gols de um time |                 140 |
 |  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 5 x 0          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 132 |
