@@ -2,13 +2,13 @@
 
 # RODRIGO ALBERNAZ
 
-_atualizado às 26/06/2025 18:12:14_
+_atualizado às 27/06/2025 00:30:28_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 26.Jun.2025 |       2 |        6 |     3   |             2.8 |                 191 |                0 |                              0 |                    1 |                   1 |                 0 |
+| 26.Jun.2025 |       4 |       16 |     4   |             2   |                 201 |                0 |                              0 |                    3 |                   1 |                 0 |
 | 25.Jun.2025 |       4 |       20 |     5   |             2.8 |                 185 |                0 |                              2 |                    1 |                   1 |                 0 |
 | 24.Jun.2025 |       4 |       10 |     2.5 |             3   |                 165 |                0 |                              1 |                    0 |                   3 |                 0 |
 | 23.Jun.2025 |       4 |       20 |     5   |             5.6 |                 155 |                1 |                              1 |                    0 |                   1 |                 1 |
@@ -28,6 +28,8 @@ Artilheiro: **Mbappe **
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  47 | 26.Jun.2025 | 22h    | RB Salzburg         | Real Madrid         | 1 x 2          | Real Madrid         | 0 x 3         | Real Madrid         |        5 | 3-Vencedor correto           |                 196 |
+|  48 | 26.Jun.2025 | 22h    | Al-Hilal            | Pachuca             | 3 x 2          | Al-Hilal            | 2 x 0         | Al-Hilal            |        5 | 3-Vencedor correto           |                 201 |
 |  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 1 x 2          | Manchester City     | 2 x 5         | Manchester City     |        5 | 3-Vencedor correto           |                 190 |
 |  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 1 x 1          | empate              | 1 x 2         | Al-Ain              |        1 | 4-Gols de um time            |                 191 |
 |  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 1          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 180 |

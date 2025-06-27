@@ -2,13 +2,13 @@
 
 # Thales Oliveira
 
-_atualizado às 26/06/2025 18:12:14_
+_atualizado às 27/06/2025 00:30:28_
 
 ## resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 26.Jun.2025 |       2 |       10 |     5   |             0   |                 178 |                0 |                              0 |                    2 |                   0 |                 0 |
+| 26.Jun.2025 |       4 |       29 |     7.2 |             3.3 |                 197 |                1 |                              1 |                    2 |                   0 |                 0 |
 | 25.Jun.2025 |       4 |       12 |     3   |             3.6 |                 168 |                0 |                              1 |                    1 |                   0 |                 2 |
 | 24.Jun.2025 |       4 |        9 |     2.2 |             3.2 |                 156 |                0 |                              1 |                    0 |                   2 |                 1 |
 | 23.Jun.2025 |       4 |        8 |     2   |             3.4 |                 147 |                0 |                              1 |                    0 |                   1 |                 2 |
@@ -28,6 +28,8 @@ Artilheiro: **Harry Kane**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
+|  47 | 26.Jun.2025 | 22h    | RB Salzburg         | Real Madrid         | 0 x 2          | Real Madrid         | 0 x 3         | Real Madrid         |        7 | 2-Vencedor + gols de um time |                 185 |
+|  48 | 26.Jun.2025 | 22h    | Al-Hilal            | Pachuca             | 2 x 0          | Al-Hilal            | 2 x 0         | Al-Hilal            |       12 | 1-Placar exato               |                 197 |
 |  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 1 x 2          | Manchester City     | 2 x 5         | Manchester City     |        5 | 3-Vencedor correto           |                 173 |
 |  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 0 x 1          | Al-Ain              | 1 x 2         | Al-Ain              |        5 | 3-Vencedor correto           |                 178 |
 |  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 3 x 1          | Internazionale      | 2 x 0         | Internazionale      |        5 | 3-Vencedor correto           |                 168 |
