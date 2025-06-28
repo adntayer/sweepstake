@@ -1,1 +1,5 @@
-date,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,playoffs
+date,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,playoffs,match
+2025-06-28 13h,Palmeiras,,,x,,,Botafogo,oitavas,oitavas-palmeiras-vs-botafogo
+2025-06-28 17h,Benfica,,,x,,,Chelsea,oitavas,oitavas-benfica-vs-chelsea
+2025-06-29 13h,Paris Saint-Germain,,,x,,,Inter Miami,oitavas,oitavas-paris_saint-germain-vs-inter_miami
+2025-06-29 17h,Bayern de Munique,,,x,,,Flagmento,oitavas,oitavas-bayern_de_munique-vs-flamengo

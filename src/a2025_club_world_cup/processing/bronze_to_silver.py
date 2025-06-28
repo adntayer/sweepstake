@@ -8,6 +8,16 @@ import pandas as pd
 from src.services.printing import print_colored
 
 
+def extract_games_1afase():
+    return pd.read_csv(
+        os.path.join("src", "a2025_club_world_cup", "data", "jogos_1afase.csv"), sep=","
+    )
+
+def extract_games_playoffs():
+    return pd.read_csv(
+        os.path.join("src", "a2025_club_world_cup", "data", "jogos_playoffs.csv"), sep=","
+    )
+
 def main():
     print_colored("bronze to silver", "sand")
     core_path = os.path.join("src", "a2025_club_world_cup", "data", "silver")
@@ -46,13 +56,16 @@ def main():
     for path in list_folder_paths:
         os.makedirs(path, exist_ok=True)
 
+    extract_1afase()
+    extract_playoff_oitavas()
+
+
+def extract_1afase():
     list_csvs = glob(
         os.path.join("src", "a2025_club_world_cup", "data", "bronze", "1afase", "*"),
         recursive=True,
     )
-    df_games = pd.read_csv(
-        os.path.join("src", "a2025_club_world_cup", "data", "jogos_1afase.csv"), sep=","
-    )
+    df_games = extract_games_1afase()
 
     df_all = pd.DataFrame()
     for path_csv in list_csvs:
@@ -192,6 +205,50 @@ def main():
     )
     df_striker.to_csv(output_path, sep=",", decimal=".", index=False)
     print_colored("bronze to silver completed", "green")
+
+
+
+def extract_playoff_oitavas():
+    list_csvs = glob(
+        os.path.join("src", "a2025_club_world_cup", "data", "bronze", "playoffs", "oitavas", "*"),
+        recursive=True,
+    )
+    df_all = pd.DataFrame()
+    df_games = extract_games_playoffs()
+    df_games = df_games.query("playoffs=='oitavas'")
+    df_games = df_games.dropna(subset=['home_goals', 'away_goals'], how='all')
+    if df_games.empty():
+        print('not in oitavas')
+        return
+
+    for path_csv in list_csvs:
+        df = pd.read_csv(path_csv, sep=",")
+        df_merge = df.merge(df_games, on="match", suffixes=("_bol", "_real"))
+        df_merge[["pontos", "criterio", "valido"]] = df_merge.apply(
+            lambda row: handle_results(row), axis=1
+        )
+        df_merge.rename(
+            columns={
+                "date_bol": "date",
+                "match_bol": "match",
+                "home_team_bol": "home_team",
+                "away_team_bol": "away_team",
+            },
+            inplace=True,
+        )
+        df_merge["resultado_bol_placar"] = (
+            df_merge["home_goals_bol"].astype("Int64").astype(str)
+            + " x "
+            + df_merge["away_goals_bol"].astype("Int64").astype(str)
+        )
+        df_merge["resultado_bol_time"] = df_merge.apply(
+            lambda row: row["home_team"]
+            if row["home_goals_bol"] > row["away_goals_bol"]
+            else row["away_team"]
+            if row["away_goals_bol"] > row["home_goals_bol"]
+            else "empate",
+            axis=1,
+        )
 
 
 def handle_results(row):

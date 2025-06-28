@@ -93,6 +93,34 @@ def parse_excel_palyoffs_full(path):
 
     return df_playoff, df_striker
 
+def parse_excel_playoffs_oitavas(path):
+    who = path.split("-")[1].strip().replace(".xls", "")
+
+    df = pd.read_excel(path, skiprows=2)
+
+    df = df[df.columns[:9]]
+    df.columns = [
+        "date",
+        "hour",
+        "home_team",
+        "home_pen",
+        "home_goals",
+        "x",
+        "away_goals",
+        "away_pen",
+        "away_team",
+    ]
+    df.dropna(how="all", inplace=True)
+    df["who"] = who
+    df = df.loc[df["date"].notna()]
+    df['playoff'] = 'oitavas'
+    df["match"] = (
+        df["playoff"].str.strip() + "-" + df["home_team"].str.strip() + "-vs-" + df["away_team"].str.strip()
+    )
+    df["match"] = df["match"].str.replace(" ", "_").str.lower()
+
+    return df
+
 
 if __name__ == "__main__":
     import os

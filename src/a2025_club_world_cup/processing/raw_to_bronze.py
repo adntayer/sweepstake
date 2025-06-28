@@ -8,6 +8,7 @@ import pandas as pd
 from src.a2025_club_world_cup.processing.load_excel import (
     parse_excel_1a_fase,
     parse_excel_palyoffs_full,
+    parse_excel_playoffs_oitavas,
 )
 from src.services.printing import print_colored
 
@@ -55,6 +56,10 @@ def main():
     for path in list_folder_paths:
         os.makedirs(path, exist_ok=True)
 
+    # extract_1afase()
+    extract_playoff_oitavas()
+
+def extract_1afase():
     print_colored("raw to bronze", "sand")
     root_dir = os.path.join("src", "a2025_club_world_cup", "data", "raw", "1afase", "*")
     list_excel_paths = glob(root_dir, recursive=True)
@@ -106,6 +111,30 @@ def main():
     df_strikers.sort_values(by=["boleiro"], inplace=True)
     df_strikers.to_csv(path_bronze_playoffs_striker, sep=",", decimal=".", index=False)
     print_colored("raw to bronze completed", "green")
+
+
+
+def extract_playoff_oitavas():
+    print_colored("raw to bronze", "sand")
+    root_dir = os.path.join("src", "a2025_club_world_cup", "data", "raw", "playoffs", "oitavas", "*")
+    list_excel_paths = glob(root_dir, recursive=True)
+
+    for path in list_excel_paths:
+        df = parse_excel_playoffs_oitavas(path)
+
+        df.sort_values(by=["date", "hour"], inplace=True)
+        who = df["who"].unique()[0]
+        path_bronze_playoffs_oitavas = os.path.join(
+            "src",
+            "a2025_club_world_cup",
+            "data",
+            "bronze",
+            "playoffs",
+            "oitavas",
+            f"1afase_{who}.csv",
+        )
+        df.to_csv(path_bronze_playoffs_oitavas, sep=",", decimal=".", index=False)
+
 
 
 if __name__ == "__main__":
