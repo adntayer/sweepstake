@@ -1,0 +1,49 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2025-06-14,21h,Al Ahly,,2.0,x,3.0,,Inter Miami,Pedro Tayerx,al_ahly-vs-inter_miami
+2025-06-15,13h,Bayern de Munique,,1.0,x,1.0,,Auckland City,Pedro Tayerx,bayern_de_munique-vs-auckland_city
+2025-06-15,16h,Paris Saint-Germain,,2.0,x,1.0,,Atlético de Madrid,Pedro Tayerx,paris_saint-germain-vs-atlético_de_madrid
+2025-06-15,19h,Palmeiras,,2.0,x,1.0,,Porto ,Pedro Tayerx,palmeiras-vs-porto
+2025-06-15,23h,Botafogo,,1.0,x,1.0,,Seattle Sounders,Pedro Tayerx,botafogo-vs-seattle_sounders
+2025-06-16,16h,Chelsea,,2.0,x,0.0,,Los Angeles FC,Pedro Tayerx,chelsea-vs-los_angeles_fc
+2025-06-16,19h,Boca Juniors,,1.0,x,2.0,,Benfica,Pedro Tayerx,boca_juniors-vs-benfica
+2025-06-16,22h,Flamengo,,2.0,x,1.0,,Espérance,Pedro Tayerx,flamengo-vs-espérance
+2025-06-17,13h,Fluminense,,0.0,x,7.0,,Borussia Dortmund,Pedro Tayerx,fluminense-vs-borussia_dortmund
+2025-06-17,16h,River Plate,,1.0,x,3.0,,Urawa Reds,Pedro Tayerx,river_plate-vs-urawa_reds
+2025-06-17,19h,Ulsan HD,,2.0,x,2.0,,Mamelodi Sundowns,Pedro Tayerx,ulsan_hd-vs-mamelodi_sundowns
+2025-06-17,22h,Monterrey,,1.0,x,4.0,,Internazionale,Pedro Tayerx,monterrey-vs-internazionale
+2025-06-18,13h,Manchester City,,2.0,x,0.0,,Wydad Casablanca,Pedro Tayerx,manchester_city-vs-wydad_casablanca
+2025-06-18,16h,Real Madrid,,3.0,x,0.0,,Al-Hilal,Pedro Tayerx,real_madrid-vs-al-hilal
+2025-06-18,19h,Pachuca,,1.0,x,3.0,,RB Salzburg,Pedro Tayerx,pachuca-vs-rb_salzburg
+2025-06-18,22h,Al-Ain,,2.0,x,2.0,,Juventus,Pedro Tayerx,al-ain-vs-juventus
+2025-06-19,13h,Palmeiras,,1.0,x,2.0,,Al Ahly,Pedro Tayerx,palmeiras-vs-al_ahly
+2025-06-19,16h,Inter Miami,,3.0,x,0.0,,Porto ,Pedro Tayerx,inter_miami-vs-porto
+2025-06-19,19h,Seattle Sounders,,1.0,x,2.0,,Atlético de Madrid,Pedro Tayerx,seattle_sounders-vs-atlético_de_madrid
+2025-06-19,22h,Paris Saint-Germain,,4.0,x,0.0,,Botafogo,Pedro Tayerx,paris_saint-germain-vs-botafogo
+2025-06-20,13h,Benfica,,4.0,x,2.0,,Auckland City,Pedro Tayerx,benfica-vs-auckland_city
+2025-06-20,15h,Flamengo,,1.0,x,1.0,,Chelsea,Pedro Tayerx,flamengo-vs-chelsea
+2025-06-20,19h,Los Angeles FC,,2.0,x,0.0,,Espérance,Pedro Tayerx,los_angeles_fc-vs-espérance
+2025-06-20,22h,Bayern de Munique,,2.0,x,0.0,,Boca Juniors,Pedro Tayerx,bayern_de_munique-vs-boca_juniors
+2025-06-21,13h,Mamelodi Sundowns,,1.0,x,3.0,,Borussia Dortmund,Pedro Tayerx,mamelodi_sundowns-vs-borussia_dortmund
+2025-06-21,16h,Internazionale,,3.0,x,0.0,,Urawa Reds,Pedro Tayerx,internazionale-vs-urawa_reds
+2025-06-21,19h,Fluminense,,0.0,x,3.0,,Ulsan HD,Pedro Tayerx,fluminense-vs-ulsan_hd
+2025-06-21,22h,River Plate,,1.0,x,2.0,,Monterrey,Pedro Tayerx,river_plate-vs-monterrey
+2025-06-22,13h,Juventus,,2.0,x,1.0,,Wydad Casablanca,Pedro Tayerx,juventus-vs-wydad_casablanca
+2025-06-22,16h,Real Madrid,,2.0,x,0.0,,Pachuca,Pedro Tayerx,real_madrid-vs-pachuca
+2025-06-22,19h,RB Salzburg,,2.0,x,1.0,,Al-Hilal,Pedro Tayerx,rb_salzburg-vs-al-hilal
+2025-06-22,22h,Manchester City,,2.0,x,1.0,,Al-Ain,Pedro Tayerx,manchester_city-vs-al-ain
+2025-06-23,16h,Seattle Sounders,,0.0,x,3.0,,Paris Saint-Germain,Pedro Tayerx,seattle_sounders-vs-paris_saint-germain
+2025-06-23,16h,Atlético de Madrid,,3.0,x,0.0,,Botafogo,Pedro Tayerx,atlético_de_madrid-vs-botafogo
+2025-06-23,22h,Inter Miami,,4.0,x,1.0,,Palmeiras,Pedro Tayerx,inter_miami-vs-palmeiras
+2025-06-23,22h,Porto,,1.0,x,3.0,,Al Ahly,Pedro Tayerx,porto-vs-al_ahly
+2025-06-24,16h,Benfica,,3.0,x,3.0,,Bayern de Munique,Pedro Tayerx,benfica-vs-bayern_de_munique
+2025-06-24,16h,Auckland City,,2.0,x,0.0,,Boca Juniors,Pedro Tayerx,auckland_city-vs-boca_juniors
+2025-06-24,22h,Los Angeles FC,,2.0,x,1.0,,Flamengo,Pedro Tayerx,los_angeles_fc-vs-flamengo
+2025-06-24,22h,Espérance,,1.0,x,2.0,,Chelsea,Pedro Tayerx,espérance-vs-chelsea
+2025-06-25,16h,Mamelodi Sundowns,,2.0,x,0.0,,Fluminense,Pedro Tayerx,mamelodi_sundowns-vs-fluminense
+2025-06-25,16h,Borussia Dortmund,,4.0,x,1.0,,Ulsan HD,Pedro Tayerx,borussia_dortmund-vs-ulsan_hd
+2025-06-25,22h,Internazionale,,5.0,x,0.0,,River Plate,Pedro Tayerx,internazionale-vs-river_plate
+2025-06-25,22h,Urawa Reds,,1.0,x,0.0,,Monterrey,Pedro Tayerx,urawa_reds-vs-monterrey
+2025-06-26,16h,Juventus,,2.0,x,1.0,,Manchester City,Pedro Tayerx,juventus-vs-manchester_city
+2025-06-26,16h,Wydad Casablanca,,1.0,x,3.0,,Al-Ain,Pedro Tayerx,wydad_casablanca-vs-al-ain
+2025-06-26,22h,RB Salzburg,,3.0,x,3.0,,Real Madrid,Pedro Tayerx,rb_salzburg-vs-real_madrid
+2025-06-26,22h,Al-Hilal,,1.0,x,2.0,,Pachuca,Pedro Tayerx,al-hilal-vs-pachuca

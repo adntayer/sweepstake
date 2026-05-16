@@ -1,0 +1,16 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,playoff
+2025-06-28,13h,Palmeiras,,2.0,x,1.0,,Atlético de Madrid,Lucas Ubertini,oitavas
+2025-06-28,17h,Bayern de Munique,,2.0,x,1.0,,Flamengo,Lucas Ubertini,oitavas
+2025-06-29,13h,Paris Saint-Germain,,3.0,x,0.0,,Inter Miami,Lucas Ubertini,oitavas
+2025-06-29,17h,Chelsea,4.0,1.0,x,1.0,3.0,Benfica,Lucas Ubertini,oitavas
+2025-06-30,16h,Internazionale,,2.0,x,0.0,,Borussia Dortmund,Lucas Ubertini,oitavas
+2025-06-30,22h,Manchester City,,3.0,x,1.0,,Al-Hilal,Lucas Ubertini,oitavas
+2025-07-01,16h,Real Madrid,,2.0,x,0.0,,Juventus,Lucas Ubertini,oitavas
+2025-07-01,22h,Fluminense,,1.0,x,0.0,,River Plate,Lucas Ubertini,oitavas
+2025-07-04,16h,Internazionale,,1.0,x,3.0,,Manchester City,Lucas Ubertini,quartas
+2025-07-04,22h,Palmeiras,,1.0,x,2.0,,Bayern de Munique,Lucas Ubertini,quartas
+2025-07-05,13h,Paris Saint-Germain,,3.0,x,1.0,,Chelsea,Lucas Ubertini,quartas
+2025-07-05,17h,Fluminense,,0.0,x,3.0,,Real Madrid,Lucas Ubertini,quartas
+2025-07-08,16h,Bayern de Munique,,1.0,x,2.0,,Manchester City,Lucas Ubertini,semi
+2025-07-09,16h,Paris Saint-Germain,,2.0,x,1.0,,Real Madrid,Lucas Ubertini,semi
+2025-07-13,16h,Manchester City,,2.0,x,1.0,,Paris Saint-Germain,Lucas Ubertini,final

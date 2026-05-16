@@ -1,0 +1,49 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2025-06-14,21h,Al Ahly,,1.0,x,1.0,,Inter Miami,Leo Fernandes,al_ahly-vs-inter_miami
+2025-06-15,13h,Bayern de Munique,,4.0,x,0.0,,Auckland City,Leo Fernandes,bayern_de_munique-vs-auckland_city
+2025-06-15,16h,Paris Saint-Germain,,2.0,x,1.0,,Atlético de Madrid,Leo Fernandes,paris_saint-germain-vs-atlético_de_madrid
+2025-06-15,19h,Palmeiras,,1.0,x,0.0,,Porto ,Leo Fernandes,palmeiras-vs-porto
+2025-06-15,23h,Botafogo,,1.0,x,0.0,,Seattle Sounders,Leo Fernandes,botafogo-vs-seattle_sounders
+2025-06-16,16h,Chelsea,,2.0,x,0.0,,Los Angeles FC,Leo Fernandes,chelsea-vs-los_angeles_fc
+2025-06-16,19h,Boca Juniors,,0.0,x,1.0,,Benfica,Leo Fernandes,boca_juniors-vs-benfica
+2025-06-16,22h,Flamengo,,2.0,x,0.0,,Espérance,Leo Fernandes,flamengo-vs-espérance
+2025-06-17,13h,Fluminense,,0.0,x,2.0,,Borussia Dortmund,Leo Fernandes,fluminense-vs-borussia_dortmund
+2025-06-17,16h,River Plate,,2.0,x,1.0,,Urawa Reds,Leo Fernandes,river_plate-vs-urawa_reds
+2025-06-17,19h,Ulsan HD,,1.0,x,1.0,,Mamelodi Sundowns,Leo Fernandes,ulsan_hd-vs-mamelodi_sundowns
+2025-06-17,22h,Monterrey,,0.0,x,1.0,,Internazionale,Leo Fernandes,monterrey-vs-internazionale
+2025-06-18,13h,Manchester City,,3.0,x,0.0,,Wydad Casablanca,Leo Fernandes,manchester_city-vs-wydad_casablanca
+2025-06-18,16h,Real Madrid,,2.0,x,0.0,,Al-Hilal,Leo Fernandes,real_madrid-vs-al-hilal
+2025-06-18,19h,Pachuca,,1.0,x,0.0,,RB Salzburg,Leo Fernandes,pachuca-vs-rb_salzburg
+2025-06-18,22h,Al-Ain,,0.0,x,2.0,,Juventus,Leo Fernandes,al-ain-vs-juventus
+2025-06-19,13h,Palmeiras,,2.0,x,0.0,,Al Ahly,Leo Fernandes,palmeiras-vs-al_ahly
+2025-06-19,16h,Inter Miami,,0.0,x,2.0,,Porto ,Leo Fernandes,inter_miami-vs-porto
+2025-06-19,19h,Seattle Sounders,,0.0,x,2.0,,Atlético de Madrid,Leo Fernandes,seattle_sounders-vs-atlético_de_madrid
+2025-06-19,22h,Paris Saint-Germain,,2.0,x,0.0,,Botafogo,Leo Fernandes,paris_saint-germain-vs-botafogo
+2025-06-20,13h,Benfica,,2.0,x,0.0,,Auckland City,Leo Fernandes,benfica-vs-auckland_city
+2025-06-20,15h,Flamengo,,1.0,x,2.0,,Chelsea,Leo Fernandes,flamengo-vs-chelsea
+2025-06-20,19h,Los Angeles FC,,1.0,x,1.0,,Espérance,Leo Fernandes,los_angeles_fc-vs-espérance
+2025-06-20,22h,Bayern de Munique,,3.0,x,0.0,,Boca Juniors,Leo Fernandes,bayern_de_munique-vs-boca_juniors
+2025-06-21,13h,Mamelodi Sundowns,,0.0,x,3.0,,Borussia Dortmund,Leo Fernandes,mamelodi_sundowns-vs-borussia_dortmund
+2025-06-21,16h,Internazionale,,2.0,x,0.0,,Urawa Reds,Leo Fernandes,internazionale-vs-urawa_reds
+2025-06-21,19h,Fluminense,,2.0,x,1.0,,Ulsan HD,Leo Fernandes,fluminense-vs-ulsan_hd
+2025-06-21,22h,River Plate,,1.0,x,1.0,,Monterrey,Leo Fernandes,river_plate-vs-monterrey
+2025-06-22,13h,Juventus,,2.0,x,0.0,,Wydad Casablanca,Leo Fernandes,juventus-vs-wydad_casablanca
+2025-06-22,16h,Real Madrid,,2.0,x,1.0,,Pachuca,Leo Fernandes,real_madrid-vs-pachuca
+2025-06-22,19h,RB Salzburg,,1.0,x,1.0,,Al-Hilal,Leo Fernandes,rb_salzburg-vs-al-hilal
+2025-06-22,22h,Manchester City,,3.0,x,0.0,,Al-Ain,Leo Fernandes,manchester_city-vs-al-ain
+2025-06-23,16h,Seattle Sounders,,0.0,x,3.0,,Paris Saint-Germain,Leo Fernandes,seattle_sounders-vs-paris_saint-germain
+2025-06-23,16h,Atlético de Madrid,,2.0,x,0.0,,Botafogo,Leo Fernandes,atlético_de_madrid-vs-botafogo
+2025-06-23,22h,Inter Miami,,0.0,x,2.0,,Palmeiras,Leo Fernandes,inter_miami-vs-palmeiras
+2025-06-23,22h,Porto,,2.0,x,0.0,,Al Ahly,Leo Fernandes,porto-vs-al_ahly
+2025-06-24,16h,Benfica,,1.0,x,2.0,,Bayern de Munique,Leo Fernandes,benfica-vs-bayern_de_munique
+2025-06-24,16h,Auckland City,,0.0,x,2.0,,Boca Juniors,Leo Fernandes,auckland_city-vs-boca_juniors
+2025-06-24,22h,Los Angeles FC,,0.0,x,1.0,,Flamengo,Leo Fernandes,los_angeles_fc-vs-flamengo
+2025-06-24,22h,Espérance,,0.0,x,3.0,,Chelsea,Leo Fernandes,espérance-vs-chelsea
+2025-06-25,16h,Mamelodi Sundowns,,0.0,x,1.0,,Fluminense,Leo Fernandes,mamelodi_sundowns-vs-fluminense
+2025-06-25,16h,Borussia Dortmund,,2.0,x,0.0,,Ulsan HD,Leo Fernandes,borussia_dortmund-vs-ulsan_hd
+2025-06-25,22h,Internazionale,,1.0,x,0.0,,River Plate,Leo Fernandes,internazionale-vs-river_plate
+2025-06-25,22h,Urawa Reds,,0.0,x,1.0,,Monterrey,Leo Fernandes,urawa_reds-vs-monterrey
+2025-06-26,16h,Juventus,,1.0,x,2.0,,Manchester City,Leo Fernandes,juventus-vs-manchester_city
+2025-06-26,16h,Wydad Casablanca,,1.0,x,1.0,,Al-Ain,Leo Fernandes,wydad_casablanca-vs-al-ain
+2025-06-26,22h,RB Salzburg,,0.0,x,2.0,,Real Madrid,Leo Fernandes,rb_salzburg-vs-real_madrid
+2025-06-26,22h,Al-Hilal,,1.0,x,1.0,,Pachuca,Leo Fernandes,al-hilal-vs-pachuca

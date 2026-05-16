@@ -1,0 +1,49 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2025-06-14,21h,Al Ahly,,0.0,x,2.0,,Inter Miami,Cesar Saraivax,al_ahly-vs-inter_miami
+2025-06-15,13h,Bayern de Munique,,3.0,x,0.0,,Auckland City,Cesar Saraivax,bayern_de_munique-vs-auckland_city
+2025-06-15,16h,Paris Saint-Germain,,2.0,x,1.0,,Atlético de Madrid,Cesar Saraivax,paris_saint-germain-vs-atlético_de_madrid
+2025-06-15,19h,Palmeiras,,1.0,x,1.0,,Porto ,Cesar Saraivax,palmeiras-vs-porto
+2025-06-15,23h,Botafogo,,2.0,x,0.0,,Seattle Sounders,Cesar Saraivax,botafogo-vs-seattle_sounders
+2025-06-16,16h,Chelsea,,2.0,x,0.0,,Los Angeles FC,Cesar Saraivax,chelsea-vs-los_angeles_fc
+2025-06-16,19h,Boca Juniors,,1.0,x,2.0,,Benfica,Cesar Saraivax,boca_juniors-vs-benfica
+2025-06-16,22h,Flamengo,,3.0,x,1.0,,Espérance,Cesar Saraivax,flamengo-vs-espérance
+2025-06-17,13h,Fluminense,,1.0,x,2.0,,Borussia Dortmund,Cesar Saraivax,fluminense-vs-borussia_dortmund
+2025-06-17,16h,River Plate,,2.0,x,0.0,,Urawa Reds,Cesar Saraivax,river_plate-vs-urawa_reds
+2025-06-17,19h,Ulsan HD,,1.0,x,1.0,,Mamelodi Sundowns,Cesar Saraivax,ulsan_hd-vs-mamelodi_sundowns
+2025-06-17,22h,Monterrey,,0.0,x,2.0,,Internazionale,Cesar Saraivax,monterrey-vs-internazionale
+2025-06-18,13h,Manchester City,,2.0,x,0.0,,Wydad Casablanca,Cesar Saraivax,manchester_city-vs-wydad_casablanca
+2025-06-18,16h,Real Madrid,,2.0,x,0.0,,Al-Hilal,Cesar Saraivax,real_madrid-vs-al-hilal
+2025-06-18,19h,Pachuca,,1.0,x,1.0,,RB Salzburg,Cesar Saraivax,pachuca-vs-rb_salzburg
+2025-06-18,22h,Al-Ain,,0.0,x,2.0,,Juventus,Cesar Saraivax,al-ain-vs-juventus
+2025-06-19,13h,Palmeiras,,2.0,x,0.0,,Al Ahly,Cesar Saraivax,palmeiras-vs-al_ahly
+2025-06-19,16h,Inter Miami,,1.0,x,2.0,,Porto ,Cesar Saraivax,inter_miami-vs-porto
+2025-06-19,19h,Seattle Sounders,,0.0,x,2.0,,Atlético de Madrid,Cesar Saraivax,seattle_sounders-vs-atlético_de_madrid
+2025-06-19,22h,Paris Saint-Germain,,2.0,x,1.0,,Botafogo,Cesar Saraivax,paris_saint-germain-vs-botafogo
+2025-06-20,13h,Benfica,,2.0,x,0.0,,Auckland City,Cesar Saraivax,benfica-vs-auckland_city
+2025-06-20,15h,Flamengo,,1.0,x,2.0,,Chelsea,Cesar Saraivax,flamengo-vs-chelsea
+2025-06-20,19h,Los Angeles FC,,2.0,x,1.0,,Espérance,Cesar Saraivax,los_angeles_fc-vs-espérance
+2025-06-20,22h,Bayern de Munique,,2.0,x,1.0,,Boca Juniors,Cesar Saraivax,bayern_de_munique-vs-boca_juniors
+2025-06-21,13h,Mamelodi Sundowns,,0.0,x,2.0,,Borussia Dortmund,Cesar Saraivax,mamelodi_sundowns-vs-borussia_dortmund
+2025-06-21,16h,Internazionale,,3.0,x,0.0,,Urawa Reds,Cesar Saraivax,internazionale-vs-urawa_reds
+2025-06-21,19h,Fluminense,,2.0,x,0.0,,Ulsan HD,Cesar Saraivax,fluminense-vs-ulsan_hd
+2025-06-21,22h,River Plate,,2.0,x,1.0,,Monterrey,Cesar Saraivax,river_plate-vs-monterrey
+2025-06-22,13h,Juventus,,2.0,x,0.0,,Wydad Casablanca,Cesar Saraivax,juventus-vs-wydad_casablanca
+2025-06-22,16h,Real Madrid,,3.0,x,0.0,,Pachuca,Cesar Saraivax,real_madrid-vs-pachuca
+2025-06-22,19h,RB Salzburg,,0.0,x,1.0,,Al-Hilal,Cesar Saraivax,rb_salzburg-vs-al-hilal
+2025-06-22,22h,Manchester City,,3.0,x,0.0,,Al-Ain,Cesar Saraivax,manchester_city-vs-al-ain
+2025-06-23,16h,Seattle Sounders,,0.0,x,3.0,,Paris Saint-Germain,Cesar Saraivax,seattle_sounders-vs-paris_saint-germain
+2025-06-23,16h,Atlético de Madrid,,2.0,x,1.0,,Botafogo,Cesar Saraivax,atlético_de_madrid-vs-botafogo
+2025-06-23,22h,Inter Miami,,1.0,x,2.0,,Palmeiras,Cesar Saraivax,inter_miami-vs-palmeiras
+2025-06-23,22h,Porto,,2.0,x,0.0,,Al Ahly,Cesar Saraivax,porto-vs-al_ahly
+2025-06-24,16h,Benfica,,1.0,x,2.0,,Bayern de Munique,Cesar Saraivax,benfica-vs-bayern_de_munique
+2025-06-24,16h,Auckland City,,0.0,x,3.0,,Boca Juniors,Cesar Saraivax,auckland_city-vs-boca_juniors
+2025-06-24,22h,Los Angeles FC,,0.0,x,2.0,,Flamengo,Cesar Saraivax,los_angeles_fc-vs-flamengo
+2025-06-24,22h,Espérance,,0.0,x,3.0,,Chelsea,Cesar Saraivax,espérance-vs-chelsea
+2025-06-25,16h,Mamelodi Sundowns,,1.0,x,1.0,,Fluminense,Cesar Saraivax,mamelodi_sundowns-vs-fluminense
+2025-06-25,16h,Borussia Dortmund,,3.0,x,0.0,,Ulsan HD,Cesar Saraivax,borussia_dortmund-vs-ulsan_hd
+2025-06-25,22h,Internazionale,,2.0,x,1.0,,River Plate,Cesar Saraivax,internazionale-vs-river_plate
+2025-06-25,22h,Urawa Reds,,1.0,x,1.0,,Monterrey,Cesar Saraivax,urawa_reds-vs-monterrey
+2025-06-26,16h,Juventus,,1.0,x,2.0,,Manchester City,Cesar Saraivax,juventus-vs-manchester_city
+2025-06-26,16h,Wydad Casablanca,,1.0,x,1.0,,Al-Ain,Cesar Saraivax,wydad_casablanca-vs-al-ain
+2025-06-26,22h,RB Salzburg,,0.0,x,3.0,,Real Madrid,Cesar Saraivax,rb_salzburg-vs-real_madrid
+2025-06-26,22h,Al-Hilal,,2.0,x,1.0,,Pachuca,Cesar Saraivax,al-hilal-vs-pachuca

@@ -1,0 +1,16 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,playoff
+2025-06-28,13h,Inter Miami,5.0,2.0,x,2.0,4.0,Atlético de Madrid,Pedro Tayerx,oitavas
+2025-06-28,17h,Benfica,,3.0,x,2.0,,Los Angeles FC,Pedro Tayerx,oitavas
+2025-06-29,13h,Paris Saint-Germain,,3.0,x,1.0,,Al Ahly,Pedro Tayerx,oitavas
+2025-06-29,17h,Chelsea,,2.0,x,1.0,,Bayern de Munique,Pedro Tayerx,oitavas
+2025-06-30,16h,Internazionale,,3.0,x,0.0,,Ulsan HD,Pedro Tayerx,oitavas
+2025-06-30,22h,Juventus,,1.0,x,3.0,,RB Salzburg,Pedro Tayerx,oitavas
+2025-07-01,16h,Real Madrid,,2.0,x,1.0,,Manchester City,Pedro Tayerx,oitavas
+2025-07-01,22h,Borussia Dortmund,,2.0,x,0.0,,Urawa Reds,Pedro Tayerx,oitavas
+2025-07-04,16h,Internazionale,4.0,2.0,x,2.0,5.0,RB Salzburg,Pedro Tayerx,quartas
+2025-07-04,22h,Inter Miami,,2.0,x,3.0,,Benfica,Pedro Tayerx,quartas
+2025-07-05,13h,Paris Saint-Germain,,2.0,x,1.0,,Chelsea,Pedro Tayerx,quartas
+2025-07-05,17h,Borussia Dortmund,4.0,2.0,x,2.0,5.0,Real Madrid,Pedro Tayerx,quartas
+2025-07-08,16h,Benfica,,1.0,x,4.0,,RB Salzburg,Pedro Tayerx,semi
+2025-07-09,16h,Paris Saint-Germain,,1.0,x,3.0,,Real Madrid,Pedro Tayerx,semi
+2025-07-13,16h,RB Salzburg,,2.0,x,1.0,,Real Madrid,Pedro Tayerx,final
