@@ -8,7 +8,7 @@ from glob import glob
 import markdown
 
 from src.core.config import ChampionshipConfig
-from src.services.printing import print_colored
+from src.core.printing import print_colored
 
 
 def _norm(path: str) -> str:

@@ -8,7 +8,6 @@ from pathlib import Path
 
 import yaml
 
-
 # ------------------------------------------------------------------
 # Path normalizer — converts YAML forward-slash paths to OS-native
 # ------------------------------------------------------------------
@@ -26,6 +25,7 @@ class ScoringRule:
 
     name: str
     points: int
+    priority: int = 0
     rule: str = ""  # e.g. "exact_score", "correct_winner_and_goals"
     max_total_error: int | None = None
     min_total_error: int | None = None
@@ -108,20 +108,13 @@ class ChampionshipConfig:
     group_phase_label: str = "1a Fase"
 
     def __post_init__(self) -> None:
-        if not self.base_dir:
-            self.base_dir = _norm(os.path.join("src", "data", self.id))
-        if not self.raw_dir:
-            self.raw_dir = _norm(os.path.join(self.base_dir, "raw"))
-        if not self.results_file:
-            self.results_file = _norm(os.path.join(self.base_dir, "jogos.csv"))
-        if not self.bronze_dir:
-            self.bronze_dir = _norm(os.path.join(self.base_dir, "bronze"))
-        if not self.silver_dir:
-            self.silver_dir = _norm(os.path.join(self.base_dir, "silver"))
-        if not self.gold_dir:
-            self.gold_dir = _norm(os.path.join(self.base_dir, "gold"))
-        if not self.reports_dir:
-            self.reports_dir = _norm(os.path.join("src", "reports", self.id))
+        self.base_dir = _norm(self.base_dir) if self.base_dir else _norm(os.path.join("src", "data", self.id))
+        self.raw_dir = _norm(self.raw_dir) if self.raw_dir else _norm(os.path.join(self.base_dir, "raw"))
+        self.results_file = _norm(self.results_file) if self.results_file else _norm(os.path.join(self.base_dir, "jogos.csv"))
+        self.bronze_dir = _norm(self.bronze_dir) if self.bronze_dir else _norm(os.path.join(self.base_dir, "bronze"))
+        self.silver_dir = _norm(self.silver_dir) if self.silver_dir else _norm(os.path.join(self.base_dir, "silver"))
+        self.gold_dir = _norm(self.gold_dir) if self.gold_dir else _norm(os.path.join(self.base_dir, "gold"))
+        self.reports_dir = _norm(self.reports_dir) if self.reports_dir else _norm(os.path.join("src", "reports", self.id))
         if not self.report_title:
             self.report_title = f"{self.name}"
 
@@ -212,6 +205,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         ScoringRule(
             name=r["name"],
             points=r["points"],
+            priority=r.get("priority", i),
             rule=r.get("rule", ""),
             max_total_error=r.get("max_total_error"),
             min_total_error=r.get("min_total_error"),

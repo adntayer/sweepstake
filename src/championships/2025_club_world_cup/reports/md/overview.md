@@ -1,6 +1,6 @@
 # Visao Geral dos Jogos - 1afase
 
-_atualizado as 16/05/2026 17:00:00_
+_atualizado as 16/05/2026 17:05:23_
 
 _ultimo jogo que tem resultado_
 

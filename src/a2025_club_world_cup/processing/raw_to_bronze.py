@@ -9,7 +9,7 @@ from src.a2025_club_world_cup.processing.load_excel import (
     parse_excel_1a_fase,
     parse_excel_palyoffs_full,
 )
-from src.services.printing import print_colored
+from src.core.printing import print_colored
 
 
 def main():

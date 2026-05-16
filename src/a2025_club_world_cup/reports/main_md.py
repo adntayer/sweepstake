@@ -5,7 +5,7 @@ from datetime import datetime
 import pandas as pd
 import pytz
 
-from src.services.printing import print_colored
+from src.core.printing import print_colored
 
 list_html_folder_paths = [
     os.path.join("src", "a2025_club_world_cup", "docs", "md"),

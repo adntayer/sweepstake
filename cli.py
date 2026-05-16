@@ -22,7 +22,7 @@ from src.core.pipeline import run_raw_to_bronze, run_silver_to_gold, run_pipelin
 from src.core.reports.dashboard import generate_dashboard
 from src.core.reports.html import generate_html_reports
 from src.core.reports.markdown import generate_markdown_reports
-from src.services.printing import print_colored
+from src.core.printing import print_colored
 
 
 def cmd_list(_args: argparse.Namespace) -> None:

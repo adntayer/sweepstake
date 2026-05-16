@@ -10,7 +10,6 @@ import pandas as pd
 
 from src.core.config import ChampionshipConfig
 
-
 # Column names expected in the first 9 columns of the Excel sheet
 _EXCEL_COLUMNS = [
     "date",
@@ -30,7 +29,7 @@ def _extract_who(path: str, config: ChampionshipConfig) -> str:
     layout = config.excel_layout
     parts = path.split(layout.playoffs.name_split_char)
     name = parts[layout.playoffs.name_split_index].strip()
-    return name.replace(".xls", "").replace(".xlsx", "")
+    return name.replace(".xlsx", "").replace(".xls", "").strip()
 
 
 def _clean_dataframe(df: pd.DataFrame, who: str) -> pd.DataFrame:

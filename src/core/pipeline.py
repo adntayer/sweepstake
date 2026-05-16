@@ -14,9 +14,8 @@ import pandas as pd
 
 from src.core.config import ChampionshipConfig
 from src.core.loader import parse_group_stage, parse_playoffs
+from src.core.printing import print_colored
 from src.core.scoring import score_prediction
-from src.services.printing import print_colored
-
 
 # ------------------------------------------------------------------
 # Helpers

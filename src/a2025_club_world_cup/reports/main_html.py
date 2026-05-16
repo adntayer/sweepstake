@@ -4,7 +4,7 @@ from glob import glob
 
 import markdown
 
-from src.services.printing import print_colored
+from src.core.printing import print_colored
 
 
 def save_html_report(filepath: str, body_html: str):

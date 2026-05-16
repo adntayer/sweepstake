@@ -3,8 +3,9 @@
 ```terminal
 $ uv venv
 $ .venv\Scripts\activate
-$ uv sync
+$ uv sync --all-extras
 $ uv pip install -e .
+$ uv run pytest tests/ -v
 ```
 
 ruff check --fix

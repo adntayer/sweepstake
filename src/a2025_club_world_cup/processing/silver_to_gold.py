@@ -4,7 +4,7 @@ import shutil
 
 import pandas as pd
 
-from src.services.printing import print_colored
+from src.core.printing import print_colored
 
 
 def main():

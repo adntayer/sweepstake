@@ -7,7 +7,7 @@ from glob import glob
 import pandas as pd
 import pytz
 
-from src.services.printing import print_colored
+from src.core.printing import print_colored
 
 
 def generate_links(base_dir):

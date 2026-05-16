@@ -9,6 +9,6 @@ Each subdirectory contains a config.yaml that defines:
 To add a new championship, create a new directory with a config.yaml.
 """
 
-from src.core.config import list_championships, load_config, ChampionshipConfig
+from src.core.config import ChampionshipConfig, list_championships, load_config
 
 __all__ = ["list_championships", "load_config", "ChampionshipConfig"]
