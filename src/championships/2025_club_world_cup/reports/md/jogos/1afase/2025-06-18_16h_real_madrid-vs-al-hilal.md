@@ -24,28 +24,28 @@
 
 ## pos jogo
 
-| criterio                     |   # | g          |
-|:-----------------------------|----:|:-----------|
-| 2-Vencedor + gols de um time |   8 | ██████████ |
-| 5-Nenhum acerto              |   8 | ██████████ |
+| criterio          |   # | g          |
+|:------------------|----:|:-----------|
+| 4-Gols de um time |   8 | ██████████ |
+| 5-Nenhum acerto   |   8 | ██████████ |
 
 ## raio x
 
-| date        | h   | boleiro          | casa        | visitante   |   pontos | criteiro                     | bol_placar   | bol_time    | real_placar   | real_time   |
-|:------------|:----|:-----------------|:------------|:------------|---------:|:-----------------------------|:-------------|:------------|:--------------|:------------|
-| 18.Jun.2025 | 16h | RODRIGO ALBERNAZ | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 2 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Marcelo          | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Lucas Ubertini   | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | João Henrique    | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 2 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Guilherme        | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Gabãox           | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Frederico Soter  | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 2 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | André Tayer      | Real Madrid | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 5 x 1        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | thiago bahiensex | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 3 x 0        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Thales Oliveira  | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 2 x 0        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Rafael Contex    | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 4 x 0        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Pedro Tayerx     | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 3 x 0        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Leo Fernandes    | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 2 x 0        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Leigo Gianonnix  | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 2 x 0        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Cesar Saraivax   | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 2 x 0        | Real Madrid | 1 x 1         | empate      |
-| 18.Jun.2025 | 16h | Andre Bonito     | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto              | 3 x 2        | Real Madrid | 1 x 1         | empate      |
+| date        | h   | boleiro          | casa        | visitante   |   pontos | criteiro          | bol_placar   | bol_time    | real_placar   | real_time   |
+|:------------|:----|:-----------------|:------------|:------------|---------:|:------------------|:-------------|:------------|:--------------|:------------|
+| 18.Jun.2025 | 16h | RODRIGO ALBERNAZ | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 2 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Marcelo          | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Lucas Ubertini   | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | João Henrique    | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 2 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Guilherme        | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Gabãox           | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 3 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Frederico Soter  | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 2 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | André Tayer      | Real Madrid | Al-Hilal    |        1 | 4-Gols de um time | 5 x 1        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | thiago bahiensex | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 3 x 0        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Thales Oliveira  | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 2 x 0        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Rafael Contex    | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 4 x 0        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Pedro Tayerx     | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 3 x 0        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Leo Fernandes    | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 2 x 0        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Leigo Gianonnix  | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 2 x 0        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Cesar Saraivax   | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 2 x 0        | Real Madrid | 1 x 1         | empate      |
+| 18.Jun.2025 | 16h | Andre Bonito     | Real Madrid | Al-Hilal    |        0 | 5-Nenhum acerto   | 3 x 2        | Real Madrid | 1 x 1         | empate      |

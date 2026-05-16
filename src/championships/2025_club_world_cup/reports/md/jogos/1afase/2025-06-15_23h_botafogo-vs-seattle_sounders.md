@@ -23,11 +23,12 @@
 
 ## pos jogo
 
-| criterio                     |   # | g           |
-|:-----------------------------|----:|:------------|
-| 1-Placar exato               |   1 | █           |
-| 2-Vencedor + gols de um time |   9 | ███████████ |
-| 3-Vencedor correto           |   6 | ███████     |
+| criterio                     |   # | g       |
+|:-----------------------------|----:|:--------|
+| 1-Placar exato               |   1 | █       |
+| 2-Vencedor + gols de um time |   6 | ███████ |
+| 3-Vencedor correto           |   6 | ███████ |
+| 4-Gols de um time            |   3 | ███     |
 
 ## raio x
 
@@ -36,11 +37,8 @@
 | 15.Jun.2025 | 23h | Marcelo          | Botafogo | Seattle Sounders |       12 | 1-Placar exato               | 2 x 1        | Botafogo   | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | thiago bahiensex | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 3 x 1        | Botafogo   | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | Thales Oliveira  | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 2 x 0        | Botafogo   | 2 x 1         | Botafogo    |
-| 15.Jun.2025 | 23h | RODRIGO ALBERNAZ | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate     | 2 x 1         | Botafogo    |
-| 15.Jun.2025 | 23h | Pedro Tayerx     | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate     | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | Leigo Gianonnix  | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 2 x 0        | Botafogo   | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | Gabãox           | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 3 x 1        | Botafogo   | 2 x 1         | Botafogo    |
-| 15.Jun.2025 | 23h | Frederico Soter  | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate     | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | Cesar Saraivax   | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 2 x 0        | Botafogo   | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | Andre Bonito     | Botafogo | Seattle Sounders |        7 | 2-Vencedor + gols de um time | 2 x 0        | Botafogo   | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | Rafael Contex    | Botafogo | Seattle Sounders |        5 | 3-Vencedor correto           | 1 x 0        | Botafogo   | 2 x 1         | Botafogo    |
@@ -49,3 +47,6 @@
 | 15.Jun.2025 | 23h | João Henrique    | Botafogo | Seattle Sounders |        5 | 3-Vencedor correto           | 1 x 0        | Botafogo   | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | Guilherme        | Botafogo | Seattle Sounders |        5 | 3-Vencedor correto           | 1 x 0        | Botafogo   | 2 x 1         | Botafogo    |
 | 15.Jun.2025 | 23h | André Tayer      | Botafogo | Seattle Sounders |        5 | 3-Vencedor correto           | 1 x 0        | Botafogo   | 2 x 1         | Botafogo    |
+| 15.Jun.2025 | 23h | RODRIGO ALBERNAZ | Botafogo | Seattle Sounders |        1 | 4-Gols de um time            | 1 x 1        | empate     | 2 x 1         | Botafogo    |
+| 15.Jun.2025 | 23h | Pedro Tayerx     | Botafogo | Seattle Sounders |        1 | 4-Gols de um time            | 1 x 1        | empate     | 2 x 1         | Botafogo    |
+| 15.Jun.2025 | 23h | Frederico Soter  | Botafogo | Seattle Sounders |        1 | 4-Gols de um time            | 1 x 1        | empate     | 2 x 1         | Botafogo    |

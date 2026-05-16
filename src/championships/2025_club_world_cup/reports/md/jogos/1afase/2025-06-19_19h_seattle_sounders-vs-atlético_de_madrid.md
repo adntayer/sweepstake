@@ -23,11 +23,12 @@
 
 ## pos jogo
 
-| criterio                     |   # | g          |
-|:-----------------------------|----:|:-----------|
-| 1-Placar exato               |   2 | ██         |
-| 2-Vencedor + gols de um time |   8 | ██████████ |
-| 3-Vencedor correto           |   6 | ███████    |
+| criterio                     |   # | g        |
+|:-----------------------------|----:|:---------|
+| 1-Placar exato               |   2 | ██       |
+| 2-Vencedor + gols de um time |   7 | ████████ |
+| 3-Vencedor correto           |   6 | ███████  |
+| 4-Gols de um time            |   1 | █        |
 
 ## raio x
 
@@ -37,7 +38,6 @@
 | 19.Jun.2025 | 19h | João Henrique    | Seattle Sounders | Atlético de Madrid |       12 | 1-Placar exato               | 1 x 3        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
 | 19.Jun.2025 | 19h | Rafael Contex    | Seattle Sounders | Atlético de Madrid |        7 | 2-Vencedor + gols de um time | 0 x 3        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
 | 19.Jun.2025 | 19h | Pedro Tayerx     | Seattle Sounders | Atlético de Madrid |        7 | 2-Vencedor + gols de um time | 1 x 2        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
-| 19.Jun.2025 | 19h | Lucas Ubertini   | Seattle Sounders | Atlético de Madrid |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate             | 1 x 3         | Atlético de Madrid |
 | 19.Jun.2025 | 19h | Leigo Gianonnix  | Seattle Sounders | Atlético de Madrid |        7 | 2-Vencedor + gols de um time | 0 x 3        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
 | 19.Jun.2025 | 19h | Guilherme        | Seattle Sounders | Atlético de Madrid |        7 | 2-Vencedor + gols de um time | 0 x 3        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
 | 19.Jun.2025 | 19h | Frederico Soter  | Seattle Sounders | Atlético de Madrid |        7 | 2-Vencedor + gols de um time | 0 x 3        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
@@ -49,3 +49,4 @@
 | 19.Jun.2025 | 19h | Leo Fernandes    | Seattle Sounders | Atlético de Madrid |        5 | 3-Vencedor correto           | 0 x 2        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
 | 19.Jun.2025 | 19h | Gabãox           | Seattle Sounders | Atlético de Madrid |        5 | 3-Vencedor correto           | 0 x 2        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
 | 19.Jun.2025 | 19h | Cesar Saraivax   | Seattle Sounders | Atlético de Madrid |        5 | 3-Vencedor correto           | 0 x 2        | Atlético de Madrid | 1 x 3         | Atlético de Madrid |
+| 19.Jun.2025 | 19h | Lucas Ubertini   | Seattle Sounders | Atlético de Madrid |        1 | 4-Gols de um time            | 1 x 1        | empate             | 1 x 3         | Atlético de Madrid |

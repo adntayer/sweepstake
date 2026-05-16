@@ -26,8 +26,9 @@
 
 | criterio                     |   # | g             |
 |:-----------------------------|----:|:--------------|
-| 2-Vencedor + gols de um time |   5 | ██████        |
+| 2-Vencedor + gols de um time |   4 | █████         |
 | 3-Vencedor correto           |  11 | █████████████ |
+| 4-Gols de um time            |   1 | █             |
 
 ## raio x
 
@@ -37,7 +38,6 @@
 | 22.Jun.2025 | 13h | Pedro Tayerx     | Juventus | Wydad Casablanca |        7 | 2-Vencedor + gols de um time | 2 x 1        | Juventus   | 4 x 1         | Juventus    |
 | 22.Jun.2025 | 13h | Lucas Ubertini   | Juventus | Wydad Casablanca |        7 | 2-Vencedor + gols de um time | 2 x 1        | Juventus   | 4 x 1         | Juventus    |
 | 22.Jun.2025 | 13h | Guilherme        | Juventus | Wydad Casablanca |        7 | 2-Vencedor + gols de um time | 3 x 1        | Juventus   | 4 x 1         | Juventus    |
-| 22.Jun.2025 | 13h | Frederico Soter  | Juventus | Wydad Casablanca |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate     | 4 x 1         | Juventus    |
 | 22.Jun.2025 | 13h | thiago bahiensex | Juventus | Wydad Casablanca |        5 | 3-Vencedor correto           | 2 x 0        | Juventus   | 4 x 1         | Juventus    |
 | 22.Jun.2025 | 13h | Thales Oliveira  | Juventus | Wydad Casablanca |        5 | 3-Vencedor correto           | 2 x 0        | Juventus   | 4 x 1         | Juventus    |
 | 22.Jun.2025 | 13h | RODRIGO ALBERNAZ | Juventus | Wydad Casablanca |        5 | 3-Vencedor correto           | 1 x 0        | Juventus   | 4 x 1         | Juventus    |
@@ -49,3 +49,4 @@
 | 22.Jun.2025 | 13h | Cesar Saraivax   | Juventus | Wydad Casablanca |        5 | 3-Vencedor correto           | 2 x 0        | Juventus   | 4 x 1         | Juventus    |
 | 22.Jun.2025 | 13h | André Tayer      | Juventus | Wydad Casablanca |        5 | 3-Vencedor correto           | 2 x 0        | Juventus   | 4 x 1         | Juventus    |
 | 22.Jun.2025 | 13h | Andre Bonito     | Juventus | Wydad Casablanca |        5 | 3-Vencedor correto           | 2 x 0        | Juventus   | 4 x 1         | Juventus    |
+| 22.Jun.2025 | 13h | Frederico Soter  | Juventus | Wydad Casablanca |        1 | 4-Gols de um time            | 1 x 1        | empate     | 4 x 1         | Juventus    |

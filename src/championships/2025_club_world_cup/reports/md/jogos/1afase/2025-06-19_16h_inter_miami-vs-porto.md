@@ -28,30 +28,30 @@
 
 ## pos jogo
 
-| criterio                     |   # | g          |
-|:-----------------------------|----:|:-----------|
-| 1-Placar exato               |   1 | █          |
-| 2-Vencedor + gols de um time |   5 | ██████     |
-| 3-Vencedor correto           |   2 | ██         |
-| 5-Nenhum acerto              |   8 | ██████████ |
+| criterio           |   # | g          |
+|:-------------------|----:|:-----------|
+| 1-Placar exato     |   1 | █          |
+| 3-Vencedor correto |   2 | ██         |
+| 4-Gols de um time  |   5 | ██████     |
+| 5-Nenhum acerto    |   8 | ██████████ |
 
 ## raio x
 
-| date        | h   | boleiro          | casa        | visitante   |   pontos | criteiro                     | bol_placar   | bol_time    | real_placar   | real_time   |
-|:------------|:----|:-----------------|:------------|:------------|---------:|:-----------------------------|:-------------|:------------|:--------------|:------------|
-| 19.Jun.2025 | 16h | João Henrique    | Inter Miami | Porto       |       12 | 1-Placar exato               | 2 x 1        | Inter Miami | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | thiago bahiensex | Inter Miami | Porto       |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate      | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | RODRIGO ALBERNAZ | Inter Miami | Porto       |        7 | 2-Vencedor + gols de um time | 2 x 2        | empate      | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Lucas Ubertini   | Inter Miami | Porto       |        7 | 2-Vencedor + gols de um time | 2 x 2        | empate      | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Guilherme        | Inter Miami | Porto       |        7 | 2-Vencedor + gols de um time | 0 x 1        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | André Tayer      | Inter Miami | Porto       |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate      | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Pedro Tayerx     | Inter Miami | Porto       |        5 | 3-Vencedor correto           | 3 x 0        | Inter Miami | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Gabãox           | Inter Miami | Porto       |        5 | 3-Vencedor correto           | 1 x 0        | Inter Miami | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Thales Oliveira  | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 1 x 2        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Rafael Contex    | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Marcelo          | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Leo Fernandes    | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 0 x 2        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Leigo Gianonnix  | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Frederico Soter  | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Cesar Saraivax   | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 1 x 2        | Porto       | 2 x 1         | Inter Miami |
-| 19.Jun.2025 | 16h | Andre Bonito     | Inter Miami | Porto       |        0 | 5-Nenhum acerto              | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
+| date        | h   | boleiro          | casa        | visitante   |   pontos | criteiro           | bol_placar   | bol_time    | real_placar   | real_time   |
+|:------------|:----|:-----------------|:------------|:------------|---------:|:-------------------|:-------------|:------------|:--------------|:------------|
+| 19.Jun.2025 | 16h | João Henrique    | Inter Miami | Porto       |       12 | 1-Placar exato     | 2 x 1        | Inter Miami | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Pedro Tayerx     | Inter Miami | Porto       |        5 | 3-Vencedor correto | 3 x 0        | Inter Miami | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Gabãox           | Inter Miami | Porto       |        5 | 3-Vencedor correto | 1 x 0        | Inter Miami | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | thiago bahiensex | Inter Miami | Porto       |        1 | 4-Gols de um time  | 1 x 1        | empate      | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | RODRIGO ALBERNAZ | Inter Miami | Porto       |        1 | 4-Gols de um time  | 2 x 2        | empate      | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Lucas Ubertini   | Inter Miami | Porto       |        1 | 4-Gols de um time  | 2 x 2        | empate      | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Guilherme        | Inter Miami | Porto       |        1 | 4-Gols de um time  | 0 x 1        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | André Tayer      | Inter Miami | Porto       |        1 | 4-Gols de um time  | 1 x 1        | empate      | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Thales Oliveira  | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 1 x 2        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Rafael Contex    | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Marcelo          | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Leo Fernandes    | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 0 x 2        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Leigo Gianonnix  | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Frederico Soter  | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 1 x 3        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Cesar Saraivax   | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 1 x 2        | Porto       | 2 x 1         | Inter Miami |
+| 19.Jun.2025 | 16h | Andre Bonito     | Inter Miami | Porto       |        0 | 5-Nenhum acerto    | 1 x 3        | Porto       | 2 x 1         | Inter Miami |

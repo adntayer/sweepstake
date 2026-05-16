@@ -1,6 +1,6 @@
 # Visao Geral dos Jogos - 1afase
 
-_atualizado as 16/05/2026 15:40:03_
+_atualizado as 16/05/2026 17:00:00_
 
 _ultimo jogo que tem resultado_
 
@@ -10,46 +10,46 @@ _ultimo jogo que tem resultado_
 
 ---
 ## Ranking
-|   # | boleiro          |   pontos |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   5-Nenhum acerto |
-|----:|:-----------------|---------:|-----------------:|-------------------------------:|---------------------:|------------------:|
-|   1 | Guilherme        |      307 |                7 |                             24 |                   11 |                 6 |
-|   2 | André Tayer      |      295 |                6 |                             24 |                   11 |                 7 |
-|   3 | Gabãox           |      292 |                6 |                             20 |                   16 |                 6 |
-|   4 | João Henrique    |      287 |                5 |                             26 |                    9 |                 8 |
-|   5 | Leo Fernandes    |      278 |                4 |                             25 |                   11 |                 8 |
-|   6 | Marcelo          |      276 |                6 |                             17 |                   17 |                 8 |
-|   7 | RODRIGO ALBERNAZ |      273 |                2 |                             22 |                   19 |                 5 |
-|   8 | Andre Bonito     |      272 |                7 |                             19 |                   11 |                11 |
-|   9 | Cesar Saraivax   |      272 |                6 |                             20 |                   12 |                10 |
-|  10 | Rafael Contex    |      266 |                4 |                             24 |                   10 |                10 |
-|  11 | Leigo Gianonnix  |      258 |                2 |                             27 |                    9 |                10 |
-|  12 | thiago bahiensex |      248 |                4 |                             20 |                   12 |                12 |
-|  13 | Lucas Ubertini   |      239 |                4 |                             18 |                   13 |                13 |
-|  14 | Thales Oliveira  |      233 |                3 |                             21 |                   10 |                14 |
-|  15 | Frederico Soter  |      215 |                2 |                             18 |                   13 |                15 |
-|  16 | Pedro Tayerx     |      195 |                2 |                             18 |                    9 |                19 |
+|   # | boleiro          |   pontos |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
+|----:|:-----------------|---------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
+|   1 | Guilherme        |      229 |                7 |                             11 |                   11 |                  13 |                 6 |
+|   2 | Andre Bonito     |      224 |                7 |                             11 |                   11 |                   8 |                11 |
+|   3 | André Tayer      |      223 |                6 |                             12 |                   11 |                  12 |                 7 |
+|   4 | Marcelo          |      222 |                6 |                              8 |                   17 |                   9 |                 8 |
+|   5 | Gabãox           |      220 |                6 |                              8 |                   16 |                  12 |                 6 |
+|   6 | Cesar Saraivax   |      212 |                6 |                             10 |                   12 |                  10 |                10 |
+|   7 | Leo Fernandes    |      212 |                4 |                             14 |                   11 |                  11 |                 8 |
+|   8 | Leigo Gianonnix  |      204 |                2 |                             18 |                    9 |                   9 |                10 |
+|   9 | João Henrique    |      203 |                5 |                             12 |                    9 |                  14 |                 8 |
+|  10 | RODRIGO ALBERNAZ |      201 |                2 |                             10 |                   19 |                  12 |                 5 |
+|  11 | Thales Oliveira  |      197 |                3 |                             15 |                   10 |                   6 |                14 |
+|  12 | Lucas Ubertini   |      197 |                4 |                             11 |                   13 |                   7 |                13 |
+|  13 | thiago bahiensex |      194 |                4 |                             11 |                   12 |                   9 |                12 |
+|  14 | Rafael Contex    |      182 |                4 |                             10 |                   10 |                  14 |                10 |
+|  15 | Frederico Soter  |      167 |                2 |                             10 |                   13 |                   8 |                15 |
+|  16 | Pedro Tayerx     |      141 |                2 |                              9 |                    9 |                   9 |                19 |
 
 ## Ultimos dias de pontuacao
 | boleiro          |   22/06 |   23/06 |   24/06 |   25/06 |   26/06 |   total_ult_dias |
 |:-----------------|--------:|--------:|--------:|--------:|--------:|-----------------:|
-| Rafael Contex    |    33   |    14   |    33   |    33   |    19   |            132   |
-| André Tayer      |    26   |    21   |    36   |    29   |    14   |            126   |
-| Guilherme        |    26   |    17   |    33   |    26   |    24   |            126   |
-| Gabãox           |    22   |    24   |    28   |    26   |    24   |            124   |
-| RODRIGO ALBERNAZ |    22   |    26   |    28   |    26   |    22   |            124   |
-| João Henrique    |    24   |    22   |    26   |    28   |    19   |            119   |
-| Leo Fernandes    |    24   |    21   |    26   |    28   |    19   |            118   |
-| Andre Bonito     |    15   |    26   |    36   |    19   |    21   |            117   |
-| Cesar Saraivax   |    26   |    19   |    19   |    19   |    31   |            114   |
-| Leigo Gianonnix  |    19   |    14   |    21   |    28   |    28   |            110   |
-| Marcelo          |    24   |    19   |    19   |    17   |    22   |            101   |
-| thiago bahiensex |    17   |    24   |    26   |     7   |    24   |             98   |
-| Thales Oliveira  |    19   |    14   |    21   |    12   |    29   |             95   |
-| Lucas Ubertini   |    26   |    15   |    17   |    12   |    24   |             94   |
-| Frederico Soter  |    19   |    10   |    21   |    17   |    24   |             91   |
-| Pedro Tayerx     |    17   |    14   |    12   |    19   |    21   |             83   |
-| media            |    22.4 |    18.8 |    25.1 |    21.6 |    22.8 |            110.8 |
-| desv. pdr        |     4.6 |     4.9 |     7   |     7.4 |     4.2 |             15   |
+| Andre Bonito     |    15   |      20 |    30   |    19   |    21   |            105   |
+| Cesar Saraivax   |    20   |      13 |    13   |    19   |    25   |             90   |
+| Guilherme        |    20   |      17 |    15   |    20   |    18   |             90   |
+| Rafael Contex    |    27   |      14 |    15   |    27   |     7   |             90   |
+| Lucas Ubertini   |    26   |      15 |    17   |     6   |    24   |             88   |
+| RODRIGO ALBERNAZ |    22   |      20 |    10   |    20   |    16   |             88   |
+| Leo Fernandes    |    24   |      15 |    14   |    22   |    13   |             88   |
+| Gabãox           |    22   |      18 |    10   |    20   |    18   |             88   |
+| André Tayer      |    20   |       9 |    30   |    23   |     2   |             84   |
+| thiago bahiensex |    17   |      18 |    14   |     7   |    24   |             80   |
+| Leigo Gianonnix  |    19   |      14 |     9   |    22   |    16   |             80   |
+| João Henrique    |    18   |      22 |    14   |    16   |     7   |             77   |
+| Thales Oliveira  |    19   |       8 |     9   |    12   |    29   |             77   |
+| Marcelo          |    18   |      13 |    13   |    17   |    16   |             77   |
+| Frederico Soter  |    13   |      10 |     9   |    17   |    24   |             73   |
+| Pedro Tayerx     |    17   |      14 |     6   |    13   |     9   |             59   |
+| media            |    19.8 |      15 |    14.2 |    17.5 |    16.8 |             83.4 |
+| desv. pdr        |     3.7 |       4 |     6.8 |     5.7 |     7.7 |             10.1 |
 
 ## ultimos 6 jogos
 | date           | casa             |   gols | x   |   gols | visitante       |

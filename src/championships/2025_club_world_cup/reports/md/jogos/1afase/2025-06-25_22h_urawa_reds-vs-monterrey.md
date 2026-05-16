@@ -29,8 +29,9 @@
 
 | criterio                     |   # | g        |
 |:-----------------------------|----:|:---------|
-| 2-Vencedor + gols de um time |   7 | ████████ |
+| 2-Vencedor + gols de um time |   5 | ██████   |
 | 3-Vencedor correto           |   2 | ██       |
+| 4-Gols de um time            |   2 | ██       |
 | 5-Nenhum acerto              |   7 | ████████ |
 
 ## raio x
@@ -40,12 +41,12 @@
 | 25.Jun.2025 | 22h | Rafael Contex    | Urawa Reds | Monterrey   |        7 | 2-Vencedor + gols de um time | 0 x 1        | Monterrey  | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | Leo Fernandes    | Urawa Reds | Monterrey   |        7 | 2-Vencedor + gols de um time | 0 x 1        | Monterrey  | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | Leigo Gianonnix  | Urawa Reds | Monterrey   |        7 | 2-Vencedor + gols de um time | 0 x 1        | Monterrey  | 0 x 4         | Monterrey   |
-| 25.Jun.2025 | 22h | João Henrique    | Urawa Reds | Monterrey   |        7 | 2-Vencedor + gols de um time | 0 x 0        | empate     | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | Guilherme        | Urawa Reds | Monterrey   |        7 | 2-Vencedor + gols de um time | 0 x 1        | Monterrey  | 0 x 4         | Monterrey   |
-| 25.Jun.2025 | 22h | André Tayer      | Urawa Reds | Monterrey   |        7 | 2-Vencedor + gols de um time | 0 x 0        | empate     | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | Andre Bonito     | Urawa Reds | Monterrey   |        7 | 2-Vencedor + gols de um time | 0 x 2        | Monterrey  | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | RODRIGO ALBERNAZ | Urawa Reds | Monterrey   |        5 | 3-Vencedor correto           | 1 x 3        | Monterrey  | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | Marcelo          | Urawa Reds | Monterrey   |        5 | 3-Vencedor correto           | 1 x 2        | Monterrey  | 0 x 4         | Monterrey   |
+| 25.Jun.2025 | 22h | João Henrique    | Urawa Reds | Monterrey   |        1 | 4-Gols de um time            | 0 x 0        | empate     | 0 x 4         | Monterrey   |
+| 25.Jun.2025 | 22h | André Tayer      | Urawa Reds | Monterrey   |        1 | 4-Gols de um time            | 0 x 0        | empate     | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | thiago bahiensex | Urawa Reds | Monterrey   |        0 | 5-Nenhum acerto              | 1 x 1        | empate     | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | Thales Oliveira  | Urawa Reds | Monterrey   |        0 | 5-Nenhum acerto              | 1 x 1        | empate     | 0 x 4         | Monterrey   |
 | 25.Jun.2025 | 22h | Pedro Tayerx     | Urawa Reds | Monterrey   |        0 | 5-Nenhum acerto              | 1 x 0        | Urawa Reds | 0 x 4         | Monterrey   |

@@ -15,26 +15,23 @@ silver_dir: "src/championships/2025_club_world_cup/data/silver"
 gold_dir: "src/championships/2025_club_world_cup/data/gold"
 reports_dir: "src/championships/2025_club_world_cup/reports"
 
-# Scoring rules (checked in priority order)
+# Scoring rules (checked in rule order)
 scoring:
   - name: "1-Placar exato"
+    rule: "exact_score"
     points: 12
-    priority: 1
   - name: "2-Vencedor + gols de um time"
+    rule: "correct_winner_and_goals"
     points: 7
-    priority: 2
   - name: "3-Vencedor correto"
+    rule: "correct_winner"
     points: 5
-    priority: 3
   - name: "4-Gols de um time"
+    rule: "one_team_goals"
     points: 1
-    priority: 4
   - name: "5-Nenhum acerto"
+    rule: 'no_score'
     points: 0
-    priority: 5
-  - name: "9-Sem jogo"
-    points: 0
-    priority: 99
 
 # Excel parsing layout
 excel_layout:

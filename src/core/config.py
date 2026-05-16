@@ -26,7 +26,9 @@ class ScoringRule:
 
     name: str
     points: int
-    priority: int  # lower = checked first
+    rule: str = ""  # e.g. "exact_score", "correct_winner_and_goals"
+    max_total_error: int | None = None
+    min_total_error: int | None = None
 
 
 @dataclass
@@ -172,8 +174,8 @@ class ChampionshipConfig:
         return _norm(os.path.join(self.reports_dir, "html", "index.html"))
 
     def scoring_rule_names(self) -> list[str]:
-        """Return scoring rule names sorted by priority."""
-        return [r.name for r in sorted(self.scoring_rules, key=lambda r: r.priority)]
+        """Return scoring rule names sorted by name."""
+        return [r.name for r in sorted(self.scoring_rules, key=lambda r: r.name)]
 
     def scoring_dict(self) -> dict[str, int]:
         """Return {name: points} for quick lookup."""
@@ -210,7 +212,9 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         ScoringRule(
             name=r["name"],
             points=r["points"],
-            priority=r.get("priority", i),
+            rule=r.get("rule", ""),
+            max_total_error=r.get("max_total_error"),
+            min_total_error=r.get("min_total_error"),
         )
         for i, r in enumerate(raw.get("scoring", []))
     ]
