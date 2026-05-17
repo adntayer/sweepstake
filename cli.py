@@ -21,7 +21,6 @@ from src.championships import list_championships, load_config
 from src.core.pipeline import run_raw_to_bronze, run_silver_to_gold, run_pipeline, run_bronze_to_silver
 from src.core.reports.dashboard import generate_dashboard
 from src.core.reports.html import generate_html_reports
-from src.core.reports.markdown import generate_markdown_reports
 from src.core.printing import print_colored
 
 
@@ -72,7 +71,6 @@ def cmd_run(args: argparse.Namespace) -> None:
 
     # Reports
     if run_rep:
-        generate_markdown_reports(config)
         generate_html_reports(config)
         generate_dashboard(config)
 

@@ -2,102 +2,401 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025 Club World Cup</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        h1 {
-            color: #2c3e50;
-        }
-        h2, h4 {
-            color: #34495e;
-        }
-        a {
-            color: #2980b9;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        li {
-            padding: 4px 0;
-        }
-        .section {
-            background: #fff;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: flex-start;
-        }
-        .column {
-            flex: 1;
-            min-width: 220px;
-            max-width: 280px;
-        }
+    :root {
+    --primary: #1a5e1f;
+    --primary-light: #2d8a33;
+    --accent: #f5c518;
+    --accent-dark: #d4a817;
+    --bg: #0d1117;
+    --card-bg: #161b22;
+    --card-border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --success: #2ea043;
+    --warning: #d29922;
+    --danger: #f85149;
+}
+
+    
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Hero */
+.hero {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #fff;
+}
+.hero h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+.hero .subtitle { font-size: 1rem; opacity: 0.85; }
+
+/* Section */
+.section { margin: 1rem 0; }
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Card */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0 0.75rem;
+}
+
+/* Score card (last result) */
+.result-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1rem;
+}
+.result-card .team { flex: 1; text-align: center; font-size: 1rem; font-weight: 600; }
+.result-card .score {
+    color: var(--accent);
+    font-size: 1.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.result-card .date {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Leaderboard */
+.lb-row {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--card-border);
+    gap: 0.75rem;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-rank {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+.lb-rank-1 { background: var(--accent); color: #000; }
+.lb-rank-2 { background: #c0c0c0; color: #000; }
+.lb-rank-3 { background: #cd7f32; color: #fff; }
+.lb-rank-n { background: var(--card-border); color: var(--text-muted); }
+.lb-name { flex: 1; font-weight: 600; font-size: 0.9rem; }
+.lb-pts {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+/* Horizontal scroll for upcoming games */
+.scroll-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+.scroll-row::-webkit-scrollbar { height: 4px; }
+.scroll-row::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
+
+.game-card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    min-width: 200px;
+}
+.game-card .matchup { font-weight: 700; font-size: 1rem; margin: 0.5rem 0; }
+.game-card .datetime { font-size: 0.8rem; color: var(--text-muted); }
+.game-card .badge-live {
+    display: inline-block;
+    background: var(--danger);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+}
+
+/* Player grid */
+.player-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0 0.75rem;
+}
+.player-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: border-color 0.2s;
+}
+.player-card:hover { border-color: var(--accent); }
+.player-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.player-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.player-pts {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Accordion */
+details {
+    margin: 0.5rem 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+summary {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+}
+summary:hover { background: rgba(255,255,255,0.03); }
+details[open] summary { border-bottom: 1px solid var(--card-border); }
+details .content { padding: 0.5rem 1rem; }
+details .content a {
+    display: block;
+    padding: 0.4rem 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--card-border);
+}
+details .content a:last-child { border-bottom: none; }
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    body { max-width: 800px; margin: 0 auto; }
+    .player-grid { grid-template-columns: repeat(3, 1fr); }
+    .game-card { flex: 0 0 45%; }
+}
+@media (min-width: 1024px) {
+    .player-grid { grid-template-columns: repeat(4, 1fr); }
+    .game-card { flex: 0 0 30%; }
+}
+
     </style>
 </head>
 <body>
-    <div class="section">
-        <p><i>atualizado as 16/05/2026 22:17:40</i></p>
-        <h1>🏆 2025 Club World Cup</h1>
-        <h2>📊 Overview</h2>
-        <p><a href="overview.html">Veja um overview do bolao</a></p>
-        <br>
-        <h3> Ultimo jogo com resultado </h3>
-        <h4>2025-06-26 22h || Al-Hilal <b>2</b> x <b>0</b> Pachuca  </h4>
+
+<div class="hero">
+    <h1>🏆 2025 Club World Cup</h1>
+    <div class="subtitle">Bolao Dashboard</div>
+</div>
+
+
+<div class="section">
+    <div class="section-title">📊 Ultimo Resultado</div>
+    <div class="card">
+        <div class="result-card">
+            <div class="team">Al-Hilal</div>
+            <div class="score">2 - 0</div>
+            <div class="team">Pachuca</div>
+        </div>
+        <div class="date">2025-06-26 22h</div>
     </div>
+</div>
 
-    <div class="section">
-        <p></p>
-        <h2>🕒 Proximos jogos</h2>
-        <ul></ul>
+
+<div class="section">
+    <div class="section-title">🏆 Top 5</div>
+    <div class="card"><div class="lb-row"><div class="lb-rank lb-rank-1">🥇</div><a class="lb-name" href="boleiros/Guilherme.html">Guilherme</a><div class="lb-pts">241 pts</div></div>
+<div class="lb-row"><div class="lb-rank lb-rank-2">🥈</div><a class="lb-name" href="boleiros/Marcelo.html">Marcelo</a><div class="lb-pts">238 pts</div></div>
+<div class="lb-row"><div class="lb-rank lb-rank-3">🥉</div><a class="lb-name" href="boleiros/André Tayer.html">André Tayer</a><div class="lb-pts">235 pts</div></div>
+<div class="lb-row"><div class="lb-rank lb-rank-n">4</div><a class="lb-name" href="boleiros/Gabão.html">Gabão</a><div class="lb-pts">232 pts</div></div>
+<div class="lb-row"><div class="lb-rank lb-rank-n">5</div><a class="lb-name" href="boleiros/Andre Bonito.html">Andre Bonito</a><div class="lb-pts">228 pts</div></div>
+</div>
+</div>
+
+<a href="overview.html" style="display:block;margin:0 0.75rem;">
+    <div class="card" style="text-align:center;font-weight:600;">
+        📊 Veja o Overview Completo
     </div>
+</a>
 
-    <div class="section flex-container">
-        <div class="column">
-            <h4>👥 Boleiros</h4>
-            <ul><li> 1 -->> <a href="boleiros/Andre Bonito.html">Andre Bonito</a></li><br><li> 2 -->> <a href="boleiros/André Tayer.html">André Tayer</a></li><br><li> 3 -->> <a href="boleiros/Cesar Saraiva.html">Cesar Saraiva</a></li><br><li> 4 -->> <a href="boleiros/Cesar Saraivax.html">Cesar Saraivax</a></li><br><li> 5 -->> <a href="boleiros/Frederico Soter.html">Frederico Soter</a></li><br><li> 6 -->> <a href="boleiros/Gabão.html">Gabão</a></li><br><li> 7 -->> <a href="boleiros/Gabãox.html">Gabãox</a></li><br><li> 8 -->> <a href="boleiros/Guilherme.html">Guilherme</a></li><br><li> 9 -->> <a href="boleiros/João Henrique.html">João Henrique</a></li><br><li>10 -->> <a href="boleiros/Leigo Gianonni.html">Leigo Gianonni</a></li><br><li>11 -->> <a href="boleiros/Leigo Gianonnix.html">Leigo Gianonnix</a></li><br><li>12 -->> <a href="boleiros/Leo Fernandes.html">Leo Fernandes</a></li><br><li>13 -->> <a href="boleiros/Lucas Ubertini.html">Lucas Ubertini</a></li><br><li>14 -->> <a href="boleiros/Marcelo.html">Marcelo</a></li><br><li>15 -->> <a href="boleiros/Pedro Tayer.html">Pedro Tayer</a></li><br><li>16 -->> <a href="boleiros/Pedro Tayerx.html">Pedro Tayerx</a></li><br><li>17 -->> <a href="boleiros/RODRIGO ALBERNAZ.html">RODRIGO ALBERNAZ</a></li><br><li>18 -->> <a href="boleiros/Rafael Conte.html">Rafael Conte</a></li><br><li>19 -->> <a href="boleiros/Rafael Contex.html">Rafael Contex</a></li><br><li>20 -->> <a href="boleiros/Thales Oliveira.html">Thales Oliveira</a></li><br><li>21 -->> <a href="boleiros/thiago bahiense.html">thiago bahiense</a></li><br><li>22 -->> <a href="boleiros/thiago bahiensex.html">thiago bahiensex</a></li><br></ul>
-        </div>
-
-        <div class="column">
-            <h4>⚽ 1afase</h4>
-            <ul><li> 1 -->> <a href="jogos/1afase/2025-06-14_21h_al_ahly-vs-inter_miami.html">2025-06-14 21h | al ahly vs inter miami</a></li><br><li> 2 -->> <a href="jogos/1afase/2025-06-15_13h_bayern_de_munique-vs-auckland_city.html">2025-06-15 13h | bayern de munique vs auckland city</a></li><br><li> 3 -->> <a href="jogos/1afase/2025-06-15_16h_paris_saint-germain-vs-atlético_de_madrid.html">2025-06-15 16h | paris saint-germain vs atlético de madrid</a></li><br><li> 4 -->> <a href="jogos/1afase/2025-06-15_19h_palmeiras-vs-porto.html">2025-06-15 19h | palmeiras vs porto</a></li><br><li> 5 -->> <a href="jogos/1afase/2025-06-15_23h_botafogo-vs-seattle_sounders.html">2025-06-15 23h | botafogo vs seattle sounders</a></li><br><li> 6 -->> <a href="jogos/1afase/2025-06-16_16h_chelsea-vs-los_angeles_fc.html">2025-06-16 16h | chelsea vs los angeles fc</a></li><br><li> 7 -->> <a href="jogos/1afase/2025-06-16_19h_boca_juniors-vs-benfica.html">2025-06-16 19h | boca juniors vs benfica</a></li><br><li> 8 -->> <a href="jogos/1afase/2025-06-16_22h_flamengo-vs-espérance.html">2025-06-16 22h | flamengo vs espérance</a></li><br><li> 9 -->> <a href="jogos/1afase/2025-06-17_13h_fluminense-vs-borussia_dortmund.html">2025-06-17 13h | fluminense vs borussia dortmund</a></li><br><li>10 -->> <a href="jogos/1afase/2025-06-17_16h_river_plate-vs-urawa_reds.html">2025-06-17 16h | river plate vs urawa reds</a></li><br><li>11 -->> <a href="jogos/1afase/2025-06-17_19h_ulsan_hd-vs-mamelodi_sundowns.html">2025-06-17 19h | ulsan hd vs mamelodi sundowns</a></li><br><li>12 -->> <a href="jogos/1afase/2025-06-17_22h_monterrey-vs-internazionale.html">2025-06-17 22h | monterrey vs internazionale</a></li><br><li>13 -->> <a href="jogos/1afase/2025-06-18_13h_manchester_city-vs-wydad_casablanca.html">2025-06-18 13h | manchester city vs wydad casablanca</a></li><br><li>14 -->> <a href="jogos/1afase/2025-06-18_16h_real_madrid-vs-al-hilal.html">2025-06-18 16h | real madrid vs al-hilal</a></li><br><li>15 -->> <a href="jogos/1afase/2025-06-18_19h_pachuca-vs-rb_salzburg.html">2025-06-18 19h | pachuca vs rb salzburg</a></li><br><li>16 -->> <a href="jogos/1afase/2025-06-18_22h_al-ain-vs-juventus.html">2025-06-18 22h | al-ain vs juventus</a></li><br><li>17 -->> <a href="jogos/1afase/2025-06-19_13h_palmeiras-vs-al_ahly.html">2025-06-19 13h | palmeiras vs al ahly</a></li><br><li>18 -->> <a href="jogos/1afase/2025-06-19_16h_inter_miami-vs-porto.html">2025-06-19 16h | inter miami vs porto</a></li><br><li>19 -->> <a href="jogos/1afase/2025-06-19_19h_seattle_sounders-vs-atlético_de_madrid.html">2025-06-19 19h | seattle sounders vs atlético de madrid</a></li><br><li>20 -->> <a href="jogos/1afase/2025-06-19_22h_paris_saint-germain-vs-botafogo.html">2025-06-19 22h | paris saint-germain vs botafogo</a></li><br><li>21 -->> <a href="jogos/1afase/2025-06-20_13h_benfica-vs-auckland_city.html">2025-06-20 13h | benfica vs auckland city</a></li><br><li>22 -->> <a href="jogos/1afase/2025-06-20_15h_flamengo-vs-chelsea.html">2025-06-20 15h | flamengo vs chelsea</a></li><br><li>23 -->> <a href="jogos/1afase/2025-06-20_19h_los_angeles_fc-vs-espérance.html">2025-06-20 19h | los angeles fc vs espérance</a></li><br><li>24 -->> <a href="jogos/1afase/2025-06-20_22h_bayern_de_munique-vs-boca_juniors.html">2025-06-20 22h | bayern de munique vs boca juniors</a></li><br><li>25 -->> <a href="jogos/1afase/2025-06-21_13h_mamelodi_sundowns-vs-borussia_dortmund.html">2025-06-21 13h | mamelodi sundowns vs borussia dortmund</a></li><br><li>26 -->> <a href="jogos/1afase/2025-06-21_16h_internazionale-vs-urawa_reds.html">2025-06-21 16h | internazionale vs urawa reds</a></li><br><li>27 -->> <a href="jogos/1afase/2025-06-21_19h_fluminense-vs-ulsan_hd.html">2025-06-21 19h | fluminense vs ulsan hd</a></li><br><li>28 -->> <a href="jogos/1afase/2025-06-21_22h_river_plate-vs-monterrey.html">2025-06-21 22h | river plate vs monterrey</a></li><br><li>29 -->> <a href="jogos/1afase/2025-06-22_13h_juventus-vs-wydad_casablanca.html">2025-06-22 13h | juventus vs wydad casablanca</a></li><br><li>30 -->> <a href="jogos/1afase/2025-06-22_16h_real_madrid-vs-pachuca.html">2025-06-22 16h | real madrid vs pachuca</a></li><br><li>31 -->> <a href="jogos/1afase/2025-06-22_19h_rb_salzburg-vs-al-hilal.html">2025-06-22 19h | rb salzburg vs al-hilal</a></li><br><li>32 -->> <a href="jogos/1afase/2025-06-22_22h_manchester_city-vs-al-ain.html">2025-06-22 22h | manchester city vs al-ain</a></li><br><li>33 -->> <a href="jogos/1afase/2025-06-23_16h_atlético_de_madrid-vs-botafogo.html">2025-06-23 16h | atlético de madrid vs botafogo</a></li><br><li>34 -->> <a href="jogos/1afase/2025-06-23_16h_seattle_sounders-vs-paris_saint-germain.html">2025-06-23 16h | seattle sounders vs paris saint-germain</a></li><br><li>35 -->> <a href="jogos/1afase/2025-06-23_22h_inter_miami-vs-palmeiras.html">2025-06-23 22h | inter miami vs palmeiras</a></li><br><li>36 -->> <a href="jogos/1afase/2025-06-23_22h_porto-vs-al_ahly.html">2025-06-23 22h | porto vs al ahly</a></li><br><li>37 -->> <a href="jogos/1afase/2025-06-24_16h_auckland_city-vs-boca_juniors.html">2025-06-24 16h | auckland city vs boca juniors</a></li><br><li>38 -->> <a href="jogos/1afase/2025-06-24_16h_benfica-vs-bayern_de_munique.html">2025-06-24 16h | benfica vs bayern de munique</a></li><br><li>39 -->> <a href="jogos/1afase/2025-06-24_22h_espérance-vs-chelsea.html">2025-06-24 22h | espérance vs chelsea</a></li><br><li>40 -->> <a href="jogos/1afase/2025-06-24_22h_los_angeles_fc-vs-flamengo.html">2025-06-24 22h | los angeles fc vs flamengo</a></li><br><li>41 -->> <a href="jogos/1afase/2025-06-25_16h_borussia_dortmund-vs-ulsan_hd.html">2025-06-25 16h | borussia dortmund vs ulsan hd</a></li><br><li>42 -->> <a href="jogos/1afase/2025-06-25_16h_mamelodi_sundowns-vs-fluminense.html">2025-06-25 16h | mamelodi sundowns vs fluminense</a></li><br><li>43 -->> <a href="jogos/1afase/2025-06-25_22h_internazionale-vs-river_plate.html">2025-06-25 22h | internazionale vs river plate</a></li><br><li>44 -->> <a href="jogos/1afase/2025-06-25_22h_urawa_reds-vs-monterrey.html">2025-06-25 22h | urawa reds vs monterrey</a></li><br><li>45 -->> <a href="jogos/1afase/2025-06-26_16h_juventus-vs-manchester_city.html">2025-06-26 16h | juventus vs manchester city</a></li><br><li>46 -->> <a href="jogos/1afase/2025-06-26_16h_wydad_casablanca-vs-al-ain.html">2025-06-26 16h | wydad casablanca vs al-ain</a></li><br><li>47 -->> <a href="jogos/1afase/2025-06-26_22h_al-hilal-vs-pachuca.html">2025-06-26 22h | al-hilal vs pachuca</a></li><br><li>48 -->> <a href="jogos/1afase/2025-06-26_22h_rb_salzburg-vs-real_madrid.html">2025-06-26 22h | rb salzburg vs real madrid</a></li><br></ul>
-        </div>
-
-        <div class="column">
-            <h4>🏁 Oitavas</h4>
-            <ul></ul>
-        </div>
-
-        <div class="column">
-            <h4>🔥 Quartas</h4>
-            <ul></ul>
-        </div>
-
-        <div class="column">
-            <h4>🎯 Semi</h4>
-            <ul></ul>
-        </div>
-
-        <div class="column">
-            <h4>🏆 Final</h4>
-            <ul></ul>
-        </div>
-
+<a href="arena.html" style="display:block;margin:0 0.75rem;">
+    <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);">
+        ⚔️ Arena — Compare Jogadores
     </div>
+</a>
+
+
+
+
+<div class="section">
+    <div class="section-title">👥 Boleiros (16)</div>
+    <div class="player-grid"><a href="boleiros/Guilherme.html" class="player-card"><div class="player-avatar">GU</div><div><div class="player-name">Guilherme</div><div class="player-pts">241 pts</div></div></a>
+<a href="boleiros/Marcelo.html" class="player-card"><div class="player-avatar">MA</div><div><div class="player-name">Marcelo</div><div class="player-pts">238 pts</div></div></a>
+<a href="boleiros/André Tayer.html" class="player-card"><div class="player-avatar">AT</div><div><div class="player-name">André Tayer</div><div class="player-pts">235 pts</div></div></a>
+<a href="boleiros/Gabão.html" class="player-card"><div class="player-avatar">GA</div><div><div class="player-name">Gabão</div><div class="player-pts">232 pts</div></div></a>
+<a href="boleiros/Andre Bonito.html" class="player-card"><div class="player-avatar">AB</div><div><div class="player-name">Andre Bonito</div><div class="player-pts">228 pts</div></div></a>
+<a href="boleiros/Cesar Saraiva.html" class="player-card"><div class="player-avatar">CS</div><div><div class="player-name">Cesar Saraiva</div><div class="player-pts">226 pts</div></div></a>
+<a href="boleiros/Leo Fernandes.html" class="player-card"><div class="player-avatar">LF</div><div><div class="player-name">Leo Fernandes</div><div class="player-pts">222 pts</div></div></a>
+<a href="boleiros/RODRIGO ALBERNAZ.html" class="player-card"><div class="player-avatar">RA</div><div><div class="player-name">RODRIGO ALBERNAZ</div><div class="player-pts">221 pts</div></div></a>
+<a href="boleiros/Lucas Ubertini.html" class="player-card"><div class="player-avatar">LU</div><div><div class="player-name">Lucas Ubertini</div><div class="player-pts">217 pts</div></div></a>
+<a href="boleiros/João Henrique.html" class="player-card"><div class="player-avatar">JH</div><div><div class="player-name">João Henrique</div><div class="player-pts">215 pts</div></div></a>
+<a href="boleiros/Leigo Gianonni.html" class="player-card"><div class="player-avatar">LG</div><div><div class="player-name">Leigo Gianonni</div><div class="player-pts">214 pts</div></div></a>
+<a href="boleiros/thiago bahiense.html" class="player-card"><div class="player-avatar">TB</div><div><div class="player-name">thiago bahiense</div><div class="player-pts">206 pts</div></div></a>
+<a href="boleiros/Thales Oliveira.html" class="player-card"><div class="player-avatar">TO</div><div><div class="player-name">Thales Oliveira</div><div class="player-pts">205 pts</div></div></a>
+<a href="boleiros/Rafael Conte.html" class="player-card"><div class="player-avatar">RC</div><div><div class="player-name">Rafael Conte</div><div class="player-pts">188 pts</div></div></a>
+<a href="boleiros/Frederico Soter.html" class="player-card"><div class="player-avatar">FS</div><div><div class="player-name">Frederico Soter</div><div class="player-pts">179 pts</div></div></a>
+<a href="boleiros/Pedro Tayer.html" class="player-card"><div class="player-avatar">PT</div><div><div class="player-name">Pedro Tayer</div><div class="player-pts">143 pts</div></div></a>
+</div>
+</div>
+
+
+<div class="section">
+    <div class="section-title">📂 Jogos por Fase</div>
+    
+<details open>
+    <summary>⚽ 1afase (48)</summary>
+    <div class="content"><a href="jogos/1afase/2025-06-14_21h_al_ahly-vs-inter_miami.html">2025-06-14 21h | al ahly vs inter miami</a>
+<a href="jogos/1afase/2025-06-15_13h_bayern_de_munique-vs-auckland_city.html">2025-06-15 13h | bayern de munique vs auckland city</a>
+<a href="jogos/1afase/2025-06-15_16h_paris_saint-germain-vs-atlético_de_madrid.html">2025-06-15 16h | paris saint-germain vs atlético de madrid</a>
+<a href="jogos/1afase/2025-06-15_19h_palmeiras-vs-porto.html">2025-06-15 19h | palmeiras vs porto</a>
+<a href="jogos/1afase/2025-06-15_23h_botafogo-vs-seattle_sounders.html">2025-06-15 23h | botafogo vs seattle sounders</a>
+<a href="jogos/1afase/2025-06-16_16h_chelsea-vs-los_angeles_fc.html">2025-06-16 16h | chelsea vs los angeles fc</a>
+<a href="jogos/1afase/2025-06-16_19h_boca_juniors-vs-benfica.html">2025-06-16 19h | boca juniors vs benfica</a>
+<a href="jogos/1afase/2025-06-16_22h_flamengo-vs-espérance.html">2025-06-16 22h | flamengo vs espérance</a>
+<a href="jogos/1afase/2025-06-17_13h_fluminense-vs-borussia_dortmund.html">2025-06-17 13h | fluminense vs borussia dortmund</a>
+<a href="jogos/1afase/2025-06-17_16h_river_plate-vs-urawa_reds.html">2025-06-17 16h | river plate vs urawa reds</a>
+<a href="jogos/1afase/2025-06-17_19h_ulsan_hd-vs-mamelodi_sundowns.html">2025-06-17 19h | ulsan hd vs mamelodi sundowns</a>
+<a href="jogos/1afase/2025-06-17_22h_monterrey-vs-internazionale.html">2025-06-17 22h | monterrey vs internazionale</a>
+<a href="jogos/1afase/2025-06-18_13h_manchester_city-vs-wydad_casablanca.html">2025-06-18 13h | manchester city vs wydad casablanca</a>
+<a href="jogos/1afase/2025-06-18_16h_real_madrid-vs-al-hilal.html">2025-06-18 16h | real madrid vs al-hilal</a>
+<a href="jogos/1afase/2025-06-18_19h_pachuca-vs-rb_salzburg.html">2025-06-18 19h | pachuca vs rb salzburg</a>
+<a href="jogos/1afase/2025-06-18_22h_al-ain-vs-juventus.html">2025-06-18 22h | al-ain vs juventus</a>
+<a href="jogos/1afase/2025-06-19_13h_palmeiras-vs-al_ahly.html">2025-06-19 13h | palmeiras vs al ahly</a>
+<a href="jogos/1afase/2025-06-19_16h_inter_miami-vs-porto.html">2025-06-19 16h | inter miami vs porto</a>
+<a href="jogos/1afase/2025-06-19_19h_seattle_sounders-vs-atlético_de_madrid.html">2025-06-19 19h | seattle sounders vs atlético de madrid</a>
+<a href="jogos/1afase/2025-06-19_22h_paris_saint-germain-vs-botafogo.html">2025-06-19 22h | paris saint-germain vs botafogo</a>
+<a href="jogos/1afase/2025-06-20_13h_benfica-vs-auckland_city.html">2025-06-20 13h | benfica vs auckland city</a>
+<a href="jogos/1afase/2025-06-20_15h_flamengo-vs-chelsea.html">2025-06-20 15h | flamengo vs chelsea</a>
+<a href="jogos/1afase/2025-06-20_19h_los_angeles_fc-vs-espérance.html">2025-06-20 19h | los angeles fc vs espérance</a>
+<a href="jogos/1afase/2025-06-20_22h_bayern_de_munique-vs-boca_juniors.html">2025-06-20 22h | bayern de munique vs boca juniors</a>
+<a href="jogos/1afase/2025-06-21_13h_mamelodi_sundowns-vs-borussia_dortmund.html">2025-06-21 13h | mamelodi sundowns vs borussia dortmund</a>
+<a href="jogos/1afase/2025-06-21_16h_internazionale-vs-urawa_reds.html">2025-06-21 16h | internazionale vs urawa reds</a>
+<a href="jogos/1afase/2025-06-21_19h_fluminense-vs-ulsan_hd.html">2025-06-21 19h | fluminense vs ulsan hd</a>
+<a href="jogos/1afase/2025-06-21_22h_river_plate-vs-monterrey.html">2025-06-21 22h | river plate vs monterrey</a>
+<a href="jogos/1afase/2025-06-22_13h_juventus-vs-wydad_casablanca.html">2025-06-22 13h | juventus vs wydad casablanca</a>
+<a href="jogos/1afase/2025-06-22_16h_real_madrid-vs-pachuca.html">2025-06-22 16h | real madrid vs pachuca</a>
+<a href="jogos/1afase/2025-06-22_19h_rb_salzburg-vs-al-hilal.html">2025-06-22 19h | rb salzburg vs al-hilal</a>
+<a href="jogos/1afase/2025-06-22_22h_manchester_city-vs-al-ain.html">2025-06-22 22h | manchester city vs al-ain</a>
+<a href="jogos/1afase/2025-06-23_16h_atlético_de_madrid-vs-botafogo.html">2025-06-23 16h | atlético de madrid vs botafogo</a>
+<a href="jogos/1afase/2025-06-23_16h_seattle_sounders-vs-paris_saint-germain.html">2025-06-23 16h | seattle sounders vs paris saint-germain</a>
+<a href="jogos/1afase/2025-06-23_22h_inter_miami-vs-palmeiras.html">2025-06-23 22h | inter miami vs palmeiras</a>
+<a href="jogos/1afase/2025-06-23_22h_porto-vs-al_ahly.html">2025-06-23 22h | porto vs al ahly</a>
+<a href="jogos/1afase/2025-06-24_16h_auckland_city-vs-boca_juniors.html">2025-06-24 16h | auckland city vs boca juniors</a>
+<a href="jogos/1afase/2025-06-24_16h_benfica-vs-bayern_de_munique.html">2025-06-24 16h | benfica vs bayern de munique</a>
+<a href="jogos/1afase/2025-06-24_22h_espérance-vs-chelsea.html">2025-06-24 22h | espérance vs chelsea</a>
+<a href="jogos/1afase/2025-06-24_22h_los_angeles_fc-vs-flamengo.html">2025-06-24 22h | los angeles fc vs flamengo</a>
+<a href="jogos/1afase/2025-06-25_16h_borussia_dortmund-vs-ulsan_hd.html">2025-06-25 16h | borussia dortmund vs ulsan hd</a>
+<a href="jogos/1afase/2025-06-25_16h_mamelodi_sundowns-vs-fluminense.html">2025-06-25 16h | mamelodi sundowns vs fluminense</a>
+<a href="jogos/1afase/2025-06-25_22h_internazionale-vs-river_plate.html">2025-06-25 22h | internazionale vs river plate</a>
+<a href="jogos/1afase/2025-06-25_22h_urawa_reds-vs-monterrey.html">2025-06-25 22h | urawa reds vs monterrey</a>
+<a href="jogos/1afase/2025-06-26_16h_juventus-vs-manchester_city.html">2025-06-26 16h | juventus vs manchester city</a>
+<a href="jogos/1afase/2025-06-26_16h_wydad_casablanca-vs-al-ain.html">2025-06-26 16h | wydad casablanca vs al-ain</a>
+<a href="jogos/1afase/2025-06-26_22h_al-hilal-vs-pachuca.html">2025-06-26 22h | al-hilal vs pachuca</a>
+<a href="jogos/1afase/2025-06-26_22h_rb_salzburg-vs-real_madrid.html">2025-06-26 22h | rb salzburg vs real madrid</a>
+</div>
+</details>
+
+<details>
+    <summary>🏁 Oitavas (0)</summary>
+    <div class="content"></div>
+</details>
+
+<details>
+    <summary>🔥 Quartas (0)</summary>
+    <div class="content"></div>
+</details>
+
+<details>
+    <summary>🎯 Semi (0)</summary>
+    <div class="content"></div>
+</details>
+
+<details>
+    <summary>🏆 Final (0)</summary>
+    <div class="content"></div>
+</details>
+
+</div>
+
+<div class="footer">
+    atualizado as 17/05/2026 00:28:03
+</div>
+
 </body>
 </html>

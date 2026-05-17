@@ -59,3 +59,20 @@ excel_layout:
         key: "final"
         matches: 1
         tail_offset: 2
+
+# HTML report theme
+theme:
+  mode: "dark"
+  colors:
+    primary: "#1a5e1f"
+    primary_light: "#2d8a33"
+    accent: "#f5c518"
+    accent_dark: "#d4a817"
+    bg: "#0d1117"
+    card_bg: "#161b22"
+    card_border: "#30363d"
+    text: "#e6edf3"
+    text_muted: "#8b949e"
+    success: "#2ea043"
+    warning: "#d29922"
+    danger: "#f85149"

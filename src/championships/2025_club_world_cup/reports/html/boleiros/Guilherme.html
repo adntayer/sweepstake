@@ -2,980 +2,396 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>2025 Club World Cup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guilherme - 2025 Club World Cup</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 12px;
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            color: #212529;
-        }
+    :root {
+    --primary: #1a5e1f;
+    --primary-light: #2d8a33;
+    --accent: #f5c518;
+    --accent-dark: #d4a817;
+    --bg: #0d1117;
+    --card-bg: #161b22;
+    --card-border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --success: #2ea043;
+    --warning: #d29922;
+    --danger: #f85149;
+}
 
-        h1, h2, h3 {
-            color: #343a40;
-        }
+    
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-        }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            table-layout: fixed;
-            word-wrap: break-word;
-            font-size: 12px;
-        }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-        th, td {
-            padding: 8px 10px;
-            border: 1px solid #dee2e6;
-            text-align: center;
-        }
+/* Hero banner */
+.hero {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: #fff;
+}
+.hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
+.hero .timestamp { font-size: 0.75rem; opacity: 0.65; margin-top: 0.5rem; }
 
-        th {
-            background-color: #343a40;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 2;
-            font-size: 12px;
-        }
+/* Back navigation */
+.back-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.back-nav a {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0.75rem;
+}
+.card-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
 
-        tr:hover {
-            background-color: #e9ecef;
-        }
+/* Stat cards row */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.75rem;
+}
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-align: center;
+}
+.stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+.stat-card .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
 
-        a {
-            color: #0d6efd;
-            text-decoration: none;
-            font-size: 12px;
-        }
+/* Score display */
+.score-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+.score-card .team { flex: 1; text-align: center; font-size: 1rem; }
+.score-card .score {
+    color: var(--accent);
+    font-size: 2rem;
+    white-space: nowrap;
+}
+.score-card .vs { color: var(--text-muted); font-size: 0.9rem; }
 
-        a:hover {
-            text-decoration: underline;
-        }
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-success { background: var(--success); color: #fff; }
+.badge-warning { background: var(--warning); color: #000; }
+.badge-danger { background: var(--danger); color: #fff; }
 
-        .note {
-            font-style: italic;
-            font-size: 12px;
-            color: #6c757d;
-        }
+/* CSS bar charts */
+.bar-chart { padding: 0.5rem 0; }
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+}
+.bar-label { min-width: 80px; color: var(--text-muted); }
+.bar-track {
+    flex: 1;
+    height: 20px;
+    background: var(--card-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+.bar-pct { min-width: 40px; text-align: right; color: var(--text-muted); }
 
-        hr {
-            margin: 3rem 0;
-            border: none;
-            border-top: 1px solid #ced4da;
-        }
+/* Player prediction rows */
+.pred-row {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+    gap: 0.75rem;
+}
+.pred-row:last-child { border-bottom: none; }
+.pred-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+.pred-info { flex: 1; min-width: 0; }
+.pred-name { font-weight: 600; font-size: 0.9rem; }
+.pred-detail { font-size: 0.8rem; color: var(--text-muted); }
+.pred-points {
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    min-width: 50px;
+    text-align: right;
+}
 
-        @media (max-width: 768px) {
-            body {
-                font-size: 12px;
-            }
-            th, td {
-                font-size: 12px;
-                padding: 6px 8px;
-            }
-        }
+/* Ranking table */
+.rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+.rank-table th {
+    background: var(--card-border);
+    color: var(--text-muted);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.rank-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+}
+.rank-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.rank-table .rank-1 td { background: rgba(245, 197, 24, 0.1); }
+.rank-table .rank-2 td { background: rgba(192, 192, 192, 0.08); }
+.rank-table .rank-3 td { background: rgba(205, 127, 50, 0.08); }
+
+/* Section spacing */
+.section { margin: 1rem 0; }
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Accordion / details */
+details {
+    margin: 0.5rem 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+summary {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+}
+summary:hover { background: rgba(255,255,255,0.03); }
+details[open] summary { border-bottom: 1px solid var(--card-border); }
+details .content { padding: 0.75rem 1rem; }
+
+/* Striker badge */
+.striker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 0.75rem;
+    font-size: 0.9rem;
+}
+.striker-badge .icon { font-size: 1.2rem; }
+
+/* Responsive */
+@media (min-width: 768px) {
+    body { max-width: 800px; margin: 0 auto; }
+    .stat-row { grid-template-columns: repeat(3, 1fr); }
+}
+
     </style>
 </head>
 <body>
-    <div class="table-container">
-        <h1>📊 Visao Geral dos Jogos - 1afase</h1>
-<h1>👤 Guilherme</h1>
-<p><em>atualizado as 16/05/2026 22:17:38</em></p>
-<h2>📋 resumo</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">date</th>
-<th style="text-align: right;">jogos</th>
-<th style="text-align: right;">pontos</th>
-<th style="text-align: right;">media</th>
-<th style="text-align: right;">desvio padrao</th>
-<th style="text-align: right;">pontos_acumulados</th>
-<th style="text-align: right;">1-Placar exato</th>
-<th style="text-align: right;">2-Vencedor + gols de um time</th>
-<th style="text-align: right;">3-Vencedor correto</th>
-<th style="text-align: right;">4-Gols de um time</th>
-<th style="text-align: right;">5-Nenhum acerto</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">26.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">18</td>
-<td style="text-align: right;">4.5</td>
-<td style="text-align: right;">2.5</td>
-<td style="text-align: right;">241</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">25.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">5.5</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">223</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">24.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">3.8</td>
-<td style="text-align: right;">5.5</td>
-<td style="text-align: right;">201</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">23.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">4.2</td>
-<td style="text-align: right;">5.7</td>
-<td style="text-align: right;">186</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr>
-<td style="text-align: left;">22.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">5.5</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">169</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">21.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">4.8</td>
-<td style="text-align: right;">3.3</td>
-<td style="text-align: right;">147</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr>
-<td style="text-align: left;">20.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">3.5</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">128</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr>
-<td style="text-align: left;">19.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">5.6</td>
-<td style="text-align: right;">114</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr>
-<td style="text-align: left;">18.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">5.2</td>
-<td style="text-align: right;">94</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">17.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">2.5</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">62</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">16.Jun.2025</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">8.3</td>
-<td style="text-align: right;">6.4</td>
-<td style="text-align: right;">52</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">15.Jun.2025</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">6.5</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr>
-<td style="text-align: left;">14.Jun.2025</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-<h2>🔍 raio x</h2>
-<p>Artilheiro: <strong>Mbappe</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;">#</th>
-<th style="text-align: left;">date</th>
-<th style="text-align: left;">hour</th>
-<th style="text-align: left;">casa</th>
-<th style="text-align: left;">visitante</th>
-<th style="text-align: left;">bolao_placar</th>
-<th style="text-align: left;">bolao_time</th>
-<th style="text-align: left;">real_placar</th>
-<th style="text-align: left;">real_time</th>
-<th style="text-align: right;">pontos</th>
-<th style="text-align: left;">criterio</th>
-<th style="text-align: right;">pontos_acumulados</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;">47</td>
-<td style="text-align: left;">26.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">RB Salzburg</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: left;">0 x 3</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">3-Vencedor correto</td>
-<td style="text-align: right;">234</td>
-</tr>
-<tr>
-<td style="text-align: right;">48</td>
-<td style="text-align: left;">26.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Al-Hilal</td>
-<td style="text-align: left;">Pachuca</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">Al-Hilal</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Al-Hilal</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">241</td>
-</tr>
-<tr>
-<td style="text-align: right;">45</td>
-<td style="text-align: left;">26.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Juventus</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: left;">2 x 5</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">3-Vencedor correto</td>
-<td style="text-align: right;">228</td>
-</tr>
-<tr>
-<td style="text-align: right;">46</td>
-<td style="text-align: left;">26.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Wydad Casablanca</td>
-<td style="text-align: left;">Al-Ain</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">Wydad Casablanca</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">Al-Ain</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">229</td>
-</tr>
-<tr>
-<td style="text-align: right;">43</td>
-<td style="text-align: left;">25.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: left;">River Plate</td>
-<td style="text-align: left;">3 x 1</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">216</td>
-</tr>
-<tr>
-<td style="text-align: right;">44</td>
-<td style="text-align: left;">25.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Urawa Reds</td>
-<td style="text-align: left;">Monterrey</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Monterrey</td>
-<td style="text-align: left;">0 x 4</td>
-<td style="text-align: left;">Monterrey</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">223</td>
-</tr>
-<tr>
-<td style="text-align: right;">41</td>
-<td style="text-align: left;">25.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Mamelodi Sundowns</td>
-<td style="text-align: left;">Fluminense</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Fluminense</td>
-<td style="text-align: left;">0 x 0</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">202</td>
-</tr>
-<tr>
-<td style="text-align: right;">42</td>
-<td style="text-align: left;">25.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: left;">Ulsan HD</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">209</td>
-</tr>
-<tr>
-<td style="text-align: right;">39</td>
-<td style="text-align: left;">24.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Los Angeles FC</td>
-<td style="text-align: left;">Flamengo</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">Flamengo</td>
-<td style="text-align: left;">1 x 1</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">189</td>
-</tr>
-<tr>
-<td style="text-align: right;">40</td>
-<td style="text-align: left;">24.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Espérance</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: left;">0 x 3</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: left;">0 x 3</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">1-Placar exato</td>
-<td style="text-align: right;">201</td>
-</tr>
-<tr>
-<td style="text-align: right;">37</td>
-<td style="text-align: left;">24.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Benfica</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: left;">1 x 3</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">Benfica</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">187</td>
-</tr>
-<tr>
-<td style="text-align: right;">38</td>
-<td style="text-align: left;">24.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Auckland City</td>
-<td style="text-align: left;">Boca Juniors</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Boca Juniors</td>
-<td style="text-align: left;">1 x 1</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">188</td>
-</tr>
-<tr>
-<td style="text-align: right;">35</td>
-<td style="text-align: left;">23.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Inter Miami</td>
-<td style="text-align: left;">Palmeiras</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Palmeiras</td>
-<td style="text-align: left;">2 x 2</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">5-Nenhum acerto</td>
-<td style="text-align: right;">186</td>
-</tr>
-<tr>
-<td style="text-align: right;">36</td>
-<td style="text-align: left;">23.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Porto</td>
-<td style="text-align: left;">Al Ahly</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">Porto</td>
-<td style="text-align: left;">4 x 4</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">5-Nenhum acerto</td>
-<td style="text-align: right;">186</td>
-</tr>
-<tr>
-<td style="text-align: right;">33</td>
-<td style="text-align: left;">23.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Seattle Sounders</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: left;">0 x 2</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: left;">0 x 2</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">1-Placar exato</td>
-<td style="text-align: right;">181</td>
-</tr>
-<tr>
-<td style="text-align: right;">34</td>
-<td style="text-align: left;">23.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Atlético de Madrid</td>
-<td style="text-align: left;">Botafogo</td>
-<td style="text-align: left;">3 x 1</td>
-<td style="text-align: left;">Atlético de Madrid</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">Atlético de Madrid</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">3-Vencedor correto</td>
-<td style="text-align: right;">186</td>
-</tr>
-<tr>
-<td style="text-align: right;">32</td>
-<td style="text-align: left;">22.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: left;">Al-Ain</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: left;">6 x 0</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">169</td>
-</tr>
-<tr>
-<td style="text-align: right;">31</td>
-<td style="text-align: left;">22.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">RB Salzburg</td>
-<td style="text-align: left;">Al-Hilal</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">RB Salzburg</td>
-<td style="text-align: left;">0 x 0</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">162</td>
-</tr>
-<tr>
-<td style="text-align: right;">30</td>
-<td style="text-align: left;">22.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: left;">Pachuca</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: left;">3 x 1</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">161</td>
-</tr>
-<tr>
-<td style="text-align: right;">29</td>
-<td style="text-align: left;">22.Jun.2025</td>
-<td style="text-align: left;">13h</td>
-<td style="text-align: left;">Juventus</td>
-<td style="text-align: left;">Wydad Casablanca</td>
-<td style="text-align: left;">3 x 1</td>
-<td style="text-align: left;">Juventus</td>
-<td style="text-align: left;">4 x 1</td>
-<td style="text-align: left;">Juventus</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">154</td>
-</tr>
-<tr>
-<td style="text-align: right;">28</td>
-<td style="text-align: left;">21.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">River Plate</td>
-<td style="text-align: left;">Monterrey</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">River Plate</td>
-<td style="text-align: left;">0 x 0</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">5-Nenhum acerto</td>
-<td style="text-align: right;">147</td>
-</tr>
-<tr>
-<td style="text-align: right;">27</td>
-<td style="text-align: left;">21.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">Fluminense</td>
-<td style="text-align: left;">Ulsan HD</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Fluminense</td>
-<td style="text-align: left;">4 x 2</td>
-<td style="text-align: left;">Fluminense</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">147</td>
-</tr>
-<tr>
-<td style="text-align: right;">26</td>
-<td style="text-align: left;">21.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: left;">Urawa Reds</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">140</td>
-</tr>
-<tr>
-<td style="text-align: right;">25</td>
-<td style="text-align: left;">21.Jun.2025</td>
-<td style="text-align: left;">13h</td>
-<td style="text-align: left;">Mamelodi Sundowns</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: left;">0 x 3</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: left;">3 x 4</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">3-Vencedor correto</td>
-<td style="text-align: right;">133</td>
-</tr>
-<tr>
-<td style="text-align: right;">24</td>
-<td style="text-align: left;">20.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: left;">Boca Juniors</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">128</td>
-</tr>
-<tr>
-<td style="text-align: right;">23</td>
-<td style="text-align: left;">20.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">Los Angeles FC</td>
-<td style="text-align: left;">Espérance</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">Los Angeles FC</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Espérance</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">5-Nenhum acerto</td>
-<td style="text-align: right;">121</td>
-</tr>
-<tr>
-<td style="text-align: right;">22</td>
-<td style="text-align: left;">20.Jun.2025</td>
-<td style="text-align: left;">15h</td>
-<td style="text-align: left;">Flamengo</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: left;">3 x 1</td>
-<td style="text-align: left;">Flamengo</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">5-Nenhum acerto</td>
-<td style="text-align: right;">121</td>
-</tr>
-<tr>
-<td style="text-align: right;">21</td>
-<td style="text-align: left;">20.Jun.2025</td>
-<td style="text-align: left;">13h</td>
-<td style="text-align: left;">Benfica</td>
-<td style="text-align: left;">Auckland City</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Benfica</td>
-<td style="text-align: left;">6 x 0</td>
-<td style="text-align: left;">Benfica</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">121</td>
-</tr>
-<tr>
-<td style="text-align: right;">20</td>
-<td style="text-align: left;">19.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: left;">Botafogo</td>
-<td style="text-align: left;">3 x 0</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Botafogo</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">5-Nenhum acerto</td>
-<td style="text-align: right;">114</td>
-</tr>
-<tr>
-<td style="text-align: right;">19</td>
-<td style="text-align: left;">19.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">Seattle Sounders</td>
-<td style="text-align: left;">Atlético de Madrid</td>
-<td style="text-align: left;">0 x 3</td>
-<td style="text-align: left;">Atlético de Madrid</td>
-<td style="text-align: left;">1 x 3</td>
-<td style="text-align: left;">Atlético de Madrid</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">114</td>
-</tr>
-<tr>
-<td style="text-align: right;">18</td>
-<td style="text-align: left;">19.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Inter Miami</td>
-<td style="text-align: left;">Porto</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Porto</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">Inter Miami</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">107</td>
-</tr>
-<tr>
-<td style="text-align: right;">17</td>
-<td style="text-align: left;">19.Jun.2025</td>
-<td style="text-align: left;">13h</td>
-<td style="text-align: left;">Palmeiras</td>
-<td style="text-align: left;">Al Ahly</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Palmeiras</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Palmeiras</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">1-Placar exato</td>
-<td style="text-align: right;">106</td>
-</tr>
-<tr>
-<td style="text-align: right;">16</td>
-<td style="text-align: left;">18.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Al-Ain</td>
-<td style="text-align: left;">Juventus</td>
-<td style="text-align: left;">0 x 2</td>
-<td style="text-align: left;">Juventus</td>
-<td style="text-align: left;">0 x 5</td>
-<td style="text-align: left;">Juventus</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">94</td>
-</tr>
-<tr>
-<td style="text-align: right;">15</td>
-<td style="text-align: left;">18.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">Pachuca</td>
-<td style="text-align: left;">RB Salzburg</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">RB Salzburg</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">RB Salzburg</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">1-Placar exato</td>
-<td style="text-align: right;">87</td>
-</tr>
-<tr>
-<td style="text-align: right;">14</td>
-<td style="text-align: left;">18.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: left;">Al-Hilal</td>
-<td style="text-align: left;">3 x 1</td>
-<td style="text-align: left;">Real Madrid</td>
-<td style="text-align: left;">1 x 1</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">75</td>
-</tr>
-<tr>
-<td style="text-align: right;">13</td>
-<td style="text-align: left;">18.Jun.2025</td>
-<td style="text-align: left;">13h</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: left;">Wydad Casablanca</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Manchester City</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">1-Placar exato</td>
-<td style="text-align: right;">74</td>
-</tr>
-<tr>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">17.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Monterrey</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: left;">1 x 2</td>
-<td style="text-align: left;">Internazionale</td>
-<td style="text-align: left;">1 x 1</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">62</td>
-</tr>
-<tr>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">17.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">Ulsan HD</td>
-<td style="text-align: left;">Mamelodi Sundowns</td>
-<td style="text-align: left;">1 x 1</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Mamelodi Sundowns</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">61</td>
-</tr>
-<tr>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">17.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">River Plate</td>
-<td style="text-align: left;">Urawa Reds</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">River Plate</td>
-<td style="text-align: left;">3 x 1</td>
-<td style="text-align: left;">River Plate</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">60</td>
-</tr>
-<tr>
-<td style="text-align: right;">9</td>
-<td style="text-align: left;">17.Jun.2025</td>
-<td style="text-align: left;">13h</td>
-<td style="text-align: left;">Fluminense</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: left;">0 x 2</td>
-<td style="text-align: left;">Borussia Dortmund</td>
-<td style="text-align: left;">0 x 0</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">53</td>
-</tr>
-<tr>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">16.Jun.2025</td>
-<td style="text-align: left;">22h</td>
-<td style="text-align: left;">Flamengo</td>
-<td style="text-align: left;">Espérance</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Flamengo</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Flamengo</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">1-Placar exato</td>
-<td style="text-align: right;">52</td>
-</tr>
-<tr>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">16.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">Boca Juniors</td>
-<td style="text-align: left;">Benfica</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">Boca Juniors</td>
-<td style="text-align: left;">2 x 2</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">40</td>
-</tr>
-<tr>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">16.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: left;">Los Angeles FC</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: left;">2 x 0</td>
-<td style="text-align: left;">Chelsea</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">1-Placar exato</td>
-<td style="text-align: right;">39</td>
-</tr>
-<tr>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">15.Jun.2025</td>
-<td style="text-align: left;">23h</td>
-<td style="text-align: left;">Botafogo</td>
-<td style="text-align: left;">Seattle Sounders</td>
-<td style="text-align: left;">1 x 0</td>
-<td style="text-align: left;">Botafogo</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">Botafogo</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">27</td>
-</tr>
-<tr>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">15.Jun.2025</td>
-<td style="text-align: left;">19h</td>
-<td style="text-align: left;">Palmeiras</td>
-<td style="text-align: left;">Porto</td>
-<td style="text-align: left;">2 x 2</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: left;">0 x 0</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">15.Jun.2025</td>
-<td style="text-align: left;">16h</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: left;">Atlético de Madrid</td>
-<td style="text-align: left;">2 x 1</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: left;">4 x 0</td>
-<td style="text-align: left;">Paris Saint-Germain</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">3-Vencedor correto</td>
-<td style="text-align: right;">13</td>
-</tr>
-<tr>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">15.Jun.2025</td>
-<td style="text-align: left;">13h</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: left;">Auckland City</td>
-<td style="text-align: left;">3 x 0</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: left;">10 x 0</td>
-<td style="text-align: left;">Bayern de Munique</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2-Vencedor + gols de um time</td>
-<td style="text-align: right;">8</td>
-</tr>
-<tr>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">14.Jun.2025</td>
-<td style="text-align: left;">21h</td>
-<td style="text-align: left;">Al Ahly</td>
-<td style="text-align: left;">Inter Miami</td>
-<td style="text-align: left;">0 x 1</td>
-<td style="text-align: left;">Inter Miami</td>
-<td style="text-align: left;">0 x 0</td>
-<td style="text-align: left;">empate</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">4-Gols de um time</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
+<div class="back-nav"><a href="../index.html">← Voltar</a></div>
+
+<div class="hero">
+    <h1>👤 Guilherme</h1>
+    <div class="subtitle">2025 Club World Cup</div>
+</div>
+
+<div class="stat-row" style="grid-template-columns:repeat(2,1fr);">
+    <div class="stat-card">
+        <div class="value">241</div>
+        <div class="label">Total</div>
     </div>
+    <div class="stat-card">
+        <div class="value">5.0</div>
+        <div class="label">Media/Jogo (48)</div>
+    </div>
+</div>
+<div class="stat-row" style="grid-template-columns:repeat(2,1fr);margin-top:0;">
+    <div class="stat-card">
+        <div class="value">18.5</div>
+        <div class="label">Media/Dia (13)</div>
+    </div>
+    <div class="stat-card">
+        <div class="value">41.8%</div>
+        <div class="label">Aproveitamento</div>
+    </div>
+</div>
+<div class="striker-badge"><span class="icon">🎯</span> Artilheiro: <strong>Mbappe</strong></div>
+<div class="card"><div class="card-title">Pontos por dia</div><div class="bar-chart"><div class="bar-row"><span class="bar-label">14/06</span><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><span class="bar-pct">1/12 (8%)</span></div>
+<div class="bar-row"><span class="bar-label">15/06</span><div class="bar-track"><div class="bar-fill" style="width:81%"></div></div><span class="bar-pct">26/48 (54%)</span></div>
+<div class="bar-row"><span class="bar-label">16/06</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><span class="bar-pct">25/36 (69%)</span></div>
+<div class="bar-row"><span class="bar-label">17/06</span><div class="bar-track"><div class="bar-fill" style="width:31%"></div></div><span class="bar-pct">10/48 (21%)</span></div>
+<div class="bar-row"><span class="bar-label">18/06</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">32/48 (67%)</span></div>
+<div class="bar-row"><span class="bar-label">19/06</span><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><span class="bar-pct">20/48 (42%)</span></div>
+<div class="bar-row"><span class="bar-label">20/06</span><div class="bar-track"><div class="bar-fill" style="width:43%"></div></div><span class="bar-pct">14/48 (29%)</span></div>
+<div class="bar-row"><span class="bar-label">21/06</span><div class="bar-track"><div class="bar-fill" style="width:59%"></div></div><span class="bar-pct">19/48 (40%)</span></div>
+<div class="bar-row"><span class="bar-label">22/06</span><div class="bar-track"><div class="bar-fill" style="width:68%"></div></div><span class="bar-pct">22/48 (46%)</span></div>
+<div class="bar-row"><span class="bar-label">23/06</span><div class="bar-track"><div class="bar-fill" style="width:53%"></div></div><span class="bar-pct">17/48 (35%)</span></div>
+<div class="bar-row"><span class="bar-label">24/06</span><div class="bar-track"><div class="bar-fill" style="width:46%"></div></div><span class="bar-pct">15/48 (31%)</span></div>
+<div class="bar-row"><span class="bar-label">25/06</span><div class="bar-track"><div class="bar-fill" style="width:68%"></div></div><span class="bar-pct">22/48 (46%)</span></div>
+<div class="bar-row"><span class="bar-label">26/06</span><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div><span class="bar-pct">18/48 (38%)</span></div>
+</div></div>
+<div class="card"><div class="card-title">Pontos por Dia — Voce vs Bolao</div><div style="padding:0.5rem 0;"><div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">14/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:3%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">1</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:5%"></div></div><span style="min-width:30px;text-align:right">1.9</span></div></div><span style="color:var(--danger);min-width:40px;text-align:right;font-weight:700">▼0.9</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">15/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:81%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">26</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:16%"></div></div><span style="min-width:30px;text-align:right">5.2</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲20.8</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">16/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:78%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">25</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:21%"></div></div><span style="min-width:30px;text-align:right">6.8</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲18.2</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">17/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:31%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">10</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:8%"></div></div><span style="min-width:30px;text-align:right">2.8</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲7.2</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">18/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:100%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">32</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:15%"></div></div><span style="min-width:30px;text-align:right">4.9</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲27.1</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">19/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:62%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">20</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:13%"></div></div><span style="min-width:30px;text-align:right">4.3</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲15.7</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">20/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:43%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">14</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:11%"></div></div><span style="min-width:30px;text-align:right">3.7</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲10.3</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">21/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:59%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">19</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:15%"></div></div><span style="min-width:30px;text-align:right">4.9</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲14.1</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">22/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:68%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">22</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:16%"></div></div><span style="min-width:30px;text-align:right">5.3</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲16.7</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">23/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:53%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">17</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:12%"></div></div><span style="min-width:30px;text-align:right">4.0</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲13.0</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">24/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:46%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">15</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:11%"></div></div><span style="min-width:30px;text-align:right">3.7</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲11.3</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">25/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:68%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">22</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:14%"></div></div><span style="min-width:30px;text-align:right">4.6</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲17.4</span></div>
+<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;"><span style="min-width:40px;color:var(--text-muted)">26/06</span><div style="flex:1;"><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--accent)">Voce</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:56%;background:var(--accent)"></div></div><span style="min-width:30px;text-align:right">18</span></div><div style="display:flex;align-items:center;gap:0.25rem;"><span style="min-width:40px;color:var(--text-muted)">Bolao</span><div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:13%"></div></div><span style="min-width:30px;text-align:right">4.3</span></div></div><span style="color:var(--success);min-width:40px;text-align:right;font-weight:700">▲13.7</span></div>
+</div></div>
+
+<div class="section">
+    <div class="section-title">📋 Historico de Jogos (48)</div>
+    <div class="card"><div class="pred-row"><div class="pred-info"><div class="pred-name">RB Salzburg 0 x 3 Real Madrid</div><div class="pred-detail">Previsto: 1 x 2 | 3-Vencedor correto</div><div class="pred-detail">26/06</div></div><div class="pred-points" style="color:var(--warning)">+5 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Al-Hilal 2 x 0 Pachuca</div><div class="pred-detail">Previsto: 1 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">26/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Juventus 2 x 5 Manchester City</div><div class="pred-detail">Previsto: 1 x 2 | 3-Vencedor correto</div><div class="pred-detail">26/06</div></div><div class="pred-points" style="color:var(--warning)">+5 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Wydad Casablanca 1 x 2 Al-Ain</div><div class="pred-detail">Previsto: 1 x 0 | 4-Gols de um time</div><div class="pred-detail">26/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Internazionale 2 x 0 River Plate</div><div class="pred-detail">Previsto: 3 x 1 | 2-Vencedor + gols de um time</div><div class="pred-detail">25/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Urawa Reds 0 x 4 Monterrey</div><div class="pred-detail">Previsto: 0 x 1 | 2-Vencedor + gols de um time</div><div class="pred-detail">25/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Mamelodi Sundowns 0 x 0 Fluminense</div><div class="pred-detail">Previsto: 0 x 1 | 4-Gols de um time</div><div class="pred-detail">25/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Borussia Dortmund 1 x 0 Ulsan HD</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">25/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Los Angeles FC 1 x 1 Flamengo</div><div class="pred-detail">Previsto: 1 x 2 | 4-Gols de um time</div><div class="pred-detail">24/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Espérance 0 x 3 Chelsea</div><div class="pred-detail">Previsto: 0 x 3 | 1-Placar exato</div><div class="pred-detail">24/06</div></div><div class="pred-points" style="color:var(--success)">+12 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Benfica 1 x 0 Bayern de Munique</div><div class="pred-detail">Previsto: 1 x 3 | 4-Gols de um time</div><div class="pred-detail">24/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Auckland City 1 x 1 Boca Juniors</div><div class="pred-detail">Previsto: 0 x 1 | 4-Gols de um time</div><div class="pred-detail">24/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Inter Miami 2 x 2 Palmeiras</div><div class="pred-detail">Previsto: 0 x 1 | 5-Nenhum acerto</div><div class="pred-detail">23/06</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Porto 4 x 4 Al Ahly</div><div class="pred-detail">Previsto: 2 x 1 | 5-Nenhum acerto</div><div class="pred-detail">23/06</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Seattle Sounders 0 x 2 Paris Saint-Germain</div><div class="pred-detail">Previsto: 0 x 2 | 1-Placar exato</div><div class="pred-detail">23/06</div></div><div class="pred-points" style="color:var(--success)">+12 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Atlético de Madrid 1 x 0 Botafogo</div><div class="pred-detail">Previsto: 3 x 1 | 3-Vencedor correto</div><div class="pred-detail">23/06</div></div><div class="pred-points" style="color:var(--warning)">+5 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Manchester City 6 x 0 Al-Ain</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">22/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">RB Salzburg 0 x 0 Al-Hilal</div><div class="pred-detail">Previsto: 1 x 0 | 4-Gols de um time</div><div class="pred-detail">22/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Real Madrid 3 x 1 Pachuca</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">22/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Juventus 4 x 1 Wydad Casablanca</div><div class="pred-detail">Previsto: 3 x 1 | 2-Vencedor + gols de um time</div><div class="pred-detail">22/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">River Plate 0 x 0 Monterrey</div><div class="pred-detail">Previsto: 2 x 1 | 5-Nenhum acerto</div><div class="pred-detail">21/06</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Fluminense 4 x 2 Ulsan HD</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">21/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Internazionale 2 x 1 Urawa Reds</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">21/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Mamelodi Sundowns 3 x 4 Borussia Dortmund</div><div class="pred-detail">Previsto: 0 x 3 | 3-Vencedor correto</div><div class="pred-detail">21/06</div></div><div class="pred-points" style="color:var(--warning)">+5 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Bayern de Munique 2 x 1 Boca Juniors</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">20/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Los Angeles FC 0 x 1 Espérance</div><div class="pred-detail">Previsto: 1 x 0 | 5-Nenhum acerto</div><div class="pred-detail">20/06</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Flamengo 3 x 1 Chelsea</div><div class="pred-detail">Previsto: 1 x 2 | 5-Nenhum acerto</div><div class="pred-detail">20/06</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Benfica 6 x 0 Auckland City</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">20/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Paris Saint-Germain 0 x 1 Botafogo</div><div class="pred-detail">Previsto: 3 x 0 | 5-Nenhum acerto</div><div class="pred-detail">19/06</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Seattle Sounders 1 x 3 Atlético de Madrid</div><div class="pred-detail">Previsto: 0 x 3 | 2-Vencedor + gols de um time</div><div class="pred-detail">19/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Inter Miami 2 x 1 Porto </div><div class="pred-detail">Previsto: 0 x 1 | 4-Gols de um time</div><div class="pred-detail">19/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Palmeiras 2 x 0 Al Ahly</div><div class="pred-detail">Previsto: 2 x 0 | 1-Placar exato</div><div class="pred-detail">19/06</div></div><div class="pred-points" style="color:var(--success)">+12 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Al-Ain 0 x 5 Juventus</div><div class="pred-detail">Previsto: 0 x 2 | 2-Vencedor + gols de um time</div><div class="pred-detail">18/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Pachuca 1 x 2 RB Salzburg</div><div class="pred-detail">Previsto: 1 x 2 | 1-Placar exato</div><div class="pred-detail">18/06</div></div><div class="pred-points" style="color:var(--success)">+12 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Real Madrid 1 x 1 Al-Hilal</div><div class="pred-detail">Previsto: 3 x 1 | 4-Gols de um time</div><div class="pred-detail">18/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Manchester City 2 x 0 Wydad Casablanca</div><div class="pred-detail">Previsto: 2 x 0 | 1-Placar exato</div><div class="pred-detail">18/06</div></div><div class="pred-points" style="color:var(--success)">+12 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Monterrey 1 x 1 Internazionale</div><div class="pred-detail">Previsto: 1 x 2 | 4-Gols de um time</div><div class="pred-detail">17/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Ulsan HD 0 x 1 Mamelodi Sundowns</div><div class="pred-detail">Previsto: 1 x 1 | 4-Gols de um time</div><div class="pred-detail">17/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">River Plate 3 x 1 Urawa Reds</div><div class="pred-detail">Previsto: 2 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">17/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Fluminense 0 x 0 Borussia Dortmund</div><div class="pred-detail">Previsto: 0 x 2 | 4-Gols de um time</div><div class="pred-detail">17/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Flamengo 2 x 0 Espérance</div><div class="pred-detail">Previsto: 2 x 0 | 1-Placar exato</div><div class="pred-detail">16/06</div></div><div class="pred-points" style="color:var(--success)">+12 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Boca Juniors 2 x 2 Benfica</div><div class="pred-detail">Previsto: 2 x 1 | 4-Gols de um time</div><div class="pred-detail">16/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Chelsea 2 x 0 Los Angeles FC</div><div class="pred-detail">Previsto: 2 x 0 | 1-Placar exato</div><div class="pred-detail">16/06</div></div><div class="pred-points" style="color:var(--success)">+12 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Botafogo 2 x 1 Seattle Sounders</div><div class="pred-detail">Previsto: 1 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">15/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Palmeiras 0 x 0 Porto </div><div class="pred-detail">Previsto: 2 x 2 | 2-Vencedor + gols de um time</div><div class="pred-detail">15/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Paris Saint-Germain 4 x 0 Atlético de Madrid</div><div class="pred-detail">Previsto: 2 x 1 | 3-Vencedor correto</div><div class="pred-detail">15/06</div></div><div class="pred-points" style="color:var(--warning)">+5 ⚠️</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Bayern de Munique 10 x 0 Auckland City</div><div class="pred-detail">Previsto: 3 x 0 | 2-Vencedor + gols de um time</div><div class="pred-detail">15/06</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Al Ahly 0 x 0 Inter Miami</div><div class="pred-detail">Previsto: 0 x 1 | 4-Gols de um time</div><div class="pred-detail">14/06</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
+</div>
+</div>
+
+<div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
+    atualizado as 17/05/2026 00:28:03
+</div>
 </body>
 </html>
