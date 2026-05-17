@@ -985,11 +985,21 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
             "recent": [{"match": f"{r['home_team']} {r['resultado_real_placar']} {r['away_team']}", "pts": int(r["pontos"]), "date": pd.to_datetime(r["date"]).strftime("%d/%m")} for _, r in recent.iterrows()]
         }
 
+    # Compute championship leader
+    df_totals = df_valid.groupby("who", as_index=False)["pontos"].sum()
+    df_totals.sort_values("pontos", ascending=False, inplace=True)
+    leader_name = str(df_totals.iloc[0]["who"]) if not df_totals.empty else ""
+
     import json
-    json_str = json.dumps(player_json, ensure_ascii=False)
+    json_str = json.dumps({
+        "players": player_json,
+        "leader": leader_name,
+    }, ensure_ascii=False)
 
     js_code = r"""
-const playerData = PLAYER_DATA_PLACEHOLDER;
+const arenaData = DATA_PLACEHOLDER;
+const playerData = arenaData.players;
+const leaderName = arenaData.leader;
 
 function getCSSVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -1018,9 +1028,14 @@ function updateArena() {
 
     const voceColor = getCSSVar('--voce');
     const bolaoColor = getCSSVar('--bolao');
+    const leaderColor = getCSSVar('--leader');
     const gridColor = getCSSVar('--card-border');
     const axisColor = getCSSVar('--text-muted');
     const legendTextColor = getCSSVar('--text');
+
+    // Determine if leader should be shown (neither selected player is the leader)
+    const showLeader = leaderName && leaderName !== p1 && leaderName !== p2;
+    const dLeader = showLeader ? playerData[leaderName] : null;
 
     // Cumulative line chart
     const cumDiv = document.getElementById('cumulative-comparison');
@@ -1039,10 +1054,16 @@ function updateArena() {
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
 
-    const allCumDates = [...new Set([...d1.cumulative.map(c => c.date), ...d2.cumulative.map(c => c.date)])].sort();
+    let allCumDates = [...new Set([...d1.cumulative.map(c => c.date), ...d2.cumulative.map(c => c.date)])];
+    if (showLeader && dLeader) {
+        allCumDates = [...new Set([...allCumDates, ...dLeader.cumulative.map(c => c.date)])];
+    }
+    allCumDates.sort();
+
     const last1 = d1.cumulative.length > 0 ? d1.cumulative[d1.cumulative.length-1].cum : 0;
     const last2 = d2.cumulative.length > 0 ? d2.cumulative[d2.cumulative.length-1].cum : 0;
-    const maxCum = Math.max(last1, last2, 1);
+    const lastLeader = showLeader && dLeader && dLeader.cumulative.length > 0 ? dLeader.cumulative[dLeader.cumulative.length-1].cum : 0;
+    const maxCum = Math.max(last1, last2, lastLeader, 1);
 
     function buildSeries(data, dates) {
         return dates.map(function(date) {
@@ -1052,6 +1073,7 @@ function updateArena() {
     }
     const s1 = buildSeries(d1.cumulative, allCumDates);
     const s2 = buildSeries(d2.cumulative, allCumDates);
+    const sLeader = showLeader ? buildSeries(dLeader.cumulative, allCumDates) : null;
 
     function getPointX(i) { return padL + (plotW / Math.max(allCumDates.length - 1, 1)) * i; }
     function getPointY(val) { return padT + plotH - (val / maxCum) * plotH; }
@@ -1075,9 +1097,9 @@ function updateArena() {
         ctx.fillText(val, padL - 4, y + 3);
     }
 
-    function drawLine(series, color) {
+    function drawLine(series, color, lineWidth, dotRadius) {
         ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = lineWidth || 2;
         ctx.beginPath();
         series.forEach(function(val, i) {
             const x = getPointX(i);
@@ -1091,11 +1113,15 @@ function updateArena() {
             const y = getPointY(val);
             ctx.fillStyle = color;
             ctx.beginPath();
-            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.arc(x, y, dotRadius || 3, 0, Math.PI * 2);
             ctx.fill();
         });
     }
 
+    // Draw leader line first (behind)
+    if (showLeader && sLeader) {
+        drawLine(sLeader, leaderColor, 1.5, 2);
+    }
     drawLine(s1, voceColor);
     drawLine(s2, bolaoColor);
 
@@ -1113,16 +1139,28 @@ function updateArena() {
 
     // Legend - bottom right
     const legendY = H - padB - 30;
+    const legendStartX = W - padR - 80;
+    const legendItemH = 14;
+    let legendIdx = 0;
+
+    if (showLeader) {
+        ctx.fillStyle = leaderColor;
+        ctx.fillRect(legendStartX, legendY + legendIdx * legendItemH, 12, 12);
+        ctx.fillStyle = legendTextColor;
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(leaderName, legendStartX + 16, legendY + legendIdx * legendItemH + 10);
+        legendIdx++;
+    }
     ctx.fillStyle = voceColor;
-    ctx.fillRect(W - padR - 80, legendY, 12, 12);
+    ctx.fillRect(legendStartX, legendY + legendIdx * legendItemH, 12, 12);
     ctx.fillStyle = legendTextColor;
-    ctx.font = '10px sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(p1, W - padR - 64, legendY + 10);
+    ctx.fillText(p1, legendStartX + 16, legendY + legendIdx * legendItemH + 10);
+    legendIdx++;
     ctx.fillStyle = bolaoColor;
-    ctx.fillRect(W - padR - 80, legendY + 18, 12, 12);
+    ctx.fillRect(legendStartX, legendY + legendIdx * legendItemH, 12, 12);
     ctx.fillStyle = legendTextColor;
-    ctx.fillText(p2, W - padR - 64, legendY + 28);
+    ctx.fillText(p2, legendStartX + 16, legendY + legendIdx * legendItemH + 10);
 
     // Hover tooltip
     canvas.addEventListener('mousemove', function(e) {
@@ -1138,10 +1176,18 @@ function updateArena() {
         if (closest >= 0) {
             const v1 = s1[closest];
             const v2 = s2[closest];
-            tooltip.style.display = 'block';
-            tooltip.innerHTML = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + allCumDates[closest] + '</div>' +
+            let tipHtml = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + allCumDates[closest] + '</div>' +
                 '<div style="color:' + voceColor + ';">' + p1 + ': <strong>' + v1 + '</strong> pts</div>' +
                 '<div style="color:' + bolaoColor + ';">' + p2 + ': <strong>' + v2 + '</strong> pts</div>';
+            if (showLeader && sLeader) {
+                const vL = sLeader[closest];
+                tipHtml = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + allCumDates[closest] + '</div>' +
+                    '<div style="color:' + leaderColor + ';">' + leaderName + ': <strong>' + vL + '</strong> pts</div>' +
+                    '<div style="color:' + voceColor + ';">' + p1 + ': <strong>' + v1 + '</strong> pts</div>' +
+                    '<div style="color:' + bolaoColor + ';">' + p2 + ': <strong>' + v2 + '</strong> pts</div>';
+            }
+            tooltip.style.display = 'block';
+            tooltip.innerHTML = tipHtml;
             let tx = mx + 12;
             let ty = my - 10;
             if (tx + 120 > W) tx = mx - 130;
@@ -1223,6 +1269,7 @@ function updateArena() {
         <div class="stat-card" style="background:var(--card-border);">
             <div class="value" style="font-size:1.2rem;">VS</div>
             <div class="label">Comparacao</div>
+            <div class="label"></div>
         </div>
         <div class="stat-card" id="p2-total">
             <div class="value" style="color:var(--bolao)">-</div>
@@ -1266,7 +1313,7 @@ function updateArena() {
 </div>
 
 <script>
-{js_code.replace('PLAYER_DATA_PLACEHOLDER', json_str)}
+{js_code.replace('DATA_PLACEHOLDER', json_str)}
 </script>
 """
     return _page_frame(config, f"Arena - {config.report_title}", body, back_link="index.html")

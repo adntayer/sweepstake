@@ -304,6 +304,53 @@ class TestListChampionships:
 
 
 # ------------------------------------------------------------------
+# Scoring rule uniqueness validation
+# ------------------------------------------------------------------
+
+class TestScoringRuleUniqueness:
+    """Ensure a championship config has no duplicate rule types.
+
+    Duplicate rule keys (e.g. two rules with rule='no_score') cause
+    silent data loss: score_prediction builds a dict {rule.rule: rule}
+    where the first occurrence wins and the rest are discarded.
+    """
+
+    def test_no_duplicate_rule_types(self):
+        """All loaded championships must have unique rule.rule values."""
+        for champ_id in list_championships():
+            cfg = load_config(champ_id)
+            rule_keys = [r.rule for r in cfg.scoring_rules if r.rule]
+            assert len(rule_keys) == len(set(rule_keys)), (
+                f"{champ_id}: duplicate rule types found: "
+                f"{[k for k in rule_keys if rule_keys.count(k) > 1]}"
+            )
+
+    def test_no_duplicate_rule_types_explicit(self):
+        """Manually constructed config with duplicate rule should fail."""
+        cfg = ChampionshipConfig(
+            id="test", name="Test", year=2025,
+            scoring_rules=[
+                ScoringRule(name="A", points=5, rule="no_score"),
+                ScoringRule(name="B", points=0, rule="no_score"),
+            ],
+        )
+        rule_keys = [r.rule for r in cfg.scoring_rules if r.rule]
+        assert len(rule_keys) != len(set(rule_keys))
+
+    def test_empty_rule_is_ignored(self):
+        """Rules with empty rule string should not count as duplicates."""
+        cfg = ChampionshipConfig(
+            id="test", name="Test", year=2025,
+            scoring_rules=[
+                ScoringRule(name="A", points=5, rule=""),
+                ScoringRule(name="B", points=3, rule=""),
+            ],
+        )
+        rule_keys = [r.rule for r in cfg.scoring_rules if r.rule]
+        assert len(rule_keys) == 0  # all empty → no collision possible
+
+
+# ------------------------------------------------------------------
 # ThemeConfig
 # ------------------------------------------------------------------
 

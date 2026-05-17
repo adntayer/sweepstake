@@ -552,7 +552,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 
 <a href="arena.html" style="display:block;margin:0 0.75rem;">
     <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);">
-        \u2694\ufe0f Arena — Compare Jogadores
+        \u2694\ufe0f Arena — Compare Boleiros
     </div>
 </a>
 

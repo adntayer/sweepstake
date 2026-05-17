@@ -63,6 +63,7 @@ class ThemeColors:
     text_inverse: str = "#000000"
     silver: str = "#c0c0c0"
     bronze: str = "#cd7f32"
+    leader: str = "#8899aa"
     accent_highlight: str = "rgba(245,197,24,0.1)"
     silver_highlight: str = "rgba(192,192,192,0.08)"
     bronze_highlight: str = "rgba(205,127,50,0.08)"
@@ -116,6 +117,7 @@ class ThemeConfig:
             f"    --text-inverse: {c.text_inverse};\n"
             f"    --silver: {c.silver};\n"
             f"    --bronze: {c.bronze};\n"
+            f"    --leader: {c.leader};\n"
             f"    --accent-highlight: {c.accent_highlight};\n"
             f"    --silver-highlight: {c.silver_highlight};\n"
             f"    --bronze-highlight: {c.bronze_highlight};\n"
@@ -336,6 +338,7 @@ def _parse_theme(raw: dict) -> ThemeConfig:
         text_inverse=colors_raw.get("text_inverse", "#000000"),
         silver=colors_raw.get("silver", "#c0c0c0"),
         bronze=colors_raw.get("bronze", "#cd7f32"),
+        leader=colors_raw.get("leader", "#8899aa"),
         accent_highlight=colors_raw.get("accent_highlight", "rgba(245,197,24,0.1)"),
         silver_highlight=colors_raw.get("silver_highlight", "rgba(192,192,192,0.08)"),
         bronze_highlight=colors_raw.get("bronze_highlight", "rgba(205,127,50,0.08)"),

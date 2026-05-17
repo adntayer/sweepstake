@@ -56,9 +56,8 @@ def _matches_condition(
     if cond == "correct_winner_and_goals":
         if not correct_w:
             return False
-        # Must also have either one team's exact goals OR correct goal difference
-        correct_diff = (home_pred - away_pred) == (home_real - away_real)
-        if not (one_team or correct_diff):
+        # Must have at least one team's exact goals
+        if not one_team:
             return False
         # Check error bounds
         max_err = getattr(rule, "max_total_error", None)
@@ -116,27 +115,24 @@ def score_prediction(
     away_real = int(away_real)
 
     exact_score = home_pred == home_real and away_pred == away_real
+    correct_winner_and_scores_one_time = pred_w == real_w and (home_pred == home_real or  away_pred == away_real)
     correct_winner = pred_w == real_w
     one_team_goals = home_pred == home_real or away_pred == away_real
-    correct_diff = (home_pred - away_pred) == (home_real - away_real)
+
+    series_score = pd.Series([0, "5-Nenhum acerto", 1])
 
     if exact_score:
-        rule_name = "exact_score"
-    elif correct_winner and (one_team_goals or correct_diff):
-        rule_name = "correct_winner_and_goals"
+        rule_name = 'exact_score'
+    elif correct_winner_and_scores_one_time:
+        rule_name = 'correct_winner_and_goals'
     elif correct_winner:
-        rule_name = "correct_winner"
+        rule_name = 'correct_winner'
     elif one_team_goals:
-        rule_name = "one_team_goals"
+        rule_name = 'one_team_goals'
     else:
-        rule_name = "no_score"
+        rule_name = 'no_score'
 
-    dict_rule = {}
-    for rule in config.scoring_rules:
-        if rule.rule not in dict_rule:
-            dict_rule[rule.rule] = rule
+    dict_rule = {rule.rule: rule for rule in config.scoring_rules}
 
     rule = dict_rule.get(rule_name)
-    if rule is None:
-        return pd.Series([0, "5-Nenhum acerto", 1])
     return pd.Series([rule.points, rule.name, 1])
