@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'src/a2025_club_world_cup/data/jogos_1afase.csv'
-      - 'src/a2025_club_world_cup/data/jogos_playoffs.csv'
+      - 'src/championships/2025_club_world_cup/data/jogos_1afase.csv'
+      - 'src/championships/2025_club_world_cup/data/jogos_playoffs.csv'
 
 jobs:
   run:
@@ -47,7 +47,7 @@ jobs:
           title: 'Update data'
           draft: false
 
-      # - run: | 
+      # - run: |
       #     git config --global user.name adntayer
       #     git config --global user.email 'adntayer@users.noreply.github.com'
       #     git commit -am  "score update at ${{ steps.date.outputs.date }}"
