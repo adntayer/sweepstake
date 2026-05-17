@@ -8,9 +8,9 @@ from datetime import datetime, timedelta
 
 import pytz
 
-from src.core.config import ChampionshipConfig, PlayoffRound
-from src.core.reports.dashboard import _generate_links, _get_upcoming_games
-from src.core.reports.html import _save_html
+from src.core.config import ChampionshipConfig, PlayoffRound, ThemeConfig
+from src.core.reports.dashboard import _get_upcoming_games, _parse_game_file
+from src.core.reports.html import _save
 
 
 def _make_cfg(reports_dir: str = "reports/test") -> ChampionshipConfig:
@@ -22,50 +22,28 @@ def _make_cfg(reports_dir: str = "reports/test") -> ChampionshipConfig:
         playoff_rounds=[
             PlayoffRound(name="Semi", key="semi", matches=2),
         ],
+        theme=ThemeConfig(),
     )
 
 
 # ------------------------------------------------------------------
-# dashboard._generate_links
+# dashboard._parse_game_file
 # ------------------------------------------------------------------
 
-class TestGenerateLinks:
-    def test_generates_links(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            html_dir = os.path.join(tmpdir, "html", "boleiros")
-            os.makedirs(html_dir)
-            for name in ["Alice", "Bob"]:
-                with open(os.path.join(html_dir, f"{name}.html"), "w") as f:
-                    f.write("<html></html>")
+class TestParseGameFile:
+    def test_parses_valid_filename(self):
+        cfg = _make_cfg()
+        filepath = "reports/test/html/jogos/group/2025-06-14_21h_team_a-vs-team_b.html"
+        result = _parse_game_file(filepath, cfg)
+        assert result is not None
+        assert result["date_str"] == "14/06 21h"
+        assert "href" in result
 
-            cfg = _make_cfg(tmpdir)
-            pattern = os.path.join(html_dir, "*.html")
-            links = _generate_links(pattern, cfg)
-
-            assert len(links) == 2
-            assert '<a href="boleiros/Alice.html">' in links[0] or '<a href="boleiros/Bob.html">' in links[0]
-
-    def test_skips_index(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            html_dir = os.path.join(tmpdir, "html")
-            os.makedirs(html_dir)
-            with open(os.path.join(html_dir, "index.html"), "w") as f:
-                f.write("<html></html>")
-            with open(os.path.join(html_dir, "other.html"), "w") as f:
-                f.write("<html></html>")
-
-            cfg = _make_cfg(tmpdir)
-            links = _generate_links(os.path.join(html_dir, "*.html"), cfg)
-            assert len(links) == 1
-            assert "index" not in links[0].lower() or "index.html" not in links[0]
-
-    def test_empty_directory(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            html_dir = os.path.join(tmpdir, "html")
-            os.makedirs(html_dir)
-            cfg = _make_cfg(tmpdir)
-            links = _generate_links(os.path.join(html_dir, "*.html"), cfg)
-            assert links == []
+    def test_returns_none_for_invalid_filename(self):
+        cfg = _make_cfg()
+        filepath = "reports/test/html/boleiros/Alice.html"
+        result = _parse_game_file(filepath, cfg)
+        assert result is None
 
 
 # ------------------------------------------------------------------
@@ -73,70 +51,90 @@ class TestGenerateLinks:
 # ------------------------------------------------------------------
 
 class TestGetUpcomingGames:
-    def test_filters_future_games(self):
-        cfg = _make_cfg()
-        future = datetime.now(pytz.timezone(cfg.timezone)) + timedelta(hours=5)
-        links = [
-            f'jogos/group/{future.strftime("%Y-%m-%d")}_{future.strftime("%H")}h_match.html',
-        ]
-        result = _get_upcoming_games(links, cfg)
-        assert len(result) == 1
+    def test_finds_future_games(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cfg = _make_cfg(tmpdir)
+            html_base = os.path.join(tmpdir, "html")
+            game_dir = os.path.join(html_base, "jogos", "group")
+            os.makedirs(game_dir)
 
-    def test_filters_past_games(self):
-        cfg = _make_cfg()
-        past = datetime.now(pytz.timezone(cfg.timezone)) - timedelta(hours=5)
-        links = [
-            f'jogos/group/{past.strftime("%Y-%m-%d")}_{past.strftime("%H")}h_match.html',
-        ]
-        result = _get_upcoming_games(links, cfg)
-        assert len(result) == 0
+            future = datetime.now(pytz.timezone(cfg.timezone)) + timedelta(hours=5)
+            fname = f"{future.strftime('%Y-%m-%d')}_{future.strftime('%H')}h_team_a-vs-team_b.html"
+            with open(os.path.join(game_dir, fname), "w") as f:
+                f.write("<html></html>")
 
-    def test_ignores_non_game_links(self):
-        cfg = _make_cfg()
-        links = ["boleiros/Alice.html", "overview.html"]
-        result = _get_upcoming_games(links, cfg)
-        assert result == []
+            result = _get_upcoming_games(html_base, cfg)
+            assert len(result) == 1
 
-    def test_returns_sorted(self):
-        cfg = _make_cfg()
-        future1 = datetime.now(pytz.timezone(cfg.timezone)) + timedelta(hours=5)
-        future2 = datetime.now(pytz.timezone(cfg.timezone)) + timedelta(hours=10)
-        links = [
-            f'jogos/group/{future2.strftime("%Y-%m-%d")}_{future2.strftime("%H")}h_b.html',
-            f'jogos/group/{future1.strftime("%Y-%m-%d")}_{future1.strftime("%H")}h_a.html',
-        ]
-        result = _get_upcoming_games(links, cfg)
-        assert result == sorted(result)
+    def test_ignores_past_games(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cfg = _make_cfg(tmpdir)
+            html_base = os.path.join(tmpdir, "html")
+            game_dir = os.path.join(html_base, "jogos", "group")
+            os.makedirs(game_dir)
+
+            past = datetime.now(pytz.timezone(cfg.timezone)) - timedelta(hours=5)
+            fname = f"{past.strftime('%Y-%m-%d')}_{past.strftime('%H')}h_team_a-vs-team_b.html"
+            with open(os.path.join(game_dir, fname), "w") as f:
+                f.write("<html></html>")
+
+            result = _get_upcoming_games(html_base, cfg)
+            assert len(result) == 0
+
+    def test_empty_directory(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cfg = _make_cfg(tmpdir)
+            html_base = os.path.join(tmpdir, "html")
+            os.makedirs(os.path.join(html_base, "jogos", "group"))
+            result = _get_upcoming_games(html_base, cfg)
+            assert result == []
+
+    def test_returns_sorted_by_date(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cfg = _make_cfg(tmpdir)
+            html_base = os.path.join(tmpdir, "html")
+            game_dir = os.path.join(html_base, "jogos", "group")
+            os.makedirs(game_dir)
+
+            tz = pytz.timezone(cfg.timezone)
+            f1 = datetime.now(tz) + timedelta(hours=10)
+            f2 = datetime.now(tz) + timedelta(hours=5)
+
+            for dt, name in [(f1, "b"), (f2, "a")]:
+                fname = f"{dt.strftime('%Y-%m-%d')}_{dt.strftime('%H')}h_team_{name}-vs-other.html"
+                with open(os.path.join(game_dir, fname), "w") as f:
+                    f.write("<html></html>")
+
+            result = _get_upcoming_games(html_base, cfg)
+            assert len(result) == 2
+            assert result[0]["dt"] <= result[1]["dt"]
 
 
 # ------------------------------------------------------------------
-# html._save_html
+# html._save
 # ------------------------------------------------------------------
 
 class TestSaveHtml:
     def test_creates_file(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             path = os.path.join(tmpdir, "sub", "report.html")
-            _save_html(path, "<h1>Hello</h1>", "Test")
+            _save(path, "<!DOCTYPE html><html><body><h1>Hello</h1></body></html>")
             assert os.path.isfile(path)
             with open(path, encoding="utf-8") as f:
                 content = f.read()
             assert "<h1>Hello</h1>" in content
-            assert "<title>Test</title>" in content
 
     def test_creates_parent_dirs(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             path = os.path.join(tmpdir, "deep", "nested", "report.html")
-            _save_html(path, "<p>test</p>", "Title")
+            _save(path, "<p>test</p>")
             assert os.path.isfile(path)
 
-    def test_template_structure(self):
+    def test_writes_utf8(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             path = os.path.join(tmpdir, "report.html")
-            _save_html(path, "<p>body</p>", "MyTitle")
+            _save(path, "<p>Jo\u00e3o & Caf\u00e9</p>")
             with open(path, encoding="utf-8") as f:
                 content = f.read()
-            assert "<!DOCTYPE html>" in content
-            assert "MyTitle" in content
-            assert "<p>body</p>" in content
-            assert "</html>" in content
+            assert "Jo\u00e3o" in content
+            assert "Caf\u00e9" in content

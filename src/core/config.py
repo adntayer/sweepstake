@@ -41,6 +41,52 @@ class PlayoffRound:
 
 
 @dataclass
+class ThemeColors:
+    """Color palette for HTML reports."""
+
+    primary: str = "#1a5e1f"
+    primary_light: str = "#2d8a33"
+    accent: str = "#f5c518"
+    accent_dark: str = "#d4a817"
+    bg: str = "#0d1117"
+    card_bg: str = "#161b22"
+    card_border: str = "#30363d"
+    text: str = "#e6edf3"
+    text_muted: str = "#8b949e"
+    success: str = "#2ea043"
+    warning: str = "#d29922"
+    danger: str = "#f85149"
+
+
+@dataclass
+class ThemeConfig:
+    """Theme configuration for HTML reports."""
+
+    mode: str = "dark"
+    colors: ThemeColors = field(default_factory=ThemeColors)
+
+    def to_css_vars(self) -> str:
+        """Return CSS custom properties block."""
+        c = self.colors
+        return (
+            ":root {\n"
+            f"    --primary: {c.primary};\n"
+            f"    --primary-light: {c.primary_light};\n"
+            f"    --accent: {c.accent};\n"
+            f"    --accent-dark: {c.accent_dark};\n"
+            f"    --bg: {c.bg};\n"
+            f"    --card-bg: {c.card_bg};\n"
+            f"    --card-border: {c.card_border};\n"
+            f"    --text: {c.text};\n"
+            f"    --text-muted: {c.text_muted};\n"
+            f"    --success: {c.success};\n"
+            f"    --warning: {c.warning};\n"
+            f"    --danger: {c.danger};\n"
+            "}\n"
+        )
+
+
+@dataclass
 class FirstRoundLayout:
     """First round / group stage Excel slicing config."""
 
@@ -106,6 +152,7 @@ class ChampionshipConfig:
     # Report settings
     report_title: str = ""
     group_phase_label: str = "1a Fase"
+    theme: ThemeConfig = field(default_factory=ThemeConfig)
 
     def __post_init__(self) -> None:
         self.base_dir = _norm(self.base_dir) if self.base_dir else _norm(os.path.join("src", "data", self.id))
@@ -178,6 +225,28 @@ class ChampionshipConfig:
 # ------------------------------------------------------------------
 # Loader
 # ------------------------------------------------------------------
+
+def _parse_theme(raw: dict) -> ThemeConfig:
+    """Parse theme configuration from YAML."""
+    if not raw:
+        return ThemeConfig()
+    colors_raw = raw.get("colors", {})
+    colors = ThemeColors(
+        primary=colors_raw.get("primary", "#1a5e1f"),
+        primary_light=colors_raw.get("primary_light", "#2d8a33"),
+        accent=colors_raw.get("accent", "#f5c518"),
+        accent_dark=colors_raw.get("accent_dark", "#d4a817"),
+        bg=colors_raw.get("bg", "#0d1117"),
+        card_bg=colors_raw.get("card_bg", "#161b22"),
+        card_border=colors_raw.get("card_border", "#30363d"),
+        text=colors_raw.get("text", "#e6edf3"),
+        text_muted=colors_raw.get("text_muted", "#8b949e"),
+        success=colors_raw.get("success", "#2ea043"),
+        warning=colors_raw.get("warning", "#d29922"),
+        danger=colors_raw.get("danger", "#f85149"),
+    )
+    return ThemeConfig(mode=raw.get("mode", "dark"), colors=colors)
+
 
 def _find_championship_dir(championship_id: str) -> Path:
     """Locate the championship directory under src/championships/."""
@@ -255,6 +324,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         excel_layout=excel_layout,
         report_title=raw.get("report_title", raw["name"]),
         group_phase_label=raw.get("group_phase_label", "1a Fase"),
+        theme=_parse_theme(raw.get("theme", {})),
         base_dir=_norm(raw.get("base_dir", "")),
         raw_dir=_norm(raw.get("raw_dir", "")),
         results_file=_norm(raw.get("results_file", "")),

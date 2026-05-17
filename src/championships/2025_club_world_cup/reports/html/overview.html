@@ -2,90 +2,281 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>2025 Club World Cup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview - 2025 Club World Cup</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 12px;
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            color: #212529;
-        }
+    :root {
+    --primary: #1a5e1f;
+    --primary-light: #2d8a33;
+    --accent: #f5c518;
+    --accent-dark: #d4a817;
+    --bg: #0d1117;
+    --card-bg: #161b22;
+    --card-border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --success: #2ea043;
+    --warning: #d29922;
+    --danger: #f85149;
+}
 
-        h1, h2, h3 {
-            color: #343a40;
-        }
+    
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-        }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            table-layout: fixed;
-            word-wrap: break-word;
-            font-size: 12px;
-        }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-        th, td {
-            padding: 8px 10px;
-            border: 1px solid #dee2e6;
-            text-align: center;
-        }
+/* Hero banner */
+.hero {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: #fff;
+}
+.hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
+.hero .timestamp { font-size: 0.75rem; opacity: 0.65; margin-top: 0.5rem; }
 
-        th {
-            background-color: #343a40;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 2;
-            font-size: 12px;
-        }
+/* Back navigation */
+.back-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.back-nav a {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0.75rem;
+}
+.card-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
 
-        tr:hover {
-            background-color: #e9ecef;
-        }
+/* Stat cards row */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.75rem;
+}
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-align: center;
+}
+.stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+.stat-card .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
 
-        a {
-            color: #0d6efd;
-            text-decoration: none;
-            font-size: 12px;
-        }
+/* Score display */
+.score-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+.score-card .team { flex: 1; text-align: center; font-size: 1rem; }
+.score-card .score {
+    color: var(--accent);
+    font-size: 2rem;
+    white-space: nowrap;
+}
+.score-card .vs { color: var(--text-muted); font-size: 0.9rem; }
 
-        a:hover {
-            text-decoration: underline;
-        }
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-success { background: var(--success); color: #fff; }
+.badge-warning { background: var(--warning); color: #000; }
+.badge-danger { background: var(--danger); color: #fff; }
 
-        .note {
-            font-style: italic;
-            font-size: 12px;
-            color: #6c757d;
-        }
+/* CSS bar charts */
+.bar-chart { padding: 0.5rem 0; }
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+}
+.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; }
+.bar-track {
+    flex: 1;
+    height: 20px;
+    background: var(--card-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+.bar-pct { min-width: 40px; text-align: right; color: var(--text-muted); }
 
-        hr {
-            margin: 3rem 0;
-            border: none;
-            border-top: 1px solid #ced4da;
-        }
+/* Player prediction rows */
+.pred-row {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+    gap: 0.75rem;
+}
+.pred-row:last-child { border-bottom: none; }
+.pred-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+.pred-info { flex: 1; min-width: 0; }
+.pred-name { font-weight: 600; font-size: 0.9rem; }
+.pred-detail { font-size: 0.8rem; color: var(--text-muted); }
+.pred-points {
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    min-width: 50px;
+    text-align: right;
+}
 
-        @media (max-width: 768px) {
-            body {
-                font-size: 12px;
-            }
-            th, td {
-                font-size: 12px;
-                padding: 6px 8px;
-            }
-        }
+/* Ranking table */
+.rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+.rank-table th {
+    background: var(--card-border);
+    color: var(--text-muted);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.rank-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+}
+.rank-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.rank-table .rank-1 td { background: rgba(245, 197, 24, 0.1); }
+.rank-table .rank-2 td { background: rgba(192, 192, 192, 0.08); }
+.rank-table .rank-3 td { background: rgba(205, 127, 50, 0.08); }
+
+/* Section spacing */
+.section { margin: 1rem 0; }
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Accordion / details */
+details {
+    margin: 0.5rem 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+summary {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+}
+summary:hover { background: rgba(255,255,255,0.03); }
+details[open] summary { border-bottom: 1px solid var(--card-border); }
+details .content { padding: 0.75rem 1rem; }
+
+/* Striker badge */
+.striker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 0.75rem;
+    font-size: 0.9rem;
+}
+.striker-badge .icon { font-size: 1.2rem; }
+
+/* Responsive */
+@media (min-width: 768px) {
+    body { max-width: 800px; margin: 0 auto; }
+    .stat-row { grid-template-columns: repeat(3, 1fr); }
+}
+
     </style>
 </head>
 <body>
@@ -533,7 +724,35 @@
 <td style="text-align: left;">Monterrey</td>
 </tr>
 </tbody>
-</table>
+        </table>
     </div>
+</div>
+
+<div class="card"><div class="card-title">Pontuacao por jogador (ultimos dias)</div><div class="bar-row"><span class="bar-label">Andre Bonito</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">109/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">Lucas Uberti</span><div class="bar-track"><div class="bar-fill" style="width:91%"></div></div><span class="bar-pct">100/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">Guilherme</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">Cesar Saraiv</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">RODRIGO ALBE</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">Gabão</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">Leo Fernande</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">Rafael Conte</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">André Tayer</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">88/0 (0%)</span></div>
+<div class="bar-row"><span class="bar-label">thiago bahie</span><div class="bar-track"><div class="bar-fill" style="width:77%"></div></div><span class="bar-pct">84/0 (0%)</span></div>
+</div>
+
+<div class="section">
+    <div class="section-title">⚽ Ultimos Resultados</div>
+    <div class="card"><div class="pred-row"><div class="pred-info"><div class="pred-name">Al-Hilal vs Pachuca</div><div class="pred-detail">2025-06-26 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">2 - 0</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">RB Salzburg vs Real Madrid</div><div class="pred-detail">2025-06-26 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">0 - 3</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Wydad Casablanca vs Al-Ain</div><div class="pred-detail">2025-06-26 16h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">1 - 2</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Juventus vs Manchester City</div><div class="pred-detail">2025-06-26 16h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">2 - 5</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Internazionale vs River Plate</div><div class="pred-detail">2025-06-25 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">2 - 0</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Urawa Reds vs Monterrey</div><div class="pred-detail">2025-06-25 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">0 - 4</div></div>
+</div>
+</div>
+
+<div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
+    atualizado as 17/05/2026 00:42:26
+</div>
 </body>
 </html>

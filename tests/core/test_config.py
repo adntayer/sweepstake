@@ -13,6 +13,8 @@ from src.core.config import (
     PlayoffRound,
     PlayoffsLayout,
     ScoringRule,
+    ThemeColors,
+    ThemeConfig,
     _find_championship_dir,
     _norm,
     list_championships,
@@ -299,3 +301,53 @@ class TestListChampionships:
         result = list_championships()
         assert isinstance(result, list)
         assert "2025_club_world_cup" in result
+
+
+# ------------------------------------------------------------------
+# ThemeConfig
+# ------------------------------------------------------------------
+
+class TestThemeColors:
+    def test_defaults(self):
+        c = ThemeColors()
+        assert c.primary == "#1a5e1f"
+        assert c.bg == "#0d1117"
+        assert c.accent == "#f5c518"
+
+    def test_custom(self):
+        c = ThemeColors(primary="#ff0000", bg="#ffffff")
+        assert c.primary == "#ff0000"
+        assert c.bg == "#ffffff"
+        assert c.accent == "#f5c518"  # default preserved
+
+
+class TestThemeConfig:
+    def test_defaults(self):
+        t = ThemeConfig()
+        assert t.mode == "dark"
+        assert isinstance(t.colors, ThemeColors)
+
+    def test_to_css_vars(self):
+        t = ThemeConfig()
+        css = t.to_css_vars()
+        assert ":root {" in css
+        assert "--primary:" in css
+        assert "--bg:" in css
+        assert "--accent:" in css
+
+    def test_custom_colors(self):
+        colors = ThemeColors(primary="#ff0000", bg="#ffffff")
+        t = ThemeConfig(mode="light", colors=colors)
+        css = t.to_css_vars()
+        assert "--primary: #ff0000" in css
+        assert "--bg: #ffffff" in css
+
+    def test_config_has_theme(self):
+        cfg = ChampionshipConfig(id="t", name="T", year=2025)
+        assert isinstance(cfg.theme, ThemeConfig)
+
+    def test_theme_loaded_from_yaml(self):
+        cfg = load_config("2025_club_world_cup")
+        assert cfg.theme.mode == "dark"
+        assert cfg.theme.colors.primary == "#1a5e1f"
+        assert cfg.theme.colors.bg == "#0d1117"
