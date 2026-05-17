@@ -155,7 +155,7 @@ a:hover { text-decoration: underline; }
     margin-bottom: 0.4rem;
     font-size: 0.85rem;
 }
-.bar-label { min-width: 80px; color: var(--text-muted); }
+.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; }
 .bar-track {
     flex: 1;
     height: 20px;
@@ -620,7 +620,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 pts = int(row["pontos"])
                 max_p = int(row["max_possible"])
                 pct_of_max = round(pts / max_p * 100) if max_p > 0 else 0
-                pct_bar = int(pts / max_date_pts * 100)
+                pct_bar = pct_of_max
                 timeline_bars += (
                     f'<div class="bar-row">'
                     f'<span class="bar-label">{row["date_str"]}</span>'
@@ -773,7 +773,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
             f'<div class="bar-row">'
             f'<span class="bar-label">{row["vencedor"]}</span>'
             f'<div class="bar-track"><div class="bar-fill" style="width:{pct}%"></div></div>'
-            f'<span class="bar-pct">{pct}% ({count} de {total_t})</span>'
+            f'<span class="bar-pct">{pct}% ({count}/{total_t})</span>'
             f'</div>\n'
         )
 
@@ -901,12 +901,14 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
         df_p["date"] = pd.to_datetime(df_p["date"])
         daily = df_p.groupby("date")["pontos"].sum().reset_index()
         daily["date_str"] = daily["date"].dt.strftime("%d/%m")
+        daily["cum"] = daily["pontos"].cumsum()
         recent = df_p.sort_values("date", ascending=False).head(10)
         player_json[p] = {
             "total": int(df_p["pontos"].sum()),
             "avg": round(df_p["pontos"].mean(), 1),
             "games": len(df_p),
             "daily": [{"date": r["date_str"], "pts": int(r["pontos"])} for _, r in daily.iterrows()],
+            "cumulative": [{"date": r["date_str"], "cum": int(r["cum"])} for _, r in daily.iterrows()],
             "recent": [{"match": f"{r['home_team']} {r['resultado_real_placar']} {r['away_team']}", "pts": int(r["pontos"]), "date": pd.to_datetime(r["date"]).strftime("%d/%m")} for _, r in recent.iterrows()]
         }
 
@@ -970,6 +972,35 @@ function updateArena() {
             '</div>';
     });
     dailyDiv.innerHTML = dailyHtml;
+
+    // Cumulative comparison
+    const cumDiv = document.getElementById('cumulative-comparison');
+    const maxCum = Math.max(d1.cumulative[d1.cumulative.length-1].cum, d2.cumulative[d2.cumulative.length-1].cum, 1);
+    let cumHtml = '';
+    const maxCumLen = Math.max(d1.cumulative.length, d2.cumulative.length);
+    for (let i = 0; i < maxCumLen; i++) {
+        const c1 = d1.cumulative[i];
+        const c2 = d2.cumulative[i];
+        if (c1) {
+            const pct1 = Math.round(c1.cum / maxCum * 100);
+            cumHtml += '<div style="margin-bottom:0.3rem;font-size:0.75rem;">' +
+                '<div style="display:flex;align-items:center;gap:0.25rem;">' +
+                '<span style="min-width:30px;color:var(--accent);">' + c1.date + '</span>' +
+                '<div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
+                '<span style="min-width:25px;text-align:right;">' + c1.cum + '</span>' +
+                '</div></div>';
+        }
+        if (c2) {
+            const pct2 = Math.round(c2.cum / maxCum * 100);
+            cumHtml += '<div style="margin-bottom:0.3rem;font-size:0.75rem;">' +
+                '<div style="display:flex;align-items:center;gap:0.25rem;">' +
+                '<span style="min-width:30px;color:var(--text-muted);">' + c2.date + '</span>' +
+                '<div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
+                '<span style="min-width:25px;text-align:right;">' + c2.cum + '</span>' +
+                '</div></div>';
+        }
+    }
+    cumDiv.innerHTML = cumHtml;
 
     // Recent games comparison
     const recentDiv = document.getElementById('recent-comparison');
@@ -1065,6 +1096,11 @@ function updateArena() {
     <div class="card">
         <div class="card-title">Pontos por Dia</div>
         <div id="daily-comparison"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Acumulado por Dia</div>
+        <div id="cumulative-comparison"></div>
     </div>
 
     <div class="card">
