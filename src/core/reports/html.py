@@ -50,7 +50,7 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     padding: 1.5rem 1rem;
     text-align: center;
-    color: #fff;
+    color: var(--text);
 }
 .hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
 .hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
@@ -146,7 +146,7 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     font-weight: 600;
 }
 .badge-success { background: var(--success); color: #fff; }
-.badge-warning { background: var(--warning); color: #000; }
+.badge-warning { background: var(--warning); color: var(--text-inverse); }
 .badge-danger { background: var(--danger); color: #fff; }
 
 /* CSS bar charts */
@@ -228,10 +228,10 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     padding: 0.6rem 0.75rem;
     border-bottom: 1px solid var(--card-border);
 }
-.rank-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-.rank-table .rank-1 td { background: rgba(245, 197, 24, 0.1); }
-.rank-table .rank-2 td { background: rgba(192, 192, 192, 0.08); }
-.rank-table .rank-3 td { background: rgba(205, 127, 50, 0.08); }
+.rank-table tr:nth-child(even) { background: var(--zebra-stripe); }
+.rank-table .rank-1 td { background: var(--accent-highlight); }
+.rank-table .rank-2 td { background: var(--silver-highlight); }
+.rank-table .rank-3 td { background: var(--bronze-highlight); }
 
 /* Section spacing */
 .section { margin: 1rem 0; }
@@ -263,7 +263,7 @@ summary {
     gap: 0.5rem;
     user-select: none;
 }
-summary:hover { background: rgba(255,255,255,0.03); }
+summary:hover { background: var(--hover-overlay); }
 details[open] summary { border-bottom: 1px solid var(--card-border); }
 details .content { padding: 0.75rem 1rem; }
 
@@ -327,6 +327,8 @@ details .content { padding: 0.75rem 1rem; }
 .compare-label-p2 { min-width: 30px; color: var(--text-muted); font-size: 0.75rem; }
 .compare-bar-track { height: 12px; }
 .compare-bar-fill-accent { background: var(--accent); }
+.compare-bar-fill-voce { background: var(--voce); }
+.compare-bar-fill-bolao { background: var(--bolao); }
 .compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
 .compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
 
@@ -544,7 +546,7 @@ def _build_overview(config: ChampionshipConfig) -> str:
             bar_rows = ""
             for name, row in df_pivot.head(10).iterrows():
                 total = int(row["total"])
-                pct_bar = int(total / max_val * 100)
+                pct_bar = round(total / max_val * 100)
                 bar_rows += (
                     f'<div class="bar-row">'
                     f'<span class="bar-label">{name[:12]}</span>'
@@ -694,23 +696,23 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             for _, row in df_compare.iterrows():
                 p_pts = row["player_pts"]
                 b_avg = row["bolao_avg"]
-                p_pct = int(p_pts / max_val * 100)
-                b_pct = int(b_avg / max_val * 100)
+                p_pct = round(p_pts / max_val * 100)
+                b_pct = round(b_avg / max_val * 100)
                 diff = p_pts - b_avg
-                diff_color = "var(--success)" if diff >= 0 else "var(--danger)"
+                diff_color = "var(--voce)" if diff >= 0 else "var(--bolao)"
                 diff_icon = "\u25b2" if diff >= 0 else "\u25bc"
                 compare_bars += (
                     f'<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;font-size:0.8rem;">'
                     f'<span style="min-width:40px;color:var(--text-muted)">{row["date_str"]}</span>'
                     f'<div style="flex:1;">'
                     f'<div style="display:flex;align-items:center;gap:0.25rem;">'
-                    f'<span style="min-width:40px;color:var(--accent)">Voce</span>'
-                    f'<div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:{p_pct}%;background:var(--accent)"></div></div>'
+                    f'<span style="min-width:40px;color:var(--voce)">Voce</span>'
+                    f'<div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:{p_pct}%;background:var(--voce)"></div></div>'
                     f'<span style="min-width:30px;text-align:right">{p_pts}</span>'
                     f'</div>'
                     f'<div style="display:flex;align-items:center;gap:0.25rem;">'
-                    f'<span style="min-width:40px;color:var(--text-muted)">Bolao</span>'
-                    f'<div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:{b_pct}%"></div></div>'
+                    f'<span style="min-width:40px;color:var(--bolao)">Bolao</span>'
+                    f'<div class="bar-track" style="height:14px;"><div class="bar-fill" style="width:{b_pct}%;background:var(--bolao)"></div></div>'
                     f'<span style="min-width:30px;text-align:right">{b_avg}</span>'
                     f'</div>'
                     f'</div>'
@@ -725,7 +727,21 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         pts = int(row["pontos"])
         date_str = pd.to_datetime(row["date"]).strftime("%d/%m")
         criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
-        pts_color = config.scoring_color(row.get("criterio", "")) or "var(--text-muted)"
+        css_var, css_bg, css_border = config.scoring_css_var(row.get("criterio", ""))
+        if css_var:
+            pts_color = css_var
+            pts_bg = css_bg
+            pts_border = css_border
+        else:
+            hex_color = config.scoring_color(row.get("criterio", ""))
+            if hex_color:
+                pts_color = hex_color
+                pts_bg = hex_color + "1a"
+                pts_border = hex_color + "40"
+            else:
+                pts_color = "var(--text-muted)"
+                pts_bg = "transparent"
+                pts_border = "var(--card-border)"
         history_rows += (
             f'<div class="pred-row">'
             f'<div class="pred-info">'
@@ -733,7 +749,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
             f'<div class="pred-detail">{date_str}</div>'
             f'</div>'
-            f'<div class="score-pill" style="color:{pts_color};background:{pts_color}1a;border:1px solid {pts_color}40">+{pts} {criterio_emoji}</div>'
+            f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
             f'</div>\n'
         )
 
@@ -745,21 +761,21 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
 <div class="stat-row" style="grid-template-columns:repeat(2,1fr);">
     <div class="stat-card">
-        <div class="value">{total_pts}</div>
+        <div class="value" style="color:var(--voce)">{total_pts}</div>
         <div class="label">Total</div>
     </div>
     <div class="stat-card">
-        <div class="value">{avg_per_game}</div>
+        <div class="value" style="color:var(--voce)">{avg_per_game}</div>
         <div class="label">Media/Jogo ({num_games})</div>
     </div>
 </div>
 <div class="stat-row" style="grid-template-columns:repeat(2,1fr);margin-top:0;">
     <div class="stat-card">
-        <div class="value">{avg_per_day}</div>
+        <div class="value" style="color:var(--voce)">{avg_per_day}</div>
         <div class="label">Media/Dia ({num_days})</div>
     </div>
     <div class="stat-card">
-        <div class="value">{round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0}%</div>
+        <div class="value" style="color:var(--voce)">{round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0}%</div>
         <div class="label">Aproveitamento</div>
     </div>
 </div>
@@ -859,7 +875,21 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     for _, row in df_match.iterrows():
         pts = int(row["pontos"])
         criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
-        pts_color = config.scoring_color(row.get("criterio", "")) or "var(--text-muted)"
+        css_var, css_bg, css_border = config.scoring_css_var(row.get("criterio", ""))
+        if css_var:
+            pts_color = css_var
+            pts_bg = css_bg
+            pts_border = css_border
+        else:
+            hex_color = config.scoring_color(row.get("criterio", ""))
+            if hex_color:
+                pts_color = hex_color
+                pts_bg = hex_color + "1a"
+                pts_border = hex_color + "40"
+            else:
+                pts_color = "var(--text-muted)"
+                pts_bg = "transparent"
+                pts_border = "var(--card-border)"
         pred_rows += (
             f'<div class="pred-row">'
             f'{_avatar_html(row["who"])}'
@@ -867,7 +897,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
             f'<div class="pred-name">{row["who"]}</div>'
             f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
             f'</div>'
-            f'<div class="score-pill" style="color:{pts_color};background:{pts_color}1a;border:1px solid {pts_color}40">+{pts} {criterio_emoji}</div>'
+            f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
             f'</div>\n'
         )
 
@@ -945,7 +975,7 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
         daily = df_p.groupby("date")["pontos"].sum().reset_index()
         daily["date_str"] = daily["date"].dt.strftime("%d/%m")
         daily["cum"] = daily["pontos"].cumsum()
-        recent = df_p.sort_values("date", ascending=False).head(10)
+        recent = df_p.sort_values("date", ascending=False)
         player_json[p] = {
             "total": int(df_p["pontos"].sum()),
             "avg": round(df_p["pontos"].mean(), 1),
@@ -960,6 +990,10 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
 
     js_code = r"""
 const playerData = PLAYER_DATA_PLACEHOLDER;
+
+function getCSSVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
 
 function updateArena() {
     const p1 = document.getElementById('player1').value;
@@ -982,67 +1016,145 @@ function updateArena() {
     document.getElementById('p1-games').querySelector('.value').textContent = d1.games;
     document.getElementById('p2-games').querySelector('.value').textContent = d2.games;
 
-    // Daily comparison
-    const dailyDiv = document.getElementById('daily-comparison');
-    const allDates = [...new Set([...d1.daily.map(d => d.date), ...d2.daily.map(d => d.date)])].sort();
-    const maxDaily = Math.max(...d1.daily.map(d => d.pts), ...d2.daily.map(d => d.pts), 1);
+    const voceColor = getCSSVar('--voce');
+    const bolaoColor = getCSSVar('--bolao');
+    const gridColor = getCSSVar('--card-border');
+    const axisColor = getCSSVar('--text-muted');
+    const legendTextColor = getCSSVar('--text');
 
-    let dailyHtml = '';
-    allDates.forEach(function(date) {
-        const v1 = d1.daily.find(d => d.date === date);
-        const v2 = d2.daily.find(d => d.date === date);
-        const pts1 = v1 ? v1.pts : 0;
-        const pts2 = v2 ? v2.pts : 0;
-        const pct1 = Math.round(pts1 / maxDaily * 100);
-        const pct2 = Math.round(pts2 / maxDaily * 100);
-        const diff = pts1 - pts2;
-        const diffColor = diff >= 0 ? 'var(--success)' : 'var(--danger)';
-        const diffIcon = diff >= 0 ? '\u25B2' : '\u25BC';
-
-        dailyHtml += '<div style="margin-bottom:0.4rem;font-size:0.8rem;">' +
-            '<div style="color:var(--text-muted);margin-bottom:0.15rem;">' + date + '</div>' +
-            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--accent);font-size:0.75rem;">P1</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
-            '<span style="min-width:25px;text-align:right;font-size:0.75rem;">' + pts1 + '</span>' +
-            '</div>' +
-            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--text-muted);font-size:0.75rem;">P2</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
-            '<span style="min-width:25px;text-align:right;font-size:0.75rem;">' + pts2 + '</span>' +
-            '</div>' +
-            '<div style="text-align:right;color:' + diffColor + ';font-size:0.7rem;font-weight:700;">' + diffIcon + Math.abs(diff) + '</div>' +
-            '</div>';
-    });
-    dailyDiv.innerHTML = dailyHtml;
-
-    // Cumulative comparison
+    // Cumulative line chart
     const cumDiv = document.getElementById('cumulative-comparison');
-    const maxCum = Math.max(d1.cumulative[d1.cumulative.length-1].cum, d2.cumulative[d2.cumulative.length-1].cum, 1);
-    let cumHtml = '';
-    const allCumDates = [...new Set([...d1.cumulative.map(c => c.date), ...d2.cumulative.map(c => c.date)])];
-    allCumDates.forEach(function(date) {
-        const c1 = d1.cumulative.find(c => c.date === date);
-        const c2 = d2.cumulative.find(c => c.date === date);
-        const cum1 = c1 ? c1.cum : 0;
-        const cum2 = c2 ? c2.cum : 0;
-        const pct1 = Math.round(cum1 / maxCum * 100);
-        const pct2 = Math.round(cum2 / maxCum * 100);
-        cumHtml += '<div style="margin-bottom:0.5rem;font-size:0.75rem;">' +
-            '<div style="color:var(--text-muted);margin-bottom:0.15rem;">' + date + '</div>' +
-            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--accent);font-size:0.7rem;">P1</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
-            '<span style="min-width:25px;text-align:right;font-size:0.75rem;">' + cum1 + '</span>' +
-            '</div>' +
-            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--text-muted);font-size:0.7rem;">P2</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
-            '<span style="min-width:25px;text-align:right;font-size:0.75rem;">' + cum2 + '</span>' +
-            '</div>' +
-            '</div>';
+    cumDiv.innerHTML = '<div style="position:relative;"><canvas id="cum-chart" width="600" height="250" style="width:100%;height:250px;cursor:crosshair;"></canvas><div id="cum-tooltip" style="display:none;position:absolute;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;pointer-events:none;z-index:100;box-shadow:0 4px 12px var(--shadow-color);"></div></div>';
+    const canvas = document.getElementById('cum-chart');
+    const tooltip = document.getElementById('cum-tooltip');
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = 250 * dpr;
+    ctx.scale(dpr, dpr);
+    const W = rect.width;
+    const H = 250;
+    const padL = 40, padR = 10, padT = 10, padB = 30;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    const allCumDates = [...new Set([...d1.cumulative.map(c => c.date), ...d2.cumulative.map(c => c.date)])].sort();
+    const last1 = d1.cumulative.length > 0 ? d1.cumulative[d1.cumulative.length-1].cum : 0;
+    const last2 = d2.cumulative.length > 0 ? d2.cumulative[d2.cumulative.length-1].cum : 0;
+    const maxCum = Math.max(last1, last2, 1);
+
+    function buildSeries(data, dates) {
+        return dates.map(function(date) {
+            const entry = data.find(c => c.date === date);
+            return entry ? entry.cum : 0;
+        });
+    }
+    const s1 = buildSeries(d1.cumulative, allCumDates);
+    const s2 = buildSeries(d2.cumulative, allCumDates);
+
+    function getPointX(i) { return padL + (plotW / Math.max(allCumDates.length - 1, 1)) * i; }
+    function getPointY(val) { return padT + plotH - (val / maxCum) * plotH; }
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid lines
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 0.5;
+    const gridLines = 5;
+    for (let i = 0; i <= gridLines; i++) {
+        const y = padT + (plotH / gridLines) * i;
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(W - padR, y);
+        ctx.stroke();
+        const val = Math.round(maxCum - (maxCum / gridLines) * i);
+        ctx.fillStyle = axisColor;
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(val, padL - 4, y + 3);
+    }
+
+    function drawLine(series, color) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        series.forEach(function(val, i) {
+            const x = getPointX(i);
+            const y = getPointY(val);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        series.forEach(function(val, i) {
+            const x = getPointX(i);
+            const y = getPointY(val);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    }
+
+    drawLine(s1, voceColor);
+    drawLine(s2, bolaoColor);
+
+    // X-axis labels
+    ctx.fillStyle = axisColor;
+    ctx.font = '9px sans-serif';
+    ctx.textAlign = 'center';
+    const step = Math.max(1, Math.floor(allCumDates.length / 8));
+    allCumDates.forEach(function(date, i) {
+        if (i % step === 0 || i === allCumDates.length - 1) {
+            const x = getPointX(i);
+            ctx.fillText(date, x, H - 5);
+        }
     });
-    cumDiv.innerHTML = cumHtml;
+
+    // Legend - bottom right
+    const legendY = H - padB - 30;
+    ctx.fillStyle = voceColor;
+    ctx.fillRect(W - padR - 80, legendY, 12, 12);
+    ctx.fillStyle = legendTextColor;
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(p1, W - padR - 64, legendY + 10);
+    ctx.fillStyle = bolaoColor;
+    ctx.fillRect(W - padR - 80, legendY + 18, 12, 12);
+    ctx.fillStyle = legendTextColor;
+    ctx.fillText(p2, W - padR - 64, legendY + 28);
+
+    // Hover tooltip
+    canvas.addEventListener('mousemove', function(e) {
+        const r = canvas.getBoundingClientRect();
+        const mx = e.clientX - r.left;
+        const my = e.clientY - r.top;
+        let closest = -1;
+        let closestDist = 20;
+        for (let i = 0; i < allCumDates.length; i++) {
+            const dx = Math.abs(mx - getPointX(i));
+            if (dx < closestDist) { closestDist = dx; closest = i; }
+        }
+        if (closest >= 0) {
+            const v1 = s1[closest];
+            const v2 = s2[closest];
+            tooltip.style.display = 'block';
+            tooltip.innerHTML = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + allCumDates[closest] + '</div>' +
+                '<div style="color:' + voceColor + ';">' + p1 + ': <strong>' + v1 + '</strong> pts</div>' +
+                '<div style="color:' + bolaoColor + ';">' + p2 + ': <strong>' + v2 + '</strong> pts</div>';
+            let tx = mx + 12;
+            let ty = my - 10;
+            if (tx + 120 > W) tx = mx - 130;
+            if (ty < 0) ty = 10;
+            tooltip.style.left = tx + 'px';
+            tooltip.style.top = ty + 'px';
+        } else {
+            tooltip.style.display = 'none';
+        }
+    });
+    canvas.addEventListener('mouseleave', function() {
+        tooltip.style.display = 'none';
+    });
 
     // Recent games comparison
     const recentDiv = document.getElementById('recent-comparison');
@@ -1060,15 +1172,15 @@ function updateArena() {
         const pct2 = Math.round(pts2 / maxRecent * 100);
         const dateLabel = r1 ? r1.date : r2.date;
         recentHtml += '<div style="margin-bottom:0.5rem;font-size:0.75rem;">' +
-            '<div style="color:var(--text-muted);margin-bottom:0.15rem;font-size:0.7rem;">' + dateLabel + ' — ' + match + '</div>' +
+            '<div style="color:var(--text-muted);margin-bottom:0.15rem;font-size:0.7rem;">' + dateLabel + ' \u2014 ' + match + '</div>' +
             '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--accent);font-size:0.7rem;">P1</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
+            '<span style="min-width:30px;color:var(--voce);font-size:0.7rem;">P1</span>' +
+            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--voce);"></div></div>' +
             '<span style="min-width:20px;text-align:right;font-size:0.75rem;">' + pts1 + '</span>' +
             '</div>' +
             '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--text-muted);font-size:0.7rem;">P2</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
+            '<span style="min-width:30px;color:var(--bolao);font-size:0.7rem;">P2</span>' +
+            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;background:var(--bolao);"></div></div>' +
             '<span style="min-width:20px;text-align:right;font-size:0.75rem;">' + pts2 + '</span>' +
             '</div>' +
             '</div>';
@@ -1105,7 +1217,7 @@ function updateArena() {
 <div id="arena-content" style="display:none;">
     <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
         <div class="stat-card" id="p1-total">
-            <div class="value">-</div>
+            <div class="value" style="color:var(--voce)">-</div>
             <div class="label">Total</div>
         </div>
         <div class="stat-card" style="background:var(--card-border);">
@@ -1113,26 +1225,26 @@ function updateArena() {
             <div class="label">Comparacao</div>
         </div>
         <div class="stat-card" id="p2-total">
-            <div class="value">-</div>
+            <div class="value" style="color:var(--bolao)">-</div>
             <div class="label">Total</div>
         </div>
     </div>
 
     <div class="stat-row" style="grid-template-columns:repeat(4,1fr);">
         <div class="stat-card" id="p1-avg">
-            <div class="value" style="font-size:1.1rem;">-</div>
+            <div class="value" style="font-size:1.1rem;color:var(--voce)">-</div>
             <div class="label">Media/Jogo</div>
         </div>
         <div class="stat-card" id="p1-games">
-            <div class="value" style="font-size:1.1rem;">-</div>
+            <div class="value" style="font-size:1.1rem;color:var(--voce)">-</div>
             <div class="label">Jogos</div>
         </div>
         <div class="stat-card" id="p2-avg">
-            <div class="value" style="font-size:1.1rem;">-</div>
+            <div class="value" style="font-size:1.1rem;color:var(--bolao)">-</div>
             <div class="label">Media/Jogo</div>
         </div>
         <div class="stat-card" id="p2-games">
-            <div class="value" style="font-size:1.1rem;">-</div>
+            <div class="value" style="font-size:1.1rem;color:var(--bolao)">-</div>
             <div class="label">Jogos</div>
         </div>
     </div>
@@ -1148,7 +1260,7 @@ function updateArena() {
     </div>
 
     <div class="card">
-        <div class="card-title">Ultimos 10 Jogos</div>
+        <div class="card-title">Todos os Jogos</div>
         <div id="recent-comparison"></div>
     </div>
 </div>

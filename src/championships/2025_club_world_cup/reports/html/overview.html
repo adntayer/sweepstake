@@ -9,15 +9,42 @@
     --primary: #1a5e1f;
     --primary-light: #2d8a33;
     --accent: #f5c518;
-    --accent-dark: #d4a817;
-    --bg: #0d1117;
-    --card-bg: #161b22;
-    --card-border: #30363d;
-    --text: #e6edf3;
-    --text-muted: #8b949e;
-    --success: #2ea043;
-    --warning: #d29922;
-    --danger: #f85149;
+    --accent-dark: #b8940f;
+    --bg: #060d1a;
+    --card-bg: #0d1b2e;
+    --card-border: #1a3050;
+    --text: #ffffff;
+    --text-muted: #8899aa;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --voce: #f5c518;
+    --bolao: #3b82f6;
+    --text-inverse: #000000;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --accent-highlight: rgba(245,197,24,0.1);
+    --silver-highlight: rgba(192,192,192,0.08);
+    --bronze-highlight: rgba(205,127,50,0.08);
+    --zebra-stripe: rgba(255,255,255,0.02);
+    --hover-overlay: rgba(255,255,255,0.03);
+    --shadow-color: rgba(0,0,0,0.4);
+    --score-exact: #00cc00;
+    --score-winner-goals: #66ff66;
+    --score-winner: #ffcc00;
+    --score-one-team: #ff9900;
+    --score-none: #ff3333;
+    --score-exact-bg: rgba(0,204,0,0.1);
+    --score-exact-border: rgba(0,204,0,0.4);
+    --score-winner-goals-bg: rgba(102,255,102,0.1);
+    --score-winner-goals-border: rgba(102,255,102,0.4);
+    --score-winner-bg: rgba(255,204,0,0.1);
+    --score-winner-border: rgba(255,204,0,0.4);
+    --score-one-team-bg: rgba(255,153,0,0.1);
+    --score-one-team-border: rgba(255,153,0,0.4);
+    --score-none-bg: rgba(255,51,51,0.1);
+    --score-none-border: rgba(255,51,51,0.4);
+    --player-card-active: rgba(245,197,24,0.05);
 }
 
     
@@ -43,7 +70,7 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     padding: 1.5rem 1rem;
     text-align: center;
-    color: #fff;
+    color: var(--text);
 }
 .hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
 .hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
@@ -139,7 +166,7 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     font-weight: 600;
 }
 .badge-success { background: var(--success); color: #fff; }
-.badge-warning { background: var(--warning); color: #000; }
+.badge-warning { background: var(--warning); color: var(--text-inverse); }
 .badge-danger { background: var(--danger); color: #fff; }
 
 /* CSS bar charts */
@@ -221,10 +248,10 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     padding: 0.6rem 0.75rem;
     border-bottom: 1px solid var(--card-border);
 }
-.rank-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-.rank-table .rank-1 td { background: rgba(245, 197, 24, 0.1); }
-.rank-table .rank-2 td { background: rgba(192, 192, 192, 0.08); }
-.rank-table .rank-3 td { background: rgba(205, 127, 50, 0.08); }
+.rank-table tr:nth-child(even) { background: var(--zebra-stripe); }
+.rank-table .rank-1 td { background: var(--accent-highlight); }
+.rank-table .rank-2 td { background: var(--silver-highlight); }
+.rank-table .rank-3 td { background: var(--bronze-highlight); }
 
 /* Section spacing */
 .section { margin: 1rem 0; }
@@ -256,7 +283,7 @@ summary {
     gap: 0.5rem;
     user-select: none;
 }
-summary:hover { background: rgba(255,255,255,0.03); }
+summary:hover { background: var(--hover-overlay); }
 details[open] summary { border-bottom: 1px solid var(--card-border); }
 details .content { padding: 0.75rem 1rem; }
 
@@ -320,6 +347,8 @@ details .content { padding: 0.75rem 1rem; }
 .compare-label-p2 { min-width: 30px; color: var(--text-muted); font-size: 0.75rem; }
 .compare-bar-track { height: 12px; }
 .compare-bar-fill-accent { background: var(--accent); }
+.compare-bar-fill-voce { background: var(--voce); }
+.compare-bar-fill-bolao { background: var(--bolao); }
 .compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
 .compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
 
@@ -347,90 +376,6 @@ details .content { padding: 0.75rem 1rem; }
 <div class="section">
     <div class="section-title">📅 Acompanhamento Diario</div>
     
-<details>
-    <summary>26/06 — 4 jogos — max 48 pts</summary>
-    <div class="content">
-        <div class="grid-3 mb-1">
-            <div class="stat-card stat-card-sm">
-                <div class="value">275</div>
-                <div class="label">Total pts</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">17.2</div>
-                <div class="label">Media</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">65%</div>
-                <div class="label">Melhor</div>
-            </div>
-        </div>
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
-            🏆 Thales Oliveira: 31/48 pts (65%)
-        </div>
-        <div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Juventus 2-5 Manchester City</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Wydad Casablanca 1-2 Al-Ain</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">RB Salzburg 0-3 Real Madrid</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Al-Hilal 2-0 Pachuca</div></div></div>
-
-    </div>
-</details>
-
-<details>
-    <summary>25/06 — 4 jogos — max 48 pts</summary>
-    <div class="content">
-        <div class="grid-3 mb-1">
-            <div class="stat-card stat-card-sm">
-                <div class="value">294</div>
-                <div class="label">Total pts</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">18.4</div>
-                <div class="label">Media</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">56%</div>
-                <div class="label">Melhor</div>
-            </div>
-        </div>
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
-            🏆 Rafael Conte: 27/48 pts (56%)
-        </div>
-        <div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Mamelodi Sundowns 0-0 Fluminense</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Borussia Dortmund 1-0 Ulsan HD</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Urawa Reds 0-4 Monterrey</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Internazionale 2-0 River Plate</div></div></div>
-
-    </div>
-</details>
-
-<details>
-    <summary>24/06 — 4 jogos — max 48 pts</summary>
-    <div class="content">
-        <div class="grid-3 mb-1">
-            <div class="stat-card stat-card-sm">
-                <div class="value">234</div>
-                <div class="label">Total pts</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">14.6</div>
-                <div class="label">Media</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">67%</div>
-                <div class="label">Melhor</div>
-            </div>
-        </div>
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
-            🏆 Andre Bonito: 32/48 pts (67%)
-        </div>
-        <div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Auckland City 1-1 Boca Juniors</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Benfica 1-0 Bayern de Munique</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Espérance 0-3 Chelsea</div></div></div>
-<div class="pred-row" style="padding:0.4rem 0;"><div class="pred-info"><div class="pred-name" style="font-size:0.85rem">Los Angeles FC 1-1 Flamengo</div></div></div>
-
-    </div>
-</details>
-
 </div>
 
 
@@ -439,52 +384,52 @@ details .content { padding: 0.75rem 1rem; }
     <div class="card" style="overflow-x:auto;">
         <table class="rank-table">
             <thead><tr><th>#</th><th>Boleiro</th><th>Pts</th><th>🎯 1</th><th>⚽ 2</th><th>✅ 3</th><th>👊 4</th><th>❌ 5</th></tr></thead>
-            <tbody><tr class="rank-1"><td>🥇 1</td><td><a href="boleiros/Guilherme.html">Guilherme</a></td><td style="font-weight:700;color:var(--accent)">241</td><td>7</td><td>17</td><td>5</td><td>13</td><td>6</td></tr>
-<tr class="rank-2"><td>🥈 2</td><td><a href="boleiros/Marcelo.html">Marcelo</a></td><td style="font-weight:700;color:var(--accent)">238</td><td>6</td><td>16</td><td>9</td><td>9</td><td>8</td></tr>
-<tr class="rank-3"><td>🥉 3</td><td><a href="boleiros/André Tayer.html">André Tayer</a></td><td style="font-weight:700;color:var(--accent)">235</td><td>6</td><td>18</td><td>5</td><td>12</td><td>7</td></tr>
-<tr class=""><td> 4</td><td><a href="boleiros/Gabão.html">Gabão</a></td><td style="font-weight:700;color:var(--accent)">232</td><td>6</td><td>14</td><td>10</td><td>12</td><td>6</td></tr>
-<tr class=""><td> 5</td><td><a href="boleiros/Andre Bonito.html">Andre Bonito</a></td><td style="font-weight:700;color:var(--accent)">228</td><td>7</td><td>13</td><td>9</td><td>8</td><td>11</td></tr>
-<tr class=""><td> 6</td><td><a href="boleiros/Cesar Saraiva.html">Cesar Saraiva</a></td><td style="font-weight:700;color:var(--accent)">226</td><td>6</td><td>17</td><td>5</td><td>10</td><td>10</td></tr>
-<tr class=""><td> 7</td><td><a href="boleiros/Leo Fernandes.html">Leo Fernandes</a></td><td style="font-weight:700;color:var(--accent)">222</td><td>4</td><td>19</td><td>6</td><td>11</td><td>8</td></tr>
-<tr class=""><td> 8</td><td><a href="boleiros/RODRIGO ALBERNAZ.html">RODRIGO ALBERNAZ</a></td><td style="font-weight:700;color:var(--accent)">221</td><td>2</td><td>20</td><td>9</td><td>12</td><td>5</td></tr>
-<tr class=""><td> 9</td><td><a href="boleiros/Lucas Ubertini.html">Lucas Ubertini</a></td><td style="font-weight:700;color:var(--accent)">217</td><td>4</td><td>21</td><td>3</td><td>7</td><td>13</td></tr>
-<tr class=""><td> 10</td><td><a href="boleiros/João Henrique.html">João Henrique</a></td><td style="font-weight:700;color:var(--accent)">215</td><td>5</td><td>18</td><td>3</td><td>14</td><td>8</td></tr>
-<tr class=""><td> 11</td><td><a href="boleiros/Leigo Gianonni.html">Leigo Gianonni</a></td><td style="font-weight:700;color:var(--accent)">214</td><td>2</td><td>23</td><td>4</td><td>9</td><td>10</td></tr>
-<tr class=""><td> 12</td><td><a href="boleiros/thiago bahiense.html">thiago bahiense</a></td><td style="font-weight:700;color:var(--accent)">206</td><td>4</td><td>17</td><td>6</td><td>9</td><td>12</td></tr>
-<tr class=""><td> 13</td><td><a href="boleiros/Thales Oliveira.html">Thales Oliveira</a></td><td style="font-weight:700;color:var(--accent)">205</td><td>3</td><td>19</td><td>6</td><td>6</td><td>14</td></tr>
-<tr class=""><td> 14</td><td><a href="boleiros/Rafael Conte.html">Rafael Conte</a></td><td style="font-weight:700;color:var(--accent)">188</td><td>4</td><td>13</td><td>7</td><td>14</td><td>10</td></tr>
-<tr class=""><td> 15</td><td><a href="boleiros/Frederico Soter.html">Frederico Soter</a></td><td style="font-weight:700;color:var(--accent)">179</td><td>2</td><td>16</td><td>7</td><td>8</td><td>15</td></tr>
-<tr class=""><td> 16</td><td><a href="boleiros/Pedro Tayer.html">Pedro Tayer</a></td><td style="font-weight:700;color:var(--accent)">143</td><td>2</td><td>10</td><td>8</td><td>9</td><td>19</td></tr>
+            <tbody><tr class="rank-1"><td>🥇 1</td><td><a href="boleiros/Marcelo.html">Marcelo</a></td><td style="font-weight:700;color:var(--accent)">204</td><td>6</td><td>13</td><td>7</td><td>6</td><td>7</td></tr>
+<tr class="rank-2"><td>🥈 2</td><td><a href="boleiros/André Tayer.html">André Tayer</a></td><td style="font-weight:700;color:var(--accent)">203</td><td>6</td><td>14</td><td>5</td><td>8</td><td>6</td></tr>
+<tr class="rank-3"><td>🥉 3</td><td><a href="boleiros/Guilherme.html">Guilherme</a></td><td style="font-weight:700;color:var(--accent)">200</td><td>6</td><td>14</td><td>4</td><td>10</td><td>5</td></tr>
+<tr class=""><td> 4</td><td><a href="boleiros/Andre Bonito.html">Andre Bonito</a></td><td style="font-weight:700;color:var(--accent)">197</td><td>7</td><td>10</td><td>7</td><td>8</td><td>7</td></tr>
+<tr class=""><td> 5</td><td><a href="boleiros/Gabão.html">Gabão</a></td><td style="font-weight:700;color:var(--accent)">196</td><td>6</td><td>12</td><td>6</td><td>10</td><td>5</td></tr>
+<tr class=""><td> 6</td><td><a href="boleiros/Cesar Saraiva.html">Cesar Saraiva</a></td><td style="font-weight:700;color:var(--accent)">190</td><td>6</td><td>13</td><td>4</td><td>7</td><td>9</td></tr>
+<tr class=""><td> 7</td><td><a href="boleiros/Leo Fernandes.html">Leo Fernandes</a></td><td style="font-weight:700;color:var(--accent)">188</td><td>4</td><td>15</td><td>5</td><td>10</td><td>5</td></tr>
+<tr class=""><td> 8</td><td><a href="boleiros/Leigo Gianonni.html">Leigo Gianonni</a></td><td style="font-weight:700;color:var(--accent)">186</td><td>2</td><td>20</td><td>3</td><td>7</td><td>7</td></tr>
+<tr class=""><td> 9</td><td><a href="boleiros/Lucas Ubertini.html">Lucas Ubertini</a></td><td style="font-weight:700;color:var(--accent)">181</td><td>4</td><td>16</td><td>3</td><td>6</td><td>10</td></tr>
+<tr class=""><td> 10</td><td><a href="boleiros/João Henrique.html">João Henrique</a></td><td style="font-weight:700;color:var(--accent)">180</td><td>4</td><td>16</td><td>2</td><td>10</td><td>7</td></tr>
+<tr class=""><td> 11</td><td><a href="boleiros/RODRIGO ALBERNAZ.html">RODRIGO ALBERNAZ</a></td><td style="font-weight:700;color:var(--accent)">176</td><td>1</td><td>17</td><td>7</td><td>10</td><td>4</td></tr>
+<tr class=""><td> 12</td><td><a href="boleiros/thiago bahiense.html">thiago bahiense</a></td><td style="font-weight:700;color:var(--accent)">161</td><td>2</td><td>14</td><td>6</td><td>9</td><td>8</td></tr>
+<tr class=""><td> 13</td><td><a href="boleiros/Rafael Conte.html">Rafael Conte</a></td><td style="font-weight:700;color:var(--accent)">161</td><td>4</td><td>11</td><td>5</td><td>11</td><td>8</td></tr>
+<tr class=""><td> 14</td><td><a href="boleiros/Thales Oliveira.html">Thales Oliveira</a></td><td style="font-weight:700;color:var(--accent)">160</td><td>2</td><td>15</td><td>5</td><td>6</td><td>11</td></tr>
+<tr class=""><td> 15</td><td><a href="boleiros/Frederico Soter.html">Frederico Soter</a></td><td style="font-weight:700;color:var(--accent)">137</td><td>1</td><td>14</td><td>4</td><td>7</td><td>13</td></tr>
+<tr class=""><td> 16</td><td><a href="boleiros/Pedro Tayer.html">Pedro Tayer</a></td><td style="font-weight:700;color:var(--accent)">119</td><td>2</td><td>8</td><td>6</td><td>9</td><td>14</td></tr>
 </tbody>
         </table>
     </div>
 </div>
 
-<div class="card"><div class="card-title">Pontuacao por jogador (ultimos dias)</div><div class="bar-row"><span class="bar-label">Andre Bonito</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">109 pts</span></div>
-<div class="bar-row"><span class="bar-label">Lucas Uberti</span><div class="bar-track"><div class="bar-fill" style="width:91%"></div></div><span class="bar-pct">100 pts</span></div>
-<div class="bar-row"><span class="bar-label">Guilherme</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94 pts</span></div>
-<div class="bar-row"><span class="bar-label">Cesar Saraiv</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94 pts</span></div>
-<div class="bar-row"><span class="bar-label">RODRIGO ALBE</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92 pts</span></div>
-<div class="bar-row"><span class="bar-label">Gabão</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92 pts</span></div>
-<div class="bar-row"><span class="bar-label">Leo Fernande</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90 pts</span></div>
-<div class="bar-row"><span class="bar-label">Rafael Conte</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90 pts</span></div>
-<div class="bar-row"><span class="bar-label">André Tayer</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">88 pts</span></div>
-<div class="bar-row"><span class="bar-label">thiago bahie</span><div class="bar-track"><div class="bar-fill" style="width:77%"></div></div><span class="bar-pct">84 pts</span></div>
+<div class="card"><div class="card-title">Pontuacao por jogador (ultimos dias)</div><div class="bar-row"><span class="bar-label">Andre Bonito</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">83 pts</span></div>
+<div class="bar-row"><span class="bar-label">Rafael Conte</span><div class="bar-track"><div class="bar-fill" style="width:89%"></div></div><span class="bar-pct">74 pts</span></div>
+<div class="bar-row"><span class="bar-label">Lucas Uberti</span><div class="bar-track"><div class="bar-fill" style="width:87%"></div></div><span class="bar-pct">72 pts</span></div>
+<div class="bar-row"><span class="bar-label">André Tayer</span><div class="bar-track"><div class="bar-fill" style="width:87%"></div></div><span class="bar-pct">72 pts</span></div>
+<div class="bar-row"><span class="bar-label">Cesar Saraiv</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">71 pts</span></div>
+<div class="bar-row"><span class="bar-label">Leo Fernande</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">68 pts</span></div>
+<div class="bar-row"><span class="bar-label">Gabão</span><div class="bar-track"><div class="bar-fill" style="width:81%"></div></div><span class="bar-pct">67 pts</span></div>
+<div class="bar-row"><span class="bar-label">Leigo Gianon</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">66 pts</span></div>
+<div class="bar-row"><span class="bar-label">Guilherme</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">66 pts</span></div>
+<div class="bar-row"><span class="bar-label">João Henriqu</span><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><span class="bar-pct">62 pts</span></div>
 </div>
 
 <div class="section">
     <div class="section-title">⚽ Ultimos Resultados</div>
-    <div class="card"><div class="pred-row"><div class="pred-info"><div class="pred-name">Al-Hilal vs Pachuca</div><div class="pred-detail">2025-06-26 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">2 - 0</div></div>
-<div class="pred-row"><div class="pred-info"><div class="pred-name">RB Salzburg vs Real Madrid</div><div class="pred-detail">2025-06-26 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">0 - 3</div></div>
-<div class="pred-row"><div class="pred-info"><div class="pred-name">Wydad Casablanca vs Al-Ain</div><div class="pred-detail">2025-06-26 16h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">1 - 2</div></div>
-<div class="pred-row"><div class="pred-info"><div class="pred-name">Juventus vs Manchester City</div><div class="pred-detail">2025-06-26 16h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">2 - 5</div></div>
-<div class="pred-row"><div class="pred-info"><div class="pred-name">Internazionale vs River Plate</div><div class="pred-detail">2025-06-25 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">2 - 0</div></div>
-<div class="pred-row"><div class="pred-info"><div class="pred-name">Urawa Reds vs Monterrey</div><div class="pred-detail">2025-06-25 22h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">0 - 4</div></div>
+    <div class="card"><div class="pred-row"><div class="pred-info"><div class="pred-name">Chelsea vs Paris Saint-Germain</div><div class="pred-detail">2025-07-13 19h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">3 - 0</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Paris Saint-Germain vs Real Madrid</div><div class="pred-detail">2025-07-09 19h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">4 - 0</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Fluminense vs Chelsea</div><div class="pred-detail">2025-07-08 19h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">0 - 2</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Real Madrid vs Borussia Dortmund</div><div class="pred-detail">2025-07-05 20h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">3 - 2</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Paris Saint-Germain vs Bayern de Munique</div><div class="pred-detail">2025-07-05 16h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">2 - 0</div></div>
+<div class="pred-row"><div class="pred-info"><div class="pred-name">Palmeiras vs Chelsea</div><div class="pred-detail">2025-07-05 01h</div><div style="margin-top:0.25rem;"></div></div><div class="pred-points" style="color:var(--accent)">1 - 2</div></div>
 </div>
 </div>
 
 <div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 17/05/2026 01:18:52
+    atualizado às 17/05/2026 11:15:35
 </div>
 </body>
 </html>

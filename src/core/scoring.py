@@ -131,7 +131,10 @@ def score_prediction(
     else:
         rule_name = "no_score"
 
-    dict_rule = {rule.rule: rule for rule in config.scoring_rules}
+    dict_rule = {}
+    for rule in config.scoring_rules:
+        if rule.rule not in dict_rule:
+            dict_rule[rule.rule] = rule
 
     rule = dict_rule.get(rule_name)
     if rule is None:

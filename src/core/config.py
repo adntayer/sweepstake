@@ -58,6 +58,33 @@ class ThemeColors:
     success: str = "#2ea043"
     warning: str = "#d29922"
     danger: str = "#f85149"
+    voce: str = "#2ea043"
+    bolao: str = "#f5c518"
+    text_inverse: str = "#000000"
+    silver: str = "#c0c0c0"
+    bronze: str = "#cd7f32"
+    accent_highlight: str = "rgba(245,197,24,0.1)"
+    silver_highlight: str = "rgba(192,192,192,0.08)"
+    bronze_highlight: str = "rgba(205,127,50,0.08)"
+    zebra_stripe: str = "rgba(255,255,255,0.02)"
+    hover_overlay: str = "rgba(255,255,255,0.03)"
+    shadow_color: str = "rgba(0,0,0,0.4)"
+    score_exact: str = "#00cc00"
+    score_winner_goals: str = "#66ff66"
+    score_winner: str = "#ffcc00"
+    score_one_team: str = "#ff9900"
+    score_none: str = "#ff3333"
+    player_card_active: str = "rgba(245,197,24,0.05)"
+    score_exact_bg: str = "rgba(0,204,0,0.1)"
+    score_exact_border: str = "rgba(0,204,0,0.4)"
+    score_winner_goals_bg: str = "rgba(102,255,102,0.1)"
+    score_winner_goals_border: str = "rgba(102,255,102,0.4)"
+    score_winner_bg: str = "rgba(255,204,0,0.1)"
+    score_winner_border: str = "rgba(255,204,0,0.4)"
+    score_one_team_bg: str = "rgba(255,153,0,0.1)"
+    score_one_team_border: str = "rgba(255,153,0,0.4)"
+    score_none_bg: str = "rgba(255,51,51,0.1)"
+    score_none_border: str = "rgba(255,51,51,0.4)"
 
 
 @dataclass
@@ -84,6 +111,33 @@ class ThemeConfig:
             f"    --success: {c.success};\n"
             f"    --warning: {c.warning};\n"
             f"    --danger: {c.danger};\n"
+            f"    --voce: {c.voce};\n"
+            f"    --bolao: {c.bolao};\n"
+            f"    --text-inverse: {c.text_inverse};\n"
+            f"    --silver: {c.silver};\n"
+            f"    --bronze: {c.bronze};\n"
+            f"    --accent-highlight: {c.accent_highlight};\n"
+            f"    --silver-highlight: {c.silver_highlight};\n"
+            f"    --bronze-highlight: {c.bronze_highlight};\n"
+            f"    --zebra-stripe: {c.zebra_stripe};\n"
+            f"    --hover-overlay: {c.hover_overlay};\n"
+            f"    --shadow-color: {c.shadow_color};\n"
+            f"    --score-exact: {c.score_exact};\n"
+            f"    --score-winner-goals: {c.score_winner_goals};\n"
+            f"    --score-winner: {c.score_winner};\n"
+            f"    --score-one-team: {c.score_one_team};\n"
+            f"    --score-none: {c.score_none};\n"
+            f"    --score-exact-bg: {c.score_exact_bg};\n"
+            f"    --score-exact-border: {c.score_exact_border};\n"
+            f"    --score-winner-goals-bg: {c.score_winner_goals_bg};\n"
+            f"    --score-winner-goals-border: {c.score_winner_goals_border};\n"
+            f"    --score-winner-bg: {c.score_winner_bg};\n"
+            f"    --score-winner-border: {c.score_winner_border};\n"
+            f"    --score-one-team-bg: {c.score_one_team_bg};\n"
+            f"    --score-one-team-border: {c.score_one_team_border};\n"
+            f"    --score-none-bg: {c.score_none_bg};\n"
+            f"    --score-none-border: {c.score_none_border};\n"
+            f"    --player-card-active: {c.player_card_active};\n"
             "}\n"
         )
 
@@ -146,10 +200,15 @@ class ChampionshipConfig:
     base_dir: str = ""
     raw_dir: str = ""
     results_file: str = ""
+    games_file: str = ""
     bronze_dir: str = ""
     silver_dir: str = ""
     gold_dir: str = ""
     reports_dir: str = ""
+
+    # External data
+    results_endpoint: str = ""
+    team_name_mapping: dict = field(default_factory=dict)
 
     # Report settings
     report_title: str = ""
@@ -160,6 +219,7 @@ class ChampionshipConfig:
         self.base_dir = _norm(self.base_dir) if self.base_dir else _norm(os.path.join("src", "data", self.id))
         self.raw_dir = _norm(self.raw_dir) if self.raw_dir else _norm(os.path.join(self.base_dir, "raw"))
         self.results_file = _norm(self.results_file) if self.results_file else _norm(os.path.join(self.base_dir, "jogos.csv"))
+        self.games_file = _norm(self.games_file) if self.games_file else self.results_file
         self.bronze_dir = _norm(self.bronze_dir) if self.bronze_dir else _norm(os.path.join(self.base_dir, "bronze"))
         self.silver_dir = _norm(self.silver_dir) if self.silver_dir else _norm(os.path.join(self.base_dir, "silver"))
         self.gold_dir = _norm(self.gold_dir) if self.gold_dir else _norm(os.path.join(self.base_dir, "gold"))
@@ -237,6 +297,17 @@ class ChampionshipConfig:
                 return r.color_text
         return ""
 
+    def scoring_css_var(self, rule_name: str) -> dict:
+        """Return CSS variable names for a scoring rule (color, bg, border)."""
+        mapping = {
+            "1-Placar exato": ("--score-exact", "--score-exact-bg", "--score-exact-border"),
+            "2-Vencedor + gols de um time": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
+            "3-Vencedor correto": ("--score-winner", "--score-winner-bg", "--score-winner-border"),
+            "4-Gols de um time": ("--score-one-team", "--score-one-team-bg", "--score-one-team-border"),
+            "5-Nenhum acerto": ("--score-none", "--score-none-bg", "--score-none-border"),
+        }
+        return mapping.get(rule_name, ("", "", ""))
+
 
 # ------------------------------------------------------------------
 # Loader
@@ -260,8 +331,46 @@ def _parse_theme(raw: dict) -> ThemeConfig:
         success=colors_raw.get("success", "#2ea043"),
         warning=colors_raw.get("warning", "#d29922"),
         danger=colors_raw.get("danger", "#f85149"),
+        voce=colors_raw.get("voce", "#2ea043"),
+        bolao=colors_raw.get("bolao", "#f5c518"),
+        text_inverse=colors_raw.get("text_inverse", "#000000"),
+        silver=colors_raw.get("silver", "#c0c0c0"),
+        bronze=colors_raw.get("bronze", "#cd7f32"),
+        accent_highlight=colors_raw.get("accent_highlight", "rgba(245,197,24,0.1)"),
+        silver_highlight=colors_raw.get("silver_highlight", "rgba(192,192,192,0.08)"),
+        bronze_highlight=colors_raw.get("bronze_highlight", "rgba(205,127,50,0.08)"),
+        zebra_stripe=colors_raw.get("zebra_stripe", "rgba(255,255,255,0.02)"),
+        hover_overlay=colors_raw.get("hover_overlay", "rgba(255,255,255,0.03)"),
+        shadow_color=colors_raw.get("shadow_color", "rgba(0,0,0,0.4)"),
+        score_exact=colors_raw.get("score_exact", "#00cc00"),
+        score_winner_goals=colors_raw.get("score_winner_goals", "#66ff66"),
+        score_winner=colors_raw.get("score_winner", "#ffcc00"),
+        score_one_team=colors_raw.get("score_one_team", "#ff9900"),
+        score_none=colors_raw.get("score_none", "#ff3333"),
+        player_card_active=colors_raw.get("player_card_active", "rgba(245,197,24,0.05)"),
+        score_exact_bg=colors_raw.get("score_exact_bg", "rgba(0,204,0,0.1)"),
+        score_exact_border=colors_raw.get("score_exact_border", "rgba(0,204,0,0.4)"),
+        score_winner_goals_bg=colors_raw.get("score_winner_goals_bg", "rgba(102,255,102,0.1)"),
+        score_winner_goals_border=colors_raw.get("score_winner_goals_border", "rgba(102,255,102,0.4)"),
+        score_winner_bg=colors_raw.get("score_winner_bg", "rgba(255,204,0,0.1)"),
+        score_winner_border=colors_raw.get("score_winner_border", "rgba(255,204,0,0.4)"),
+        score_one_team_bg=colors_raw.get("score_one_team_bg", "rgba(255,153,0,0.1)"),
+        score_one_team_border=colors_raw.get("score_one_team_border", "rgba(255,153,0,0.4)"),
+        score_none_bg=colors_raw.get("score_none_bg", "rgba(255,51,51,0.1)"),
+        score_none_border=colors_raw.get("score_none_border", "rgba(255,51,51,0.4)"),
     )
     return ThemeConfig(mode=raw.get("mode", "dark"), colors=colors)
+
+
+def _parse_team_mapping(raw: list) -> dict[str, str]:
+    """Parse team_name_mapping from YAML into {english: portuguese} dict."""
+    mapping: dict[str, str] = {}
+    for entry in raw:
+        en = entry.get("en", "").strip()
+        pt = entry.get("pt", "").strip()
+        if en and pt:
+            mapping[en] = pt
+    return mapping
 
 
 def _find_championship_dir(championship_id: str) -> Path:
@@ -346,10 +455,13 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         base_dir=_norm(raw.get("base_dir", "")),
         raw_dir=_norm(raw.get("raw_dir", "")),
         results_file=_norm(raw.get("results_file", "")),
+        games_file=_norm(raw.get("games_file", "")),
         bronze_dir=_norm(raw.get("bronze_dir", "")),
         silver_dir=_norm(raw.get("silver_dir", "")),
         gold_dir=_norm(raw.get("gold_dir", "")),
         reports_dir=_norm(raw.get("reports_dir", "")),
+        results_endpoint=raw.get("results_endpoint", ""),
+        team_name_mapping=_parse_team_mapping(raw.get("team_name_mapping", [])),
     )
 
 

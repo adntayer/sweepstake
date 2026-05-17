@@ -51,7 +51,7 @@ a:hover { text-decoration: underline; }
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     padding: 2rem 1rem;
     text-align: center;
-    color: #fff;
+    color: var(--text);
 }
 .hero h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
 .hero .subtitle { font-size: 1rem; opacity: 0.85; }
@@ -119,9 +119,9 @@ a:hover { text-decoration: underline; }
     font-size: 0.8rem;
     flex-shrink: 0;
 }
-.lb-rank-1 { background: var(--accent); color: #000; }
-.lb-rank-2 { background: #c0c0c0; color: #000; }
-.lb-rank-3 { background: #cd7f32; color: #fff; }
+.lb-rank-1 { background: var(--accent); color: var(--text-inverse); }
+.lb-rank-2 { background: var(--silver); color: var(--text-inverse); }
+.lb-rank-3 { background: var(--bronze); color: var(--text); }
 .lb-rank-n { background: var(--card-border); color: var(--text-muted); }
 .lb-name { flex: 1; font-weight: 600; font-size: 0.9rem; }
 .lb-pts {
@@ -158,7 +158,7 @@ a:hover { text-decoration: underline; }
 .game-card .badge-live {
     display: inline-block;
     background: var(--danger);
-    color: #fff;
+    color: var(--text);
     font-size: 0.7rem;
     font-weight: 700;
     padding: 0.15rem 0.5rem;
@@ -184,7 +184,7 @@ a:hover { text-decoration: underline; }
     transition: border-color 0.2s;
 }
 .player-card:hover { border-color: var(--accent); }
-.player-card:active { border-color: var(--accent); background: rgba(245, 197, 24, 0.05); }
+.player-card:active { border-color: var(--accent); background: var(--player-card-active); }
 .player-avatar {
     width: 44px;
     height: 44px;
@@ -228,7 +228,7 @@ summary {
     gap: 0.5rem;
     user-select: none;
 }
-summary:hover { background: rgba(255,255,255,0.03); }
+summary:hover { background: var(--hover-overlay); }
 details[open] summary { border-bottom: 1px solid var(--card-border); }
 details .content { padding: 0.5rem 1rem; }
 details .content a {
