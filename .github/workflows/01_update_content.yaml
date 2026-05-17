@@ -29,11 +29,11 @@ jobs:
         run: |
           uv python install
           uv sync
+          uv pip install -e .
 
       - name: Run update content
         run: |
-          python -m src.a2025_club_world_cup.processing.main
-          python -m src.a2025_club_world_cup.reports.main
+          ss run 2025_club_world_cup
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
@@ -47,7 +47,7 @@ jobs:
           title: 'Update data'
           draft: false
 
-      # - run: |
+      # - run: | 
       #     git config --global user.name adntayer
       #     git config --global user.email 'adntayer@users.noreply.github.com'
       #     git commit -am  "score update at ${{ steps.date.outputs.date }}"

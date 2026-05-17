@@ -103,20 +103,20 @@ def main():
     now_sp = datetime.now(tz_sp).strftime("%d/%m/%Y %H:%M:%S")
 
     with open(PATH_OVERVIEW, "w", encoding="utf-8") as f:
-        f.write("# Visão Geral dos Jogos - 1ª Fase\n\n")
+        f.write("# 📊 Visão Geral dos Jogos - 1ª Fase\n\n")
         f.write(f"_atualizado às {now_sp}_\n\n")
         f.write("_último jogo que tem resultado_\n\n")
         f.write(df.head(1).to_markdown(index=False))
         f.write("\n\n")
         f.write("\n")
         f.write("\n---\n")
-        f.write("## Ranking\n")
+        f.write("## 🏆 Ranking\n")
         f.write(df_rank.to_markdown(index=False))
         f.write("\n\n")
-        f.write("## Últimos dias de pontuacao\n")
+        f.write("## 📈 Últimos dias de pontuacao\n")
         f.write(df_pivot.to_markdown(index=False))
         f.write("\n\n")
-        f.write("## últimos 6 jogos\n")
+        f.write("## ⚽ últimos 6 jogos\n")
         df.columns = ["date", "casa", "gols", "x", "gols", "visitante"]
         f.write(df.head(6).to_markdown(index=False))
         f.write("\n")
@@ -125,7 +125,7 @@ def main():
 
     df_striker = pd.read_csv(PATH_CSV_STRIKER, sep=",")
     for boleiro in list_boleiros:
-        print_colored(f"building boleiros md: {boleiro}", "blue")
+        print_colored(f"building boleiros md: 👤 {boleiro}", "blue")
         df_bol = df_all_valido.loc[df_all_valido["who"] == boleiro]
         df_striker_bol = df_striker.loc[df_striker["boleiro"] == boleiro]
 
@@ -190,13 +190,13 @@ def main():
             "%d.%b.%Y"
         )
         with open(path_bol_xray, "w", encoding="utf-8") as f:
-            f.write("# Visão Geral dos Jogos - 1ª Fase\n\n")
-            f.write(f"# {boleiro}\n\n")
+            f.write("# 📊 Visão Geral dos Jogos - 1ª Fase\n\n")
+            f.write(f"# 👤 {boleiro}\n\n")
             f.write(f"_atualizado às {now_sp}_\n\n")
-            f.write("## resumo\n\n")
+            f.write("## 📋 resumo\n\n")
             f.write(df_bol_stats.to_markdown(index=False))
             f.write("\n\n")
-            f.write("## raio x\n\n")
+            f.write("## 🔍 raio x\n\n")
             f.write(f"Artilheiro: **{df_striker_bol.iloc[0]['striker']}**\n\n")
             f.write(df_bol.to_markdown(index=False))
             f.write("\n")
@@ -204,7 +204,7 @@ def main():
     list_matches = list(df_all["match"].unique())
 
     for match in list_matches:
-        print_colored(f"building jogos md: {match}", "blue")
+        print_colored(f"building jogos md: ⚽ {match}", "blue")
         df_m = df_all.loc[df_all["match"] == match]
 
         list_desired_cols = [
@@ -282,19 +282,19 @@ def main():
             "real_time",
         ]
         with open(path_game_xray, "w", encoding="utf-8") as f:
-            f.write("# Visão Geral dos Jogos - 1ª Fase\n\n")
-            f.write(f"# {match}\n\n")
-            f.write("## pré jogo\n\n")
+            f.write("# ⚽ Visão Geral dos Jogos - 1ª Fase\n\n")
+            f.write(f"# ⚽ {match}\n\n")
+            f.write("## 🔮 pré jogo\n\n")
             f.write("### time\n\n")
             f.write(df_pre_result_time.to_markdown(index=False))
             f.write("\n\n")
             f.write("### placar\n\n")
             f.write(df_pre_result_placar.to_markdown(index=False))
             f.write("\n\n")
-            f.write("## pós jogo\n\n")
+            f.write("## 📊 pós jogo\n\n")
             f.write(df_pos.to_markdown(index=False))
             f.write("\n\n")
-            f.write("## raio x\n\n")
+            f.write("## 🔍 raio x\n\n")
             f.write(df_m.to_markdown(index=False))
 
 

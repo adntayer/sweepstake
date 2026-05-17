@@ -1,18 +1,18 @@
-# Visao Geral dos Jogos - 1afase
+# 📊 Visao Geral dos Jogos - 1afase
 
-# Andre Bonito
+# 👤 Andre Bonito
 
-_atualizado as 16/05/2026 17:05:23_
+_atualizado as 16/05/2026 22:17:38_
 
-## resumo
+## 📋 resumo
 
 | date        |   jogos |   pontos |   media |   desvio padrao |   pontos_acumulados |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |:------------|--------:|---------:|--------:|----------------:|--------------------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-| 26.Jun.2025 |       4 |       21 |     5.2 |             3.5 |                 224 |                0 |                              3 |                    0 |                   0 |                 1 |
-| 25.Jun.2025 |       4 |       19 |     4.8 |             3.3 |                 203 |                0 |                              2 |                    1 |                   0 |                 1 |
-| 24.Jun.2025 |       4 |       30 |     7.5 |             5.4 |                 184 |                2 |                              0 |                    1 |                   1 |                 0 |
-| 23.Jun.2025 |       4 |       20 |     5   |             5.6 |                 154 |                1 |                              1 |                    0 |                   1 |                 1 |
-| 22.Jun.2025 |       4 |       15 |     3.8 |             2.5 |                 134 |                0 |                              0 |                    3 |                   0 |                 1 |
+| 26.Jun.2025 |       4 |       21 |     5.2 |             3.5 |                 228 |                0 |                              3 |                    0 |                   0 |                 1 |
+| 25.Jun.2025 |       4 |       19 |     4.8 |             3.3 |                 207 |                0 |                              2 |                    1 |                   0 |                 1 |
+| 24.Jun.2025 |       4 |       32 |     8   |             5.2 |                 188 |                2 |                              1 |                    0 |                   1 |                 0 |
+| 23.Jun.2025 |       4 |       20 |     5   |             5.6 |                 156 |                1 |                              1 |                    0 |                   1 |                 1 |
+| 22.Jun.2025 |       4 |       17 |     4.2 |             3   |                 136 |                0 |                              1 |                    2 |                   0 |                 1 |
 | 21.Jun.2025 |       4 |       18 |     4.5 |             2.5 |                 119 |                0 |                              1 |                    2 |                   1 |                 0 |
 | 20.Jun.2025 |       4 |       11 |     2.8 |             2.6 |                 101 |                0 |                              0 |                    2 |                   1 |                 1 |
 | 19.Jun.2025 |       4 |       19 |     4.8 |             5.9 |                  90 |                1 |                              1 |                    0 |                   0 |                 2 |
@@ -22,31 +22,31 @@ _atualizado as 16/05/2026 17:05:23_
 | 15.Jun.2025 |       4 |       20 |     5   |             2.8 |                  20 |                0 |                              2 |                    1 |                   1 |                 0 |
 | 14.Jun.2025 |       1 |        0 |     0   |             0   |                   0 |                0 |                              0 |                    0 |                   0 |                 1 |
 
-## raio x
+## 🔍 raio x
 
 Artilheiro: **Haaland**
 
 |   # | date        | hour   | casa                | visitante           | bolao_placar   | bolao_time          | real_placar   | real_time           |   pontos | criterio                     |   pontos_acumulados |
 |----:|:------------|:-------|:--------------------|:--------------------|:---------------|:--------------------|:--------------|:--------------------|---------:|:-----------------------------|--------------------:|
-|  47 | 26.Jun.2025 | 22h    | RB Salzburg         | Real Madrid         | 1 x 3          | Real Madrid         | 0 x 3         | Real Madrid         |        7 | 2-Vencedor + gols de um time |                 217 |
-|  48 | 26.Jun.2025 | 22h    | Al-Hilal            | Pachuca             | 2 x 1          | Al-Hilal            | 2 x 0         | Al-Hilal            |        7 | 2-Vencedor + gols de um time |                 224 |
-|  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 1 x 1          | empate              | 2 x 5         | Manchester City     |        0 | 5-Nenhum acerto              |                 203 |
-|  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 0 x 2          | Al-Ain              | 1 x 2         | Al-Ain              |        7 | 2-Vencedor + gols de um time |                 210 |
-|  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 1          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 196 |
-|  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 0 x 2          | Monterrey           | 0 x 4         | Monterrey           |        7 | 2-Vencedor + gols de um time |                 203 |
-|  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 1 x 3          | Fluminense          | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 184 |
-|  42 | 25.Jun.2025 | 16h    | Borussia Dortmund   | Ulsan HD            | 3 x 1          | Borussia Dortmund   | 1 x 0         | Borussia Dortmund   |        5 | 3-Vencedor correto           |                 189 |
-|  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 1 x 1          | empate              | 1 x 1         | empate              |       12 | 1-Placar exato               |                 172 |
-|  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 3          | Chelsea             | 0 x 3         | Chelsea             |       12 | 1-Placar exato               |                 184 |
-|  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 3          | Bayern de Munique   | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 155 |
-|  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 0 x 0          | empate              | 1 x 1         | empate              |        5 | 3-Vencedor correto           |                 160 |
-|  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 2 x 2          | empate              | 2 x 2         | empate              |       12 | 1-Placar exato               |                 154 |
-|  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 2 x 0          | Porto               | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 154 |
-|  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 4          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time |                 141 |
-|  34 | 23.Jun.2025 | 16h    | Atlético de Madrid  | Botafogo            | 1 x 1          | empate              | 1 x 0         | Atlético de Madrid  |        1 | 4-Gols de um time            |                 142 |
-|  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain              | 3 x 1          | Manchester City     | 6 x 0         | Manchester City     |        5 | 3-Vencedor correto           |                 134 |
-|  31 | 22.Jun.2025 | 19h    | RB Salzburg         | Al-Hilal            | 1 x 2          | Al-Hilal            | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 129 |
-|  30 | 22.Jun.2025 | 16h    | Real Madrid         | Pachuca             | 2 x 0          | Real Madrid         | 3 x 1         | Real Madrid         |        5 | 3-Vencedor correto           |                 129 |
+|  47 | 26.Jun.2025 | 22h    | RB Salzburg         | Real Madrid         | 1 x 3          | Real Madrid         | 0 x 3         | Real Madrid         |        7 | 2-Vencedor + gols de um time |                 221 |
+|  48 | 26.Jun.2025 | 22h    | Al-Hilal            | Pachuca             | 2 x 1          | Al-Hilal            | 2 x 0         | Al-Hilal            |        7 | 2-Vencedor + gols de um time |                 228 |
+|  45 | 26.Jun.2025 | 16h    | Juventus            | Manchester City     | 1 x 1          | empate              | 2 x 5         | Manchester City     |        0 | 5-Nenhum acerto              |                 207 |
+|  46 | 26.Jun.2025 | 16h    | Wydad Casablanca    | Al-Ain              | 0 x 2          | Al-Ain              | 1 x 2         | Al-Ain              |        7 | 2-Vencedor + gols de um time |                 214 |
+|  43 | 25.Jun.2025 | 22h    | Internazionale      | River Plate         | 2 x 1          | Internazionale      | 2 x 0         | Internazionale      |        7 | 2-Vencedor + gols de um time |                 200 |
+|  44 | 25.Jun.2025 | 22h    | Urawa Reds          | Monterrey           | 0 x 2          | Monterrey           | 0 x 4         | Monterrey           |        7 | 2-Vencedor + gols de um time |                 207 |
+|  41 | 25.Jun.2025 | 16h    | Mamelodi Sundowns   | Fluminense          | 1 x 3          | Fluminense          | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 188 |
+|  42 | 25.Jun.2025 | 16h    | Borussia Dortmund   | Ulsan HD            | 3 x 1          | Borussia Dortmund   | 1 x 0         | Borussia Dortmund   |        5 | 3-Vencedor correto           |                 193 |
+|  39 | 24.Jun.2025 | 22h    | Los Angeles FC      | Flamengo            | 1 x 1          | empate              | 1 x 1         | empate              |       12 | 1-Placar exato               |                 176 |
+|  40 | 24.Jun.2025 | 22h    | Espérance           | Chelsea             | 0 x 3          | Chelsea             | 0 x 3         | Chelsea             |       12 | 1-Placar exato               |                 188 |
+|  37 | 24.Jun.2025 | 16h    | Benfica             | Bayern de Munique   | 1 x 3          | Bayern de Munique   | 1 x 0         | Benfica             |        1 | 4-Gols de um time            |                 157 |
+|  38 | 24.Jun.2025 | 16h    | Auckland City       | Boca Juniors        | 0 x 0          | empate              | 1 x 1         | empate              |        7 | 2-Vencedor + gols de um time |                 164 |
+|  35 | 23.Jun.2025 | 22h    | Inter Miami         | Palmeiras           | 2 x 2          | empate              | 2 x 2         | empate              |       12 | 1-Placar exato               |                 156 |
+|  36 | 23.Jun.2025 | 22h    | Porto               | Al Ahly             | 2 x 0          | Porto               | 4 x 4         | empate              |        0 | 5-Nenhum acerto              |                 156 |
+|  33 | 23.Jun.2025 | 16h    | Seattle Sounders    | Paris Saint-Germain | 0 x 4          | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time |                 143 |
+|  34 | 23.Jun.2025 | 16h    | Atlético de Madrid  | Botafogo            | 1 x 1          | empate              | 1 x 0         | Atlético de Madrid  |        1 | 4-Gols de um time            |                 144 |
+|  32 | 22.Jun.2025 | 22h    | Manchester City     | Al-Ain              | 3 x 1          | Manchester City     | 6 x 0         | Manchester City     |        5 | 3-Vencedor correto           |                 136 |
+|  31 | 22.Jun.2025 | 19h    | RB Salzburg         | Al-Hilal            | 1 x 2          | Al-Hilal            | 0 x 0         | empate              |        0 | 5-Nenhum acerto              |                 131 |
+|  30 | 22.Jun.2025 | 16h    | Real Madrid         | Pachuca             | 2 x 0          | Real Madrid         | 3 x 1         | Real Madrid         |        7 | 2-Vencedor + gols de um time |                 131 |
 |  29 | 22.Jun.2025 | 13h    | Juventus            | Wydad Casablanca    | 2 x 0          | Juventus            | 4 x 1         | Juventus            |        5 | 3-Vencedor correto           |                 124 |
 |  28 | 21.Jun.2025 | 22h    | River Plate         | Monterrey           | 1 x 0          | River Plate         | 0 x 0         | empate              |        1 | 4-Gols de um time            |                 119 |
 |  27 | 21.Jun.2025 | 19h    | Fluminense          | Ulsan HD            | 1 x 0          | Fluminense          | 4 x 2         | Fluminense          |        5 | 3-Vencedor correto           |                 118 |

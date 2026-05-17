@@ -1,8 +1,8 @@
-# Visao Geral dos Jogos - 1afase
+# ⚽ Visao Geral dos Jogos - 1afase
 
-# seattle_sounders-vs-paris_saint-germain
+# ⚽ seattle_sounders-vs-paris_saint-germain
 
-## pre jogo
+## 🔮 pre jogo
 
 ### time
 
@@ -21,31 +21,31 @@
 | Paris Saint-Germain | 1 x 3    |   2 | 12 %  | ██    |
 | Paris Saint-Germain | 1 x 4    |   1 | 6 %   | █     |
 
-## pos jogo
+## 📊 pos jogo
 
-| criterio                     |   # | g           |
-|:-----------------------------|----:|:------------|
-| 1-Placar exato               |   4 | █████       |
-| 2-Vencedor + gols de um time |   9 | ███████████ |
-| 3-Vencedor correto           |   3 | ███         |
+| criterio                     |   # | g             |
+|:-----------------------------|----:|:--------------|
+| 1-Placar exato               |   4 | █████         |
+| 2-Vencedor + gols de um time |  11 | █████████████ |
+| 3-Vencedor correto           |   1 | █             |
 
-## raio x
+## 🔍 raio x
 
 | date        | h   | boleiro          | casa             | visitante           |   pontos | criteiro                     | bol_placar   | bol_time            | real_placar   | real_time           |
 |:------------|:----|:-----------------|:-----------------|:--------------------|---------:|:-----------------------------|:-------------|:--------------------|:--------------|:--------------------|
-| 23.Jun.2025 | 16h | thiago bahiensex | Seattle Sounders | Paris Saint-Germain |       12 | 1-Placar exato               | 0 x 2        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | thiago bahiense  | Seattle Sounders | Paris Saint-Germain |       12 | 1-Placar exato               | 0 x 2        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | RODRIGO ALBERNAZ | Seattle Sounders | Paris Saint-Germain |       12 | 1-Placar exato               | 0 x 2        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | João Henrique    | Seattle Sounders | Paris Saint-Germain |       12 | 1-Placar exato               | 0 x 2        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | Guilherme        | Seattle Sounders | Paris Saint-Germain |       12 | 1-Placar exato               | 0 x 2        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | Thales Oliveira  | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 4        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
-| 23.Jun.2025 | 16h | Rafael Contex    | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 5        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
-| 23.Jun.2025 | 16h | Pedro Tayerx     | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | Rafael Conte     | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 5        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | Pedro Tayer      | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | Marcelo          | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 4        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | Lucas Ubertini   | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 1 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | Leo Fernandes    | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
-| 23.Jun.2025 | 16h | Leigo Gianonnix  | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 4        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
-| 23.Jun.2025 | 16h | Cesar Saraivax   | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | Leigo Gianonni   | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 4        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | Frederico Soter  | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 1 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | Cesar Saraiva    | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | André Tayer      | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
 | 23.Jun.2025 | 16h | Andre Bonito     | Seattle Sounders | Paris Saint-Germain |        7 | 2-Vencedor + gols de um time | 0 x 4        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
-| 23.Jun.2025 | 16h | Lucas Ubertini   | Seattle Sounders | Paris Saint-Germain |        5 | 3-Vencedor correto           | 1 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
-| 23.Jun.2025 | 16h | Gabãox           | Seattle Sounders | Paris Saint-Germain |        5 | 3-Vencedor correto           | 1 x 4        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
-| 23.Jun.2025 | 16h | Frederico Soter  | Seattle Sounders | Paris Saint-Germain |        5 | 3-Vencedor correto           | 1 x 3        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |
+| 23.Jun.2025 | 16h | Gabão            | Seattle Sounders | Paris Saint-Germain |        5 | 3-Vencedor correto           | 1 x 4        | Paris Saint-Germain | 0 x 2         | Paris Saint-Germain |

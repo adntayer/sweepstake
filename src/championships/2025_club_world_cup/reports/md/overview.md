@@ -1,6 +1,6 @@
-# Visao Geral dos Jogos - 1afase
+# 📊 Visao Geral dos Jogos - 1afase
 
-_atualizado as 16/05/2026 17:05:23_
+_atualizado as 16/05/2026 22:17:38_
 
 _ultimo jogo que tem resultado_
 
@@ -9,49 +9,49 @@ _ultimo jogo que tem resultado_
 | 2025-06-26 22h | Al-Hilal    |            2 | x   |            0 | Pachuca     |
 
 ---
-## Ranking
+## 🏆 Ranking
 |   # | boleiro          |   pontos |   1-Placar exato |   2-Vencedor + gols de um time |   3-Vencedor correto |   4-Gols de um time |   5-Nenhum acerto |
 |----:|:-----------------|---------:|-----------------:|-------------------------------:|---------------------:|--------------------:|------------------:|
-|   1 | Guilherme        |      229 |                7 |                             11 |                   11 |                  13 |                 6 |
-|   2 | Andre Bonito     |      224 |                7 |                             11 |                   11 |                   8 |                11 |
-|   3 | André Tayer      |      223 |                6 |                             12 |                   11 |                  12 |                 7 |
-|   4 | Marcelo          |      222 |                6 |                              8 |                   17 |                   9 |                 8 |
-|   5 | Gabãox           |      220 |                6 |                              8 |                   16 |                  12 |                 6 |
-|   6 | Cesar Saraivax   |      212 |                6 |                             10 |                   12 |                  10 |                10 |
-|   7 | Leo Fernandes    |      212 |                4 |                             14 |                   11 |                  11 |                 8 |
-|   8 | Leigo Gianonnix  |      204 |                2 |                             18 |                    9 |                   9 |                10 |
-|   9 | João Henrique    |      203 |                5 |                             12 |                    9 |                  14 |                 8 |
-|  10 | RODRIGO ALBERNAZ |      201 |                2 |                             10 |                   19 |                  12 |                 5 |
-|  11 | Thales Oliveira  |      197 |                3 |                             15 |                   10 |                   6 |                14 |
-|  12 | Lucas Ubertini   |      197 |                4 |                             11 |                   13 |                   7 |                13 |
-|  13 | thiago bahiensex |      194 |                4 |                             11 |                   12 |                   9 |                12 |
-|  14 | Rafael Contex    |      182 |                4 |                             10 |                   10 |                  14 |                10 |
-|  15 | Frederico Soter  |      167 |                2 |                             10 |                   13 |                   8 |                15 |
-|  16 | Pedro Tayerx     |      141 |                2 |                              9 |                    9 |                   9 |                19 |
+|   1 | Guilherme        |      241 |                7 |                             17 |                    5 |                  13 |                 6 |
+|   2 | Marcelo          |      238 |                6 |                             16 |                    9 |                   9 |                 8 |
+|   3 | André Tayer      |      235 |                6 |                             18 |                    5 |                  12 |                 7 |
+|   4 | Gabão            |      232 |                6 |                             14 |                   10 |                  12 |                 6 |
+|   5 | Andre Bonito     |      228 |                7 |                             13 |                    9 |                   8 |                11 |
+|   6 | Cesar Saraiva    |      226 |                6 |                             17 |                    5 |                  10 |                10 |
+|   7 | Leo Fernandes    |      222 |                4 |                             19 |                    6 |                  11 |                 8 |
+|   8 | RODRIGO ALBERNAZ |      221 |                2 |                             20 |                    9 |                  12 |                 5 |
+|   9 | Lucas Ubertini   |      217 |                4 |                             21 |                    3 |                   7 |                13 |
+|  10 | João Henrique    |      215 |                5 |                             18 |                    3 |                  14 |                 8 |
+|  11 | Leigo Gianonni   |      214 |                2 |                             23 |                    4 |                   9 |                10 |
+|  12 | thiago bahiense  |      206 |                4 |                             17 |                    6 |                   9 |                12 |
+|  13 | Thales Oliveira  |      205 |                3 |                             19 |                    6 |                   6 |                14 |
+|  14 | Rafael Conte     |      188 |                4 |                             13 |                    7 |                  14 |                10 |
+|  15 | Frederico Soter  |      179 |                2 |                             16 |                    7 |                   8 |                15 |
+|  16 | Pedro Tayer      |      143 |                2 |                             10 |                    8 |                   9 |                19 |
 
-## Ultimos dias de pontuacao
+## 📈 Ultimos dias de pontuacao
 | boleiro          |   22/06 |   23/06 |   24/06 |   25/06 |   26/06 |   total_ult_dias |
 |:-----------------|--------:|--------:|--------:|--------:|--------:|-----------------:|
-| Andre Bonito     |    15   |      20 |    30   |    19   |    21   |            105   |
-| Cesar Saraivax   |    20   |      13 |    13   |    19   |    25   |             90   |
-| Guilherme        |    20   |      17 |    15   |    20   |    18   |             90   |
-| Rafael Contex    |    27   |      14 |    15   |    27   |     7   |             90   |
-| Lucas Ubertini   |    26   |      15 |    17   |     6   |    24   |             88   |
-| RODRIGO ALBERNAZ |    22   |      20 |    10   |    20   |    16   |             88   |
-| Leo Fernandes    |    24   |      15 |    14   |    22   |    13   |             88   |
-| Gabãox           |    22   |      18 |    10   |    20   |    18   |             88   |
-| André Tayer      |    20   |       9 |    30   |    23   |     2   |             84   |
-| thiago bahiensex |    17   |      18 |    14   |     7   |    24   |             80   |
-| Leigo Gianonnix  |    19   |      14 |     9   |    22   |    16   |             80   |
-| João Henrique    |    18   |      22 |    14   |    16   |     7   |             77   |
-| Thales Oliveira  |    19   |       8 |     9   |    12   |    29   |             77   |
-| Marcelo          |    18   |      13 |    13   |    17   |    16   |             77   |
-| Frederico Soter  |    13   |      10 |     9   |    17   |    24   |             73   |
-| Pedro Tayerx     |    17   |      14 |     6   |    13   |     9   |             59   |
-| media            |    19.8 |      15 |    14.2 |    17.5 |    16.8 |             83.4 |
-| desv. pdr        |     3.7 |       4 |     6.8 |     5.7 |     7.7 |             10.1 |
+| Andre Bonito     |    17   |    20   |    32   |    19   |    21   |            109   |
+| Lucas Ubertini   |    28   |    21   |    19   |     8   |    24   |            100   |
+| Guilherme        |    22   |    17   |    15   |    22   |    18   |             94   |
+| Cesar Saraiva    |    20   |    15   |    13   |    21   |    25   |             94   |
+| RODRIGO ALBERNAZ |    26   |    20   |    10   |    20   |    16   |             92   |
+| Gabão            |    26   |    18   |    10   |    20   |    18   |             92   |
+| Leo Fernandes    |    26   |    15   |    14   |    22   |    13   |             90   |
+| Rafael Conte     |    27   |    14   |    15   |    27   |     7   |             90   |
+| André Tayer      |    20   |     9   |    32   |    25   |     2   |             88   |
+| thiago bahiense  |    19   |    20   |    14   |     7   |    24   |             84   |
+| João Henrique    |    20   |    26   |    14   |    16   |     7   |             83   |
+| Marcelo          |    18   |    13   |    13   |    19   |    20   |             83   |
+| Leigo Gianonni   |    21   |    14   |     9   |    22   |    16   |             82   |
+| Thales Oliveira  |    19   |     8   |     9   |    14   |    31   |             81   |
+| Frederico Soter  |    13   |    14   |     9   |    19   |    24   |             79   |
+| Pedro Tayer      |    19   |    14   |     6   |    13   |     9   |             61   |
+| media            |    21.3 |    16.1 |    14.6 |    18.4 |    17.2 |             87.6 |
+| desv. pdr        |     4.2 |     4.6 |     7.5 |     5.5 |     7.9 |             10.5 |
 
-## ultimos 6 jogos
+## ⚽ ultimos 6 jogos
 | date           | casa             |   gols | x   |   gols | visitante       |
 |:---------------|:-----------------|-------:|:----|-------:|:----------------|
 | 2025-06-26 22h | Al-Hilal         |      2 | x   |      0 | Pachuca         |

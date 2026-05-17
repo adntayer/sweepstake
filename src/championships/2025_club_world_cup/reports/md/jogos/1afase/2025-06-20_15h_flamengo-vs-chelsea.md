@@ -1,8 +1,8 @@
-# Visao Geral dos Jogos - 1afase
+# ⚽ Visao Geral dos Jogos - 1afase
 
-# flamengo-vs-chelsea
+# ⚽ flamengo-vs-chelsea
 
-## pre jogo
+## 🔮 pre jogo
 
 ### time
 
@@ -23,7 +23,7 @@
 | Flamengo   | 2 x 1    |   1 | 6 %   | █      |
 | empate     | 2 x 2    |   1 | 6 %   | █      |
 
-## pos jogo
+## 📊 pos jogo
 
 | criterio                     |   # | g          |
 |:-----------------------------|----:|:-----------|
@@ -31,23 +31,23 @@
 | 4-Gols de um time            |   8 | ██████████ |
 | 5-Nenhum acerto              |   7 | ████████   |
 
-## raio x
+## 🔍 raio x
 
 | date        | h   | boleiro          | casa     | visitante   |   pontos | criteiro                     | bol_placar   | bol_time   | real_placar   | real_time   |
 |:------------|:----|:-----------------|:---------|:------------|---------:|:-----------------------------|:-------------|:-----------|:--------------|:------------|
 | 20.Jun.2025 | 15h | Frederico Soter  | Flamengo | Chelsea     |        7 | 2-Vencedor + gols de um time | 2 x 1        | Flamengo   | 3 x 1         | Flamengo    |
-| 20.Jun.2025 | 15h | thiago bahiensex | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 0 x 1        | Chelsea    | 3 x 1         | Flamengo    |
+| 20.Jun.2025 | 15h | thiago bahiense  | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 0 x 1        | Chelsea    | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | Thales Oliveira  | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 1 x 1        | empate     | 3 x 1         | Flamengo    |
-| 20.Jun.2025 | 15h | Rafael Contex    | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 0 x 1        | Chelsea    | 3 x 1         | Flamengo    |
-| 20.Jun.2025 | 15h | Pedro Tayerx     | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 1 x 1        | empate     | 3 x 1         | Flamengo    |
+| 20.Jun.2025 | 15h | Rafael Conte     | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 0 x 1        | Chelsea    | 3 x 1         | Flamengo    |
+| 20.Jun.2025 | 15h | Pedro Tayer      | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 1 x 1        | empate     | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | Lucas Ubertini   | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 1 x 1        | empate     | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | João Henrique    | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 1 x 1        | empate     | 3 x 1         | Flamengo    |
-| 20.Jun.2025 | 15h | Gabãox           | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 0 x 1        | Chelsea    | 3 x 1         | Flamengo    |
+| 20.Jun.2025 | 15h | Gabão            | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 0 x 1        | Chelsea    | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | André Tayer      | Flamengo | Chelsea     |        1 | 4-Gols de um time            | 1 x 1        | empate     | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | RODRIGO ALBERNAZ | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 1 x 2        | Chelsea    | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | Marcelo          | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 1 x 2        | Chelsea    | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | Leo Fernandes    | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 1 x 2        | Chelsea    | 3 x 1         | Flamengo    |
-| 20.Jun.2025 | 15h | Leigo Gianonnix  | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 0 x 2        | Chelsea    | 3 x 1         | Flamengo    |
+| 20.Jun.2025 | 15h | Leigo Gianonni   | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 0 x 2        | Chelsea    | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | Guilherme        | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 1 x 2        | Chelsea    | 3 x 1         | Flamengo    |
-| 20.Jun.2025 | 15h | Cesar Saraivax   | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 1 x 2        | Chelsea    | 3 x 1         | Flamengo    |
+| 20.Jun.2025 | 15h | Cesar Saraiva    | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 1 x 2        | Chelsea    | 3 x 1         | Flamengo    |
 | 20.Jun.2025 | 15h | Andre Bonito     | Flamengo | Chelsea     |        0 | 5-Nenhum acerto              | 2 x 2        | empate     | 3 x 1         | Flamengo    |

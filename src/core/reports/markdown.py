@@ -88,16 +88,16 @@ def _build_overview(config: ChampionshipConfig) -> None:
     now_str = _now_str(config)
 
     with open(config.overview_md_path(), "w", encoding="utf-8") as f:
-        f.write(f"# Visao Geral dos Jogos - {config.group_phase_label}\n\n")
+        f.write(f"# 📊 Visao Geral dos Jogos - {config.group_phase_label}\n\n")
         f.write(f"_atualizado as {now_str}_\n\n")
         f.write("_ultimo jogo que tem resultado_\n\n")
         f.write(df_games.head(1).to_markdown(index=False))
         f.write("\n\n---\n")
-        f.write("## Ranking\n")
+        f.write("## 🏆 Ranking\n")
         f.write(df_rank.to_markdown(index=False))
-        f.write("\n\n## Ultimos dias de pontuacao\n")
+        f.write("\n\n## 📈 Ultimos dias de pontuacao\n")
         f.write(df_pivot.to_markdown(index=False))
-        f.write("\n\n## ultimos 6 jogos\n")
+        f.write("\n\n## ⚽ ultimos 6 jogos\n")
         df_games.columns = ["date", "casa", "gols", "x", "gols", "visitante"]
         f.write(df_games.head(6).to_markdown(index=False))
         f.write("\n")
@@ -110,7 +110,7 @@ def _build_boleiro_reports(config: ChampionshipConfig) -> None:
     now_str = _now_str(config)
 
     for boleiro in sorted(df_valid["who"].unique()):
-        print_colored(f"building boleiros md: {boleiro}", "blue")
+        print_colored(f"building boleiros md: 👤 {boleiro}", "blue")
         df_bol = df_valid.loc[df_valid["who"] == boleiro].copy()
         df_striker_bol = df_striker.loc[df_striker["boleiro"] == boleiro]
 
@@ -167,12 +167,12 @@ def _build_boleiro_reports(config: ChampionshipConfig) -> None:
             config.reports_dir, "md", "boleiros", f"{boleiro}.md"
         ))
         with open(path, "w", encoding="utf-8") as f:
-            f.write(f"# Visao Geral dos Jogos - {config.group_phase_label}\n\n")
-            f.write(f"# {boleiro}\n\n")
+            f.write(f"# 📊 Visao Geral dos Jogos - {config.group_phase_label}\n\n")
+            f.write(f"# 👤 {boleiro}\n\n")
             f.write(f"_atualizado as {now_str}_\n\n")
-            f.write("## resumo\n\n")
+            f.write("## 📋 resumo\n\n")
             f.write(df_stats.to_markdown(index=False))
-            f.write("\n\n## raio x\n\n")
+            f.write("\n\n## 🔍 raio x\n\n")
             striker_name = df_striker_bol.iloc[0]["striker"]
             f.write(f"Artilheiro: **{striker_name}**\n\n")
             f.write(df_bol.to_markdown(index=False))
@@ -185,7 +185,7 @@ def _build_match_reports(config: ChampionshipConfig) -> None:
     now_str = _now_str(config)
 
     for match in sorted(df_all["match"].unique()):
-        print_colored(f"building jogos md: {match}", "blue")
+        print_colored(f"building jogos md: ⚽ {match}", "blue")
         df_m = df_all.loc[df_all["match"] == match].copy()
 
         cols = [
@@ -254,16 +254,16 @@ def _build_match_reports(config: ChampionshipConfig) -> None:
         ]
 
         with open(path, "w", encoding="utf-8") as f:
-            f.write(f"# Visao Geral dos Jogos - {config.group_phase_label}\n\n")
-            f.write(f"# {match}\n\n")
-            f.write("## pre jogo\n\n")
+            f.write(f"# ⚽ Visao Geral dos Jogos - {config.group_phase_label}\n\n")
+            f.write(f"# ⚽ {match}\n\n")
+            f.write("## 🔮 pre jogo\n\n")
             f.write("### time\n\n")
             f.write(df_pre_time.to_markdown(index=False))
             f.write("\n\n### placar\n\n")
             f.write(df_pre_placar.to_markdown(index=False))
-            f.write("\n\n## pos jogo\n\n")
+            f.write("\n\n## 📊 pos jogo\n\n")
             f.write(df_post.to_markdown(index=False))
-            f.write("\n\n## raio x\n\n")
+            f.write("\n\n## 🔍 raio x\n\n")
             f.write(df_m.to_markdown(index=False))
 
 

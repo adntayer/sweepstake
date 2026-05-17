@@ -1,8 +1,8 @@
-# Visao Geral dos Jogos - 1afase
+# ⚽ Visao Geral dos Jogos - 1afase
 
-# rb_salzburg-vs-al-hilal
+# ⚽ rb_salzburg-vs-al-hilal
 
-## pre jogo
+## 🔮 pre jogo
 
 ### time
 
@@ -25,31 +25,31 @@
 | RB Salzburg | 2 x 1    |   1 | 6 %   | █     |
 | RB Salzburg | 3 x 2    |   1 | 6 %   | █     |
 
-## pos jogo
+## 📊 pos jogo
 
-| criterio           |   # | g       |
-|:-------------------|----:|:--------|
-| 3-Vencedor correto |   4 | █████   |
-| 4-Gols de um time  |   6 | ███████ |
-| 5-Nenhum acerto    |   6 | ███████ |
+| criterio                     |   # | g       |
+|:-----------------------------|----:|:--------|
+| 2-Vencedor + gols de um time |   4 | █████   |
+| 4-Gols de um time            |   6 | ███████ |
+| 5-Nenhum acerto              |   6 | ███████ |
 
-## raio x
+## 🔍 raio x
 
-| date        | h   | boleiro          | casa        | visitante   |   pontos | criteiro           | bol_placar   | bol_time    | real_placar   | real_time   |
-|:------------|:----|:-----------------|:------------|:------------|---------:|:-------------------|:-------------|:------------|:--------------|:------------|
-| 22.Jun.2025 | 19h | RODRIGO ALBERNAZ | RB Salzburg | Al-Hilal    |        5 | 3-Vencedor correto | 1 x 1        | empate      | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Lucas Ubertini   | RB Salzburg | Al-Hilal    |        5 | 3-Vencedor correto | 1 x 1        | empate      | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Leo Fernandes    | RB Salzburg | Al-Hilal    |        5 | 3-Vencedor correto | 1 x 1        | empate      | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Gabãox           | RB Salzburg | Al-Hilal    |        5 | 3-Vencedor correto | 1 x 1        | empate      | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Rafael Contex    | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time  | 1 x 0        | RB Salzburg | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Marcelo          | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time  | 0 x 2        | Al-Hilal    | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | João Henrique    | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time  | 1 x 0        | RB Salzburg | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Guilherme        | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time  | 1 x 0        | RB Salzburg | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Cesar Saraivax   | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time  | 0 x 1        | Al-Hilal    | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | André Tayer      | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time  | 2 x 0        | RB Salzburg | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | thiago bahiensex | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto    | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Thales Oliveira  | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto    | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Pedro Tayerx     | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto    | 2 x 1        | RB Salzburg | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Leigo Gianonnix  | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto    | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Frederico Soter  | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto    | 3 x 2        | RB Salzburg | 0 x 0         | empate      |
-| 22.Jun.2025 | 19h | Andre Bonito     | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto    | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |
+| date        | h   | boleiro          | casa        | visitante   |   pontos | criteiro                     | bol_placar   | bol_time    | real_placar   | real_time   |
+|:------------|:----|:-----------------|:------------|:------------|---------:|:-----------------------------|:-------------|:------------|:--------------|:------------|
+| 22.Jun.2025 | 19h | RODRIGO ALBERNAZ | RB Salzburg | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate      | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Lucas Ubertini   | RB Salzburg | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate      | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Leo Fernandes    | RB Salzburg | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate      | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Gabão            | RB Salzburg | Al-Hilal    |        7 | 2-Vencedor + gols de um time | 1 x 1        | empate      | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Rafael Conte     | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time            | 1 x 0        | RB Salzburg | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Marcelo          | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time            | 0 x 2        | Al-Hilal    | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | João Henrique    | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time            | 1 x 0        | RB Salzburg | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Guilherme        | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time            | 1 x 0        | RB Salzburg | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Cesar Saraiva    | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time            | 0 x 1        | Al-Hilal    | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | André Tayer      | RB Salzburg | Al-Hilal    |        1 | 4-Gols de um time            | 2 x 0        | RB Salzburg | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | thiago bahiense  | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto              | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Thales Oliveira  | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto              | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Pedro Tayer      | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto              | 2 x 1        | RB Salzburg | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Leigo Gianonni   | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto              | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Frederico Soter  | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto              | 3 x 2        | RB Salzburg | 0 x 0         | empate      |
+| 22.Jun.2025 | 19h | Andre Bonito     | RB Salzburg | Al-Hilal    |        0 | 5-Nenhum acerto              | 1 x 2        | Al-Hilal    | 0 x 0         | empate      |

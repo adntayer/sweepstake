@@ -111,10 +111,12 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 
     # Build playoff section HTML
     playoff_sections = ""
+    playoff_emojis = {"oitavas": "🏁", "quartas": "🔥", "semi": "🎯", "final": "🏆"}
     for pr in config.playoff_rounds:
+        emoji = playoff_emojis.get(pr.key, "")
         playoff_sections += f"""
         <div class="column">
-            <h4>{pr.name}</h4>
+            <h4>{emoji} {pr.name}</h4>
             <ul>{"".join(links_playoff.get(pr.key, []))}</ul>
         </div>
 """
@@ -174,8 +176,8 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 <body>
     <div class="section">
         <p><i>atualizado as {now_str}</i></p>
-        <h1>{config.report_title}</h1>
-        <h2>Overview</h2>
+        <h1>🏆 {config.report_title}</h1>
+        <h2>📊 Overview</h2>
         <p><a href="overview.html">Veja um overview do bolao</a></p>
         <br>
         <h3> Ultimo jogo com resultado </h3>
@@ -184,18 +186,18 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 
     <div class="section">
         <p></p>
-        <h2>Proximos jogos</h2>
+        <h2>🕒 Proximos jogos</h2>
         <ul>{"".join(upcoming)}</ul>
     </div>
 
     <div class="section flex-container">
         <div class="column">
-            <h4>Boleiros</h4>
+            <h4>👥 Boleiros</h4>
             <ul>{"".join(links_boleiros)}</ul>
         </div>
 
         <div class="column">
-            <h4>{config.group_phase_label}</h4>
+            <h4>⚽ {config.group_phase_label}</h4>
             <ul>{"".join(links_group)}</ul>
         </div>
 {playoff_sections}

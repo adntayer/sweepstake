@@ -1,8 +1,8 @@
-# Visao Geral dos Jogos - 1afase
+# ⚽ Visao Geral dos Jogos - 1afase
 
-# benfica-vs-auckland_city
+# ⚽ benfica-vs-auckland_city
 
-## pre jogo
+## 🔮 pre jogo
 
 ### time
 
@@ -23,7 +23,7 @@
 | Benfica    | 4 x 0    |   2 | 12 %  | ██     |
 | Benfica    | 4 x 2    |   1 | 6 %   | █      |
 
-## pos jogo
+## 📊 pos jogo
 
 | criterio                     |   # | g           |
 |:-----------------------------|----:|:------------|
@@ -31,7 +31,7 @@
 | 3-Vencedor correto           |   6 | ███████     |
 | 5-Nenhum acerto              |   1 | █           |
 
-## raio x
+## 🔍 raio x
 
 | date        | h   | boleiro          | casa    | visitante     |   pontos | criteiro                     | bol_placar   | bol_time   | real_placar   | real_time   |
 |:------------|:----|:-----------------|:--------|:--------------|---------:|:-----------------------------|:-------------|:-----------|:--------------|:------------|
@@ -39,15 +39,15 @@
 | 20.Jun.2025 | 13h | Marcelo          | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 4 x 0        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | Lucas Ubertini   | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 3 x 0        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | Leo Fernandes    | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 2 x 0        | Benfica    | 6 x 0         | Benfica     |
-| 20.Jun.2025 | 13h | Leigo Gianonnix  | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 3 x 0        | Benfica    | 6 x 0         | Benfica     |
+| 20.Jun.2025 | 13h | Leigo Gianonni   | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 3 x 0        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | João Henrique    | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 2 x 0        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | Guilherme        | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 2 x 0        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | Frederico Soter  | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 1 x 0        | Benfica    | 6 x 0         | Benfica     |
-| 20.Jun.2025 | 13h | Cesar Saraivax   | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 2 x 0        | Benfica    | 6 x 0         | Benfica     |
-| 20.Jun.2025 | 13h | thiago bahiensex | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
-| 20.Jun.2025 | 13h | Rafael Contex    | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
+| 20.Jun.2025 | 13h | Cesar Saraiva    | Benfica | Auckland City |        7 | 2-Vencedor + gols de um time | 2 x 0        | Benfica    | 6 x 0         | Benfica     |
+| 20.Jun.2025 | 13h | thiago bahiense  | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
+| 20.Jun.2025 | 13h | Rafael Conte     | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | RODRIGO ALBERNAZ | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
-| 20.Jun.2025 | 13h | Pedro Tayerx     | Benfica | Auckland City |        5 | 3-Vencedor correto           | 4 x 2        | Benfica    | 6 x 0         | Benfica     |
-| 20.Jun.2025 | 13h | Gabãox           | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
+| 20.Jun.2025 | 13h | Pedro Tayer      | Benfica | Auckland City |        5 | 3-Vencedor correto           | 4 x 2        | Benfica    | 6 x 0         | Benfica     |
+| 20.Jun.2025 | 13h | Gabão            | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | Andre Bonito     | Benfica | Auckland City |        5 | 3-Vencedor correto           | 2 x 1        | Benfica    | 6 x 0         | Benfica     |
 | 20.Jun.2025 | 13h | André Tayer      | Benfica | Auckland City |        0 | 5-Nenhum acerto              | 1 x 1        | empate     | 6 x 0         | Benfica     |
