@@ -20,18 +20,28 @@ scoring:
   - name: "1-Placar exato"
     rule: "exact_score"
     points: 12
+    emoji: "\U0001f3af"
+    color_text: "#00cc00"
   - name: "2-Vencedor + gols de um time"
     rule: "correct_winner_and_goals"
     points: 7
+    emoji: "\u26bd"
+    color_text: "#66ff66"
   - name: "3-Vencedor correto"
     rule: "correct_winner"
     points: 5
+    emoji: "\u2705"
+    color_text: "#ffcc00"
   - name: "4-Gols de um time"
     rule: "one_team_goals"
     points: 1
+    emoji: "\U0001f44a"
+    color_text: "#ff9900"
   - name: "5-Nenhum acerto"
     rule: 'no_score'
     points: 0
+    emoji: "\u274c"
+    color_text: "#ff3333"
 
 # Excel parsing layout
 excel_layout:

@@ -26,7 +26,9 @@ class ScoringRule:
     name: str
     points: int
     priority: int = 0
-    rule: str = ""  # e.g. "exact_score", "correct_winner_and_goals"
+    rule: str = ""
+    emoji: str = ""
+    color_text: str = ""
     max_total_error: int | None = None
     min_total_error: int | None = None
 
@@ -221,6 +223,20 @@ class ChampionshipConfig:
         """Return {name: points} for quick lookup."""
         return {r.name: r.points for r in self.scoring_rules}
 
+    def scoring_emoji(self, rule_name: str) -> str:
+        """Return emoji for a rule name, or empty string."""
+        for r in self.scoring_rules:
+            if r.name == rule_name:
+                return r.emoji
+        return ""
+
+    def scoring_color(self, rule_name: str) -> str:
+        """Return text color for a rule name, or empty string."""
+        for r in self.scoring_rules:
+            if r.name == rule_name:
+                return r.color_text
+        return ""
+
 
 # ------------------------------------------------------------------
 # Loader
@@ -276,6 +292,8 @@ def load_config(championship_id: str) -> ChampionshipConfig:
             points=r["points"],
             priority=r.get("priority", i),
             rule=r.get("rule", ""),
+            emoji=r.get("emoji", ""),
+            color_text=r.get("color_text", ""),
             max_total_error=r.get("max_total_error"),
             min_total_error=r.get("min_total_error"),
         )

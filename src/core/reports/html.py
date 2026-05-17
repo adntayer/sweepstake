@@ -278,6 +278,18 @@ details .content { padding: 0.75rem 1rem; }
 }
 .striker-badge .icon { font-size: 1.2rem; }
 
+/* Score pill */
+.score-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
 /* Responsive */
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
@@ -559,7 +571,10 @@ def _build_overview(config: ChampionshipConfig) -> str:
         <table class="rank-table">
             <thead><tr><th>#</th><th>Boleiro</th><th>Pts</th>"""
     for sn in score_names:
-        body += f"<th>{sn.split('-')[0].strip()}</th>"
+        emoji = config.scoring_emoji(sn)
+        header = f"{emoji} " if emoji else ""
+        header += sn.split('-')[0].strip()
+        body += f"<th>{header}</th>"
     body += f"""</tr></thead>
             <tbody>{rank_rows}</tbody>
         </table>
@@ -680,17 +695,17 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     history_rows = ""
     for _, row in df_hist.iterrows():
         pts = int(row["pontos"])
-        pts_color = "var(--success)" if pts >= 7 else "var(--warning)" if pts >= 5 else "var(--text-muted)"
-        pts_icon = "\u2705" if pts >= 7 else "\u26a0\ufe0f" if pts > 0 else "\u274c"
         date_str = pd.to_datetime(row["date"]).strftime("%d/%m")
+        criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
+        pts_color = config.scoring_color(row.get("criterio", "")) or "var(--text-muted)"
         history_rows += (
             f'<div class="pred-row">'
             f'<div class="pred-info">'
             f'<div class="pred-name">{row["home_team"]} {row["resultado_real_placar"]} {row["away_team"]}</div>'
-            f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {row["criterio"]}</div>'
+            f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
             f'<div class="pred-detail">{date_str}</div>'
             f'</div>'
-            f'<div class="pred-points" style="color:{pts_color}">+{pts} {pts_icon}</div>'
+            f'<div class="score-pill" style="color:{pts_color};background:{pts_color}1a;border:1px solid {pts_color}40">+{pts} {criterio_emoji}</div>'
             f'</div>\n'
         )
 
@@ -815,16 +830,16 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     pred_rows = ""
     for _, row in df_match.iterrows():
         pts = int(row["pontos"])
-        pts_color = "var(--success)" if pts >= 7 else "var(--warning)" if pts >= 5 else "var(--text-muted)"
-        pts_icon = "\u2705" if pts >= 7 else "\u26a0\ufe0f" if pts > 0 else "\u274c"
+        criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
+        pts_color = config.scoring_color(row.get("criterio", "")) or "var(--text-muted)"
         pred_rows += (
             f'<div class="pred-row">'
             f'{_avatar_html(row["who"])}'
             f'<div class="pred-info">'
             f'<div class="pred-name">{row["who"]}</div>'
-            f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {row["criterio"]}</div>'
+            f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
             f'</div>'
-            f'<div class="pred-points" style="color:{pts_color}">+{pts} {pts_icon}</div>'
+            f'<div class="score-pill" style="color:{pts_color};background:{pts_color}1a;border:1px solid {pts_color}40">+{pts} {criterio_emoji}</div>'
             f'</div>\n'
         )
 
