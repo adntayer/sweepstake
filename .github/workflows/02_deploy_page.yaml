@@ -1,12 +1,15 @@
 name: Deploy Page
 
+env:
+  DOCS_PATH: src/championships/2025_club_world_cup/reports/html
+
 on:
   workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      - 'src/a2025_club_world_cup/docs/html/**'
+      - 'src/championships/2025_club_world_cup/reports/html/**'
 
 jobs:
   build-and-deploy:
@@ -28,7 +31,7 @@ jobs:
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: src/a2025_club_world_cup/docs/html/
+          path: ${{ env.DOCS_PATH }}
 
       - name: Deploy to GitHub Pages
         id: deployment

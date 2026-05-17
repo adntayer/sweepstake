@@ -1,0 +1,61 @@
+# Championship: 2025 FIFA Club World Cup
+id: 2025_club_world_cup
+name: "2025 Club World Cup"
+year: 2025
+timezone: "America/Sao_Paulo"
+report_title: "2025 Club World Cup"
+group_phase_label: "1afase"
+
+# All paths (relative to project root)
+base_dir: "src/championships/2025_club_world_cup/data"
+raw_dir: "src/championships/2025_club_world_cup/data/raw"
+results_file: "src/championships/2025_club_world_cup/data/jogos_1afase.csv"
+bronze_dir: "src/championships/2025_club_world_cup/data/bronze"
+silver_dir: "src/championships/2025_club_world_cup/data/silver"
+gold_dir: "src/championships/2025_club_world_cup/data/gold"
+reports_dir: "src/championships/2025_club_world_cup/reports"
+
+# Scoring rules (checked in rule order)
+scoring:
+  - name: "1-Placar exato"
+    rule: "exact_score"
+    points: 12
+  - name: "2-Vencedor + gols de um time"
+    rule: "correct_winner_and_goals"
+    points: 7
+  - name: "3-Vencedor correto"
+    rule: "correct_winner"
+    points: 5
+  - name: "4-Gols de um time"
+    rule: "one_team_goals"
+    points: 1
+  - name: "5-Nenhum acerto"
+    rule: 'no_score'
+    points: 0
+
+# Excel parsing layout
+excel_layout:
+  first_round:
+    matches: 48
+    skiprows: 2
+  playoffs:
+    striker_row_offset: 1
+    name_split_char: "-"
+    name_split_index: 1
+    rounds:
+      - name: "Oitavas"
+        key: "oitavas"
+        matches: 8
+        tail_offset: 19
+      - name: "Quartas"
+        key: "quartas"
+        matches: 4
+        tail_offset: 10
+      - name: "Semi"
+        key: "semi"
+        matches: 2
+        tail_offset: 5
+      - name: "Final"
+        key: "final"
+        matches: 1
+        tail_offset: 2

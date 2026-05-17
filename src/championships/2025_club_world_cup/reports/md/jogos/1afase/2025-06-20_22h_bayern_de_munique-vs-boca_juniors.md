@@ -1,0 +1,52 @@
+# ⚽ Visao Geral dos Jogos - 1afase
+
+# ⚽ bayern_de_munique-vs-boca_juniors
+
+## 🔮 pre jogo
+
+### time
+
+| vencedor          |   # | pct   | g                    |
+|:------------------|----:|:------|:---------------------|
+| Bayern de Munique |  16 | 100 % | ████████████████████ |
+
+### placar
+
+| vencedor          | placar   |   # | pct   | g     |
+|:------------------|:---------|----:|:------|:------|
+| Bayern de Munique | 1 x 0    |   1 | 6 %   | █     |
+| Bayern de Munique | 2 x 0    |   4 | 25 %  | █████ |
+| Bayern de Munique | 2 x 1    |   4 | 25 %  | █████ |
+| Bayern de Munique | 3 x 0    |   4 | 25 %  | █████ |
+| Bayern de Munique | 3 x 1    |   1 | 6 %   | █     |
+| Bayern de Munique | 4 x 0    |   1 | 6 %   | █     |
+| Bayern de Munique | 4 x 2    |   1 | 6 %   | █     |
+
+## 📊 pos jogo
+
+| criterio                     |   # | g       |
+|:-----------------------------|----:|:--------|
+| 1-Placar exato               |   4 | █████   |
+| 2-Vencedor + gols de um time |   6 | ███████ |
+| 3-Vencedor correto           |   6 | ███████ |
+
+## 🔍 raio x
+
+| date        | h   | boleiro          | casa              | visitante    |   pontos | criteiro                     | bol_placar   | bol_time          | real_placar   | real_time         |
+|:------------|:----|:-----------------|:------------------|:-------------|---------:|:-----------------------------|:-------------|:------------------|:--------------|:------------------|
+| 20.Jun.2025 | 22h | Rafael Conte     | Bayern de Munique | Boca Juniors |       12 | 1-Placar exato               | 2 x 1        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Lucas Ubertini   | Bayern de Munique | Boca Juniors |       12 | 1-Placar exato               | 2 x 1        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Gabão            | Bayern de Munique | Boca Juniors |       12 | 1-Placar exato               | 2 x 1        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Cesar Saraiva    | Bayern de Munique | Boca Juniors |       12 | 1-Placar exato               | 2 x 1        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | thiago bahiense  | Bayern de Munique | Boca Juniors |        7 | 2-Vencedor + gols de um time | 3 x 1        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | RODRIGO ALBERNAZ | Bayern de Munique | Boca Juniors |        7 | 2-Vencedor + gols de um time | 2 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Pedro Tayer      | Bayern de Munique | Boca Juniors |        7 | 2-Vencedor + gols de um time | 2 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | João Henrique    | Bayern de Munique | Boca Juniors |        7 | 2-Vencedor + gols de um time | 1 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Guilherme        | Bayern de Munique | Boca Juniors |        7 | 2-Vencedor + gols de um time | 2 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | André Tayer      | Bayern de Munique | Boca Juniors |        7 | 2-Vencedor + gols de um time | 2 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Thales Oliveira  | Bayern de Munique | Boca Juniors |        5 | 3-Vencedor correto           | 4 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Marcelo          | Bayern de Munique | Boca Juniors |        5 | 3-Vencedor correto           | 3 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Leo Fernandes    | Bayern de Munique | Boca Juniors |        5 | 3-Vencedor correto           | 3 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Leigo Gianonni   | Bayern de Munique | Boca Juniors |        5 | 3-Vencedor correto           | 3 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Frederico Soter  | Bayern de Munique | Boca Juniors |        5 | 3-Vencedor correto           | 4 x 2        | Bayern de Munique | 2 x 1         | Bayern de Munique |
+| 20.Jun.2025 | 22h | Andre Bonito     | Bayern de Munique | Boca Juniors |        5 | 3-Vencedor correto           | 3 x 0        | Bayern de Munique | 2 x 1         | Bayern de Munique |
