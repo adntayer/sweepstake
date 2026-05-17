@@ -41,6 +41,9 @@ body {
 
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Hero banner */
 .hero {
@@ -155,7 +158,7 @@ a:hover { text-decoration: underline; }
     margin-bottom: 0.4rem;
     font-size: 0.85rem;
 }
-.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; }
+.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bar-track {
     flex: 1;
     height: 20px;
@@ -290,7 +293,48 @@ details .content { padding: 0.75rem 1rem; }
     white-space: nowrap;
 }
 
+/* Utility */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.mt-0 { margin-top: 0; }
+.mb-1 { margin-bottom: 0.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.stat-card-sm { padding: 0.5rem; }
+.stat-card-sm .value { font-size: 1.1rem; }
+.stat-card-sm .label { font-size: 0.6rem; }
+.card-link {
+    display: block;
+    margin: 0 0.75rem;
+    text-align: center;
+    font-weight: 600;
+}
+.card-link.accent { border-color: var(--accent); }
+.arena-select {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+.arena-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.arena-label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem; }
+.compare-date { color: var(--text-muted); margin-bottom: 0.15rem; }
+.compare-row { margin-bottom: 0.4rem; font-size: 0.8rem; }
+.compare-label-p1 { min-width: 30px; color: var(--accent); font-size: 0.75rem; }
+.compare-label-p2 { min-width: 30px; color: var(--text-muted); font-size: 0.75rem; }
+.compare-bar-track { height: 12px; }
+.compare-bar-fill-accent { background: var(--accent); }
+.compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
+.compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
+
 /* Responsive */
+@media (max-width: 359px) {
+    .hero h1 { font-size: 1.25rem; }
+    .hero .subtitle { font-size: 0.8rem; }
+}
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
     .stat-row { grid-template-columns: repeat(3, 1fr); }
@@ -322,7 +366,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
 {back_html}
 {body}
 <div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado as {now_str}
+    atualizado às {now_str}
 </div>
 </body>
 </html>"""
@@ -406,18 +450,18 @@ def _build_daily_tracking(config: ChampionshipConfig, df_valid: pd.DataFrame, df
 <details>
     <summary>{date_display} — {num_games} jogos — max {max_possible} pts</summary>
     <div class="content">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:0.75rem;">
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">{total_earned}</div>
-                <div class="label" style="font-size:0.6rem">Total pts</div>
+        <div class="grid-3 mb-1">
+            <div class="stat-card stat-card-sm">
+                <div class="value">{total_earned}</div>
+                <div class="label">Total pts</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">{avg_earned}</div>
-                <div class="label" style="font-size:0.6rem">Media</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">{avg_earned}</div>
+                <div class="label">Media</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">{best_pct}%</div>
-                <div class="label" style="font-size:0.6rem">Melhor</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">{best_pct}%</div>
+                <div class="label">Melhor</div>
             </div>
         </div>
         <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
@@ -495,33 +539,17 @@ def _build_overview(config: ChampionshipConfig) -> str:
     # Build points timeline bars with max possible context
     timeline_html = ""
     if not df_pivot.empty:
-        # Calculate max possible per player based on their actual games in the shown days
-        player_max_dict = {}
-        for name in df_pivot.index:
-            player_max = 0
-            for col in df_pivot.columns:
-                if col != "total":
-                    # Count how many games this player had on this date
-                    date_raw = pd.to_datetime(col, format="%d/%m", errors="coerce")
-                    if pd.notna(date_raw):
-                        date_str_raw = date_raw.strftime("%Y-%m-%d")
-                        n = df_valid[(df_valid["who"] == name) & (df_valid["date"] == date_str_raw)].shape[0]
-                        player_max += n * max_pts
-            player_max_dict[name] = player_max
-
         max_val = df_pivot["total"].max()
         if max_val > 0:
             bar_rows = ""
             for name, row in df_pivot.head(10).iterrows():
                 total = int(row["total"])
-                max_possible = player_max_dict.get(name, 0)
-                pct_of_max = round(total / max_possible * 100) if max_possible > 0 else 0
                 pct_bar = int(total / max_val * 100)
                 bar_rows += (
                     f'<div class="bar-row">'
                     f'<span class="bar-label">{name[:12]}</span>'
                     f'<div class="bar-track"><div class="bar-fill" style="width:{pct_bar}%"></div></div>'
-                    f'<span class="bar-pct">{total}/{max_possible} ({pct_of_max}%)</span>'
+                    f'<span class="bar-pct">{total} pts</span>'
                     f'</div>\n'
                 )
             timeline_html = f'<div class="card"><div class="card-title">Pontuacao por jogador (ultimos dias)</div>{bar_rows}</div>'
@@ -992,58 +1020,59 @@ function updateArena() {
     const cumDiv = document.getElementById('cumulative-comparison');
     const maxCum = Math.max(d1.cumulative[d1.cumulative.length-1].cum, d2.cumulative[d2.cumulative.length-1].cum, 1);
     let cumHtml = '';
-    const maxCumLen = Math.max(d1.cumulative.length, d2.cumulative.length);
-    for (let i = 0; i < maxCumLen; i++) {
-        const c1 = d1.cumulative[i];
-        const c2 = d2.cumulative[i];
-        if (c1) {
-            const pct1 = Math.round(c1.cum / maxCum * 100);
-            cumHtml += '<div style="margin-bottom:0.3rem;font-size:0.75rem;">' +
-                '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-                '<span style="min-width:30px;color:var(--accent);">' + c1.date + '</span>' +
-                '<div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
-                '<span style="min-width:25px;text-align:right;">' + c1.cum + '</span>' +
-                '</div></div>';
-        }
-        if (c2) {
-            const pct2 = Math.round(c2.cum / maxCum * 100);
-            cumHtml += '<div style="margin-bottom:0.3rem;font-size:0.75rem;">' +
-                '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-                '<span style="min-width:30px;color:var(--text-muted);">' + c2.date + '</span>' +
-                '<div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
-                '<span style="min-width:25px;text-align:right;">' + c2.cum + '</span>' +
-                '</div></div>';
-        }
-    }
+    const allCumDates = [...new Set([...d1.cumulative.map(c => c.date), ...d2.cumulative.map(c => c.date)])];
+    allCumDates.forEach(function(date) {
+        const c1 = d1.cumulative.find(c => c.date === date);
+        const c2 = d2.cumulative.find(c => c.date === date);
+        const cum1 = c1 ? c1.cum : 0;
+        const cum2 = c2 ? c2.cum : 0;
+        const pct1 = Math.round(cum1 / maxCum * 100);
+        const pct2 = Math.round(cum2 / maxCum * 100);
+        cumHtml += '<div style="margin-bottom:0.5rem;font-size:0.75rem;">' +
+            '<div style="color:var(--text-muted);margin-bottom:0.15rem;">' + date + '</div>' +
+            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
+            '<span style="min-width:30px;color:var(--accent);font-size:0.7rem;">P1</span>' +
+            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
+            '<span style="min-width:25px;text-align:right;font-size:0.75rem;">' + cum1 + '</span>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
+            '<span style="min-width:30px;color:var(--text-muted);font-size:0.7rem;">P2</span>' +
+            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
+            '<span style="min-width:25px;text-align:right;font-size:0.75rem;">' + cum2 + '</span>' +
+            '</div>' +
+            '</div>';
+    });
     cumDiv.innerHTML = cumHtml;
 
     // Recent games comparison
     const recentDiv = document.getElementById('recent-comparison');
     const maxRecent = Math.max(...d1.recent.map(r => r.pts), ...d2.recent.map(r => r.pts), 1);
     let recentHtml = '';
-    const maxLen = Math.max(d1.recent.length, d2.recent.length);
-    for (let i = 0; i < maxLen; i++) {
-        const r1 = d1.recent[i];
-        const r2 = d2.recent[i];
-        if (r1) {
-            const pct1 = Math.round(r1.pts / maxRecent * 100);
-            recentHtml += '<div style="margin-bottom:0.3rem;font-size:0.75rem;">' +
-                '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-                '<span style="min-width:30px;color:var(--accent);">' + r1.date + '</span>' +
-                '<div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
-                '<span style="min-width:20px;text-align:right;">' + r1.pts + '</span>' +
-                '</div></div>';
-        }
-        if (r2) {
-            const pct2 = Math.round(r2.pts / maxRecent * 100);
-            recentHtml += '<div style="margin-bottom:0.3rem;font-size:0.75rem;">' +
-                '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-                '<span style="min-width:30px;color:var(--text-muted);">' + r2.date + '</span>' +
-                '<div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
-                '<span style="min-width:20px;text-align:right;">' + r2.pts + '</span>' +
-                '</div></div>';
-        }
-    }
+    const allRecentKeys = [...new Set([...d1.recent.map(r => r.date + '|' + r.match), ...d2.recent.map(r => r.date + '|' + r.match)])];
+    const recentMatches = [...new Set(allRecentKeys.map(k => k.split('|')[1]))];
+    recentMatches.forEach(function(match) {
+        const r1 = d1.recent.find(r => r.match === match);
+        const r2 = d2.recent.find(r => r.match === match);
+        if (!r1 && !r2) return;
+        const pts1 = r1 ? r1.pts : 0;
+        const pts2 = r2 ? r2.pts : 0;
+        const pct1 = Math.round(pts1 / maxRecent * 100);
+        const pct2 = Math.round(pts2 / maxRecent * 100);
+        const dateLabel = r1 ? r1.date : r2.date;
+        recentHtml += '<div style="margin-bottom:0.5rem;font-size:0.75rem;">' +
+            '<div style="color:var(--text-muted);margin-bottom:0.15rem;font-size:0.7rem;">' + dateLabel + ' — ' + match + '</div>' +
+            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
+            '<span style="min-width:30px;color:var(--accent);font-size:0.7rem;">P1</span>' +
+            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--accent);"></div></div>' +
+            '<span style="min-width:20px;text-align:right;font-size:0.75rem;">' + pts1 + '</span>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
+            '<span style="min-width:30px;color:var(--text-muted);font-size:0.7rem;">P2</span>' +
+            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;"></div></div>' +
+            '<span style="min-width:20px;text-align:right;font-size:0.75rem;">' + pts2 + '</span>' +
+            '</div>' +
+            '</div>';
+    });
     recentDiv.innerHTML = recentHtml;
 }
 """
@@ -1055,17 +1084,17 @@ function updateArena() {
 </div>
 
 <div class="card" style="margin:1rem 0.75rem;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+    <div class="grid-2">
         <div>
-            <label style="font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Jogador 1</label>
-            <select id="player1" onchange="updateArena()" style="width:100%;padding:0.5rem;background:var(--card-bg);color:var(--text);border:1px solid var(--card-border);border-radius:6px;font-size:0.9rem;">
+            <label class="arena-label" for="player1">Jogador 1</label>
+            <select id="player1" class="arena-select" onchange="updateArena()">
                 <option value="">Selecione...</option>
                 {options}
             </select>
         </div>
         <div>
-            <label style="font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Jogador 2</label>
-            <select id="player2" onchange="updateArena()" style="width:100%;padding:0.5rem;background:var(--card-bg);color:var(--text);border:1px solid var(--card-border);border-radius:6px;font-size:0.9rem;">
+            <label class="arena-label" for="player2">Jogador 2</label>
+            <select id="player2" class="arena-select" onchange="updateArena()">
                 <option value="">Selecione...</option>
                 {options}
             </select>

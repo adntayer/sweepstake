@@ -184,6 +184,7 @@ a:hover { text-decoration: underline; }
     transition: border-color 0.2s;
 }
 .player-card:hover { border-color: var(--accent); }
+.player-card:active { border-color: var(--accent); background: rgba(245, 197, 24, 0.05); }
 .player-avatar {
     width: 44px;
     height: 44px;
@@ -246,7 +247,20 @@ details .content a:last-child { border-bottom: none; }
     font-size: 0.75rem;
 }
 
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
 /* Responsive */
+@media (max-width: 359px) {
+    .hero h1 { font-size: 1.4rem; }
+    .hero .subtitle { font-size: 0.85rem; }
+}
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
     .player-grid { grid-template-columns: repeat(3, 1fr); }
@@ -443,6 +457,9 @@ def _build_phase_accordion(config: ChampionshipConfig) -> str:
         )
         links += f'<a href="{href}">{label}</a>\n'
 
+    if not links:
+        links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
+
     sections += f"""
 <details open>
     <summary>\u26bd {config.group_phase_label} ({len(group_files)})</summary>
@@ -471,6 +488,9 @@ def _build_phase_accordion(config: ChampionshipConfig) -> str:
                 .replace("h ", "h | ")
             )
             po_links += f'<a href="{href}">{label}</a>\n'
+
+        if not po_links:
+            po_links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
         sections += f"""
 <details>
@@ -546,7 +566,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 </div>
 
 <div class="footer">
-    atualizado as {now_str}
+    atualizado às {now_str}
 </div>
 
 </body>

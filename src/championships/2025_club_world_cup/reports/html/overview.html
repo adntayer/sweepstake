@@ -34,6 +34,9 @@ body {
 
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Hero banner */
 .hero {
@@ -148,7 +151,7 @@ a:hover { text-decoration: underline; }
     margin-bottom: 0.4rem;
     font-size: 0.85rem;
 }
-.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; }
+.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bar-track {
     flex: 1;
     height: 20px;
@@ -283,7 +286,48 @@ details .content { padding: 0.75rem 1rem; }
     white-space: nowrap;
 }
 
+/* Utility */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.mt-0 { margin-top: 0; }
+.mb-1 { margin-bottom: 0.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.stat-card-sm { padding: 0.5rem; }
+.stat-card-sm .value { font-size: 1.1rem; }
+.stat-card-sm .label { font-size: 0.6rem; }
+.card-link {
+    display: block;
+    margin: 0 0.75rem;
+    text-align: center;
+    font-weight: 600;
+}
+.card-link.accent { border-color: var(--accent); }
+.arena-select {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+.arena-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.arena-label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem; }
+.compare-date { color: var(--text-muted); margin-bottom: 0.15rem; }
+.compare-row { margin-bottom: 0.4rem; font-size: 0.8rem; }
+.compare-label-p1 { min-width: 30px; color: var(--accent); font-size: 0.75rem; }
+.compare-label-p2 { min-width: 30px; color: var(--text-muted); font-size: 0.75rem; }
+.compare-bar-track { height: 12px; }
+.compare-bar-fill-accent { background: var(--accent); }
+.compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
+.compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
+
 /* Responsive */
+@media (max-width: 359px) {
+    .hero h1 { font-size: 1.25rem; }
+    .hero .subtitle { font-size: 0.8rem; }
+}
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
     .stat-row { grid-template-columns: repeat(3, 1fr); }
@@ -306,18 +350,18 @@ details .content { padding: 0.75rem 1rem; }
 <details>
     <summary>26/06 — 4 jogos — max 48 pts</summary>
     <div class="content">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:0.75rem;">
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">275</div>
-                <div class="label" style="font-size:0.6rem">Total pts</div>
+        <div class="grid-3 mb-1">
+            <div class="stat-card stat-card-sm">
+                <div class="value">275</div>
+                <div class="label">Total pts</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">17.2</div>
-                <div class="label" style="font-size:0.6rem">Media</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">17.2</div>
+                <div class="label">Media</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">65%</div>
-                <div class="label" style="font-size:0.6rem">Melhor</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">65%</div>
+                <div class="label">Melhor</div>
             </div>
         </div>
         <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
@@ -334,18 +378,18 @@ details .content { padding: 0.75rem 1rem; }
 <details>
     <summary>25/06 — 4 jogos — max 48 pts</summary>
     <div class="content">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:0.75rem;">
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">294</div>
-                <div class="label" style="font-size:0.6rem">Total pts</div>
+        <div class="grid-3 mb-1">
+            <div class="stat-card stat-card-sm">
+                <div class="value">294</div>
+                <div class="label">Total pts</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">18.4</div>
-                <div class="label" style="font-size:0.6rem">Media</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">18.4</div>
+                <div class="label">Media</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">56%</div>
-                <div class="label" style="font-size:0.6rem">Melhor</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">56%</div>
+                <div class="label">Melhor</div>
             </div>
         </div>
         <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
@@ -362,18 +406,18 @@ details .content { padding: 0.75rem 1rem; }
 <details>
     <summary>24/06 — 4 jogos — max 48 pts</summary>
     <div class="content">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:0.75rem;">
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">234</div>
-                <div class="label" style="font-size:0.6rem">Total pts</div>
+        <div class="grid-3 mb-1">
+            <div class="stat-card stat-card-sm">
+                <div class="value">234</div>
+                <div class="label">Total pts</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">14.6</div>
-                <div class="label" style="font-size:0.6rem">Media</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">14.6</div>
+                <div class="label">Media</div>
             </div>
-            <div class="stat-card" style="padding:0.5rem;">
-                <div class="value" style="font-size:1.1rem">67%</div>
-                <div class="label" style="font-size:0.6rem">Melhor</div>
+            <div class="stat-card stat-card-sm">
+                <div class="value">67%</div>
+                <div class="label">Melhor</div>
             </div>
         </div>
         <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
@@ -416,16 +460,16 @@ details .content { padding: 0.75rem 1rem; }
     </div>
 </div>
 
-<div class="card"><div class="card-title">Pontuacao por jogador (ultimos dias)</div><div class="bar-row"><span class="bar-label">Andre Bonito</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">109/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">Lucas Uberti</span><div class="bar-track"><div class="bar-fill" style="width:91%"></div></div><span class="bar-pct">100/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">Guilherme</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">Cesar Saraiv</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">RODRIGO ALBE</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">Gabão</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">Leo Fernande</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">Rafael Conte</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">André Tayer</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">88/0 (0%)</span></div>
-<div class="bar-row"><span class="bar-label">thiago bahie</span><div class="bar-track"><div class="bar-fill" style="width:77%"></div></div><span class="bar-pct">84/0 (0%)</span></div>
+<div class="card"><div class="card-title">Pontuacao por jogador (ultimos dias)</div><div class="bar-row"><span class="bar-label">Andre Bonito</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">109 pts</span></div>
+<div class="bar-row"><span class="bar-label">Lucas Uberti</span><div class="bar-track"><div class="bar-fill" style="width:91%"></div></div><span class="bar-pct">100 pts</span></div>
+<div class="bar-row"><span class="bar-label">Guilherme</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94 pts</span></div>
+<div class="bar-row"><span class="bar-label">Cesar Saraiv</span><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><span class="bar-pct">94 pts</span></div>
+<div class="bar-row"><span class="bar-label">RODRIGO ALBE</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92 pts</span></div>
+<div class="bar-row"><span class="bar-label">Gabão</span><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><span class="bar-pct">92 pts</span></div>
+<div class="bar-row"><span class="bar-label">Leo Fernande</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90 pts</span></div>
+<div class="bar-row"><span class="bar-label">Rafael Conte</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-pct">90 pts</span></div>
+<div class="bar-row"><span class="bar-label">André Tayer</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">88 pts</span></div>
+<div class="bar-row"><span class="bar-label">thiago bahie</span><div class="bar-track"><div class="bar-fill" style="width:77%"></div></div><span class="bar-pct">84 pts</span></div>
 </div>
 
 <div class="section">
@@ -440,7 +484,7 @@ details .content { padding: 0.75rem 1rem; }
 </div>
 
 <div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado as 17/05/2026 01:05:18
+    atualizado às 17/05/2026 01:18:52
 </div>
 </body>
 </html>
