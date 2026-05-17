@@ -271,6 +271,18 @@ details .content { padding: 0.75rem 1rem; }
 }
 .striker-badge .icon { font-size: 1.2rem; }
 
+/* Score pill */
+.score-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
 /* Responsive */
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
@@ -325,27 +337,27 @@ details .content { padding: 0.75rem 1rem; }
 
 <div class="section">
     <div class="section-title">📋 Previsoes dos Jogadores (16)</div>
-    <div class="card"><div class="pred-row"><div class="pred-avatar">FS</div><div class="pred-info"><div class="pred-name">Frederico Soter</div><div class="pred-detail">Previsto: 2 x 1 | 2-Vencedor + gols de um time</div></div><div class="pred-points" style="color:var(--success)">+7 ✅</div></div>
-<div class="pred-row"><div class="pred-avatar">TB</div><div class="pred-info"><div class="pred-name">thiago bahiense</div><div class="pred-detail">Previsto: 0 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">TO</div><div class="pred-info"><div class="pred-name">Thales Oliveira</div><div class="pred-detail">Previsto: 1 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">RC</div><div class="pred-info"><div class="pred-name">Rafael Conte</div><div class="pred-detail">Previsto: 0 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">PT</div><div class="pred-info"><div class="pred-name">Pedro Tayer</div><div class="pred-detail">Previsto: 1 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">LU</div><div class="pred-info"><div class="pred-name">Lucas Ubertini</div><div class="pred-detail">Previsto: 1 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">JH</div><div class="pred-info"><div class="pred-name">João Henrique</div><div class="pred-detail">Previsto: 1 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">GA</div><div class="pred-info"><div class="pred-name">Gabão</div><div class="pred-detail">Previsto: 0 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">AT</div><div class="pred-info"><div class="pred-name">André Tayer</div><div class="pred-detail">Previsto: 1 x 1 | 4-Gols de um time</div></div><div class="pred-points" style="color:var(--text-muted)">+1 ⚠️</div></div>
-<div class="pred-row"><div class="pred-avatar">RA</div><div class="pred-info"><div class="pred-name">RODRIGO ALBERNAZ</div><div class="pred-detail">Previsto: 1 x 2 | 5-Nenhum acerto</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
-<div class="pred-row"><div class="pred-avatar">MA</div><div class="pred-info"><div class="pred-name">Marcelo</div><div class="pred-detail">Previsto: 1 x 2 | 5-Nenhum acerto</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
-<div class="pred-row"><div class="pred-avatar">LF</div><div class="pred-info"><div class="pred-name">Leo Fernandes</div><div class="pred-detail">Previsto: 1 x 2 | 5-Nenhum acerto</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
-<div class="pred-row"><div class="pred-avatar">LG</div><div class="pred-info"><div class="pred-name">Leigo Gianonni</div><div class="pred-detail">Previsto: 0 x 2 | 5-Nenhum acerto</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
-<div class="pred-row"><div class="pred-avatar">GU</div><div class="pred-info"><div class="pred-name">Guilherme</div><div class="pred-detail">Previsto: 1 x 2 | 5-Nenhum acerto</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
-<div class="pred-row"><div class="pred-avatar">CS</div><div class="pred-info"><div class="pred-name">Cesar Saraiva</div><div class="pred-detail">Previsto: 1 x 2 | 5-Nenhum acerto</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
-<div class="pred-row"><div class="pred-avatar">AB</div><div class="pred-info"><div class="pred-name">Andre Bonito</div><div class="pred-detail">Previsto: 2 x 2 | 5-Nenhum acerto</div></div><div class="pred-points" style="color:var(--text-muted)">+0 ❌</div></div>
+    <div class="card"><div class="pred-row"><div class="pred-avatar">FS</div><div class="pred-info"><div class="pred-name">Frederico Soter</div><div class="pred-detail">Previsto: 2 x 1 | ⚽ 2-Vencedor + gols de um time</div></div><div class="score-pill" style="color:#66ff66;background:#66ff661a;border:1px solid #66ff6640">+7 ⚽</div></div>
+<div class="pred-row"><div class="pred-avatar">TB</div><div class="pred-info"><div class="pred-name">thiago bahiense</div><div class="pred-detail">Previsto: 0 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">TO</div><div class="pred-info"><div class="pred-name">Thales Oliveira</div><div class="pred-detail">Previsto: 1 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">RC</div><div class="pred-info"><div class="pred-name">Rafael Conte</div><div class="pred-detail">Previsto: 0 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">PT</div><div class="pred-info"><div class="pred-name">Pedro Tayer</div><div class="pred-detail">Previsto: 1 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">LU</div><div class="pred-info"><div class="pred-name">Lucas Ubertini</div><div class="pred-detail">Previsto: 1 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">JH</div><div class="pred-info"><div class="pred-name">João Henrique</div><div class="pred-detail">Previsto: 1 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">GA</div><div class="pred-info"><div class="pred-name">Gabão</div><div class="pred-detail">Previsto: 0 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">AT</div><div class="pred-info"><div class="pred-name">André Tayer</div><div class="pred-detail">Previsto: 1 x 1 | 👊 4-Gols de um time</div></div><div class="score-pill" style="color:#ff9900;background:#ff99001a;border:1px solid #ff990040">+1 👊</div></div>
+<div class="pred-row"><div class="pred-avatar">RA</div><div class="pred-info"><div class="pred-name">RODRIGO ALBERNAZ</div><div class="pred-detail">Previsto: 1 x 2 | ❌ 5-Nenhum acerto</div></div><div class="score-pill" style="color:#ff3333;background:#ff33331a;border:1px solid #ff333340">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-avatar">MA</div><div class="pred-info"><div class="pred-name">Marcelo</div><div class="pred-detail">Previsto: 1 x 2 | ❌ 5-Nenhum acerto</div></div><div class="score-pill" style="color:#ff3333;background:#ff33331a;border:1px solid #ff333340">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-avatar">LF</div><div class="pred-info"><div class="pred-name">Leo Fernandes</div><div class="pred-detail">Previsto: 1 x 2 | ❌ 5-Nenhum acerto</div></div><div class="score-pill" style="color:#ff3333;background:#ff33331a;border:1px solid #ff333340">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-avatar">LG</div><div class="pred-info"><div class="pred-name">Leigo Gianonni</div><div class="pred-detail">Previsto: 0 x 2 | ❌ 5-Nenhum acerto</div></div><div class="score-pill" style="color:#ff3333;background:#ff33331a;border:1px solid #ff333340">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-avatar">GU</div><div class="pred-info"><div class="pred-name">Guilherme</div><div class="pred-detail">Previsto: 1 x 2 | ❌ 5-Nenhum acerto</div></div><div class="score-pill" style="color:#ff3333;background:#ff33331a;border:1px solid #ff333340">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-avatar">CS</div><div class="pred-info"><div class="pred-name">Cesar Saraiva</div><div class="pred-detail">Previsto: 1 x 2 | ❌ 5-Nenhum acerto</div></div><div class="score-pill" style="color:#ff3333;background:#ff33331a;border:1px solid #ff333340">+0 ❌</div></div>
+<div class="pred-row"><div class="pred-avatar">AB</div><div class="pred-info"><div class="pred-name">Andre Bonito</div><div class="pred-detail">Previsto: 2 x 2 | ❌ 5-Nenhum acerto</div></div><div class="score-pill" style="color:#ff3333;background:#ff33331a;border:1px solid #ff333340">+0 ❌</div></div>
 </div>
 </div>
 
 <div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado as 17/05/2026 00:51:51
+    atualizado as 17/05/2026 01:05:19
 </div>
 </body>
 </html>
