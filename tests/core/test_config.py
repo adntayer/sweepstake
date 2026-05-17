@@ -350,4 +350,4 @@ class TestThemeConfig:
         cfg = load_config("2025_club_world_cup")
         assert cfg.theme.mode == "dark"
         assert cfg.theme.colors.primary == "#1a5e1f"
-        assert cfg.theme.colors.bg == "#0d1117"
+        assert cfg.theme.colors.bg == "#060d1a"

@@ -16,6 +16,7 @@ from src.core.config import ChampionshipConfig
 from src.core.loader import parse_group_stage, parse_playoffs
 from src.core.printing import print_colored
 from src.core.scoring import score_prediction
+from src.core.get_results import get_results
 
 # ------------------------------------------------------------------
 # Helpers
@@ -130,7 +131,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
     _recreate_dirs(dirs)
 
     # Load official results
-    df_results = pd.read_csv(config.results_file, sep=",")
+    df_results = pd.read_csv(config.games_file, sep=",")
 
     # Load all bronze group CSVs
     bronze_pattern = _norm(os.path.join(config.bronze_dir, group_label, "*"))
@@ -309,6 +310,7 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
 
 def run_pipeline(config: ChampionshipConfig) -> None:
     """Run the full medallion pipeline."""
+    get_results(config)
     run_raw_to_bronze(config)
     run_bronze_to_silver(config)
     run_silver_to_gold(config)

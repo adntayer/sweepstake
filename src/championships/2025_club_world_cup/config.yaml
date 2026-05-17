@@ -9,13 +9,116 @@ group_phase_label: "1afase"
 # All paths (relative to project root)
 base_dir: "src/championships/2025_club_world_cup/data"
 raw_dir: "src/championships/2025_club_world_cup/data/raw"
-results_file: "src/championships/2025_club_world_cup/data/jogos_1afase.csv"
+results_file: "src/championships/2025_club_world_cup/data/games.csv"
+games_file: "src/championships/2025_club_world_cup/data/games.csv"
 bronze_dir: "src/championships/2025_club_world_cup/data/bronze"
 silver_dir: "src/championships/2025_club_world_cup/data/silver"
 gold_dir: "src/championships/2025_club_world_cup/data/gold"
 reports_dir: "src/championships/2025_club_world_cup/reports"
 
+# External results source
+results_endpoint: "https://fixturedownload.com/download/fifa-club-world-cup-2025-UTC.csv"
+
+# English → Portuguese team name mapping (supports typos, alternates, etc.)
+team_name_mapping:
+  - en: "Al Ahly FC"
+    pt: "Al Ahly"
+
+  - en: "Inter Miami CF"
+    pt: "Inter Miami"
+
+  - en: "FC Bayern München"
+    pt: "Bayern de Munique"
+
+  - en: "Auckland City FC"
+    pt: "Auckland City"
+
+  - en: "Paris Saint-Germain"
+    pt: "Paris Saint-Germain"
+
+  - en: "Atlético de Madrid"
+    pt: "Atlético de Madrid"
+
+  - en: "Palmeiras"
+    pt: "Palmeiras"
+
+  - en: "FC Porto"
+    pt: "Porto"
+
+  - en: "Botafogo"
+    pt: "Botafogo"
+
+  - en: "Seattle Sounders FC"
+    pt: "Seattle Sounders"
+
+  - en: "Chelsea FC"
+    pt: "Chelsea"
+
+  - en: "LAFC"
+    pt: "Los Angeles FC"
+
+  - en: "CA Boca Juniors"
+    pt: "Boca Juniors"
+
+  - en: "SL Benfica"
+    pt: "Benfica"
+
+  - en: "CR Flamengo"
+    pt: "Flamengo"
+
+  - en: "Espérance de Tunisie"
+    pt: "Espérance"
+
+  - en: "Fluminense FC"
+    pt: "Fluminense"
+
+  - en: "Borussia Dortmund"
+    pt: "Borussia Dortmund"
+
+  - en: "CA River Plate"
+    pt: "River Plate"
+
+  - en: "Urawa Red Diamonds"
+    pt: "Urawa Reds"
+
+  - en: "Ulsan HD"
+    pt: "Ulsan HD"
+
+  - en: "Mamelodi Sundowns FC"
+    pt: "Mamelodi Sundowns"
+
+  - en: "CF Monterrey"
+    pt: "Monterrey"
+
+  - en: "FC Internazionale Milano"
+    pt: "Internazionale"
+
+  - en: "Manchester City"
+    pt: "Manchester City"
+
+  - en: "Wydad AC"
+    pt: "Wydad Casablanca"
+
+  - en: "Real Madrid C.F."
+    pt: "Real Madrid"
+
+  - en: "Al Hilal"
+    pt: "Al-Hilal"
+
+  - en: "CF Pachuca"
+    pt: "Pachuca"
+
+  - en: "FC Salzburg"
+    pt: "RB Salzburg"
+
+  - en: "Al Ain FC"
+    pt: "Al-Ain"
+
+  - en: "Juventus FC"
+    pt: "Juventus"
+
 # Scoring rules (checked in rule order)
+# Colors reference theme section above
 scoring:
   - name: "1-Placar exato"
     rule: "exact_score"
@@ -70,19 +173,46 @@ excel_layout:
         matches: 1
         tail_offset: 2
 
-# HTML report theme
+# HTML report theme — ALL colors controlled here
 theme:
   mode: "dark"
   colors:
     primary: "#1a5e1f"
     primary_light: "#2d8a33"
     accent: "#f5c518"
-    accent_dark: "#d4a817"
-    bg: "#0d1117"
-    card_bg: "#161b22"
-    card_border: "#30363d"
-    text: "#e6edf3"
-    text_muted: "#8b949e"
-    success: "#2ea043"
-    warning: "#d29922"
-    danger: "#f85149"
+    accent_dark: "#b8940f"
+    bg: "#060d1a"
+    card_bg: "#0d1b2e"
+    card_border: "#1a3050"
+    text: "#ffffff"
+    text_muted: "#8899aa"
+    text_inverse: "#000000"
+    success: "#22c55e"
+    warning: "#f59e0b"
+    danger: "#ef4444"
+    voce: "#f5c518"
+    bolao: "#3b82f6"
+    silver: "#c0c0c0"
+    bronze: "#cd7f32"
+    accent_highlight: "rgba(245,197,24,0.1)"
+    silver_highlight: "rgba(192,192,192,0.08)"
+    bronze_highlight: "rgba(205,127,50,0.08)"
+    zebra_stripe: "rgba(255,255,255,0.02)"
+    hover_overlay: "rgba(255,255,255,0.03)"
+    shadow_color: "rgba(0,0,0,0.4)"
+    player_card_active: "rgba(245,197,24,0.05)"
+    score_exact: "#00cc00"
+    score_exact_bg: "rgba(0,204,0,0.1)"
+    score_exact_border: "rgba(0,204,0,0.4)"
+    score_winner_goals: "#66ff66"
+    score_winner_goals_bg: "rgba(102,255,102,0.1)"
+    score_winner_goals_border: "rgba(102,255,102,0.4)"
+    score_winner: "#ffcc00"
+    score_winner_bg: "rgba(255,204,0,0.1)"
+    score_winner_border: "rgba(255,204,0,0.4)"
+    score_one_team: "#ff9900"
+    score_one_team_bg: "rgba(255,153,0,0.1)"
+    score_one_team_border: "rgba(255,153,0,0.4)"
+    score_none: "#ff3333"
+    score_none_bg: "rgba(255,51,51,0.1)"
+    score_none_border: "rgba(255,51,51,0.4)"

@@ -6,8 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/championships/2025_club_world_cup/data/jogos_1afase.csv'
-      - 'src/championships/2025_club_world_cup/data/jogos_playoffs.csv'
+      - 'src/championships/2025_club_world_cup/data/games.csv'
 
 jobs:
   run:
