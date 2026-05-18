@@ -1333,8 +1333,6 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         _norm(os.path.join(html_base, "boleiros")),
         _norm(os.path.join(html_base, "jogos", config.group_phase_label)),
     ]
-    for pr in config.playoff_rounds:
-        dirs.append(_norm(os.path.join(html_base, "jogos", pr.key)))
     for d in dirs:
         os.makedirs(d, exist_ok=True)
 
@@ -1368,20 +1366,3 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
         path = _norm(os.path.join(html_base, "jogos", config.group_phase_label, filename))
         _save(path, html)
-
-    # --- Per-match (playoff rounds) ---
-    for pr in config.playoff_rounds:
-        try:
-            gold_path = config.gold_all_path(phase=pr.key)
-            if os.path.exists(gold_path):
-                df_po = pd.read_csv(gold_path, sep=",")
-                po_matches = df_po[df_po["match"].notna()].groupby("match")
-                for match, df_match in po_matches:
-                    print_colored(f"generating playoff match html: {match}", "blue")
-                    html = _build_match(config, match, pr.name, df_match)
-                    first = df_match.iloc[0]
-                    filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
-                    path = _norm(os.path.join(html_base, "jogos", pr.key, filename))
-                    _save(path, html)
-        except Exception:
-            pass

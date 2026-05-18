@@ -230,43 +230,106 @@ class ChampionshipConfig:
             self.report_title = f"{self.name}"
 
     # ------------------------------------------------------------------
-    # Convenience helpers
+    # Path helpers — first_round / playoffs structure
+    # ------------------------------------------------------------------
+    # Bronze:
+    #   bronze/first_round/group_phase_{boleiro}.csv
+    #   bronze/first_round/bonus_teams_{boleiro}.csv
+    #   bronze/first_round/striker_{boleiro}.csv
+    #   bronze/playoffs/  (future separate playoff Excel files)
+    #
+    # Silver:
+    #   silver/first_round/group_phase_{boleiro}.csv
+    #   silver/playoffs/  (future)
+    #
+    # Gold:
+    #   gold/first_round/group_phase_{boleiro}.csv
+    #   gold/first_round/{label}_all.csv
+    #   gold/first_round/{label}_valido_all.csv
+    #   gold/first_round/striker_{boleiro}.csv
+    #   gold/first_round/playoffs_strikers.csv
+    #   gold/playoffs/  (future)
     # ------------------------------------------------------------------
 
+    def _br_first_round(self) -> str:
+        return _norm(os.path.join(self.bronze_dir, "first_round"))
+
+    def _br_playoffs(self) -> str:
+        return _norm(os.path.join(self.bronze_dir, "playoffs"))
+
+    def _ag_first_round(self) -> str:
+        return _norm(os.path.join(self.silver_dir, "first_round"))
+
+    def _ag_playoffs(self) -> str:
+        return _norm(os.path.join(self.silver_dir, "playoffs"))
+
+    def _au_first_round(self) -> str:
+        return _norm(os.path.join(self.gold_dir, "first_round"))
+
+    def _au_playoffs(self) -> str:
+        return _norm(os.path.join(self.gold_dir, "playoffs"))
+
+    # --- Bronze paths ---
+
+    def bronze_group_path(self, boleiro: str) -> str:
+        """Path to bronze group-phase CSV for a single boleiro."""
+        return _norm(os.path.join(self._br_first_round(), f"group_phase_{boleiro}.csv"))
+
+    def bronze_bonus_path(self, boleiro: str) -> str:
+        """Path to bronze bonus playoff teams for a single boleiro."""
+        return _norm(os.path.join(self._br_first_round(), f"bonus_teams_{boleiro}.csv"))
+
+    def bronze_striker_path(self, boleiro: str) -> str:
+        """Path to bronze striker CSV for a single boleiro."""
+        return _norm(os.path.join(self._br_first_round(), f"striker_{boleiro}.csv"))
+
+    # --- Silver paths ---
+
+    def silver_group_path(self, boleiro: str) -> str:
+        """Path to silver group-phase CSV for a single boleiro."""
+        return _norm(os.path.join(self._ag_first_round(), f"group_phase_{boleiro}.csv"))
+
+    # --- Gold paths ---
+
+    def gold_first_round_dir(self) -> str:
+        """Directory for gold first-round files."""
+        return self._au_first_round()
+
+    def gold_playoffs_dir(self) -> str:
+        """Directory for gold playoff files."""
+        return self._au_playoffs()
+
+    def gold_group_boleiro_path(self, boleiro: str) -> str:
+        """Path to gold group-phase CSV for a single boleiro."""
+        return _norm(os.path.join(self._au_first_round(), f"group_phase_{boleiro}.csv"))
+
     def gold_valid_path(self, phase: str = "group") -> str:
-        """Path to the gold 'valid only' CSV for a phase."""
-        key = self.group_phase_label if phase == "group" else phase
-        return _norm(os.path.join(self.gold_dir, key, f"{key}_valido_all.csv"))
+        """Path to the gold 'valid only' aggregated CSV."""
+        label = self.group_phase_label
+        return _norm(os.path.join(self._au_first_round(), f"{label}_valido_all.csv"))
 
     def gold_all_path(self, phase: str = "group") -> str:
-        """Path to the gold 'all records' CSV for a phase."""
-        key = self.group_phase_label if phase == "group" else phase
-        return _norm(os.path.join(self.gold_dir, key, f"{key}_all.csv"))
+        """Path to the gold 'all records' aggregated CSV."""
+        label = self.group_phase_label
+        return _norm(os.path.join(self._au_first_round(), f"{label}_all.csv"))
 
-    def silver_all_path(self, phase: str = "group") -> str:
-        """Path to the silver merged CSV for a phase."""
-        key = self.group_phase_label if phase == "group" else phase
-        return _norm(os.path.join(self.silver_dir, key, "all_games.csv"))
+    def gold_striker_path(self, boleiro: str) -> str:
+        """Path to gold striker CSV for a single boleiro."""
+        return _norm(os.path.join(self._au_first_round(), f"striker_{boleiro}.csv"))
 
     def playoff_strikers_path(self, layer: str = "gold") -> str:
-        """Path to the strikers CSV."""
+        """Path to the aggregated strikers CSV."""
         if layer == "bronze":
-            base = self.bronze_dir
+            base = self._br_first_round()
         elif layer == "silver":
-            base = self.silver_dir
+            base = self._ag_first_round()
         else:
-            base = self.gold_dir
-        return _norm(os.path.join(base, "playoffs", "full", "playoffs_strikers.csv"))
+            base = self._au_first_round()
+        return _norm(os.path.join(base, "playoffs_strikers.csv"))
 
     def playoff_games_path(self, layer: str = "gold") -> str:
-        """Path to the playoff games CSV."""
-        if layer == "bronze":
-            base = self.bronze_dir
-        elif layer == "silver":
-            base = self.silver_dir
-        else:
-            base = self.gold_dir
-        return _norm(os.path.join(base, "playoffs", "full", "playoffs_full_games.csv"))
+        """Path to the aggregated playoff games CSV (legacy compat, returns strikers)."""
+        return self.playoff_strikers_path(layer)
 
     def overview_md_path(self) -> str:
         return _norm(os.path.join(self.reports_dir, "md", "overview.md"))
