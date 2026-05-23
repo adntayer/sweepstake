@@ -172,38 +172,58 @@ class TestChampionshipConfigPaths:
 
     def test_gold_valid_path(self):
         cfg = self._cfg()
-        assert cfg.gold_valid_path() == _norm("data/test/gold/group/group_valido_all.csv")
+        assert cfg.gold_valid_path() == _norm("data/test/gold/first_round/group_valido_all.csv")
 
     def test_gold_all_path(self):
         cfg = self._cfg()
-        assert cfg.gold_all_path() == _norm("data/test/gold/group/group_all.csv")
+        assert cfg.gold_all_path() == _norm("data/test/gold/first_round/group_all.csv")
 
-    def test_silver_all_path(self):
+    def test_bronze_group_path(self):
         cfg = self._cfg()
-        assert cfg.silver_all_path() == _norm("data/test/silver/group/all_games.csv")
+        assert cfg.bronze_group_path("joao") == _norm("data/test/bronze/first_round/group_phase_joao.csv")
+
+    def test_bronze_bonus_path(self):
+        cfg = self._cfg()
+        assert cfg.bronze_bonus_path("joao") == _norm("data/test/bronze/first_round/bonus_teams_joao.csv")
+
+    def test_bronze_striker_path(self):
+        cfg = self._cfg()
+        assert cfg.bronze_striker_path("joao") == _norm("data/test/bronze/first_round/striker_joao.csv")
+
+    def test_silver_group_path(self):
+        cfg = self._cfg()
+        assert cfg.silver_group_path("joao") == _norm("data/test/silver/first_round/group_phase_joao.csv")
+
+    def test_gold_group_boleiro_path(self):
+        cfg = self._cfg()
+        assert cfg.gold_group_boleiro_path("joao") == _norm("data/test/gold/first_round/group_phase_joao.csv")
+
+    def test_gold_striker_path(self):
+        cfg = self._cfg()
+        assert cfg.gold_striker_path("joao") == _norm("data/test/gold/first_round/striker_joao.csv")
 
     def test_playoff_strikers_gold(self):
         cfg = self._cfg()
         assert cfg.playoff_strikers_path("gold") == _norm(
-            "data/test/gold/playoffs/full/playoffs_strikers.csv"
+            "data/test/gold/first_round/playoffs_strikers.csv"
         )
 
     def test_playoff_strikers_silver(self):
         cfg = self._cfg()
         assert cfg.playoff_strikers_path("silver") == _norm(
-            "data/test/silver/playoffs/full/playoffs_strikers.csv"
+            "data/test/silver/first_round/playoffs_strikers.csv"
         )
 
     def test_playoff_strikers_bronze(self):
         cfg = self._cfg()
         assert cfg.playoff_strikers_path("bronze") == _norm(
-            "data/test/bronze/playoffs/full/playoffs_strikers.csv"
+            "data/test/bronze/first_round/playoffs_strikers.csv"
         )
 
     def test_playoff_games_gold(self):
         cfg = self._cfg()
         assert cfg.playoff_games_path("gold") == _norm(
-            "data/test/gold/playoffs/full/playoffs_full_games.csv"
+            "data/test/gold/first_round/playoffs_strikers.csv"
         )
 
     def test_overview_md_path(self):

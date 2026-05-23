@@ -293,16 +293,6 @@ def _get_upcoming_games(html_base: str, config: ChampionshipConfig, limit: int =
         if info and info["dt"] > now:
             games.append(info)
 
-    # Scan playoff rounds
-    for pr in config.playoff_rounds:
-        po_dir = _norm(os.path.join(html_base, "jogos", pr.key))
-        for fp in sorted(glob(_norm(os.path.join(po_dir, "*.html")))):
-            if "index" in fp:
-                continue
-            info = _parse_game_file(fp, config)
-            if info and info["dt"] > now:
-                games.append(info)
-
     games.sort(key=lambda g: g["dt"])
     return games[:limit]
 
