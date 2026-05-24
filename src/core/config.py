@@ -217,6 +217,13 @@ class ChampionshipConfig:
     group_phase_label: str = "1a Fase"
     theme: ThemeConfig = field(default_factory=ThemeConfig)
 
+    # Playoff bonus scoring (phase_key -> points_per_correct)
+    playoff_scoring: dict[str, int] = field(default_factory=dict)
+
+    # Striker scoring
+    actual_top_scorer: str = ""
+    striker_points: int = 0
+
     def __post_init__(self) -> None:
         self.base_dir = _norm(self.base_dir) if self.base_dir else _norm(os.path.join("src", "data", self.id))
         self.raw_dir = _norm(self.raw_dir) if self.raw_dir else _norm(os.path.join(self.base_dir, "raw"))
@@ -507,6 +514,15 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         for r in po_cfg.get("rounds", [])
     ]
 
+    # Parse playoff scoring
+    playoff_scoring = {}
+    for phase_key, points in raw.get("playoff_scoring", {}).items():
+        playoff_scoring[phase_key] = points
+
+    # Parse striker scoring
+    striker_cfg = raw.get("striker_scoring", {})
+    striker_points = striker_cfg.get("points", 0)
+
     return ChampionshipConfig(
         id=raw["id"],
         name=raw["name"],
@@ -528,6 +544,9 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         reports_dir=_norm(raw.get("reports_dir", "")),
         results_endpoint=raw.get("results_endpoint", ""),
         team_name_mapping=_parse_team_mapping(raw.get("team_name_mapping", [])),
+        playoff_scoring=playoff_scoring,
+        actual_top_scorer=raw.get("actual_top_scorer", ""),
+        striker_points=striker_points,
     )
 
 

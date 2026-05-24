@@ -1,7 +1,6 @@
 """Generate rich mobile-first HTML reports directly from gold-layer CSV data.
 
 Produces:
-  - overview.html (ranking, stats, recent results)
   - Per-participant boleiros/<name>.html (X-ray analysis)
   - Per-match jogos/<phase>/<match>.html (prediction analysis)
 """
@@ -9,6 +8,7 @@ Produces:
 from __future__ import annotations
 
 import os
+import shutil
 from datetime import datetime
 
 import pandas as pd
@@ -332,6 +332,15 @@ details .content { padding: 0.75rem 1rem; }
 .compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
 .compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
 
+/* Heatmap */
+.heat-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.heat-row { display: flex; gap: 0; margin-bottom: 2px; }
+.heat-label { width: 80px; min-width: 80px; font-size: 0.7rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 4px; line-height: 28px; text-align: right; }
+.heat-cells { display: flex; gap: 2px; }
+.heat-cell { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--text); border-radius: 3px; flex-shrink: 0; }
+.heat-cell-header { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; color: var(--text-muted); flex-shrink: 0; border-radius: 3px; }
+.heat-total-label { width: 80px; min-width: 80px; font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; padding-right: 4px; line-height: 28px; text-align: right; border-top: 1px solid var(--card-border); }
+
 /* Responsive */
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.25rem; }
@@ -401,224 +410,7 @@ def _max_points_per_game(config: ChampionshipConfig) -> int:
     return max(r.points for r in config.scoring_rules)
 
 
-def _build_daily_tracking(config: ChampionshipConfig, df_valid: pd.DataFrame, df_results: pd.DataFrame) -> str:
-    """Build the daily tracking section for the overview page."""
-    max_pts = _max_points_per_game(config)
 
-    # Get last 3 days with results
-    cols_res = ["date", "home_team", "home_goals", "away_goals", "away_team"]
-    df_games = df_results[cols_res].dropna(how="any").copy()
-    df_games["date"] = pd.to_datetime(df_games["date"]).dt.strftime("%Y-%m-%d")
-    unique_dates = sorted(df_games["date"].unique(), reverse=True)[:3]
-
-    if not unique_dates:
-        return ""
-
-    sections = ""
-    for date_str in unique_dates:
-        day_games = df_games[df_games["date"] == date_str]
-        num_games = len(day_games)
-        max_possible = max_pts * num_games
-
-        # Get points for this day
-        day_pts = df_valid[df_valid["date"] == date_str].groupby("who", as_index=False)["pontos"].sum()
-        if day_pts.empty:
-            continue
-
-        # Calculate stats
-        total_earned = int(day_pts["pontos"].sum())
-        avg_earned = round(day_pts["pontos"].mean(), 1)
-        best_player = day_pts.loc[day_pts["pontos"].idxmax()]
-        best_name = best_player["who"]
-        best_pts = int(best_player["pontos"])
-        best_pct = round(best_pts / max_possible * 100) if max_possible > 0 else 0
-
-        date_display = pd.to_datetime(date_str).strftime("%d/%m")
-
-        # Build game results summary
-        game_summary = ""
-        for _, g in day_games.iterrows():
-            hg = int(g["home_goals"])
-            ag = int(g["away_goals"])
-            game_summary += (
-                f'<div class="pred-row" style="padding:0.4rem 0;">'
-                f'<div class="pred-info">'
-                f'<div class="pred-name" style="font-size:0.85rem">{g["home_team"]} {hg}-{ag} {g["away_team"]}</div>'
-                f'</div>'
-                f'</div>\n'
-            )
-
-        sections += f"""
-<details>
-    <summary>{date_display} — {num_games} jogos — max {max_possible} pts</summary>
-    <div class="content">
-        <div class="grid-3 mb-1">
-            <div class="stat-card stat-card-sm">
-                <div class="value">{total_earned}</div>
-                <div class="label">Total pts</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">{avg_earned}</div>
-                <div class="label">Media</div>
-            </div>
-            <div class="stat-card stat-card-sm">
-                <div class="value">{best_pct}%</div>
-                <div class="label">Melhor</div>
-            </div>
-        </div>
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
-            \U0001f3c6 {best_name}: {best_pts}/{max_possible} pts ({best_pct}%)
-        </div>
-        {game_summary}
-    </div>
-</details>
-"""
-
-    return f"""
-<div class="section">
-    <div class="section-title">\U0001f4c5 Acompanhamento Diario</div>
-    {sections}
-</div>
-"""
-
-
-# ------------------------------------------------------------------
-# Overview page
-# ------------------------------------------------------------------
-
-def _build_overview(config: ChampionshipConfig) -> str:
-    """Build the overview.html body."""
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
-    df_results = pd.read_csv(config.results_file, sep=",")
-    max_pts = _max_points_per_game(config)
-
-    # Ranking
-    score_names = config.scoring_rule_names()
-    agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
-    df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
-    df_rank.sort_values("pontos", ascending=False, inplace=True)
-    df_rank.reset_index(drop=True, inplace=True)
-    df_rank["#"] = range(1, len(df_rank) + 1)
-    df_rank.rename(columns={"who": "boleiro"}, inplace=True)
-
-    # Points by date (last 5 days)
-    df_pts = df_valid.groupby(["who", "date"], as_index=False).agg({"pontos": "sum"})
-    df_pts["date"] = pd.to_datetime(df_pts["date"])
-    last_dts = sorted(df_pts["date"].unique())[-5:]
-    df_last = df_pts[df_pts["date"].isin(last_dts)]
-    if not df_last.empty:
-        df_pivot = df_last.pivot(index="who", columns="date", values="pontos").fillna(0).astype(int)
-        df_pivot.columns = [c.strftime("%d/%m") for c in df_pivot.columns]
-        df_pivot["total"] = df_pivot.sum(axis=1)
-        df_pivot.sort_values("total", ascending=False, inplace=True)
-    else:
-        df_pivot = pd.DataFrame()
-
-    # Last results
-    cols_res = ["date", "home_team", "home_goals", "away_goals", "away_team"]
-    df_games = df_results[cols_res].dropna(how="any").sort_values("date", ascending=False).head(6)
-
-    # Build ranking rows
-    rank_rows = ""
-    for _, row in df_rank.iterrows():
-        rank_num = int(row["#"])
-        medal = ""
-        if rank_num == 1:
-            medal = "\U0001f947"
-        elif rank_num == 2:
-            medal = "\U0001f948"
-        elif rank_num == 3:
-            medal = "\U0001f949"
-        rank_class = f"rank-{rank_num}" if rank_num <= 3 else ""
-        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["boleiro"]}.html">{row["boleiro"]}</a></td>'
-        cells += f'<td style="font-weight:700;color:var(--accent)">{int(row["pontos"])}</td>'
-        for sn in score_names:
-            if sn in row.index:
-                val = int(row[sn]) if pd.notna(row[sn]) else 0
-                cells += f"<td>{val}</td>"
-        rank_rows += f'<tr class="{rank_class}">{cells}</tr>\n'
-
-    # Build points timeline bars with max possible context
-    timeline_html = ""
-    if not df_pivot.empty:
-        max_val = df_pivot["total"].max()
-        if max_val > 0:
-            bar_rows = ""
-            for name, row in df_pivot.head(10).iterrows():
-                total = int(row["total"])
-                pct_bar = round(total / max_val * 100)
-                bar_rows += (
-                    f'<div class="bar-row">'
-                    f'<span class="bar-label">{name[:12]}</span>'
-                    f'<div class="bar-track"><div class="bar-fill" style="width:{pct_bar}%"></div></div>'
-                    f'<span class="bar-pct">{total} pts</span>'
-                    f'</div>\n'
-                )
-            timeline_html = f'<div class="card"><div class="card-title">Pontuacao por jogador (ultimos dias)</div>{bar_rows}</div>'
-
-    # Build last results with point distribution checklist
-    result_rows = ""
-    for _, row in df_games.iterrows():
-        match_key = f"{row['home_team']}-{row['away_team']}".lower().replace(" ", "_")
-        hg = int(row["home_goals"])
-        ag = int(row["away_goals"])
-        date_info = str(row["date"])
-
-        # Get point distribution for this match
-        match_pts = df_valid[df_valid["match"] == match_key] if "match" in df_valid.columns else pd.DataFrame()
-        pts_dist = ""
-        if not match_pts.empty:
-            pts_counts = match_pts["pontos"].value_counts().sort_index(ascending=False)
-            for pts, count in pts_counts.items():
-                pts_int = int(pts)
-                color = "var(--success)" if pts_int >= 7 else "var(--warning)" if pts_int >= 5 else "var(--text-muted)"
-                pts_dist += f'<span style="color:{color};font-size:0.75rem;margin-right:0.5rem;">{pts_int}pts: {count}</span>'
-
-        result_rows += (
-            f'<div class="pred-row">'
-            f'<div class="pred-info">'
-            f'<div class="pred-name">{row["home_team"]} vs {row["away_team"]}</div>'
-            f'<div class="pred-detail">{date_info}</div>'
-            f'<div style="margin-top:0.25rem;">{pts_dist}</div>'
-            f'</div>'
-            f'<div class="pred-points" style="color:var(--accent)">{hg} - {ag}</div>'
-            f'</div>\n'
-        )
-
-    daily_tracking = _build_daily_tracking(config, df_valid, df_results)
-
-    body = f"""
-<div class="hero">
-    <h1>\U0001f3c6 {config.report_title}</h1>
-    <div class="subtitle">Bolao Dashboard</div>
-</div>
-
-{daily_tracking}
-
-<div class="section">
-    <div class="section-title">\U0001f3c6 Ranking</div>
-    <div class="card" style="overflow-x:auto;">
-        <table class="rank-table">
-            <thead><tr><th>#</th><th>Boleiro</th><th>Pts</th>"""
-    for sn in score_names:
-        emoji = config.scoring_emoji(sn)
-        header = f"{emoji} " if emoji else ""
-        header += sn.split('-')[0].strip()
-        body += f"<th>{header}</th>"
-    body += f"""</tr></thead>
-            <tbody>{rank_rows}</tbody>
-        </table>
-    </div>
-</div>
-
-{timeline_html}
-
-<div class="section">
-    <div class="section-title">\u26bd Ultimos Resultados</div>
-    <div class="card">{result_rows}</div>
-</div>
-"""
-    return _page_frame(config, f"Overview - {config.report_title}", body, back_link="index.html")
 
 
 # ------------------------------------------------------------------
@@ -1320,6 +1112,1082 @@ function updateArena() {
 
 
 # ------------------------------------------------------------------
+# Ranking Evolution page
+# ------------------------------------------------------------------
+
+
+def _build_ranking_evolution(config: ChampionshipConfig) -> str:
+    """Show rank position over time (toggleable per player, inverted Y-axis)."""
+    df = pd.read_csv(_norm(os.path.join(config._au_first_round(), "ranking_history.csv")), sep=",")
+    players = sorted(df["boleiro"].unique())
+    all_dates = sorted(df["date"].unique())
+
+    player_json = {}
+    for p in players:
+        dp = df[df["boleiro"] == p].sort_values("date")
+        player_json[p] = {
+            "ranks": [int(r) for r in dp["rank"]],
+            "cums": [int(c) for c in dp["cumulative_points"]],
+        }
+
+    import json
+    max_rank = len(players)
+    json_str = json.dumps({
+        "players": player_json,
+        "dates": all_dates,
+        "max_rank": max_rank,
+    }, ensure_ascii=False)
+
+    # Toggle buttons
+    import re as _re
+    toggle_btns = ""
+    for i, p in enumerate(players):
+        safe = _re.sub(r'\s+', '_', p)
+        color_idx = i % 8
+        colors = ['#f5c518', '#3b82f6', '#22c55e', '#ef4444', '#a855f7', '#ec4899', '#f97316', '#14b8a6']
+        toggle_btns += (
+            f'<button id="tb-{safe}" class="toggle-btn" '
+            f'onclick="togglePlayer(\'{p}\')" '
+            f'style="border-left:4px solid {colors[color_idx]};">{p}</button>\n'
+        )
+
+    js_code = r"""
+const data = DATA_PLACEHOLDER;
+const COLORS = ['#f5c518', '#3b82f6', '#22c55e', '#ef4444', '#a855f7', '#ec4899', '#f97316', '#14b8a6'];
+const activePlayers = new Set();
+
+function togglePlayer(name) {
+    const safe = name.replace(/\s+/g, '_');
+    const btn = document.getElementById('tb-' + safe);
+    if (activePlayers.has(name)) {
+        activePlayers.delete(name);
+        btn.classList.remove('active');
+    } else {
+        activePlayers.add(name);
+        btn.classList.add('active');
+    }
+    drawChart();
+}
+
+function drawChart() {
+    const canvas = document.getElementById('rank-chart');
+    if (!canvas) return;
+    const tooltip = document.getElementById('rank-tooltip');
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = 250 * dpr;
+    ctx.scale(dpr, dpr);
+    const W = rect.width;
+    const H = 250;
+    const padL = 44, padR = 12, padT = 24, padB = 30;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    const dates = data.dates;
+    const maxRank = data.max_rank;
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#30363d';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 4; i++) {
+        const y = padT + (plotH / 4) * i;
+        ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+        ctx.fillStyle = '#8899aa';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'right';
+        // Inverted Y: position 1 at top
+        const pos = 1 + Math.round((maxRank - 1) * (i / 4));
+        ctx.fillText(pos + '\u00ba', padL - 4, y + 3);
+    }
+
+    // X axis
+    ctx.fillStyle = '#8899aa';
+    ctx.font = '9px sans-serif';
+    ctx.textAlign = 'center';
+    const step = Math.max(1, Math.floor(dates.length / 7));
+    dates.forEach(function(d, i) {
+        if (i % step === 0 || i === dates.length - 1) {
+            const x = padL + (plotW / Math.max(dates.length - 1, 1)) * i;
+            ctx.fillText(d.slice(5), x, H - 6);
+        }
+    });
+
+    function getX(i) { return padL + (plotW / Math.max(dates.length - 1, 1)) * i; }
+    function getY(rank) { return padT + ((rank - 1) / maxRank) * plotH; }
+
+    // Draw only active players
+    let idx = 0;
+    activePlayers.forEach(function(name) {
+        const p = data.players[name];
+        if (!p) return;
+        const color = COLORS[idx % COLORS.length];
+        idx++;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        p.ranks.forEach(function(r, i) {
+            const x = getX(i);
+            const y = getY(r);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+
+        // Dots
+        p.ranks.forEach(function(r, i) {
+            const x = getX(i);
+            const y = getY(r);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    });
+
+    // Tooltip
+    if (!canvas._listener) {
+        canvas._listener = true;
+        canvas.addEventListener('mousemove', function(e) {
+            const r = canvas.getBoundingClientRect();
+            const mx = e.clientX - r.left;
+            const my = e.clientY - r.top;
+            let closest = -1, closestDist = 20;
+            for (let i = 0; i < dates.length; i++) {
+                const dx = Math.abs(mx - getX(i));
+                if (dx < closestDist) { closestDist = dx; closest = i; }
+            }
+            if (closest >= 0 && activePlayers.size > 0) {
+                let tip = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + dates[closest] + '</div>';
+                let cIdx = 0;
+                activePlayers.forEach(function(name) {
+                    const rank = data.players[name].ranks[closest];
+                    const cum = data.players[name].cums[closest];
+                    const color = COLORS[cIdx % COLORS.length];
+                    cIdx++;
+                    tip += '<div style="color:' + color + ';">' + name + ': <strong>' + rank + '\u00ba</strong> (' + cum + ' pts)</div>';
+                });
+                tooltip.style.display = 'block';
+                tooltip.innerHTML = tip;
+                tooltip.style.left = Math.min(mx + 12, W - 140) + 'px';
+                tooltip.style.top = Math.max(my - 10, 5) + 'px';
+            } else {
+                tooltip.style.display = 'none';
+            }
+        });
+        canvas.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+    }
+}
+document.addEventListener('DOMContentLoaded', drawChart);
+"""
+
+    # Table
+    table_rows = ""
+    for p in players:
+        dp = df[df["boleiro"] == p].sort_values("date")
+        if dp.empty:
+            continue
+        last = dp.iloc[-1]
+        table_rows += f"""
+<tr><td style="padding:0.3rem 0.5rem;"><a href="boleiros/{p}.html" style="color:var(--accent);">{p}</a></td><td style="padding:0.3rem 0.5rem;font-weight:700;">{int(last['rank'])}\u00ba</td><td style="padding:0.3rem 0.5rem;">{int(last['cumulative_points'])} pts</td><td style="padding:0.3rem 0.5rem;color:var(--text-muted);font-size:0.8rem;">{int(last['leader_distance'])} do lider</td></tr>"""
+
+    body = f"""
+<div class="hero">
+    <h1>\U0001f4c8 Evolucao no Ranking</h1>
+    <div class="subtitle">Clique nos jogadores abaixo para ligar/desligar</div>
+</div>
+
+<div class="card">
+    <div class="card-title">Grafico (passe o mouse sobre as linhas)</div>
+    <div style="position:relative;">
+        <canvas id="rank-chart" width="600" height="250" style="width:100%;height:250px;cursor:crosshair;"></canvas>
+        <div id="rank-tooltip" style="display:none;position:absolute;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;pointer-events:none;z-index:100;box-shadow:0 4px 12px var(--shadow-color);"></div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">Jogadores (clique para ligar/desligar)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+        {toggle_btns}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">Classificacao Atual</div>
+    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+        <thead>
+            <tr style="border-bottom:1px solid var(--card-border);">
+                <th style="text-align:left;padding:0.3rem 0.5rem;">#</th>
+                <th style="text-align:left;padding:0.3rem 0.5rem;">Pts</th>
+                <th style="text-align:left;padding:0.3rem 0.5rem;">Dist</th>
+            </tr>
+        </thead>
+        <tbody>{table_rows}</tbody>
+    </table>
+</div>
+
+<style>
+.toggle-btn {{
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}}
+.toggle-btn.active {{
+    background: var(--accent);
+    color: var(--text-inverse);
+    border-color: var(--accent);
+}}
+</style>
+
+<script>
+{js_code.replace('DATA_PLACEHOLDER', json_str)}
+</script>
+"""
+    return _page_frame(config, f"Evolucao - {config.report_title}", body, back_link="index.html")
+
+
+# ------------------------------------------------------------------
+# Boldômetro page
+# ------------------------------------------------------------------
+
+
+def _build_boldometer(config: ChampionshipConfig) -> str:
+    """Scatter plot: boldness vs average points per game."""
+    df_bold = pd.read_csv(_norm(os.path.join(config._au_first_round(), "boldness_index.csv")), sep=",")
+    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_avg = df_valid.groupby("who")["pontos"].mean().reset_index()
+    df_avg.columns = ["boleiro", "avg_pts_per_game"]
+    df = df_bold.merge(df_avg, on="boleiro", how="left")
+
+    players = []
+    for _, r in df.iterrows():
+        players.append({
+            "name": r["boleiro"],
+            "boldness": float(r["boldness_score"]),
+            "avg_pts": float(r["avg_pts_per_game"]),
+            "avg_goals": float(r["avg_total_goals_bol"]),
+            "games": int(r["games"]),
+        })
+
+    import json
+    json_str = json.dumps(players, ensure_ascii=False)
+
+    # Example rows for table
+    example_rows = ""
+    sorted_by_bold = sorted(players, key=lambda p: p["boldness"], reverse=True)
+    for p in sorted_by_bold[:3]:
+        example_rows += f"<tr><td>{p['name']}</td><td>{p['boldness']:+.2f}</td><td>{p['avg_pts']:.1f}</td><td style='font-size:0.8rem;color:var(--text-muted);'>{p['avg_goals']:.1f} gols/jogo</td></tr>\n"
+    example_rows += "<tr style='border-top:1px solid var(--card-border);'><td colspan='4' style='text-align:center;font-style:italic;'>... e mais " + str(len(players) - 3) + " jogadores</td></tr>\n"
+
+    js_code = r"""
+const players = DATA_PLACEHOLDER;
+const canvas = document.getElementById('scatter');
+const tooltip = document.getElementById('scatter-tooltip');
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+const rect = canvas.getBoundingClientRect();
+canvas.width = rect.width * dpr;
+canvas.height = 380 * dpr;
+ctx.scale(dpr, dpr);
+const W = rect.width;
+const H = 380;
+const padL = 55, padR = 20, padT = 30, padB = 50;
+const plotW = W - padL - padR;
+const plotH = H - padT - padB;
+
+const xs = players.map(p => p.boldness);
+const ys = players.map(p => p.avg_pts);
+const minX = Math.min(...xs, -0.3) - 0.3;
+const maxX = Math.max(...xs, 0.3) + 0.3;
+const minY = Math.max(0, Math.min(...ys) - 0.3);
+const maxY = Math.max(...ys) + 0.3;
+
+function getX(v) { return padL + ((v - minX) / (maxX - minX)) * plotW; }
+function getY(v) { return padT + plotH - ((v - minY) / (maxY - minY)) * plotH; }
+
+ctx.clearRect(0, 0, W, H);
+
+// Draw quadrant backgrounds (stronger opacity)
+const zeroX = getX(0);
+const avgY = ys.reduce((a,b) => a+b, 0) / ys.length;
+const avgYPx = getY(avgY);
+
+// Top-left: Green (efficient - low boldness, high pts)
+ctx.fillStyle = 'rgba(34,197,94,0.12)';
+ctx.fillRect(padL, padT, zeroX - padL, avgYPx - padT);
+// Top-right: Yellow (risky - high boldness, high pts)
+ctx.fillStyle = 'rgba(234,179,8,0.12)';
+ctx.fillRect(zeroX, padT, padL + plotW - zeroX, avgYPx - padT);
+// Bottom-left: Blue-gray (conservative - low boldness, low pts)
+ctx.fillStyle = 'rgba(100,116,139,0.12)';
+ctx.fillRect(padL, avgYPx, zeroX - padL, padT + plotH - avgYPx);
+// Bottom-right: Red (bad - high boldness, low pts)
+ctx.fillStyle = 'rgba(239,68,68,0.12)';
+ctx.fillRect(zeroX, avgYPx, padL + plotW - zeroX, padT + plotH - avgYPx);
+
+// Grid
+ctx.strokeStyle = '#30363d';
+ctx.lineWidth = 0.5;
+for (let i = 0; i <= 4; i++) {
+    const x = padL + (plotW / 4) * i;
+    const y = padT + (plotH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, padT + plotH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + plotW, y); ctx.stroke();
+}
+
+// Quadrant labels
+ctx.font = 'bold 10px sans-serif';
+ctx.textAlign = 'center';
+ctx.fillStyle = 'rgba(34,197,94,0.7)';
+ctx.fillText('EFICIENTE', padL + (zeroX - padL) / 2, padT + 14);
+ctx.fillStyle = 'rgba(234,179,8,0.7)';
+ctx.fillText('OUSADO', zeroX + (padL + plotW - zeroX) / 2, padT + 14);
+ctx.fillStyle = 'rgba(100,116,139,0.7)';
+ctx.fillText('CONSERVADOR', padL + (zeroX - padL) / 2, padT + plotH - 10);
+ctx.fillStyle = 'rgba(239,68,68,0.7)';
+ctx.fillText('ARRISCADO', zeroX + (padL + plotW - zeroX) / 2, padT + plotH - 10);
+
+// Axis labels
+ctx.fillStyle = '#8899aa';
+ctx.font = '10px sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText('\u2190 Mais conservador (aposta menos gols)', padL + plotW/4, H - 10);
+ctx.fillText('Mais ousado (aposta mais gols) \u2192', padL + plotW*3/4, H - 10);
+ctx.save();
+ctx.translate(12, padT + plotH/2);
+ctx.rotate(-Math.PI/2);
+ctx.fillText('Media de pontos por jogo \u2191', 0, 0);
+ctx.restore();
+
+// Zero line (boldness = bolao avg)
+ctx.strokeStyle = 'rgba(245,197,24,0.4)';
+ctx.lineWidth = 1;
+ctx.setLineDash([4, 4]);
+ctx.beginPath(); ctx.moveTo(zeroX, padT); ctx.lineTo(zeroX, padT + plotH); ctx.stroke();
+ctx.setLineDash([]);
+
+// Average pts line
+ctx.strokeStyle = 'rgba(34,197,94,0.4)';
+ctx.lineWidth = 1;
+ctx.setLineDash([4, 4]);
+ctx.beginPath(); ctx.moveTo(padL, avgYPx); ctx.lineTo(padL + plotW, avgYPx); ctx.stroke();
+ctx.setLineDash([]);
+
+// Points
+players.forEach(function(p) {
+    const x = getX(p.boldness);
+    const y = getY(p.avg_pts);
+    const radius = 8;
+    ctx.fillStyle = '#f5c518';
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 8px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const initial = p.name.charAt(0).toUpperCase();
+    ctx.fillText(initial, x, y);
+});
+
+// Hover tooltip
+canvas.onmousemove = function(e) {
+    const r = canvas.getBoundingClientRect();
+    const mx = e.clientX - r.left;
+    const my = e.clientY - r.top;
+    let found = null;
+    players.forEach(function(p) {
+        const x = getX(p.boldness);
+        const y = getY(p.avg_pts);
+        const d = Math.sqrt((mx-x)**2 + (my-y)**2);
+        if (d < 15) found = p;
+    });
+    if (found) {
+        let quadrant = found.boldness <= 0 && found.avg_pts >= avgY ? 'Eficiente' :
+                       found.boldness > 0 && found.avg_pts >= avgY ? 'Ousado' :
+                       found.boldness <= 0 && found.avg_pts < avgY ? 'Conservador' : 'Arriscado';
+        tooltip.style.display = 'block';
+        tooltip.innerHTML = '<strong>' + found.name + '</strong><br>' +
+            'Ousadia: ' + found.boldness.toFixed(2) + ' (media ' + found.avg_goals.toFixed(1) + ' gols/jogo)<br>' +
+            'Media pts/jogo: ' + found.avg_pts.toFixed(2) + '<br>' +
+            'Jogos: ' + found.games + '<br>' +
+            'Perfil: ' + quadrant;
+        const tx = Math.min(mx + 12, W - 160);
+        tooltip.style.left = tx + 'px';
+        tooltip.style.top = Math.max(my - 35, 5) + 'px';
+    } else {
+        tooltip.style.display = 'none';
+    }
+};
+canvas.onmouseleave = function() { tooltip.style.display = 'none'; };
+"""
+
+    body = f"""
+<div class="hero">
+    <h1>\U0001f4ca Boldometro</h1>
+    <div class="subtitle">Ousadia vs Aproveitamento — Quem aposta alto e acerta?</div>
+</div>
+
+<div class="card" style="margin:1rem 0.75rem;">
+    <div class="card-title">O que e o Boldometro?</div>
+    <div style="font-size:0.85rem;">
+        <p style="margin-bottom:0.5rem;">
+            <strong>Ousadia</strong> (eixo X): diferenca entre a <strong>media de gols totais</strong> que voce apostou por jogo
+            e a media do bolaao. Se voce aposta sempre 3x0 e a media do bolaao e 2.5 gols, sua ousadia e <strong>+0.5</strong>.
+        </p>
+        <p style="margin-bottom:0.5rem;">
+            <strong>Aproveitamento</strong> (eixo Y): sua <strong>media de pontos por jogo</strong>. Quanto maior, melhor.
+        </p>
+        <p>
+            <strong>Exemplo:</strong> Se voce aposta 1x0 toda partida, sua ousadia e baixa (negativa). Se aposta 5x3, e alta (positiva).
+        </p>
+    </div>
+</div>
+
+<div class="card">
+    <div style="position:relative;">
+        <canvas id="scatter" width="600" height="380" style="width:100%;height:380px;cursor:crosshair;"></canvas>
+        <div id="scatter-tooltip" style="display:none;position:absolute;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;pointer-events:none;z-index:100;box-shadow:0 4px 12px var(--shadow-color);"></div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">Quadrantes</div>
+    <table style="width:100%;font-size:0.85rem;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--card-border);"><td style="padding:0.4rem;"><span style="color:#22c55e;font-weight:700;">\u25a0</span> EFICIENTE</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia baixa (aposta poucos gols), pontuacao alta = voce e conservador e acerta muito</td></tr>
+        <tr style="border-bottom:1px solid var(--card-border);"><td style="padding:0.4rem;"><span style="color:#eab308;font-weight:700;">\u25a0</span> OUSADO</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia alta (aposta muitos gols), pontuacao alta = voce arrisca e acerta</td></tr>
+        <tr style="border-bottom:1px solid var(--card-border);"><td style="padding:0.4rem;"><span style="color:#64748b;font-weight:700;">\u25a0</span> CONSERVADOR</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia baixa (aposta poucos gols), pontuacao baixa = joga seguro mas nao acerta</td></tr>
+        <tr><td style="padding:0.4rem;"><span style="color:#ef4444;font-weight:700;">\u25a0</span> ARRISCADO</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia alta (aposta muitos gols), pontuacao baixa = aposta muitos gols mas erra</td></tr>
+    </table>
+</div>
+
+<div class="card">
+    <div class="card-title">Exemplos — Os mais ousados</div>
+    <table style="width:100%;font-size:0.85rem;border-collapse:collapse;">
+        <thead>
+            <tr style="border-bottom:1px solid var(--card-border);">
+                <th style="text-align:left;padding:0.4rem;">Jogador</th>
+                <th style="text-align:left;padding:0.4rem;">Ousadia</th>
+                <th style="text-align:left;padding:0.4rem;">Media pts</th>
+                <th style="text-align:left;padding:0.4rem;">Detalhe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {example_rows}
+        </tbody>
+    </table>
+</div>
+
+<script>
+{js_code.replace('DATA_PLACEHOLDER', json_str)}
+</script>
+"""
+    return _page_frame(config, f"Boldometro - {config.report_title}", body, back_link="index.html")
+
+
+# ------------------------------------------------------------------
+# Raio-X Radar page
+# ------------------------------------------------------------------
+
+
+def _build_bolao_xray(config: ChampionshipConfig) -> str:
+    """Bolão X-ray: meta-analysis of the entire sweepstake — no per-player focus."""
+    df_all = pd.read_csv(config.gold_all_path(), sep=",")
+    df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
+    df_results = pd.read_csv(config.results_file, sep=",").dropna(subset=["home_goals"])
+
+    # Build resultado_real_placar from raw columns
+    df_results["resultado_real_placar"] = df_results.apply(
+        lambda r: f"{int(r['home_goals'])} x {int(r['away_goals'])}"
+        if pd.notna(r.get("home_goals")) and pd.notna(r.get("away_goals"))
+        else "",
+        axis=1,
+    )
+
+    # Build a lookup: match -> real placar (from first prediction with result)
+    match_real_result = df_valid.dropna(subset=["home_goals_real"]).groupby("match").agg(
+        home_goals_real=("home_goals_real", "first"),
+        away_goals_real=("away_goals_real", "first"),
+    ).reset_index()
+    match_real_result["real_placar"] = match_real_result.apply(
+        lambda r: f"{int(r['home_goals_real'])} x {int(r['away_goals_real'])}", axis=1
+    )
+
+    # ----- Snapshot numbers -----
+    n_players = df_valid["who"].nunique()
+    n_matches = df_valid["match"].nunique()
+    n_predictions = len(df_valid)
+    total_pts = int(df_valid["pontos"].sum())
+    avg_pts_player = round(total_pts / n_players, 1) if n_players else 0
+    max_possible = _max_points_per_game(config) * n_matches * n_players
+    overall_aproveitamento = round(total_pts / max_possible * 100, 1) if max_possible > 0 else 0
+
+    # ----- Ranking table (moved from overview) -----
+    score_names = config.scoring_rule_names()
+    agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
+    df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
+    df_rank.sort_values("pontos", ascending=False, inplace=True)
+    df_rank.reset_index(drop=True, inplace=True)
+    df_rank["#"] = range(1, len(df_rank) + 1)
+    rank_rows = ""
+    for _, row in df_rank.iterrows():
+        rank_num = int(row["#"])
+        medal = "\U0001f947" if rank_num == 1 else "\U0001f948" if rank_num == 2 else "\U0001f949" if rank_num == 3 else ""
+        rank_class = f"rank-{rank_num}" if rank_num <= 3 else ""
+        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["who"]}.html">{row["who"]}</a></td>'
+        cells += f'<td style="font-weight:700;color:var(--accent)">{int(row["pontos"])}</td>'
+        for sn in score_names:
+            if sn in row.index:
+                val = int(row[sn]) if pd.notna(row[sn]) else 0
+                cells += f"<td>{val}</td>"
+        rank_rows += f'<tr class="{rank_class}">{cells}</tr>\n'
+    rank_header = ""
+    for sn in score_names:
+        emoji = config.scoring_emoji(sn)
+        h = f"{emoji} " if emoji else ""
+        h += sn.split("-")[0].strip()
+        rank_header += f"<th>{h}</th>"
+
+    # ----- Heatmap: player (row) x day (column), color = points -----
+    df_heat = df_valid.groupby(["who", "date"], as_index=False)["pontos"].sum()
+    # Sort players alphabetically
+    player_order = sorted(df_heat["who"].unique())
+    date_order = sorted(df_heat["date"].unique())
+
+    # Theoretical max points per day = matches_that_day * max_points_per_game
+    matches_per_day = df_valid.groupby("date")["match"].nunique()
+    max_pts_per_game = _max_points_per_game(config)
+
+    # Pivot: rows=players, cols=dates
+    heat_pivot = df_heat.pivot(index="who", columns="date", values="pontos").fillna(0)
+    heat_pivot = heat_pivot.reindex(player_order)
+    heat_pivot = heat_pivot[date_order]
+
+    # Color scale: red (0%) → green (100%) via simple RGB
+    def _heat_color(pct: float) -> str:
+        r = int(200 - pct * 160)
+        g = int(55 + pct * 165)
+        b = int(55)
+        return f"rgb({r},{g},{b})"
+
+    heat_html = ""
+    for player in player_order:
+        row = heat_pivot.loc[player]
+        cells = ""
+        for day in date_order:
+            val = int(row[day])
+            day_max = int(matches_per_day.get(day, 1) * max_pts_per_game)
+            pct = val / day_max if day_max > 0 else 0
+            display_val = f"{round(pct * 100)}%"
+            bg = _heat_color(pct)
+            cells += (
+                f'<div class="heat-cell" style="background:{bg};" '
+                f'title="{player}: {val} pts de {day_max} max possivel ({display_val})">{display_val}</div>'
+            )
+        heat_html += (
+            f'<div class="heat-row">'
+            f'<div class="heat-label">{player}</div>'
+            f'<div class="heat-cells">{cells}</div>'
+            f'</div>\n'
+        )
+
+    # Header row (wrap cells in .heat-cells too, to match data rows alignment)
+    header_cells = ""
+    for day in date_order:
+        d = pd.to_datetime(day).strftime("%d/%m")
+        header_cells += f'<div class="heat-cell-header">{d}</div>'
+    heat_header = f'<div class="heat-row"><div class="heat-label">Jogador</div><div class="heat-cells">{header_cells}</div></div>\n'
+
+    # Average row: mean points per player per day
+    avg_cells = ""
+    for day in date_order:
+        day_vals = heat_pivot[day].values
+        avg = round(sum(day_vals) / len(day_vals), 1)
+        avg_cells += f'<div class="heat-cell-header" style="font-weight:600;">{avg}</div>'
+    heat_avg = f'<div class="heat-row"><div class="heat-total-label">Media pts/dia</div><div class="heat-cells">{avg_cells}</div></div>\n'
+
+    # Aproveitamento: average of INDIVIDUAL player pcts (each player's pts / theoretical max)
+    pct_cells = ""
+    for day in date_order:
+        day_max = int(matches_per_day.get(day, 1) * max_pts_per_game)
+        day_vals = heat_pivot[day].values
+        # Each player's individual pct
+        individual_pcts = [v / day_max for v in day_vals if day_max > 0]
+        avg_pct = round(sum(individual_pcts) / len(individual_pcts) * 100) if individual_pcts else 0
+        bg = _heat_color(avg_pct / 100)
+        pct_cells += f'<div class="heat-cell" style="background:{bg};">{avg_pct}%</div>'
+    heat_pct_row = f'<div class="heat-row"><div class="heat-total-label">Aproveitamento</div><div class="heat-cells">{pct_cells}</div></div>\n'
+
+    # Total row: max possivel per day
+    total_cells = ""
+    for day in date_order:
+        day_max = int(matches_per_day.get(day, 1) * max_pts_per_game)
+        total_cells += f'<div class="heat-cell-header" style="font-weight:700;">{day_max}</div>'
+    heat_total = f'<div class="heat-row"><div class="heat-total-label">Max possivel</div><div class="heat-cells">{total_cells}</div></div>\n'
+
+    # ----- Hit type distribution (using actual scoring rules from config) -----
+    rule_map = {r.name: r.points for r in config.scoring_rules}
+    # Order the rules as they appear in config (priority = their index order)
+    tipo_order = [r.name for r in config.scoring_rules]
+
+    def _rule_color(rname: str) -> str:
+        css_vars = config.scoring_css_var(rname)
+        return css_vars[0] if css_vars and css_vars[0] else "var(--text-muted)"
+
+    tipo_counts = df_valid["criterio"].value_counts()
+    tipo_rows = ""
+    largest_tipo_count = max((int(tipo_counts.get(t, 0)) for t in tipo_order), default=1)
+    for t in tipo_order:
+        cnt = int(tipo_counts.get(t, 0))
+        pts_per = rule_map.get(t, 0)
+        pct = round(cnt / n_predictions * 100, 1) if n_predictions else 0
+        bar_w = max(cnt / largest_tipo_count * 100, 1)
+        name_part = t.split("-", 1)[1] if "-" in t else t
+        label = f"{name_part} (+{pts_per}p)" if pts_per > 0 else name_part
+        color = _rule_color(t)
+        tipo_rows += f"""
+        <tr>
+            <td style="padding:0.3rem 0.5rem;"><span style="color:{color};font-weight:700;">\u25a0</span> {label}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;font-weight:600;">{cnt}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{pct}%</td>
+            <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{bar_w:.0f}%;background:{color};height:10px;"></div></div></td>
+        </tr>"""
+
+    # Exact-score rule name from config (e.g. "1-Placar exato")
+    exact_rule_name = next((r.name for r in config.scoring_rules if r.rule == "exact_score"), "1-Placar exato")
+    exact_points = next((r.points for r in config.scoring_rules if r.rule == "exact_score"), 12)
+
+    # ----- Match predictability: percent who got EXACT SCORE (+{exact_points}) -----
+    match_stats = df_valid.groupby("match").agg(
+        total=("pontos", "count"),
+        exact=("criterio", lambda x: (x == exact_rule_name).sum()),
+    ).reset_index()
+    match_stats["pct"] = (match_stats["exact"] / match_stats["total"] * 100).round(1)
+    match_info = df_valid[["match", "home_team", "away_team"]].drop_duplicates("match")
+    match_stats = match_stats.merge(match_info, on="match", how="left")
+    match_stats = match_stats.merge(match_real_result[["match", "real_placar"]], on="match", how="left")
+    match_stats["real_placar"] = match_stats["real_placar"].fillna("?")
+
+    def _match_rows(subset):
+        html = ""
+        for _, r in subset.iterrows():
+            html += f"<tr><td style='padding:0.3rem 0.5rem;font-size:0.75rem;'>{r['home_team']} vs {r['away_team']}</td><td style='padding:0.3rem 0.5rem;text-align:center;font-weight:600;'>{r['real_placar']}</td><td style='padding:0.3rem 0.5rem;text-align:right;font-weight:600;'>{r['pct']}%</td><td style='padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);'>{int(r['exact'])}/{int(r['total'])}</td></tr>"
+        return html
+
+    top_pred = match_stats.nlargest(10, "pct")
+    top_pred_html = _match_rows(top_pred)
+    worst_pred = match_stats.nsmallest(10, "pct")
+    worst_pred_html = _match_rows(worst_pred)
+
+    # ----- Points histogram: distribution of total points per match -----
+    match_pts_total = df_valid.groupby("match")["pontos"].sum().reset_index()
+    # Bucket by 20-point ranges
+    max_pts_match = int(match_pts_total["pontos"].max())
+    bucket_size = 20
+    num_buckets = max(1, (max_pts_match // bucket_size) + 1)
+    hist_buckets = {}
+    for i in range(num_buckets):
+        low = i * bucket_size
+        high = (i + 1) * bucket_size
+        label = f"{low}-{high}"
+        count = int(((match_pts_total["pontos"] >= low) & (match_pts_total["pontos"] < high)).sum())
+        if count > 0:
+            hist_buckets[label] = count
+    max_hist = max(hist_buckets.values()) if hist_buckets else 1
+    hist_rows = ""
+    for label, count in sorted(hist_buckets.items(), key=lambda x: int(x[0].split("-")[0])):
+        bar_w = max(count / max_hist * 100, 1)
+        hist_rows += f"""
+        <tr>
+            <td style="padding:0.3rem 0.5rem;font-weight:600;">{label}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;">{count}</td>
+            <td style="padding:0.3rem 0.5rem;width:40%;"><div class="bar-track"><div class="bar-fill" style="width:{bar_w:.0f}%;background:var(--accent);height:12px;"></div></div></td>
+        </tr>"""
+
+    # ----- Most predicted scorelines -----
+    score_counts = df_valid["resultado_bol_placar"].value_counts().head(10)
+    score_rows = ""
+    max_score_count = score_counts.iloc[0] if not score_counts.empty else 1
+    for placar, cnt in score_counts.items():
+        pct = round(cnt / n_predictions * 100, 1) if n_predictions else 0
+        bar_w = max(cnt / max_score_count * 100, 1)
+        score_rows += f"""
+        <tr>
+            <td style="padding:0.3rem 0.5rem;font-weight:600;font-size:0.9rem;">{placar}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;">{cnt}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{pct}%</td>
+            <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{bar_w:.0f}%;background:var(--accent);height:10px;"></div></div></td>
+        </tr>"""
+
+    # ----- Actual score distribution -----
+    actual_scores = df_results["resultado_real_placar"].value_counts().head(10)
+    actual_rows = ""
+    for placar, cnt in actual_scores.items():
+        actual_rows += f"""
+        <tr><td style="padding:0.3rem 0.5rem;font-weight:600;">{placar}</td><td style="padding:0.3rem 0.5rem;text-align:right;">{cnt}</td></tr>"""
+
+    body = f"""
+<div class="hero">
+    <h1>\U0001f50d Raio-X do Bol\u00e3o</h1>
+    <div class="subtitle">Como o bol\u00e3o inteiro est\u00e1 se comportando</div>
+</div>
+
+<!-- Snapshot -->
+<div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin:0.75rem;">
+    <div class="stat-card stat-card-sm">
+        <div class="value" style="color:var(--accent);">{n_players}</div>
+        <div class="label">Participantes</div>
+    </div>
+    <div class="stat-card stat-card-sm">
+        <div class="value" style="color:var(--accent);">{n_matches}</div>
+        <div class="label">Partidas</div>
+    </div>
+    <div class="stat-card stat-card-sm">
+        <div class="value" style="color:var(--accent);">{n_predictions}</div>
+        <div class="label">Palpites</div>
+    </div>
+</div>
+<div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin:0 0.75rem 0.75rem;">
+    <div class="stat-card stat-card-sm">
+        <div class="value" style="color:var(--voce);">{total_pts}</div>
+        <div class="label">Total Pontos</div>
+    </div>
+    <div class="stat-card stat-card-sm">
+        <div class="value" style="color:var(--voce);">{avg_pts_player}</div>
+        <div class="label">M\u00e9dia por jogador</div>
+    </div>
+    <div class="stat-card stat-card-sm">
+        <div class="value" style="color:var(--voce);">{overall_aproveitamento}%</div>
+        <div class="label">Aproveitamento geral</div>
+    </div>
+</div>
+
+<!-- Heatmap: player x day -->
+<div class="card">
+    <div class="card-title">Heatmap: Pontos por dia</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Cada coluna \u00e9 um dia, cada linha \u00e9 um jogador (ordenado do melhor para o pior). A cor varia de <span style="color:rgb(200,55,55);font-weight:700;">\u25a0 vermelho (0%)</span> a <span style="color:rgb(55,220,55);font-weight:700;">\u25a0 verde (100%)</span> conforme o percentual de pontos que o jogador fez em rela\u00e7\u00e3o ao <strong>m\u00e1ximo te\u00f3rico</strong> daquele dia (n\u00ba de jogos \u00d7 {max_pts_per_game} pts). A \u00faltima linha mostra esse m\u00e1ximo te\u00f3rico.</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Role horizontalmente se a tabela n\u00e3o couber na tela.</div>
+    <details style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;">
+        <summary style="cursor:pointer;font-weight:600;">Como verificar se os n\u00fameros est\u00e3o certos?</summary>
+        <ul style="padding-left:1rem;margin-top:0.3rem;">
+            <li><strong>Max poss\u00edvel</strong> = n\u00famero de jogos do dia \u00d7 {max_pts_per_game} pts (placar exato). Ex: 3 jogos = {3 * max_pts_per_game} pts m\u00e1x.</li>
+            <li><strong>M\u00e9dia pts/dia</strong> = soma dos pontos de todos os jogadores \u00f7 n\u00famero de participantes.</li>
+            <li><strong>Aproveitamento</strong> = m\u00e9dia dos percentuais individuais. Para cada jogador: pts dele \u00f7 max te\u00f3rico, depois tira-se a m\u00e9dia entre todos.</li>
+            <li>Para validar: pegue um dia, para cada jogador calcule % = pts dele \u00f7 max te\u00f3rico, depois tire a m\u00e9dia. O resultado deve bater com o "Aproveitamento".</li>
+        </ul>
+    </details>
+    <div class="heat-container">
+        {heat_header}
+        {heat_html}
+        {heat_avg}
+        {heat_pct_row}
+        {heat_total}
+    </div>
+</div>
+
+<!-- Hit Type Distribution (now with real rule names and points from config) -->
+<div class="card">
+    <div class="card-title">Distribui\u00e7\u00e3o dos acertos</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Quantos palpites em cada categoria (conforme regras do campeonato)</div>
+    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
+            <th style="text-align:left;padding:0.3rem 0.5rem;">Tipo</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">Qtde</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">%</th>
+            <th style="padding:0.3rem 0.5rem;"></th>
+        </tr>
+        {tipo_rows}
+    </table>
+</div>
+
+<!-- Points histogram: how many total points per match -->
+<div class="card">
+    <div class="card-title">Histograma: Pontos por partida</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Quantas partidas renderam X pontos totais (somando todos os jogadores)</div>
+    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
+            <th style="text-align:left;padding:0.3rem 0.5rem;">Faixa de pontos</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">Partidas</th>
+            <th style="padding:0.3rem 0.5rem;"></th>
+        </tr>
+        {hist_rows}
+    </table>
+</div>
+
+<!-- Most predictable matches (with actual result) -->
+<div class="card">
+    <div class="card-title">Partidas mais previs\u00edveis</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">As 10 partidas com mais acertos de <strong>placar exato (+{exact_points}p)</strong> — a coluna "Acertaram" mostra quantos jogadores cravaram o placar certo.</div>
+    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
+            <th style="text-align:left;padding:0.3rem 0.5rem;">Partida</th>
+            <th style="text-align:center;padding:0.3rem 0.5rem;">Resultado</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">% placar exato</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">Acertaram (+{exact_points}p)</th>
+        </tr>
+        {top_pred_html}
+    </table>
+</div>
+
+<!-- Least predictable matches (with actual result) -->
+<div class="card">
+    <div class="card-title">Partidas menos previs\u00edveis</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">As 10 partidas com menos acertos de <strong>placar exato (+{exact_points}p)</strong> — quase ningu\u00e9m cravou o placar certo.</div>
+    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
+            <th style="text-align:left;padding:0.3rem 0.5rem;">Partida</th>
+            <th style="text-align:center;padding:0.3rem 0.5rem;">Resultado</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">% placar exato</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">Acertaram (+{exact_points}p)</th>
+        </tr>
+        {worst_pred_html}
+    </table>
+</div>
+
+<!-- Top-10 predicted scorelines -->
+<div class="card">
+    <div class="card-title">Placares mais apostados</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Os 10 placares que o bol\u00e3o mais apostou (previstos)</div>
+    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
+            <th style="text-align:left;padding:0.3rem 0.5rem;">Placar</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">Apostas</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">%</th>
+            <th style="padding:0.3rem 0.5rem;"></th>
+        </tr>
+        {score_rows}
+    </table>
+</div>
+
+<!-- Actual score distribution -->
+<div class="card">
+    <div class="card-title">Placares reais mais comuns</div>
+    <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Os 10 placares que mais aconteceram de verdade</div>
+    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
+            <th style="text-align:left;padding:0.3rem 0.5rem;">Placar</th>
+            <th style="text-align:right;padding:0.3rem 0.5rem;">Ocorr\u00eancias</th>
+        </tr>
+        {actual_rows}
+    </table>
+</div>
+"""
+    return _page_frame(config, f"Raio-X do Bolão - {config.report_title}", body, back_link="index.html")
+
+
+# ------------------------------------------------------------------
+# Round Winners page
+# ------------------------------------------------------------------
+
+
+def _build_day_winners(config: ChampionshipConfig) -> str:
+    """Show day-by-day winners, zebras, and highlights with day selector."""
+    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_all = pd.read_csv(config.gold_all_path(), sep=",")
+    df_results = pd.read_csv(config.results_file, sep=",")
+    df_upset = pd.read_csv(_norm(os.path.join(config._au_first_round(), "upset_tracker.csv")), sep=",")
+    max_pts = _max_points_per_game(config)
+
+    # Get unique days from games.csv (extract date part since it includes hour)
+    df_results["date_only"] = df_results["date"].str.extract(r'(\d{4}-\d{2}-\d{2})', expand=False)
+    days = sorted(df_results.dropna(subset=["home_goals"])["date_only"].unique())
+    if len(days) == 0:
+        days = sorted(df_valid["date"].unique())
+
+    # Pre-build content per day
+    day_content = {}
+    for day in days:
+        day_predictions = df_valid[df_valid["date"] == day]
+        day_results = df_results[df_results["date_only"] == day].dropna(subset=["home_goals"])
+        if day_predictions.empty:
+            continue
+
+        # Day winner: who scored most points this day
+        day_pts = day_predictions.groupby("who")["pontos"].sum()
+        winner = day_pts.idxmax()
+        winner_pts = int(day_pts.max())
+        runner_up = day_pts.nlargest(2).index[-1] if len(day_pts) >= 2 else ""
+        runner_up_pts = int(day_pts.nlargest(2).iloc[-1]) if len(day_pts) >= 2 else 0
+
+        # Average pts
+        avg_pts = round(day_pts.mean(), 1)
+
+        # Matches this day
+        matches_this_day = day_predictions["match"].unique()
+
+        # Upsets: matches where the favorite (most predicted winner) was wrong
+        day_upsets = df_upset[df_upset["match"].isin(matches_this_day)]
+        upsets = day_upsets[day_upsets["is_upset"] == 1]
+        upset_list = []
+        for _, u in upsets.iterrows():
+            upset_list.append(f"{u['home_team']} vs {u['away_team']}: favorito {u['favorite']} perdeu")
+
+        # Most original correct pick
+        day_all = df_all[df_all["match"].isin(matches_this_day)]
+        original_pick = ""
+        if not day_all.empty:
+            hits = day_all[day_all["pontos"] > 0]
+            if not hits.empty:
+                rarity = hits.groupby(["match", "resultado_bol_placar"]).size().reset_index(name="count")
+                rarest = rarity.nsmallest(1, "count").iloc[0]
+                match_info = hits[
+                    (hits["match"] == rarest["match"])
+                    & (hits["resultado_bol_placar"] == rarest["resultado_bol_placar"])
+                ]
+                if not match_info.empty:
+                    row = match_info.iloc[0]
+                    original_pick = (
+                        f"{row['home_team']} {row['resultado_bol_placar']} {row['away_team']} "
+                        f"por {row['who']} ({int(row['pontos'])} pts)"
+                    )
+
+        # Results summary
+        result_lines = ""
+        for _, r in day_results.iterrows():
+            hg = int(r["home_goals"])
+            ag = int(r["away_goals"])
+            result_lines += f"<div style='font-size:0.85rem;padding:0.2rem 0;'>{r['home_team']} {hg}-{ag} {r['away_team']}</div>\n"
+
+        day_content[day] = {
+            "winner": winner,
+            "winner_pts": winner_pts,
+            "runner_up": runner_up,
+            "runner_up_pts": runner_up_pts,
+            "avg_pts": avg_pts,
+            "upsets": upset_list,
+            "original_pick": original_pick,
+            "result_lines": result_lines,
+        }
+
+    if not day_content:
+        return _page_frame(config, "Day Winners - sem dados", "<div class='hero'><h1>Day Winners</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", back_link="index.html")
+
+    # Day selector options
+    day_options = "".join(f'<option value="{d}">{pd.to_datetime(d).strftime("%d/%m (%a)")}</option>' for d in sorted(day_content.keys()))
+
+    # Pre-render all cards (hidden via JS)
+    card_html = {}
+    for day, content in day_content.items():
+        upset_html = ""
+        if content["upsets"]:
+            for u in content["upsets"]:
+                upset_html += f'<div style="font-size:0.85rem;padding:0.2rem 0;color:var(--danger);">\U0001f4a5 {u}</div>\n'
+        else:
+            upset_html = '<div style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">Nenhuma zebra neste dia</div>\n'
+
+        original_html = ""
+        if content["original_pick"]:
+            original_html = f'<div style="font-size:0.85rem;margin-top:0.5rem;"><span style="color:var(--accent);font-weight:600;">\U0001f3af Palpite mais original:</span> {content["original_pick"]}</div>\n'
+        else:
+            original_html = '<div style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">Nenhum palpite original neste dia</div>\n'
+
+        date_display = pd.to_datetime(day).strftime("%d/%m/%Y")
+
+        card_html[day] = f"""
+<div class="card" id="day-card-{day}" style="display:none;">
+    <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="color:var(--voce);font-size:1.3rem;">{content["winner_pts"]}</div>
+            <div class="label">Melhor do dia</div>
+            <div style="font-size:0.8rem;"><a href="boleiros/{content['winner']}.html" style="color:var(--accent);">{content['winner']}</a></div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">{content["avg_pts"]}</div>
+            <div class="label">Media do dia</div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">{len(content['upsets'])}</div>
+            <div class="label">Zebras</div>
+        </div>
+    </div>
+"""
+        if content["runner_up"]:
+            card_html[day] += f'<div style="font-size:0.85rem;margin-top:0.5rem;">\U0001f948 Vice: {content["runner_up"]} ({content["runner_up_pts"]} pts)</div>\n'
+
+        card_html[day] += f"""
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">Resultados do dia</div>
+        {content['result_lines']}
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">\U0001f4a5 Zebras</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">
+            Zebra = quando o time mais votado como vencedor PERDEU ou empatou. O favorito errou.
+        </div>
+        {upset_html}
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        {original_html}
+    </div>
+</div>
+"""
+
+    # JS for day switching
+    js_code = """
+function showDay(day) {
+    document.querySelectorAll('[id^="day-card-"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
+    const card = document.getElementById('day-card-' + day);
+    if (card) card.style.display = 'block';
+}
+function onDayChange() {
+    const sel = document.getElementById('day-select');
+    showDay(sel.value);
+}
+"""
+
+    body = f"""
+<div class="hero">
+    <h1>\U0001f3c6 Day Winners</h1>
+    <div class="subtitle">Quem venceu cada dia, zebras e palpites originais</div>
+</div>
+
+<div class="card" style="margin:1rem 0.75rem;">
+    <label class="arena-label" for="day-select">Selecione o dia</label>
+    <select id="day-select" class="arena-select" onchange="onDayChange()">
+        {day_options}
+    </select>
+</div>
+
+<div id="day-cards-container">
+    {''.join(card_html.values())}
+</div>
+
+<div class="card" style="margin:1rem 0.75rem 0.25rem;font-size:0.85rem;color:var(--text-muted);">
+    <p><strong>Criterio de Zebra:</strong> Em cada partida, o sistema calcula o time mais votado como vencedor (o "favorito" do bolaao).
+    Se o favorito perdeu ou empatou, a partida e marcada como ZEBRA. Quanto mais zebras, mais imprevisivel foi o dia.</p>
+</div>
+<div class="card" style="margin:0.25rem 0.75rem 1rem;font-size:0.85rem;color:var(--text-muted);">
+    <p><strong>\U0001f3af Palpite mais original:</strong> Dentre todos os palpites <strong>corretos</strong> do dia, o sistema procura o placar que <strong>menos pessoas acertaram</strong>.
+    Ou seja, a aposta certa que foi a mais incomum — quase ningu\u00e9m acreditou naquele placar, mas o jogador acertou.
+    N\u00e3o \u00e9 necessariamente o maior pontuador do dia; \u00e9 o reconhecimento de uma "aposta ousada que deu certo".</p>
+    <p style="margin-top:0.3rem;">Exemplo: Se todo mundo acertou Brasil 2 x 0 Argentina, mas s\u00f3 uma pessoa acertou Alemanha 3 x 2 Fran\u00e7a,
+    essa pessoa leva o "palpite mais original" — mesmo que n\u00e3o seja a l\u00edder de pontos do dia.</p>
+</div>
+
+<script>
+{js_code}
+// Show first day on load
+document.addEventListener('DOMContentLoaded', function() {{
+    const sel = document.getElementById('day-select');
+    if (sel && sel.value) showDay(sel.value);
+}});
+</script>
+"""
+    return _page_frame(config, f"Day Winners - {config.report_title}", body, back_link="index.html")
+
+
+# ------------------------------------------------------------------
 # Orchestrator
 # ------------------------------------------------------------------
 
@@ -1327,22 +2195,24 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
     """Generate all HTML reports from gold-layer data."""
     html_base = _norm(os.path.join(config.reports_dir, "html"))
 
-    # Create HTML directories
+    # Create / recreate HTML directories (clean jogos to avoid stale files)
     dirs = [
         html_base,
         _norm(os.path.join(html_base, "boleiros")),
-        _norm(os.path.join(html_base, "jogos", config.group_phase_label)),
     ]
     for d in dirs:
         os.makedirs(d, exist_ok=True)
 
+    # Clean jogos dirs to avoid stale HTML files from old runs
+    jogos_base = _norm(os.path.join(html_base, "jogos"))
+    if os.path.exists(jogos_base):
+        shutil.rmtree(jogos_base)
+    os.makedirs(_norm(os.path.join(jogos_base, config.group_phase_label)))
+    for pr in (config.playoff_rounds or []):
+        os.makedirs(_norm(os.path.join(jogos_base, pr.key)), exist_ok=True)
+
     # Load gold data
     df_all = pd.read_csv(config.gold_all_path(), sep=",")
-
-    # --- Overview ---
-    print_colored("generating overview.html", "blue")
-    overview_html = _build_overview(config)
-    _save(config.overview_html_path(), overview_html)
 
     # --- Per-player ---
     df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
@@ -1366,3 +2236,36 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
         path = _norm(os.path.join(html_base, "jogos", config.group_phase_label, filename))
         _save(path, html)
+
+    # --- New v2 pages ---
+    # Ranking Evolution
+    ranking_path = _norm(os.path.join(html_base, "ranking_evolution.html"))
+    if os.path.exists(_norm(os.path.join(config._au_first_round(), "ranking_history.csv"))):
+        print_colored("generating ranking_evolution.html", "blue")
+        _save(ranking_path, _build_ranking_evolution(config))
+    else:
+        print_colored("skipping ranking_evolution.html (no ranking_history.csv)", "yellow")
+
+    # Boldômetro
+    bold_path = _norm(os.path.join(html_base, "boldometer.html"))
+    if os.path.exists(_norm(os.path.join(config._au_first_round(), "boldness_index.csv"))):
+        print_colored("generating boldometer.html", "blue")
+        _save(bold_path, _build_boldometer(config))
+    else:
+        print_colored("skipping boldometer.html (no boldness_index.csv)", "yellow")
+
+    # Raio-X do Bolão
+    xray_path = _norm(os.path.join(html_base, "bolao_xray.html"))
+    if os.path.exists(config.gold_valid_path()):
+        print_colored("generating bolao_xray.html", "blue")
+        _save(xray_path, _build_bolao_xray(config))
+    else:
+        print_colored("skipping bolao_xray.html (no valid data)", "yellow")
+
+    # Day Winners
+    rw_path = _norm(os.path.join(html_base, "day_winners.html"))
+    if os.path.exists(config.gold_valid_path()):
+        print_colored("generating day_winners.html", "blue")
+        _save(rw_path, _build_day_winners(config))
+    else:
+        print_colored("skipping day_winners.html (no valid data)", "yellow")

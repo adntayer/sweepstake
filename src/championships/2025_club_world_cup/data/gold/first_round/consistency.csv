@@ -1,0 +1,769 @@
+boleiro,date,match,streak_type,streak_length,running_avg_5
+Andre Bonito,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+Andre Bonito,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,3.5
+Andre Bonito,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,2,4.0
+Andre Bonito,2025-06-15,palmeiras-vs-porto,hit,3,3.2
+Andre Bonito,2025-06-15,botafogo-vs-seattle_sounders,hit,4,4.0
+Andre Bonito,2025-06-16,chelsea-vs-los_angeles_fc,hit,5,6.4
+Andre Bonito,2025-06-16,boca_juniors-vs-benfica,hit,6,5.2
+Andre Bonito,2025-06-16,flamengo-vs-espérance,hit,7,6.6
+Andre Bonito,2025-06-17,fluminense-vs-borussia_dortmund,miss,1,6.4
+Andre Bonito,2025-06-17,river_plate-vs-urawa_reds,hit,1,6.0
+Andre Bonito,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,2,3.8
+Andre Bonito,2025-06-17,monterrey-vs-internazionale,hit,3,6.0
+Andre Bonito,2025-06-18,manchester_city-vs-wydad_casablanca,hit,4,5.0
+Andre Bonito,2025-06-18,real_madrid-vs-al_hilal,miss,1,5.0
+Andre Bonito,2025-06-18,pachuca-vs-rb_salzburg,hit,1,4.2
+Andre Bonito,2025-06-18,al_ain-vs-juventus,miss,1,4.0
+Andre Bonito,2025-06-19,palmeiras-vs-al_ahly,hit,1,4.0
+Andre Bonito,2025-06-19,inter_miami-vs-porto,miss,1,2.6
+Andre Bonito,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,4.0
+Andre Bonito,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,3.8
+Andre Bonito,2025-06-20,benfica-vs-auckland_city,hit,1,4.8
+Andre Bonito,2025-06-20,flamengo-vs-chelsea,miss,1,2.4
+Andre Bonito,2025-06-20,los_angeles_fc-vs-espérance,hit,1,2.6
+Andre Bonito,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,2,2.2
+Andre Bonito,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,3,3.2
+Andre Bonito,2025-06-21,internazionale-vs-urawa_reds,hit,4,3.6
+Andre Bonito,2025-06-21,fluminense-vs-ulsan_hd,hit,5,4.6
+Andre Bonito,2025-06-21,river_plate-vs-monterrey,hit,6,4.6
+Andre Bonito,2025-06-22,juventus-vs-wydad_casablanca,hit,7,4.6
+Andre Bonito,2025-06-22,real_madrid-vs-pachuca,hit,8,4.6
+Andre Bonito,2025-06-22,rb_salzburg-vs-al_hilal,miss,1,3.2
+Andre Bonito,2025-06-22,manchester_city-vs-al_ain,hit,1,3.2
+Andre Bonito,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,2,4.4
+Andre Bonito,2025-06-23,atlético_de_madrid-vs-botafogo,hit,3,3.6
+Andre Bonito,2025-06-23,inter_miami-vs-palmeiras,hit,4,5.0
+Andre Bonito,2025-06-23,porto-vs-al_ahly,miss,1,5.0
+Andre Bonito,2025-06-24,benfica-vs-bayern_de_munique,hit,1,4.2
+Andre Bonito,2025-06-24,auckland_city-vs-boca_juniors,hit,2,3.8
+Andre Bonito,2025-06-24,los_angeles_fc-vs-flamengo,hit,3,6.0
+Andre Bonito,2025-06-24,espérance-vs-chelsea,hit,4,6.0
+Andre Bonito,2025-06-25,mamelodi_sundowns-vs-fluminense,miss,1,6.0
+Andre Bonito,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,1,6.8
+Andre Bonito,2025-06-25,internazionale-vs-river_plate,hit,2,7.2
+Andre Bonito,2025-06-25,urawa_reds-vs-monterrey,hit,3,6.2
+Andre Bonito,2025-06-26,juventus-vs-manchester_city,miss,1,3.8
+Andre Bonito,2025-06-26,wydad_casablanca-vs-al_ain,hit,1,5.2
+Andre Bonito,2025-06-26,rb_salzburg-vs-real_madrid,hit,2,5.6
+Andre Bonito,2025-06-26,al_hilal-vs-pachuca,hit,3,5.6
+André Tayer,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+André Tayer,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,3.5
+André Tayer,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,2,4.7
+André Tayer,2025-06-15,palmeiras-vs-porto,hit,3,4.8
+André Tayer,2025-06-15,botafogo-vs-seattle_sounders,hit,4,4.8
+André Tayer,2025-06-16,chelsea-vs-los_angeles_fc,hit,5,6.2
+André Tayer,2025-06-16,boca_juniors-vs-benfica,hit,6,5.8
+André Tayer,2025-06-16,flamengo-vs-espérance,hit,7,6.8
+André Tayer,2025-06-17,fluminense-vs-borussia_dortmund,miss,1,5.8
+André Tayer,2025-06-17,river_plate-vs-urawa_reds,hit,1,5.8
+André Tayer,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,2,6.8
+André Tayer,2025-06-17,monterrey-vs-internazionale,hit,3,6.0
+André Tayer,2025-06-18,manchester_city-vs-wydad_casablanca,hit,4,5.0
+André Tayer,2025-06-18,real_madrid-vs-al_hilal,hit,5,5.2
+André Tayer,2025-06-18,pachuca-vs-rb_salzburg,hit,6,6.6
+André Tayer,2025-06-18,al_ain-vs-juventus,hit,7,5.6
+André Tayer,2025-06-19,palmeiras-vs-al_ahly,hit,8,6.8
+André Tayer,2025-06-19,inter_miami-vs-porto,hit,9,5.6
+André Tayer,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,10,6.8
+André Tayer,2025-06-19,paris_saint_germain-vs-botafogo,hit,11,4.6
+André Tayer,2025-06-20,benfica-vs-auckland_city,miss,1,3.2
+André Tayer,2025-06-20,flamengo-vs-chelsea,hit,1,2.0
+André Tayer,2025-06-20,los_angeles_fc-vs-espérance,miss,1,1.8
+André Tayer,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,1,1.8
+André Tayer,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,2,2.6
+André Tayer,2025-06-21,internazionale-vs-urawa_reds,hit,3,4.0
+André Tayer,2025-06-21,fluminense-vs-ulsan_hd,hit,4,4.8
+André Tayer,2025-06-21,river_plate-vs-monterrey,hit,5,5.8
+André Tayer,2025-06-22,juventus-vs-wydad_casablanca,hit,6,5.4
+André Tayer,2025-06-22,real_madrid-vs-pachuca,hit,7,5.8
+André Tayer,2025-06-22,rb_salzburg-vs-al_hilal,hit,8,4.6
+André Tayer,2025-06-22,manchester_city-vs-al_ain,hit,9,5.0
+André Tayer,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,10,5.4
+André Tayer,2025-06-23,atlético_de_madrid-vs-botafogo,hit,11,4.6
+André Tayer,2025-06-23,inter_miami-vs-palmeiras,hit,12,3.4
+André Tayer,2025-06-23,porto-vs-al_ahly,miss,1,3.2
+André Tayer,2025-06-24,benfica-vs-bayern_de_munique,hit,1,2.0
+André Tayer,2025-06-24,auckland_city-vs-boca_juniors,hit,2,1.6
+André Tayer,2025-06-24,los_angeles_fc-vs-flamengo,hit,3,3.8
+André Tayer,2025-06-24,espérance-vs-chelsea,hit,4,6.0
+André Tayer,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,5,8.4
+André Tayer,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,6,9.2
+André Tayer,2025-06-25,internazionale-vs-river_plate,hit,7,9.2
+André Tayer,2025-06-25,urawa_reds-vs-monterrey,hit,8,7.0
+André Tayer,2025-06-26,juventus-vs-manchester_city,hit,9,4.8
+André Tayer,2025-06-26,wydad_casablanca-vs-al_ain,hit,10,2.6
+André Tayer,2025-06-26,rb_salzburg-vs-real_madrid,miss,1,1.6
+André Tayer,2025-06-26,al_hilal-vs-pachuca,miss,2,0.6
+Cesar Saraiva,2025-06-14,al_ahly-vs-inter_miami,hit,1,1.0
+Cesar Saraiva,2025-06-15,bayern_de_munique-vs-auckland_city,hit,2,4.0
+Cesar Saraiva,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,3,4.3
+Cesar Saraiva,2025-06-15,palmeiras-vs-porto,hit,4,4.5
+Cesar Saraiva,2025-06-15,botafogo-vs-seattle_sounders,hit,5,5.0
+Cesar Saraiva,2025-06-16,chelsea-vs-los_angeles_fc,hit,6,7.2
+Cesar Saraiva,2025-06-16,boca_juniors-vs-benfica,hit,7,6.0
+Cesar Saraiva,2025-06-16,flamengo-vs-espérance,hit,8,6.0
+Cesar Saraiva,2025-06-17,fluminense-vs-borussia_dortmund,miss,1,5.0
+Cesar Saraiva,2025-06-17,river_plate-vs-urawa_reds,hit,1,4.6
+Cesar Saraiva,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,2,2.4
+Cesar Saraiva,2025-06-17,monterrey-vs-internazionale,miss,1,2.2
+Cesar Saraiva,2025-06-18,manchester_city-vs-wydad_casablanca,hit,1,3.6
+Cesar Saraiva,2025-06-18,real_madrid-vs-al_hilal,miss,1,3.6
+Cesar Saraiva,2025-06-18,pachuca-vs-rb_salzburg,hit,1,2.8
+Cesar Saraiva,2025-06-18,al_ain-vs-juventus,hit,2,4.0
+Cesar Saraiva,2025-06-19,palmeiras-vs-al_ahly,hit,3,6.4
+Cesar Saraiva,2025-06-19,inter_miami-vs-porto,miss,1,4.0
+Cesar Saraiva,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,5.0
+Cesar Saraiva,2025-06-19,paris_saint_germain-vs-botafogo,hit,2,5.0
+Cesar Saraiva,2025-06-20,benfica-vs-auckland_city,hit,3,5.0
+Cesar Saraiva,2025-06-20,flamengo-vs-chelsea,miss,1,2.6
+Cesar Saraiva,2025-06-20,los_angeles_fc-vs-espérance,hit,1,2.8
+Cesar Saraiva,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,2,4.2
+Cesar Saraiva,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,3,5.0
+Cesar Saraiva,2025-06-21,internazionale-vs-urawa_reds,hit,4,4.6
+Cesar Saraiva,2025-06-21,fluminense-vs-ulsan_hd,hit,5,5.6
+Cesar Saraiva,2025-06-21,river_plate-vs-monterrey,miss,1,5.4
+Cesar Saraiva,2025-06-22,juventus-vs-wydad_casablanca,hit,1,4.0
+Cesar Saraiva,2025-06-22,real_madrid-vs-pachuca,hit,2,4.4
+Cesar Saraiva,2025-06-22,rb_salzburg-vs-al_hilal,hit,3,3.6
+Cesar Saraiva,2025-06-22,manchester_city-vs-al_ain,hit,4,4.0
+Cesar Saraiva,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,5,5.4
+Cesar Saraiva,2025-06-23,atlético_de_madrid-vs-botafogo,hit,6,5.4
+Cesar Saraiva,2025-06-23,inter_miami-vs-palmeiras,hit,7,4.2
+Cesar Saraiva,2025-06-23,porto-vs-al_ahly,miss,1,4.0
+Cesar Saraiva,2025-06-24,benfica-vs-bayern_de_munique,hit,1,2.8
+Cesar Saraiva,2025-06-24,auckland_city-vs-boca_juniors,miss,1,1.4
+Cesar Saraiva,2025-06-24,los_angeles_fc-vs-flamengo,miss,2,0.4
+Cesar Saraiva,2025-06-24,espérance-vs-chelsea,hit,1,2.6
+Cesar Saraiva,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,2,3.6
+Cesar Saraiva,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,3,4.8
+Cesar Saraiva,2025-06-25,internazionale-vs-river_plate,hit,4,6.2
+Cesar Saraiva,2025-06-25,urawa_reds-vs-monterrey,miss,1,6.2
+Cesar Saraiva,2025-06-26,juventus-vs-manchester_city,hit,1,4.8
+Cesar Saraiva,2025-06-26,wydad_casablanca-vs-al_ain,hit,2,4.0
+Cesar Saraiva,2025-06-26,rb_salzburg-vs-real_madrid,hit,3,5.0
+Cesar Saraiva,2025-06-26,al_hilal-vs-pachuca,hit,4,5.0
+Frederico Soter,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+Frederico Soter,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,3.5
+Frederico Soter,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,2,4.7
+Frederico Soter,2025-06-15,palmeiras-vs-porto,miss,1,3.5
+Frederico Soter,2025-06-15,botafogo-vs-seattle_sounders,hit,1,3.0
+Frederico Soter,2025-06-16,chelsea-vs-los_angeles_fc,hit,2,5.4
+Frederico Soter,2025-06-16,boca_juniors-vs-benfica,hit,3,4.2
+Frederico Soter,2025-06-16,flamengo-vs-espérance,miss,1,2.8
+Frederico Soter,2025-06-17,fluminense-vs-borussia_dortmund,hit,1,3.0
+Frederico Soter,2025-06-17,river_plate-vs-urawa_reds,miss,1,2.8
+Frederico Soter,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,1,1.4
+Frederico Soter,2025-06-17,monterrey-vs-internazionale,miss,1,1.2
+Frederico Soter,2025-06-18,manchester_city-vs-wydad_casablanca,hit,1,2.2
+Frederico Soter,2025-06-18,real_madrid-vs-al_hilal,hit,2,2.2
+Frederico Soter,2025-06-18,pachuca-vs-rb_salzburg,hit,3,3.6
+Frederico Soter,2025-06-18,al_ain-vs-juventus,hit,4,3.6
+Frederico Soter,2025-06-19,palmeiras-vs-al_ahly,miss,1,3.6
+Frederico Soter,2025-06-19,inter_miami-vs-porto,miss,2,2.6
+Frederico Soter,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,3.8
+Frederico Soter,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,2.4
+Frederico Soter,2025-06-20,benfica-vs-auckland_city,hit,1,2.8
+Frederico Soter,2025-06-20,flamengo-vs-chelsea,hit,2,4.2
+Frederico Soter,2025-06-20,los_angeles_fc-vs-espérance,hit,3,4.4
+Frederico Soter,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,4,4.0
+Frederico Soter,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,miss,1,4.0
+Frederico Soter,2025-06-21,internazionale-vs-urawa_reds,hit,1,3.6
+Frederico Soter,2025-06-21,fluminense-vs-ulsan_hd,hit,2,3.2
+Frederico Soter,2025-06-21,river_plate-vs-monterrey,hit,3,4.0
+Frederico Soter,2025-06-22,juventus-vs-wydad_casablanca,hit,4,3.2
+Frederico Soter,2025-06-22,real_madrid-vs-pachuca,hit,5,4.6
+Frederico Soter,2025-06-22,rb_salzburg-vs-al_hilal,miss,1,3.6
+Frederico Soter,2025-06-22,manchester_city-vs-al_ain,hit,1,3.6
+Frederico Soter,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,2,3.6
+Frederico Soter,2025-06-23,atlético_de_madrid-vs-botafogo,hit,3,4.4
+Frederico Soter,2025-06-23,inter_miami-vs-palmeiras,miss,1,3.0
+Frederico Soter,2025-06-23,porto-vs-al_ahly,miss,2,3.0
+Frederico Soter,2025-06-24,benfica-vs-bayern_de_munique,miss,3,2.0
+Frederico Soter,2025-06-24,auckland_city-vs-boca_juniors,hit,1,1.2
+Frederico Soter,2025-06-24,los_angeles_fc-vs-flamengo,hit,2,0.4
+Frederico Soter,2025-06-24,espérance-vs-chelsea,hit,3,1.8
+Frederico Soter,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,4,2.8
+Frederico Soter,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,5,3.8
+Frederico Soter,2025-06-25,internazionale-vs-river_plate,hit,6,5.0
+Frederico Soter,2025-06-25,urawa_reds-vs-monterrey,miss,1,4.8
+Frederico Soter,2025-06-26,juventus-vs-manchester_city,miss,2,3.4
+Frederico Soter,2025-06-26,wydad_casablanca-vs-al_ain,hit,1,4.8
+Frederico Soter,2025-06-26,rb_salzburg-vs-real_madrid,hit,2,5.2
+Frederico Soter,2025-06-26,al_hilal-vs-pachuca,hit,3,4.8
+Gabão,2025-06-14,al_ahly-vs-inter_miami,hit,1,1.0
+Gabão,2025-06-15,bayern_de_munique-vs-auckland_city,hit,2,4.0
+Gabão,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,3,4.3
+Gabão,2025-06-15,palmeiras-vs-porto,hit,4,4.5
+Gabão,2025-06-15,botafogo-vs-seattle_sounders,hit,5,5.0
+Gabão,2025-06-16,chelsea-vs-los_angeles_fc,hit,6,7.2
+Gabão,2025-06-16,boca_juniors-vs-benfica,miss,1,5.8
+Gabão,2025-06-16,flamengo-vs-espérance,hit,1,5.8
+Gabão,2025-06-17,fluminense-vs-borussia_dortmund,hit,2,5.0
+Gabão,2025-06-17,river_plate-vs-urawa_reds,hit,3,4.6
+Gabão,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,4,2.4
+Gabão,2025-06-17,monterrey-vs-internazionale,miss,1,2.4
+Gabão,2025-06-18,manchester_city-vs-wydad_casablanca,hit,1,2.8
+Gabão,2025-06-18,real_madrid-vs-al_hilal,hit,2,2.8
+Gabão,2025-06-18,pachuca-vs-rb_salzburg,hit,3,3.2
+Gabão,2025-06-18,al_ain-vs-juventus,hit,4,4.0
+Gabão,2025-06-19,palmeiras-vs-al_ahly,hit,5,6.4
+Gabão,2025-06-19,inter_miami-vs-porto,hit,6,6.0
+Gabão,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,7,6.8
+Gabão,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,5.4
+Gabão,2025-06-20,benfica-vs-auckland_city,hit,1,5.4
+Gabão,2025-06-20,flamengo-vs-chelsea,hit,2,3.2
+Gabão,2025-06-20,los_angeles_fc-vs-espérance,hit,3,2.4
+Gabão,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,4,3.8
+Gabão,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,5,4.8
+Gabão,2025-06-21,internazionale-vs-urawa_reds,hit,6,6.2
+Gabão,2025-06-21,fluminense-vs-ulsan_hd,hit,7,7.0
+Gabão,2025-06-21,river_plate-vs-monterrey,miss,1,6.8
+Gabão,2025-06-22,juventus-vs-wydad_casablanca,hit,1,5.4
+Gabão,2025-06-22,real_madrid-vs-pachuca,hit,2,5.8
+Gabão,2025-06-22,rb_salzburg-vs-al_hilal,hit,3,4.4
+Gabão,2025-06-22,manchester_city-vs-al_ain,hit,4,4.4
+Gabão,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,5,5.4
+Gabão,2025-06-23,atlético_de_madrid-vs-botafogo,hit,6,6.8
+Gabão,2025-06-23,inter_miami-vs-palmeiras,hit,7,5.6
+Gabão,2025-06-23,porto-vs-al_ahly,miss,1,4.6
+Gabão,2025-06-24,benfica-vs-bayern_de_munique,hit,1,3.8
+Gabão,2025-06-24,auckland_city-vs-boca_juniors,hit,2,3.0
+Gabão,2025-06-24,los_angeles_fc-vs-flamengo,hit,3,0.8
+Gabão,2025-06-24,espérance-vs-chelsea,hit,4,2.0
+Gabão,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,5,2.2
+Gabão,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,6,3.4
+Gabão,2025-06-25,internazionale-vs-river_plate,hit,7,5.6
+Gabão,2025-06-25,urawa_reds-vs-monterrey,miss,1,5.4
+Gabão,2025-06-26,juventus-vs-manchester_city,hit,1,5.0
+Gabão,2025-06-26,wydad_casablanca-vs-al_ain,hit,2,6.2
+Gabão,2025-06-26,rb_salzburg-vs-real_madrid,hit,3,5.8
+Gabão,2025-06-26,al_hilal-vs-pachuca,hit,4,3.6
+Guilherme,2025-06-14,al_ahly-vs-inter_miami,hit,1,1.0
+Guilherme,2025-06-15,bayern_de_munique-vs-auckland_city,hit,2,4.0
+Guilherme,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,3,4.3
+Guilherme,2025-06-15,palmeiras-vs-porto,hit,4,4.5
+Guilherme,2025-06-15,botafogo-vs-seattle_sounders,hit,5,4.6
+Guilherme,2025-06-16,chelsea-vs-los_angeles_fc,hit,6,6.8
+Guilherme,2025-06-16,boca_juniors-vs-benfica,hit,7,5.6
+Guilherme,2025-06-16,flamengo-vs-espérance,hit,8,7.0
+Guilherme,2025-06-17,fluminense-vs-borussia_dortmund,hit,9,6.2
+Guilherme,2025-06-17,river_plate-vs-urawa_reds,hit,10,6.2
+Guilherme,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,11,4.0
+Guilherme,2025-06-17,monterrey-vs-internazionale,hit,12,4.0
+Guilherme,2025-06-18,manchester_city-vs-wydad_casablanca,hit,13,4.0
+Guilherme,2025-06-18,real_madrid-vs-al_hilal,hit,14,4.0
+Guilherme,2025-06-18,pachuca-vs-rb_salzburg,hit,15,5.4
+Guilherme,2025-06-18,al_ain-vs-juventus,hit,16,6.6
+Guilherme,2025-06-19,palmeiras-vs-al_ahly,hit,17,8.8
+Guilherme,2025-06-19,inter_miami-vs-porto,hit,18,6.6
+Guilherme,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,19,7.8
+Guilherme,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,5.4
+Guilherme,2025-06-20,benfica-vs-auckland_city,hit,1,5.4
+Guilherme,2025-06-20,flamengo-vs-chelsea,miss,1,3.0
+Guilherme,2025-06-20,los_angeles_fc-vs-espérance,miss,2,2.8
+Guilherme,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,1,2.8
+Guilherme,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,2,3.8
+Guilherme,2025-06-21,internazionale-vs-urawa_reds,hit,3,3.8
+Guilherme,2025-06-21,fluminense-vs-ulsan_hd,hit,4,4.8
+Guilherme,2025-06-21,river_plate-vs-monterrey,miss,1,4.8
+Guilherme,2025-06-22,juventus-vs-wydad_casablanca,hit,1,4.8
+Guilherme,2025-06-22,real_madrid-vs-pachuca,hit,2,4.8
+Guilherme,2025-06-22,rb_salzburg-vs-al_hilal,hit,3,3.6
+Guilherme,2025-06-22,manchester_city-vs-al_ain,hit,4,4.0
+Guilherme,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,5,6.4
+Guilherme,2025-06-23,atlético_de_madrid-vs-botafogo,hit,6,6.0
+Guilherme,2025-06-23,inter_miami-vs-palmeiras,miss,1,5.0
+Guilherme,2025-06-23,porto-vs-al_ahly,miss,2,4.8
+Guilherme,2025-06-24,benfica-vs-bayern_de_munique,hit,1,3.6
+Guilherme,2025-06-24,auckland_city-vs-boca_juniors,hit,2,1.4
+Guilherme,2025-06-24,los_angeles_fc-vs-flamengo,hit,3,0.6
+Guilherme,2025-06-24,espérance-vs-chelsea,hit,4,3.0
+Guilherme,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,5,3.2
+Guilherme,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,6,4.4
+Guilherme,2025-06-25,internazionale-vs-river_plate,hit,7,5.2
+Guilherme,2025-06-25,urawa_reds-vs-monterrey,hit,8,6.4
+Guilherme,2025-06-26,juventus-vs-manchester_city,hit,9,5.0
+Guilherme,2025-06-26,wydad_casablanca-vs-al_ain,hit,10,5.0
+Guilherme,2025-06-26,rb_salzburg-vs-real_madrid,hit,11,4.6
+Guilherme,2025-06-26,al_hilal-vs-pachuca,hit,12,5.0
+João Henrique,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+João Henrique,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,3.5
+João Henrique,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,2,4.0
+João Henrique,2025-06-15,palmeiras-vs-porto,miss,1,3.0
+João Henrique,2025-06-15,botafogo-vs-seattle_sounders,hit,1,3.4
+João Henrique,2025-06-16,chelsea-vs-los_angeles_fc,hit,2,5.8
+João Henrique,2025-06-16,boca_juniors-vs-benfica,miss,1,4.4
+João Henrique,2025-06-16,flamengo-vs-espérance,hit,1,4.8
+João Henrique,2025-06-17,fluminense-vs-borussia_dortmund,hit,2,5.0
+João Henrique,2025-06-17,river_plate-vs-urawa_reds,hit,3,5.4
+João Henrique,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,4,3.2
+João Henrique,2025-06-17,monterrey-vs-internazionale,hit,5,3.4
+João Henrique,2025-06-18,manchester_city-vs-wydad_casablanca,hit,6,3.4
+João Henrique,2025-06-18,real_madrid-vs-al_hilal,hit,7,3.4
+João Henrique,2025-06-18,pachuca-vs-rb_salzburg,hit,8,3.0
+João Henrique,2025-06-18,al_ain-vs-juventus,hit,9,4.2
+João Henrique,2025-06-19,palmeiras-vs-al_ahly,hit,10,5.4
+João Henrique,2025-06-19,inter_miami-vs-porto,hit,11,6.4
+João Henrique,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,12,8.6
+João Henrique,2025-06-19,paris_saint_germain-vs-botafogo,hit,13,7.8
+João Henrique,2025-06-20,benfica-vs-auckland_city,hit,14,7.8
+João Henrique,2025-06-20,flamengo-vs-chelsea,hit,15,6.6
+João Henrique,2025-06-20,los_angeles_fc-vs-espérance,hit,16,4.4
+João Henrique,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,17,3.0
+João Henrique,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,18,4.2
+João Henrique,2025-06-21,internazionale-vs-urawa_reds,hit,19,4.2
+João Henrique,2025-06-21,fluminense-vs-ulsan_hd,miss,1,4.0
+João Henrique,2025-06-21,river_plate-vs-monterrey,miss,2,3.8
+João Henrique,2025-06-22,juventus-vs-wydad_casablanca,hit,1,3.8
+João Henrique,2025-06-22,real_madrid-vs-pachuca,hit,2,3.4
+João Henrique,2025-06-22,rb_salzburg-vs-al_hilal,hit,3,2.2
+João Henrique,2025-06-22,manchester_city-vs-al_ain,hit,4,3.6
+João Henrique,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,5,6.0
+João Henrique,2025-06-23,atlético_de_madrid-vs-botafogo,hit,6,6.0
+João Henrique,2025-06-23,inter_miami-vs-palmeiras,miss,1,5.0
+João Henrique,2025-06-23,porto-vs-al_ahly,hit,1,5.8
+João Henrique,2025-06-24,benfica-vs-bayern_de_munique,hit,2,4.6
+João Henrique,2025-06-24,auckland_city-vs-boca_juniors,miss,1,2.2
+João Henrique,2025-06-24,los_angeles_fc-vs-flamengo,hit,1,1.4
+João Henrique,2025-06-24,espérance-vs-chelsea,hit,2,3.8
+João Henrique,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,3,3.0
+João Henrique,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,4,4.2
+João Henrique,2025-06-25,internazionale-vs-river_plate,hit,5,5.6
+João Henrique,2025-06-25,urawa_reds-vs-monterrey,hit,6,5.6
+João Henrique,2025-06-26,juventus-vs-manchester_city,hit,7,3.4
+João Henrique,2025-06-26,wydad_casablanca-vs-al_ain,hit,8,3.4
+João Henrique,2025-06-26,rb_salzburg-vs-real_madrid,hit,9,3.0
+João Henrique,2025-06-26,al_hilal-vs-pachuca,miss,1,1.6
+Leigo Gianonni,2025-06-14,al_ahly-vs-inter_miami,hit,1,5.0
+Leigo Gianonni,2025-06-15,bayern_de_munique-vs-auckland_city,hit,2,6.0
+Leigo Gianonni,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,3,5.7
+Leigo Gianonni,2025-06-15,palmeiras-vs-porto,miss,1,4.2
+Leigo Gianonni,2025-06-15,botafogo-vs-seattle_sounders,hit,1,4.8
+Leigo Gianonni,2025-06-16,chelsea-vs-los_angeles_fc,hit,2,5.2
+Leigo Gianonni,2025-06-16,boca_juniors-vs-benfica,hit,3,4.0
+Leigo Gianonni,2025-06-16,flamengo-vs-espérance,hit,4,4.0
+Leigo Gianonni,2025-06-17,fluminense-vs-borussia_dortmund,hit,5,4.2
+Leigo Gianonni,2025-06-17,river_plate-vs-urawa_reds,hit,6,3.8
+Leigo Gianonni,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,7,2.6
+Leigo Gianonni,2025-06-17,monterrey-vs-internazionale,miss,1,2.4
+Leigo Gianonni,2025-06-18,manchester_city-vs-wydad_casablanca,hit,1,2.8
+Leigo Gianonni,2025-06-18,real_madrid-vs-al_hilal,miss,1,2.6
+Leigo Gianonni,2025-06-18,pachuca-vs-rb_salzburg,hit,1,4.0
+Leigo Gianonni,2025-06-18,al_ain-vs-juventus,hit,2,5.2
+Leigo Gianonni,2025-06-19,palmeiras-vs-al_ahly,hit,3,7.6
+Leigo Gianonni,2025-06-19,inter_miami-vs-porto,miss,1,6.2
+Leigo Gianonni,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,7.6
+Leigo Gianonni,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,5.2
+Leigo Gianonni,2025-06-20,benfica-vs-auckland_city,hit,1,5.2
+Leigo Gianonni,2025-06-20,flamengo-vs-chelsea,miss,1,2.8
+Leigo Gianonni,2025-06-20,los_angeles_fc-vs-espérance,hit,1,3.0
+Leigo Gianonni,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,2,2.6
+Leigo Gianonni,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,3,4.0
+Leigo Gianonni,2025-06-21,internazionale-vs-urawa_reds,hit,4,3.6
+Leigo Gianonni,2025-06-21,fluminense-vs-ulsan_hd,hit,5,4.6
+Leigo Gianonni,2025-06-21,river_plate-vs-monterrey,hit,6,5.4
+Leigo Gianonni,2025-06-22,juventus-vs-wydad_casablanca,hit,7,5.4
+Leigo Gianonni,2025-06-22,real_madrid-vs-pachuca,hit,8,5.4
+Leigo Gianonni,2025-06-22,rb_salzburg-vs-al_hilal,miss,1,4.4
+Leigo Gianonni,2025-06-22,manchester_city-vs-al_ain,hit,1,4.8
+Leigo Gianonni,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,2,5.2
+Leigo Gianonni,2025-06-23,atlético_de_madrid-vs-botafogo,hit,3,5.6
+Leigo Gianonni,2025-06-23,inter_miami-vs-palmeiras,miss,1,4.2
+Leigo Gianonni,2025-06-23,porto-vs-al_ahly,miss,2,4.2
+Leigo Gianonni,2025-06-24,benfica-vs-bayern_de_munique,hit,1,3.0
+Leigo Gianonni,2025-06-24,auckland_city-vs-boca_juniors,hit,2,1.8
+Leigo Gianonni,2025-06-24,los_angeles_fc-vs-flamengo,miss,1,0.4
+Leigo Gianonni,2025-06-24,espérance-vs-chelsea,hit,1,1.8
+Leigo Gianonni,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,2,2.0
+Leigo Gianonni,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,3,3.2
+Leigo Gianonni,2025-06-25,internazionale-vs-river_plate,hit,4,4.4
+Leigo Gianonni,2025-06-25,urawa_reds-vs-monterrey,hit,5,5.8
+Leigo Gianonni,2025-06-26,juventus-vs-manchester_city,hit,6,5.8
+Leigo Gianonni,2025-06-26,wydad_casablanca-vs-al_ain,hit,7,5.8
+Leigo Gianonni,2025-06-26,rb_salzburg-vs-real_madrid,hit,8,5.8
+Leigo Gianonni,2025-06-26,al_hilal-vs-pachuca,hit,9,4.6
+Leo Fernandes,2025-06-14,al_ahly-vs-inter_miami,hit,1,5.0
+Leo Fernandes,2025-06-15,bayern_de_munique-vs-auckland_city,hit,2,6.0
+Leo Fernandes,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,3,5.7
+Leo Fernandes,2025-06-15,palmeiras-vs-porto,hit,4,4.5
+Leo Fernandes,2025-06-15,botafogo-vs-seattle_sounders,hit,5,4.6
+Leo Fernandes,2025-06-16,chelsea-vs-los_angeles_fc,hit,6,6.0
+Leo Fernandes,2025-06-16,boca_juniors-vs-benfica,miss,1,4.6
+Leo Fernandes,2025-06-16,flamengo-vs-espérance,hit,1,6.0
+Leo Fernandes,2025-06-17,fluminense-vs-borussia_dortmund,hit,2,6.0
+Leo Fernandes,2025-06-17,river_plate-vs-urawa_reds,hit,3,6.4
+Leo Fernandes,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,4,4.2
+Leo Fernandes,2025-06-17,monterrey-vs-internazionale,hit,5,4.4
+Leo Fernandes,2025-06-18,manchester_city-vs-wydad_casablanca,hit,6,3.4
+Leo Fernandes,2025-06-18,real_madrid-vs-al_hilal,miss,1,3.2
+Leo Fernandes,2025-06-18,pachuca-vs-rb_salzburg,hit,1,2.0
+Leo Fernandes,2025-06-18,al_ain-vs-juventus,hit,2,3.2
+Leo Fernandes,2025-06-19,palmeiras-vs-al_ahly,hit,3,5.4
+Leo Fernandes,2025-06-19,inter_miami-vs-porto,miss,1,4.0
+Leo Fernandes,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,5.0
+Leo Fernandes,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,4.8
+Leo Fernandes,2025-06-20,benfica-vs-auckland_city,hit,1,4.8
+Leo Fernandes,2025-06-20,flamengo-vs-chelsea,miss,1,2.4
+Leo Fernandes,2025-06-20,los_angeles_fc-vs-espérance,hit,1,2.6
+Leo Fernandes,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,2,2.6
+Leo Fernandes,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,3,3.6
+Leo Fernandes,2025-06-21,internazionale-vs-urawa_reds,hit,4,3.6
+Leo Fernandes,2025-06-21,fluminense-vs-ulsan_hd,hit,5,4.6
+Leo Fernandes,2025-06-21,river_plate-vs-monterrey,hit,6,5.4
+Leo Fernandes,2025-06-22,juventus-vs-wydad_casablanca,hit,7,5.4
+Leo Fernandes,2025-06-22,real_madrid-vs-pachuca,hit,8,5.8
+Leo Fernandes,2025-06-22,rb_salzburg-vs-al_hilal,hit,9,5.4
+Leo Fernandes,2025-06-22,manchester_city-vs-al_ain,hit,10,5.8
+Leo Fernandes,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,11,6.2
+Leo Fernandes,2025-06-23,atlético_de_madrid-vs-botafogo,hit,12,6.6
+Leo Fernandes,2025-06-23,inter_miami-vs-palmeiras,hit,13,5.4
+Leo Fernandes,2025-06-23,porto-vs-al_ahly,miss,1,4.4
+Leo Fernandes,2025-06-24,benfica-vs-bayern_de_munique,hit,1,3.2
+Leo Fernandes,2025-06-24,auckland_city-vs-boca_juniors,miss,1,1.8
+Leo Fernandes,2025-06-24,los_angeles_fc-vs-flamengo,hit,1,0.6
+Leo Fernandes,2025-06-24,espérance-vs-chelsea,hit,2,2.8
+Leo Fernandes,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,3,3.0
+Leo Fernandes,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,4,4.2
+Leo Fernandes,2025-06-25,internazionale-vs-river_plate,hit,5,5.6
+Leo Fernandes,2025-06-25,urawa_reds-vs-monterrey,hit,6,6.8
+Leo Fernandes,2025-06-26,juventus-vs-manchester_city,hit,7,5.4
+Leo Fernandes,2025-06-26,wydad_casablanca-vs-al_ain,hit,8,5.4
+Leo Fernandes,2025-06-26,rb_salzburg-vs-real_madrid,hit,9,5.4
+Leo Fernandes,2025-06-26,al_hilal-vs-pachuca,miss,1,4.0
+Lucas Ubertini,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+Lucas Ubertini,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,3.5
+Lucas Ubertini,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,miss,1,2.3
+Lucas Ubertini,2025-06-15,palmeiras-vs-porto,miss,2,1.8
+Lucas Ubertini,2025-06-15,botafogo-vs-seattle_sounders,hit,1,2.4
+Lucas Ubertini,2025-06-16,chelsea-vs-los_angeles_fc,hit,2,3.8
+Lucas Ubertini,2025-06-16,boca_juniors-vs-benfica,hit,3,2.6
+Lucas Ubertini,2025-06-16,flamengo-vs-espérance,hit,4,4.0
+Lucas Ubertini,2025-06-17,fluminense-vs-borussia_dortmund,hit,5,5.0
+Lucas Ubertini,2025-06-17,river_plate-vs-urawa_reds,hit,6,5.0
+Lucas Ubertini,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,7,6.0
+Lucas Ubertini,2025-06-17,monterrey-vs-internazionale,hit,8,6.0
+Lucas Ubertini,2025-06-18,manchester_city-vs-wydad_casablanca,hit,9,5.6
+Lucas Ubertini,2025-06-18,real_madrid-vs-al_hilal,hit,10,4.8
+Lucas Ubertini,2025-06-18,pachuca-vs-rb_salzburg,miss,1,3.8
+Lucas Ubertini,2025-06-18,al_ain-vs-juventus,hit,1,2.8
+Lucas Ubertini,2025-06-19,palmeiras-vs-al_ahly,hit,2,4.0
+Lucas Ubertini,2025-06-19,inter_miami-vs-porto,hit,3,3.2
+Lucas Ubertini,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,4,3.2
+Lucas Ubertini,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,3.2
+Lucas Ubertini,2025-06-20,benfica-vs-auckland_city,hit,1,3.2
+Lucas Ubertini,2025-06-20,flamengo-vs-chelsea,hit,2,2.0
+Lucas Ubertini,2025-06-20,los_angeles_fc-vs-espérance,miss,1,1.8
+Lucas Ubertini,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,1,4.0
+Lucas Ubertini,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,2,5.0
+Lucas Ubertini,2025-06-21,internazionale-vs-urawa_reds,hit,3,5.0
+Lucas Ubertini,2025-06-21,fluminense-vs-ulsan_hd,hit,4,5.8
+Lucas Ubertini,2025-06-21,river_plate-vs-monterrey,miss,1,5.8
+Lucas Ubertini,2025-06-22,juventus-vs-wydad_casablanca,hit,1,4.8
+Lucas Ubertini,2025-06-22,real_madrid-vs-pachuca,hit,2,5.2
+Lucas Ubertini,2025-06-22,rb_salzburg-vs-al_hilal,hit,3,4.8
+Lucas Ubertini,2025-06-22,manchester_city-vs-al_ain,hit,4,5.2
+Lucas Ubertini,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,5,6.2
+Lucas Ubertini,2025-06-23,atlético_de_madrid-vs-botafogo,hit,6,5.8
+Lucas Ubertini,2025-06-23,inter_miami-vs-palmeiras,hit,7,5.4
+Lucas Ubertini,2025-06-23,porto-vs-al_ahly,miss,1,4.4
+Lucas Ubertini,2025-06-24,benfica-vs-bayern_de_munique,miss,2,3.0
+Lucas Ubertini,2025-06-24,auckland_city-vs-boca_juniors,miss,3,2.0
+Lucas Ubertini,2025-06-24,los_angeles_fc-vs-flamengo,hit,1,2.0
+Lucas Ubertini,2025-06-24,espérance-vs-chelsea,hit,2,3.4
+Lucas Ubertini,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,3,3.6
+Lucas Ubertini,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,4,4.6
+Lucas Ubertini,2025-06-25,internazionale-vs-river_plate,miss,1,4.6
+Lucas Ubertini,2025-06-25,urawa_reds-vs-monterrey,miss,2,3.6
+Lucas Ubertini,2025-06-26,juventus-vs-manchester_city,hit,1,2.2
+Lucas Ubertini,2025-06-26,wydad_casablanca-vs-al_ain,miss,1,2.0
+Lucas Ubertini,2025-06-26,rb_salzburg-vs-real_madrid,hit,1,3.4
+Lucas Ubertini,2025-06-26,al_hilal-vs-pachuca,hit,2,4.8
+Marcelo,2025-06-14,al_ahly-vs-inter_miami,hit,1,5.0
+Marcelo,2025-06-15,bayern_de_munique-vs-auckland_city,hit,2,6.0
+Marcelo,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,3,5.7
+Marcelo,2025-06-15,palmeiras-vs-porto,hit,4,5.5
+Marcelo,2025-06-15,botafogo-vs-seattle_sounders,hit,5,6.8
+Marcelo,2025-06-16,chelsea-vs-los_angeles_fc,hit,6,8.2
+Marcelo,2025-06-16,boca_juniors-vs-benfica,hit,7,7.0
+Marcelo,2025-06-16,flamengo-vs-espérance,hit,8,8.4
+Marcelo,2025-06-17,fluminense-vs-borussia_dortmund,hit,9,7.6
+Marcelo,2025-06-17,river_plate-vs-urawa_reds,hit,10,6.2
+Marcelo,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,11,4.8
+Marcelo,2025-06-17,monterrey-vs-internazionale,hit,12,4.8
+Marcelo,2025-06-18,manchester_city-vs-wydad_casablanca,hit,13,3.8
+Marcelo,2025-06-18,real_madrid-vs-al_hilal,hit,14,3.8
+Marcelo,2025-06-18,pachuca-vs-rb_salzburg,miss,1,2.8
+Marcelo,2025-06-18,al_ain-vs-juventus,hit,1,3.2
+Marcelo,2025-06-19,palmeiras-vs-al_ahly,hit,2,4.4
+Marcelo,2025-06-19,inter_miami-vs-porto,miss,1,3.0
+Marcelo,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,5.2
+Marcelo,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,5.2
+Marcelo,2025-06-20,benfica-vs-auckland_city,hit,1,5.2
+Marcelo,2025-06-20,flamengo-vs-chelsea,miss,1,3.8
+Marcelo,2025-06-20,los_angeles_fc-vs-espérance,hit,1,4.0
+Marcelo,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,2,2.6
+Marcelo,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,3,3.6
+Marcelo,2025-06-21,internazionale-vs-urawa_reds,hit,4,4.6
+Marcelo,2025-06-21,fluminense-vs-ulsan_hd,hit,5,5.6
+Marcelo,2025-06-21,river_plate-vs-monterrey,hit,6,6.4
+Marcelo,2025-06-22,juventus-vs-wydad_casablanca,hit,7,6.4
+Marcelo,2025-06-22,real_madrid-vs-pachuca,hit,8,6.8
+Marcelo,2025-06-22,rb_salzburg-vs-al_hilal,hit,9,4.6
+Marcelo,2025-06-22,manchester_city-vs-al_ain,hit,10,4.6
+Marcelo,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,11,5.0
+Marcelo,2025-06-23,atlético_de_madrid-vs-botafogo,hit,12,5.0
+Marcelo,2025-06-23,inter_miami-vs-palmeiras,hit,13,3.8
+Marcelo,2025-06-23,porto-vs-al_ahly,miss,1,3.6
+Marcelo,2025-06-24,benfica-vs-bayern_de_munique,hit,1,2.8
+Marcelo,2025-06-24,auckland_city-vs-boca_juniors,miss,1,1.4
+Marcelo,2025-06-24,los_angeles_fc-vs-flamengo,miss,2,0.4
+Marcelo,2025-06-24,espérance-vs-chelsea,hit,1,2.6
+Marcelo,2025-06-25,mamelodi_sundowns-vs-fluminense,miss,1,2.6
+Marcelo,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,1,3.8
+Marcelo,2025-06-25,internazionale-vs-river_plate,hit,2,4.8
+Marcelo,2025-06-25,urawa_reds-vs-monterrey,hit,3,5.8
+Marcelo,2025-06-26,juventus-vs-manchester_city,hit,4,4.4
+Marcelo,2025-06-26,wydad_casablanca-vs-al_ain,hit,5,4.6
+Marcelo,2025-06-26,rb_salzburg-vs-real_madrid,hit,6,4.2
+Marcelo,2025-06-26,al_hilal-vs-pachuca,hit,7,4.2
+Pedro Tayer,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+Pedro Tayer,2025-06-15,bayern_de_munique-vs-auckland_city,miss,2,0.0
+Pedro Tayer,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,1,1.7
+Pedro Tayer,2025-06-15,palmeiras-vs-porto,miss,1,1.2
+Pedro Tayer,2025-06-15,botafogo-vs-seattle_sounders,hit,1,1.2
+Pedro Tayer,2025-06-16,chelsea-vs-los_angeles_fc,hit,2,3.6
+Pedro Tayer,2025-06-16,boca_juniors-vs-benfica,hit,3,3.8
+Pedro Tayer,2025-06-16,flamengo-vs-espérance,hit,4,4.2
+Pedro Tayer,2025-06-17,fluminense-vs-borussia_dortmund,hit,5,4.4
+Pedro Tayer,2025-06-17,river_plate-vs-urawa_reds,miss,1,4.2
+Pedro Tayer,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,miss,2,1.8
+Pedro Tayer,2025-06-17,monterrey-vs-internazionale,hit,1,1.8
+Pedro Tayer,2025-06-18,manchester_city-vs-wydad_casablanca,hit,2,2.8
+Pedro Tayer,2025-06-18,real_madrid-vs-al_hilal,miss,1,2.6
+Pedro Tayer,2025-06-18,pachuca-vs-rb_salzburg,hit,1,4.0
+Pedro Tayer,2025-06-18,al_ain-vs-juventus,miss,1,4.0
+Pedro Tayer,2025-06-19,palmeiras-vs-al_ahly,miss,2,3.8
+Pedro Tayer,2025-06-19,inter_miami-vs-porto,hit,1,2.4
+Pedro Tayer,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,2,3.8
+Pedro Tayer,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,2.4
+Pedro Tayer,2025-06-20,benfica-vs-auckland_city,hit,1,3.4
+Pedro Tayer,2025-06-20,flamengo-vs-chelsea,hit,2,3.6
+Pedro Tayer,2025-06-20,los_angeles_fc-vs-espérance,miss,1,2.6
+Pedro Tayer,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,1,2.6
+Pedro Tayer,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,2,3.6
+Pedro Tayer,2025-06-21,internazionale-vs-urawa_reds,hit,3,3.6
+Pedro Tayer,2025-06-21,fluminense-vs-ulsan_hd,miss,1,3.4
+Pedro Tayer,2025-06-21,river_plate-vs-monterrey,miss,2,3.4
+Pedro Tayer,2025-06-22,juventus-vs-wydad_casablanca,hit,1,3.4
+Pedro Tayer,2025-06-22,real_madrid-vs-pachuca,hit,2,3.4
+Pedro Tayer,2025-06-22,rb_salzburg-vs-al_hilal,miss,1,2.4
+Pedro Tayer,2025-06-22,manchester_city-vs-al_ain,hit,1,3.4
+Pedro Tayer,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,2,4.8
+Pedro Tayer,2025-06-23,atlético_de_madrid-vs-botafogo,hit,3,4.8
+Pedro Tayer,2025-06-23,inter_miami-vs-palmeiras,miss,1,3.8
+Pedro Tayer,2025-06-23,porto-vs-al_ahly,miss,2,3.8
+Pedro Tayer,2025-06-24,benfica-vs-bayern_de_munique,miss,3,2.8
+Pedro Tayer,2025-06-24,auckland_city-vs-boca_juniors,miss,4,1.4
+Pedro Tayer,2025-06-24,los_angeles_fc-vs-flamengo,hit,1,0.2
+Pedro Tayer,2025-06-24,espérance-vs-chelsea,hit,2,1.2
+Pedro Tayer,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,3,1.4
+Pedro Tayer,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,4,2.4
+Pedro Tayer,2025-06-25,internazionale-vs-river_plate,hit,5,3.8
+Pedro Tayer,2025-06-25,urawa_reds-vs-monterrey,miss,1,3.6
+Pedro Tayer,2025-06-26,juventus-vs-manchester_city,hit,1,2.8
+Pedro Tayer,2025-06-26,wydad_casablanca-vs-al_ain,hit,2,4.0
+Pedro Tayer,2025-06-26,rb_salzburg-vs-real_madrid,hit,3,3.2
+Pedro Tayer,2025-06-26,al_hilal-vs-pachuca,miss,1,1.8
+RODRIGO ALBERNAZ,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+RODRIGO ALBERNAZ,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,3.5
+RODRIGO ALBERNAZ,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,2,4.0
+RODRIGO ALBERNAZ,2025-06-15,palmeiras-vs-porto,hit,3,4.2
+RODRIGO ALBERNAZ,2025-06-15,botafogo-vs-seattle_sounders,hit,4,3.6
+RODRIGO ALBERNAZ,2025-06-16,chelsea-vs-los_angeles_fc,hit,5,4.6
+RODRIGO ALBERNAZ,2025-06-16,boca_juniors-vs-benfica,hit,6,4.2
+RODRIGO ALBERNAZ,2025-06-16,flamengo-vs-espérance,hit,7,5.6
+RODRIGO ALBERNAZ,2025-06-17,fluminense-vs-borussia_dortmund,hit,8,4.8
+RODRIGO ALBERNAZ,2025-06-17,river_plate-vs-urawa_reds,hit,9,5.6
+RODRIGO ALBERNAZ,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,10,4.8
+RODRIGO ALBERNAZ,2025-06-17,monterrey-vs-internazionale,hit,11,4.0
+RODRIGO ALBERNAZ,2025-06-18,manchester_city-vs-wydad_casablanca,hit,12,2.6
+RODRIGO ALBERNAZ,2025-06-18,real_madrid-vs-al_hilal,hit,13,2.6
+RODRIGO ALBERNAZ,2025-06-18,pachuca-vs-rb_salzburg,hit,14,3.0
+RODRIGO ALBERNAZ,2025-06-18,al_ain-vs-juventus,hit,15,4.2
+RODRIGO ALBERNAZ,2025-06-19,palmeiras-vs-al_ahly,hit,16,5.0
+RODRIGO ALBERNAZ,2025-06-19,inter_miami-vs-porto,hit,17,4.2
+RODRIGO ALBERNAZ,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,18,5.0
+RODRIGO ALBERNAZ,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,3.6
+RODRIGO ALBERNAZ,2025-06-20,benfica-vs-auckland_city,hit,1,3.2
+RODRIGO ALBERNAZ,2025-06-20,flamengo-vs-chelsea,miss,1,2.2
+RODRIGO ALBERNAZ,2025-06-20,los_angeles_fc-vs-espérance,miss,2,2.0
+RODRIGO ALBERNAZ,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,1,2.4
+RODRIGO ALBERNAZ,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,2,3.4
+RODRIGO ALBERNAZ,2025-06-21,internazionale-vs-urawa_reds,hit,3,3.8
+RODRIGO ALBERNAZ,2025-06-21,fluminense-vs-ulsan_hd,hit,4,4.8
+RODRIGO ALBERNAZ,2025-06-21,river_plate-vs-monterrey,hit,5,5.8
+RODRIGO ALBERNAZ,2025-06-22,juventus-vs-wydad_casablanca,hit,6,5.4
+RODRIGO ALBERNAZ,2025-06-22,real_madrid-vs-pachuca,hit,7,5.4
+RODRIGO ALBERNAZ,2025-06-22,rb_salzburg-vs-al_hilal,hit,8,5.0
+RODRIGO ALBERNAZ,2025-06-22,manchester_city-vs-al_ain,hit,9,5.4
+RODRIGO ALBERNAZ,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,10,6.8
+RODRIGO ALBERNAZ,2025-06-23,atlético_de_madrid-vs-botafogo,hit,11,7.2
+RODRIGO ALBERNAZ,2025-06-23,inter_miami-vs-palmeiras,hit,12,6.4
+RODRIGO ALBERNAZ,2025-06-23,porto-vs-al_ahly,miss,1,5.4
+RODRIGO ALBERNAZ,2025-06-24,benfica-vs-bayern_de_munique,hit,1,4.2
+RODRIGO ALBERNAZ,2025-06-24,auckland_city-vs-boca_juniors,hit,2,2.0
+RODRIGO ALBERNAZ,2025-06-24,los_angeles_fc-vs-flamengo,hit,3,0.8
+RODRIGO ALBERNAZ,2025-06-24,espérance-vs-chelsea,hit,4,2.0
+RODRIGO ALBERNAZ,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,5,2.2
+RODRIGO ALBERNAZ,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,6,3.4
+RODRIGO ALBERNAZ,2025-06-25,internazionale-vs-river_plate,hit,7,4.6
+RODRIGO ALBERNAZ,2025-06-25,urawa_reds-vs-monterrey,hit,8,5.4
+RODRIGO ALBERNAZ,2025-06-26,juventus-vs-manchester_city,hit,9,5.0
+RODRIGO ALBERNAZ,2025-06-26,wydad_casablanca-vs-al_ain,hit,10,5.0
+RODRIGO ALBERNAZ,2025-06-26,rb_salzburg-vs-real_madrid,hit,11,4.6
+RODRIGO ALBERNAZ,2025-06-26,al_hilal-vs-pachuca,hit,12,4.2
+Rafael Conte,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+Rafael Conte,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,3.5
+Rafael Conte,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,2,4.0
+Rafael Conte,2025-06-15,palmeiras-vs-porto,hit,3,3.2
+Rafael Conte,2025-06-15,botafogo-vs-seattle_sounders,hit,4,3.6
+Rafael Conte,2025-06-16,chelsea-vs-los_angeles_fc,hit,5,4.6
+Rafael Conte,2025-06-16,boca_juniors-vs-benfica,miss,1,3.2
+Rafael Conte,2025-06-16,flamengo-vs-espérance,hit,1,3.6
+Rafael Conte,2025-06-17,fluminense-vs-borussia_dortmund,hit,2,3.6
+Rafael Conte,2025-06-17,river_plate-vs-urawa_reds,hit,3,3.6
+Rafael Conte,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,miss,1,2.6
+Rafael Conte,2025-06-17,monterrey-vs-internazionale,miss,2,2.6
+Rafael Conte,2025-06-18,manchester_city-vs-wydad_casablanca,hit,1,2.6
+Rafael Conte,2025-06-18,real_madrid-vs-al_hilal,miss,1,2.4
+Rafael Conte,2025-06-18,pachuca-vs-rb_salzburg,hit,1,1.6
+Rafael Conte,2025-06-18,al_ain-vs-juventus,hit,2,2.6
+Rafael Conte,2025-06-19,palmeiras-vs-al_ahly,miss,1,2.6
+Rafael Conte,2025-06-19,inter_miami-vs-porto,miss,2,1.2
+Rafael Conte,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,2.6
+Rafael Conte,2025-06-19,paris_saint_germain-vs-botafogo,hit,2,2.6
+Rafael Conte,2025-06-20,benfica-vs-auckland_city,hit,3,2.6
+Rafael Conte,2025-06-20,flamengo-vs-chelsea,hit,4,2.8
+Rafael Conte,2025-06-20,los_angeles_fc-vs-espérance,hit,5,3.0
+Rafael Conte,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,6,4.0
+Rafael Conte,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,7,4.8
+Rafael Conte,2025-06-21,internazionale-vs-urawa_reds,hit,8,4.8
+Rafael Conte,2025-06-21,fluminense-vs-ulsan_hd,hit,9,5.6
+Rafael Conte,2025-06-21,river_plate-vs-monterrey,hit,10,5.6
+Rafael Conte,2025-06-22,juventus-vs-wydad_casablanca,hit,11,4.6
+Rafael Conte,2025-06-22,real_madrid-vs-pachuca,hit,12,6.0
+Rafael Conte,2025-06-22,rb_salzburg-vs-al_hilal,hit,13,5.2
+Rafael Conte,2025-06-22,manchester_city-vs-al_ain,hit,14,5.6
+Rafael Conte,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,15,6.8
+Rafael Conte,2025-06-23,atlético_de_madrid-vs-botafogo,hit,16,6.8
+Rafael Conte,2025-06-23,inter_miami-vs-palmeiras,miss,1,4.4
+Rafael Conte,2025-06-23,porto-vs-al_ahly,miss,2,4.2
+Rafael Conte,2025-06-24,benfica-vs-bayern_de_munique,hit,1,3.0
+Rafael Conte,2025-06-24,auckland_city-vs-boca_juniors,hit,2,1.8
+Rafael Conte,2025-06-24,los_angeles_fc-vs-flamengo,hit,3,0.6
+Rafael Conte,2025-06-24,espérance-vs-chelsea,hit,4,3.0
+Rafael Conte,2025-06-25,mamelodi_sundowns-vs-fluminense,hit,5,3.2
+Rafael Conte,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,6,4.4
+Rafael Conte,2025-06-25,internazionale-vs-river_plate,hit,7,6.6
+Rafael Conte,2025-06-25,urawa_reds-vs-monterrey,hit,8,7.8
+Rafael Conte,2025-06-26,juventus-vs-manchester_city,hit,9,5.6
+Rafael Conte,2025-06-26,wydad_casablanca-vs-al_ain,hit,10,5.6
+Rafael Conte,2025-06-26,rb_salzburg-vs-real_madrid,hit,11,5.2
+Rafael Conte,2025-06-26,al_hilal-vs-pachuca,miss,1,2.8
+Thales Oliveira,2025-06-14,al_ahly-vs-inter_miami,hit,1,5.0
+Thales Oliveira,2025-06-15,bayern_de_munique-vs-auckland_city,hit,2,6.0
+Thales Oliveira,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,3,5.7
+Thales Oliveira,2025-06-15,palmeiras-vs-porto,miss,1,4.2
+Thales Oliveira,2025-06-15,botafogo-vs-seattle_sounders,hit,1,4.8
+Thales Oliveira,2025-06-16,chelsea-vs-los_angeles_fc,hit,2,5.2
+Thales Oliveira,2025-06-16,boca_juniors-vs-benfica,hit,3,4.0
+Thales Oliveira,2025-06-16,flamengo-vs-espérance,hit,4,4.4
+Thales Oliveira,2025-06-17,fluminense-vs-borussia_dortmund,hit,5,4.6
+Thales Oliveira,2025-06-17,river_plate-vs-urawa_reds,hit,6,4.2
+Thales Oliveira,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,miss,1,2.8
+Thales Oliveira,2025-06-17,monterrey-vs-internazionale,miss,2,2.6
+Thales Oliveira,2025-06-18,manchester_city-vs-wydad_casablanca,hit,1,2.6
+Thales Oliveira,2025-06-18,real_madrid-vs-al_hilal,miss,1,2.4
+Thales Oliveira,2025-06-18,pachuca-vs-rb_salzburg,hit,1,3.8
+Thales Oliveira,2025-06-18,al_ain-vs-juventus,hit,2,5.2
+Thales Oliveira,2025-06-19,palmeiras-vs-al_ahly,hit,3,7.6
+Thales Oliveira,2025-06-19,inter_miami-vs-porto,miss,1,6.2
+Thales Oliveira,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,1,7.2
+Thales Oliveira,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,4.8
+Thales Oliveira,2025-06-20,benfica-vs-auckland_city,hit,1,4.8
+Thales Oliveira,2025-06-20,flamengo-vs-chelsea,hit,2,2.6
+Thales Oliveira,2025-06-20,los_angeles_fc-vs-espérance,miss,1,2.6
+Thales Oliveira,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,1,2.6
+Thales Oliveira,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,2,4.0
+Thales Oliveira,2025-06-21,internazionale-vs-urawa_reds,hit,3,4.0
+Thales Oliveira,2025-06-21,fluminense-vs-ulsan_hd,hit,4,4.8
+Thales Oliveira,2025-06-21,river_plate-vs-monterrey,miss,1,4.8
+Thales Oliveira,2025-06-22,juventus-vs-wydad_casablanca,hit,1,4.8
+Thales Oliveira,2025-06-22,real_madrid-vs-pachuca,hit,2,4.8
+Thales Oliveira,2025-06-22,rb_salzburg-vs-al_hilal,miss,1,3.4
+Thales Oliveira,2025-06-22,manchester_city-vs-al_ain,hit,1,3.8
+Thales Oliveira,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,2,5.2
+Thales Oliveira,2025-06-23,atlético_de_madrid-vs-botafogo,hit,3,4.4
+Thales Oliveira,2025-06-23,inter_miami-vs-palmeiras,miss,1,3.0
+Thales Oliveira,2025-06-23,porto-vs-al_ahly,miss,2,3.0
+Thales Oliveira,2025-06-24,benfica-vs-bayern_de_munique,miss,3,1.6
+Thales Oliveira,2025-06-24,auckland_city-vs-boca_juniors,hit,1,0.4
+Thales Oliveira,2025-06-24,los_angeles_fc-vs-flamengo,hit,2,0.4
+Thales Oliveira,2025-06-24,espérance-vs-chelsea,hit,3,1.8
+Thales Oliveira,2025-06-25,mamelodi_sundowns-vs-fluminense,miss,1,1.8
+Thales Oliveira,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,1,3.2
+Thales Oliveira,2025-06-25,internazionale-vs-river_plate,hit,2,4.0
+Thales Oliveira,2025-06-25,urawa_reds-vs-monterrey,miss,1,3.8
+Thales Oliveira,2025-06-26,juventus-vs-manchester_city,hit,1,3.4
+Thales Oliveira,2025-06-26,wydad_casablanca-vs-al_ain,hit,2,4.4
+Thales Oliveira,2025-06-26,rb_salzburg-vs-real_madrid,hit,3,4.4
+Thales Oliveira,2025-06-26,al_hilal-vs-pachuca,hit,4,5.8
+thiago bahiense,2025-06-14,al_ahly-vs-inter_miami,miss,1,0.0
+thiago bahiense,2025-06-15,bayern_de_munique-vs-auckland_city,hit,1,2.5
+thiago bahiense,2025-06-15,paris_saint_germain-vs-atlético_de_madrid,hit,2,4.0
+thiago bahiense,2025-06-15,palmeiras-vs-porto,hit,3,4.2
+thiago bahiense,2025-06-15,botafogo-vs-seattle_sounders,hit,4,4.8
+thiago bahiense,2025-06-16,chelsea-vs-los_angeles_fc,hit,5,5.8
+thiago bahiense,2025-06-16,boca_juniors-vs-benfica,hit,6,5.8
+thiago bahiense,2025-06-16,flamengo-vs-espérance,hit,7,6.8
+thiago bahiense,2025-06-17,fluminense-vs-borussia_dortmund,hit,8,6.0
+thiago bahiense,2025-06-17,river_plate-vs-urawa_reds,hit,9,6.0
+thiago bahiense,2025-06-17,ulsan_hd-vs-mamelodi_sundowns,hit,10,5.2
+thiago bahiense,2025-06-17,monterrey-vs-internazionale,miss,1,4.2
+thiago bahiense,2025-06-18,manchester_city-vs-wydad_casablanca,hit,1,3.2
+thiago bahiense,2025-06-18,real_madrid-vs-al_hilal,miss,1,3.0
+thiago bahiense,2025-06-18,pachuca-vs-rb_salzburg,miss,2,1.6
+thiago bahiense,2025-06-18,al_ain-vs-juventus,hit,1,2.8
+thiago bahiense,2025-06-19,palmeiras-vs-al_ahly,hit,2,4.2
+thiago bahiense,2025-06-19,inter_miami-vs-porto,hit,3,3.0
+thiago bahiense,2025-06-19,seattle_sounders-vs-atlético_de_madrid,hit,4,4.0
+thiago bahiense,2025-06-19,paris_saint_germain-vs-botafogo,miss,1,4.0
+thiago bahiense,2025-06-20,benfica-vs-auckland_city,hit,1,3.6
+thiago bahiense,2025-06-20,flamengo-vs-chelsea,hit,2,2.4
+thiago bahiense,2025-06-20,los_angeles_fc-vs-espérance,hit,3,2.4
+thiago bahiense,2025-06-20,bayern_de_munique-vs-boca_juniors,hit,4,2.8
+thiago bahiense,2025-06-21,mamelodi_sundowns-vs-borussia_dortmund,hit,5,3.8
+thiago bahiense,2025-06-21,internazionale-vs-urawa_reds,hit,6,4.2
+thiago bahiense,2025-06-21,fluminense-vs-ulsan_hd,hit,7,5.0
+thiago bahiense,2025-06-21,river_plate-vs-monterrey,hit,8,5.0
+thiago bahiense,2025-06-22,juventus-vs-wydad_casablanca,hit,9,4.6
+thiago bahiense,2025-06-22,real_madrid-vs-pachuca,hit,10,4.6
+thiago bahiense,2025-06-22,rb_salzburg-vs-al_hilal,miss,1,3.2
+thiago bahiense,2025-06-22,manchester_city-vs-al_ain,hit,1,3.6
+thiago bahiense,2025-06-23,seattle_sounders-vs-paris_saint_germain,hit,2,5.8
+thiago bahiense,2025-06-23,atlético_de_madrid-vs-botafogo,hit,3,5.8
+thiago bahiense,2025-06-23,inter_miami-vs-palmeiras,hit,4,5.0
+thiago bahiense,2025-06-23,porto-vs-al_ahly,miss,1,5.0
+thiago bahiense,2025-06-24,benfica-vs-bayern_de_munique,hit,1,3.8
+thiago bahiense,2025-06-24,auckland_city-vs-boca_juniors,miss,1,1.4
+thiago bahiense,2025-06-24,los_angeles_fc-vs-flamengo,hit,1,0.6
+thiago bahiense,2025-06-24,espérance-vs-chelsea,hit,2,2.8
+thiago bahiense,2025-06-25,mamelodi_sundowns-vs-fluminense,miss,1,2.8
+thiago bahiense,2025-06-25,borussia_dortmund-vs-ulsan_hd,hit,1,4.0
+thiago bahiense,2025-06-25,internazionale-vs-river_plate,miss,1,4.0
+thiago bahiense,2025-06-25,urawa_reds-vs-monterrey,miss,2,3.8
+thiago bahiense,2025-06-26,juventus-vs-manchester_city,hit,1,2.4
+thiago bahiense,2025-06-26,wydad_casablanca-vs-al_ain,hit,2,4.8
+thiago bahiense,2025-06-26,rb_salzburg-vs-real_madrid,hit,3,4.8
+thiago bahiense,2025-06-26,al_hilal-vs-pachuca,miss,1,4.8

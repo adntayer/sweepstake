@@ -31,10 +31,15 @@ from glob import glob
 
 import pandas as pd
 
+from datetime import datetime
+from pathlib import Path
+
+import numpy as np
+
 from src.core.config import ChampionshipConfig
 from src.core.loader import parse_group_stage, parse_bonus_playoffs
 from src.core.printing import print_colored
-from src.core.scoring import score_prediction
+from src.core.scoring import score_prediction, score_playoff_bonus, score_strikers
 from src.core.get_results import get_results
 
 # ------------------------------------------------------------------
@@ -334,7 +339,402 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
             df_st = pd.read_csv(path_csv, sep=",")
             _save_csv(df_st, config.gold_striker_path(boleiro))
 
+    # --- New analytics ---
+    _generate_playoff_scoring(config)
+    _generate_striker_scoring(config)
+    _generate_consistency(df_valid, config)
+    _generate_upset_tracker(df_all, config)
+    _generate_round_by_round(df_valid, config)
+    _generate_team_accuracy(df_valid, config)
+
+    # --- New v2 analytics ---
+    _generate_ranking_history(df_valid, config)
+    _generate_boldness_index(df_all, config)
+    _generate_prediction_timing(config)
+    _generate_goal_error_by_team(df_valid, config)
+
     print_colored("silver to gold completed", "green")
+
+
+# ------------------------------------------------------------------
+# Derived analytics (generated from gold data)
+# ------------------------------------------------------------------
+
+
+def _generate_playoff_scoring(config: ChampionshipConfig) -> None:
+    """Score playoff bonus team picks and save to gold."""
+    if not config.playoff_scoring:
+        print_colored("\tskipping playoff scoring (no config)", "yellow")
+        return
+    print_colored("\tgenerating playoff scoring", "ice")
+    df = score_playoff_bonus(config)
+    _save_csv(df, _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv")))
+    print_colored(f"\tplayoffs_scored.csv: {len(df)} rows", "green")
+
+
+def _generate_striker_scoring(config: ChampionshipConfig) -> None:
+    """Score striker picks and save to gold."""
+    if not config.actual_top_scorer or not config.striker_points:
+        print_colored("\tskipping striker scoring (no config)", "yellow")
+        return
+    print_colored("\tgenerating striker scoring", "ice")
+    df = score_strikers(config)
+    _save_csv(df, _norm(os.path.join(config._au_first_round(), "strikers_scored.csv")))
+    print_colored(f"\tstrikers_scored.csv: {len(df)} rows", "green")
+
+
+def _generate_consistency(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
+    """Derive streak/consistency data from gold predictions."""
+    print_colored("\tgenerating consistency tracking", "ice")
+    df = df_valid.copy()
+    df = df.sort_values(["who", "date", "hour"])
+    df["hit"] = df["pontos"] > 0
+
+    rows = []
+    for boleiro, group in df.groupby("who"):
+        streak_type = None
+        streak_len = 0
+        for _, row in group.iterrows():
+            is_hit = row["hit"]
+            if is_hit and streak_type == "hit":
+                streak_len += 1
+            elif not is_hit and streak_type == "miss":
+                streak_len += 1
+            else:
+                streak_type = "hit" if is_hit else "miss"
+                streak_len = 1
+
+            # Running avg of last 5 games
+            recent = group.loc[:row.name, "pontos"].tail(5).mean() if "pontos" in group.columns else 0
+
+            rows.append({
+                "boleiro": boleiro,
+                "date": row["date"],
+                "match": row.get("match", ""),
+                "streak_type": streak_type,
+                "streak_length": streak_len,
+                "running_avg_5": round(recent, 1),
+            })
+
+    df_out = pd.DataFrame(rows)
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "consistency.csv")))
+    print_colored(f"\tconsistency.csv: {len(df_out)} rows", "green")
+
+
+def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) -> None:
+    """Identify upset matches and who correctly predicted them."""
+    print_colored("\tgenerating upset tracker", "ice")
+    df = df_all.copy()
+    df_results = pd.read_csv(config.games_file, sep=",")
+
+    # Merge round info
+    df_games_round = df_results[["match", "round"]].drop_duplicates()
+    df = df.merge(df_games_round, on="match", how="left")
+
+    rows = []
+    for match, group in df.groupby("match"):
+        first = group.iloc[0]
+        home = first["home_team"]
+        away = first["away_team"]
+        real_winner = first.get("resultado_real_time", "")
+
+        # Determine favorite (most predicted winner)
+        vote_counts = group["resultado_bol_time"].value_counts()
+        favorite = vote_counts.index[0] if not vote_counts.empty else ""
+        favorite_votes = int(vote_counts.iloc[0]) if not vote_counts.empty else 0
+        total_votes = len(group)
+
+        is_upset = 0
+        if real_winner and real_winner != "empate" and favorite and favorite != "empate":
+            if real_winner != favorite:
+                is_upset = 1
+
+        # Which players got the upset
+        players_correct = []
+        for _, p_row in group.iterrows():
+            if str(p_row.get("resultado_bol_time", "")) == real_winner:
+                players_correct.append(p_row["who"])
+
+        rows.append({
+            "match": match,
+            "home_team": home,
+            "away_team": away,
+            "real_winner": real_winner,
+            "favorite": favorite,
+            "favorite_votes": favorite_votes,
+            "total_votes": total_votes,
+            "is_upset": is_upset,
+            "num_correct": len(players_correct),
+            "players_correct": " | ".join(players_correct),
+        })
+
+    df_out = pd.DataFrame(rows)
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "upset_tracker.csv")))
+    print_colored(f"\tupset_tracker.csv: {len(df_out)} rows", "green")
+
+
+def _generate_round_by_round(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
+    """Aggregate points per round for each player."""
+    print_colored("\tgenerating round-by-round tracking", "ice")
+    df = df_valid.copy()
+    df_results = pd.read_csv(config.games_file, sep=",")
+
+    # Merge round info from games.csv
+    df_games_round = df_results[["match", "round"]].drop_duplicates()
+    df = df.merge(df_games_round, on="match", how="left")
+    df["round"] = df["round"].fillna("0")
+
+    # Map round labels to numeric ordering
+    round_order = {}
+    for i, r in enumerate(["1", "2", "3", "oitavas", "quartas", "semi", "final"]):
+        round_order[r] = i + 1
+    df["round_number"] = df["round"].map(round_order).fillna(0).astype(int)
+
+    rows = []
+    for boleiro, group in df.groupby("who"):
+        group = group.sort_values("round_number")
+        cum = 0
+        for rn, rgroup in group.groupby("round_number"):
+            pts = int(rgroup["pontos"].sum())
+            cum += pts
+            rows.append({
+                "boleiro": boleiro,
+                "round_number": rn,
+                "round_label": rgroup.iloc[0]["round"],
+                "points": pts,
+                "cumulative_points": cum,
+            })
+
+    # Add rank per round
+    df_out = pd.DataFrame(rows)
+    if not df_out.empty:
+        for rn in df_out["round_number"].unique():
+            mask = df_out["round_number"] == rn
+            df_out.loc[mask, "rank"] = df_out.loc[mask, "cumulative_points"].rank(
+                ascending=False, method="min"
+            ).astype(int)
+
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "round_by_round.csv")))
+    print_colored(f"\tround_by_round.csv: {len(df_out)} rows", "green")
+
+
+def _generate_team_accuracy(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
+    """Calculate prediction accuracy per team for each player."""
+    print_colored("\tgenerating team accuracy tracking", "ice")
+    df = df_valid.copy()
+
+    rows = []
+    # For home team role
+    for team_col, opp_col in [("home_team", "away_team"), ("away_team", "home_team")]:
+        for team, group in df.groupby(team_col):
+            for boleiro, bg in group.groupby("who"):
+                total = len(bg)
+                correct_winner = sum(
+                    1 for _, r in bg.iterrows()
+                    if str(r.get("resultado_bol_time", "")) == str(r.get("resultado_real_time", ""))
+                )
+                exact_score = sum(
+                    1 for _, r in bg.iterrows()
+                    if r.get("home_goals_bol", -1) == r.get("home_goals_real", -2)
+                    and r.get("away_goals_bol", -1) == r.get("away_goals_real", -2)
+                )
+                rows.append({
+                    "team": team,
+                    "role": team_col.replace("_team", ""),
+                    "boleiro": boleiro,
+                    "total_bets": total,
+                    "correct_winner": correct_winner,
+                    "exact_score": exact_score,
+                    "accuracy_pct": round(correct_winner / total * 100, 1) if total > 0 else 0,
+                })
+
+    df_out = pd.DataFrame(rows)
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "team_accuracy.csv")))
+    print_colored(f"\tteam_accuracy.csv: {len(df_out)} rows", "green")
+
+
+# ------------------------------------------------------------------
+# New analytics #1: Ranking history (daily rank position)
+# ------------------------------------------------------------------
+
+
+def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
+    """Daily rank position for each player (cumulative ranking)."""
+    print_colored("\tgenerating ranking history", "ice")
+    df = df_valid.copy()
+    df = df.sort_values(["who", "date"])
+
+    rows = []
+    for date, day_group in df.groupby("date"):
+        # Cumulative points up to this date for each player
+        daily_pts = day_group.groupby("who")["pontos"].sum()
+        # Get all players' cumulative up to this date
+        all_cum = df[df["date"] <= date].groupby("who")["pontos"].sum()
+        leader_pts = int(all_cum.max()) if not all_cum.empty else 0
+        leader_name = str(all_cum.idxmax()) if not all_cum.empty else ""
+
+        for boleiro, pts in daily_pts.items():
+            cum = int(all_cum.get(boleiro, 0))
+            rank = int(all_cum.rank(ascending=False, method="min").get(boleiro, 0))
+            rows.append({
+                "boleiro": boleiro,
+                "date": date,
+                "daily_points": int(pts),
+                "cumulative_points": cum,
+                "rank": rank,
+                "leader_name": leader_name,
+                "leader_distance": leader_pts - cum,
+            })
+
+    df_out = pd.DataFrame(rows)
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "ranking_history.csv")))
+    print_colored(f"\tranking_history.csv: {len(df_out)} rows", "green")
+
+
+# ------------------------------------------------------------------
+# New analytics #2: Boldness index
+# ------------------------------------------------------------------
+
+
+def _generate_boldness_index(df_all: pd.DataFrame, config: ChampionshipConfig) -> None:
+    """Measure how 'bold' each player's predictions are."""
+    print_colored("\tgenerating boldness index", "ice")
+    df = df_all.copy()
+
+    # Bolão average total goals per game
+    bolao_avg = (df["home_goals_bol"] + df["away_goals_bol"]).mean()
+
+    rows = []
+    for boleiro, group in df.groupby("who"):
+        total_goals = group["home_goals_bol"] + group["away_goals_bol"]
+        avg_total = total_goals.mean()
+        games = len(group)
+
+        # How often they predict extreme scores (>= 5 total goals)
+        extreme_pct = (total_goals >= 5).sum() / games * 100 if games > 0 else 0
+
+        rows.append({
+            "boleiro": boleiro,
+            "avg_total_goals_bol": round(avg_total, 2),
+            "avg_home_goals_bol": round(group["home_goals_bol"].mean(), 2),
+            "avg_away_goals_bol": round(group["away_goals_bol"].mean(), 2),
+            "max_home_bol": int(group["home_goals_bol"].max()),
+            "max_away_bol": int(group["away_goals_bol"].max()),
+            "extreme_score_pct": round(extreme_pct, 1),
+            "games": games,
+            "boldness_score": round(avg_total - bolao_avg, 2),
+        })
+
+    df_out = pd.DataFrame(rows)
+    df_out = df_out.sort_values("boldness_score", ascending=False)
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "boldness_index.csv")))
+    print_colored(f"\tboldness_index.csv: {len(df_out)} rows", "green")
+
+
+# ------------------------------------------------------------------
+# New analytics #3: Prediction timing (lead days from raw Excel mtime)
+# ------------------------------------------------------------------
+
+
+def _generate_prediction_timing(config: ChampionshipConfig) -> None:
+    """Estimate how early each player submitted picks (via raw Excel mtime)."""
+    print_colored("\tgenerating prediction timing", "ice")
+
+    # Load games to know first match date
+    df_games = pd.read_csv(config.games_file, sep=",")
+    if "date" in df_games.columns and not df_games["date"].empty:
+        first_match = pd.to_datetime(df_games["date"].dropna().min())
+    else:
+        first_match = datetime.now()
+
+    # Scan raw Excel files for modification time
+    raw_pattern = _norm(os.path.join(config.raw_dir, config.group_phase_label, "*"))
+    raw_paths = sorted(glob(raw_pattern))
+
+    rows = []
+    for path_excel in raw_paths:
+        layout = config.excel_layout
+        parts = path_excel.split(layout.playoffs.name_split_char)
+        name = parts[layout.playoffs.name_split_index].strip()
+        boleiro = name.replace(".xlsx", "").replace(".xls", "").strip()
+
+        mtime = os.path.getmtime(path_excel)
+        mtime_dt = datetime.fromtimestamp(mtime)
+        lead_days = (first_match - pd.Timestamp(mtime_dt)).days if first_match else 0
+
+        rows.append({
+            "boleiro": boleiro,
+            "file_mtime": mtime_dt.strftime("%Y-%m-%d %H:%M:%S"),
+            "first_match_date": first_match.strftime("%Y-%m-%d") if not pd.isna(first_match) else "",
+            "lead_days": max(lead_days, 0),
+        })
+
+    df_out = pd.DataFrame(rows)
+    df_out = df_out.sort_values("lead_days", ascending=False)
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "prediction_timing.csv")))
+    print_colored(f"\tprediction_timing.csv: {len(df_out)} rows", "green")
+
+
+# ------------------------------------------------------------------
+# New analytics #4: Goal error by team
+# ------------------------------------------------------------------
+
+
+def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
+    """Mean Absolute Error per team for each player's goal predictions."""
+    print_colored("\tgenerating goal error by team", "ice")
+    df = df_valid.copy()
+
+    rows = []
+    for team_col in ("home_team", "away_team"):
+        role = team_col.replace("_team", "")
+        goals_bol_col = f"{role}_goals_bol"
+        goals_real_col = f"{role}_goals_real"
+
+        for team, group in df.groupby(team_col):
+            for boleiro, bg in group.groupby("who"):
+                games = len(bg)
+                if games == 0:
+                    continue
+                errors = abs(bg[goals_bol_col] - bg[goals_real_col])
+                mae = round(errors.mean(), 2)
+                bias = round((bg[goals_bol_col] - bg[goals_real_col]).mean(), 2)
+
+                rows.append({
+                    "boleiro": boleiro,
+                    "team": team,
+                    "role": role,
+                    "games": games,
+                    "mae": mae,
+                    "goal_bias": bias,
+                    "avg_predicted": round(bg[goals_bol_col].mean(), 2),
+                    "avg_real": round(bg[goals_real_col].mean(), 2),
+                })
+
+    # Also total MAE (home + away combined)
+    # Group by (boleiro, team) and merge home/away rows
+    df_out = pd.DataFrame(rows)
+    # Add a "total" row per boleiro+team
+    totals = []
+    for (boleiro, team), group in df_out.groupby(["boleiro", "team"]):
+        total_games = group["games"].sum()
+        total_mae = round((group["mae"] * group["games"]).sum() / total_games, 2) if total_games > 0 else 0
+        totals.append({
+            "boleiro": boleiro,
+            "team": team,
+            "role": "total",
+            "games": total_games,
+            "mae": total_mae,
+            "goal_bias": round(group["goal_bias"].mean(), 2),
+            "avg_predicted": round((group["avg_predicted"] * group["games"]).sum() / total_games, 2) if total_games > 0 else 0,
+            "avg_real": round((group["avg_real"] * group["games"]).sum() / total_games, 2) if total_games > 0 else 0,
+        })
+    df_totals = pd.DataFrame(totals)
+    df_out = pd.concat([df_out, df_totals], ignore_index=True)
+    df_out = df_out.sort_values(["boleiro", "team", "role"])
+
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "goal_error_by_team.csv")))
+    print_colored(f"\tgoal_error_by_team.csv: {len(df_out)} rows", "green")
 
 
 # ------------------------------------------------------------------

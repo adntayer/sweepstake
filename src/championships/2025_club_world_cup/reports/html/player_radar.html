@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raio-X - 2025 Club World Cup</title>
+    <style>
+    :root {
+    --primary: #1a5e1f;
+    --primary-light: #2d8a33;
+    --accent: #f5c518;
+    --accent-dark: #b8940f;
+    --bg: #060d1a;
+    --card-bg: #0d1b2e;
+    --card-border: #1a3050;
+    --text: #ffffff;
+    --text-muted: #8899aa;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --voce: #f5c518;
+    --bolao: #3b82f6;
+    --text-inverse: #000000;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --leader: #8899aa;
+    --accent-highlight: rgba(245,197,24,0.1);
+    --silver-highlight: rgba(192,192,192,0.08);
+    --bronze-highlight: rgba(205,127,50,0.08);
+    --zebra-stripe: rgba(255,255,255,0.02);
+    --hover-overlay: rgba(255,255,255,0.03);
+    --shadow-color: rgba(0,0,0,0.4);
+    --score-exact: #00cc00;
+    --score-winner-goals: #66ff66;
+    --score-winner: #ffcc00;
+    --score-one-team: #ff9900;
+    --score-none: #ff3333;
+    --score-exact-bg: rgba(0,204,0,0.1);
+    --score-exact-border: rgba(0,204,0,0.4);
+    --score-winner-goals-bg: rgba(102,255,102,0.1);
+    --score-winner-goals-border: rgba(102,255,102,0.4);
+    --score-winner-bg: rgba(255,204,0,0.1);
+    --score-winner-border: rgba(255,204,0,0.4);
+    --score-one-team-bg: rgba(255,153,0,0.1);
+    --score-one-team-border: rgba(255,153,0,0.4);
+    --score-none-bg: rgba(255,51,51,0.1);
+    --score-none-border: rgba(255,51,51,0.4);
+    --player-card-active: rgba(245,197,24,0.05);
+}
+
+    
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Hero banner */
+.hero {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: var(--text);
+}
+.hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
+.hero .timestamp { font-size: 0.75rem; opacity: 0.65; margin-top: 0.5rem; }
+
+/* Back navigation */
+.back-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.back-nav a {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0.75rem;
+}
+.card-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+/* Stat cards row */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.75rem;
+}
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-align: center;
+}
+.stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+.stat-card .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
+/* Score display */
+.score-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+.score-card .team { flex: 1; text-align: center; font-size: 1rem; }
+.score-card .score {
+    color: var(--accent);
+    font-size: 2rem;
+    white-space: nowrap;
+}
+.score-card .vs { color: var(--text-muted); font-size: 0.9rem; }
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-success { background: var(--success); color: #fff; }
+.badge-warning { background: var(--warning); color: var(--text-inverse); }
+.badge-danger { background: var(--danger); color: #fff; }
+
+/* CSS bar charts */
+.bar-chart { padding: 0.5rem 0; }
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+}
+.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track {
+    flex: 1;
+    height: 20px;
+    background: var(--card-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+.bar-pct { min-width: 40px; text-align: right; color: var(--text-muted); }
+
+/* Player prediction rows */
+.pred-row {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+    gap: 0.75rem;
+}
+.pred-row:last-child { border-bottom: none; }
+.pred-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+.pred-info { flex: 1; min-width: 0; }
+.pred-name { font-weight: 600; font-size: 0.9rem; }
+.pred-detail { font-size: 0.8rem; color: var(--text-muted); }
+.pred-points {
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    min-width: 50px;
+    text-align: right;
+}
+
+/* Ranking table */
+.rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+.rank-table th {
+    background: var(--card-border);
+    color: var(--text-muted);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.rank-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+}
+.rank-table tr:nth-child(even) { background: var(--zebra-stripe); }
+.rank-table .rank-1 td { background: var(--accent-highlight); }
+.rank-table .rank-2 td { background: var(--silver-highlight); }
+.rank-table .rank-3 td { background: var(--bronze-highlight); }
+
+/* Section spacing */
+.section { margin: 1rem 0; }
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Accordion / details */
+details {
+    margin: 0.5rem 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+summary {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+}
+summary:hover { background: var(--hover-overlay); }
+details[open] summary { border-bottom: 1px solid var(--card-border); }
+details .content { padding: 0.75rem 1rem; }
+
+/* Striker badge */
+.striker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 0.75rem;
+    font-size: 0.9rem;
+}
+.striker-badge .icon { font-size: 1.2rem; }
+
+/* Score pill */
+.score-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+/* Utility */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.mt-0 { margin-top: 0; }
+.mb-1 { margin-bottom: 0.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.stat-card-sm { padding: 0.5rem; }
+.stat-card-sm .value { font-size: 1.1rem; }
+.stat-card-sm .label { font-size: 0.6rem; }
+.card-link {
+    display: block;
+    margin: 0 0.75rem;
+    text-align: center;
+    font-weight: 600;
+}
+.card-link.accent { border-color: var(--accent); }
+.arena-select {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+.arena-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.arena-label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem; }
+.compare-date { color: var(--text-muted); margin-bottom: 0.15rem; }
+.compare-row { margin-bottom: 0.4rem; font-size: 0.8rem; }
+.compare-label-p1 { min-width: 30px; color: var(--accent); font-size: 0.75rem; }
+.compare-label-p2 { min-width: 30px; color: var(--text-muted); font-size: 0.75rem; }
+.compare-bar-track { height: 12px; }
+.compare-bar-fill-accent { background: var(--accent); }
+.compare-bar-fill-voce { background: var(--voce); }
+.compare-bar-fill-bolao { background: var(--bolao); }
+.compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
+.compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
+
+/* Responsive */
+@media (max-width: 359px) {
+    .hero h1 { font-size: 1.25rem; }
+    .hero .subtitle { font-size: 0.8rem; }
+}
+@media (min-width: 768px) {
+    body { max-width: 800px; margin: 0 auto; }
+    .stat-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+    </style>
+</head>
+<body>
+<div class="back-nav"><a href="index.html">← Voltar</a></div>
+
+<div class="hero">
+    <h1>📊 Raio-X do Jogador</h1>
+    <div class="subtitle">Suas metricas comparadas com a media do bolaao</div>
+</div>
+
+<div class="card" style="margin:1rem 0.75rem;">
+    <label class="arena-label" for="player-select">Escolha um jogador</label>
+    <select id="player-select" class="arena-select" onchange="onPlayerChange()">
+        <option value="Andre Bonito">Andre Bonito</option><option value="André Tayer">André Tayer</option><option value="Cesar Saraiva">Cesar Saraiva</option><option value="Frederico Soter">Frederico Soter</option><option value="Gabão">Gabão</option><option value="Guilherme">Guilherme</option><option value="João Henrique">João Henrique</option><option value="Leigo Gianonni">Leigo Gianonni</option><option value="Leo Fernandes">Leo Fernandes</option><option value="Lucas Ubertini">Lucas Ubertini</option><option value="Marcelo">Marcelo</option><option value="Pedro Tayer">Pedro Tayer</option><option value="RODRIGO ALBERNAZ">RODRIGO ALBERNAZ</option><option value="Rafael Conte">Rafael Conte</option><option value="Thales Oliveira">Thales Oliveira</option><option value="thiago bahiense">thiago bahiense</option>
+    </select>
+</div>
+
+<div class="card">
+    <div class="card-title">Comparativo</div>
+    <div id="player-card-Andre_Bonito" style="display:block;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:90%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">224</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 224 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:90%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">38.9%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 38.9%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:65%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">3.4</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 3.4</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:19%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">-0.19</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:62%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">14.6%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 14.6%</div>
+        </div>
+</div>
+<div id="player-card-André_Tayer" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:90%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">223</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 223 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:90%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">38.7%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 38.7%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:63%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">8.2</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 8.2</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:10%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.1</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:73%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">12.5%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 12.5%</div>
+        </div>
+</div>
+<div id="player-card-Cesar_Saraiva" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:95%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">212</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 212 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:95%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">36.8%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 36.8%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:73%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">3.8</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 3.8</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:23%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">-0.23</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:73%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">12.5%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 12.5%</div>
+        </div>
+</div>
+<div id="player-card-Frederico_Soter" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:83%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">167</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 167 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:83%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">29.0%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 29.0%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:58%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">3.0</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 3.0</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:43%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.43</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:46%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">4.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 4.2%</div>
+        </div>
+</div>
+<div id="player-card-Gabão" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:92%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">220</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 220 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:92%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">38.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 38.2%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:87%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">6.0</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 6.0</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:11%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">-0.11</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:73%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">12.5%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 12.5%</div>
+        </div>
+</div>
+<div id="player-card-Guilherme" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:88%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">229</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 229 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:88%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">39.8%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 39.8%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:62%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">8.4</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 8.4</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:42%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">-0.42</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:62%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">14.6%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 14.6%</div>
+        </div>
+</div>
+<div id="player-card-João_Henrique" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:99%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">203</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 203 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:99%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">35.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 35.2%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:78%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">6.7</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 6.7</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:48%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">-0.48</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:87%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">10.4%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 10.4%</div>
+        </div>
+</div>
+<div id="player-card-Leigo_Gianonni" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:99%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">204</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 204 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:99%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">35.4%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 35.4%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:73%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">3.8</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 3.8</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:16%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.16</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:46%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">4.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 4.2%</div>
+        </div>
+</div>
+<div id="player-card-Leo_Fernandes" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:95%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">212</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 212 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:95%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">36.8%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 36.8%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:96%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">5.0</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 5.0</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:63%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">-0.63</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:91%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">8.3%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 8.3%</div>
+        </div>
+</div>
+<div id="player-card-Lucas_Ubertini" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:98%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">197</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 197 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:98%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">34.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 34.2%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:75%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">3.9</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 3.9</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:16%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.16</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:91%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">8.3%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 8.3%</div>
+        </div>
+</div>
+<div id="player-card-Marcelo" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:91%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">222</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 222 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:91%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">38.5%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 38.5%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:96%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">5.0</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 5.0</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:39%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.39</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:73%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">12.5%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 12.5%</div>
+        </div>
+</div>
+<div id="player-card-Pedro_Tayer" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:70%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">141</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 141 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:70%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">24.5%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 24.5%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:50%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">2.6</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 2.6</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:64%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.64</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:46%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">4.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 4.2%</div>
+        </div>
+</div>
+<div id="player-card-RODRIGO_ALBERNAZ" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">201</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 201 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">34.9%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 34.9%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:48%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">10.8</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 10.8</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:6%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.06</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:46%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">4.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 4.2%</div>
+        </div>
+</div>
+<div id="player-card-Rafael_Conte" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:90%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">182</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 182 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:90%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">31.6%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 31.6%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:83%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--voce);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--voce);">6.3</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 6.3</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:18%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.18</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:91%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">8.3%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 8.3%</div>
+        </div>
+</div>
+<div id="player-card-Thales_Oliveira" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:98%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">197</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 197 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:98%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">34.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 34.2%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:54%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">2.8</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 2.8</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:8%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">0.08</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:68%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">6.2%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 6.2%</div>
+        </div>
+</div>
+<div id="player-card-thiago_bahiense" style="display:none;">
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Total Pontos</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">201.8</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:96%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">194</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 201.8 pts | Voce: 194 pts</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Aproveitamento</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">35.0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:96%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">33.7%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 35.0% | Voce: 33.7%</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Consistencia
+(streak medio)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">5.2</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:77%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">4.0</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 5.2 | Voce: 4.0</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Ousadia
+(gols extras/jogo)</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:0%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">0</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:17%;background:var(--accent);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--accent);">-0.17</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 0 (media) | Voce: {p:+.2f}</div>
+        </div>
+
+        <div style="margin-bottom:0.8rem;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.2rem;">Placar Exato</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--text-muted);">Bolao</span>
+                <div class="bar-track" style="height:10px;flex:1;"><div class="bar-fill" style="width:100%;background:var(--card-border);height:10px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.75rem;color:var(--text-muted);">9.1%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="min-width:35px;font-size:0.75rem;color:var(--accent);font-weight:600;">Voce</span>
+                <div class="bar-track" style="height:14px;flex:1;"><div class="bar-fill" style="width:91%;background:var(--danger);height:14px;"></div></div>
+                <span style="min-width:40px;text-align:right;font-size:0.8rem;font-weight:700;color:var(--danger);">8.3%</span>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.1rem;">Bolao: 9.1% | Voce: 8.3%</div>
+        </div>
+</div>
+
+</div>
+
+<div class="card" style="font-size:0.8rem;color:var(--text-muted);">
+    <p><span style="color:var(--voce);font-weight:700;">■</span> Voce &nbsp; <span style="color:var(--card-border);font-weight:700;">■</span> Media do Bolaao</p>
+    <p><strong>Total Pontos</strong>: sua pontuacao vs media do bolaao</p>
+    <p><strong>Aproveitamento</strong>: % de pontos conquistados em relacao ao maximo possivel em cada jogo</p>
+    <p><strong>Consistencia</strong>: media de acertos consecutivos (streaks)</p>
+    <p><strong>Ousadia</strong>: quantos gols a mais (ou menos) voce aposta por jogo vs a media do bolaao</p>
+    <p><strong>Placar Exato</strong>: % dos seus palpites que acertaram o placar exato</p>
+    <p style="margin-top:0.5rem;"><strong>Exemplo:</strong> Se a media do bolaao e 2.5 gols/jogo e voce aposta 3.0, sua ousadia e +0.5. Se acerta 6 de 48 placares exatos, seu exato_pct e 12.5%.</p>
+</div>
+
+<script>
+
+function showPlayer(name) {
+    document.querySelectorAll('[id^="player-card-"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
+    const card = document.getElementById('player-card-' + name.replace(/\s+/g, '_'));
+    if (card) card.style.display = 'block';
+}
+function onPlayerChange() {
+    const sel = document.getElementById('player-select');
+    showPlayer(sel.value);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    const sel = document.getElementById('player-select');
+    if (sel && sel.value) showPlayer(sel.value);
+});
+
+</script>
+
+<div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
+    atualizado às 24/05/2026 12:26:33
+</div>
+</body>
+</html>

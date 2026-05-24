@@ -353,6 +353,15 @@ details .content { padding: 0.75rem 1rem; }
 .compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
 .compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
 
+/* Heatmap */
+.heat-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.heat-row { display: flex; gap: 0; margin-bottom: 2px; }
+.heat-label { width: 80px; min-width: 80px; font-size: 0.7rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 4px; line-height: 28px; text-align: right; }
+.heat-cells { display: flex; gap: 2px; }
+.heat-cell { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--text); border-radius: 3px; flex-shrink: 0; }
+.heat-cell-header { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; color: var(--text-muted); flex-shrink: 0; border-radius: 3px; }
+.heat-total-label { width: 80px; min-width: 80px; font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; padding-right: 4px; line-height: 28px; text-align: right; border-top: 1px solid var(--card-border); }
+
 /* Responsive */
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.25rem; }
@@ -686,7 +695,7 @@ function updateArena() {
 </script>
 
 <div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 17/05/2026 23:10:08
+    atualizado às 24/05/2026 13:25:47
 </div>
 </body>
 </html>

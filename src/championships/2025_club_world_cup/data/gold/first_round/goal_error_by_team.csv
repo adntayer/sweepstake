@@ -1,0 +1,1553 @@
+boleiro,team,role,games,mae,goal_bias,avg_predicted,avg_real
+Andre Bonito,Al Ahly,away,2,2.0,-2.0,0.0,2.0
+Andre Bonito,Al Ahly,home,1,2.0,2.0,2.0,0.0
+Andre Bonito,Al Ahly,total,3,2.0,0.0,0.67,1.33
+Andre Bonito,Al-Ain,away,2,0.5,0.5,1.5,1.0
+Andre Bonito,Al-Ain,home,1,1.0,1.0,1.0,0.0
+Andre Bonito,Al-Ain,total,3,0.67,0.75,1.33,0.67
+Andre Bonito,Al-Hilal,away,2,1.5,1.5,2.0,0.5
+Andre Bonito,Al-Hilal,home,1,0.0,0.0,2.0,2.0
+Andre Bonito,Al-Hilal,total,3,1.0,0.75,2.0,1.0
+Andre Bonito,Atlético de Madrid,away,2,0.5,0.5,2.0,1.5
+Andre Bonito,Atlético de Madrid,home,1,0.0,0.0,1.0,1.0
+Andre Bonito,Atlético de Madrid,total,3,0.33,0.25,1.67,1.33
+Andre Bonito,Auckland City,away,2,0.5,0.5,0.5,0.0
+Andre Bonito,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Andre Bonito,Auckland City,total,3,0.67,-0.25,0.33,0.33
+Andre Bonito,Bayern de Munique,away,1,3.0,3.0,3.0,0.0
+Andre Bonito,Bayern de Munique,home,2,4.0,-3.0,3.0,6.0
+Andre Bonito,Bayern de Munique,total,3,3.67,0.0,3.0,4.0
+Andre Bonito,Benfica,away,1,0.0,0.0,2.0,2.0
+Andre Bonito,Benfica,home,2,2.0,-2.0,1.5,3.5
+Andre Bonito,Benfica,total,3,1.33,-1.0,1.67,3.0
+Andre Bonito,Boca Juniors,away,2,1.0,-1.0,0.0,1.0
+Andre Bonito,Boca Juniors,home,1,2.0,-2.0,0.0,2.0
+Andre Bonito,Boca Juniors,total,3,1.33,-1.5,0.0,1.33
+Andre Bonito,Borussia Dortmund,away,2,1.5,0.5,2.5,2.0
+Andre Bonito,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+Andre Bonito,Borussia Dortmund,total,3,1.67,1.25,2.67,1.67
+Andre Bonito,Botafogo,away,2,1.0,0.0,0.5,0.5
+Andre Bonito,Botafogo,home,1,0.0,0.0,2.0,2.0
+Andre Bonito,Botafogo,total,3,0.67,0.0,1.0,1.0
+Andre Bonito,Chelsea,away,2,0.5,0.5,2.5,2.0
+Andre Bonito,Chelsea,home,1,0.0,0.0,2.0,2.0
+Andre Bonito,Chelsea,total,3,0.33,0.25,2.33,2.0
+Andre Bonito,Espérance,away,2,0.0,0.0,0.5,0.5
+Andre Bonito,Espérance,home,1,0.0,0.0,0.0,0.0
+Andre Bonito,Espérance,total,3,0.0,0.0,0.33,0.33
+Andre Bonito,Flamengo,away,1,0.0,0.0,1.0,1.0
+Andre Bonito,Flamengo,home,2,0.5,-0.5,2.0,2.5
+Andre Bonito,Flamengo,total,3,0.33,-0.25,1.67,2.0
+Andre Bonito,Fluminense,away,1,3.0,3.0,3.0,0.0
+Andre Bonito,Fluminense,home,2,2.0,-1.0,1.0,2.0
+Andre Bonito,Fluminense,total,3,2.33,1.0,1.67,1.33
+Andre Bonito,Inter Miami,away,1,1.0,1.0,1.0,0.0
+Andre Bonito,Inter Miami,home,2,0.5,-0.5,1.5,2.0
+Andre Bonito,Inter Miami,total,3,0.67,0.25,1.33,1.33
+Andre Bonito,Internazionale,away,1,0.0,0.0,1.0,1.0
+Andre Bonito,Internazionale,home,2,0.0,0.0,2.0,2.0
+Andre Bonito,Internazionale,total,3,0.0,0.0,1.67,1.67
+Andre Bonito,Juventus,away,1,5.0,-5.0,0.0,5.0
+Andre Bonito,Juventus,home,2,1.5,-1.5,1.5,3.0
+Andre Bonito,Juventus,total,3,2.67,-3.25,1.0,3.67
+Andre Bonito,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Andre Bonito,Los Angeles FC,home,2,0.5,0.5,1.0,0.5
+Andre Bonito,Los Angeles FC,total,3,0.33,0.25,0.67,0.33
+Andre Bonito,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+Andre Bonito,Mamelodi Sundowns,home,2,2.0,-1.0,0.5,1.5
+Andre Bonito,Mamelodi Sundowns,total,3,1.33,-0.5,0.67,1.33
+Andre Bonito,Manchester City,away,1,4.0,-4.0,1.0,5.0
+Andre Bonito,Manchester City,home,2,2.0,-1.0,3.0,4.0
+Andre Bonito,Manchester City,total,3,2.67,-2.5,2.33,4.33
+Andre Bonito,Monterrey,away,2,1.0,-1.0,1.0,2.0
+Andre Bonito,Monterrey,home,1,0.0,0.0,1.0,1.0
+Andre Bonito,Monterrey,total,3,0.67,-0.5,1.0,1.67
+Andre Bonito,Pachuca,away,2,1.0,0.0,0.5,0.5
+Andre Bonito,Pachuca,home,1,0.0,0.0,1.0,1.0
+Andre Bonito,Pachuca,total,3,0.67,0.0,0.67,0.67
+Andre Bonito,Palmeiras,away,1,0.0,0.0,2.0,2.0
+Andre Bonito,Palmeiras,home,2,0.5,0.5,1.5,1.0
+Andre Bonito,Palmeiras,total,3,0.33,0.25,1.67,1.33
+Andre Bonito,Paris Saint-Germain,away,1,2.0,2.0,4.0,2.0
+Andre Bonito,Paris Saint-Germain,home,2,2.0,0.0,2.0,2.0
+Andre Bonito,Paris Saint-Germain,total,3,2.0,1.0,2.67,2.0
+Andre Bonito,Porto,home,1,2.0,-2.0,2.0,4.0
+Andre Bonito,Porto,total,1,2.0,-2.0,2.0,4.0
+Andre Bonito,Porto ,away,2,1.0,1.0,1.5,0.5
+Andre Bonito,Porto ,total,2,1.0,1.0,1.5,0.5
+Andre Bonito,RB Salzburg,away,1,1.0,-1.0,1.0,2.0
+Andre Bonito,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+Andre Bonito,RB Salzburg,total,3,1.0,0.0,1.0,0.67
+Andre Bonito,Real Madrid,away,1,0.0,0.0,3.0,3.0
+Andre Bonito,Real Madrid,home,2,1.5,0.5,2.5,2.0
+Andre Bonito,Real Madrid,total,3,1.0,0.25,2.67,2.33
+Andre Bonito,River Plate,away,1,1.0,1.0,1.0,0.0
+Andre Bonito,River Plate,home,2,1.5,-0.5,1.0,1.5
+Andre Bonito,River Plate,total,3,1.33,0.25,1.0,1.0
+Andre Bonito,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Andre Bonito,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+Andre Bonito,Seattle Sounders,total,3,0.67,-0.75,0.0,0.67
+Andre Bonito,Ulsan HD,away,2,1.5,-0.5,0.5,1.0
+Andre Bonito,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+Andre Bonito,Ulsan HD,total,3,1.33,0.25,0.67,0.67
+Andre Bonito,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+Andre Bonito,Urawa Reds,home,1,0.0,0.0,0.0,0.0
+Andre Bonito,Urawa Reds,total,3,0.67,-0.5,0.0,0.67
+Andre Bonito,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+Andre Bonito,Wydad Casablanca,home,1,1.0,-1.0,0.0,1.0
+Andre Bonito,Wydad Casablanca,total,3,0.67,-0.75,0.0,0.67
+André Tayer,Al Ahly,away,2,2.5,-1.5,0.5,2.0
+André Tayer,Al Ahly,home,1,1.0,1.0,1.0,0.0
+André Tayer,Al Ahly,total,3,2.0,-0.25,0.67,1.33
+André Tayer,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+André Tayer,Al-Ain,home,1,0.0,0.0,0.0,0.0
+André Tayer,Al-Ain,total,3,0.33,-0.25,0.33,0.67
+André Tayer,Al-Hilal,away,2,0.0,0.0,0.5,0.5
+André Tayer,Al-Hilal,home,1,1.0,-1.0,1.0,2.0
+André Tayer,Al-Hilal,total,3,0.33,-0.5,0.67,1.0
+André Tayer,Atlético de Madrid,away,2,1.5,0.5,2.0,1.5
+André Tayer,Atlético de Madrid,home,1,0.0,0.0,1.0,1.0
+André Tayer,Atlético de Madrid,total,3,1.0,0.25,1.67,1.33
+André Tayer,Auckland City,away,2,0.5,0.5,0.5,0.0
+André Tayer,Auckland City,home,1,1.0,1.0,2.0,1.0
+André Tayer,Auckland City,total,3,0.67,0.75,1.0,0.33
+André Tayer,Bayern de Munique,away,1,3.0,3.0,3.0,0.0
+André Tayer,Bayern de Munique,home,2,3.0,-3.0,3.0,6.0
+André Tayer,Bayern de Munique,total,3,3.0,0.0,3.0,4.0
+André Tayer,Benfica,away,1,2.0,-2.0,0.0,2.0
+André Tayer,Benfica,home,2,2.5,-2.5,1.0,3.5
+André Tayer,Benfica,total,3,2.33,-2.25,0.67,3.0
+André Tayer,Boca Juniors,away,2,1.0,0.0,1.0,1.0
+André Tayer,Boca Juniors,home,1,2.0,-2.0,0.0,2.0
+André Tayer,Boca Juniors,total,3,1.33,-1.0,0.67,1.33
+André Tayer,Borussia Dortmund,away,2,2.5,0.5,2.5,2.0
+André Tayer,Borussia Dortmund,home,1,3.0,3.0,4.0,1.0
+André Tayer,Borussia Dortmund,total,3,2.67,1.75,3.0,1.67
+André Tayer,Botafogo,away,2,1.5,1.5,2.0,0.5
+André Tayer,Botafogo,home,1,1.0,-1.0,1.0,2.0
+André Tayer,Botafogo,total,3,1.33,0.25,1.67,1.0
+André Tayer,Chelsea,away,2,0.0,0.0,2.0,2.0
+André Tayer,Chelsea,home,1,1.0,1.0,3.0,2.0
+André Tayer,Chelsea,total,3,0.33,0.5,2.33,2.0
+André Tayer,Espérance,away,2,0.5,-0.5,0.0,0.5
+André Tayer,Espérance,home,1,0.0,0.0,0.0,0.0
+André Tayer,Espérance,total,3,0.33,-0.25,0.0,0.33
+André Tayer,Flamengo,away,1,0.0,0.0,1.0,1.0
+André Tayer,Flamengo,home,2,1.0,-1.0,1.5,2.5
+André Tayer,Flamengo,total,3,0.67,-0.5,1.33,2.0
+André Tayer,Fluminense,away,1,0.0,0.0,0.0,0.0
+André Tayer,Fluminense,home,2,2.0,-1.0,1.0,2.0
+André Tayer,Fluminense,total,3,1.33,-0.5,0.67,1.33
+André Tayer,Inter Miami,away,1,4.0,4.0,4.0,0.0
+André Tayer,Inter Miami,home,2,1.0,-1.0,1.0,2.0
+André Tayer,Inter Miami,total,3,2.0,1.5,2.0,1.33
+André Tayer,Internazionale,away,1,1.0,1.0,2.0,1.0
+André Tayer,Internazionale,home,2,0.5,0.5,2.5,2.0
+André Tayer,Internazionale,total,3,0.67,0.75,2.33,1.67
+André Tayer,Juventus,away,1,2.0,-2.0,3.0,5.0
+André Tayer,Juventus,home,2,1.0,-1.0,2.0,3.0
+André Tayer,Juventus,total,3,1.33,-1.5,2.33,3.67
+André Tayer,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+André Tayer,Los Angeles FC,home,2,0.5,0.5,1.0,0.5
+André Tayer,Los Angeles FC,total,3,0.33,0.25,0.67,0.33
+André Tayer,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+André Tayer,Mamelodi Sundowns,home,2,1.5,-1.5,0.0,1.5
+André Tayer,Mamelodi Sundowns,total,3,1.0,-0.75,0.33,1.33
+André Tayer,Manchester City,away,1,3.0,-3.0,2.0,5.0
+André Tayer,Manchester City,home,2,3.0,0.0,4.0,4.0
+André Tayer,Manchester City,total,3,3.0,-1.5,3.33,4.33
+André Tayer,Monterrey,away,2,3.0,-1.0,1.0,2.0
+André Tayer,Monterrey,home,1,0.0,0.0,1.0,1.0
+André Tayer,Monterrey,total,3,2.0,-0.5,1.0,1.67
+André Tayer,Pachuca,away,2,1.5,0.5,1.0,0.5
+André Tayer,Pachuca,home,1,0.0,0.0,1.0,1.0
+André Tayer,Pachuca,total,3,1.0,0.25,1.0,0.67
+André Tayer,Palmeiras,away,1,0.0,0.0,2.0,2.0
+André Tayer,Palmeiras,home,2,1.0,1.0,2.0,1.0
+André Tayer,Palmeiras,total,3,0.67,0.5,2.0,1.33
+André Tayer,Paris Saint-Germain,away,1,1.0,1.0,3.0,2.0
+André Tayer,Paris Saint-Germain,home,2,2.0,2.0,4.0,2.0
+André Tayer,Paris Saint-Germain,total,3,1.67,1.5,3.67,2.0
+André Tayer,Porto,home,1,1.0,-1.0,3.0,4.0
+André Tayer,Porto,total,1,1.0,-1.0,3.0,4.0
+André Tayer,Porto ,away,2,1.0,1.0,1.5,0.5
+André Tayer,Porto ,total,2,1.0,1.0,1.5,0.5
+André Tayer,RB Salzburg,away,1,0.0,0.0,2.0,2.0
+André Tayer,RB Salzburg,home,2,2.0,2.0,2.0,0.0
+André Tayer,RB Salzburg,total,3,1.33,1.0,2.0,0.67
+André Tayer,Real Madrid,away,1,2.0,-2.0,1.0,3.0
+André Tayer,Real Madrid,home,2,2.0,2.0,4.0,2.0
+André Tayer,Real Madrid,total,3,2.0,0.0,3.0,2.33
+André Tayer,River Plate,away,1,1.0,1.0,1.0,0.0
+André Tayer,River Plate,home,2,2.0,0.0,1.5,1.5
+André Tayer,River Plate,total,3,1.67,0.5,1.33,1.0
+André Tayer,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+André Tayer,Seattle Sounders,home,2,0.0,0.0,0.5,0.5
+André Tayer,Seattle Sounders,total,3,0.33,-0.5,0.33,0.67
+André Tayer,Ulsan HD,away,2,1.5,-0.5,0.5,1.0
+André Tayer,Ulsan HD,home,1,0.0,0.0,0.0,0.0
+André Tayer,Ulsan HD,total,3,1.0,-0.25,0.33,0.67
+André Tayer,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+André Tayer,Urawa Reds,home,1,0.0,0.0,0.0,0.0
+André Tayer,Urawa Reds,total,3,0.67,-0.5,0.0,0.67
+André Tayer,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+André Tayer,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+André Tayer,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
+Cesar Saraiva,Al Ahly,away,2,2.0,-2.0,0.0,2.0
+Cesar Saraiva,Al Ahly,home,1,0.0,0.0,0.0,0.0
+Cesar Saraiva,Al Ahly,total,3,1.33,-1.0,0.0,1.33
+Cesar Saraiva,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+Cesar Saraiva,Al-Ain,home,1,0.0,0.0,0.0,0.0
+Cesar Saraiva,Al-Ain,total,3,0.33,-0.25,0.33,0.67
+Cesar Saraiva,Al-Hilal,away,2,1.0,0.0,0.5,0.5
+Cesar Saraiva,Al-Hilal,home,1,0.0,0.0,2.0,2.0
+Cesar Saraiva,Al-Hilal,total,3,0.67,0.0,1.0,1.0
+Cesar Saraiva,Atlético de Madrid,away,2,1.0,0.0,1.5,1.5
+Cesar Saraiva,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+Cesar Saraiva,Atlético de Madrid,total,3,1.0,0.5,1.67,1.33
+Cesar Saraiva,Auckland City,away,2,0.0,0.0,0.0,0.0
+Cesar Saraiva,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Cesar Saraiva,Auckland City,total,3,0.33,-0.5,0.0,0.33
+Cesar Saraiva,Bayern de Munique,away,1,2.0,2.0,2.0,0.0
+Cesar Saraiva,Bayern de Munique,home,2,3.5,-3.5,2.5,6.0
+Cesar Saraiva,Bayern de Munique,total,3,3.0,-0.75,2.33,4.0
+Cesar Saraiva,Benfica,away,1,0.0,0.0,2.0,2.0
+Cesar Saraiva,Benfica,home,2,2.0,-2.0,1.5,3.5
+Cesar Saraiva,Benfica,total,3,1.33,-1.0,1.67,3.0
+Cesar Saraiva,Boca Juniors,away,2,1.0,1.0,2.0,1.0
+Cesar Saraiva,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+Cesar Saraiva,Boca Juniors,total,3,1.0,0.0,1.67,1.33
+Cesar Saraiva,Borussia Dortmund,away,2,2.0,0.0,2.0,2.0
+Cesar Saraiva,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+Cesar Saraiva,Borussia Dortmund,total,3,2.0,1.0,2.33,1.67
+Cesar Saraiva,Botafogo,away,2,0.5,0.5,1.0,0.5
+Cesar Saraiva,Botafogo,home,1,0.0,0.0,2.0,2.0
+Cesar Saraiva,Botafogo,total,3,0.33,0.25,1.33,1.0
+Cesar Saraiva,Chelsea,away,2,0.5,0.5,2.5,2.0
+Cesar Saraiva,Chelsea,home,1,0.0,0.0,2.0,2.0
+Cesar Saraiva,Chelsea,total,3,0.33,0.25,2.33,2.0
+Cesar Saraiva,Espérance,away,2,0.5,0.5,1.0,0.5
+Cesar Saraiva,Espérance,home,1,0.0,0.0,0.0,0.0
+Cesar Saraiva,Espérance,total,3,0.33,0.25,0.67,0.33
+Cesar Saraiva,Flamengo,away,1,1.0,1.0,2.0,1.0
+Cesar Saraiva,Flamengo,home,2,1.5,-0.5,2.0,2.5
+Cesar Saraiva,Flamengo,total,3,1.33,0.25,2.0,2.0
+Cesar Saraiva,Fluminense,away,1,1.0,1.0,1.0,0.0
+Cesar Saraiva,Fluminense,home,2,1.5,-0.5,1.5,2.0
+Cesar Saraiva,Fluminense,total,3,1.33,0.25,1.33,1.33
+Cesar Saraiva,Inter Miami,away,1,2.0,2.0,2.0,0.0
+Cesar Saraiva,Inter Miami,home,2,1.0,-1.0,1.0,2.0
+Cesar Saraiva,Inter Miami,total,3,1.33,0.5,1.33,1.33
+Cesar Saraiva,Internazionale,away,1,1.0,1.0,2.0,1.0
+Cesar Saraiva,Internazionale,home,2,0.5,0.5,2.5,2.0
+Cesar Saraiva,Internazionale,total,3,0.67,0.75,2.33,1.67
+Cesar Saraiva,Juventus,away,1,3.0,-3.0,2.0,5.0
+Cesar Saraiva,Juventus,home,2,1.5,-1.5,1.5,3.0
+Cesar Saraiva,Juventus,total,3,2.0,-2.25,1.67,3.67
+Cesar Saraiva,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Cesar Saraiva,Los Angeles FC,home,2,1.5,0.5,1.0,0.5
+Cesar Saraiva,Los Angeles FC,total,3,1.0,0.25,0.67,0.33
+Cesar Saraiva,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+Cesar Saraiva,Mamelodi Sundowns,home,2,2.0,-1.0,0.5,1.5
+Cesar Saraiva,Mamelodi Sundowns,total,3,1.33,-0.5,0.67,1.33
+Cesar Saraiva,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Cesar Saraiva,Manchester City,home,2,1.5,-1.5,2.5,4.0
+Cesar Saraiva,Manchester City,total,3,2.0,-2.25,2.33,4.33
+Cesar Saraiva,Monterrey,away,2,2.0,-1.0,1.0,2.0
+Cesar Saraiva,Monterrey,home,1,1.0,-1.0,0.0,1.0
+Cesar Saraiva,Monterrey,total,3,1.67,-1.0,0.67,1.67
+Cesar Saraiva,Pachuca,away,2,1.0,0.0,0.5,0.5
+Cesar Saraiva,Pachuca,home,1,0.0,0.0,1.0,1.0
+Cesar Saraiva,Pachuca,total,3,0.67,0.0,0.67,0.67
+Cesar Saraiva,Palmeiras,away,1,0.0,0.0,2.0,2.0
+Cesar Saraiva,Palmeiras,home,2,0.5,0.5,1.5,1.0
+Cesar Saraiva,Palmeiras,total,3,0.33,0.25,1.67,1.33
+Cesar Saraiva,Paris Saint-Germain,away,1,1.0,1.0,3.0,2.0
+Cesar Saraiva,Paris Saint-Germain,home,2,2.0,0.0,2.0,2.0
+Cesar Saraiva,Paris Saint-Germain,total,3,1.67,0.5,2.33,2.0
+Cesar Saraiva,Porto,home,1,2.0,-2.0,2.0,4.0
+Cesar Saraiva,Porto,total,1,2.0,-2.0,2.0,4.0
+Cesar Saraiva,Porto ,away,2,1.0,1.0,1.5,0.5
+Cesar Saraiva,Porto ,total,2,1.0,1.0,1.5,0.5
+Cesar Saraiva,RB Salzburg,away,1,1.0,-1.0,1.0,2.0
+Cesar Saraiva,RB Salzburg,home,2,0.0,0.0,0.0,0.0
+Cesar Saraiva,RB Salzburg,total,3,0.33,-0.5,0.33,0.67
+Cesar Saraiva,Real Madrid,away,1,0.0,0.0,3.0,3.0
+Cesar Saraiva,Real Madrid,home,2,0.5,0.5,2.5,2.0
+Cesar Saraiva,Real Madrid,total,3,0.33,0.25,2.67,2.33
+Cesar Saraiva,River Plate,away,1,1.0,1.0,1.0,0.0
+Cesar Saraiva,River Plate,home,2,1.5,0.5,2.0,1.5
+Cesar Saraiva,River Plate,total,3,1.33,0.75,1.67,1.0
+Cesar Saraiva,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Cesar Saraiva,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+Cesar Saraiva,Seattle Sounders,total,3,0.67,-0.75,0.0,0.67
+Cesar Saraiva,Ulsan HD,away,2,1.0,-1.0,0.0,1.0
+Cesar Saraiva,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+Cesar Saraiva,Ulsan HD,total,3,1.0,0.0,0.33,0.67
+Cesar Saraiva,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+Cesar Saraiva,Urawa Reds,home,1,1.0,1.0,1.0,0.0
+Cesar Saraiva,Urawa Reds,total,3,1.0,0.0,0.33,0.67
+Cesar Saraiva,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+Cesar Saraiva,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Cesar Saraiva,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
+Frederico Soter,Al Ahly,away,2,3.0,-1.0,1.0,2.0
+Frederico Soter,Al Ahly,home,1,1.0,1.0,1.0,0.0
+Frederico Soter,Al Ahly,total,3,2.33,0.0,1.0,1.33
+Frederico Soter,Al-Ain,away,2,0.5,0.5,1.5,1.0
+Frederico Soter,Al-Ain,home,1,1.0,1.0,1.0,0.0
+Frederico Soter,Al-Ain,total,3,0.67,0.75,1.33,0.67
+Frederico Soter,Al-Hilal,away,2,1.0,1.0,1.5,0.5
+Frederico Soter,Al-Hilal,home,1,1.0,1.0,3.0,2.0
+Frederico Soter,Al-Hilal,total,3,1.0,1.0,2.0,1.0
+Frederico Soter,Atlético de Madrid,away,2,0.0,0.0,1.5,1.5
+Frederico Soter,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+Frederico Soter,Atlético de Madrid,total,3,0.33,0.5,1.67,1.33
+Frederico Soter,Auckland City,away,2,0.0,0.0,0.0,0.0
+Frederico Soter,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Frederico Soter,Auckland City,total,3,0.33,-0.5,0.0,0.33
+Frederico Soter,Bayern de Munique,away,1,2.0,2.0,2.0,0.0
+Frederico Soter,Bayern de Munique,home,2,5.5,-3.5,2.5,6.0
+Frederico Soter,Bayern de Munique,total,3,4.33,-0.75,2.33,4.0
+Frederico Soter,Benfica,away,1,0.0,0.0,2.0,2.0
+Frederico Soter,Benfica,home,2,3.0,-2.0,1.5,3.5
+Frederico Soter,Benfica,total,3,2.0,-1.0,1.67,3.0
+Frederico Soter,Boca Juniors,away,2,0.5,0.5,1.5,1.0
+Frederico Soter,Boca Juniors,home,1,2.0,-2.0,0.0,2.0
+Frederico Soter,Boca Juniors,total,3,1.0,-0.75,1.0,1.33
+Frederico Soter,Borussia Dortmund,away,2,2.0,0.0,2.0,2.0
+Frederico Soter,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+Frederico Soter,Borussia Dortmund,total,3,2.0,1.0,2.33,1.67
+Frederico Soter,Botafogo,away,2,1.0,0.0,0.5,0.5
+Frederico Soter,Botafogo,home,1,1.0,-1.0,1.0,2.0
+Frederico Soter,Botafogo,total,3,1.0,-0.5,0.67,1.0
+Frederico Soter,Chelsea,away,2,1.0,1.0,3.0,2.0
+Frederico Soter,Chelsea,home,1,0.0,0.0,2.0,2.0
+Frederico Soter,Chelsea,total,3,0.67,0.5,2.67,2.0
+Frederico Soter,Espérance,away,2,0.5,0.5,1.0,0.5
+Frederico Soter,Espérance,home,1,0.0,0.0,0.0,0.0
+Frederico Soter,Espérance,total,3,0.33,0.25,0.67,0.33
+Frederico Soter,Flamengo,away,1,3.0,3.0,4.0,1.0
+Frederico Soter,Flamengo,home,2,1.0,-1.0,1.5,2.5
+Frederico Soter,Flamengo,total,3,1.67,1.0,2.33,2.0
+Frederico Soter,Fluminense,away,1,1.0,1.0,1.0,0.0
+Frederico Soter,Fluminense,home,2,1.5,-1.5,0.5,2.0
+Frederico Soter,Fluminense,total,3,1.33,-0.25,0.67,1.33
+Frederico Soter,Inter Miami,away,1,2.0,2.0,2.0,0.0
+Frederico Soter,Inter Miami,home,2,1.5,-1.5,0.5,2.0
+Frederico Soter,Inter Miami,total,3,1.67,0.25,1.0,1.33
+Frederico Soter,Internazionale,away,1,2.0,2.0,3.0,1.0
+Frederico Soter,Internazionale,home,2,1.0,1.0,3.0,2.0
+Frederico Soter,Internazionale,total,3,1.33,1.5,3.0,1.67
+Frederico Soter,Juventus,away,1,2.0,-2.0,3.0,5.0
+Frederico Soter,Juventus,home,2,2.0,-1.0,2.0,3.0
+Frederico Soter,Juventus,total,3,2.0,-1.5,2.33,3.67
+Frederico Soter,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Frederico Soter,Los Angeles FC,home,2,1.0,1.0,1.5,0.5
+Frederico Soter,Los Angeles FC,total,3,0.67,0.5,1.0,0.33
+Frederico Soter,Mamelodi Sundowns,away,1,1.0,1.0,2.0,1.0
+Frederico Soter,Mamelodi Sundowns,home,2,1.0,0.0,1.5,1.5
+Frederico Soter,Mamelodi Sundowns,total,3,1.0,0.5,1.67,1.33
+Frederico Soter,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Frederico Soter,Manchester City,home,2,3.0,-1.0,3.0,4.0
+Frederico Soter,Manchester City,total,3,3.0,-2.0,2.67,4.33
+Frederico Soter,Monterrey,away,2,1.5,-0.5,1.5,2.0
+Frederico Soter,Monterrey,home,1,1.0,1.0,2.0,1.0
+Frederico Soter,Monterrey,total,3,1.33,0.25,1.67,1.67
+Frederico Soter,Pachuca,away,2,1.0,1.0,1.5,0.5
+Frederico Soter,Pachuca,home,1,0.0,0.0,1.0,1.0
+Frederico Soter,Pachuca,total,3,0.67,0.5,1.33,0.67
+Frederico Soter,Palmeiras,away,1,1.0,-1.0,1.0,2.0
+Frederico Soter,Palmeiras,home,2,1.0,0.0,1.0,1.0
+Frederico Soter,Palmeiras,total,3,1.0,-0.5,1.0,1.33
+Frederico Soter,Paris Saint-Germain,away,1,1.0,1.0,3.0,2.0
+Frederico Soter,Paris Saint-Germain,home,2,2.5,-0.5,1.5,2.0
+Frederico Soter,Paris Saint-Germain,total,3,2.0,0.25,2.0,2.0
+Frederico Soter,Porto,home,1,2.0,-2.0,2.0,4.0
+Frederico Soter,Porto,total,1,2.0,-2.0,2.0,4.0
+Frederico Soter,Porto ,away,2,2.5,2.5,3.0,0.5
+Frederico Soter,Porto ,total,2,2.5,2.5,3.0,0.5
+Frederico Soter,RB Salzburg,away,1,1.0,1.0,3.0,2.0
+Frederico Soter,RB Salzburg,home,2,2.0,2.0,2.0,0.0
+Frederico Soter,RB Salzburg,total,3,1.67,1.5,2.33,0.67
+Frederico Soter,Real Madrid,away,1,0.0,0.0,3.0,3.0
+Frederico Soter,Real Madrid,home,2,1.0,0.0,2.0,2.0
+Frederico Soter,Real Madrid,total,3,0.67,0.0,2.33,2.33
+Frederico Soter,River Plate,away,1,1.0,1.0,1.0,0.0
+Frederico Soter,River Plate,home,2,1.5,-0.5,1.0,1.5
+Frederico Soter,River Plate,total,3,1.33,0.25,1.0,1.0
+Frederico Soter,Seattle Sounders,away,1,0.0,0.0,1.0,1.0
+Frederico Soter,Seattle Sounders,home,2,1.0,0.0,0.5,0.5
+Frederico Soter,Seattle Sounders,total,3,0.67,0.0,0.67,0.67
+Frederico Soter,Ulsan HD,away,2,1.5,-0.5,0.5,1.0
+Frederico Soter,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+Frederico Soter,Ulsan HD,total,3,1.33,0.25,0.67,0.67
+Frederico Soter,Urawa Reds,away,2,1.0,1.0,2.0,1.0
+Frederico Soter,Urawa Reds,home,1,2.0,2.0,2.0,0.0
+Frederico Soter,Urawa Reds,total,3,1.33,1.5,2.0,0.67
+Frederico Soter,Wydad Casablanca,away,2,1.0,1.0,1.5,0.5
+Frederico Soter,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Frederico Soter,Wydad Casablanca,total,3,0.67,0.5,1.33,0.67
+Gabão,Al Ahly,away,2,1.5,-1.5,0.5,2.0
+Gabão,Al Ahly,home,1,0.0,0.0,0.0,0.0
+Gabão,Al Ahly,total,3,1.0,-0.75,0.33,1.33
+Gabão,Al-Ain,away,2,1.0,1.0,2.0,1.0
+Gabão,Al-Ain,home,1,1.0,1.0,1.0,0.0
+Gabão,Al-Ain,total,3,1.0,1.0,1.67,0.67
+Gabão,Al-Hilal,away,2,0.5,0.5,1.0,0.5
+Gabão,Al-Hilal,home,1,0.0,0.0,2.0,2.0
+Gabão,Al-Hilal,total,3,0.33,0.25,1.33,1.0
+Gabão,Atlético de Madrid,away,2,1.0,0.0,1.5,1.5
+Gabão,Atlético de Madrid,home,1,0.0,0.0,1.0,1.0
+Gabão,Atlético de Madrid,total,3,0.67,0.0,1.33,1.33
+Gabão,Auckland City,away,2,0.5,0.5,0.5,0.0
+Gabão,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Gabão,Auckland City,total,3,0.67,-0.25,0.33,0.33
+Gabão,Bayern de Munique,away,1,1.0,1.0,1.0,0.0
+Gabão,Bayern de Munique,home,2,3.5,-3.5,2.5,6.0
+Gabão,Bayern de Munique,total,3,2.67,-1.25,2.0,4.0
+Gabão,Benfica,away,1,1.0,-1.0,1.0,2.0
+Gabão,Benfica,home,2,2.0,-2.0,1.5,3.5
+Gabão,Benfica,total,3,1.67,-1.5,1.33,3.0
+Gabão,Boca Juniors,away,2,0.0,0.0,1.0,1.0
+Gabão,Boca Juniors,home,1,2.0,-2.0,0.0,2.0
+Gabão,Boca Juniors,total,3,0.67,-1.0,0.67,1.33
+Gabão,Borussia Dortmund,away,2,1.5,0.5,2.5,2.0
+Gabão,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+Gabão,Borussia Dortmund,total,3,1.67,1.25,2.67,1.67
+Gabão,Botafogo,away,2,0.5,-0.5,0.0,0.5
+Gabão,Botafogo,home,1,1.0,1.0,3.0,2.0
+Gabão,Botafogo,total,3,0.67,0.25,1.0,1.0
+Gabão,Chelsea,away,2,0.0,0.0,2.0,2.0
+Gabão,Chelsea,home,1,0.0,0.0,2.0,2.0
+Gabão,Chelsea,total,3,0.0,0.0,2.0,2.0
+Gabão,Espérance,away,2,1.0,0.0,0.5,0.5
+Gabão,Espérance,home,1,1.0,1.0,1.0,0.0
+Gabão,Espérance,total,3,1.0,0.5,0.67,0.33
+Gabão,Flamengo,away,1,1.0,1.0,2.0,1.0
+Gabão,Flamengo,home,2,2.0,-1.0,1.5,2.5
+Gabão,Flamengo,total,3,1.67,0.0,1.67,2.0
+Gabão,Fluminense,away,1,1.0,1.0,1.0,0.0
+Gabão,Fluminense,home,2,1.0,-1.0,1.0,2.0
+Gabão,Fluminense,total,3,1.0,0.0,1.0,1.33
+Gabão,Inter Miami,away,1,2.0,2.0,2.0,0.0
+Gabão,Inter Miami,home,2,1.0,-1.0,1.0,2.0
+Gabão,Inter Miami,total,3,1.33,0.5,1.33,1.33
+Gabão,Internazionale,away,1,1.0,1.0,2.0,1.0
+Gabão,Internazionale,home,2,0.0,0.0,2.0,2.0
+Gabão,Internazionale,total,3,0.33,0.5,2.0,1.67
+Gabão,Juventus,away,1,2.0,-2.0,3.0,5.0
+Gabão,Juventus,home,2,1.0,-1.0,2.0,3.0
+Gabão,Juventus,total,3,1.33,-1.5,2.33,3.67
+Gabão,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Gabão,Los Angeles FC,home,2,0.0,0.0,0.5,0.5
+Gabão,Los Angeles FC,total,3,0.0,0.0,0.33,0.33
+Gabão,Mamelodi Sundowns,away,1,1.0,-1.0,0.0,1.0
+Gabão,Mamelodi Sundowns,home,2,1.0,-1.0,0.5,1.5
+Gabão,Mamelodi Sundowns,total,3,1.0,-1.0,0.33,1.33
+Gabão,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Gabão,Manchester City,home,2,2.0,0.0,4.0,4.0
+Gabão,Manchester City,total,3,2.33,-1.5,3.33,4.33
+Gabão,Monterrey,away,2,2.0,-1.0,1.0,2.0
+Gabão,Monterrey,home,1,1.0,-1.0,0.0,1.0
+Gabão,Monterrey,total,3,1.67,-1.0,0.67,1.67
+Gabão,Pachuca,away,2,1.5,0.5,1.0,0.5
+Gabão,Pachuca,home,1,1.0,-1.0,0.0,1.0
+Gabão,Pachuca,total,3,1.33,-0.25,0.67,0.67
+Gabão,Palmeiras,away,1,0.0,0.0,2.0,2.0
+Gabão,Palmeiras,home,2,0.5,0.5,1.5,1.0
+Gabão,Palmeiras,total,3,0.33,0.25,1.67,1.33
+Gabão,Paris Saint-Germain,away,1,2.0,2.0,4.0,2.0
+Gabão,Paris Saint-Germain,home,2,2.5,0.5,2.5,2.0
+Gabão,Paris Saint-Germain,total,3,2.33,1.25,3.0,2.0
+Gabão,Porto,home,1,1.0,-1.0,3.0,4.0
+Gabão,Porto,total,1,1.0,-1.0,3.0,4.0
+Gabão,Porto ,away,2,1.0,0.0,0.5,0.5
+Gabão,Porto ,total,2,1.0,0.0,0.5,0.5
+Gabão,RB Salzburg,away,1,0.0,0.0,2.0,2.0
+Gabão,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+Gabão,RB Salzburg,total,3,0.67,0.5,1.33,0.67
+Gabão,Real Madrid,away,1,1.0,-1.0,2.0,3.0
+Gabão,Real Madrid,home,2,1.0,1.0,3.0,2.0
+Gabão,Real Madrid,total,3,1.0,0.0,2.67,2.33
+Gabão,River Plate,away,1,0.0,0.0,0.0,0.0
+Gabão,River Plate,home,2,2.5,0.5,2.0,1.5
+Gabão,River Plate,total,3,1.67,0.25,1.33,1.0
+Gabão,Seattle Sounders,away,1,0.0,0.0,1.0,1.0
+Gabão,Seattle Sounders,home,2,1.0,0.0,0.5,0.5
+Gabão,Seattle Sounders,total,3,0.67,0.0,0.67,0.67
+Gabão,Ulsan HD,away,2,0.5,-0.5,0.5,1.0
+Gabão,Ulsan HD,home,1,0.0,0.0,0.0,0.0
+Gabão,Ulsan HD,total,3,0.33,-0.25,0.33,0.67
+Gabão,Urawa Reds,away,2,0.5,-0.5,0.5,1.0
+Gabão,Urawa Reds,home,1,1.0,1.0,1.0,0.0
+Gabão,Urawa Reds,total,3,0.67,0.25,0.67,0.67
+Gabão,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+Gabão,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Gabão,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
+Guilherme,Al Ahly,away,2,1.5,-1.5,0.5,2.0
+Guilherme,Al Ahly,home,1,0.0,0.0,0.0,0.0
+Guilherme,Al Ahly,total,3,1.0,-0.75,0.33,1.33
+Guilherme,Al-Ain,away,2,1.0,-1.0,0.0,1.0
+Guilherme,Al-Ain,home,1,0.0,0.0,0.0,0.0
+Guilherme,Al-Ain,total,3,0.67,-0.5,0.0,0.67
+Guilherme,Al-Hilal,away,2,0.0,0.0,0.5,0.5
+Guilherme,Al-Hilal,home,1,1.0,-1.0,1.0,2.0
+Guilherme,Al-Hilal,total,3,0.33,-0.5,0.67,1.0
+Guilherme,Atlético de Madrid,away,2,0.5,0.5,2.0,1.5
+Guilherme,Atlético de Madrid,home,1,2.0,2.0,3.0,1.0
+Guilherme,Atlético de Madrid,total,3,1.0,1.25,2.33,1.33
+Guilherme,Auckland City,away,2,0.0,0.0,0.0,0.0
+Guilherme,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Guilherme,Auckland City,total,3,0.33,-0.5,0.0,0.33
+Guilherme,Bayern de Munique,away,1,3.0,3.0,3.0,0.0
+Guilherme,Bayern de Munique,home,2,3.5,-3.5,2.5,6.0
+Guilherme,Bayern de Munique,total,3,3.33,-0.25,2.67,4.0
+Guilherme,Benfica,away,1,1.0,-1.0,1.0,2.0
+Guilherme,Benfica,home,2,2.0,-2.0,1.5,3.5
+Guilherme,Benfica,total,3,1.67,-1.5,1.33,3.0
+Guilherme,Boca Juniors,away,2,0.5,-0.5,0.5,1.0
+Guilherme,Boca Juniors,home,1,0.0,0.0,2.0,2.0
+Guilherme,Boca Juniors,total,3,0.33,-0.25,1.0,1.33
+Guilherme,Borussia Dortmund,away,2,1.5,0.5,2.5,2.0
+Guilherme,Borussia Dortmund,home,1,1.0,1.0,2.0,1.0
+Guilherme,Borussia Dortmund,total,3,1.33,0.75,2.33,1.67
+Guilherme,Botafogo,away,2,1.0,0.0,0.5,0.5
+Guilherme,Botafogo,home,1,1.0,-1.0,1.0,2.0
+Guilherme,Botafogo,total,3,1.0,-0.5,0.67,1.0
+Guilherme,Chelsea,away,2,0.5,0.5,2.5,2.0
+Guilherme,Chelsea,home,1,0.0,0.0,2.0,2.0
+Guilherme,Chelsea,total,3,0.33,0.25,2.33,2.0
+Guilherme,Espérance,away,2,0.5,-0.5,0.0,0.5
+Guilherme,Espérance,home,1,0.0,0.0,0.0,0.0
+Guilherme,Espérance,total,3,0.33,-0.25,0.0,0.33
+Guilherme,Flamengo,away,1,1.0,1.0,2.0,1.0
+Guilherme,Flamengo,home,2,1.0,-1.0,1.5,2.5
+Guilherme,Flamengo,total,3,1.0,0.0,1.67,2.0
+Guilherme,Fluminense,away,1,1.0,1.0,1.0,0.0
+Guilherme,Fluminense,home,2,1.0,-1.0,1.0,2.0
+Guilherme,Fluminense,total,3,1.0,0.0,1.0,1.33
+Guilherme,Inter Miami,away,1,1.0,1.0,1.0,0.0
+Guilherme,Inter Miami,home,2,2.0,-2.0,0.0,2.0
+Guilherme,Inter Miami,total,3,1.67,-0.5,0.33,1.33
+Guilherme,Internazionale,away,1,1.0,1.0,2.0,1.0
+Guilherme,Internazionale,home,2,0.5,0.5,2.5,2.0
+Guilherme,Internazionale,total,3,0.67,0.75,2.33,1.67
+Guilherme,Juventus,away,1,3.0,-3.0,2.0,5.0
+Guilherme,Juventus,home,2,1.0,-1.0,2.0,3.0
+Guilherme,Juventus,total,3,1.67,-2.0,2.0,3.67
+Guilherme,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Guilherme,Los Angeles FC,home,2,0.5,0.5,1.0,0.5
+Guilherme,Los Angeles FC,total,3,0.33,0.25,0.67,0.33
+Guilherme,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+Guilherme,Mamelodi Sundowns,home,2,1.5,-1.5,0.0,1.5
+Guilherme,Mamelodi Sundowns,total,3,1.0,-0.75,0.33,1.33
+Guilherme,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Guilherme,Manchester City,home,2,2.0,-2.0,2.0,4.0
+Guilherme,Manchester City,total,3,2.33,-2.5,2.0,4.33
+Guilherme,Monterrey,away,2,2.0,-1.0,1.0,2.0
+Guilherme,Monterrey,home,1,0.0,0.0,1.0,1.0
+Guilherme,Monterrey,total,3,1.33,-0.5,1.0,1.67
+Guilherme,Pachuca,away,2,0.5,-0.5,0.0,0.5
+Guilherme,Pachuca,home,1,0.0,0.0,1.0,1.0
+Guilherme,Pachuca,total,3,0.33,-0.25,0.33,0.67
+Guilherme,Palmeiras,away,1,1.0,-1.0,1.0,2.0
+Guilherme,Palmeiras,home,2,1.0,1.0,2.0,1.0
+Guilherme,Palmeiras,total,3,1.0,0.0,1.67,1.33
+Guilherme,Paris Saint-Germain,away,1,0.0,0.0,2.0,2.0
+Guilherme,Paris Saint-Germain,home,2,2.5,0.5,2.5,2.0
+Guilherme,Paris Saint-Germain,total,3,1.67,0.25,2.33,2.0
+Guilherme,Porto,home,1,2.0,-2.0,2.0,4.0
+Guilherme,Porto,total,1,2.0,-2.0,2.0,4.0
+Guilherme,Porto ,away,2,1.0,1.0,1.5,0.5
+Guilherme,Porto ,total,2,1.0,1.0,1.5,0.5
+Guilherme,RB Salzburg,away,1,0.0,0.0,2.0,2.0
+Guilherme,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+Guilherme,RB Salzburg,total,3,0.67,0.5,1.33,0.67
+Guilherme,Real Madrid,away,1,1.0,-1.0,2.0,3.0
+Guilherme,Real Madrid,home,2,1.5,0.5,2.5,2.0
+Guilherme,Real Madrid,total,3,1.33,-0.25,2.33,2.33
+Guilherme,River Plate,away,1,1.0,1.0,1.0,0.0
+Guilherme,River Plate,home,2,1.5,0.5,2.0,1.5
+Guilherme,River Plate,total,3,1.33,0.75,1.67,1.0
+Guilherme,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Guilherme,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+Guilherme,Seattle Sounders,total,3,0.67,-0.75,0.0,0.67
+Guilherme,Ulsan HD,away,2,1.0,-1.0,0.0,1.0
+Guilherme,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+Guilherme,Ulsan HD,total,3,1.0,0.0,0.33,0.67
+Guilherme,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+Guilherme,Urawa Reds,home,1,0.0,0.0,0.0,0.0
+Guilherme,Urawa Reds,total,3,0.67,-0.5,0.0,0.67
+Guilherme,Wydad Casablanca,away,2,0.0,0.0,0.5,0.5
+Guilherme,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Guilherme,Wydad Casablanca,total,3,0.0,0.0,0.67,0.67
+João Henrique,Al Ahly,away,2,1.5,-1.5,0.5,2.0
+João Henrique,Al Ahly,home,1,1.0,1.0,1.0,0.0
+João Henrique,Al Ahly,total,3,1.33,-0.25,0.67,1.33
+João Henrique,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+João Henrique,Al-Ain,home,1,0.0,0.0,0.0,0.0
+João Henrique,Al-Ain,total,3,0.33,-0.25,0.33,0.67
+João Henrique,Al-Hilal,away,2,0.0,0.0,0.5,0.5
+João Henrique,Al-Hilal,home,1,1.0,-1.0,1.0,2.0
+João Henrique,Al-Hilal,total,3,0.33,-0.5,0.67,1.0
+João Henrique,Atlético de Madrid,away,2,0.5,0.5,2.0,1.5
+João Henrique,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+João Henrique,Atlético de Madrid,total,3,0.67,0.75,2.0,1.33
+João Henrique,Auckland City,away,2,0.0,0.0,0.0,0.0
+João Henrique,Auckland City,home,1,1.0,-1.0,0.0,1.0
+João Henrique,Auckland City,total,3,0.33,-0.5,0.0,0.33
+João Henrique,Bayern de Munique,away,1,2.0,2.0,2.0,0.0
+João Henrique,Bayern de Munique,home,2,4.0,-4.0,2.0,6.0
+João Henrique,Bayern de Munique,total,3,3.33,-1.0,2.0,4.0
+João Henrique,Benfica,away,1,2.0,-2.0,0.0,2.0
+João Henrique,Benfica,home,2,2.0,-2.0,1.5,3.5
+João Henrique,Benfica,total,3,2.0,-2.0,1.0,3.0
+João Henrique,Boca Juniors,away,2,1.0,0.0,1.0,1.0
+João Henrique,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+João Henrique,Boca Juniors,total,3,1.0,-0.5,1.0,1.33
+João Henrique,Borussia Dortmund,away,2,1.0,1.0,3.0,2.0
+João Henrique,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+João Henrique,Borussia Dortmund,total,3,1.33,1.5,3.0,1.67
+João Henrique,Botafogo,away,2,0.5,0.5,1.0,0.5
+João Henrique,Botafogo,home,1,1.0,-1.0,1.0,2.0
+João Henrique,Botafogo,total,3,0.67,-0.25,1.0,1.0
+João Henrique,Chelsea,away,2,0.0,0.0,2.0,2.0
+João Henrique,Chelsea,home,1,0.0,0.0,2.0,2.0
+João Henrique,Chelsea,total,3,0.0,0.0,2.0,2.0
+João Henrique,Espérance,away,2,0.0,0.0,0.5,0.5
+João Henrique,Espérance,home,1,0.0,0.0,0.0,0.0
+João Henrique,Espérance,total,3,0.0,0.0,0.33,0.33
+João Henrique,Flamengo,away,1,0.0,0.0,1.0,1.0
+João Henrique,Flamengo,home,2,1.5,-1.5,1.0,2.5
+João Henrique,Flamengo,total,3,1.0,-0.75,1.0,2.0
+João Henrique,Fluminense,away,1,1.0,1.0,1.0,0.0
+João Henrique,Fluminense,home,2,1.5,-1.5,0.5,2.0
+João Henrique,Fluminense,total,3,1.33,-0.25,0.67,1.33
+João Henrique,Inter Miami,away,1,2.0,2.0,2.0,0.0
+João Henrique,Inter Miami,home,2,0.5,0.5,2.5,2.0
+João Henrique,Inter Miami,total,3,1.0,1.25,2.33,1.33
+João Henrique,Internazionale,away,1,1.0,1.0,2.0,1.0
+João Henrique,Internazionale,home,2,0.0,0.0,2.0,2.0
+João Henrique,Internazionale,total,3,0.33,0.5,2.0,1.67
+João Henrique,Juventus,away,1,3.0,-3.0,2.0,5.0
+João Henrique,Juventus,home,2,1.0,-1.0,2.0,3.0
+João Henrique,Juventus,total,3,1.67,-2.0,2.0,3.67
+João Henrique,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+João Henrique,Los Angeles FC,home,2,1.5,0.5,1.0,0.5
+João Henrique,Los Angeles FC,total,3,1.0,0.25,0.67,0.33
+João Henrique,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+João Henrique,Mamelodi Sundowns,home,2,1.5,-1.5,0.0,1.5
+João Henrique,Mamelodi Sundowns,total,3,1.0,-0.75,0.33,1.33
+João Henrique,Manchester City,away,1,3.0,-3.0,2.0,5.0
+João Henrique,Manchester City,home,2,2.5,-2.5,1.5,4.0
+João Henrique,Manchester City,total,3,2.67,-2.75,1.67,4.33
+João Henrique,Monterrey,away,2,2.5,-1.5,0.5,2.0
+João Henrique,Monterrey,home,1,0.0,0.0,1.0,1.0
+João Henrique,Monterrey,total,3,1.67,-0.75,0.67,1.67
+João Henrique,Pachuca,away,2,1.0,0.0,0.5,0.5
+João Henrique,Pachuca,home,1,1.0,-1.0,0.0,1.0
+João Henrique,Pachuca,total,3,1.0,-0.5,0.33,0.67
+João Henrique,Palmeiras,away,1,1.0,-1.0,1.0,2.0
+João Henrique,Palmeiras,home,2,1.0,0.0,1.0,1.0
+João Henrique,Palmeiras,total,3,1.0,-0.5,1.0,1.33
+João Henrique,Paris Saint-Germain,away,1,0.0,0.0,2.0,2.0
+João Henrique,Paris Saint-Germain,home,2,2.0,0.0,2.0,2.0
+João Henrique,Paris Saint-Germain,total,3,1.33,0.0,2.0,2.0
+João Henrique,Porto,home,1,3.0,-3.0,1.0,4.0
+João Henrique,Porto,total,1,3.0,-3.0,1.0,4.0
+João Henrique,Porto ,away,2,1.0,1.0,1.5,0.5
+João Henrique,Porto ,total,2,1.0,1.0,1.5,0.5
+João Henrique,RB Salzburg,away,1,1.0,-1.0,1.0,2.0
+João Henrique,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+João Henrique,RB Salzburg,total,3,1.0,0.0,1.0,0.67
+João Henrique,Real Madrid,away,1,1.0,-1.0,2.0,3.0
+João Henrique,Real Madrid,home,2,1.0,0.0,2.0,2.0
+João Henrique,Real Madrid,total,3,1.0,-0.5,2.0,2.33
+João Henrique,River Plate,away,1,1.0,1.0,1.0,0.0
+João Henrique,River Plate,home,2,1.5,0.5,2.0,1.5
+João Henrique,River Plate,total,3,1.33,0.75,1.67,1.0
+João Henrique,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+João Henrique,Seattle Sounders,home,2,0.0,0.0,0.5,0.5
+João Henrique,Seattle Sounders,total,3,0.33,-0.5,0.33,0.67
+João Henrique,Ulsan HD,away,2,0.5,-0.5,0.5,1.0
+João Henrique,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+João Henrique,Ulsan HD,total,3,0.67,0.25,0.67,0.67
+João Henrique,Urawa Reds,away,2,0.5,-0.5,0.5,1.0
+João Henrique,Urawa Reds,home,1,0.0,0.0,0.0,0.0
+João Henrique,Urawa Reds,total,3,0.33,-0.25,0.33,0.67
+João Henrique,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+João Henrique,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+João Henrique,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
+Leigo Gianonni,Al Ahly,away,2,2.0,-2.0,0.0,2.0
+Leigo Gianonni,Al Ahly,home,1,1.0,1.0,1.0,0.0
+Leigo Gianonni,Al Ahly,total,3,1.67,-0.5,0.33,1.33
+Leigo Gianonni,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+Leigo Gianonni,Al-Ain,home,1,0.0,0.0,0.0,0.0
+Leigo Gianonni,Al-Ain,total,3,0.33,-0.25,0.33,0.67
+Leigo Gianonni,Al-Hilal,away,2,1.5,0.5,1.0,0.5
+Leigo Gianonni,Al-Hilal,home,1,0.0,0.0,2.0,2.0
+Leigo Gianonni,Al-Hilal,total,3,1.0,0.25,1.33,1.0
+Leigo Gianonni,Atlético de Madrid,away,2,1.0,1.0,2.5,1.5
+Leigo Gianonni,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+Leigo Gianonni,Atlético de Madrid,total,3,1.0,1.0,2.33,1.33
+Leigo Gianonni,Auckland City,away,2,0.0,0.0,0.0,0.0
+Leigo Gianonni,Auckland City,home,1,0.0,0.0,1.0,1.0
+Leigo Gianonni,Auckland City,total,3,0.0,0.0,0.33,0.33
+Leigo Gianonni,Bayern de Munique,away,1,2.0,2.0,2.0,0.0
+Leigo Gianonni,Bayern de Munique,home,2,3.5,-2.5,3.5,6.0
+Leigo Gianonni,Bayern de Munique,total,3,3.0,-0.25,3.0,4.0
+Leigo Gianonni,Benfica,away,1,0.0,0.0,2.0,2.0
+Leigo Gianonni,Benfica,home,2,1.5,-1.5,2.0,3.5
+Leigo Gianonni,Benfica,total,3,1.0,-0.75,2.0,3.0
+Leigo Gianonni,Boca Juniors,away,2,1.0,0.0,1.0,1.0
+Leigo Gianonni,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+Leigo Gianonni,Boca Juniors,total,3,1.0,-0.5,1.0,1.33
+Leigo Gianonni,Borussia Dortmund,away,2,1.0,1.0,3.0,2.0
+Leigo Gianonni,Borussia Dortmund,home,1,4.0,4.0,5.0,1.0
+Leigo Gianonni,Borussia Dortmund,total,3,2.0,2.5,3.67,1.67
+Leigo Gianonni,Botafogo,away,2,0.5,-0.5,0.0,0.5
+Leigo Gianonni,Botafogo,home,1,0.0,0.0,2.0,2.0
+Leigo Gianonni,Botafogo,total,3,0.33,-0.25,0.67,1.0
+Leigo Gianonni,Chelsea,away,2,1.0,1.0,3.0,2.0
+Leigo Gianonni,Chelsea,home,1,1.0,1.0,3.0,2.0
+Leigo Gianonni,Chelsea,total,3,1.0,1.0,3.0,2.0
+Leigo Gianonni,Espérance,away,2,1.0,0.0,0.5,0.5
+Leigo Gianonni,Espérance,home,1,0.0,0.0,0.0,0.0
+Leigo Gianonni,Espérance,total,3,0.67,0.0,0.33,0.33
+Leigo Gianonni,Flamengo,away,1,1.0,1.0,2.0,1.0
+Leigo Gianonni,Flamengo,home,2,2.0,-1.0,1.5,2.5
+Leigo Gianonni,Flamengo,total,3,1.67,0.0,1.67,2.0
+Leigo Gianonni,Fluminense,away,1,1.0,1.0,1.0,0.0
+Leigo Gianonni,Fluminense,home,2,1.5,-1.5,0.5,2.0
+Leigo Gianonni,Fluminense,total,3,1.33,-0.25,0.67,1.33
+Leigo Gianonni,Inter Miami,away,1,1.0,1.0,1.0,0.0
+Leigo Gianonni,Inter Miami,home,2,1.0,-1.0,1.0,2.0
+Leigo Gianonni,Inter Miami,total,3,1.0,0.0,1.0,1.33
+Leigo Gianonni,Internazionale,away,1,2.0,2.0,3.0,1.0
+Leigo Gianonni,Internazionale,home,2,1.5,1.5,3.5,2.0
+Leigo Gianonni,Internazionale,total,3,1.67,1.75,3.33,1.67
+Leigo Gianonni,Juventus,away,1,3.0,-3.0,2.0,5.0
+Leigo Gianonni,Juventus,home,2,0.5,-0.5,2.5,3.0
+Leigo Gianonni,Juventus,total,3,1.33,-1.75,2.33,3.67
+Leigo Gianonni,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Leigo Gianonni,Los Angeles FC,home,2,0.5,-0.5,0.0,0.5
+Leigo Gianonni,Los Angeles FC,total,3,0.33,-0.25,0.0,0.33
+Leigo Gianonni,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+Leigo Gianonni,Mamelodi Sundowns,home,2,1.5,-1.5,0.0,1.5
+Leigo Gianonni,Mamelodi Sundowns,total,3,1.0,-0.75,0.33,1.33
+Leigo Gianonni,Manchester City,away,1,2.0,-2.0,3.0,5.0
+Leigo Gianonni,Manchester City,home,2,1.5,-0.5,3.5,4.0
+Leigo Gianonni,Manchester City,total,3,1.67,-1.25,3.33,4.33
+Leigo Gianonni,Monterrey,away,2,2.5,-0.5,1.5,2.0
+Leigo Gianonni,Monterrey,home,1,1.0,-1.0,0.0,1.0
+Leigo Gianonni,Monterrey,total,3,2.0,-0.75,1.0,1.67
+Leigo Gianonni,Pachuca,away,2,1.5,0.5,1.0,0.5
+Leigo Gianonni,Pachuca,home,1,0.0,0.0,1.0,1.0
+Leigo Gianonni,Pachuca,total,3,1.0,0.25,1.0,0.67
+Leigo Gianonni,Palmeiras,away,1,1.0,1.0,3.0,2.0
+Leigo Gianonni,Palmeiras,home,2,1.0,1.0,2.0,1.0
+Leigo Gianonni,Palmeiras,total,3,1.0,1.0,2.33,1.33
+Leigo Gianonni,Paris Saint-Germain,away,1,2.0,2.0,4.0,2.0
+Leigo Gianonni,Paris Saint-Germain,home,2,2.0,1.0,3.0,2.0
+Leigo Gianonni,Paris Saint-Germain,total,3,2.0,1.5,3.33,2.0
+Leigo Gianonni,Porto,home,1,3.0,-3.0,1.0,4.0
+Leigo Gianonni,Porto,total,1,3.0,-3.0,1.0,4.0
+Leigo Gianonni,Porto ,away,2,1.5,1.5,2.0,0.5
+Leigo Gianonni,Porto ,total,2,1.5,1.5,2.0,0.5
+Leigo Gianonni,RB Salzburg,away,1,0.0,0.0,2.0,2.0
+Leigo Gianonni,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+Leigo Gianonni,RB Salzburg,total,3,0.67,0.5,1.33,0.67
+Leigo Gianonni,Real Madrid,away,1,0.0,0.0,3.0,3.0
+Leigo Gianonni,Real Madrid,home,2,0.5,0.5,2.5,2.0
+Leigo Gianonni,Real Madrid,total,3,0.33,0.25,2.67,2.33
+Leigo Gianonni,River Plate,away,1,1.0,1.0,1.0,0.0
+Leigo Gianonni,River Plate,home,2,1.5,0.5,2.0,1.5
+Leigo Gianonni,River Plate,total,3,1.33,0.75,1.67,1.0
+Leigo Gianonni,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Leigo Gianonni,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+Leigo Gianonni,Seattle Sounders,total,3,0.67,-0.75,0.0,0.67
+Leigo Gianonni,Ulsan HD,away,2,1.0,-1.0,0.0,1.0
+Leigo Gianonni,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+Leigo Gianonni,Ulsan HD,total,3,1.0,0.0,0.33,0.67
+Leigo Gianonni,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+Leigo Gianonni,Urawa Reds,home,1,0.0,0.0,0.0,0.0
+Leigo Gianonni,Urawa Reds,total,3,0.67,-0.5,0.0,0.67
+Leigo Gianonni,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+Leigo Gianonni,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Leigo Gianonni,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
+Leo Fernandes,Al Ahly,away,2,2.0,-2.0,0.0,2.0
+Leo Fernandes,Al Ahly,home,1,1.0,1.0,1.0,0.0
+Leo Fernandes,Al Ahly,total,3,1.67,-0.5,0.33,1.33
+Leo Fernandes,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+Leo Fernandes,Al-Ain,home,1,0.0,0.0,0.0,0.0
+Leo Fernandes,Al-Ain,total,3,0.33,-0.25,0.33,0.67
+Leo Fernandes,Al-Hilal,away,2,1.0,0.0,0.5,0.5
+Leo Fernandes,Al-Hilal,home,1,1.0,-1.0,1.0,2.0
+Leo Fernandes,Al-Hilal,total,3,1.0,-0.5,0.67,1.0
+Leo Fernandes,Atlético de Madrid,away,2,1.0,0.0,1.5,1.5
+Leo Fernandes,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+Leo Fernandes,Atlético de Madrid,total,3,1.0,0.5,1.67,1.33
+Leo Fernandes,Auckland City,away,2,0.0,0.0,0.0,0.0
+Leo Fernandes,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Leo Fernandes,Auckland City,total,3,0.33,-0.5,0.0,0.33
+Leo Fernandes,Bayern de Munique,away,1,2.0,2.0,2.0,0.0
+Leo Fernandes,Bayern de Munique,home,2,3.5,-2.5,3.5,6.0
+Leo Fernandes,Bayern de Munique,total,3,3.0,-0.25,3.0,4.0
+Leo Fernandes,Benfica,away,1,1.0,-1.0,1.0,2.0
+Leo Fernandes,Benfica,home,2,2.0,-2.0,1.5,3.5
+Leo Fernandes,Benfica,total,3,1.67,-1.5,1.33,3.0
+Leo Fernandes,Boca Juniors,away,2,1.0,0.0,1.0,1.0
+Leo Fernandes,Boca Juniors,home,1,2.0,-2.0,0.0,2.0
+Leo Fernandes,Boca Juniors,total,3,1.33,-1.0,0.67,1.33
+Leo Fernandes,Borussia Dortmund,away,2,1.5,0.5,2.5,2.0
+Leo Fernandes,Borussia Dortmund,home,1,1.0,1.0,2.0,1.0
+Leo Fernandes,Borussia Dortmund,total,3,1.33,0.75,2.33,1.67
+Leo Fernandes,Botafogo,away,2,0.5,-0.5,0.0,0.5
+Leo Fernandes,Botafogo,home,1,1.0,-1.0,1.0,2.0
+Leo Fernandes,Botafogo,total,3,0.67,-0.75,0.33,1.0
+Leo Fernandes,Chelsea,away,2,0.5,0.5,2.5,2.0
+Leo Fernandes,Chelsea,home,1,0.0,0.0,2.0,2.0
+Leo Fernandes,Chelsea,total,3,0.33,0.25,2.33,2.0
+Leo Fernandes,Espérance,away,2,0.0,0.0,0.5,0.5
+Leo Fernandes,Espérance,home,1,0.0,0.0,0.0,0.0
+Leo Fernandes,Espérance,total,3,0.0,0.0,0.33,0.33
+Leo Fernandes,Flamengo,away,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Flamengo,home,2,1.0,-1.0,1.5,2.5
+Leo Fernandes,Flamengo,total,3,0.67,-0.5,1.33,2.0
+Leo Fernandes,Fluminense,away,1,1.0,1.0,1.0,0.0
+Leo Fernandes,Fluminense,home,2,1.0,-1.0,1.0,2.0
+Leo Fernandes,Fluminense,total,3,1.0,0.0,1.0,1.33
+Leo Fernandes,Inter Miami,away,1,1.0,1.0,1.0,0.0
+Leo Fernandes,Inter Miami,home,2,2.0,-2.0,0.0,2.0
+Leo Fernandes,Inter Miami,total,3,1.67,-0.5,0.33,1.33
+Leo Fernandes,Internazionale,away,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Internazionale,home,2,0.5,-0.5,1.5,2.0
+Leo Fernandes,Internazionale,total,3,0.33,-0.25,1.33,1.67
+Leo Fernandes,Juventus,away,1,3.0,-3.0,2.0,5.0
+Leo Fernandes,Juventus,home,2,1.5,-1.5,1.5,3.0
+Leo Fernandes,Juventus,total,3,2.0,-2.25,1.67,3.67
+Leo Fernandes,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Leo Fernandes,Los Angeles FC,home,2,1.0,0.0,0.5,0.5
+Leo Fernandes,Los Angeles FC,total,3,0.67,0.0,0.33,0.33
+Leo Fernandes,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Mamelodi Sundowns,home,2,1.5,-1.5,0.0,1.5
+Leo Fernandes,Mamelodi Sundowns,total,3,1.0,-0.75,0.33,1.33
+Leo Fernandes,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Leo Fernandes,Manchester City,home,2,2.0,-1.0,3.0,4.0
+Leo Fernandes,Manchester City,total,3,2.33,-2.0,2.67,4.33
+Leo Fernandes,Monterrey,away,2,2.0,-1.0,1.0,2.0
+Leo Fernandes,Monterrey,home,1,1.0,-1.0,0.0,1.0
+Leo Fernandes,Monterrey,total,3,1.67,-1.0,0.67,1.67
+Leo Fernandes,Pachuca,away,2,0.5,0.5,1.0,0.5
+Leo Fernandes,Pachuca,home,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Pachuca,total,3,0.33,0.25,1.0,0.67
+Leo Fernandes,Palmeiras,away,1,0.0,0.0,2.0,2.0
+Leo Fernandes,Palmeiras,home,2,0.5,0.5,1.5,1.0
+Leo Fernandes,Palmeiras,total,3,0.33,0.25,1.67,1.33
+Leo Fernandes,Paris Saint-Germain,away,1,1.0,1.0,3.0,2.0
+Leo Fernandes,Paris Saint-Germain,home,2,2.0,0.0,2.0,2.0
+Leo Fernandes,Paris Saint-Germain,total,3,1.67,0.5,2.33,2.0
+Leo Fernandes,Porto,home,1,2.0,-2.0,2.0,4.0
+Leo Fernandes,Porto,total,1,2.0,-2.0,2.0,4.0
+Leo Fernandes,Porto ,away,2,0.5,0.5,1.0,0.5
+Leo Fernandes,Porto ,total,2,0.5,0.5,1.0,0.5
+Leo Fernandes,RB Salzburg,away,1,2.0,-2.0,0.0,2.0
+Leo Fernandes,RB Salzburg,home,2,0.5,0.5,0.5,0.0
+Leo Fernandes,RB Salzburg,total,3,1.0,-0.75,0.33,0.67
+Leo Fernandes,Real Madrid,away,1,1.0,-1.0,2.0,3.0
+Leo Fernandes,Real Madrid,home,2,1.0,0.0,2.0,2.0
+Leo Fernandes,Real Madrid,total,3,1.0,-0.5,2.0,2.33
+Leo Fernandes,River Plate,away,1,0.0,0.0,0.0,0.0
+Leo Fernandes,River Plate,home,2,1.0,0.0,1.5,1.5
+Leo Fernandes,River Plate,total,3,0.67,0.0,1.0,1.0
+Leo Fernandes,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Leo Fernandes,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+Leo Fernandes,Seattle Sounders,total,3,0.67,-0.75,0.0,0.67
+Leo Fernandes,Ulsan HD,away,2,0.5,-0.5,0.5,1.0
+Leo Fernandes,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+Leo Fernandes,Ulsan HD,total,3,0.67,0.25,0.67,0.67
+Leo Fernandes,Urawa Reds,away,2,0.5,-0.5,0.5,1.0
+Leo Fernandes,Urawa Reds,home,1,0.0,0.0,0.0,0.0
+Leo Fernandes,Urawa Reds,total,3,0.33,-0.25,0.33,0.67
+Leo Fernandes,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+Leo Fernandes,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
+Lucas Ubertini,Al Ahly,away,2,2.0,-2.0,0.0,2.0
+Lucas Ubertini,Al Ahly,home,1,1.0,1.0,1.0,0.0
+Lucas Ubertini,Al Ahly,total,3,1.67,-0.5,0.33,1.33
+Lucas Ubertini,Al-Ain,away,2,1.0,-1.0,0.0,1.0
+Lucas Ubertini,Al-Ain,home,1,0.0,0.0,0.0,0.0
+Lucas Ubertini,Al-Ain,total,3,0.67,-0.5,0.0,0.67
+Lucas Ubertini,Al-Hilal,away,2,0.5,0.5,1.0,0.5
+Lucas Ubertini,Al-Hilal,home,1,0.0,0.0,2.0,2.0
+Lucas Ubertini,Al-Hilal,total,3,0.33,0.25,1.33,1.0
+Lucas Ubertini,Atlético de Madrid,away,2,2.0,0.0,1.5,1.5
+Lucas Ubertini,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Atlético de Madrid,total,3,1.67,0.5,1.67,1.33
+Lucas Ubertini,Auckland City,away,2,0.0,0.0,0.0,0.0
+Lucas Ubertini,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Lucas Ubertini,Auckland City,total,3,0.33,-0.5,0.0,0.33
+Lucas Ubertini,Bayern de Munique,away,1,4.0,4.0,4.0,0.0
+Lucas Ubertini,Bayern de Munique,home,2,2.5,-2.5,3.5,6.0
+Lucas Ubertini,Bayern de Munique,total,3,3.0,0.75,3.67,4.0
+Lucas Ubertini,Benfica,away,1,0.0,0.0,2.0,2.0
+Lucas Ubertini,Benfica,home,2,2.0,-2.0,1.5,3.5
+Lucas Ubertini,Benfica,total,3,1.33,-1.0,1.67,3.0
+Lucas Ubertini,Boca Juniors,away,2,0.5,0.5,1.5,1.0
+Lucas Ubertini,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+Lucas Ubertini,Boca Juniors,total,3,0.67,-0.25,1.33,1.33
+Lucas Ubertini,Borussia Dortmund,away,2,1.0,0.0,2.0,2.0
+Lucas Ubertini,Borussia Dortmund,home,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Borussia Dortmund,total,3,1.0,0.5,2.0,1.67
+Lucas Ubertini,Botafogo,away,2,1.0,0.0,0.5,0.5
+Lucas Ubertini,Botafogo,home,1,1.0,-1.0,1.0,2.0
+Lucas Ubertini,Botafogo,total,3,1.0,-0.5,0.67,1.0
+Lucas Ubertini,Chelsea,away,2,0.0,0.0,2.0,2.0
+Lucas Ubertini,Chelsea,home,1,0.0,0.0,2.0,2.0
+Lucas Ubertini,Chelsea,total,3,0.0,0.0,2.0,2.0
+Lucas Ubertini,Espérance,away,2,0.5,-0.5,0.0,0.5
+Lucas Ubertini,Espérance,home,1,0.0,0.0,0.0,0.0
+Lucas Ubertini,Espérance,total,3,0.33,-0.25,0.0,0.33
+Lucas Ubertini,Flamengo,away,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Flamengo,home,2,1.5,-0.5,2.0,2.5
+Lucas Ubertini,Flamengo,total,3,1.33,0.25,2.0,2.0
+Lucas Ubertini,Fluminense,away,1,3.0,3.0,3.0,0.0
+Lucas Ubertini,Fluminense,home,2,1.0,0.0,2.0,2.0
+Lucas Ubertini,Fluminense,total,3,1.67,1.5,2.33,1.33
+Lucas Ubertini,Inter Miami,away,1,3.0,3.0,3.0,0.0
+Lucas Ubertini,Inter Miami,home,2,0.5,-0.5,1.5,2.0
+Lucas Ubertini,Inter Miami,total,3,1.33,1.25,2.0,1.33
+Lucas Ubertini,Internazionale,away,1,0.0,0.0,1.0,1.0
+Lucas Ubertini,Internazionale,home,2,1.0,0.0,2.0,2.0
+Lucas Ubertini,Internazionale,total,3,0.67,0.0,1.67,1.67
+Lucas Ubertini,Juventus,away,1,3.0,-3.0,2.0,5.0
+Lucas Ubertini,Juventus,home,2,1.5,-1.5,1.5,3.0
+Lucas Ubertini,Juventus,total,3,2.0,-2.25,1.67,3.67
+Lucas Ubertini,Los Angeles FC,away,1,1.0,1.0,1.0,0.0
+Lucas Ubertini,Los Angeles FC,home,2,1.5,1.5,2.0,0.5
+Lucas Ubertini,Los Angeles FC,total,3,1.33,1.25,1.67,0.33
+Lucas Ubertini,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+Lucas Ubertini,Mamelodi Sundowns,home,2,1.5,-1.5,0.0,1.5
+Lucas Ubertini,Mamelodi Sundowns,total,3,1.0,-0.75,0.33,1.33
+Lucas Ubertini,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Lucas Ubertini,Manchester City,home,2,2.0,0.0,4.0,4.0
+Lucas Ubertini,Manchester City,total,3,2.33,-1.5,3.33,4.33
+Lucas Ubertini,Monterrey,away,2,2.0,0.0,2.0,2.0
+Lucas Ubertini,Monterrey,home,1,1.0,-1.0,0.0,1.0
+Lucas Ubertini,Monterrey,total,3,1.67,-0.5,1.33,1.67
+Lucas Ubertini,Pachuca,away,2,1.0,0.0,0.5,0.5
+Lucas Ubertini,Pachuca,home,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Pachuca,total,3,1.0,0.5,1.0,0.67
+Lucas Ubertini,Palmeiras,away,1,1.0,-1.0,1.0,2.0
+Lucas Ubertini,Palmeiras,home,2,1.5,1.5,2.5,1.0
+Lucas Ubertini,Palmeiras,total,3,1.33,0.25,2.0,1.33
+Lucas Ubertini,Paris Saint-Germain,away,1,1.0,1.0,3.0,2.0
+Lucas Ubertini,Paris Saint-Germain,home,2,2.0,0.0,2.0,2.0
+Lucas Ubertini,Paris Saint-Germain,total,3,1.67,0.5,2.33,2.0
+Lucas Ubertini,Porto,home,1,2.0,-2.0,2.0,4.0
+Lucas Ubertini,Porto,total,1,2.0,-2.0,2.0,4.0
+Lucas Ubertini,Porto ,away,2,1.0,1.0,1.5,0.5
+Lucas Ubertini,Porto ,total,2,1.0,1.0,1.5,0.5
+Lucas Ubertini,RB Salzburg,away,1,1.0,-1.0,1.0,2.0
+Lucas Ubertini,RB Salzburg,home,2,0.5,0.5,0.5,0.0
+Lucas Ubertini,RB Salzburg,total,3,0.67,-0.25,0.67,0.67
+Lucas Ubertini,Real Madrid,away,1,0.0,0.0,3.0,3.0
+Lucas Ubertini,Real Madrid,home,2,1.0,1.0,3.0,2.0
+Lucas Ubertini,Real Madrid,total,3,0.67,0.5,3.0,2.33
+Lucas Ubertini,River Plate,away,1,1.0,1.0,1.0,0.0
+Lucas Ubertini,River Plate,home,2,1.0,0.0,1.5,1.5
+Lucas Ubertini,River Plate,total,3,1.0,0.5,1.33,1.0
+Lucas Ubertini,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Lucas Ubertini,Seattle Sounders,home,2,0.5,0.5,1.0,0.5
+Lucas Ubertini,Seattle Sounders,total,3,0.67,-0.25,0.67,0.67
+Lucas Ubertini,Ulsan HD,away,2,1.0,0.0,1.0,1.0
+Lucas Ubertini,Ulsan HD,home,1,0.0,0.0,0.0,0.0
+Lucas Ubertini,Ulsan HD,total,3,0.67,0.0,0.67,0.67
+Lucas Ubertini,Urawa Reds,away,2,0.5,-0.5,0.5,1.0
+Lucas Ubertini,Urawa Reds,home,1,2.0,2.0,2.0,0.0
+Lucas Ubertini,Urawa Reds,total,3,1.0,0.75,1.0,0.67
+Lucas Ubertini,Wydad Casablanca,away,2,0.5,0.5,1.0,0.5
+Lucas Ubertini,Wydad Casablanca,home,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Wydad Casablanca,total,3,0.67,0.75,1.33,0.67
+Marcelo,Al Ahly,away,2,2.5,-1.5,0.5,2.0
+Marcelo,Al Ahly,home,1,2.0,2.0,2.0,0.0
+Marcelo,Al Ahly,total,3,2.33,0.25,1.0,1.33
+Marcelo,Al-Ain,away,2,1.0,0.0,1.0,1.0
+Marcelo,Al-Ain,home,1,0.0,0.0,0.0,0.0
+Marcelo,Al-Ain,total,3,0.67,0.0,0.67,0.67
+Marcelo,Al-Hilal,away,2,1.0,1.0,1.5,0.5
+Marcelo,Al-Hilal,home,1,1.0,1.0,3.0,2.0
+Marcelo,Al-Hilal,total,3,1.0,1.0,2.0,1.0
+Marcelo,Atlético de Madrid,away,2,0.5,0.5,2.0,1.5
+Marcelo,Atlético de Madrid,home,1,2.0,2.0,3.0,1.0
+Marcelo,Atlético de Madrid,total,3,1.0,1.25,2.33,1.33
+Marcelo,Auckland City,away,2,0.0,0.0,0.0,0.0
+Marcelo,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Marcelo,Auckland City,total,3,0.33,-0.5,0.0,0.33
+Marcelo,Bayern de Munique,away,1,3.0,3.0,3.0,0.0
+Marcelo,Bayern de Munique,home,2,2.5,-1.5,4.5,6.0
+Marcelo,Bayern de Munique,total,3,2.67,0.75,4.0,4.0
+Marcelo,Benfica,away,1,0.0,0.0,2.0,2.0
+Marcelo,Benfica,home,2,1.0,-1.0,2.5,3.5
+Marcelo,Benfica,total,3,0.67,-0.5,2.33,3.0
+Marcelo,Boca Juniors,away,2,1.0,0.0,1.0,1.0
+Marcelo,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+Marcelo,Boca Juniors,total,3,1.0,-0.5,1.0,1.33
+Marcelo,Borussia Dortmund,away,2,1.5,0.5,2.5,2.0
+Marcelo,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+Marcelo,Borussia Dortmund,total,3,1.67,1.25,2.67,1.67
+Marcelo,Botafogo,away,2,1.0,0.0,0.5,0.5
+Marcelo,Botafogo,home,1,0.0,0.0,2.0,2.0
+Marcelo,Botafogo,total,3,0.67,0.0,1.0,1.0
+Marcelo,Chelsea,away,2,0.5,0.5,2.5,2.0
+Marcelo,Chelsea,home,1,0.0,0.0,2.0,2.0
+Marcelo,Chelsea,total,3,0.33,0.25,2.33,2.0
+Marcelo,Espérance,away,2,0.0,0.0,0.5,0.5
+Marcelo,Espérance,home,1,0.0,0.0,0.0,0.0
+Marcelo,Espérance,total,3,0.0,0.0,0.33,0.33
+Marcelo,Flamengo,away,1,2.0,2.0,3.0,1.0
+Marcelo,Flamengo,home,2,1.0,-1.0,1.5,2.5
+Marcelo,Flamengo,total,3,1.33,0.5,2.0,2.0
+Marcelo,Fluminense,away,1,2.0,2.0,2.0,0.0
+Marcelo,Fluminense,home,2,1.0,-1.0,1.0,2.0
+Marcelo,Fluminense,total,3,1.33,0.5,1.33,1.33
+Marcelo,Inter Miami,away,1,2.0,2.0,2.0,0.0
+Marcelo,Inter Miami,home,2,1.0,-1.0,1.0,2.0
+Marcelo,Inter Miami,total,3,1.33,0.5,1.33,1.33
+Marcelo,Internazionale,away,1,2.0,2.0,3.0,1.0
+Marcelo,Internazionale,home,2,0.5,0.5,2.5,2.0
+Marcelo,Internazionale,total,3,1.0,1.25,2.67,1.67
+Marcelo,Juventus,away,1,4.0,-4.0,1.0,5.0
+Marcelo,Juventus,home,2,1.5,-1.5,1.5,3.0
+Marcelo,Juventus,total,3,2.33,-2.75,1.33,3.67
+Marcelo,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Marcelo,Los Angeles FC,home,2,1.5,1.5,2.0,0.5
+Marcelo,Los Angeles FC,total,3,1.0,0.75,1.33,0.33
+Marcelo,Mamelodi Sundowns,away,1,1.0,1.0,2.0,1.0
+Marcelo,Mamelodi Sundowns,home,2,1.5,-0.5,1.0,1.5
+Marcelo,Mamelodi Sundowns,total,3,1.33,0.25,1.33,1.33
+Marcelo,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Marcelo,Manchester City,home,2,2.0,-1.0,3.0,4.0
+Marcelo,Manchester City,total,3,2.33,-2.0,2.67,4.33
+Marcelo,Monterrey,away,2,1.5,-0.5,1.5,2.0
+Marcelo,Monterrey,home,1,0.0,0.0,1.0,1.0
+Marcelo,Monterrey,total,3,1.0,-0.25,1.33,1.67
+Marcelo,Pachuca,away,2,1.0,0.0,0.5,0.5
+Marcelo,Pachuca,home,1,1.0,1.0,2.0,1.0
+Marcelo,Pachuca,total,3,1.0,0.5,1.0,0.67
+Marcelo,Palmeiras,away,1,0.0,0.0,2.0,2.0
+Marcelo,Palmeiras,home,2,0.5,0.5,1.5,1.0
+Marcelo,Palmeiras,total,3,0.33,0.25,1.67,1.33
+Marcelo,Paris Saint-Germain,away,1,2.0,2.0,4.0,2.0
+Marcelo,Paris Saint-Germain,home,2,2.0,1.0,3.0,2.0
+Marcelo,Paris Saint-Germain,total,3,2.0,1.5,3.33,2.0
+Marcelo,Porto,home,1,3.0,-3.0,1.0,4.0
+Marcelo,Porto,total,1,3.0,-3.0,1.0,4.0
+Marcelo,Porto ,away,2,1.5,1.5,2.0,0.5
+Marcelo,Porto ,total,2,1.5,1.5,2.0,0.5
+Marcelo,RB Salzburg,away,1,1.0,-1.0,1.0,2.0
+Marcelo,RB Salzburg,home,2,0.5,0.5,0.5,0.0
+Marcelo,RB Salzburg,total,3,0.67,-0.25,0.67,0.67
+Marcelo,Real Madrid,away,1,1.0,1.0,4.0,3.0
+Marcelo,Real Madrid,home,2,1.0,1.0,3.0,2.0
+Marcelo,Real Madrid,total,3,1.0,1.0,3.33,2.33
+Marcelo,River Plate,away,1,1.0,1.0,1.0,0.0
+Marcelo,River Plate,home,2,1.0,0.0,1.5,1.5
+Marcelo,River Plate,total,3,1.0,0.5,1.33,1.0
+Marcelo,Seattle Sounders,away,1,0.0,0.0,1.0,1.0
+Marcelo,Seattle Sounders,home,2,0.0,0.0,0.5,0.5
+Marcelo,Seattle Sounders,total,3,0.0,0.0,0.67,0.67
+Marcelo,Ulsan HD,away,2,0.5,-0.5,0.5,1.0
+Marcelo,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+Marcelo,Ulsan HD,total,3,0.67,0.25,0.67,0.67
+Marcelo,Urawa Reds,away,2,0.5,-0.5,0.5,1.0
+Marcelo,Urawa Reds,home,1,1.0,1.0,1.0,0.0
+Marcelo,Urawa Reds,total,3,0.67,0.25,0.67,0.67
+Marcelo,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+Marcelo,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Marcelo,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
+Pedro Tayer,Al Ahly,away,2,1.5,0.5,2.5,2.0
+Pedro Tayer,Al Ahly,home,1,2.0,2.0,2.0,0.0
+Pedro Tayer,Al Ahly,total,3,1.67,1.25,2.33,1.33
+Pedro Tayer,Al-Ain,away,2,1.0,1.0,2.0,1.0
+Pedro Tayer,Al-Ain,home,1,2.0,2.0,2.0,0.0
+Pedro Tayer,Al-Ain,total,3,1.33,1.5,2.0,0.67
+Pedro Tayer,Al-Hilal,away,2,1.0,0.0,0.5,0.5
+Pedro Tayer,Al-Hilal,home,1,1.0,-1.0,1.0,2.0
+Pedro Tayer,Al-Hilal,total,3,1.0,-0.5,0.67,1.0
+Pedro Tayer,Atlético de Madrid,away,2,1.0,0.0,1.5,1.5
+Pedro Tayer,Atlético de Madrid,home,1,2.0,2.0,3.0,1.0
+Pedro Tayer,Atlético de Madrid,total,3,1.33,1.0,2.0,1.33
+Pedro Tayer,Auckland City,away,2,1.5,1.5,1.5,0.0
+Pedro Tayer,Auckland City,home,1,1.0,1.0,2.0,1.0
+Pedro Tayer,Auckland City,total,3,1.33,1.25,1.67,0.33
+Pedro Tayer,Bayern de Munique,away,1,3.0,3.0,3.0,0.0
+Pedro Tayer,Bayern de Munique,home,2,4.5,-4.5,1.5,6.0
+Pedro Tayer,Bayern de Munique,total,3,4.0,-0.75,2.0,4.0
+Pedro Tayer,Benfica,away,1,0.0,0.0,2.0,2.0
+Pedro Tayer,Benfica,home,2,2.0,0.0,3.5,3.5
+Pedro Tayer,Benfica,total,3,1.33,0.0,3.0,3.0
+Pedro Tayer,Boca Juniors,away,2,1.0,-1.0,0.0,1.0
+Pedro Tayer,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+Pedro Tayer,Boca Juniors,total,3,1.0,-1.0,0.33,1.33
+Pedro Tayer,Borussia Dortmund,away,2,4.0,3.0,5.0,2.0
+Pedro Tayer,Borussia Dortmund,home,1,3.0,3.0,4.0,1.0
+Pedro Tayer,Borussia Dortmund,total,3,3.67,3.0,4.67,1.67
+Pedro Tayer,Botafogo,away,2,0.5,-0.5,0.0,0.5
+Pedro Tayer,Botafogo,home,1,1.0,-1.0,1.0,2.0
+Pedro Tayer,Botafogo,total,3,0.67,-0.75,0.33,1.0
+Pedro Tayer,Chelsea,away,2,0.5,-0.5,1.5,2.0
+Pedro Tayer,Chelsea,home,1,0.0,0.0,2.0,2.0
+Pedro Tayer,Chelsea,total,3,0.33,-0.25,1.67,2.0
+Pedro Tayer,Espérance,away,2,1.0,0.0,0.5,0.5
+Pedro Tayer,Espérance,home,1,1.0,1.0,1.0,0.0
+Pedro Tayer,Espérance,total,3,1.0,0.5,0.67,0.33
+Pedro Tayer,Flamengo,away,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Flamengo,home,2,1.0,-1.0,1.5,2.5
+Pedro Tayer,Flamengo,total,3,0.67,-0.5,1.33,2.0
+Pedro Tayer,Fluminense,away,1,0.0,0.0,0.0,0.0
+Pedro Tayer,Fluminense,home,2,2.0,-2.0,0.0,2.0
+Pedro Tayer,Fluminense,total,3,1.33,-1.0,0.0,1.33
+Pedro Tayer,Inter Miami,away,1,3.0,3.0,3.0,0.0
+Pedro Tayer,Inter Miami,home,2,1.5,1.5,3.5,2.0
+Pedro Tayer,Inter Miami,total,3,2.0,2.25,3.33,1.33
+Pedro Tayer,Internazionale,away,1,3.0,3.0,4.0,1.0
+Pedro Tayer,Internazionale,home,2,2.0,2.0,4.0,2.0
+Pedro Tayer,Internazionale,total,3,2.33,2.5,4.0,1.67
+Pedro Tayer,Juventus,away,1,3.0,-3.0,2.0,5.0
+Pedro Tayer,Juventus,home,2,1.0,-1.0,2.0,3.0
+Pedro Tayer,Juventus,total,3,1.67,-2.0,2.0,3.67
+Pedro Tayer,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Pedro Tayer,Los Angeles FC,home,2,1.5,1.5,2.0,0.5
+Pedro Tayer,Los Angeles FC,total,3,1.0,0.75,1.33,0.33
+Pedro Tayer,Mamelodi Sundowns,away,1,1.0,1.0,2.0,1.0
+Pedro Tayer,Mamelodi Sundowns,home,2,2.0,0.0,1.5,1.5
+Pedro Tayer,Mamelodi Sundowns,total,3,1.67,0.5,1.67,1.33
+Pedro Tayer,Manchester City,away,1,4.0,-4.0,1.0,5.0
+Pedro Tayer,Manchester City,home,2,2.0,-2.0,2.0,4.0
+Pedro Tayer,Manchester City,total,3,2.67,-3.0,1.67,4.33
+Pedro Tayer,Monterrey,away,2,3.0,-1.0,1.0,2.0
+Pedro Tayer,Monterrey,home,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Monterrey,total,3,2.0,-0.5,1.0,1.67
+Pedro Tayer,Pachuca,away,2,1.5,0.5,1.0,0.5
+Pedro Tayer,Pachuca,home,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Pachuca,total,3,1.0,0.25,1.0,0.67
+Pedro Tayer,Palmeiras,away,1,1.0,-1.0,1.0,2.0
+Pedro Tayer,Palmeiras,home,2,1.5,0.5,1.5,1.0
+Pedro Tayer,Palmeiras,total,3,1.33,-0.25,1.33,1.33
+Pedro Tayer,Paris Saint-Germain,away,1,1.0,1.0,3.0,2.0
+Pedro Tayer,Paris Saint-Germain,home,2,3.0,1.0,3.0,2.0
+Pedro Tayer,Paris Saint-Germain,total,3,2.33,1.0,3.0,2.0
+Pedro Tayer,Porto,home,1,3.0,-3.0,1.0,4.0
+Pedro Tayer,Porto,total,1,3.0,-3.0,1.0,4.0
+Pedro Tayer,Porto ,away,2,1.0,0.0,0.5,0.5
+Pedro Tayer,Porto ,total,2,1.0,0.0,0.5,0.5
+Pedro Tayer,RB Salzburg,away,1,1.0,1.0,3.0,2.0
+Pedro Tayer,RB Salzburg,home,2,2.5,2.5,2.5,0.0
+Pedro Tayer,RB Salzburg,total,3,2.0,1.75,2.67,0.67
+Pedro Tayer,Real Madrid,away,1,0.0,0.0,3.0,3.0
+Pedro Tayer,Real Madrid,home,2,1.5,0.5,2.5,2.0
+Pedro Tayer,Real Madrid,total,3,1.0,0.25,2.67,2.33
+Pedro Tayer,River Plate,away,1,0.0,0.0,0.0,0.0
+Pedro Tayer,River Plate,home,2,1.5,-0.5,1.0,1.5
+Pedro Tayer,River Plate,total,3,1.0,-0.25,0.67,1.0
+Pedro Tayer,Seattle Sounders,away,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Seattle Sounders,home,2,0.0,0.0,0.5,0.5
+Pedro Tayer,Seattle Sounders,total,3,0.0,0.0,0.67,0.67
+Pedro Tayer,Ulsan HD,away,2,1.0,1.0,2.0,1.0
+Pedro Tayer,Ulsan HD,home,1,2.0,2.0,2.0,0.0
+Pedro Tayer,Ulsan HD,total,3,1.33,1.5,2.0,0.67
+Pedro Tayer,Urawa Reds,away,2,1.5,0.5,1.5,1.0
+Pedro Tayer,Urawa Reds,home,1,1.0,1.0,1.0,0.0
+Pedro Tayer,Urawa Reds,total,3,1.33,0.75,1.33,0.67
+Pedro Tayer,Wydad Casablanca,away,2,0.0,0.0,0.5,0.5
+Pedro Tayer,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Wydad Casablanca,total,3,0.0,0.0,0.67,0.67
+RODRIGO ALBERNAZ,Al Ahly,away,2,2.5,-1.5,0.5,2.0
+RODRIGO ALBERNAZ,Al Ahly,home,1,2.0,2.0,2.0,0.0
+RODRIGO ALBERNAZ,Al Ahly,total,3,2.33,0.25,1.0,1.33
+RODRIGO ALBERNAZ,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+RODRIGO ALBERNAZ,Al-Ain,home,1,0.0,0.0,0.0,0.0
+RODRIGO ALBERNAZ,Al-Ain,total,3,0.33,-0.25,0.33,0.67
+RODRIGO ALBERNAZ,Al-Hilal,away,2,0.5,0.5,1.0,0.5
+RODRIGO ALBERNAZ,Al-Hilal,home,1,1.0,1.0,3.0,2.0
+RODRIGO ALBERNAZ,Al-Hilal,total,3,0.67,0.75,1.67,1.0
+RODRIGO ALBERNAZ,Atlético de Madrid,away,2,1.0,0.0,1.5,1.5
+RODRIGO ALBERNAZ,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Atlético de Madrid,total,3,1.0,0.5,1.67,1.33
+RODRIGO ALBERNAZ,Auckland City,away,2,0.5,0.5,0.5,0.0
+RODRIGO ALBERNAZ,Auckland City,home,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Auckland City,total,3,0.33,0.25,0.67,0.33
+RODRIGO ALBERNAZ,Bayern de Munique,away,1,2.0,2.0,2.0,0.0
+RODRIGO ALBERNAZ,Bayern de Munique,home,2,3.5,-3.5,2.5,6.0
+RODRIGO ALBERNAZ,Bayern de Munique,total,3,3.0,-0.75,2.33,4.0
+RODRIGO ALBERNAZ,Benfica,away,1,1.0,-1.0,1.0,2.0
+RODRIGO ALBERNAZ,Benfica,home,2,2.0,-2.0,1.5,3.5
+RODRIGO ALBERNAZ,Benfica,total,3,1.67,-1.5,1.33,3.0
+RODRIGO ALBERNAZ,Boca Juniors,away,2,1.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+RODRIGO ALBERNAZ,Boca Juniors,total,3,1.0,-0.5,1.0,1.33
+RODRIGO ALBERNAZ,Borussia Dortmund,away,2,2.5,1.5,3.5,2.0
+RODRIGO ALBERNAZ,Borussia Dortmund,home,1,4.0,4.0,5.0,1.0
+RODRIGO ALBERNAZ,Borussia Dortmund,total,3,3.0,2.75,4.0,1.67
+RODRIGO ALBERNAZ,Botafogo,away,2,0.5,-0.5,0.0,0.5
+RODRIGO ALBERNAZ,Botafogo,home,1,1.0,-1.0,1.0,2.0
+RODRIGO ALBERNAZ,Botafogo,total,3,0.67,-0.75,0.33,1.0
+RODRIGO ALBERNAZ,Chelsea,away,2,1.0,0.0,2.0,2.0
+RODRIGO ALBERNAZ,Chelsea,home,1,1.0,1.0,3.0,2.0
+RODRIGO ALBERNAZ,Chelsea,total,3,1.0,0.5,2.33,2.0
+RODRIGO ALBERNAZ,Espérance,away,2,0.5,0.5,1.0,0.5
+RODRIGO ALBERNAZ,Espérance,home,1,0.0,0.0,0.0,0.0
+RODRIGO ALBERNAZ,Espérance,total,3,0.33,0.25,0.67,0.33
+RODRIGO ALBERNAZ,Flamengo,away,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Flamengo,home,2,1.0,-1.0,1.5,2.5
+RODRIGO ALBERNAZ,Flamengo,total,3,1.0,0.0,1.67,2.0
+RODRIGO ALBERNAZ,Fluminense,away,1,1.0,1.0,1.0,0.0
+RODRIGO ALBERNAZ,Fluminense,home,2,1.0,-1.0,1.0,2.0
+RODRIGO ALBERNAZ,Fluminense,total,3,1.0,0.0,1.0,1.33
+RODRIGO ALBERNAZ,Inter Miami,away,1,1.0,1.0,1.0,0.0
+RODRIGO ALBERNAZ,Inter Miami,home,2,0.5,-0.5,1.5,2.0
+RODRIGO ALBERNAZ,Inter Miami,total,3,0.67,0.25,1.33,1.33
+RODRIGO ALBERNAZ,Internazionale,away,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Internazionale,home,2,0.0,0.0,2.0,2.0
+RODRIGO ALBERNAZ,Internazionale,total,3,0.0,0.0,1.67,1.67
+RODRIGO ALBERNAZ,Juventus,away,1,4.0,-4.0,1.0,5.0
+RODRIGO ALBERNAZ,Juventus,home,2,2.0,-2.0,1.0,3.0
+RODRIGO ALBERNAZ,Juventus,total,3,2.67,-3.0,1.0,3.67
+RODRIGO ALBERNAZ,Los Angeles FC,away,1,1.0,1.0,1.0,0.0
+RODRIGO ALBERNAZ,Los Angeles FC,home,2,1.5,1.5,2.0,0.5
+RODRIGO ALBERNAZ,Los Angeles FC,total,3,1.33,1.25,1.67,0.33
+RODRIGO ALBERNAZ,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Mamelodi Sundowns,home,2,1.5,-1.5,0.0,1.5
+RODRIGO ALBERNAZ,Mamelodi Sundowns,total,3,1.0,-0.75,0.33,1.33
+RODRIGO ALBERNAZ,Manchester City,away,1,3.0,-3.0,2.0,5.0
+RODRIGO ALBERNAZ,Manchester City,home,2,2.5,-1.5,2.5,4.0
+RODRIGO ALBERNAZ,Manchester City,total,3,2.67,-2.25,2.33,4.33
+RODRIGO ALBERNAZ,Monterrey,away,2,1.5,0.5,2.5,2.0
+RODRIGO ALBERNAZ,Monterrey,home,1,1.0,-1.0,0.0,1.0
+RODRIGO ALBERNAZ,Monterrey,total,3,1.33,-0.25,1.67,1.67
+RODRIGO ALBERNAZ,Pachuca,away,2,1.5,0.5,1.0,0.5
+RODRIGO ALBERNAZ,Pachuca,home,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Pachuca,total,3,1.0,0.25,1.0,0.67
+RODRIGO ALBERNAZ,Palmeiras,away,1,0.0,0.0,2.0,2.0
+RODRIGO ALBERNAZ,Palmeiras,home,2,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Palmeiras,total,3,0.67,0.5,2.0,1.33
+RODRIGO ALBERNAZ,Paris Saint-Germain,away,1,0.0,0.0,2.0,2.0
+RODRIGO ALBERNAZ,Paris Saint-Germain,home,2,2.5,1.5,3.5,2.0
+RODRIGO ALBERNAZ,Paris Saint-Germain,total,3,1.67,0.75,3.0,2.0
+RODRIGO ALBERNAZ,Porto,home,1,2.0,-2.0,2.0,4.0
+RODRIGO ALBERNAZ,Porto,total,1,2.0,-2.0,2.0,4.0
+RODRIGO ALBERNAZ,Porto ,away,2,1.0,1.0,1.5,0.5
+RODRIGO ALBERNAZ,Porto ,total,2,1.0,1.0,1.5,0.5
+RODRIGO ALBERNAZ,RB Salzburg,away,1,1.0,1.0,3.0,2.0
+RODRIGO ALBERNAZ,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+RODRIGO ALBERNAZ,RB Salzburg,total,3,1.0,1.0,1.67,0.67
+RODRIGO ALBERNAZ,Real Madrid,away,1,1.0,-1.0,2.0,3.0
+RODRIGO ALBERNAZ,Real Madrid,home,2,1.0,0.0,2.0,2.0
+RODRIGO ALBERNAZ,Real Madrid,total,3,1.0,-0.5,2.0,2.33
+RODRIGO ALBERNAZ,River Plate,away,1,1.0,1.0,1.0,0.0
+RODRIGO ALBERNAZ,River Plate,home,2,1.5,0.5,2.0,1.5
+RODRIGO ALBERNAZ,River Plate,total,3,1.33,0.75,1.67,1.0
+RODRIGO ALBERNAZ,Seattle Sounders,away,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+RODRIGO ALBERNAZ,Seattle Sounders,total,3,0.33,-0.25,0.33,0.67
+RODRIGO ALBERNAZ,Ulsan HD,away,2,0.5,-0.5,0.5,1.0
+RODRIGO ALBERNAZ,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+RODRIGO ALBERNAZ,Ulsan HD,total,3,0.67,0.25,0.67,0.67
+RODRIGO ALBERNAZ,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+RODRIGO ALBERNAZ,Urawa Reds,home,1,1.0,1.0,1.0,0.0
+RODRIGO ALBERNAZ,Urawa Reds,total,3,1.0,0.0,0.33,0.67
+RODRIGO ALBERNAZ,Wydad Casablanca,away,2,1.0,0.0,0.5,0.5
+RODRIGO ALBERNAZ,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Wydad Casablanca,total,3,0.67,0.0,0.67,0.67
+Rafael Conte,Al Ahly,away,2,3.0,0.0,2.0,2.0
+Rafael Conte,Al Ahly,home,1,1.0,1.0,1.0,0.0
+Rafael Conte,Al Ahly,total,3,2.33,0.5,1.67,1.33
+Rafael Conte,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+Rafael Conte,Al-Ain,home,1,1.0,1.0,1.0,0.0
+Rafael Conte,Al-Ain,total,3,0.67,0.25,0.67,0.67
+Rafael Conte,Al-Hilal,away,2,0.5,-0.5,0.0,0.5
+Rafael Conte,Al-Hilal,home,1,1.0,-1.0,1.0,2.0
+Rafael Conte,Al-Hilal,total,3,0.67,-0.75,0.33,1.0
+Rafael Conte,Atlético de Madrid,away,2,0.5,0.5,2.0,1.5
+Rafael Conte,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+Rafael Conte,Atlético de Madrid,total,3,0.67,0.75,2.0,1.33
+Rafael Conte,Auckland City,away,2,0.5,0.5,0.5,0.0
+Rafael Conte,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Rafael Conte,Auckland City,total,3,0.67,-0.25,0.33,0.33
+Rafael Conte,Bayern de Munique,away,1,3.0,3.0,3.0,0.0
+Rafael Conte,Bayern de Munique,home,2,3.5,-3.5,2.5,6.0
+Rafael Conte,Bayern de Munique,total,3,3.33,-0.25,2.67,4.0
+Rafael Conte,Benfica,away,1,2.0,-2.0,0.0,2.0
+Rafael Conte,Benfica,home,2,2.0,-2.0,1.5,3.5
+Rafael Conte,Benfica,total,3,2.0,-2.0,1.0,3.0
+Rafael Conte,Boca Juniors,away,2,0.0,0.0,1.0,1.0
+Rafael Conte,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+Rafael Conte,Boca Juniors,total,3,0.33,-0.5,1.0,1.33
+Rafael Conte,Borussia Dortmund,away,2,2.0,1.0,3.0,2.0
+Rafael Conte,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+Rafael Conte,Borussia Dortmund,total,3,2.0,1.5,3.0,1.67
+Rafael Conte,Botafogo,away,2,0.0,0.0,0.5,0.5
+Rafael Conte,Botafogo,home,1,1.0,-1.0,1.0,2.0
+Rafael Conte,Botafogo,total,3,0.33,-0.5,0.67,1.0
+Rafael Conte,Chelsea,away,2,0.0,0.0,2.0,2.0
+Rafael Conte,Chelsea,home,1,1.0,1.0,3.0,2.0
+Rafael Conte,Chelsea,total,3,0.33,0.5,2.33,2.0
+Rafael Conte,Espérance,away,2,0.0,0.0,0.5,0.5
+Rafael Conte,Espérance,home,1,0.0,0.0,0.0,0.0
+Rafael Conte,Espérance,total,3,0.0,0.0,0.33,0.33
+Rafael Conte,Flamengo,away,1,1.0,1.0,2.0,1.0
+Rafael Conte,Flamengo,home,2,2.0,-2.0,0.5,2.5
+Rafael Conte,Flamengo,total,3,1.67,-0.5,1.0,2.0
+Rafael Conte,Fluminense,away,1,1.0,1.0,1.0,0.0
+Rafael Conte,Fluminense,home,2,1.5,-1.5,0.5,2.0
+Rafael Conte,Fluminense,total,3,1.33,-0.25,0.67,1.33
+Rafael Conte,Inter Miami,away,1,3.0,3.0,3.0,0.0
+Rafael Conte,Inter Miami,home,2,1.5,0.5,2.5,2.0
+Rafael Conte,Inter Miami,total,3,2.0,1.75,2.67,1.33
+Rafael Conte,Internazionale,away,1,1.0,1.0,2.0,1.0
+Rafael Conte,Internazionale,home,2,0.5,0.5,2.5,2.0
+Rafael Conte,Internazionale,total,3,0.67,0.75,2.33,1.67
+Rafael Conte,Juventus,away,1,3.0,-3.0,2.0,5.0
+Rafael Conte,Juventus,home,2,0.5,-0.5,2.5,3.0
+Rafael Conte,Juventus,total,3,1.33,-1.75,2.33,3.67
+Rafael Conte,Los Angeles FC,away,1,1.0,1.0,1.0,0.0
+Rafael Conte,Los Angeles FC,home,2,0.5,0.5,1.0,0.5
+Rafael Conte,Los Angeles FC,total,3,0.67,0.75,1.0,0.33
+Rafael Conte,Mamelodi Sundowns,away,1,1.0,1.0,2.0,1.0
+Rafael Conte,Mamelodi Sundowns,home,2,1.0,-1.0,0.5,1.5
+Rafael Conte,Mamelodi Sundowns,total,3,1.0,0.0,1.0,1.33
+Rafael Conte,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Rafael Conte,Manchester City,home,2,2.0,-1.0,3.0,4.0
+Rafael Conte,Manchester City,total,3,2.33,-2.0,2.67,4.33
+Rafael Conte,Monterrey,away,2,1.5,-1.5,0.5,2.0
+Rafael Conte,Monterrey,home,1,1.0,-1.0,0.0,1.0
+Rafael Conte,Monterrey,total,3,1.33,-1.25,0.33,1.67
+Rafael Conte,Pachuca,away,2,1.5,1.5,2.0,0.5
+Rafael Conte,Pachuca,home,1,2.0,2.0,3.0,1.0
+Rafael Conte,Pachuca,total,3,1.67,1.75,2.33,0.67
+Rafael Conte,Palmeiras,away,1,2.0,-2.0,0.0,2.0
+Rafael Conte,Palmeiras,home,2,1.0,-1.0,0.0,1.0
+Rafael Conte,Palmeiras,total,3,1.33,-1.5,0.0,1.33
+Rafael Conte,Paris Saint-Germain,away,1,3.0,3.0,5.0,2.0
+Rafael Conte,Paris Saint-Germain,home,2,2.0,1.0,3.0,2.0
+Rafael Conte,Paris Saint-Germain,total,3,2.33,2.0,3.67,2.0
+Rafael Conte,Porto,home,1,1.0,1.0,5.0,4.0
+Rafael Conte,Porto,total,1,1.0,1.0,5.0,4.0
+Rafael Conte,Porto ,away,2,3.0,3.0,3.5,0.5
+Rafael Conte,Porto ,total,2,3.0,3.0,3.5,0.5
+Rafael Conte,RB Salzburg,away,1,0.0,0.0,2.0,2.0
+Rafael Conte,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+Rafael Conte,RB Salzburg,total,3,0.67,0.5,1.33,0.67
+Rafael Conte,Real Madrid,away,1,1.0,-1.0,2.0,3.0
+Rafael Conte,Real Madrid,home,2,1.5,1.5,3.5,2.0
+Rafael Conte,Real Madrid,total,3,1.33,0.25,3.0,2.33
+Rafael Conte,River Plate,away,1,0.0,0.0,0.0,0.0
+Rafael Conte,River Plate,home,2,1.0,0.0,1.5,1.5
+Rafael Conte,River Plate,total,3,0.67,0.0,1.0,1.0
+Rafael Conte,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Rafael Conte,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+Rafael Conte,Seattle Sounders,total,3,0.67,-0.75,0.0,0.67
+Rafael Conte,Ulsan HD,away,2,1.0,-1.0,0.0,1.0
+Rafael Conte,Ulsan HD,home,1,3.0,3.0,3.0,0.0
+Rafael Conte,Ulsan HD,total,3,1.67,1.0,1.0,0.67
+Rafael Conte,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+Rafael Conte,Urawa Reds,home,1,0.0,0.0,0.0,0.0
+Rafael Conte,Urawa Reds,total,3,0.67,-0.5,0.0,0.67
+Rafael Conte,Wydad Casablanca,away,2,0.0,0.0,0.5,0.5
+Rafael Conte,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+Rafael Conte,Wydad Casablanca,total,3,0.0,0.0,0.67,0.67
+Thales Oliveira,Al Ahly,away,2,2.0,-2.0,0.0,2.0
+Thales Oliveira,Al Ahly,home,1,2.0,2.0,2.0,0.0
+Thales Oliveira,Al Ahly,total,3,2.0,0.0,0.67,1.33
+Thales Oliveira,Al-Ain,away,2,0.5,-0.5,0.5,1.0
+Thales Oliveira,Al-Ain,home,1,0.0,0.0,0.0,0.0
+Thales Oliveira,Al-Ain,total,3,0.33,-0.25,0.33,0.67
+Thales Oliveira,Al-Hilal,away,2,1.5,0.5,1.0,0.5
+Thales Oliveira,Al-Hilal,home,1,0.0,0.0,2.0,2.0
+Thales Oliveira,Al-Hilal,total,3,1.0,0.25,1.33,1.0
+Thales Oliveira,Atlético de Madrid,away,2,1.0,0.0,1.5,1.5
+Thales Oliveira,Atlético de Madrid,home,1,0.0,0.0,1.0,1.0
+Thales Oliveira,Atlético de Madrid,total,3,0.67,0.0,1.33,1.33
+Thales Oliveira,Auckland City,away,2,0.0,0.0,0.0,0.0
+Thales Oliveira,Auckland City,home,1,1.0,-1.0,0.0,1.0
+Thales Oliveira,Auckland City,total,3,0.33,-0.5,0.0,0.33
+Thales Oliveira,Bayern de Munique,away,1,2.0,2.0,2.0,0.0
+Thales Oliveira,Bayern de Munique,home,2,3.5,-1.5,4.5,6.0
+Thales Oliveira,Bayern de Munique,total,3,3.0,0.25,3.67,4.0
+Thales Oliveira,Benfica,away,1,0.0,0.0,2.0,2.0
+Thales Oliveira,Benfica,home,2,1.5,-1.5,2.0,3.5
+Thales Oliveira,Benfica,total,3,1.0,-0.75,2.0,3.0
+Thales Oliveira,Boca Juniors,away,2,0.5,-0.5,0.5,1.0
+Thales Oliveira,Boca Juniors,home,1,2.0,-2.0,0.0,2.0
+Thales Oliveira,Boca Juniors,total,3,1.0,-1.25,0.33,1.33
+Thales Oliveira,Borussia Dortmund,away,2,1.5,1.5,3.5,2.0
+Thales Oliveira,Borussia Dortmund,home,1,2.0,2.0,3.0,1.0
+Thales Oliveira,Borussia Dortmund,total,3,1.67,1.75,3.33,1.67
+Thales Oliveira,Botafogo,away,2,1.0,0.0,0.5,0.5
+Thales Oliveira,Botafogo,home,1,0.0,0.0,2.0,2.0
+Thales Oliveira,Botafogo,total,3,0.67,0.0,1.0,1.0
+Thales Oliveira,Chelsea,away,2,0.5,0.5,2.5,2.0
+Thales Oliveira,Chelsea,home,1,1.0,1.0,3.0,2.0
+Thales Oliveira,Chelsea,total,3,0.67,0.75,2.67,2.0
+Thales Oliveira,Espérance,away,2,1.0,0.0,0.5,0.5
+Thales Oliveira,Espérance,home,1,0.0,0.0,0.0,0.0
+Thales Oliveira,Espérance,total,3,0.67,0.0,0.33,0.33
+Thales Oliveira,Flamengo,away,1,2.0,2.0,3.0,1.0
+Thales Oliveira,Flamengo,home,2,1.0,-1.0,1.5,2.5
+Thales Oliveira,Flamengo,total,3,1.33,0.5,2.0,2.0
+Thales Oliveira,Fluminense,away,1,3.0,3.0,3.0,0.0
+Thales Oliveira,Fluminense,home,2,1.0,-1.0,1.0,2.0
+Thales Oliveira,Fluminense,total,3,1.67,1.0,1.67,1.33
+Thales Oliveira,Inter Miami,away,1,2.0,2.0,2.0,0.0
+Thales Oliveira,Inter Miami,home,2,1.0,-1.0,1.0,2.0
+Thales Oliveira,Inter Miami,total,3,1.33,0.5,1.33,1.33
+Thales Oliveira,Internazionale,away,1,2.0,2.0,3.0,1.0
+Thales Oliveira,Internazionale,home,2,0.5,0.5,2.5,2.0
+Thales Oliveira,Internazionale,total,3,1.0,1.25,2.67,1.67
+Thales Oliveira,Juventus,away,1,3.0,-3.0,2.0,5.0
+Thales Oliveira,Juventus,home,2,1.5,-1.5,1.5,3.0
+Thales Oliveira,Juventus,total,3,2.0,-2.25,1.67,3.67
+Thales Oliveira,Los Angeles FC,away,1,0.0,0.0,0.0,0.0
+Thales Oliveira,Los Angeles FC,home,2,0.5,0.5,1.0,0.5
+Thales Oliveira,Los Angeles FC,total,3,0.33,0.25,0.67,0.33
+Thales Oliveira,Mamelodi Sundowns,away,1,1.0,1.0,2.0,1.0
+Thales Oliveira,Mamelodi Sundowns,home,2,2.0,-1.0,0.5,1.5
+Thales Oliveira,Mamelodi Sundowns,total,3,1.67,0.0,1.0,1.33
+Thales Oliveira,Manchester City,away,1,3.0,-3.0,2.0,5.0
+Thales Oliveira,Manchester City,home,2,2.0,0.0,4.0,4.0
+Thales Oliveira,Manchester City,total,3,2.33,-1.5,3.33,4.33
+Thales Oliveira,Monterrey,away,2,2.0,-1.0,1.0,2.0
+Thales Oliveira,Monterrey,home,1,1.0,-1.0,0.0,1.0
+Thales Oliveira,Monterrey,total,3,1.67,-1.0,0.67,1.67
+Thales Oliveira,Pachuca,away,2,0.5,-0.5,0.0,0.5
+Thales Oliveira,Pachuca,home,1,0.0,0.0,1.0,1.0
+Thales Oliveira,Pachuca,total,3,0.33,-0.25,0.33,0.67
+Thales Oliveira,Palmeiras,away,1,1.0,1.0,3.0,2.0
+Thales Oliveira,Palmeiras,home,2,0.5,0.5,1.5,1.0
+Thales Oliveira,Palmeiras,total,3,0.67,0.75,2.0,1.33
+Thales Oliveira,Paris Saint-Germain,away,1,2.0,2.0,4.0,2.0
+Thales Oliveira,Paris Saint-Germain,home,2,2.5,0.5,2.5,2.0
+Thales Oliveira,Paris Saint-Germain,total,3,2.33,1.25,3.0,2.0
+Thales Oliveira,Porto,home,1,2.0,-2.0,2.0,4.0
+Thales Oliveira,Porto,total,1,2.0,-2.0,2.0,4.0
+Thales Oliveira,Porto ,away,2,1.5,1.5,2.0,0.5
+Thales Oliveira,Porto ,total,2,1.5,1.5,2.0,0.5
+Thales Oliveira,RB Salzburg,away,1,0.0,0.0,2.0,2.0
+Thales Oliveira,RB Salzburg,home,2,0.5,0.5,0.5,0.0
+Thales Oliveira,RB Salzburg,total,3,0.33,0.25,1.0,0.67
+Thales Oliveira,Real Madrid,away,1,1.0,-1.0,2.0,3.0
+Thales Oliveira,Real Madrid,home,2,0.5,0.5,2.5,2.0
+Thales Oliveira,Real Madrid,total,3,0.67,-0.25,2.33,2.33
+Thales Oliveira,River Plate,away,1,1.0,1.0,1.0,0.0
+Thales Oliveira,River Plate,home,2,2.0,0.0,1.5,1.5
+Thales Oliveira,River Plate,total,3,1.67,0.5,1.33,1.0
+Thales Oliveira,Seattle Sounders,away,1,1.0,-1.0,0.0,1.0
+Thales Oliveira,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+Thales Oliveira,Seattle Sounders,total,3,0.67,-0.75,0.0,0.67
+Thales Oliveira,Ulsan HD,away,2,0.5,-0.5,0.5,1.0
+Thales Oliveira,Ulsan HD,home,1,2.0,2.0,2.0,0.0
+Thales Oliveira,Ulsan HD,total,3,1.0,0.75,1.0,0.67
+Thales Oliveira,Urawa Reds,away,2,1.0,-1.0,0.0,1.0
+Thales Oliveira,Urawa Reds,home,1,1.0,1.0,1.0,0.0
+Thales Oliveira,Urawa Reds,total,3,1.0,0.0,0.33,0.67
+Thales Oliveira,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+Thales Oliveira,Wydad Casablanca,home,1,1.0,-1.0,0.0,1.0
+Thales Oliveira,Wydad Casablanca,total,3,0.67,-0.75,0.0,0.67
+thiago bahiense,Al Ahly,away,2,1.5,-1.5,0.5,2.0
+thiago bahiense,Al Ahly,home,1,2.0,2.0,2.0,0.0
+thiago bahiense,Al Ahly,total,3,1.67,0.25,1.0,1.33
+thiago bahiense,Al-Ain,away,2,0.0,0.0,1.0,1.0
+thiago bahiense,Al-Ain,home,1,0.0,0.0,0.0,0.0
+thiago bahiense,Al-Ain,total,3,0.0,0.0,0.67,0.67
+thiago bahiense,Al-Hilal,away,2,1.5,0.5,1.0,0.5
+thiago bahiense,Al-Hilal,home,1,1.0,-1.0,1.0,2.0
+thiago bahiense,Al-Hilal,total,3,1.33,-0.25,1.0,1.0
+thiago bahiense,Atlético de Madrid,away,2,0.5,-0.5,1.0,1.5
+thiago bahiense,Atlético de Madrid,home,1,1.0,1.0,2.0,1.0
+thiago bahiense,Atlético de Madrid,total,3,0.67,0.25,1.33,1.33
+thiago bahiense,Auckland City,away,2,1.0,1.0,1.0,0.0
+thiago bahiense,Auckland City,home,1,1.0,-1.0,0.0,1.0
+thiago bahiense,Auckland City,total,3,1.0,0.0,0.67,0.33
+thiago bahiense,Bayern de Munique,away,1,3.0,3.0,3.0,0.0
+thiago bahiense,Bayern de Munique,home,2,3.5,-2.5,3.5,6.0
+thiago bahiense,Bayern de Munique,total,3,3.33,0.25,3.33,4.0
+thiago bahiense,Benfica,away,1,1.0,-1.0,1.0,2.0
+thiago bahiense,Benfica,home,2,2.0,-2.0,1.5,3.5
+thiago bahiense,Benfica,total,3,1.67,-1.5,1.33,3.0
+thiago bahiense,Boca Juniors,away,2,0.5,0.5,1.5,1.0
+thiago bahiense,Boca Juniors,home,1,1.0,-1.0,1.0,2.0
+thiago bahiense,Boca Juniors,total,3,0.67,-0.25,1.33,1.33
+thiago bahiense,Borussia Dortmund,away,2,2.0,0.0,2.0,2.0
+thiago bahiense,Borussia Dortmund,home,1,1.0,1.0,2.0,1.0
+thiago bahiense,Borussia Dortmund,total,3,1.67,0.5,2.0,1.67
+thiago bahiense,Botafogo,away,2,1.0,0.0,0.5,0.5
+thiago bahiense,Botafogo,home,1,1.0,1.0,3.0,2.0
+thiago bahiense,Botafogo,total,3,1.0,0.5,1.33,1.0
+thiago bahiense,Chelsea,away,2,0.0,0.0,2.0,2.0
+thiago bahiense,Chelsea,home,1,1.0,1.0,3.0,2.0
+thiago bahiense,Chelsea,total,3,0.33,0.5,2.33,2.0
+thiago bahiense,Espérance,away,2,0.0,0.0,0.5,0.5
+thiago bahiense,Espérance,home,1,0.0,0.0,0.0,0.0
+thiago bahiense,Espérance,total,3,0.0,0.0,0.33,0.33
+thiago bahiense,Flamengo,away,1,1.0,1.0,2.0,1.0
+thiago bahiense,Flamengo,home,2,1.5,-1.5,1.0,2.5
+thiago bahiense,Flamengo,total,3,1.33,-0.25,1.33,2.0
+thiago bahiense,Fluminense,away,1,2.0,2.0,2.0,0.0
+thiago bahiense,Fluminense,home,2,1.5,-1.5,0.5,2.0
+thiago bahiense,Fluminense,total,3,1.67,0.25,1.0,1.33
+thiago bahiense,Inter Miami,away,1,1.0,1.0,1.0,0.0
+thiago bahiense,Inter Miami,home,2,1.0,-1.0,1.0,2.0
+thiago bahiense,Inter Miami,total,3,1.0,0.0,1.0,1.33
+thiago bahiense,Internazionale,away,1,1.0,1.0,2.0,1.0
+thiago bahiense,Internazionale,home,2,1.0,0.0,2.0,2.0
+thiago bahiense,Internazionale,total,3,1.0,0.5,2.0,1.67
+thiago bahiense,Juventus,away,1,4.0,-4.0,1.0,5.0
+thiago bahiense,Juventus,home,2,1.5,-1.5,1.5,3.0
+thiago bahiense,Juventus,total,3,2.33,-2.75,1.33,3.67
+thiago bahiense,Los Angeles FC,away,1,1.0,1.0,1.0,0.0
+thiago bahiense,Los Angeles FC,home,2,1.0,1.0,1.5,0.5
+thiago bahiense,Los Angeles FC,total,3,1.0,1.0,1.33,0.33
+thiago bahiense,Mamelodi Sundowns,away,1,0.0,0.0,1.0,1.0
+thiago bahiense,Mamelodi Sundowns,home,2,2.0,-1.0,0.5,1.5
+thiago bahiense,Mamelodi Sundowns,total,3,1.33,-0.5,0.67,1.33
+thiago bahiense,Manchester City,away,1,2.0,-2.0,3.0,5.0
+thiago bahiense,Manchester City,home,2,2.0,-1.0,3.0,4.0
+thiago bahiense,Manchester City,total,3,2.0,-1.5,3.0,4.33
+thiago bahiense,Monterrey,away,2,1.5,-1.5,0.5,2.0
+thiago bahiense,Monterrey,home,1,1.0,-1.0,0.0,1.0
+thiago bahiense,Monterrey,total,3,1.33,-1.25,0.33,1.67
+thiago bahiense,Pachuca,away,2,1.0,0.0,0.5,0.5
+thiago bahiense,Pachuca,home,1,1.0,1.0,2.0,1.0
+thiago bahiense,Pachuca,total,3,1.0,0.5,1.0,0.67
+thiago bahiense,Palmeiras,away,1,0.0,0.0,2.0,2.0
+thiago bahiense,Palmeiras,home,2,1.0,0.0,1.0,1.0
+thiago bahiense,Palmeiras,total,3,0.67,0.0,1.33,1.33
+thiago bahiense,Paris Saint-Germain,away,1,0.0,0.0,2.0,2.0
+thiago bahiense,Paris Saint-Germain,home,2,2.0,0.0,2.0,2.0
+thiago bahiense,Paris Saint-Germain,total,3,1.33,0.0,2.0,2.0
+thiago bahiense,Porto,home,1,2.0,-2.0,2.0,4.0
+thiago bahiense,Porto,total,1,2.0,-2.0,2.0,4.0
+thiago bahiense,Porto ,away,2,0.5,0.5,1.0,0.5
+thiago bahiense,Porto ,total,2,0.5,0.5,1.0,0.5
+thiago bahiense,RB Salzburg,away,1,1.0,-1.0,1.0,2.0
+thiago bahiense,RB Salzburg,home,2,1.0,1.0,1.0,0.0
+thiago bahiense,RB Salzburg,total,3,1.0,0.0,1.0,0.67
+thiago bahiense,Real Madrid,away,1,0.0,0.0,3.0,3.0
+thiago bahiense,Real Madrid,home,2,1.5,0.5,2.5,2.0
+thiago bahiense,Real Madrid,total,3,1.0,0.25,2.67,2.33
+thiago bahiense,River Plate,away,1,1.0,1.0,1.0,0.0
+thiago bahiense,River Plate,home,2,1.0,0.0,1.5,1.5
+thiago bahiense,River Plate,total,3,1.0,0.5,1.33,1.0
+thiago bahiense,Seattle Sounders,away,1,0.0,0.0,1.0,1.0
+thiago bahiense,Seattle Sounders,home,2,0.5,-0.5,0.0,0.5
+thiago bahiense,Seattle Sounders,total,3,0.33,-0.25,0.33,0.67
+thiago bahiense,Ulsan HD,away,2,1.0,-1.0,0.0,1.0
+thiago bahiense,Ulsan HD,home,1,1.0,1.0,1.0,0.0
+thiago bahiense,Ulsan HD,total,3,1.0,0.0,0.33,0.67
+thiago bahiense,Urawa Reds,away,2,0.0,0.0,1.0,1.0
+thiago bahiense,Urawa Reds,home,1,1.0,1.0,1.0,0.0
+thiago bahiense,Urawa Reds,total,3,0.33,0.5,1.0,0.67
+thiago bahiense,Wydad Casablanca,away,2,0.5,-0.5,0.0,0.5
+thiago bahiense,Wydad Casablanca,home,1,0.0,0.0,1.0,1.0
+thiago bahiense,Wydad Casablanca,total,3,0.33,-0.25,0.33,0.67
