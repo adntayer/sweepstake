@@ -341,10 +341,147 @@ details .content { padding: 0.75rem 1rem; }
 .heat-cell-header { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; color: var(--text-muted); flex-shrink: 0; border-radius: 3px; }
 .heat-total-label { width: 80px; min-width: 80px; font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; padding-right: 4px; line-height: 28px; text-align: right; border-top: 1px solid var(--card-border); }
 
+/* Bottom navigation bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.25rem 0;
+    padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 10px var(--shadow-color);
+}
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    min-height: 44px;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav a:active { background: var(--hover-overlay); }
+.bottom-nav a .nav-icon { font-size: 1.2rem; line-height: 1; }
+.bottom-nav a.active { color: var(--accent); }
+body { padding-bottom: 70px; }
+
+/* Zebra cards */
+.zebra-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0.75rem;
+}
+.zebra-card.upset { border-color: var(--danger); border-width: 2px; }
+.zebra-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.zebra-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.zebra-badge.upset { background: var(--danger); color: #fff; }
+.zebra-badge.favorite { background: var(--success); color: #fff; }
+.zebra-matchup { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+.zebra-detail { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+.zebra-players { margin-top: 0.5rem; font-size: 0.8rem; }
+.zebra-players .tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    margin: 0.1rem;
+    background: var(--accent-highlight);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    color: var(--accent);
+}
+
+/* Momentum / streak styles */
+.streak-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 0.85rem;
+}
+.streak-row:last-child { border-bottom: none; }
+.streak-name { flex: 1; font-weight: 600; }
+.streak-bar-mini {
+    height: 6px;
+    border-radius: 3px;
+    flex: 0 0 80px;
+    background: var(--card-border);
+    overflow: hidden;
+}
+.streak-bar-mini .fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+.streak-bar-mini .fill.hot { background: var(--success); }
+.streak-bar-mini .fill.cold { background: var(--danger); }
+.streak-val { min-width: 30px; text-align: right; font-size: 0.75rem; font-weight: 700; }
+
+/* Profile badge */
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid var(--accent);
+    background: var(--accent-highlight);
+}
+
+/* Trend indicators */
+.trend-up { color: var(--success); }
+.trend-down { color: var(--danger); }
+.trend-flat { color: var(--text-muted); }
+
+/* Hot streak indicator */
+.hot-streak {
+    display: inline-block;
+    font-size: 0.9rem;
+    animation: pulse-fire 1.5s ease-in-out infinite;
+}
+@keyframes pulse-fire {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Mini stat columns */
+.mini-stat { text-align: center; padding: 0.3rem; }
+.mini-stat .val { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+.mini-stat .lbl { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+
 /* Responsive */
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.25rem; }
     .hero .subtitle { font-size: 0.8rem; }
+    .bottom-nav a { font-size: 0.55rem; }
+    .bottom-nav a .nav-icon { font-size: 1rem; }
 }
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
@@ -353,7 +490,23 @@ details .content { padding: 0.75rem 1rem; }
 """
 
 
-def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: str = "") -> str:
+def _bottom_nav_html(active: str = "") -> str:
+    """Build the fixed bottom navigation bar. 'active' should match a href."""
+    items = [
+        ("index.html", "\U0001f3e0", "In\u00edcio"),
+        ("arena.html", "\u2694\ufe0f", "Arena"),
+        ("zebras.html", "\U0001f993", "Zebras"),
+        ("momentum.html", "\U0001f525", "Momentum"),
+        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+    ]
+    links = ""
+    for href, icon, label in items:
+        cls = ' class="active"' if active == href else ""
+        links += f'<a href="{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
+    return f'<nav class="bottom-nav">{links}</nav>'
+
+
+def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: str = "", active_nav: str = "") -> str:
     """Wrap body content in the standard HTML page frame."""
     back_html = ""
     if back_link:
@@ -376,9 +529,10 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
 <body>
 {back_html}
 {body}
-<div style="text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:0.75rem;">
+<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
     atualizado às {now_str}
 </div>
+{_bottom_nav_html(active_nav)}
 </body>
 </html>"""
 
@@ -424,6 +578,21 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     max_pts = _max_points_per_game(config)
 
     df_bol = df_valid.loc[df_valid["who"] == boleiro].copy()
+
+    # --- Load playoff predictions for this player ---
+    playoff_parts = []
+    for pr in (config.playoff_rounds or []):
+        phase_valid_path = config.gold_playoff_valid_path(pr.key)
+        if os.path.exists(phase_valid_path):
+            df_phase = pd.read_csv(phase_valid_path, sep=",")
+            df_phase_player = df_phase[df_phase["who"] == boleiro]
+            if not df_phase_player.empty:
+                playoff_parts.append(df_phase_player)
+
+    if playoff_parts:
+        df_playoff = pd.concat(playoff_parts, ignore_index=True)
+        df_bol = pd.concat([df_bol, df_playoff], ignore_index=True)
+
     df_bol = df_bol.sort_values(["date", "hour"], ascending=True)
     df_bol["pontos_acumulados"] = df_bol["pontos"].cumsum()
 
@@ -513,6 +682,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 )
 
     # Match history rows (newest first)
+    playoff_emoji_map = {"oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "final": "\U0001f3c6"}
     df_hist = df_bol.sort_values(["date", "hour"], ascending=False)
     history_rows = ""
     for _, row in df_hist.iterrows():
@@ -534,12 +704,17 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 pts_color = "var(--text-muted)"
                 pts_bg = "transparent"
                 pts_border = "var(--card-border)"
+        # Phase indicator for playoff matches
+        phase_label = ""
+        phase_val = row.get("phase", "")
+        if phase_val and phase_val in playoff_emoji_map:
+            phase_label = f'{playoff_emoji_map[phase_val]} {phase_val} | '
         history_rows += (
             f'<div class="pred-row">'
             f'<div class="pred-info">'
             f'<div class="pred-name">{row["home_team"]} {row["resultado_real_placar"]} {row["away_team"]}</div>'
             f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
-            f'<div class="pred-detail">{date_str}</div>'
+            f'<div class="pred-detail">{phase_label}{date_str}</div>'
             f'</div>'
             f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
             f'</div>\n'
@@ -581,6 +756,128 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
     if compare_bars:
         body += f'<div class="card"><div class="card-title">Pontos por Dia — Voce vs Bolao</div><div style="padding:0.5rem 0;">{compare_bars}</div></div>\n'
+
+    # ------------------------------------------------------------------
+    # Perfil do Jogador (advanced stats from gold layer)
+    # ------------------------------------------------------------------
+    profile_html = ""
+    gold_dir = config._au_first_round()
+
+    # --- Profile type from boldness_index ---
+    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
+    boldness_score = None
+    if os.path.exists(bold_path):
+        df_bold = pd.read_csv(bold_path, sep=",")
+        df_bold_player = df_bold[df_bold["boleiro"] == boleiro]
+        if not df_bold_player.empty:
+            boldness_score = float(df_bold_player.iloc[0]["boldness_score"])
+            if boldness_score > 0.3:
+                profile_type = "\U0001f680 Ousado"
+                profile_desc = "Você aposta em placares acima da média do bolão"
+            elif boldness_score < -0.3:
+                profile_type = "\U0001f6c8 Conservador"
+                profile_desc = "Você aposta em placares abaixo da média do bolão"
+            else:
+                profile_type = "\u2696\ufe0f Equilibrado"
+                profile_desc = "Você aposta na média do bolão"
+
+    # --- Best and worst teams (goal_error_by_team) ---
+    error_path = _norm(os.path.join(gold_dir, "goal_error_by_team.csv"))
+    best_team_html = ""
+    worst_team_html = ""
+    bias_html = ""
+    if os.path.exists(error_path):
+        df_err = pd.read_csv(error_path, sep=",")
+        df_err_p = df_err[df_err["boleiro"] == boleiro].copy()
+        if not df_err_p.empty:
+            # Best (lowest MAE)
+            df_err_p_sorted = df_err_p.sort_values("mae")
+            best_teams = df_err_p_sorted.head(3)
+            worst_teams = df_err_p_sorted.tail(3)
+
+            best_team_html = "<div style='margin-top:0.5rem;'>"
+            best_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f3c6 Times que voce mais acerta</div>'
+            for _, r in best_teams.iterrows():
+                best_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) — erro medio de {r["mae"]:.1f} gols</div>\n'
+            best_team_html += "</div>"
+
+            worst_team_html = "<div style='margin-top:0.5rem;'>"
+            worst_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f4a9 Times que voce mais erra</div>'
+            for _, r in worst_teams.iterrows():
+                worst_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) — erro medio de {r["mae"]:.1f} gols</div>\n'
+            worst_team_html += "</div>"
+
+            # Bias analysis
+            bias_teams = df_err_p[df_err_p["goal_bias"].abs() >= 0.5].sort_values("goal_bias")
+            if not bias_teams.empty:
+                bias_html = "<div style='margin-top:0.5rem;'>"
+                bias_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f4ca Vies de palpites</div>'
+                for _, r in bias_teams.head(4).iterrows():
+                    direction = "superestima" if r["goal_bias"] > 0 else "subestima"
+                    bias_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;">Voce <strong>{direction}</strong> o {r["team"]} em {abs(r["goal_bias"]):.1f} gols</div>\n'
+                bias_html += "</div>"
+
+    # --- Timing (prediction_timing) ---
+    timing_html = ""
+    timing_path = _norm(os.path.join(gold_dir, "prediction_timing.csv"))
+    if os.path.exists(timing_path):
+        df_timing = pd.read_csv(timing_path, sep=",")
+        df_timing_p = df_timing[df_timing["boleiro"] == boleiro]
+        if not df_timing_p.empty:
+            lead_days = int(df_timing_p.iloc[0]["lead_days"]) if "lead_days" in df_timing_p.columns else 0
+            if lead_days <= 1:
+                timing_profile = "\U0001f4a5 Em cima da hora"
+            elif lead_days <= 7:
+                timing_profile = "\U0001f4c5 Prazo medio"
+            else:
+                timing_profile = "\U0001f4bd Early bird"
+            timing_html = f'<div style="margin-top:0.25rem;"><span style="font-size:0.8rem;color:var(--text-muted);">Submissao:</span> <strong>{timing_profile}</strong> ({lead_days} dias de antecedencia)</div>\n'
+
+    # --- Current streak ---
+    streak_html = ""
+    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
+    if os.path.exists(cons_path):
+        df_cons = pd.read_csv(cons_path, sep=",")
+        df_cons_p = df_cons[df_cons["boleiro"] == boleiro].sort_values("date")
+        if not df_cons_p.empty:
+            # Find current streak
+            streak_type = ""
+            streak_len = 0
+            for _, r in reversed(list(df_cons_p.iterrows())):
+                st = r.get("streak_type", "")
+                if st == "hit":
+                    if streak_type == "" or streak_type == "hit":
+                        streak_type = "hit"
+                        streak_len += 1
+                    else:
+                        break
+                elif st == "miss":
+                    if streak_type == "" or streak_type == "miss":
+                        streak_type = "miss"
+                        streak_len += 1
+                    else:
+                        break
+                else:
+                    break
+            if streak_type == "hit":
+                streak_html = f'<div style="margin-top:0.25rem;"><span class="profile-badge" style="border-color:var(--success);background:rgba(34,197,94,0.15);">\U0001f525 Sequencia: {streak_len} acertos</span></div>\n'
+            elif streak_type == "miss":
+                streak_html = f'<div style="margin-top:0.25rem;"><span class="profile-badge" style="border-color:var(--danger);background:rgba(239,68,68,0.15);">\U0001f4a9 Sequencia: {streak_len} erros</span></div>\n'
+
+    # --- Build profile card ---
+    if any([boldness_score is not None, best_team_html, bias_html, timing_html, streak_html]):
+        profile_parts = ""
+        if boldness_score is not None:
+            profile_parts += f'<div style="margin-bottom:0.5rem;"><span class="profile-badge">{profile_type}</span> <span style="font-size:0.8rem;color:var(--text-muted);">({profile_desc})</span></div>\n'
+        profile_parts += timing_html
+        profile_parts += streak_html
+        profile_parts += best_team_html
+        profile_parts += worst_team_html
+        profile_parts += bias_html
+        if profile_parts:
+            profile_html = f'<div class="section"><div class="section-title">\U0001f9d0 Perfil do Jogador</div><div class="card">{profile_parts}</div></div>\n'
+
+    body += profile_html
 
     body += f"""
 <div class="section">
@@ -2188,6 +2485,356 @@ document.addEventListener('DOMContentLoaded', function() {{
 
 
 # ------------------------------------------------------------------
+# Zebras & Favoritos
+# ------------------------------------------------------------------
+
+def _build_zebras(config: ChampionshipConfig) -> str:
+    """Show all upset matches, ranking of zebra predictors, and impact analysis."""
+    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
+    if not os.path.exists(upset_path):
+        return _page_frame(config, "Zebras", "<div class='hero'><h1>\U0001f993 Zebras & Favoritos</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", active_nav="zebras.html")
+
+    df_upset = pd.read_csv(upset_path, sep=",")
+
+    if "is_upset" not in df_upset.columns:
+        df_upset["is_upset"] = 0
+
+    total_matches = len(df_upset)
+    upset_matches = df_upset[df_upset["is_upset"] == 1]
+    num_upsets = len(upset_matches)
+    upset_pct = round(num_upsets / total_matches * 100, 1) if total_matches else 0
+
+    # Parse players_correct column
+    def _parse_correct(val: str) -> list[str]:
+        if pd.isna(val) or not val:
+            return []
+        return [p.strip() for p in str(val).split("|")]
+
+    # Build zebra cards
+    zebra_cards = ""
+    # Sort by most impactful first (more votes for favorite = bigger upset)
+    upset_sorted = upset_matches.sort_values("favorite_votes", ascending=False) if not upset_matches.empty else upset_matches
+
+    for _, row in upset_sorted.iterrows():
+        home = str(row.get("home_team", ""))
+        away = str(row.get("away_team", ""))
+        favorite = str(row.get("favorite", "?"))
+        real_winner = str(row.get("real_winner", "?"))
+        fav_votes = int(row.get("favorite_votes", 0))
+        total_votes = int(row.get("total_votes", 0))
+        num_correct = int(row.get("num_correct", 0))
+        players_correct = _parse_correct(row.get("players_correct", ""))
+
+        fav_pct = round(fav_votes / total_votes * 100) if total_votes else 0
+        players_html = " ".join(f'<span class="tag">{p}</span>' for p in players_correct) if players_correct else '<span style="color:var(--text-muted);font-style:italic;">ningu\u00e9m acertou</span>'
+
+        # Determine upset magnitude
+        if fav_pct >= 80:
+            magnitude = "\U0001f4a5 ZEBRA MONSTRA"
+        elif fav_pct >= 60:
+            magnitude = "\U0001f4a5 Zebra Grande"
+        elif fav_pct >= 40:
+            magnitude = "\U0001f4a5 Zebra Media"
+        else:
+            magnitude = "\U0001f4a5 Zebra Leve"
+
+        zebra_cards += f"""
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">{magnitude}</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">{fav_votes}/{total_votes} ({fav_pct}%) acreditavam no {favorite}</span>
+    </div>
+    <div class="zebra-matchup">{home} vs {away}</div>
+    <div class="zebra-detail">
+        Favorito: <strong>{favorite}</strong> | Resultado: <strong>{real_winner}</strong><br>
+        Acertaram essa zebra: {num_correct} jogadores
+    </div>
+    <div class="zebra-players">{players_html}</div>
+</div>
+"""
+
+    # No upsets message
+    if not zebra_cards:
+        zebra_cards = '<div class="card" style="text-align:center;color:var(--text-muted);font-style:italic;padding:2rem 1rem;">\U0001f614 Nenhuma zebra ate agora — o bolao esta muito previsivel!</div>'
+
+    # Rank zebra predictors (who got the most upsets right)
+    correct_counter: dict[str, int] = {}
+    for _, row in upset_matches.iterrows():
+        for p in _parse_correct(row.get("players_correct", "")):
+            correct_counter[p] = correct_counter.get(p, 0) + 1
+
+    zebra_king_rows = ""
+    if correct_counter:
+        sorted_kings = sorted(correct_counter.items(), key=lambda x: -x[1])
+        for i, (name, count) in enumerate(sorted_kings):
+            medal = "\U0001f947" if i == 0 else "\U0001f948" if i == 1 else "\U0001f949" if i == 2 else ""
+            zebra_king_rows += f"<tr><td>{medal} {i+1}</td><td><a href='boleiros/{name}.html'>{name}</a></td><td style='font-weight:700;color:var(--accent);'>{count}</td></tr>\n"
+    else:
+        zebra_king_rows = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Nenhum dado</td></tr>'
+
+    # Non-upset matches (favorites that won) — show a few
+    non_upsets = df_upset[df_upset["is_upset"] == 0].head(6)
+    fav_won_cards = ""
+    for _, row in non_upsets.iterrows():
+        home = str(row.get("home_team", ""))
+        away = str(row.get("away_team", ""))
+        favorite = str(row.get("favorite", "?"))
+        fav_votes = int(row.get("favorite_votes", 0))
+        total_votes = int(row.get("total_votes", 0))
+        fav_pct = round(fav_votes / total_votes * 100) if total_votes else 0
+        fav_won_cards += f"""
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">{fav_pct}% no favorito</span>
+    </div>
+    <div class="zebra-matchup">{home} vs {away}</div>
+    <div class="zebra-detail">Favorito {favorite} confirmou</div>
+</div>
+"""
+
+    body = f"""
+<div class="hero">
+    <h1>\U0001f993 Zebras & Favoritos</h1>
+    <div class="subtitle">Partidas onde o bolaao inteiro errou — e quem acertou</div>
+</div>
+
+<div class="card" style="margin:1rem 0.75rem;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;">
+        <div class="mini-stat">
+            <div class="val">{total_matches}</div>
+            <div class="lbl">Partidas</div>
+        </div>
+        <div class="mini-stat">
+            <div class="val" style="color:var(--danger);">{num_upsets}</div>
+            <div class="lbl">Zebras</div>
+        </div>
+        <div class="mini-stat">
+            <div class="val">{upset_pct}%</div>
+            <div class="lbl">Zebra Rate</div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">\U0001f4a5 Zebras do Torneio</div>
+    {zebra_cards}
+</div>
+
+<div class="section">
+    <div class="section-title">\U0001f451 Rei das Zebras</div>
+    <div class="card" style="overflow-x:auto;">
+        <table class="rank-table">
+            <thead><tr><th>#</th><th>Boleiro</th><th>Zebras acertadas</th></tr></thead>
+            <tbody>{zebra_king_rows}</tbody>
+        </table>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">\U00002705 Favoritos que Confirmaram</div>
+    {fav_won_cards}
+</div>
+
+<div class="card" style="margin:0.75rem;font-size:0.8rem;color:var(--text-muted);">
+    <p><strong>\U0001f4a1 O que e uma Zebra?</strong> Quando o time mais votado como vencedor pelo bolaao PERDEU ou empatou. Quanto maior a porcentagem de votos no favorito, maior a zebra.</p>
+</div>
+"""
+    return _page_frame(config, f"Zebras - {config.report_title}", body, active_nav="zebras.html")
+
+
+# ------------------------------------------------------------------
+# Momentum & Sequencias
+# ------------------------------------------------------------------
+
+def _build_momentum(config: ChampionshipConfig) -> str:
+    """Show current streaks, longest streaks, hot/cold players."""
+    gold_dir = config._au_first_round()
+    consistency_path = _norm(os.path.join(gold_dir, "consistency.csv"))
+    ranking_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
+
+    if not os.path.exists(consistency_path):
+        return _page_frame(config, "Momentum", "<div class='hero'><h1>\U0001f525 Momentum</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", active_nav="momentum.html")
+
+    df_cons = pd.read_csv(consistency_path, sep=",")
+
+    # Current streak for each player
+    df_cons_sorted = df_cons.sort_values(["boleiro", "date"])
+    current_streaks: dict[str, dict] = {}
+    longest_hot: dict[str, int] = {}
+    longest_cold: dict[str, int] = {}
+
+    for boleiro in df_cons["boleiro"].unique():
+        df_b = df_cons_sorted[df_cons_sorted["boleiro"] == boleiro]
+        # Current streak
+        last_rows = df_b.tail(5)
+        streak_type = ""
+        streak_len = 0
+        for _, r in reversed(list(df_b.iterrows())):
+            st = r.get("streak_type", "")
+            if st == "hit":
+                if streak_type == "" or streak_type == "hit":
+                    streak_type = "hit"
+                    streak_len += 1
+                else:
+                    break
+            elif st == "miss":
+                if streak_type == "" or streak_type == "miss":
+                    streak_type = "miss"
+                    streak_len += 1
+                else:
+                    break
+            else:
+                break
+        current_streaks[boleiro] = {"type": streak_type, "length": streak_len}
+
+        # Longest streaks
+        df_b = df_b.reset_index(drop=True)
+        hot_max = 0
+        cold_max = 0
+        cur_hot = 0
+        cur_cold = 0
+        for _, r in df_b.iterrows():
+            st = r.get("streak_type", "")
+            if st == "hit":
+                cur_hot += 1
+                cur_cold = 0
+                hot_max = max(hot_max, cur_hot)
+            elif st == "miss":
+                cur_cold += 1
+                cur_hot = 0
+                cold_max = max(cold_max, cur_cold)
+            else:
+                cur_hot = 0
+                cur_cold = 0
+        longest_hot[boleiro] = hot_max
+        longest_cold[boleiro] = cold_max
+
+    # Load avg points for ranking
+    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_avg = df_valid.groupby("who")["pontos"].mean().reset_index()
+    df_avg.columns = ["boleiro", "avg_pts"]
+
+    # Build streak bars for current
+    players = sorted(current_streaks.keys())
+    streak_rows = ""
+    for p in players:
+        info = current_streaks[p]
+        is_hot = info["type"] == "hit"
+        is_cold = info["type"] == "miss"
+        if is_hot:
+            pct = min(info["length"] / 10 * 100, 100)
+            fill_class = "hot"
+            icon = "\U0001f525"
+            label = f"{info['length']} acertos"
+        elif is_cold:
+            pct = min(info["length"] / 10 * 100, 100)
+            fill_class = "cold"
+            icon = "\U0001f4a9"
+            label = f"{info['length']} erros"
+        else:
+            pct = 0
+            fill_class = ""
+            icon = "\U0001f504"
+            label = "sem streak"
+
+        avg = df_avg.loc[df_avg["boleiro"] == p, "avg_pts"].values
+        avg_str = f"{avg[0]:.1f}" if len(avg) else "-"
+
+        streak_rows += f"""
+<div class="streak-row">
+    <span>{icon}</span>
+    <span class="streak-name"><a href="boleiros/{p}.html">{p}</a></span>
+    <span style="font-size:0.75rem;color:var(--text-muted);min-width:25px;">{avg_str}</span>
+    <div class="streak-bar-mini"><div class="fill {fill_class}" style="width:{pct}%"></div></div>
+    <span class="streak-val">{label}</span>
+</div>
+"""
+
+    # Longest streaks table
+    longest_rows = ""
+    all_players_both = set(list(longest_hot.keys()) + list(longest_cold.keys()))
+    for p in sorted(all_players_both):
+        hot = longest_hot.get(p, 0)
+        cold = longest_cold.get(p, 0)
+        longest_rows += f"<tr><td><a href='boleiros/{p}.html'>{p}</a></td><td style='color:var(--success);font-weight:700;'>{hot}</td><td style='color:var(--danger);font-weight:700;'>{cold}</td></tr>\n"
+
+    # Current hot streak champions
+    hot_players = {p: v for p, v in current_streaks.items() if v["type"] == "hit"}
+    top_hot = sorted(hot_players.items(), key=lambda x: -x[1]["length"])[:3]
+    hot_champs = ""
+    for i, (p, v) in enumerate(top_hot):
+        medal = "\U0001f947" if i == 0 else "\U0001f948" if i == 1 else "\U0001f949"
+        hot_champs += f"<tr><td>{medal}</td><td><a href='boleiros/{p}.html'>{p}</a></td><td style='font-weight:700;color:var(--success)'>{v['length']} acertos</td></tr>\n"
+
+    if not hot_champs:
+        hot_champs = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Ninguem em streak quente</td></tr>'
+
+    # Cold streak champions
+    cold_players = {p: v for p, v in current_streaks.items() if v["type"] == "miss"}
+    top_cold = sorted(cold_players.items(), key=lambda x: -x[1]["length"])[:3]
+    cold_champs = ""
+    for i, (p, v) in enumerate(top_cold):
+        medal = "\U0001f947" if i == 0 else "\U0001f948" if i == 1 else "\U0001f949"
+        cold_champs += f"<tr><td>{medal}</td><td><a href='boleiros/{p}.html'>{p}</a></td><td style='font-weight:700;color:var(--danger)'>{v['length']} erros</td></tr>\n"
+
+    if not cold_champs:
+        cold_champs = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Ninguem em streak fria</td></tr>'
+
+    body = f"""
+<div class="hero">
+    <h1>\U0001f525 Momentum</h1>
+    <div class="subtitle">Sequencias quentes e frias de cada jogador</div>
+</div>
+
+<div class="section">
+    <div class="section-title">\U0001f4aa Momento Atual</div>
+    <div class="card">
+        <div style="display:flex;gap:0.75rem;padding:0 0 0.5rem;font-size:0.7rem;color:var(--text-muted);">
+            <span style="flex:1;">Jogador</span>
+            <span style="min-width:25px;">M\u00e9dia</span>
+            <span style="flex:0 0 80px;">Sequ\u00eancia</span>
+            <span style="min-width:50px;text-align:right;">Atual</span>
+        </div>
+        {streak_rows}
+    </div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;margin:0 0.75rem;">
+    <div class="card" style="margin:0;">
+        <div class="card-title">\U0001f525 Maiores Streaks Quentes</div>
+        <table class="rank-table">
+            <thead><tr><th></th><th>Jogador</th><th>Streak</th></tr></thead>
+            <tbody>{hot_champs}</tbody>
+        </table>
+    </div>
+    <div class="card" style="margin:0;">
+        <div class="card-title">\U0001f4a9 Maiores Streaks Frias</div>
+        <table class="rank-table">
+            <thead><tr><th></th><th>Jogador</th><th>Streak</th></tr></thead>
+            <tbody>{cold_champs}</tbody>
+        </table>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">\U0001f4ca Longest Streaks (Geral)</div>
+    <div class="card" style="overflow-x:auto;">
+        <table class="rank-table">
+            <thead><tr><th>Jogador</th><th>\U0001f525 Maior sequ\u00eancia de acertos</th><th>\U0001f4a9 Maior sequ\u00eancia de erros</th></tr></thead>
+            <tbody>{longest_rows}</tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card" style="margin:0.75rem;font-size:0.8rem;color:var(--text-muted);">
+    <p><strong>\U0001f4a1 O que \u00e9 streak?</strong> Uma sequ\u00eancia de acertos (qualquer pontua\u00e7\u00e3o > 0) ou erros (0 pontos) consecutivos. O "momento atual" mostra a streak MAIS RECENTE de cada jogador.</p>
+</div>
+"""
+    return _page_frame(config, f"Momentum - {config.report_title}", body, active_nav="momentum.html")
+
+
+# ------------------------------------------------------------------
 # Orchestrator
 # ------------------------------------------------------------------
 
@@ -2237,6 +2884,24 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         path = _norm(os.path.join(html_base, "jogos", config.group_phase_label, filename))
         _save(path, html)
 
+    # --- Per-match (playoff rounds) ---
+    for pr in (config.playoff_rounds or []):
+        phase = pr.key
+        playoff_valid_path = config.gold_playoff_valid_path(phase)
+        if not os.path.exists(playoff_valid_path):
+            continue
+        df_phase = pd.read_csv(playoff_valid_path, sep=",")
+        if df_phase.empty:
+            continue
+        phase_matches = df_phase[df_phase["match"].notna()].groupby("match")
+        for match, df_match in phase_matches:
+            print_colored(f"generating match html: {phase} {match}", "blue")
+            html = _build_match(config, match, pr.name, df_match)
+            first = df_match.iloc[0]
+            filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
+            path = _norm(os.path.join(html_base, "jogos", phase, filename))
+            _save(path, html)
+
     # --- New v2 pages ---
     # Ranking Evolution
     ranking_path = _norm(os.path.join(html_base, "ranking_evolution.html"))
@@ -2269,3 +2934,19 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         _save(rw_path, _build_day_winners(config))
     else:
         print_colored("skipping day_winners.html (no valid data)", "yellow")
+
+    # --- Zebras & Favoritos ---
+    zebras_path = _norm(os.path.join(html_base, "zebras.html"))
+    if os.path.exists(_norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))):
+        print_colored("generating zebras.html", "blue")
+        _save(zebras_path, _build_zebras(config))
+    else:
+        print_colored("skipping zebras.html (no upset_tracker.csv)", "yellow")
+
+    # --- Momentum & Sequencias ---
+    momentum_path = _norm(os.path.join(html_base, "momentum.html"))
+    if os.path.exists(_norm(os.path.join(config._au_first_round(), "consistency.csv"))):
+        print_colored("generating momentum.html", "blue")
+        _save(momentum_path, _build_momentum(config))
+    else:
+        print_colored("skipping momentum.html (no consistency.csv)", "yellow")

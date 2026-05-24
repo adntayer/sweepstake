@@ -37,7 +37,12 @@ from pathlib import Path
 import numpy as np
 
 from src.core.config import ChampionshipConfig
-from src.core.loader import parse_group_stage, parse_bonus_playoffs
+from src.core.loader import (
+    parse_group_stage,
+    parse_playoff_stage,
+    parse_bonus_playoffs,
+    _extract_playoff_phase_and_who as _extract_phase_who_from_path,
+)
 from src.core.printing import print_colored
 from src.core.scoring import score_prediction, score_playoff_bonus, score_strikers
 from src.core.get_results import get_results
@@ -81,6 +86,37 @@ def _boleiros_from_raw(config: ChampionshipConfig) -> list[tuple[str, str]]:
         name = parts[layout.playoffs.name_split_index].strip()
         boleiro = name.replace(".xlsx", "").replace(".xls", "").strip()
         result.append((path_excel, boleiro))
+    return result
+
+
+def _extract_playoff_phase_and_boleiro(path_csv: str, config: ChampionshipConfig) -> tuple[str, str]:
+    """Extract (phase, boleiro) from a bronze/silver playoff CSV filename.
+
+    Expects format: ``group_phase_{phase}_{boleiro}.csv``
+    """
+    basename = os.path.basename(path_csv).replace("group_phase_", "").replace(".csv", "")
+    # Match known phase key at the start
+    for pr in config.playoff_rounds:
+        prefix = pr.key + "_"
+        if basename.startswith(prefix):
+            return pr.key, basename[len(prefix):]
+    raise ValueError(f"Cannot extract phase from playoff file: {path_csv}")
+
+
+def _playoff_files_from_raw(config: ChampionshipConfig) -> list[tuple[str, str, str]]:
+    """Return sorted list of (excel_path, phase_key, boleiro_name) from raw/playoffs/."""
+    raw_playoff_dir = config._raw_playoffs()
+    if not os.path.isdir(raw_playoff_dir):
+        return []
+    pattern = _norm(os.path.join(raw_playoff_dir, "*"))
+    excel_paths = sorted(glob(pattern))
+    result = []
+    for path_excel in excel_paths:
+        ext = os.path.splitext(path_excel)[1].lower()
+        if ext not in (".xls", ".xlsx"):
+            continue
+        phase, boleiro = _extract_phase_who_from_path(path_excel, config)
+        result.append((path_excel, phase, boleiro))
     return result
 
 
@@ -188,6 +224,7 @@ def run_raw_to_bronze(config: ChampionshipConfig) -> None:
     ]
     _recreate_dirs(dirs)
 
+    # --- First round (group stage) ---
     boleiros = _boleiros_from_raw(config)
     for idx, (path_excel, boleiro) in enumerate(boleiros, 1):
         print_colored(f"\t[{idx:2}/{len(boleiros)}] parsing {boleiro}", "ice")
@@ -200,6 +237,14 @@ def run_raw_to_bronze(config: ChampionshipConfig) -> None:
 
         _save_csv(df_bonus, config.bronze_bonus_path(boleiro))
         _save_csv(df_striker, config.bronze_striker_path(boleiro))
+
+    # --- Playoff rounds (separate Excel per phase) ---
+    playoff_files = _playoff_files_from_raw(config)
+    for idx, (path_excel, phase, boleiro) in enumerate(playoff_files, 1):
+        print_colored(f"\t[{idx:2}/{len(playoff_files)}] parsing {phase} {boleiro}", "ice")
+        df_playoff = parse_playoff_stage(path_excel, config)
+        df_playoff.sort_values(by=["date", "hour"], inplace=True)
+        _save_csv(df_playoff, config.bronze_playoff_path(boleiro, phase))
 
     print_colored("raw to bronze completed", "green")
 
@@ -225,7 +270,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
     # Load official results
     df_results = pd.read_csv(config.games_file, sep=",")
 
-    # Process each boleiro — first_round only
+    # --- First round (group stage) ---
     group_pattern = _norm(os.path.join(config._br_first_round(), "group_phase_*"))
     group_paths = sorted(glob(group_pattern))
 
@@ -267,6 +312,53 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
         )
         df_merged.sort_values(by=["date", "hour"], inplace=True)
         _save_csv(df_merged, config.silver_group_path(boleiro))
+
+    # --- Playoff rounds ---
+    playoff_pattern = _norm(os.path.join(config._br_playoffs(), "group_phase_*"))
+    playoff_paths = sorted(glob(playoff_pattern))
+
+    for path_csv in playoff_paths:
+        phase, boleiro = _extract_playoff_phase_and_boleiro(path_csv, config)
+        print_colored(f"\tmerging {phase} {boleiro}", "ice")
+
+        df_boleiro = pd.read_csv(path_csv, sep=",")
+
+        # Filter results to only this playoff phase
+        df_results_phase = df_results[df_results["round"] == phase].copy()
+
+        df_merged = _merge_with_results(df_boleiro, df_results_phase)
+
+        # Rename suffixed columns back to canonical names
+        df_merged.rename(
+            columns={
+                "date_bol": "date",
+                "home_team_bol": "home_team",
+                "away_team_bol": "away_team",
+            },
+            inplace=True,
+        )
+
+        # Select and order columns
+        df_merged = df_merged.reindex(
+            columns=[
+                "date",
+                "hour",
+                "match",
+                "home_team",
+                "away_team",
+                "home_goals_bol",
+                "away_goals_bol",
+                "home_goals_real",
+                "away_goals_real",
+                "resultado_bol_placar",
+                "resultado_bol_time",
+                "resultado_real_placar",
+                "resultado_real_time",
+                "who",
+            ]
+        )
+        df_merged.sort_values(by=["date", "hour"], inplace=True)
+        _save_csv(df_merged, config.silver_playoff_path(boleiro, phase))
 
     print_colored("bronze to silver completed", "green")
 
@@ -338,6 +430,44 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
             boleiro = os.path.basename(path_csv).replace("striker_", "").replace(".csv", "")
             df_st = pd.read_csv(path_csv, sep=",")
             _save_csv(df_st, config.gold_striker_path(boleiro))
+
+    # --- Playoff rounds ---
+    playoff_silver_pattern = _norm(os.path.join(config._ag_playoffs(), "group_phase_*"))
+    playoff_silver_paths = sorted(glob(playoff_silver_pattern))
+
+    # Group paths by phase so we can aggregate per phase
+    playoff_by_phase: dict[str, list[str]] = {}
+    for path_csv in playoff_silver_paths:
+        phase, _ = _extract_playoff_phase_and_boleiro(path_csv, config)
+        playoff_by_phase.setdefault(phase, []).append(path_csv)
+
+    for phase, phase_paths in sorted(playoff_by_phase.items()):
+        print_colored(f"\tscoring playoff phase: {phase}", "ice")
+        all_phase_parts = []
+        valid_phase_parts = []
+
+        for path_csv in phase_paths:
+            _, boleiro = _extract_playoff_phase_and_boleiro(path_csv, config)
+            df_silver = pd.read_csv(path_csv, sep=",")
+            if df_silver.empty:
+                continue
+            df_gold = _apply_scoring(df_silver, config)
+
+            # Save per-boleiro gold file for this phase
+            _save_csv(df_gold, config.gold_playoff_boleiro_path(boleiro, phase))
+
+            all_phase_parts.append(df_gold)
+            valid_phase_parts.append(df_gold.query("valido == 1"))
+
+        # Aggregate per phase
+        if all_phase_parts:
+            df_all = pd.concat(all_phase_parts, ignore_index=True)
+            df_all.sort_values(by=["date", "hour", "who"], inplace=True)
+            _save_csv(df_all, config.gold_playoff_all_path(phase))
+
+            df_valid = pd.concat(valid_phase_parts, ignore_index=True)
+            df_valid.sort_values(by=["date", "hour", "who"], inplace=True)
+            _save_csv(df_valid, config.gold_playoff_valid_path(phase))
 
     # --- New analytics ---
     _generate_playoff_scoring(config)
