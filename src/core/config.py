@@ -217,6 +217,13 @@ class ChampionshipConfig:
     group_phase_label: str = "1a Fase"
     theme: ThemeConfig = field(default_factory=ThemeConfig)
 
+    # Playoff bonus scoring (phase_key -> points_per_correct)
+    playoff_scoring: dict[str, int] = field(default_factory=dict)
+
+    # Striker scoring
+    actual_top_scorer: str = ""
+    striker_points: int = 0
+
     def __post_init__(self) -> None:
         self.base_dir = _norm(self.base_dir) if self.base_dir else _norm(os.path.join("src", "data", self.id))
         self.raw_dir = _norm(self.raw_dir) if self.raw_dir else _norm(os.path.join(self.base_dir, "raw"))
@@ -251,6 +258,10 @@ class ChampionshipConfig:
     #   gold/playoffs/  (future)
     # ------------------------------------------------------------------
 
+    def _raw_playoffs(self) -> str:
+        """Raw directory for per-round playoff Excel files."""
+        return _norm(os.path.join(self.raw_dir, "playoffs"))
+
     def _br_first_round(self) -> str:
         return _norm(os.path.join(self.bronze_dir, "first_round"))
 
@@ -283,11 +294,19 @@ class ChampionshipConfig:
         """Path to bronze striker CSV for a single boleiro."""
         return _norm(os.path.join(self._br_first_round(), f"striker_{boleiro}.csv"))
 
+    def bronze_playoff_path(self, boleiro: str, phase: str) -> str:
+        """Path to bronze playoff-phase CSV for a single boleiro + phase."""
+        return _norm(os.path.join(self._br_playoffs(), f"group_phase_{phase}_{boleiro}.csv"))
+
     # --- Silver paths ---
 
     def silver_group_path(self, boleiro: str) -> str:
         """Path to silver group-phase CSV for a single boleiro."""
         return _norm(os.path.join(self._ag_first_round(), f"group_phase_{boleiro}.csv"))
+
+    def silver_playoff_path(self, boleiro: str, phase: str) -> str:
+        """Path to silver playoff-phase CSV for a single boleiro + phase."""
+        return _norm(os.path.join(self._ag_playoffs(), f"group_phase_{phase}_{boleiro}.csv"))
 
     # --- Gold paths ---
 
@@ -302,6 +321,18 @@ class ChampionshipConfig:
     def gold_group_boleiro_path(self, boleiro: str) -> str:
         """Path to gold group-phase CSV for a single boleiro."""
         return _norm(os.path.join(self._au_first_round(), f"group_phase_{boleiro}.csv"))
+
+    def gold_playoff_boleiro_path(self, boleiro: str, phase: str) -> str:
+        """Path to gold playoff-phase CSV for a single boleiro + phase."""
+        return _norm(os.path.join(self._au_playoffs(), f"group_phase_{phase}_{boleiro}.csv"))
+
+    def gold_playoff_all_path(self, phase: str) -> str:
+        """Path to gold aggregated 'all records' CSV for a playoff phase."""
+        return _norm(os.path.join(self._au_playoffs(), f"{phase}_all.csv"))
+
+    def gold_playoff_valid_path(self, phase: str) -> str:
+        """Path to gold aggregated 'valid only' CSV for a playoff phase."""
+        return _norm(os.path.join(self._au_playoffs(), f"{phase}_valido_all.csv"))
 
     def gold_valid_path(self, phase: str = "group") -> str:
         """Path to the gold 'valid only' aggregated CSV."""
@@ -507,6 +538,15 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         for r in po_cfg.get("rounds", [])
     ]
 
+    # Parse playoff scoring
+    playoff_scoring = {}
+    for phase_key, points in raw.get("playoff_scoring", {}).items():
+        playoff_scoring[phase_key] = points
+
+    # Parse striker scoring
+    striker_cfg = raw.get("striker_scoring", {})
+    striker_points = striker_cfg.get("points", 0)
+
     return ChampionshipConfig(
         id=raw["id"],
         name=raw["name"],
@@ -528,6 +568,9 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         reports_dir=_norm(raw.get("reports_dir", "")),
         results_endpoint=raw.get("results_endpoint", ""),
         team_name_mapping=_parse_team_mapping(raw.get("team_name_mapping", [])),
+        playoff_scoring=playoff_scoring,
+        actual_top_scorer=raw.get("actual_top_scorer", ""),
+        striker_points=striker_points,
     )
 
 

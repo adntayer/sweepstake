@@ -131,6 +131,15 @@ a:hover { text-decoration: underline; }
     flex-shrink: 0;
 }
 
+/* Rank table (copied from html.py for the full ranking) */
+.rank-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.rank-table th { text-align: left; padding: 0.4rem 0.5rem; font-size: 0.7rem; color: var(--text-muted); border-bottom: 1px solid var(--card-border); white-space: nowrap; }
+.rank-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--card-border); white-space: nowrap; }
+.rank-table tr:nth-child(even) { background: var(--zebra-stripe); }
+.rank-table .rank-1 td { background: var(--accent-highlight); }
+.rank-table .rank-2 td { background: var(--silver-highlight); }
+.rank-table .rank-3 td { background: var(--bronze-highlight); }
+
 /* Horizontal scroll for upcoming games */
 .scroll-row {
     display: flex;
@@ -256,10 +265,64 @@ details .content a:last-child { border-bottom: none; }
     font-style: italic;
 }
 
+/* Bottom navigation bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.25rem 0;
+    padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 10px var(--shadow-color);
+}
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    min-height: 44px;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav a:active { background: var(--hover-overlay); }
+.bottom-nav a .nav-icon { font-size: 1.2rem; line-height: 1; }
+.bottom-nav a.active { color: var(--accent); }
+body { padding-bottom: 70px; }
+
+/* Trend indicators */
+.trend-up { color: var(--success); }
+.trend-down { color: var(--danger); }
+.trend-flat { color: var(--text-muted); }
+
+/* Hot streak indicator */
+.hot-streak {
+    display: inline-block;
+    font-size: 0.9rem;
+    animation: pulse-fire 1.5s ease-in-out infinite;
+}
+@keyframes pulse-fire {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
 /* Responsive */
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.4rem; }
     .hero .subtitle { font-size: 0.85rem; }
+    .bottom-nav a { font-size: 0.55rem; }
+    .bottom-nav a .nav-icon { font-size: 1rem; }
 }
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
@@ -293,6 +356,16 @@ def _get_upcoming_games(html_base: str, config: ChampionshipConfig, limit: int =
         if info and info["dt"] > now:
             games.append(info)
 
+    # Scan playoff phases
+    for pr in (config.playoff_rounds or []):
+        po_dir = _norm(os.path.join(html_base, "jogos", pr.key))
+        for fp in sorted(glob(_norm(os.path.join(po_dir, "*.html")))):
+            if "index" in fp:
+                continue
+            info = _parse_game_file(fp, config)
+            if info and info["dt"] > now:
+                games.append(info)
+
     games.sort(key=lambda g: g["dt"])
     return games[:limit]
 
@@ -319,25 +392,61 @@ def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
     return {"dt": dt, "teams": teams, "href": href, "date_str": f"{day:02d}/{month:02d} {hour:02d}h"}
 
 
-def _build_leaderboard(config: ChampionshipConfig, top_n: int = 5) -> str:
-    """Build the top-N leaderboard HTML."""
+def _build_full_ranking(config: ChampionshipConfig) -> str:
+    """Build the full ranking table (copied from Raio-X) with trend indicators."""
     df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
-    df_rank = df_valid.groupby("who", as_index=False)["pontos"].sum()
-    df_rank.sort_values("pontos", ascending=False, inplace=True)
-    df_rank = df_rank.head(top_n)
 
-    rows = ""
-    for idx, (_, row) in enumerate(df_rank.iterrows(), 1):
-        rank_class = f"lb-rank-{idx}" if idx <= 3 else "lb-rank-n"
-        medal = "\U0001f947" if idx == 1 else "\U0001f948" if idx == 2 else "\U0001f949" if idx == 3 else ""
-        rows += (
-            f'<div class="lb-row">'
-            f'<div class="lb-rank {rank_class}">{medal or idx}</div>'
-            f'<a class="lb-name" href="boleiros/{row["who"]}.html">{row["who"]}</a>'
-            f'<div class="lb-pts">{int(row["pontos"])} pts</div>'
-            f'</div>\n'
-        )
-    return rows
+    # Compute trend: compare last 3 days vs previous 3 days
+    df_valid["date_dt"] = pd.to_datetime(df_valid["date"])
+    all_dates = sorted(df_valid["date_dt"].unique())
+    trend_map: dict[str, str] = {}
+    if len(all_dates) >= 6:
+        recent_dates = all_dates[-3:]
+        prev_dates = all_dates[-6:-3]
+        df_recent = df_valid[df_valid["date_dt"].isin(recent_dates)].groupby("who")["pontos"].sum()
+        df_prev = df_valid[df_valid["date_dt"].isin(prev_dates)].groupby("who")["pontos"].sum()
+        for who in df_valid["who"].unique():
+            r = df_recent.get(who, 0)
+            p = df_prev.get(who, 0)
+            if r > p:
+                trend_map[who] = '<span class="trend-up">\u25b2</span>'
+            elif r < p:
+                trend_map[who] = '<span class="trend-down">\u25bc</span>'
+            else:
+                trend_map[who] = '<span class="trend-flat">\u25b6</span>'
+
+    score_names = config.scoring_rule_names()
+    agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
+    df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
+    df_rank.sort_values("pontos", ascending=False, inplace=True)
+    df_rank.reset_index(drop=True, inplace=True)
+    df_rank["#"] = range(1, len(df_rank) + 1)
+    rank_rows = ""
+    for _, row in df_rank.iterrows():
+        rank_num = int(row["#"])
+        medal = "\U0001f947" if rank_num == 1 else "\U0001f948" if rank_num == 2 else "\U0001f949" if rank_num == 3 else ""
+        rank_class = f"rank-{rank_num}" if rank_num <= 3 else ""
+        trend = trend_map.get(row["who"], "&nbsp;")
+        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["who"]}.html">{row["who"]}</a> {trend}</td>'
+        cells += f'<td style="font-weight:700;color:var(--accent)">{int(row["pontos"])}</td>'
+        for sn in score_names:
+            if sn in row.index:
+                val = int(row[sn]) if pd.notna(row[sn]) else 0
+                cells += f"<td>{val}</td>"
+        rank_rows += f'<tr class="{rank_class}">{cells}</tr>\n'
+    rank_header = ""
+    for sn in score_names:
+        emoji = config.scoring_emoji(sn)
+        h = f"{emoji} " if emoji else ""
+        h += sn.split("-")[0].strip()
+        rank_header += f"<th>{h}</th>"
+    return f"""
+<div style="overflow-x:auto;">
+    <table class="rank-table">
+        <thead><tr><th>#</th><th>Boleiro</th><th>Pts</th>{rank_header}</tr></thead>
+        <tbody>{rank_rows}</tbody>
+    </table>
+</div>"""
 
 
 def _build_upcoming_games(config: ChampionshipConfig) -> str:
@@ -367,20 +476,38 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
 
 
 def _build_player_grid(config: ChampionshipConfig) -> str:
-    """Build the player avatar grid with points."""
+    """Build the player avatar grid with points and hot streak indicators."""
     df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
     df_pts = df_valid.groupby("who", as_index=False)["pontos"].sum()
     df_pts.sort_values("pontos", ascending=False, inplace=True)
+
+    # Check for hot streaks from consistency.csv
+    hot_players: set[str] = set()
+    cons_path = _norm(os.path.join(config._au_first_round(), "consistency.csv"))
+    if os.path.exists(cons_path):
+        df_cons = pd.read_csv(cons_path, sep=",")
+        for boleiro in df_cons["boleiro"].unique():
+            df_b = df_cons[df_cons["boleiro"] == boleiro].sort_values("date")
+            streak_len = 0
+            for _, r in reversed(list(df_b.iterrows())):
+                st = r.get("streak_type", "")
+                if st == "hit":
+                    streak_len += 1
+                else:
+                    break
+            if streak_len >= 3:
+                hot_players.add(boleiro)
 
     cards = ""
     for _, row in df_pts.iterrows():
         name = row["who"]
         pts = int(row["pontos"])
+        hot_badge = '<span class="hot-streak">\U0001f525</span>' if name in hot_players else ""
         cards += (
             f'<a href="boleiros/{name}.html" class="player-card">'
             f'<div class="player-avatar">{_initials(name)}</div>'
             f'<div>'
-            f'<div class="player-name">{name}</div>'
+            f'<div class="player-name">{name} {hot_badge}</div>'
             f'<div class="player-pts">{pts} pts</div>'
             f'</div>'
             f'</a>\n'
@@ -392,6 +519,93 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
     <div class="player-grid">{cards}</div>
 </div>
 """
+
+
+def _build_distribution_bars(config: ChampionshipConfig) -> str:
+    """Build a distribution bar showing how many players are in each score bracket."""
+    try:
+        df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    except (FileNotFoundError, pd.errors.EmptyDataError):
+        return ""
+
+    df_pts = df_valid.groupby("who")["pontos"].sum()
+    if df_pts.empty:
+        return ""
+
+    max_pts = int(df_pts.max())
+    # Create buckets of 50 points
+    bucket_size = 50
+    num_buckets = max(1, (max_pts // bucket_size) + 1)
+
+    buckets = {}
+    for i in range(num_buckets):
+        low = i * bucket_size
+        high = (i + 1) * bucket_size
+        label = f"{low}-{high}"
+        count = int(((df_pts >= low) & (df_pts < high)).sum())
+        if count > 0:
+            buckets[label] = count
+
+    if not buckets:
+        return ""
+
+    max_count = max(buckets.values())
+    bars = ""
+    for label, count in sorted(buckets.items()):
+        pct = round(count / max_count * 100) if max_count > 0 else 0
+        bars += (
+            f'<div class="bar-row" style="margin-bottom:0.2rem;">'
+            f'<span class="bar-label">{label}</span>'
+            f'<div class="bar-track" style="height:16px;">'
+            f'<div class="bar-fill" style="width:{pct}%;background:var(--accent);height:16px;"></div>'
+            f'</div>'
+            f'<span class="bar-pct">{count}</span>'
+            f'</div>\n'
+        )
+
+    return f"""
+<div class="section">
+    <div class="section-title">\U0001f4ca Distribuicao da Pontuacao</div>
+    <div class="card">
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">
+            Quantos jogadores estao em cada faixa de pontuacao
+        </div>
+        <div class="bar-chart">{bars}</div>
+    </div>
+</div>
+"""
+
+
+def _build_zebra_counter(config: ChampionshipConfig) -> str:
+    """Show a zebra counter card for the dashboard hero."""
+    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
+    if not os.path.exists(upset_path):
+        return ""
+    try:
+        df_upset = pd.read_csv(upset_path, sep=",")
+        total = len(df_upset)
+        upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else df_upset
+        num_upsets = len(upsets)
+        pct = round(num_upsets / total * 100, 1) if total else 0
+        return f'<div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:rgba(239,68,68,0.2);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.8rem;"><span>\U0001f993</span> <strong>{num_upsets}</strong> zebras em {total} jogos ({pct}%)</div>\n'
+    except (FileNotFoundError, pd.errors.EmptyDataError):
+        return ""
+
+
+def _build_bottom_nav_dashboard() -> str:
+    """Build the bottom navigation for the dashboard."""
+    items = [
+        ("index.html", "\U0001f3e0", "In\u00edcio"),
+        ("arena.html", "\u2694\ufe0f", "Arena"),
+        ("zebras.html", "\U0001f993", "Zebras"),
+        ("momentum.html", "\U0001f525", "Momentum"),
+        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+    ]
+    links = ""
+    for href, icon, label in items:
+        cls = ' class="active"' if href == "index.html" else ""
+        links += f'<a href="{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
+    return f'<nav class="bottom-nav">{links}</nav>'
 
 
 def _build_last_result(config: ChampionshipConfig) -> str:
@@ -504,10 +718,11 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     now_str = datetime.now(tz).strftime("%d/%m/%Y %H:%M:%S")
 
     last_result = _build_last_result(config)
-    leaderboard = _build_leaderboard(config)
+    full_ranking = _build_full_ranking(config)
     upcoming = _build_upcoming_games(config)
     player_grid = _build_player_grid(config)
     phase_accordion = _build_phase_accordion(config)
+    zebra_counter = _build_zebra_counter(config)
 
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -525,26 +740,53 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 <div class="hero">
     <h1>\U0001f3c6 {config.report_title}</h1>
     <div class="subtitle">Bolao Dashboard</div>
+    {zebra_counter}
 </div>
 
 {last_result}
 
 <div class="section">
-    <div class="section-title">\U0001f3c6 Top 5</div>
-    <div class="card">{leaderboard}</div>
+    <div class="section-title">\U0001f3c6 Ranking</div>
+    <div class="card">{full_ranking}</div>
 </div>
 
-<a href="overview.html" style="display:block;margin:0 0.75rem;">
-    <div class="card" style="text-align:center;font-weight:600;">
-        \U0001f4ca Veja o Overview Completo
-    </div>
-</a>
-
-<a href="arena.html" style="display:block;margin:0 0.75rem;">
-    <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);">
-        \u2694\ufe0f Arena — Compare Boleiros
-    </div>
-</a>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
+    <a href="arena.html">
+        <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
+            \u2694\ufe0f Arena
+        </div>
+    </a>
+    <a href="zebras.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f993 Zebras
+        </div>
+    </a>
+    <a href="momentum.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f525 Momentum
+        </div>
+    </a>
+    <a href="ranking_evolution.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f4c8 Evolucao
+        </div>
+    </a>
+    <a href="boldometer.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f4ca Boldometro
+        </div>
+    </a>
+    <a href="bolao_xray.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f50d Raio-X
+        </div>
+    </a>
+    <a href="day_winners.html">
+        <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
+            \U0001f3c6 Day Winners
+        </div>
+    </a>
+</div>
 
 {upcoming}
 
@@ -555,9 +797,11 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     {phase_accordion}
 </div>
 
-<div class="footer">
+<div class="footer" style="padding-bottom:5rem;">
     atualizado às {now_str}
 </div>
+
+{_build_bottom_nav_dashboard()}
 
 </body>
 </html>"""

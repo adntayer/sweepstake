@@ -6,6 +6,8 @@ bonus playoff team picks according to the championship's ExcelLayout.
 
 from __future__ import annotations
 
+import os
+
 import pandas as pd
 
 from src.core.config import ChampionshipConfig
@@ -87,6 +89,57 @@ def parse_group_stage(path: str, config: ChampionshipConfig) -> pd.DataFrame:
     df = df.head(layout.first_round.matches).copy()
     df = _normalize_types(df)
     df = _make_match_key(df)
+
+    return df
+
+
+def _extract_playoff_phase_and_who(path: str, config: ChampionshipConfig) -> tuple[str, str]:
+    """Extract (phase_key, boleiro_name) from a playoff Excel filename.
+
+    Expects format: ``{phase}_{boleiro}.xlsx`` where phase is one of
+    the configured playoff round keys (oitavas, quartas, semi, final).
+    """
+    fname = os.path.basename(path)
+    name_no_ext = fname.replace(".xlsx", "").replace(".xls", "").strip()
+
+    # Try to match a known phase key at the start of the filename
+    for pr in config.playoff_rounds:
+        prefix = pr.key + "_"
+        if name_no_ext.startswith(prefix):
+            boleiro = name_no_ext[len(prefix):].strip()
+            return pr.key, boleiro
+
+    # Fallback: use first part before first '_' as phase, rest as name
+    if "_" in name_no_ext:
+        parts = name_no_ext.split("_", 1)
+        return parts[0].strip(), parts[1].strip()
+
+    raise ValueError(
+        f"Cannot extract phase and boleiro from filename: {fname}. "
+        f"Expected format: {{phase}}_{{boleiro}}.xlsx"
+    )
+
+
+def parse_playoff_stage(path: str, config: ChampionshipConfig) -> pd.DataFrame:
+    """Parse playoff-round predictions from a dedicated Excel file.
+
+    Each file contains only the matches for a single knockout round
+    (e.g. 8 oitavas matches, 4 quartas matches, etc.).
+
+    Returns a DataFrame with columns:
+        date, hour, home_team, home_pen, home_goals, x, away_goals, away_pen,
+        away_team, who, match, phase
+    """
+    phase, who = _extract_playoff_phase_and_who(path, config)
+
+    df = pd.read_excel(path)
+    df = df[df.columns[:9]]
+    df.columns = _EXCEL_COLUMNS
+
+    df = _clean_dataframe(df, who)
+    df = _normalize_types(df)
+    df = _make_match_key(df)
+    df["phase"] = phase
 
     return df
 

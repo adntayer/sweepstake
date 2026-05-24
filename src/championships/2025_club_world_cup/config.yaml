@@ -117,6 +117,20 @@ team_name_mapping:
   - en: "Juventus FC"
     pt: "Juventus"
 
+# Actual top scorer of the championship
+actual_top_scorer: "Haaland"
+
+# Playoff bonus scoring (per correct pick per phase)
+playoff_scoring:
+  oitavas: 3
+  quartas: 5
+  semi: 8
+  final: 12
+
+# Striker scoring (points if player's pick matches actual_top_scorer)
+striker_scoring:
+  points: 30
+
 # Scoring rules (checked in rule order)
 # Colors reference theme section above
 scoring:

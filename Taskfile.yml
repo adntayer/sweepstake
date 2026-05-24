@@ -1,0 +1,27 @@
+version: "3"
+
+vars:
+  CHAMPIONSHIP: "2025_club_world_cup"
+
+tasks:
+  setup:
+    desc: Create venv, sync dependencies, and install the package
+    cmds:
+      - uv venv -- -y
+      - uv sync --all-extras
+      - uv pip install -e .
+
+  activate:
+    desc: Print the command to activate the virtual environment
+    cmds:
+      - echo "Run this in your shell:"
+      - .venv\\Scripts\\activate
+
+  champ:
+    desc: "Run full pipeline and reports for a championship (default: 2025_club_world_cup)"
+    summary: |
+      Usage: task champ CHAMPIONSHIP=<id>
+      Example: task champ CHAMPIONSHIP=2025_club_world_cup
+    cmds:
+      - ss run {{.CHAMPIONSHIP}}
+    silent: false
