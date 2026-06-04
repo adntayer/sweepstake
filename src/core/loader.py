@@ -50,7 +50,8 @@ def _normalize_types(df: pd.DataFrame) -> pd.DataFrame:
     for col in ["home_goals", "home_pen", "away_goals", "away_pen"]:
         if col in df.columns:
             df[col] = df[col].astype(float)
-    df["date"] = pd.to_datetime(df["date"]).dt.strftime("%Y-%m-%d")
+    df["date"] = pd.to_datetime(df["date"], errors="coerce").dt.strftime("%Y-%m-%d")
+    df = df.loc[df["date"].notna()]
     return df
 
 

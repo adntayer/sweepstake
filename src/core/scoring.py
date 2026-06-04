@@ -38,46 +38,41 @@ def _total_error(
 
 def _matches_condition(
     rule: ScoringRule,
-    home_pred: float,
-    away_pred: float,
-    home_real: float,
-    away_real: float,
+    home_pred: int,
+    away_pred: int,
+    home_real: int,
+    away_real: int,
     pred_w: str,
     real_w: str,
 ) -> bool:
-    """Check if a rule's rule matches the prediction."""
-    cond = getattr(rule, "rule", "")
-    exact = home_pred == home_real and away_pred == away_real
-    correct_w = pred_w == real_w
-    one_team = home_pred == home_real or away_pred == away_real
-    err = _total_error(home_pred, away_pred, home_real, away_real)
+    """Check whether a ScoringRule's condition is satisfied.
 
-    if cond == "exact_score":
-        return exact
+    Evaluates the rule's type (rule.rule) against the computed prediction
+    outcomes AND enforces max_total_error / min_total_error bounds.
+    """
+    if rule.rule == "exact_score":
+        return home_pred == home_real and away_pred == away_real
 
-    if cond == "correct_winner_and_goals":
-        if not correct_w:
+    if rule.rule == "correct_winner_and_goals":
+        if pred_w != real_w:
             return False
-        # Must have at least one team's exact goals
-        if not one_team:
+        if not (home_pred == home_real or away_pred == away_real):
             return False
-        # Check error bounds
-        max_err = getattr(rule, "max_total_error", None)
-        min_err = getattr(rule, "min_total_error", None)
-        if max_err is not None and err > max_err:
+        total_err = int(abs(home_pred - home_real) + abs(away_pred - away_real))
+        if rule.max_total_error is not None and total_err > rule.max_total_error:
             return False
-        if min_err is not None and err < min_err:
+        if rule.min_total_error is not None and total_err < rule.min_total_error:
             return False
         return True
 
-    if cond == "correct_winner":
-        return correct_w
+    if rule.rule == "correct_winner":
+        return pred_w == real_w
 
-    if cond == "one_team_goals":
-        return one_team
+    if rule.rule == "one_team_goals":
+        return home_pred == home_real or away_pred == away_real
 
-    if cond == "missing_data":
-        return True  # handled before this function
+    if rule.rule in ("no_score", "missing_data"):
+        return True
 
     return False
 
@@ -91,7 +86,8 @@ def score_prediction(
 ) -> pd.Series:
     """Score a single prediction against the real result.
 
-    Returns pd.Series([points, criterion_name, is_valid]).
+    Evaluates all scoring rules in priority order, applying error bounds
+    where configured. Returns pd.Series([points, criterion_name, is_valid]).
     """
     # Missing data
     if (
@@ -101,7 +97,7 @@ def score_prediction(
         or pd.isna(away_real)
     ):
         no_score = next(
-            (r for r in config.scoring_rules if "sem jogo" in r.name.lower()),
+            (r for r in config.scoring_rules if r.rule == "missing_data"),
             None,
         )
         name = no_score.name if no_score else "9-Sem jogo"
@@ -111,33 +107,26 @@ def score_prediction(
     pred_w = _winner(home_pred, away_pred)
     real_w = _winner(home_real, away_real)
 
-    home_pred = int(home_pred)
-    home_real = int(home_real)
-    away_pred = int(away_pred)
-    away_real = int(away_real)
+    home_pred_i = int(home_pred)
+    home_real_i = int(home_real)
+    away_pred_i = int(away_pred)
+    away_real_i = int(away_real)
 
-    exact_score = home_pred == home_real and away_pred == away_real
-    correct_winner_and_scores_one_time = pred_w == real_w and (home_pred == home_real or  away_pred == away_real)
-    correct_winner = pred_w == real_w
-    one_team_goals = home_pred == home_real or away_pred == away_real
+    # Sort rules by priority ascending — lower number = evaluated first
+    sorted_rules = sorted(config.scoring_rules, key=lambda r: r.priority)
 
-    series_score = pd.Series([0, "5-Nenhum acerto", 1])
+    for rule in sorted_rules:
+        if rule.rule == "missing_data":
+            continue  # handled above; not a scoring outcome
+        if _matches_condition(
+            rule,
+            home_pred_i, away_pred_i, home_real_i, away_real_i,
+            pred_w, real_w,
+        ):
+            return pd.Series([rule.points, rule.name, 1])
 
-    if exact_score:
-        rule_name = 'exact_score'
-    elif correct_winner_and_scores_one_time:
-        rule_name = 'correct_winner_and_goals'
-    elif correct_winner:
-        rule_name = 'correct_winner'
-    elif one_team_goals:
-        rule_name = 'one_team_goals'
-    else:
-        rule_name = 'no_score'
-
-    dict_rule = {rule.rule: rule for rule in config.scoring_rules}
-
-    rule = dict_rule.get(rule_name)
-    return pd.Series([rule.points, rule.name, 1])
+    # Fallback — should not be reached if a no_score rule exists
+    return pd.Series([0, "5-Nenhum acerto", 1])
 
 
 def get_playoff_advancing_teams(games_csv: str) -> dict[str, list[str]]:
@@ -163,9 +152,28 @@ def get_playoff_advancing_teams(games_csv: str) -> dict[str, list[str]]:
             else:
                 pen_h = row.get("home_pen", "")
                 pen_a = row.get("away_pen", "")
-                if pd.notna(pen_h) and str(pen_h).strip():
+                try:
+                    pen_h_val = (
+                        float(pen_h)
+                        if pd.notna(pen_h) and str(pen_h).strip()
+                        else None
+                    )
+                    pen_a_val = (
+                        float(pen_a)
+                        if pd.notna(pen_a) and str(pen_a).strip()
+                        else None
+                    )
+                except (ValueError, TypeError):
+                    pen_h_val = None
+                    pen_a_val = None
+                if pen_h_val is not None and pen_a_val is not None:
+                    if pen_h_val > pen_a_val:
+                        winners.append(str(row["home_team"]))
+                    elif pen_a_val > pen_h_val:
+                        winners.append(str(row["away_team"]))
+                elif pen_h_val is not None:
                     winners.append(str(row["home_team"]))
-                elif pd.notna(pen_a) and str(pen_a).strip():
+                elif pen_a_val is not None:
                     winners.append(str(row["away_team"]))
         advancing[pr] = winners
 

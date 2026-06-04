@@ -373,7 +373,7 @@ def _get_upcoming_games(html_base: str, config: ChampionshipConfig, limit: int =
 def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
     """Extract game info from an HTML filename."""
     fname = os.path.basename(filepath).replace(".html", "")
-    match = re.search(r"(\d{4})-(\d{2})-(\d{2})_(\d{2})h", fname)
+    match = re.search(r"(\d{4})-(\d{2})-(\d{2})_(\d{1,2})h", fname)
     if not match:
         return None
 
@@ -584,7 +584,7 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
     try:
         df_upset = pd.read_csv(upset_path, sep=",")
         total = len(df_upset)
-        upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else df_upset
+        upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else pd.DataFrame()
         num_upsets = len(upsets)
         pct = round(num_upsets / total * 100, 1) if total else 0
         return f'<div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:rgba(239,68,68,0.2);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.8rem;"><span>\U0001f993</span> <strong>{num_upsets}</strong> zebras em {total} jogos ({pct}%)</div>\n'
@@ -598,7 +598,7 @@ def _build_bottom_nav_dashboard() -> str:
         ("index.html", "\U0001f3e0", "In\u00edcio"),
         ("arena.html", "\u2694\ufe0f", "Arena"),
         ("zebras.html", "\U0001f993", "Zebras"),
-        ("momentum.html", "\U0001f525", "Momentum"),
+        ("momentum.html", "\U0001f525", "Momento"),
         ("bolao_xray.html", "\U0001f50d", "Raio-X"),
     ]
     links = ""
@@ -609,13 +609,18 @@ def _build_bottom_nav_dashboard() -> str:
 
 
 def _build_last_result(config: ChampionshipConfig) -> str:
-    """Build the last result card."""
+    """Build the last result card (by date, not CSV row order)."""
     df_results = pd.read_csv(config.results_file, sep=",")
     df_results.dropna(subset=["home_goals"], inplace=True)
     if df_results.empty:
         return ""
 
-    last = df_results.tail(1).iloc[0]
+    # Sort by date (and hour if available) to get the most recent result
+    sort_cols = ["date"]
+    if "hour" in df_results.columns:
+        sort_cols.append("hour")
+    df_results = df_results.sort_values(sort_cols, ascending=True)
+    last = df_results.iloc[-1]
     home = str(last["home_team"])
     away = str(last["away_team"])
     hg = int(last["home_goals"])
@@ -739,7 +744,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 
 <div class="hero">
     <h1>\U0001f3c6 {config.report_title}</h1>
-    <div class="subtitle">Bolao Dashboard</div>
+    <div class="subtitle">Painel do Bolao</div>
     {zebra_counter}
 </div>
 
@@ -763,7 +768,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     </a>
     <a href="momentum.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f525 Momentum
+            \U0001f525 Momento
         </div>
     </a>
     <a href="ranking_evolution.html">
@@ -783,7 +788,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     </a>
     <a href="day_winners.html">
         <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
-            \U0001f3c6 Day Winners
+            \U0001f3c6 Vencedores do Dia
         </div>
     </a>
 </div>

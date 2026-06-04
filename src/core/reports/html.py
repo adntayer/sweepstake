@@ -496,7 +496,7 @@ def _bottom_nav_html(active: str = "") -> str:
         ("index.html", "\U0001f3e0", "In\u00edcio"),
         ("arena.html", "\u2694\ufe0f", "Arena"),
         ("zebras.html", "\U0001f993", "Zebras"),
-        ("momentum.html", "\U0001f525", "Momentum"),
+        ("momentum.html", "\U0001f525", "Momento"),
         ("bolao_xray.html", "\U0001f50d", "Raio-X"),
     ]
     links = ""
@@ -788,8 +788,12 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     bias_html = ""
     if os.path.exists(error_path):
         df_err = pd.read_csv(error_path, sep=",")
-        df_err_p = df_err[df_err["boleiro"] == boleiro].copy()
-        if not df_err_p.empty:
+        df_err_p_all = df_err[df_err["boleiro"] == boleiro].copy()
+        if not df_err_p_all.empty:
+            # Use only the "total" role to avoid duplicate teams (home/away/total)
+            df_err_p = df_err_p_all[df_err_p_all["role"] == "total"].copy()
+            if df_err_p.empty:
+                df_err_p = df_err_p_all.copy()  # fallback if no total rows
             # Best (lowest MAE)
             df_err_p_sorted = df_err_p.sort_values("mae")
             best_teams = df_err_p_sorted.head(3)
@@ -830,7 +834,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             elif lead_days <= 7:
                 timing_profile = "\U0001f4c5 Prazo medio"
             else:
-                timing_profile = "\U0001f4bd Early bird"
+                timing_profile = "\U0001f4bd Antecipado"
             timing_html = f'<div style="margin-top:0.25rem;"><span style="font-size:0.8rem;color:var(--text-muted);">Submissao:</span> <strong>{timing_profile}</strong> ({lead_days} dias de antecedencia)</div>\n'
 
     # --- Current streak ---
@@ -1616,6 +1620,7 @@ document.addEventListener('DOMContentLoaded', drawChart);
     <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <thead>
             <tr style="border-bottom:1px solid var(--card-border);">
+                <th style="text-align:left;padding:0.3rem 0.5rem;">Jogador</th>
                 <th style="text-align:left;padding:0.3rem 0.5rem;">#</th>
                 <th style="text-align:left;padding:0.3rem 0.5rem;">Pts</th>
                 <th style="text-align:left;padding:0.3rem 0.5rem;">Dist</th>
@@ -2364,7 +2369,7 @@ def _build_day_winners(config: ChampionshipConfig) -> str:
         }
 
     if not day_content:
-        return _page_frame(config, "Day Winners - sem dados", "<div class='hero'><h1>Day Winners</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", back_link="index.html")
+        return _page_frame(config, "Vencedores do Dia - sem dados", "<div class='hero'><h1>Vencedores do Dia</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", back_link="index.html")
 
     # Day selector options
     day_options = "".join(f'<option value="{d}">{pd.to_datetime(d).strftime("%d/%m (%a)")}</option>' for d in sorted(day_content.keys()))
@@ -2445,7 +2450,7 @@ function onDayChange() {
 
     body = f"""
 <div class="hero">
-    <h1>\U0001f3c6 Day Winners</h1>
+    <h1>\U0001f3c6 Vencedores do Dia</h1>
     <div class="subtitle">Quem venceu cada dia, zebras e palpites originais</div>
 </div>
 
@@ -2481,7 +2486,7 @@ document.addEventListener('DOMContentLoaded', function() {{
 }});
 </script>
 """
-    return _page_frame(config, f"Day Winners - {config.report_title}", body, back_link="index.html")
+    return _page_frame(config, f"Vencedores do Dia - {config.report_title}", body, back_link="index.html")
 
 
 # ------------------------------------------------------------------
@@ -2611,7 +2616,7 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         </div>
         <div class="mini-stat">
             <div class="val">{upset_pct}%</div>
-            <div class="lbl">Zebra Rate</div>
+            <div class="lbl">% de Zebras</div>
         </div>
     </div>
 </div>
@@ -2654,7 +2659,7 @@ def _build_momentum(config: ChampionshipConfig) -> str:
     ranking_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
 
     if not os.path.exists(consistency_path):
-        return _page_frame(config, "Momentum", "<div class='hero'><h1>\U0001f525 Momentum</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", active_nav="momentum.html")
+        return _page_frame(config, "Momento", "<div class='hero'><h1>\U0001f525 Momento</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", active_nav="momentum.html")
 
     df_cons = pd.read_csv(consistency_path, sep=",")
 
@@ -2667,7 +2672,6 @@ def _build_momentum(config: ChampionshipConfig) -> str:
     for boleiro in df_cons["boleiro"].unique():
         df_b = df_cons_sorted[df_cons_sorted["boleiro"] == boleiro]
         # Current streak
-        last_rows = df_b.tail(5)
         streak_type = ""
         streak_len = 0
         for _, r in reversed(list(df_b.iterrows())):
@@ -2783,7 +2787,7 @@ def _build_momentum(config: ChampionshipConfig) -> str:
 
     body = f"""
 <div class="hero">
-    <h1>\U0001f525 Momentum</h1>
+    <h1>\U0001f525 Momento</h1>
     <div class="subtitle">Sequencias quentes e frias de cada jogador</div>
 </div>
 
@@ -2802,14 +2806,14 @@ def _build_momentum(config: ChampionshipConfig) -> str:
 
 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;margin:0 0.75rem;">
     <div class="card" style="margin:0;">
-        <div class="card-title">\U0001f525 Maiores Streaks Quentes</div>
+        <div class="card-title">\U0001f525 Maiores Sequencias Quentes</div>
         <table class="rank-table">
             <thead><tr><th></th><th>Jogador</th><th>Streak</th></tr></thead>
             <tbody>{hot_champs}</tbody>
         </table>
     </div>
     <div class="card" style="margin:0;">
-        <div class="card-title">\U0001f4a9 Maiores Streaks Frias</div>
+        <div class="card-title">\U0001f4a9 Maiores Sequencias Frias</div>
         <table class="rank-table">
             <thead><tr><th></th><th>Jogador</th><th>Streak</th></tr></thead>
             <tbody>{cold_champs}</tbody>
@@ -2818,7 +2822,7 @@ def _build_momentum(config: ChampionshipConfig) -> str:
 </div>
 
 <div class="section">
-    <div class="section-title">\U0001f4ca Longest Streaks (Geral)</div>
+    <div class="section-title">\U0001f4ca Maiores Sequencias (Geral)</div>
     <div class="card" style="overflow-x:auto;">
         <table class="rank-table">
             <thead><tr><th>Jogador</th><th>\U0001f525 Maior sequ\u00eancia de acertos</th><th>\U0001f4a9 Maior sequ\u00eancia de erros</th></tr></thead>
@@ -2831,7 +2835,7 @@ def _build_momentum(config: ChampionshipConfig) -> str:
     <p><strong>\U0001f4a1 O que \u00e9 streak?</strong> Uma sequ\u00eancia de acertos (qualquer pontua\u00e7\u00e3o > 0) ou erros (0 pontos) consecutivos. O "momento atual" mostra a streak MAIS RECENTE de cada jogador.</p>
 </div>
 """
-    return _page_frame(config, f"Momentum - {config.report_title}", body, active_nav="momentum.html")
+    return _page_frame(config, f"Momento - {config.report_title}", body, active_nav="momentum.html")
 
 
 # ------------------------------------------------------------------

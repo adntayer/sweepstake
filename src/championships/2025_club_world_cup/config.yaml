@@ -159,6 +159,12 @@ scoring:
     points: 0
     emoji: "\u274c"
     color_text: "#ff3333"
+  - name: "9-Sem jogo"
+    rule: "missing_data"
+    points: 0
+    priority: 99
+    emoji: "\u2753"
+    color_text: "#888888"
 
 # Excel parsing layout
 excel_layout:

@@ -26,13 +26,14 @@ def _make_cfg(rules: list[ScoringRule]) -> ChampionshipConfig:
 
  
 def _default_rules_invented() -> list[ScoringRule]:
-    """Invented scoring config with unique rule types and tighter error bounds.
+    """Invented scoring config with tiered error bounds.
 
-    NOTE: score_prediction maps rule_name -> single rule via dict, so duplicate
-    rule keys collide (first wins). This config demonstrates that behavior:
-    the first correct_winner_and_goals rule (10pts) is kept over the second (6pts).
-    Error bounds (max_total_error/min_total_error) are only enforced in
-    _matches_condition, not in score_prediction.
+    Two correct_winner_and_goals rules at different priority levels:
+      - Rule A (priority 2): max_total_error=1, 10pts  (tight)
+      - Rule B (priority 3): 2<=error<=3,          6pts  (loose)
+    score_prediction iterates rules by priority and evaluates each
+    against the prediction outcome AND its error bounds, so the
+    correct rule is selected based on both type AND bound matching.
     """
     return [
         ScoringRule(name="1-Placar exato", points=20, priority=1, rule="exact_score"),
@@ -294,8 +295,8 @@ class TestScorePrediction2025:
         assert result[0] == 0
         assert result[1] == "5-Nenhum acerto"
 
-    def test_rigth_winner_wrong_score_one_goal_team(self):
-        """Rigth winner, one team's exact goals matches → 7pt."""
+    def test_right_winner_wrong_score_one_goal_team(self):
+        """Right winner, one team's exact goals matches → 7pt."""
         cfg = _make_cfg(_default_rules_2025())
         result = score_prediction(2, 1, 3, 1, cfg)
         assert result[0] == 7
@@ -469,15 +470,12 @@ class TestScorePredictionInvented:
         assert result[0] == 20
 
     # -- Winner + diff exact, error <= 1 (10pts) --
-    # NOTE: score_prediction uses dict lookup {rule.rule: rule}, so duplicate
-    # correct_winner_and_goals rules collide. The LAST one (6pts) wins.
-    # Error bounds are NOT checked in score_prediction, only in _matches_condition.
     def test_winner_and_diff_exact_error_0(self):
-        """Correct winner, one team exact goals → correct_winner_and_goals → 6pts (last rule wins)."""
+        """Correct winner, one team exact goals, total_error=1 ≤ max_error=1 → 10pts."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(3, 1, 2, 1, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + diff exata"
 
     def test_winner_and_diff_exact_error_1(self):
         """Correct winner, no exact goals → correct_winner → 3pts."""
@@ -487,11 +485,11 @@ class TestScorePredictionInvented:
         assert result[1] == "4-Vencedor correto"
 
     def test_winner_and_diff_exact_boundary_error_1(self):
-        """Correct winner, one team exact goals → correct_winner_and_goals → 6pts."""
+        """Correct winner, one team exact goals, total_error=1 ≤ max_error=1 → 10pts."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(2, 1, 2, 0, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + diff exata"
 
     def test_winner_and_diff_exact_correct_diff_error_1(self):
         """Correct winner, no exact goals → correct_winner → 3pts."""
@@ -508,14 +506,14 @@ class TestScorePredictionInvented:
 
     # -- Winner + goals nearby, 2 <= error <= 3 (6pts) --
     def test_winner_goals_nearby_error_2(self):
-        """Correct winner, one team exact goals → correct_winner_and_goals → 6pts (last rule wins)."""
+        """Correct winner, one team exact goals, total_error=1 ≤ max_error=1 → 10pts (Rule A)."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(3, 1, 2, 1, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + diff exata"
 
     def test_winner_goals_nearby_error_3(self):
-        """Correct winner, one team exact goals → correct_winner_and_goals → 6pts."""
+        """Correct winner, one team exact goals, total_error=2, min=2≤2≤max=3 → 6pts (Rule B)."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(4, 1, 2, 1, cfg)
         assert result[0] == 6
@@ -529,19 +527,19 @@ class TestScorePredictionInvented:
         assert result[1] == "4-Vencedor correto"
 
     def test_winner_goals_nearby_error_boundary_3(self):
-        """Correct winner, one team exact goals → correct_winner_and_goals → 6pts."""
+        """Correct winner, one team exact goals, total_error=3, min=2≤3≤max=3 → 6pts (Rule B)."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(5, 1, 2, 1, cfg)
         assert result[0] == 6
         assert result[1] == "3-Vencedor + gols proximos"
 
     def test_winner_goals_nearby_error_4_falls_through(self):
-        """Correct winner, one team exact goals → correct_winner_and_goals → 6pts.
-        NOTE: score_prediction does NOT check error bounds; all correct_winner_and_goals get 6pts."""
+        """Correct winner, no one_team, no correct_diff → correct_winner → 3pts.
+        total_error=4 exceeds both Rule A (max=1) and Rule B (max=3) bounds."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(6, 1, 2, 1, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        assert result[0] == 3
+        assert result[1] == "4-Vencedor correto"
 
     # -- Correct winner only (3pts) --
     def test_correct_winner_only(self):
@@ -572,7 +570,8 @@ class TestScorePredictionInvented:
     def test_one_team_goals_away_only(self):
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(0, 3, 2, 3, cfg)
-        # correct winner (away), away exact goals → correct_winner_and_goals → 6pts
+        # correct winner (away), away exact goals, total_error=2
+        # Rule A max=1 → no. Rule B min=2≤2≤max=3 → matches → 6pts
         assert result[0] == 6
         assert result[1] == "3-Vencedor + gols proximos"
 
@@ -702,9 +701,9 @@ class TestScorePredictionInvented:
     def test_high_scoring_winner_goals(self):
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(5, 3, 4, 3, cfg)
-        # correct winner(home), one_team_goals(away=3) → correct_winner_and_goals → 6pts
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        # correct winner(home), one_team_goals(away=3), total_error=1 ≤ 1 → 10pts (Rule A)
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + diff exata"
 
     def test_predicted_home_draw_real_draw(self):
         cfg = _make_cfg(_default_rules_invented())
@@ -713,23 +712,23 @@ class TestScorePredictionInvented:
         assert result[0] == 3
         assert result[1] == "4-Vencedor correto"
 
-    # -- Invented-specific: duplicate rule key behavior --
-    def test_duplicate_rule_key_last_wins(self):
-        """Two correct_winner_and_goals rules → last one (6pts) wins in dict lookup."""
+    # -- Invented-specific: error-bound tiered behavior --
+    def test_duplicate_rule_key_first_priority_wins(self):
+        """Two correct_winner_and_goals rules, lower error (total=1 ≤ max=1) → Rule A (10pts)."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(3, 1, 2, 1, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + diff exata"
 
-    def test_min_total_error_not_enforced_in_score_prediction(self):
-        """score_prediction does NOT check min_total_error; all correct_winner_and_goals get 6pts."""
+    def test_min_total_error_enforces_lower_bound(self):
+        """score_prediction enforces min_total_error=2; error=1 → Rule A (max=1) not Rule B."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(3, 1, 2, 1, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + diff exata"
 
     def test_min_total_error_includes_error_2(self):
-        """Correct winner, one team exact goals → correct_winner_and_goals → 6pts."""
+        """Correct winner, one team exact goals, total_error=2, min=2≤2≤max=3 → Rule B (6pts)."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(4, 1, 2, 1, cfg)
         assert result[0] == 6
@@ -750,8 +749,8 @@ class TestScorePredictionInvented:
         assert result[1] == "4-Vencedor correto"
 
     def test_away_win_tier_2_error_1(self):
-        """Away win, one team exact goals → correct_winner_and_goals → 6pts."""
+        """Away win, one team exact goals, total_error=1 ≤ max_error=1 → 10pts (Rule A)."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(1, 3, 1, 2, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + diff exata"

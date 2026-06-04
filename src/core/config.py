@@ -336,13 +336,19 @@ class ChampionshipConfig:
 
     def gold_valid_path(self, phase: str = "group") -> str:
         """Path to the gold 'valid only' aggregated CSV."""
-        label = self.group_phase_label
-        return _norm(os.path.join(self._au_first_round(), f"{label}_valido_all.csv"))
+        if phase == "group":
+            label = self.group_phase_label
+            return _norm(os.path.join(self._au_first_round(), f"{label}_valido_all.csv"))
+        # Playoff phase — use phase key as label
+        return _norm(os.path.join(self._au_playoffs(), f"{phase}_valido_all.csv"))
 
     def gold_all_path(self, phase: str = "group") -> str:
         """Path to the gold 'all records' aggregated CSV."""
-        label = self.group_phase_label
-        return _norm(os.path.join(self._au_first_round(), f"{label}_all.csv"))
+        if phase == "group":
+            label = self.group_phase_label
+            return _norm(os.path.join(self._au_first_round(), f"{label}_all.csv"))
+        # Playoff phase — use phase key as label
+        return _norm(os.path.join(self._au_playoffs(), f"{phase}_all.csv"))
 
     def gold_striker_path(self, boleiro: str) -> str:
         """Path to gold striker CSV for a single boleiro."""
@@ -359,7 +365,8 @@ class ChampionshipConfig:
         return _norm(os.path.join(base, "playoffs_strikers.csv"))
 
     def playoff_games_path(self, layer: str = "gold") -> str:
-        """Path to the aggregated playoff games CSV (legacy compat, returns strikers)."""
+        """DEPRECATED: Legacy alias returning strikers CSV path, not games data.
+        Use :meth:`playoff_strikers_path` or :meth:`gold_playoff_all_path`."""
         return self.playoff_strikers_path(layer)
 
     def overview_md_path(self) -> str:
@@ -394,15 +401,24 @@ class ChampionshipConfig:
         return ""
 
     def scoring_css_var(self, rule_name: str) -> dict:
-        """Return CSS variable names for a scoring rule (color, bg, border)."""
-        mapping = {
-            "1-Placar exato": ("--score-exact", "--score-exact-bg", "--score-exact-border"),
-            "2-Vencedor + gols de um time": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
-            "3-Vencedor correto": ("--score-winner", "--score-winner-bg", "--score-winner-border"),
-            "4-Gols de um time": ("--score-one-team", "--score-one-team-bg", "--score-one-team-border"),
-            "5-Nenhum acerto": ("--score-none", "--score-none-bg", "--score-none-border"),
+        """Return CSS variable names for a scoring rule (color, bg, border).
+
+        Resolves via the rule's ``rule`` (type key) so it works for any
+        championship regardless of localized rule names.
+        """
+        # Map rule type keys → CSS variable triplets
+        type_map = {
+            "exact_score": ("--score-exact", "--score-exact-bg", "--score-exact-border"),
+            "correct_winner_and_goals": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
+            "correct_winner": ("--score-winner", "--score-winner-bg", "--score-winner-border"),
+            "one_team_goals": ("--score-one-team", "--score-one-team-bg", "--score-one-team-border"),
+            "no_score": ("--score-none", "--score-none-bg", "--score-none-border"),
         }
-        return mapping.get(rule_name, ("", "", ""))
+        # Look up the rule by name to get its type key
+        for r in self.scoring_rules:
+            if r.name == rule_name and r.rule in type_map:
+                return type_map[r.rule]
+        return ("", "", "")
 
 
 # ------------------------------------------------------------------

@@ -43,9 +43,15 @@ def _parse_date(raw: str) -> str:
     """Convert 'DD/MM/YYYY HH:MM' → 'YYYY-MM-DD HHh'.
 
     Matches the internal date format used by jogos_1afase.csv.
+    Returns empty string for missing or unparseable dates.
     """
-    dt = pd.to_datetime(raw, format="%d/%m/%Y %H:%M")
-    return dt.strftime("%Y-%m-%d %Hh")
+    if not raw or not str(raw).strip():
+        return ""
+    try:
+        dt = pd.to_datetime(raw, format="%d/%m/%Y %H:%M")
+        return dt.strftime("%Y-%m-%d %Hh")
+    except (ValueError, TypeError):
+        return ""
 
 
 def _parse_result(result: str) -> tuple[int | None, int | None]:

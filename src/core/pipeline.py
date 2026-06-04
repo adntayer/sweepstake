@@ -42,6 +42,7 @@ from src.core.loader import (
     parse_playoff_stage,
     parse_bonus_playoffs,
     _extract_playoff_phase_and_who as _extract_phase_who_from_path,
+    _extract_who,
 )
 from src.core.printing import print_colored
 from src.core.scoring import score_prediction, score_playoff_bonus, score_strikers
@@ -81,10 +82,7 @@ def _boleiros_from_raw(config: ChampionshipConfig) -> list[tuple[str, str]]:
     excel_paths = sorted(glob(raw_pattern, recursive=True))
     result = []
     for path_excel in excel_paths:
-        layout = config.excel_layout
-        parts = path_excel.split(layout.playoffs.name_split_char)
-        name = parts[layout.playoffs.name_split_index].strip()
-        boleiro = name.replace(".xlsx", "").replace(".xls", "").strip()
+        boleiro = _extract_who(path_excel, config)
         result.append((path_excel, boleiro))
     return result
 
@@ -291,7 +289,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
             inplace=True,
         )
 
-        # Select and order columns
+        # Select and order columns (keep penalty columns for tie-break analysis)
         df_merged = df_merged.reindex(
             columns=[
                 "date",
@@ -303,6 +301,10 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
                 "away_goals_bol",
                 "home_goals_real",
                 "away_goals_real",
+                "home_pen_bol",
+                "away_pen_bol",
+                "home_pen_real",
+                "away_pen_real",
                 "resultado_bol_placar",
                 "resultado_bol_time",
                 "resultado_real_placar",
@@ -338,7 +340,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
             inplace=True,
         )
 
-        # Select and order columns
+        # Select and order columns (keep penalty columns for tie-break analysis)
         df_merged = df_merged.reindex(
             columns=[
                 "date",
@@ -350,6 +352,10 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
                 "away_goals_bol",
                 "home_goals_real",
                 "away_goals_real",
+                "home_pen_bol",
+                "away_pen_bol",
+                "home_pen_real",
+                "away_pen_real",
                 "resultado_bol_placar",
                 "resultado_bol_time",
                 "resultado_real_placar",
@@ -479,7 +485,7 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
 
     # --- New v2 analytics ---
     _generate_ranking_history(df_valid, config)
-    _generate_boldness_index(df_all, config)
+    _generate_boldness_index(df_all, config, df_valid)
     _generate_prediction_timing(config)
     _generate_goal_error_by_team(df_valid, config)
 
@@ -517,14 +523,20 @@ def _generate_consistency(df_valid: pd.DataFrame, config: ChampionshipConfig) ->
     """Derive streak/consistency data from gold predictions."""
     print_colored("\tgenerating consistency tracking", "ice")
     df = df_valid.copy()
-    df = df.sort_values(["who", "date", "hour"])
+    # Normalize hour: extract numeric part (e.g. "22h" -> 22) for correct numeric sort
+    df["_hour_num"] = pd.to_numeric(df["hour"].astype(str).str.replace("h", "", regex=False), errors="coerce").fillna(0).astype(int)
+    df = df.sort_values(["who", "date", "_hour_num"])
+    df.drop(columns=["_hour_num"], inplace=True)
     df["hit"] = df["pontos"] > 0
 
     rows = []
     for boleiro, group in df.groupby("who"):
         streak_type = None
         streak_len = 0
-        for _, row in group.iterrows():
+        # Use a positional index for the running avg to avoid
+        # slice-by-label on a reindexed DataFrame
+        group = group.reset_index(drop=True)
+        for idx, (_, row) in enumerate(group.iterrows()):
             is_hit = row["hit"]
             if is_hit and streak_type == "hit":
                 streak_len += 1
@@ -534,8 +546,8 @@ def _generate_consistency(df_valid: pd.DataFrame, config: ChampionshipConfig) ->
                 streak_type = "hit" if is_hit else "miss"
                 streak_len = 1
 
-            # Running avg of last 5 games
-            recent = group.loc[:row.name, "pontos"].tail(5).mean() if "pontos" in group.columns else 0
+            # Running avg of last 5 games — use positional index
+            recent = group.loc[:idx, "pontos"].tail(5).mean()
 
             rows.append({
                 "boleiro": boleiro,
@@ -703,13 +715,17 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
         leader_pts = int(all_cum.max()) if not all_cum.empty else 0
         leader_name = str(all_cum.idxmax()) if not all_cum.empty else ""
 
-        for boleiro, pts in daily_pts.items():
+        # Include ALL players, not just those who bet today,
+        # so ranking history has no gaps for skipped days.
+        all_players = all_cum.index.tolist()
+        for boleiro in all_players:
             cum = int(all_cum.get(boleiro, 0))
             rank = int(all_cum.rank(ascending=False, method="min").get(boleiro, 0))
+            daily_pts_val = int(daily_pts.get(boleiro, 0))
             rows.append({
                 "boleiro": boleiro,
                 "date": date,
-                "daily_points": int(pts),
+                "daily_points": daily_pts_val,
                 "cumulative_points": cum,
                 "rank": rank,
                 "leader_name": leader_name,
@@ -726,12 +742,14 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
 # ------------------------------------------------------------------
 
 
-def _generate_boldness_index(df_all: pd.DataFrame, config: ChampionshipConfig) -> None:
+def _generate_boldness_index(df_all: pd.DataFrame, config: ChampionshipConfig, df_valid: pd.DataFrame | None = None) -> None:
     """Measure how 'bold' each player's predictions are."""
     print_colored("\tgenerating boldness index", "ice")
-    df = df_all.copy()
 
-    # Bolão average total goals per game
+    # Use a single data source for both player averages AND bolão average
+    # to avoid comparing apples to oranges.
+    source = df_valid if df_valid is not None else df_all
+    df = source.copy()
     bolao_avg = (df["home_goals_bol"] + df["away_goals_bol"]).mean()
 
     rows = []
@@ -855,7 +873,7 @@ def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipCon
             "role": "total",
             "games": total_games,
             "mae": total_mae,
-            "goal_bias": round(group["goal_bias"].mean(), 2),
+            "goal_bias": round((group["goal_bias"] * group["games"]).sum() / total_games, 2) if total_games > 0 else 0,
             "avg_predicted": round((group["avg_predicted"] * group["games"]).sum() / total_games, 2) if total_games > 0 else 0,
             "avg_real": round((group["avg_real"] * group["games"]).sum() / total_games, 2) if total_games > 0 else 0,
         })
