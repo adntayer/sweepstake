@@ -753,8 +753,146 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 </div>
 """
 
+    # ------------------------------------------------------------------
+    # Bonus teams for knockout phases — at top, colored by result, scored
+    # ------------------------------------------------------------------
+    bonus_html = ""
+    bonus_path = config.bronze_bonus_path(boleiro)
+    if os.path.exists(bonus_path):
+        df_bonus = pd.read_csv(bonus_path, sep=",")
+        if not df_bonus.empty and os.path.exists(config.games_file):
+            df_games = pd.read_csv(config.games_file, sep=",")
+            df_games["round"] = df_games["round"].astype(str).str.strip()
+            playoff_keys = [pr.key for pr in (config.playoff_rounds or [])]
+
+            # Determine today's date in the configured timezone
+            tz = pytz.timezone(config.timezone)
+            today = datetime.now(tz).date()
+
+            # For each phase: find latest match date and compute winners
+            phase_latest_date = {}  # phase -> latest date
+            advancing = {}           # phase -> list of teams that advanced
+            for pk in playoff_keys:
+                phase_matches = df_games[df_games["round"] == pk]
+                winners = []
+                dates = []
+                for _, row in phase_matches.iterrows():
+                    raw_date = str(row.get("date", ""))
+                    date_part = raw_date[:10] if " " in raw_date else raw_date
+                    try:
+                        d = pd.to_datetime(date_part).date()
+                        dates.append(d)
+                    except (ValueError, TypeError):
+                        pass
+                    hg = float(row["home_goals"]) if pd.notna(row.get("home_goals")) else None
+                    ag = float(row["away_goals"]) if pd.notna(row.get("away_goals")) else None
+                    if hg is not None and ag is not None:
+                        if hg > ag:
+                            winners.append(str(row["home_team"]))
+                        elif ag > hg:
+                            winners.append(str(row["away_team"]))
+                        else:
+                            hp = row.get("home_pen", "")
+                            ap = row.get("away_pen", "")
+                            try:
+                                hp_v = float(hp) if pd.notna(hp) and str(hp).strip() else None
+                                ap_v = float(ap) if pd.notna(ap) and str(ap).strip() else None
+                            except (ValueError, TypeError):
+                                hp_v = ap_v = None
+                            if hp_v is not None and ap_v is not None:
+                                if hp_v > ap_v:
+                                    winners.append(str(row["home_team"]))
+                                elif ap_v > hp_v:
+                                    winners.append(str(row["away_team"]))
+                            elif hp_v is not None:
+                                winners.append(str(row["home_team"]))
+                            elif ap_v is not None:
+                                winners.append(str(row["away_team"]))
+                advancing[pk] = winners
+                phase_latest_date[pk] = max(dates) if dates else None
+
+            phase_order = [pr.key for pr in (config.playoff_rounds or [])]
+            phase_label_map = {pr.key: pr.name for pr in (config.playoff_rounds or [])}
+            phase_emoji_map = {
+                "segunda_fase": "\U0001f3c6",
+                "oitavas": "\U0001f3c1",
+                "quartas": "\U0001f525",
+                "semi": "\U0001f3af",
+                "terceiro_lugar": "\U0001f949",
+                "final": "\U0001f3c6",
+            }
+            playoff_scoring = getattr(config, "playoff_scoring", {})
+
+            df_bonus["phase_order"] = df_bonus["phase"].map(
+                {k: i for i, k in enumerate(phase_order)}
+            ).fillna(99)
+            df_bonus = df_bonus.sort_values(["phase_order", "team"])
+
+            total_bonus_pts = 0
+            phase_blocks = ""
+            for phase_key, group in df_bonus.groupby("phase", sort=False):
+                label = phase_label_map.get(phase_key, phase_key)
+                emoji = phase_emoji_map.get(phase_key, "\u26bd")
+                pts_per_correct = playoff_scoring.get(phase_key, 0)
+                advancing_teams = advancing.get(phase_key, [])
+
+                # Determine if this phase is checkable (all matches already played)
+                latest = phase_latest_date.get(phase_key)
+                checkable = latest is not None and today >= latest
+
+                phase_pts = 0
+                teams_list = ""
+                for _, row in group.iterrows():
+                    team = row["team"]
+                    # Always compute points from games.csv regardless of checkable
+                    passed = team in advancing_teams
+                    if passed:
+                        phase_pts += pts_per_correct
+
+                    if not checkable:
+                        # Not yet time — yellow
+                        bg = "rgba(234,179,8,0.15)"
+                        border = "var(--warning)"
+                        color = "var(--warning)"
+                    else:
+                        bg = "rgba(34,197,94,0.15)" if passed else "rgba(239,68,68,0.15)"
+                        border = "var(--success)" if passed else "var(--danger)"
+                        color = "var(--success)" if passed else "var(--danger)"
+                    teams_list += (
+                        f'<span style="display:inline-block;padding:0.2rem 0.6rem;margin:0.15rem;'
+                        f'background:{bg};border:1px solid {border};border-radius:999px;'
+                        f'font-size:0.75rem;color:{color};">{team}</span>'
+                    )
+
+                total_bonus_pts += phase_pts
+                if checkable:
+                    pts_label = f'<span style="color:var(--accent);font-weight:700;">+{phase_pts}</span>'
+                else:
+                    pts_label = f'<span style="color:var(--warning);font-weight:700;">\u23f3 +{phase_pts}</span>'
+                phase_blocks += (
+                    f'<div style="margin-bottom:0.5rem;">'
+                    f'<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">'
+                    f'{emoji} {label} {pts_label}</div>'
+                    f'<div>{teams_list}</div>'
+                    f'</div>\n'
+                )
+
+            if phase_blocks:
+                total_label = f'<span style="color:var(--accent);margin-left:0.5rem;font-weight:700;">+{total_bonus_pts}</span>'
+                bonus_html = (
+                    f'<details class="section" open>'
+                    f'<summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">'
+                    f'\U0001f3c6 Times Bonus {total_label}</summary>'
+                    f'<div class="card">{phase_blocks}</div>'
+                    f'</details>\n'
+                )
+
+    # --- Build top-of-page: striker + bonus + timeline + compare ---
     if striker_name:
         body += f'<div class="striker-badge"><span class="icon">\U0001f3af</span> Artilheiro: <strong>{striker_name}</strong></div>\n'
+
+    if bonus_html:
+        body += bonus_html
 
     if timeline_bars:
         body += f'<div class="card"><div class="card-title">Pontos por dia</div><div class="bar-chart">{timeline_bars}</div></div>\n'
