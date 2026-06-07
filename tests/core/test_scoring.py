@@ -55,6 +55,37 @@ def _default_rules_invented() -> list[ScoringRule]:
     ]
 
 
+def _default_rules_world_cup_2026() -> list[ScoringRule]:
+    """World Cup 2026 scoring rules.
+
+    - Exact score: 15pts
+    - Winner + (goals of one team OR correct diff):
+        total_error <= 2 → 10pts
+        total_error > 2  →  7pts
+    - Winner only: 5pts
+    - One team goals: 1pt
+    - None: 0pt
+    """
+    return [
+        ScoringRule(name="1-Placar exato", points=15, priority=1, rule="exact_score"),
+        ScoringRule(
+            name="2-Vencedor + acerto parcial", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        ),
+        ScoringRule(
+            name="3-Vencedor + acerto parcial", points=7, priority=3,
+            rule="correct_winner_and_goals_or_diff", min_total_error=3,
+        ),
+        ScoringRule(
+            name="4-Vencedor correto", points=5, priority=4,
+            rule="correct_winner",
+        ),
+        ScoringRule(name="5-Gols de um time", points=1, priority=5, rule="one_team_goals"),
+        ScoringRule(name="6-Nenhum acerto", points=0, priority=6, rule="no_score"),
+        ScoringRule(name="9-Sem jogo", points=0, priority=99, rule="missing_data"),
+    ]
+
+
 def _default_rules_2025() -> list[ScoringRule]:
     return [
         ScoringRule(name="1-Placar exato", points=12, priority=1, rule="exact_score"),
@@ -163,6 +194,71 @@ class TestMatchesCondition:
             rule="correct_winner_and_goals", min_total_error=3,
         )
         assert _matches_condition(rule, 3, 1, 2, 1, "home", "home") is False
+
+    def test_correct_winner_and_goals_or_diff_match_goals(self):
+        """Correct winner + one team exact goals → True."""
+        rule = ScoringRule(
+            name="w+g+d", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        )
+        assert _matches_condition(rule, 3, 1, 2, 1, "home", "home") is True
+
+    def test_correct_winner_and_goals_or_diff_match_diff(self):
+        """Correct winner + correct diff (no exact goals) → True."""
+        rule = ScoringRule(
+            name="w+g+d", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        )
+        assert _matches_condition(rule, 3, 2, 2, 1, "home", "home") is True
+
+    def test_correct_winner_and_goals_or_diff_wrong_winner(self):
+        """Wrong winner → False."""
+        rule = ScoringRule(
+            name="w+g+d", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        )
+        assert _matches_condition(rule, 1, 2, 2, 1, "away", "home") is False
+
+    def test_correct_winner_and_goals_or_diff_no_match(self):
+        """Correct winner, no exact goals, no correct diff → False."""
+        rule = ScoringRule(
+            name="w+g+d", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        )
+        assert _matches_condition(rule, 4, 2, 2, 1, "home", "home") is False
+
+    def test_correct_winner_and_goals_or_diff_error_too_high(self):
+        """Correct winner + one team goals, but error too high → False."""
+        rule = ScoringRule(
+            name="w+g+d", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        )
+        assert _matches_condition(rule, 5, 1, 2, 1, "home", "home") is False
+
+    def test_correct_winner_and_goals_or_diff_error_too_low(self):
+        """Correct winner + one team goals, but error too low for min_total_error → False."""
+        rule = ScoringRule(
+            name="w+g+d", points=7, priority=3,
+            rule="correct_winner_and_goals_or_diff", min_total_error=3,
+        )
+        assert _matches_condition(rule, 3, 1, 2, 1, "home", "home") is False
+
+    def test_correct_winner_and_goals_or_diff_draw_diff(self):
+        """Draw + correct diff (0=0) → True."""
+        rule = ScoringRule(
+            name="w+g+d", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        )
+        assert _matches_condition(rule, 2, 2, 1, 1, "draw", "draw") is True
+
+    def test_correct_winner_and_goals_or_diff_draw_no_exact(self):
+        """Draw + no exact goals but correct diff → True (diff = 0)."""
+        rule = ScoringRule(
+            name="w+g+d", points=10, priority=2,
+            rule="correct_winner_and_goals_or_diff", max_total_error=2,
+        )
+        # diff 0=0, error=2 → True
+        assert _matches_condition(rule, 0, 0, 1, 1, "draw", "draw") is True
 
     def test_correct_winner_match(self):
         rule = ScoringRule(name="winner", points=5, priority=4, rule="correct_winner")
@@ -665,74 +761,11 @@ class TestScorePredictionInvented:
         assert result[0] == 20
 
     def test_int_conversion_float_inputs(self):
+        """3-1 vs 2-1: one team exact (away=1), error=1 ≤ max_total_error=1 → 10pts."""
         cfg = _make_cfg(_default_rules_invented())
         result = score_prediction(3.0, 1.0, 2.0, 1.0, cfg)
-        assert result[0] == 6
-
-    # -- Edge cases --
-    def test_zero_vs_zero_prediction(self):
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(0, 0, 1, 0, cfg)
-        # correct winner? pred=draw, real=home → no. one_team_goals(away=0==0) → yes
-        assert result[0] == 1
-
-    def test_zero_vs_zero_real(self):
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(1, 0, 0, 0, cfg)
-        # correct winner? pred=home, real=draw → no. one_team_goals(away=0==0) → yes
-        assert result[0] == 1
-        assert result[1] == "5-Gols de um time"
-
-    def test_same_score_different_winner(self):
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(2, 1, 1, 2, cfg)
-        assert result[0] == 0
-
-    def test_same_goals_different_teams(self):
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(1, 2, 2, 1, cfg)
-        assert result[0] == 0
-
-    def test_high_scoring_exact(self):
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(4, 4, 4, 4, cfg)
-        assert result[0] == 20
-
-    def test_high_scoring_winner_goals(self):
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(5, 3, 4, 3, cfg)
-        # correct winner(home), one_team_goals(away=3), total_error=1 ≤ 1 → 10pts (Rule A)
         assert result[0] == 10
         assert result[1] == "2-Vencedor + diff exata"
-
-    def test_predicted_home_draw_real_draw(self):
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(0, 0, 1, 1, cfg)
-        # correct winner(draw), no exact goals → correct_winner → 3pts
-        assert result[0] == 3
-        assert result[1] == "4-Vencedor correto"
-
-    # -- Invented-specific: error-bound tiered behavior --
-    def test_duplicate_rule_key_first_priority_wins(self):
-        """Two correct_winner_and_goals rules, lower error (total=1 ≤ max=1) → Rule A (10pts)."""
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(3, 1, 2, 1, cfg)
-        assert result[0] == 10
-        assert result[1] == "2-Vencedor + diff exata"
-
-    def test_min_total_error_enforces_lower_bound(self):
-        """score_prediction enforces min_total_error=2; error=1 → Rule A (max=1) not Rule B."""
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(3, 1, 2, 1, cfg)
-        assert result[0] == 10
-        assert result[1] == "2-Vencedor + diff exata"
-
-    def test_min_total_error_includes_error_2(self):
-        """Correct winner, one team exact goals, total_error=2, min=2≤2≤max=3 → Rule B (6pts)."""
-        cfg = _make_cfg(_default_rules_invented())
-        result = score_prediction(4, 1, 2, 1, cfg)
-        assert result[0] == 6
-        assert result[1] == "3-Vencedor + gols proximos"
 
     def test_tier_gap_error_1_falls_to_correct_winner(self):
         """No one_team, no correct_diff → correct_winner → 3pts."""
@@ -754,3 +787,242 @@ class TestScorePredictionInvented:
         result = score_prediction(1, 3, 1, 2, cfg)
         assert result[0] == 10
         assert result[1] == "2-Vencedor + diff exata"
+
+
+# ------------------------------------------------------------------
+# score_prediction — World Cup 2026 rules
+# ------------------------------------------------------------------
+
+class TestScorePredictionWorldCup2026:
+    # -- Exact score (15pts) --
+    def test_exact_score(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, 1, 2, 1, cfg)
+        assert result[0] == 15
+        assert result[1] == "1-Placar exato"
+        assert result[2] == 1
+
+    def test_exact_score_0_0(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(0, 0, 0, 0, cfg)
+        assert result[0] == 15
+
+    def test_exact_score_high(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(5, 3, 5, 3, cfg)
+        assert result[0] == 15
+
+    def test_exact_draw(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, 2, 2, 2, cfg)
+        assert result[0] == 15
+
+    # -- Winner + goals/diff, error <= 2 (10pts) --
+    def test_winner_and_goals_low_error(self):
+        """Correct winner, one team exact goals, total_error=1 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 1, 2, 1, cfg)
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + acerto parcial"
+
+    def test_winner_and_correct_diff_low_error(self):
+        """Correct winner, correct diff (2-1=1, 3-2=1), total_error=2 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 2, 2, 1, cfg)
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + acerto parcial"
+
+    def test_winner_and_diff_error_boundary_2(self):
+        """Correct winner, one team exact goals, total_error=2 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 1, 2, 0, cfg)
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + acerto parcial"
+
+    def test_winner_and_correct_diff_error_2(self):
+        """Correct winner, correct diff (1), total_error=2 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(4, 3, 3, 2, cfg)
+        assert result[0] == 10
+
+    def test_winner_and_diff_away_win_10(self):
+        """Away win, one team exact goals (home=1), total_error=1 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(1, 3, 1, 2, cfg)
+        assert result[0] == 10
+
+    def test_draw_correct_diff_10(self):
+        """Draw, correct diff (0), total_error=2 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, 2, 1, 1, cfg)
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + acerto parcial"
+
+    def test_draw_correct_diff_zero_zero_10(self):
+        """Draw, correct diff (0), total_error=2 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(0, 0, 1, 1, cfg)
+        assert result[0] == 10
+
+    # -- Winner + goals/diff, error > 2 (7pts) --
+    def test_winner_and_goals_high_error_7(self):
+        """Correct winner, one team exact goals, total_error=3 > 2 → 7pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(5, 1, 2, 1, cfg)
+        assert result[0] == 7
+        assert result[1] == "3-Vencedor + acerto parcial"
+
+    def test_winner_and_diff_high_error_7(self):
+        """Correct winner, correct diff, total_error=4 > 2 → 7pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(4, 4, 1, 1, cfg)
+        assert result[0] == 7
+        assert result[1] == "3-Vencedor + acerto parcial"
+
+    def test_draw_correct_diff_high_error_7(self):
+        """Draw, correct diff, total_error=4 > 2 → 7pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 3, 1, 1, cfg)
+        assert result[0] == 7
+        assert result[1] == "3-Vencedor + acerto parcial"
+
+    def test_winner_and_goals_error_3_away_7(self):
+        """Away win, one team exact goals (home=1), total_error=3 > 2 → 7pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(1, 5, 1, 2, cfg)
+        assert result[0] == 7
+        assert result[1] == "3-Vencedor + acerto parcial"
+
+    # -- Correct winner only (5pts) --
+    def test_correct_winner_only(self):
+        """Correct winner, no exact goals, no correct diff, total_error=2 → 5pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 0, 2, 1, cfg)
+        assert result[0] == 5
+        assert result[1] == "4-Vencedor correto"
+
+    def test_correct_winner_away_5(self):
+        """Correct winner (away), no exact goals, no correct diff → 5pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(0, 3, 1, 2, cfg)
+        assert result[0] == 5
+        assert result[1] == "4-Vencedor correto"
+
+    def test_correct_winner_high_error(self):
+        """Correct winner, no exact goals, no correct diff → 5pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(5, 0, 2, 1, cfg)
+        assert result[0] == 5
+        assert result[1] == "4-Vencedor correto"
+
+    def test_correct_winner_no_diff_no_goals_5(self):
+        """Correct winner, no exact goals, diff off → 5pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(4, 2, 2, 1, cfg)
+        # one_team: home(4≠2), away(2≠1); diff: 2≠1 → condition not met → 5pts
+        assert result[0] == 5
+        assert result[1] == "4-Vencedor correto"
+
+    def test_draw_correct_diff_error_2_10(self):
+        """Draw, correct diff (0), error=2 ≤ 2 → 10pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 3, 2, 2, cfg)
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + acerto parcial"
+
+    # -- One team goals only (1pt) --
+    def test_one_team_goals_wrong_winner(self):
+        """Wrong winner, one team exact goals → 1pt."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, 0, 2, 3, cfg)
+        assert result[0] == 1
+        assert result[1] == "5-Gols de um time"
+
+    def test_one_team_goals_away_wrong_winner(self):
+        """Wrong winner, away exact goals → 1pt."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        # pred home 2-0, real away 2-3: wrong winner, one team exact (home=2)
+        result = score_prediction(2, 0, 2, 3, cfg)
+        assert result[0] == 1
+        assert result[1] == "5-Gols de um time"
+
+    def test_one_team_goals_draw_wrong_winner(self):
+        """Draw predicted, real home win, one team exact goals → 1pt."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, 2, 2, 0, cfg)
+        assert result[0] == 1
+        assert result[1] == "5-Gols de um time"
+
+    # -- No match (0pts) --
+    def test_no_match(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(1, 0, 2, 3, cfg)
+        assert result[0] == 0
+        assert result[1] == "6-Nenhum acerto"
+
+    def test_no_match_wrong_winner_wrong_goals(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 0, 0, 2, cfg)
+        assert result[0] == 0
+
+    def test_no_match_same_score_different_winner(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, 1, 1, 2, cfg)
+        assert result[0] == 0
+
+    # -- Missing data --
+    def test_missing_pred_home(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(float("nan"), 1, 2, 1, cfg)
+        assert result[0] == 0
+        assert result[1] == "9-Sem jogo"
+        assert result[2] == 0
+
+    def test_missing_pred_away(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, float("nan"), 2, 1, cfg)
+        assert result[2] == 0
+
+    def test_missing_real_home(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2, 1, float("nan"), 1, cfg)
+        assert result[2] == 0
+
+    def test_missing_both(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(float("nan"), float("nan"), float("nan"), float("nan"), cfg)
+        assert result[2] == 0
+
+    # -- Priority ordering: lower error caught first --
+    def test_priority_tier_2_before_tier_3(self):
+        """Same condition, error=2 (≤2) → 10pts tier (priority 2), not 7pts tier."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3, 2, 2, 1, cfg)
+        assert result[0] == 10
+        assert result[1] == "2-Vencedor + acerto parcial"
+
+    def test_priority_tier_3_when_error_gt_2(self):
+        """Same condition, error=3 (>2) → 7pts tier (priority 3)."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(5, 1, 2, 1, cfg)
+        assert result[0] == 7
+        assert result[1] == "3-Vencedor + acerto parcial"
+
+    def test_no_exact_goals_no_diff_falls_to_winner(self):
+        """Correct winner, no exact goals, no correct diff → 5pts."""
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(4, 2, 2, 1, cfg)
+        # one_team: home(4≠2), away(2≠1); diff: 2≠1 → no match
+        assert result[0] == 5
+        assert result[1] == "4-Vencedor correto"
+
+    # -- Int conversion --
+    def test_int_conversion(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(2.0, 1.0, 2.0, 1.0, cfg)
+        assert result[0] == 15
+
+    def test_float_inputs(self):
+        cfg = _make_cfg(_default_rules_world_cup_2026())
+        result = score_prediction(3.0, 1.0, 2.0, 1.0, cfg)
+        assert result[0] == 10

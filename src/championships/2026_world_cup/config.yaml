@@ -1,0 +1,263 @@
+# Championship: 2026 FIFA World Cup
+id: 2026_world_cup
+name: "2026 World Cup"
+year: 2026
+timezone: "America/Sao_Paulo"
+report_title: "2026 World Cup"
+group_phase_label: "1afase"
+
+# 2026 uses group standings format (not individual match predictions)
+standings_format: true
+standings_skiprows: 1
+
+# All paths (relative to project root)
+base_dir: "src/championships/2026_world_cup/data"
+raw_dir: "src/championships/2026_world_cup/data/raw"
+results_file: "src/championships/2026_world_cup/data/games.csv"
+games_file: "src/championships/2026_world_cup/data/games.csv"
+bronze_dir: "src/championships/2026_world_cup/data/bronze"
+silver_dir: "src/championships/2026_world_cup/data/silver"
+gold_dir: "src/championships/2026_world_cup/data/gold"
+reports_dir: "src/championships/2026_world_cup/reports"
+
+# External results source
+results_endpoint: "https://fixturedownload.com/download/fifa-world-cup-2026-UTC.csv"
+
+# English → Portuguese team name mapping (Excel uses Portuguese names)
+team_name_mapping:
+  - en: "South Africa"
+    pt: "África do Sul"
+  - en: "Korea Republic"
+    pt: "Coréia do Sul"
+  - en: "Czechia"
+    pt: "República Tcheca"
+  - en: "Mexico"
+    pt: "México"
+  - en: "Canada"
+    pt: "Canadá"
+  - en: "Bosnia and Herzegovina"
+    pt: "Bósnia"
+  - en: "Qatar"
+    pt: "Catar"
+  - en: "Switzerland"
+    pt: "Suíça"
+  - en: "Brazil"
+    pt: "Brasil"
+  - en: "Morocco"
+    pt: "Marrocos"
+  - en: "Haiti"
+    pt: "Haiti"
+  - en: "Scotland"
+    pt: "Escócia"
+  - en: "USA"
+    pt: "Estados Unidos"
+  - en: "Paraguay"
+    pt: "Paraguai"
+  - en: "Australia"
+    pt: "Austrália"
+  - en: "Türkiye"
+    pt: "Turquia"
+  - en: "Germany"
+    pt: "Alemanha"
+  - en: "Curaçao"
+    pt: "Curaçao"
+  - en: "Côte d'Ivoire"
+    pt: "Costa do Marfim"
+  - en: "Ecuador"
+    pt: "Equador"
+  - en: "Netherlands"
+    pt: "Holanda"
+  - en: "Japan"
+    pt: "Japão"
+  - en: "Sweden"
+    pt: "Suécia"
+  - en: "Tunisia"
+    pt: "Tunísia"
+  - en: "Belgium"
+    pt: "Bélgica"
+  - en: "Egypt"
+    pt: "Egito"
+  - en: "IR Iran"
+    pt: "Irã"
+  - en: "New Zealand"
+    pt: "Nova Zelândia"
+  - en: "Spain"
+    pt: "Espanha"
+  - en: "Cabo Verde"
+    pt: "Cabo Verde"
+  - en: "Saudi Arabia"
+    pt: "Arábia Saudita"
+  - en: "Uruguay"
+    pt: "Uruguai"
+  - en: "France"
+    pt: "França"
+  - en: "Senegal"
+    pt: "Senegal"
+  - en: "Iraq"
+    pt: "Iraque"
+  - en: "Norway"
+    pt: "Noruega"
+  - en: "Argentina"
+    pt: "Argentina"
+  - en: "Algeria"
+    pt: "Argélia"
+  - en: "Austria"
+    pt: "Áustria"
+  - en: "Jordan"
+    pt: "Jordânia"
+  - en: "Portugal"
+    pt: "Portugal"
+  - en: "Congo DR"
+    pt: "RD Congo"
+  - en: "Uzbekistan"
+    pt: "Uzbequistão"
+  - en: "Colombia"
+    pt: "Colômbia"
+  - en: "England"
+    pt: "Inglaterra"
+  - en: "Croatia"
+    pt: "Croácia"
+  - en: "Ghana"
+    pt: "Gana"
+  - en: "Panama"
+    pt: "Panamá"
+
+# Playoff bonus scoring (per correct pick per phase)
+playoff_scoring:
+  segunda_fase: 4
+  oitavas: 8
+  quartas: 12
+  semi: 20
+  final: 30
+  # campeao: 45  # reserved for future champion bonus pick
+
+# Striker scoring (points if player's pick matches actual_top_scorer)
+striker_scoring:
+  points: 25
+
+# Actual top scorer of the championship
+actual_top_scorer: "Harry Kane"
+
+# Scoring rules (checked in rule order)
+scoring:
+  - name: "1-Placar exato"
+    rule: "exact_score"
+    points: 15
+    emoji: "\U0001f3af"
+    color_text: "#00cc00"
+  - name: "2-Vencedor + acerto parcial"
+    rule: "correct_winner_and_goals_or_diff"
+    points: 10
+    max_total_error: 2
+    emoji: "\u26bd"
+    color_text: "#66ff66"
+  - name: "3-Vencedor + acerto parcial"
+    rule: "correct_winner_and_goals_or_diff"
+    points: 7
+    min_total_error: 3
+    emoji: "\u26bd"
+    color_text: "#66ff66"
+  - name: "4-Vencedor correto"
+    rule: "correct_winner"
+    points: 5
+    emoji: "\u2705"
+    color_text: "#ffcc00"
+  - name: "5-Gols de um time"
+    rule: "one_team_goals"
+    points: 1
+    emoji: "\U0001f44a"
+    color_text: "#ff9900"
+  - name: "6-Nenhum acerto"
+    rule: "no_score"
+    points: 0
+    emoji: "\u274c"
+    color_text: "#ff3333"
+  - name: "9-Sem jogo"
+    rule: "missing_data"
+    points: 0
+    priority: 99
+    emoji: "\u2753"
+    color_text: "#888888"
+
+# Excel parsing layout
+excel_layout:
+  first_round:
+    matches: 72
+    skiprows: 2
+  playoffs:
+    striker_row_offset: 1
+    striker_label: "Artilheiro"
+    striker_name_column: 2
+    striker_name_fallback_column: 8
+    name_split_char: "-"
+    name_split_index: 0
+    playoffs_sheet_name: "Tabela Jogos"
+    rounds:
+      - name: "2a Fase"
+        key: "segunda_fase"
+        matches: 16
+        tail_offset: 33
+      - name: "Oitavas"
+        key: "oitavas"
+        matches: 8
+        tail_offset: 17
+      - name: "Quartas"
+        key: "quartas"
+        matches: 4
+        tail_offset: 9
+      - name: "Semi"
+        key: "semi"
+        matches: 2
+        tail_offset: 5
+      - name: "Disputa 3\u00ba Lugar"
+        key: "terceiro_lugar"
+        matches: 1
+        tail_offset: 3
+      - name: "Final"
+        key: "final"
+        matches: 1
+        tail_offset: 2
+
+# HTML report theme
+theme:
+  mode: "dark"
+  colors:
+    primary: "#1a5e1f"
+    primary_light: "#2d8a33"
+    accent: "#f5c518"
+    accent_dark: "#b8940f"
+    bg: "#060d1a"
+    card_bg: "#0d1b2e"
+    card_border: "#1a3050"
+    text: "#ffffff"
+    text_muted: "#8899aa"
+    text_inverse: "#000000"
+    success: "#22c55e"
+    warning: "#f59e0b"
+    danger: "#ef4444"
+    voce: "#f5c518"
+    bolao: "#3b82f6"
+    silver: "#c0c0c0"
+    bronze: "#cd7f32"
+    accent_highlight: "rgba(245,197,24,0.1)"
+    silver_highlight: "rgba(192,192,192,0.08)"
+    bronze_highlight: "rgba(205,127,50,0.08)"
+    zebra_stripe: "rgba(255,255,255,0.02)"
+    hover_overlay: "rgba(255,255,255,0.03)"
+    shadow_color: "rgba(0,0,0,0.4)"
+    player_card_active: "rgba(245,197,24,0.05)"
+    score_exact: "#00cc00"
+    score_exact_bg: "rgba(0,204,0,0.1)"
+    score_exact_border: "rgba(0,204,0,0.4)"
+    score_winner_goals: "#66ff66"
+    score_winner_goals_bg: "rgba(102,255,102,0.1)"
+    score_winner_goals_border: "rgba(102,255,102,0.4)"
+    score_winner: "#ffcc00"
+    score_winner_bg: "rgba(255,204,0,0.1)"
+    score_winner_border: "rgba(255,204,0,0.4)"
+    score_one_team: "#ff9900"
+    score_one_team_bg: "rgba(255,153,0,0.1)"
+    score_one_team_border: "rgba(255,153,0,0.4)"
+    score_none: "#ff3333"
+    score_none_bg: "rgba(255,51,51,0.1)"
+    score_none_border: "rgba(255,51,51,0.4)"

@@ -19,6 +19,25 @@ def _norm(path: str) -> str:
     return os.path.normpath(path)
 
 
+def _load_gold_data(config: ChampionshipConfig) -> pd.DataFrame:
+    """Load gold data — prefers valid, falls back to all predictions.
+
+    This ensures the dashboard shows participants even when no real
+    results exist yet (all predictions have ``valido=0``).
+    """
+    valid_path = config.gold_valid_path()
+    all_path = config.gold_all_path()
+    if os.path.exists(valid_path):
+        df = pd.read_csv(valid_path, sep=",")
+        if not df.empty:
+            return df
+    if os.path.exists(all_path):
+        df = pd.read_csv(all_path, sep=",")
+        if not df.empty and "who" in df.columns:
+            return df
+    return pd.DataFrame()
+
+
 def _initials(name: str) -> str:
     """Get initials from a name (max 2 chars)."""
     parts = name.strip().split()
@@ -394,7 +413,9 @@ def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
 
 def _build_full_ranking(config: ChampionshipConfig) -> str:
     """Build the full ranking table (copied from Raio-X) with trend indicators."""
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_valid = _load_gold_data(config)
+    if df_valid.empty:
+        return "<div class='empty-state'>Nenhum participante encontrado</div>"
 
     # Compute trend: compare last 3 days vs previous 3 days
     df_valid["date_dt"] = pd.to_datetime(df_valid["date"])
@@ -477,7 +498,9 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
 
 def _build_player_grid(config: ChampionshipConfig) -> str:
     """Build the player avatar grid with points and hot streak indicators."""
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_valid = _load_gold_data(config)
+    if df_valid.empty:
+        return ""
     df_pts = df_valid.groupby("who", as_index=False)["pontos"].sum()
     df_pts.sort_values("pontos", ascending=False, inplace=True)
 
@@ -523,9 +546,8 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
 
 def _build_distribution_bars(config: ChampionshipConfig) -> str:
     """Build a distribution bar showing how many players are in each score bracket."""
-    try:
-        df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
-    except (FileNotFoundError, pd.errors.EmptyDataError):
+    df_valid = _load_gold_data(config)
+    if df_valid.empty:
         return ""
 
     df_pts = df_valid.groupby("who")["pontos"].sum()
@@ -717,6 +739,9 @@ def _build_phase_accordion(config: ChampionshipConfig) -> str:
 
 def generate_dashboard(config: ChampionshipConfig) -> None:
     """Create the index.html dashboard."""
+    if not os.path.exists(config.gold_valid_path()) and not os.path.exists(config.gold_all_path()):
+        print_colored(f"no gold data at {config.gold_valid_path()} or {config.gold_all_path()}, skipping dashboard", "yellow")
+        return
     print_colored("creating index.html dashboard", "sand")
 
     tz = pytz.timezone(config.timezone)

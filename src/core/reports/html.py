@@ -573,7 +573,12 @@ def _max_points_per_game(config: ChampionshipConfig) -> int:
 
 def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     """Build a per-player HTML report."""
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    if os.path.exists(config.gold_valid_path()):
+        df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+        if df_valid.empty:
+            df_valid = pd.read_csv(config.gold_all_path(), sep=",")
+    else:
+        df_valid = pd.read_csv(config.gold_all_path(), sep=",")
     df_striker = pd.read_csv(config.playoff_strikers_path(), sep=",")
     max_pts = _max_points_per_game(config)
 
@@ -1903,6 +1908,8 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
     """Bolão X-ray: meta-analysis of the entire sweepstake — no per-player focus."""
     df_all = pd.read_csv(config.gold_all_path(), sep=",")
     df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
+    if df_valid.empty:
+        return "<div class='empty-state'>Nenhum dado disponivel ainda</div>"
     df_results = pd.read_csv(config.results_file, sep=",").dropna(subset=["home_goals"])
 
     # Build resultado_real_placar from raw columns
@@ -2292,9 +2299,12 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 def _build_day_winners(config: ChampionshipConfig) -> str:
     """Show day-by-day winners, zebras, and highlights with day selector."""
     df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    if df_valid.empty:
+        return "<div class='empty-state'>Nenhum dado disponivel ainda</div>"
     df_all = pd.read_csv(config.gold_all_path(), sep=",")
     df_results = pd.read_csv(config.results_file, sep=",")
-    df_upset = pd.read_csv(_norm(os.path.join(config._au_first_round(), "upset_tracker.csv")), sep=",")
+    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
+    df_upset = pd.read_csv(upset_path, sep=",") if os.path.exists(upset_path) else pd.DataFrame()
     max_pts = _max_points_per_game(config)
 
     # Get unique days from games.csv (extract date part since it includes hour)
@@ -2842,6 +2852,103 @@ def _build_momentum(config: ChampionshipConfig) -> str:
 # Orchestrator
 # ------------------------------------------------------------------
 
+# --- Analytics HTML helpers (guarded by real results) ---
+
+
+def _analytics_cleanup(config: ChampionshipConfig, html_base: str) -> None:
+    """Delete stale analytics HTML files when no real results exist."""
+    if os.path.exists(config.games_file):
+        df_games = pd.read_csv(config.games_file, sep=",")
+        has_results = not df_games.empty and "home_goals" in df_games.columns and df_games["home_goals"].notna().any()
+    else:
+        has_results = False
+    if not has_results:
+        stale = [
+            "ranking_evolution.html",
+            "boldometer.html",
+            "bolao_xray.html",
+            "day_winners.html",
+            "zebras.html",
+            "momentum.html",
+        ]
+        for name in stale:
+            path = _norm(os.path.join(html_base, name))
+            if os.path.exists(path):
+                os.remove(path)
+                print_colored(f"\tremoved stale {name}", "yellow")
+
+
+def _build_ranking_evolution_page(config: ChampionshipConfig, html_base: str) -> None:
+    path = _norm(os.path.join(html_base, "ranking_evolution.html"))
+    csv_path = _norm(os.path.join(config._au_first_round(), "ranking_history.csv"))
+    if os.path.exists(csv_path):
+        print_colored("generating ranking_evolution.html", "blue")
+        _save(path, _build_ranking_evolution(config))
+    else:
+        print_colored("skipping ranking_evolution.html (no ranking_history.csv)", "yellow")
+
+
+def _build_boldometer_page(config: ChampionshipConfig, html_base: str) -> None:
+    path = _norm(os.path.join(html_base, "boldometer.html"))
+    csv_path = _norm(os.path.join(config._au_first_round(), "boldness_index.csv"))
+    if os.path.exists(csv_path):
+        print_colored("generating boldometer.html", "blue")
+        _save(path, _build_boldometer(config))
+    else:
+        print_colored("skipping boldometer.html (no boldness_index.csv)", "yellow")
+
+
+def _build_bolao_xray_page(config: ChampionshipConfig, html_base: str) -> None:
+    path = _norm(os.path.join(html_base, "bolao_xray.html"))
+    if os.path.exists(config.gold_valid_path()) and _has_any_valid(config):
+        print_colored("generating bolao_xray.html", "blue")
+        _save(path, _build_bolao_xray(config))
+    else:
+        print_colored("skipping bolao_xray.html (no valid data)", "yellow")
+
+
+def _build_day_winners_page(config: ChampionshipConfig, html_base: str) -> None:
+    path = _norm(os.path.join(html_base, "day_winners.html"))
+    if os.path.exists(config.gold_valid_path()) and _has_any_valid(config):
+        print_colored("generating day_winners.html", "blue")
+        _save(path, _build_day_winners(config))
+    else:
+        print_colored("skipping day_winners.html (no valid data)", "yellow")
+
+
+def _build_zebras_page(config: ChampionshipConfig, html_base: str) -> None:
+    path = _norm(os.path.join(html_base, "zebras.html"))
+    csv_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
+    if os.path.exists(csv_path):
+        print_colored("generating zebras.html", "blue")
+        _save(path, _build_zebras(config))
+    else:
+        print_colored("skipping zebras.html (no upset_tracker.csv)", "yellow")
+
+
+def _build_momentum_page(config: ChampionshipConfig, html_base: str) -> None:
+    path = _norm(os.path.join(html_base, "momentum.html"))
+    csv_path = _norm(os.path.join(config._au_first_round(), "consistency.csv"))
+    if os.path.exists(csv_path):
+        print_colored("generating momentum.html", "blue")
+        _save(path, _build_momentum(config))
+    else:
+        print_colored("skipping momentum.html (no consistency.csv)", "yellow")
+
+
+def _has_any_valid(config: ChampionshipConfig) -> bool:
+    """Check if gold_valid file has at least one row with valido=1."""
+    path = config.gold_valid_path()
+    if not os.path.exists(path):
+        return False
+    df = pd.read_csv(path, sep=",")
+    if df.empty:
+        return False
+    if "valido" in df.columns:
+        return df["valido"].eq(1).any()
+    return False
+
+
 def generate_html_reports(config: ChampionshipConfig) -> None:
     """Generate all HTML reports from gold-layer data."""
     html_base = _norm(os.path.join(config.reports_dir, "html"))
@@ -2863,10 +2970,28 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         os.makedirs(_norm(os.path.join(jogos_base, pr.key)), exist_ok=True)
 
     # Load gold data
-    df_all = pd.read_csv(config.gold_all_path(), sep=",")
+    gold_all = config.gold_all_path()
+    if not os.path.exists(gold_all):
+        print_colored(f"no gold data found at {gold_all}, skipping HTML reports", "yellow")
+        return
+    df_all = pd.read_csv(gold_all, sep=",")
 
     # --- Per-player ---
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    # Use valid if available and non-empty, otherwise fall back to all predictions
+    # so boleiro pages are generated even before the tournament starts
+    # (all predictions have valido=0 and gold_valid has 0 data rows).
+    gold_all = config.gold_all_path()
+    if not os.path.exists(gold_all):
+        print_colored(f"no gold data found at {gold_all}, skipping HTML reports", "yellow")
+        return
+    df_all = pd.read_csv(gold_all, sep=",")
+    gold_valid = config.gold_valid_path()
+    if os.path.exists(gold_valid):
+        df_valid = pd.read_csv(gold_valid, sep=",")
+        if df_valid.empty:
+            df_valid = df_all.copy()
+    else:
+        df_valid = df_all.copy()
     for boleiro in sorted(df_valid["who"].unique()):
         print_colored(f"generating boleiro html: {boleiro}", "blue")
         html = _build_boleiro(config, boleiro)
@@ -2906,51 +3031,14 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
             path = _norm(os.path.join(html_base, "jogos", phase, filename))
             _save(path, html)
 
-    # --- New v2 pages ---
-    # Ranking Evolution
-    ranking_path = _norm(os.path.join(html_base, "ranking_evolution.html"))
-    if os.path.exists(_norm(os.path.join(config._au_first_round(), "ranking_history.csv"))):
-        print_colored("generating ranking_evolution.html", "blue")
-        _save(ranking_path, _build_ranking_evolution(config))
-    else:
-        print_colored("skipping ranking_evolution.html (no ranking_history.csv)", "yellow")
-
-    # Boldômetro
-    bold_path = _norm(os.path.join(html_base, "boldometer.html"))
-    if os.path.exists(_norm(os.path.join(config._au_first_round(), "boldness_index.csv"))):
-        print_colored("generating boldometer.html", "blue")
-        _save(bold_path, _build_boldometer(config))
-    else:
-        print_colored("skipping boldometer.html (no boldness_index.csv)", "yellow")
-
-    # Raio-X do Bolão
-    xray_path = _norm(os.path.join(html_base, "bolao_xray.html"))
-    if os.path.exists(config.gold_valid_path()):
-        print_colored("generating bolao_xray.html", "blue")
-        _save(xray_path, _build_bolao_xray(config))
-    else:
-        print_colored("skipping bolao_xray.html (no valid data)", "yellow")
-
-    # Day Winners
-    rw_path = _norm(os.path.join(html_base, "day_winners.html"))
-    if os.path.exists(config.gold_valid_path()):
-        print_colored("generating day_winners.html", "blue")
-        _save(rw_path, _build_day_winners(config))
-    else:
-        print_colored("skipping day_winners.html (no valid data)", "yellow")
-
-    # --- Zebras & Favoritos ---
-    zebras_path = _norm(os.path.join(html_base, "zebras.html"))
-    if os.path.exists(_norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))):
-        print_colored("generating zebras.html", "blue")
-        _save(zebras_path, _build_zebras(config))
-    else:
-        print_colored("skipping zebras.html (no upset_tracker.csv)", "yellow")
-
-    # --- Momentum & Sequencias ---
-    momentum_path = _norm(os.path.join(html_base, "momentum.html"))
-    if os.path.exists(_norm(os.path.join(config._au_first_round(), "consistency.csv"))):
-        print_colored("generating momentum.html", "blue")
-        _save(momentum_path, _build_momentum(config))
-    else:
-        print_colored("skipping momentum.html (no consistency.csv)", "yellow")
+    # --- Analytics-dependent pages ------------------------------------
+    # If games.csv has no real results yet, delete any stale HTML files
+    # so the user doesn't see outdated data.
+    _analytics_cleanup(config, html_base)
+    # Build pages (skipped when corresponding CSV is missing)
+    _build_ranking_evolution_page(config, html_base)
+    _build_boldometer_page(config, html_base)
+    _build_bolao_xray_page(config, html_base)
+    _build_day_winners_page(config, html_base)
+    _build_zebras_page(config, html_base)
+    _build_momentum_page(config, html_base)

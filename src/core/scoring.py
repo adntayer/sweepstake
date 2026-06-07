@@ -5,8 +5,9 @@ Evaluates a predicted score against the real score and returns
 
 Supports hierarchical rules with optional conditions:
   - exact_score
-  - correct_winner_and_goals (with max_total_error / min_total_error)
-  - correct_winner
+   - correct_winner_and_goals (with max_total_error / min_total_error)
+   - correct_winner_and_goals_or_diff (like above, but also accepts correct goal difference)
+   - correct_winner
   - one_team_goals
   - missing_data
 """
@@ -57,6 +58,22 @@ def _matches_condition(
         if pred_w != real_w:
             return False
         if not (home_pred == home_real or away_pred == away_real):
+            return False
+        total_err = int(abs(home_pred - home_real) + abs(away_pred - away_real))
+        if rule.max_total_error is not None and total_err > rule.max_total_error:
+            return False
+        if rule.min_total_error is not None and total_err < rule.min_total_error:
+            return False
+        return True
+
+    if rule.rule == "correct_winner_and_goals_or_diff":
+        if pred_w != real_w:
+            return False
+        if not (
+            home_pred == home_real
+            or away_pred == away_real
+            or (home_pred - away_pred) == (home_real - away_real)
+        ):
             return False
         total_err = int(abs(home_pred - home_real) + abs(away_pred - away_real))
         if rule.max_total_error is not None and total_err > rule.max_total_error:
@@ -129,18 +146,31 @@ def score_prediction(
     return pd.Series([0, "5-Nenhum acerto", 1])
 
 
-def get_playoff_advancing_teams(games_csv: str) -> dict[str, list[str]]:
+def get_playoff_advancing_teams(
+    games_csv: str,
+    playoff_round_keys: list[str] | None = None,
+) -> dict[str, list[str]]:
     """Extract which teams advanced from each playoff phase.
+
+    Args:
+        games_csv: Path to the games.csv results file.
+        playoff_round_keys: List of round keys to look for in ``round`` column.
+            Defaults to the keys used by the 2025 Club World Cup.
 
     Returns dict mapping phase_key -> list of teams that advanced
     (e.g. {'oitavas': [...], 'quartas': [...], 'semi': [...], 'final': [...]}).
     """
     df = pd.read_csv(games_csv, sep=",")
-    playoff_rounds = ["oitavas", "quartas", "semi", "final"]
+    if playoff_round_keys is None:
+        playoff_round_keys = ["oitavas", "quartas", "semi", "final"]
     advancing: dict[str, list[str]] = {}
 
-    for pr in playoff_rounds:
-        phase_matches = df[df["round"] == pr]
+    # Normalize round column
+    df["round"] = df["round"].astype(str).str.strip().str.lower()
+
+    for pr in playoff_round_keys:
+        pr_lower = pr.lower()
+        phase_matches = df[df["round"] == pr_lower]
         winners = []
         for _, row in phase_matches.iterrows():
             hg = float(row["home_goals"]) if pd.notna(row["home_goals"]) else 0
@@ -190,8 +220,9 @@ def score_playoff_bonus(config: ChampionshipConfig) -> pd.DataFrame:
     Reads bronze bonus_teams_*.csv and games.csv, then returns
     a DataFrame: boleiro, phase, team_picked, team_actual, correct, points.
     """
-    # Get actual advancing teams
-    advancing = get_playoff_advancing_teams(config.games_file)
+    # Get actual advancing teams — use config playoff round keys
+    playoff_keys = [pr.key for pr in config.playoff_rounds]
+    advancing = get_playoff_advancing_teams(config.games_file, playoff_keys)
 
     # Load all bonus picks
     pattern = config.bronze_group_path("*").replace("group_phase_*", "bonus_teams_*.csv")

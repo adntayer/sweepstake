@@ -157,10 +157,16 @@ class PlayoffsLayout:
     """Playoff rounds Excel slicing config."""
 
     striker_row_offset: int = 1
+    striker_label: str = "Artilheiro"
+    striker_name_column: int = 2
+    striker_name_fallback_column: int = 8
     name_split_char: str = "-"
     name_split_index: int = 1
     rounds: list[dict] = field(default_factory=list)
     # Each dict: {"name": "...", "key": "...", "matches": N, "tail_offset": N}
+    # Sheet name for playoffs/striker data (standings-format only).
+    # When empty, the loader falls back to the main sheet read for standings.
+    playoffs_sheet_name: str = ""
 
 
 @dataclass
@@ -223,6 +229,13 @@ class ChampionshipConfig:
     # Striker scoring
     actual_top_scorer: str = ""
     striker_points: int = 0
+
+    # Group standings format (e.g. 2026 World Cup)
+    standings_format: bool = False
+    standings_skiprows: int = 1
+    # Fallback bonus/striker for standings format (when not parseable from Excel)
+    bonus_team_picks: dict[str, str] = field(default_factory=dict)
+    striker_pick: str = ""
 
     def __post_init__(self) -> None:
         self.base_dir = _norm(self.base_dir) if self.base_dir else _norm(os.path.join("src", "data", self.id))
@@ -410,6 +423,7 @@ class ChampionshipConfig:
         type_map = {
             "exact_score": ("--score-exact", "--score-exact-bg", "--score-exact-border"),
             "correct_winner_and_goals": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
+            "correct_winner_and_goals_or_diff": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
             "correct_winner": ("--score-winner", "--score-winner-bg", "--score-winner-border"),
             "one_team_goals": ("--score-one-team", "--score-one-team-bg", "--score-one-team-border"),
             "no_score": ("--score-none", "--score-none-bg", "--score-none-border"),
@@ -534,9 +548,13 @@ def load_config(championship_id: str) -> ChampionshipConfig:
 
     playoffs = PlayoffsLayout(
         striker_row_offset=po_cfg.get("striker_row_offset", 1),
+        striker_label=po_cfg.get("striker_label", "Artilheiro"),
+        striker_name_column=po_cfg.get("striker_name_column", 2),
+        striker_name_fallback_column=po_cfg.get("striker_name_fallback_column", 8),
         name_split_char=po_cfg.get("name_split_char", "-"),
         name_split_index=po_cfg.get("name_split_index", 1),
         rounds=po_cfg.get("rounds", []),
+        playoffs_sheet_name=po_cfg.get("playoffs_sheet_name", ""),
     )
 
     excel_layout = ExcelLayout(
@@ -587,6 +605,10 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         playoff_scoring=playoff_scoring,
         actual_top_scorer=raw.get("actual_top_scorer", ""),
         striker_points=striker_points,
+        standings_format=raw.get("standings_format", False),
+        standings_skiprows=raw.get("standings_skiprows", 1),
+        bonus_team_picks=raw.get("bonus_team_picks", {}),
+        striker_pick=raw.get("striker_pick", ""),
     )
 
 

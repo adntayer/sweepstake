@@ -39,6 +39,7 @@ import numpy as np
 from src.core.config import ChampionshipConfig
 from src.core.loader import (
     parse_group_stage,
+    parse_group_standings,
     parse_playoff_stage,
     parse_bonus_playoffs,
     _extract_playoff_phase_and_who as _extract_phase_who_from_path,
@@ -56,6 +57,18 @@ from src.core.get_results import get_results
 def _norm(path: str) -> str:
     """Normalize a path to the current OS format."""
     return os.path.normpath(path)
+
+
+def _has_real_results(config: ChampionshipConfig) -> bool:
+    """Check if games.csv contains any actual match results."""
+    if not os.path.exists(config.games_file):
+        return False
+    df = pd.read_csv(config.games_file, sep=",")
+    if df.empty:
+        return False
+    if "home_goals" not in df.columns:
+        return False
+    return df["home_goals"].notna().any()
 
 
 def _recreate_dirs(paths: list[str]) -> None:
@@ -227,8 +240,11 @@ def run_raw_to_bronze(config: ChampionshipConfig) -> None:
     for idx, (path_excel, boleiro) in enumerate(boleiros, 1):
         print_colored(f"\t[{idx:2}/{len(boleiros)}] parsing {boleiro}", "ice")
 
-        df_group = parse_group_stage(path_excel, config)
-        df_bonus, df_striker = parse_bonus_playoffs(path_excel, config)
+        if config.standings_format:
+            df_group, df_bonus, df_striker = parse_group_standings(path_excel, config)
+        else:
+            df_group = parse_group_stage(path_excel, config)
+            df_bonus, df_striker = parse_bonus_playoffs(path_excel, config)
 
         df_group.sort_values(by=["date", "hour"], inplace=True)
         _save_csv(df_group, config.bronze_group_path(boleiro))
@@ -393,6 +409,8 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
 
     df_all_parts = []
     df_valid_parts = []
+    df_all = pd.DataFrame()
+    df_valid = pd.DataFrame()
 
     for path_csv in silver_paths:
         boleiro = os.path.basename(path_csv).replace("group_phase_", "").replace(".csv", "")
@@ -475,19 +493,21 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
             df_valid.sort_values(by=["date", "hour", "who"], inplace=True)
             _save_csv(df_valid, config.gold_playoff_valid_path(phase))
 
-    # --- New analytics ---
-    _generate_playoff_scoring(config)
-    _generate_striker_scoring(config)
-    _generate_consistency(df_valid, config)
-    _generate_upset_tracker(df_all, config)
-    _generate_round_by_round(df_valid, config)
-    _generate_team_accuracy(df_valid, config)
+    # --- Analytics (skip when no real results yet) ---
+    if not _has_real_results(config):
+        print_colored("\tno real results in games.csv — skipping all analytics", "yellow")
+    else:
+        _generate_playoff_scoring(config)
+        _generate_striker_scoring(config)
+        _generate_consistency(df_valid, config)
+        _generate_upset_tracker(df_all, config)
+        _generate_round_by_round(df_valid, config)
+        _generate_team_accuracy(df_valid, config)
 
-    # --- New v2 analytics ---
-    _generate_ranking_history(df_valid, config)
-    _generate_boldness_index(df_all, config, df_valid)
-    _generate_prediction_timing(config)
-    _generate_goal_error_by_team(df_valid, config)
+        _generate_ranking_history(df_valid, config)
+        _generate_boldness_index(df_all, config, df_valid)
+        _generate_prediction_timing(config)
+        _generate_goal_error_by_team(df_valid, config)
 
     print_colored("silver to gold completed", "green")
 
@@ -521,6 +541,9 @@ def _generate_striker_scoring(config: ChampionshipConfig) -> None:
 
 def _generate_consistency(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
     """Derive streak/consistency data from gold predictions."""
+    if df_valid.empty:
+        print_colored("\tconsistency.csv: 0 rows (no data)", "yellow")
+        return
     print_colored("\tgenerating consistency tracking", "ice")
     df = df_valid.copy()
     # Normalize hour: extract numeric part (e.g. "22h" -> 22) for correct numeric sort
@@ -565,6 +588,9 @@ def _generate_consistency(df_valid: pd.DataFrame, config: ChampionshipConfig) ->
 
 def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) -> None:
     """Identify upset matches and who correctly predicted them."""
+    if df_all.empty:
+        print_colored("\tupset_tracker.csv: 0 rows (no data)", "yellow")
+        return
     print_colored("\tgenerating upset tracker", "ice")
     df = df_all.copy()
     df_results = pd.read_csv(config.games_file, sep=",")
@@ -617,6 +643,9 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
 
 def _generate_round_by_round(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
     """Aggregate points per round for each player."""
+    if df_valid.empty:
+        print_colored("\tround_by_round.csv: 0 rows (no data)", "yellow")
+        return
     print_colored("\tgenerating round-by-round tracking", "ice")
     df = df_valid.copy()
     df_results = pd.read_csv(config.games_file, sep=",")
@@ -662,6 +691,9 @@ def _generate_round_by_round(df_valid: pd.DataFrame, config: ChampionshipConfig)
 
 def _generate_team_accuracy(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
     """Calculate prediction accuracy per team for each player."""
+    if df_valid.empty:
+        print_colored("\tteam_accuracy.csv: 0 rows (no data)", "yellow")
+        return
     print_colored("\tgenerating team accuracy tracking", "ice")
     df = df_valid.copy()
 
@@ -702,6 +734,9 @@ def _generate_team_accuracy(df_valid: pd.DataFrame, config: ChampionshipConfig) 
 
 def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
     """Daily rank position for each player (cumulative ranking)."""
+    if df_valid.empty:
+        print_colored("\tranking_history.csv: 0 rows (no data)", "yellow")
+        return
     print_colored("\tgenerating ranking history", "ice")
     df = df_valid.copy()
     df = df.sort_values(["who", "date"])
@@ -744,11 +779,14 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
 
 def _generate_boldness_index(df_all: pd.DataFrame, config: ChampionshipConfig, df_valid: pd.DataFrame | None = None) -> None:
     """Measure how 'bold' each player's predictions are."""
+    source = df_valid if df_valid is not None and not df_valid.empty else df_all
+    if source.empty:
+        print_colored("\tboldness_index.csv: 0 rows (no data)", "yellow")
+        return
     print_colored("\tgenerating boldness index", "ice")
 
     # Use a single data source for both player averages AND bolão average
     # to avoid comparing apples to oranges.
-    source = df_valid if df_valid is not None else df_all
     df = source.copy()
     bolao_avg = (df["home_goals_bol"] + df["away_goals_bol"]).mean()
 
@@ -801,10 +839,7 @@ def _generate_prediction_timing(config: ChampionshipConfig) -> None:
 
     rows = []
     for path_excel in raw_paths:
-        layout = config.excel_layout
-        parts = path_excel.split(layout.playoffs.name_split_char)
-        name = parts[layout.playoffs.name_split_index].strip()
-        boleiro = name.replace(".xlsx", "").replace(".xls", "").strip()
+        boleiro = _extract_who(path_excel, config)
 
         mtime = os.path.getmtime(path_excel)
         mtime_dt = datetime.fromtimestamp(mtime)
@@ -817,6 +852,11 @@ def _generate_prediction_timing(config: ChampionshipConfig) -> None:
             "lead_days": max(lead_days, 0),
         })
 
+    if not rows:
+        print_colored("\tprediction_timing.csv: 0 rows (no raw files found)", "yellow")
+        df_out = pd.DataFrame(columns=["boleiro", "file_mtime", "first_match_date", "lead_days"])
+        _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "prediction_timing.csv")))
+        return
     df_out = pd.DataFrame(rows)
     df_out = df_out.sort_values("lead_days", ascending=False)
     _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "prediction_timing.csv")))
@@ -830,6 +870,9 @@ def _generate_prediction_timing(config: ChampionshipConfig) -> None:
 
 def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
     """Mean Absolute Error per team for each player's goal predictions."""
+    if df_valid.empty:
+        print_colored("\tgoal_error_by_team.csv: 0 rows (no data)", "yellow")
+        return
     print_colored("\tgenerating goal error by team", "ice")
     df = df_valid.copy()
 
