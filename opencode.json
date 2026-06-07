@@ -10,7 +10,21 @@
         "todowrite": "allow",
         "websearch": "allow",
         "question": "allow",
-        "bash": "deny",
+        "bash": {
+            "ss run 2026_world_cup": "allow",
+            "ss*": "allow",
+            "Get-ChildItem*": "allow",
+            "Get-Content*": "allow",
+            "Select-Object*": "allow",
+            "ForEach-Object*": "allow",
+            "Group-Object*": "allow",
+            "Sort-Object*": "allow",
+            "Import-Csv*": "allow",
+            "Test-Path*": "allow",
+            "python3*": "allow",
+            "python*": "allow",
+            "*": "ask"
+        },
         "webfetch": "allow"
     }
 }

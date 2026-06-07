@@ -193,19 +193,19 @@ excel_layout:
     name_split_index: 0
     playoffs_sheet_name: "Tabela Jogos"
     rounds:
-      - name: "2a Fase"
+      - name: "Segunda Fase"
         key: "segunda_fase"
         matches: 16
         tail_offset: 33
-      - name: "Oitavas"
+      - name: "Oitavas de Final"
         key: "oitavas"
         matches: 8
         tail_offset: 17
-      - name: "Quartas"
+      - name: "Quartas de Final"
         key: "quartas"
         matches: 4
         tail_offset: 9
-      - name: "Semi"
+      - name: "Semifinal"
         key: "semi"
         matches: 2
         tail_offset: 5

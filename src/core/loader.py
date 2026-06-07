@@ -326,6 +326,7 @@ def _parse_playoffs_and_striker(
         col0 = str(row.iloc[0]).strip() if pd.notna(row.iloc[0]) else ""
         col1 = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else ""
         col2 = str(row.iloc[2]).strip() if pd.notna(row.iloc[2]) else ""
+        col8 = str(row.iloc[8]).strip() if len(row) > 8 and pd.notna(row.iloc[8]) else ""
 
         # Phase label
         phase_key = phase_labels.get(col0) or phase_labels.get(col1)
@@ -342,9 +343,11 @@ def _parse_playoffs_and_striker(
             current_phase = None
             continue
 
-        # Team pick
+        # Team pick — both home (col2) and away (col8) are bonus picks for this phase
         if current_phase and col2 and col2 not in ("", "nan", "NaN"):
             bonus_rows.append({"boleiro": who, "phase": current_phase, "team": col2})
+        if current_phase and col8 and col8 not in ("", "nan", "NaN") and col8 != col2:
+            bonus_rows.append({"boleiro": who, "phase": current_phase, "team": col8})
 
     df_bonus = pd.DataFrame(bonus_rows, columns=["boleiro", "phase", "team"])
     df_striker = pd.DataFrame([{"boleiro": who, "striker": striker_name}])
