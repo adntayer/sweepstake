@@ -1620,7 +1620,7 @@ def _build_ranking_evolution(config: ChampionshipConfig) -> str:
     """Show rank position over time (toggleable per player, inverted Y-axis)."""
     csv_path = _norm(os.path.join(config._au_first_round(), "ranking_history.csv"))
     if not os.path.exists(csv_path):
-        return _page_frame(config, f"Evolu\u00e7\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f4ca Evolu\u00e7\u00e3o do Ranking</h1><div class='subtitle'>Nenhum dado disponivel ainda</div></div>")
+        return _page_frame(config, f"Evolu\u00e7\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f4ca Evolu\u00e7\u00e3o do Ranking</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>")
     df = pd.read_csv(csv_path, sep=",")
     players = sorted(df["boleiro"].unique())
     all_dates = sorted(df["date"].unique())
@@ -1866,7 +1866,7 @@ def _build_boldometer(config: ChampionshipConfig) -> str:
     """Scatter plot: boldness vs average points per game."""
     bold_path = _norm(os.path.join(config._au_first_round(), "boldness_index.csv"))
     if not os.path.exists(bold_path):
-        return _page_frame(config, f"Boldômetro - {config.report_title}", "<div class='hero'><h1>\U0001f4ca Boldômetro</h1><div class='subtitle'>Nenhum dado disponivel ainda</div></div>")
+        return _page_frame(config, f"Boldômetro - {config.report_title}", "<div class='hero'><h1>\U0001f4ca Boldômetro</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>")
     df_bold = pd.read_csv(bold_path, sep=",")
     df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
     df_avg = df_valid.groupby("who")["pontos"].mean().reset_index()
@@ -2109,7 +2109,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
     df_all = pd.read_csv(config.gold_all_path(), sep=",")
     df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
     if df_valid.empty:
-        return _page_frame(config, f"Raio-X do Bol\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f50d Raio-X do Bol\u00e3o</h1><div class='subtitle'>Nenhum dado disponivel ainda</div></div>", active_nav="bolao_xray.html")
+        return _page_frame(config, f"Raio-X do Bol\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f50d Raio-X do Bol\u00e3o</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados. ainda</div></div>", active_nav="bolao_xray.html")
     df_results = pd.read_csv(config.results_file, sep=",").dropna(subset=["home_goals"])
 
     # Build resultado_real_placar from raw columns
@@ -2500,7 +2500,7 @@ def _build_day_winners(config: ChampionshipConfig) -> str:
     """Show day-by-day winners, zebras, and highlights with day selector."""
     df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
     if df_valid.empty:
-        return _page_frame(config, "Vencedores do Dia - sem dados", "<div class='hero'><h1>\U0001f3c6 Vencedores do Dia</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", back_link="index.html")
+        return _page_frame(config, "Vencedores do Dia - sem dados", "<div class='hero'><h1>\U0001f3c6 Vencedores do Dia</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", back_link="index.html")
     df_all = pd.read_csv(config.gold_all_path(), sep=",")
     df_results = pd.read_csv(config.results_file, sep=",")
     upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
@@ -2579,7 +2579,7 @@ def _build_day_winners(config: ChampionshipConfig) -> str:
         }
 
     if not day_content:
-        return _page_frame(config, "Vencedores do Dia - sem dados", "<div class='hero'><h1>Vencedores do Dia</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", back_link="index.html")
+        return _page_frame(config, "Vencedores do Dia - sem dados", "<div class='hero'><h1>Vencedores do Dia</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", back_link="index.html")
 
     # Day selector options
     day_options = "".join(f'<option value="{d}">{pd.to_datetime(d).strftime("%d/%m (%a)")}</option>' for d in sorted(day_content.keys()))
@@ -2707,7 +2707,7 @@ def _build_zebras(config: ChampionshipConfig) -> str:
     """Show all upset matches, ranking of zebra predictors, and impact analysis."""
     upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
     if not os.path.exists(upset_path):
-        return _page_frame(config, "Zebras", "<div class='hero'><h1>\U0001f993 Zebras & Favoritos</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", active_nav="zebras.html")
+        return _page_frame(config, "Zebras", "<div class='hero'><h1>\U0001f993 Zebras & Favoritos</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", active_nav="zebras.html")
 
     df_upset = pd.read_csv(upset_path, sep=",")
 
@@ -2869,7 +2869,7 @@ def _build_momentum(config: ChampionshipConfig) -> str:
     ranking_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
 
     if not os.path.exists(consistency_path):
-        return _page_frame(config, "Momento", "<div class='hero'><h1>\U0001f525 Momento</h1><div class='subtitle'>Nenhum dado disponivel</div></div>", active_nav="momentum.html")
+        return _page_frame(config, "Momento", "<div class='hero'><h1>\U0001f525 Momento</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", active_nav="momentum.html")
 
     df_cons = pd.read_csv(consistency_path, sep=",")
 

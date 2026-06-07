@@ -3,9 +3,11 @@
 ## Conceito
 
 A segunda fase do campeonato (mata-mata) é dividida em 4 rodadas:
+- **Round-of-32** (16 jogos)
 - **Oitavas** (8 jogos)
 - **Quartas** (4 jogos)
 - **Semi** (2 jogos)
+- **Disputa 3º Lugar** (1 jogo)
 - **Final** (1 jogo)
 
 Cada jogador envia **um Excel por fase** com palpites de placar para os jogos daquela fase,

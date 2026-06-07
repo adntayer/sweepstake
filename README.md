@@ -73,3 +73,28 @@ llama-server -hf unsloth/gemma-4-E4B-it-GGUF:UD-Q6_K_XL -ngl 99 -c 16384 -fa on 
 
 
 llama-server -hf unsloth/gemma-4-E4B-it-GGUF:UD-Q4_K_XL -ngl 35 -c 32768 -fa on --cache-type-k q4_0 --cache-type-v q4_0 -b 512 -ub 256 -fit off
+
+
+rmdir /s /q "%USERPROFILE%\.local\share\opencode"
+rmdir /s /q "%USERPROFILE%\.cache\opencode"
+
+
+
+llama-server -hf unsloth/gemma-4-E2B-it-GGUF:Q6_K -ngl 99 -c 32768 -fa on --cache-type-k q4_0 --cache-type-v q4_0 -b 1024 -ub 512 --prio 3
+
+
+
+
+llama-server -hf Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q8_0 -ngl 99 -c 16384 -fa on --cache-type-k q4_0 --cache-type-v q4_0 -b 1024 -ub 512 --prio 3
+
+
+---
+
+llama-server -hf unsloth/gemma-4-E4B-it-GGUF:UD-Q6_K_XL -ngl 99 -c 16384 -fa on --cache-type-k q4_0 --cache-type-v q4_0 -b 1024 -ub 512 --prio 3 --no-warmup --no-mmproj-offload
+
+
+
+----------------------------
+----------------------------
+----------------------------
+llama-server -hf unsloth/gemma-4-E4B-it-GGUF:UD-Q6_K_XL -ngl 99 -c 32768 -fa on --cache-type-k q4_0 --cache-type-v q4_0 -b 1024 -ub 512 --prio 3 --no-warmup --no-mmproj-offload
