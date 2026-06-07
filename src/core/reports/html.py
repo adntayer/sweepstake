@@ -689,41 +689,62 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     # Match history rows (newest first)
     playoff_emoji_map = {"oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "final": "\U0001f3c6"}
     df_hist = df_bol.sort_values(["date", "hour"], ascending=False)
-    history_rows = ""
-    for _, row in df_hist.iterrows():
-        pts = int(row["pontos"])
-        date_str = pd.to_datetime(row["date"]).strftime("%d/%m")
-        criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
-        css_var, css_bg, css_border = config.scoring_css_var(row.get("criterio", ""))
-        if css_var:
-            pts_color = css_var
-            pts_bg = css_bg
-            pts_border = css_border
-        else:
-            hex_color = config.scoring_color(row.get("criterio", ""))
-            if hex_color:
-                pts_color = hex_color
-                pts_bg = hex_color + "1a"
-                pts_border = hex_color + "40"
+
+    def _format_real_placar(row: pd.Series) -> str:
+        """Format the real scoreline, handling NaN gracefully."""
+        rrp = row.get("resultado_real_placar", "")
+        if pd.isna(rrp) or str(rrp).strip().lower() in ("nan", "", "none"):
+            return f'{row["home_team"]} vs {row["away_team"]}'
+        return f'{row["home_team"]} {rrp} {row["away_team"]}'
+
+    def _build_history_rows(rows_df: pd.DataFrame) -> str:
+        out = ""
+        for _, row in rows_df.iterrows():
+            pts = int(row["pontos"])
+            date_str = pd.to_datetime(row["date"]).strftime("%d/%m")
+            criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
+            css_var, css_bg, css_border = config.scoring_css_var(row.get("criterio", ""))
+            if css_var:
+                pts_color = css_var
+                pts_bg = css_bg
+                pts_border = css_border
             else:
-                pts_color = "var(--text-muted)"
-                pts_bg = "transparent"
-                pts_border = "var(--card-border)"
-        # Phase indicator for playoff matches
-        phase_label = ""
-        phase_val = row.get("phase", "")
-        if phase_val and phase_val in playoff_emoji_map:
-            phase_label = f'{playoff_emoji_map[phase_val]} {phase_val} | '
-        history_rows += (
-            f'<div class="pred-row">'
-            f'<div class="pred-info">'
-            f'<div class="pred-name">{row["home_team"]} {row["resultado_real_placar"]} {row["away_team"]}</div>'
-            f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
-            f'<div class="pred-detail">{phase_label}{date_str}</div>'
-            f'</div>'
-            f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
-            f'</div>\n'
-        )
+                hex_color = config.scoring_color(row.get("criterio", ""))
+                if hex_color:
+                    pts_color = hex_color
+                    pts_bg = hex_color + "1a"
+                    pts_border = hex_color + "40"
+                else:
+                    pts_color = "var(--text-muted)"
+                    pts_bg = "transparent"
+                    pts_border = "var(--card-border)"
+            # Phase indicator for playoff matches
+            phase_label = ""
+            phase_val = row.get("phase", "")
+            if phase_val and phase_val in playoff_emoji_map:
+                phase_label = f'{playoff_emoji_map[phase_val]} {phase_val} | '
+            out += (
+                f'<div class="pred-row">'
+                f'<div class="pred-info">'
+                f'<div class="pred-name">{_format_real_placar(row)}</div>'
+                f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
+                f'<div class="pred-detail">{phase_label}{date_str}</div>'
+                f'</div>'
+                f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
+                f'</div>\n'
+            )
+        return out
+
+    tz = pytz.timezone(config.timezone)
+    today = datetime.now(tz).date()
+    df_by_date_dt = df_hist["date"].apply(lambda d: pd.to_datetime(d).date())
+    df_hist_past = df_hist[df_by_date_dt < today]
+    df_hist_future = df_hist[df_by_date_dt >= today]
+    n_past = len(df_hist_past)
+    n_future = len(df_hist_future)
+
+    history_rows_past = _build_history_rows(df_hist_past) if n_past else '<div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">Nenhum jogo encerrado.</div>'
+    history_rows_future = _build_history_rows(df_hist_future) if n_future else '<div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">Nenhum jogo futuro.</div>'
 
     body = f"""
 <div class="hero">
@@ -749,6 +770,40 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     <div class="stat-card">
         <div class="value" style="color:var(--voce)">{round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0}%</div>
         <div class="label">Aproveitamento</div>
+    </div>
+</div>
+"""
+
+    # --- Scoring distribution per criteria (bar chart) ---
+    rule_order = config.scoring_rule_names()
+    rule_map = config.scoring_dict()
+    n_preds = len(df_bol)
+    criteria_counts = df_bol["criterio"].value_counts()
+    largest_cnt = max((int(criteria_counts.get(t, 0)) for t in rule_order), default=1)
+    dist_rows = ""
+    for t in rule_order:
+        cnt = int(criteria_counts.get(t, 0))
+        pts_per = rule_map.get(t, 0)
+        pct = round(cnt / n_preds * 100, 1) if n_preds else 0
+        bar_w = max(cnt / largest_cnt * 100, 1)
+        name_part = t.split("-", 1)[1] if "-" in t else t
+        label = f"{name_part} (+{pts_per}p)" if pts_per > 0 else name_part
+        color = config.scoring_color(t)
+        emoji = config.scoring_emoji(t)
+        dist_rows += f"""
+        <tr>
+            <td style="padding:0.3rem 0.5rem;"><span style="color:{color};font-weight:700;">{emoji}</span> {label}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;font-weight:600;">{cnt}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{pct}%</td>
+            <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{bar_w:.0f}%;background:{color};height:10px;"></div></div></td>
+        </tr>"""
+    body += f"""
+<div class="section">
+    <div class="section-title">\U0001f3af Distribui\u00e7\u00e3o de Acertos ({n_preds})</div>
+    <div class="card">
+        <table style="width:100%;border-collapse:collapse;">
+            {dist_rows}
+        </table>
     </div>
 </div>
 """
@@ -879,11 +934,19 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
             if phase_blocks:
                 total_label = f'<span style="color:var(--accent);margin-left:0.5rem;font-weight:700;">+{total_bonus_pts}</span>'
+                legend = (
+                    '<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem;'
+                    'display:flex;gap:0.75rem;flex-wrap:wrap;">'
+                    '<span>\U0001f7e1 fase n\u00e3o iniciada</span>'
+                    '<span style="color:var(--success);">\u25cf time avan\u00e7ou</span>'
+                    '<span style="color:var(--danger);">\u25cf time eliminado</span>'
+                    '</div>'
+                )
                 bonus_html = (
                     f'<details class="section" open>'
                     f'<summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">'
                     f'\U0001f3c6 Times Bonus {total_label}</summary>'
-                    f'<div class="card">{phase_blocks}</div>'
+                    f'<div class="card">{legend}{phase_blocks}</div>'
                     f'</details>\n'
                 )
 
@@ -905,10 +968,11 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     # ------------------------------------------------------------------
     profile_html = ""
     gold_dir = config._au_first_round()
+    _ph = lambda msg: f'<div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">\u23f3 {msg}</div>\n'
 
     # --- Profile type from boldness_index ---
     bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
-    boldness_score = None
+    boldness_html = ""
     if os.path.exists(bold_path):
         df_bold = pd.read_csv(bold_path, sep=",")
         df_bold_player = df_bold[df_bold["boleiro"] == boleiro]
@@ -916,13 +980,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             boldness_score = float(df_bold_player.iloc[0]["boldness_score"])
             if boldness_score > 0.3:
                 profile_type = "\U0001f680 Ousado"
-                profile_desc = "Você aposta em placares acima da média do bolão"
+                profile_desc = "Voc\u00ea aposta em placares acima da m\u00e9dia do bol\u00e3o"
             elif boldness_score < -0.3:
                 profile_type = "\U0001f6c8 Conservador"
-                profile_desc = "Você aposta em placares abaixo da média do bolão"
+                profile_desc = "Voc\u00ea aposta em placares abaixo da m\u00e9dia do bol\u00e3o"
             else:
                 profile_type = "\u2696\ufe0f Equilibrado"
-                profile_desc = "Você aposta na média do bolão"
+                profile_desc = "Voc\u00ea aposta na m\u00e9dia do bol\u00e3o"
+            boldness_html = f'<div style="margin-bottom:0.5rem;"><span class="profile-badge">{profile_type}</span> <span style="font-size:0.8rem;color:var(--text-muted);">({profile_desc})</span></div>\n'
+    if not boldness_html:
+        boldness_html = _ph("Perfil de ousadia dispon\u00edvel ap\u00f3s os primeiros jogos.")
 
     # --- Best and worst teams (goal_error_by_team) ---
     error_path = _norm(os.path.join(gold_dir, "goal_error_by_team.csv"))
@@ -945,13 +1012,13 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             best_team_html = "<div style='margin-top:0.5rem;'>"
             best_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f3c6 Times que voce mais acerta</div>'
             for _, r in best_teams.iterrows():
-                best_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) — erro medio de {r["mae"]:.1f} gols</div>\n'
+                best_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) \u2014 erro medio de {r["mae"]:.1f} gols</div>\n'
             best_team_html += "</div>"
 
             worst_team_html = "<div style='margin-top:0.5rem;'>"
             worst_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f4a9 Times que voce mais erra</div>'
             for _, r in worst_teams.iterrows():
-                worst_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) — erro medio de {r["mae"]:.1f} gols</div>\n'
+                worst_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) \u2014 erro medio de {r["mae"]:.1f} gols</div>\n'
             worst_team_html += "</div>"
 
             # Bias analysis
@@ -963,22 +1030,12 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     direction = "superestima" if r["goal_bias"] > 0 else "subestima"
                     bias_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;">Voce <strong>{direction}</strong> o {r["team"]} em {abs(r["goal_bias"]):.1f} gols</div>\n'
                 bias_html += "</div>"
-
-    # --- Timing (prediction_timing) ---
-    timing_html = ""
-    timing_path = _norm(os.path.join(gold_dir, "prediction_timing.csv"))
-    if os.path.exists(timing_path):
-        df_timing = pd.read_csv(timing_path, sep=",")
-        df_timing_p = df_timing[df_timing["boleiro"] == boleiro]
-        if not df_timing_p.empty:
-            lead_days = int(df_timing_p.iloc[0]["lead_days"]) if "lead_days" in df_timing_p.columns else 0
-            if lead_days <= 1:
-                timing_profile = "\U0001f4a5 Em cima da hora"
-            elif lead_days <= 7:
-                timing_profile = "\U0001f4c5 Prazo medio"
-            else:
-                timing_profile = "\U0001f4bd Antecipado"
-            timing_html = f'<div style="margin-top:0.25rem;"><span style="font-size:0.8rem;color:var(--text-muted);">Submissao:</span> <strong>{timing_profile}</strong> ({lead_days} dias de antecedencia)</div>\n'
+    if not best_team_html:
+        best_team_html = _ph("Times que voc\u00ea mais acerta dispon\u00edvel ap\u00f3s os primeiros jogos.")
+    if not worst_team_html:
+        worst_team_html = _ph("Times que voc\u00ea mais erra dispon\u00edvel ap\u00f3s os primeiros jogos.")
+    if not bias_html:
+        bias_html = _ph("Vi\u00e9s de palpites dispon\u00edvel ap\u00f3s os primeiros jogos.")
 
     # --- Current streak ---
     streak_html = ""
@@ -1010,27 +1067,26 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 streak_html = f'<div style="margin-top:0.25rem;"><span class="profile-badge" style="border-color:var(--success);background:rgba(34,197,94,0.15);">\U0001f525 Sequencia: {streak_len} acertos</span></div>\n'
             elif streak_type == "miss":
                 streak_html = f'<div style="margin-top:0.25rem;"><span class="profile-badge" style="border-color:var(--danger);background:rgba(239,68,68,0.15);">\U0001f4a9 Sequencia: {streak_len} erros</span></div>\n'
+    if not streak_html:
+        streak_html = _ph("Sequ\u00eancia atual dispon\u00edvel ap\u00f3s os primeiros jogos.")
 
-    # --- Build profile card ---
-    if any([boldness_score is not None, best_team_html, bias_html, timing_html, streak_html]):
-        profile_parts = ""
-        if boldness_score is not None:
-            profile_parts += f'<div style="margin-bottom:0.5rem;"><span class="profile-badge">{profile_type}</span> <span style="font-size:0.8rem;color:var(--text-muted);">({profile_desc})</span></div>\n'
-        profile_parts += timing_html
-        profile_parts += streak_html
-        profile_parts += best_team_html
-        profile_parts += worst_team_html
-        profile_parts += bias_html
-        if profile_parts:
-            profile_html = f'<div class="section"><div class="section-title">\U0001f9d0 Perfil do Jogador</div><div class="card">{profile_parts}</div></div>\n'
+    # --- Build profile card (always shown, placeholders when no data) ---
+    profile_parts = boldness_html + streak_html + best_team_html + worst_team_html + bias_html
+    profile_html = f'<div class="section"><div class="section-title">\U0001f9d0 Perfil do Jogador</div><div class="card">{profile_parts}</div></div>\n'
 
     body += profile_html
 
     body += f"""
-<div class="section">
-    <div class="section-title">\U0001f4cb Historico de Jogos ({num_games})</div>
-    <div class="card">{history_rows}</div>
-</div>
+<details class="section">
+    <summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">
+    \U0001f4cb Jogos Encerrados ({n_past})</summary>
+    <div class="card">{history_rows_past}</div>
+</details>
+<details class="section" open>
+    <summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">
+    \U0001f4cb Jogos Futuros ({n_future})</summary>
+    <div class="card">{history_rows_future}</div>
+</details>
 """
     return _page_frame(config, f"{boleiro} - {config.report_title}", body, back_link="../index.html")
 
