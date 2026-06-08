@@ -5,6 +5,9 @@
     "snapshot": false,
     "share": "disabled",
     "provider": {
+        "google": {
+            "npm": "@ai-sdk/google"
+        },
         "llama.cpp": {
             "npm": "@ai-sdk/openai-compatible",
             "name": "Local LLM",
