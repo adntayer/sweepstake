@@ -614,7 +614,7 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
         return ""
 
 
-def _build_bottom_nav_dashboard() -> str:
+def _build_bottom_nav_dashboard(prefix: str = "") -> str:
     """Build the bottom navigation for the dashboard."""
     items = [
         ("index.html", "\U0001f3e0", "In\u00edcio"),
@@ -626,7 +626,7 @@ def _build_bottom_nav_dashboard() -> str:
     links = ""
     for href, icon, label in items:
         cls = ' class="active"' if href == "index.html" else ""
-        links += f'<a href="{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
+        links += f'<a href="{prefix}{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
     return f'<nav class="bottom-nav">{links}</nav>'
 
 
@@ -699,7 +699,7 @@ def _build_phase_accordion(config: ChampionshipConfig) -> str:
 """
 
     # Playoff rounds
-    playoff_emojis = {"oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "final": "\U0001f3c6"}
+    playoff_emojis = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
     for pr in config.playoff_rounds:
         po_dir = _norm(os.path.join(html_base, "jogos", pr.key))
         po_files = sorted(glob(_norm(os.path.join(po_dir, "*.html"))))
@@ -737,6 +737,63 @@ def _build_phase_accordion(config: ChampionshipConfig) -> str:
 # Main
 # ------------------------------------------------------------------
 
+def _build_bonus_times_card(config: ChampionshipConfig) -> str:
+    """Build bonus times leaderboard card for the dashboard."""
+    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
+    if not os.path.exists(bonus_path):
+        return ""
+    df = pd.read_csv(bonus_path)
+    if df.empty:
+        return ""
+
+    top_pts = (
+        df.groupby("boleiro")["points"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(3)
+        .reset_index()
+    )
+    top_pts_html = ""
+    for i, (_, r) in enumerate(top_pts.iterrows(), 1):
+        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
+        top_pts_html += (
+            f'<div class="bar-row">'
+            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
+            f'<span class="bar-pct">+{int(r["points"])}pts</span>'
+            f'</div>\n'
+        )
+
+    acc = df.groupby("boleiro").agg(
+        correct=("correct", "sum"), total=("correct", "count")
+    )
+    acc = acc[acc["total"] >= 5].copy()
+    if not acc.empty:
+        acc["rate"] = (acc["correct"] / acc["total"] * 100).round(0)
+        top_acc = acc.sort_values("rate", ascending=False).head(3).reset_index()
+    else:
+        top_acc = pd.DataFrame()
+
+    top_acc_html = ""
+    for i, (_, r) in enumerate(top_acc.iterrows(), 1):
+        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
+        top_acc_html += (
+            f'<div class="bar-row">'
+            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
+            f'<span class="bar-pct">{int(r["correct"])}/{int(r["total"])} - {int(r["rate"])}%</span>'
+            f'</div>\n'
+        )
+
+    html = '<div class="section"><div class="section-title">\U0001f3c6 Bônus Times</div><div class="card">'
+    if top_pts_html:
+        html += '<div style="margin-bottom:0.75rem;"><strong>Maiores Pontuadores</strong></div>'
+        html += f'<div class="bar-chart">{top_pts_html}</div>'
+    if top_acc_html:
+        html += '<div style="margin-top:0.75rem;margin-bottom:0.75rem;"><strong>Maiores Acertadores</strong></div>'
+        html += f'<div class="bar-chart">{top_acc_html}</div>'
+    html += "</div></div>\n"
+    return html
+
+
 def generate_dashboard(config: ChampionshipConfig) -> None:
     """Create the index.html dashboard."""
     if not os.path.exists(config.gold_valid_path()) and not os.path.exists(config.gold_all_path()):
@@ -753,6 +810,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     player_grid = _build_player_grid(config)
     phase_accordion = _build_phase_accordion(config)
     zebra_counter = _build_zebra_counter(config)
+    bonus_card = _build_bonus_times_card(config)
 
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -817,6 +875,8 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
         </div>
     </a>
 </div>
+
+{bonus_card}
 
 {upcoming}
 

@@ -490,7 +490,7 @@ body { padding-bottom: 70px; }
 """
 
 
-def _bottom_nav_html(active: str = "") -> str:
+def _bottom_nav_html(active: str = "", prefix: str = "") -> str:
     """Build the fixed bottom navigation bar. 'active' should match a href."""
     items = [
         ("index.html", "\U0001f3e0", "In\u00edcio"),
@@ -502,15 +502,19 @@ def _bottom_nav_html(active: str = "") -> str:
     links = ""
     for href, icon, label in items:
         cls = ' class="active"' if active == href else ""
-        links += f'<a href="{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
+        links += f'<a href="{prefix}{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
     return f'<nav class="bottom-nav">{links}</nav>'
 
 
 def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: str = "", active_nav: str = "") -> str:
     """Wrap body content in the standard HTML page frame."""
     back_html = ""
+    nav_prefix = ""
     if back_link:
         back_html = f'<div class="back-nav"><a href="{back_link}">\u2190 Voltar</a></div>'
+        idx = back_link.rfind("index.html")
+        if idx >= 0:
+            nav_prefix = back_link[:idx]
 
     tz = pytz.timezone(config.timezone)
     now_str = datetime.now(tz).strftime("%d/%m/%Y %H:%M:%S")
@@ -532,7 +536,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
     atualizado às {now_str}
 </div>
-{_bottom_nav_html(active_nav)}
+{_bottom_nav_html(active_nav, nav_prefix)}
 </body>
 </html>"""
 
@@ -687,7 +691,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 )
 
     # Match history rows (newest first)
-    playoff_emoji_map = {"oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "final": "\U0001f3c6"}
+    playoff_emoji_map = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
     df_hist = df_bol.sort_values(["date", "hour"], ascending=False)
 
     def _format_real_placar(row: pd.Series) -> str:
@@ -1163,6 +1167,20 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         )
 
     # Player predictions
+    bonus_by_player = {}
+    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
+    if os.path.exists(bonus_path):
+        df_bonus = pd.read_csv(bonus_path)
+        df_bonus_phase = df_bonus[df_bonus["phase"] == phase]
+        if not df_bonus_phase.empty:
+            for _, br in df_bonus_phase.iterrows():
+                who = str(br["boleiro"])
+                if who not in bonus_by_player:
+                    bonus_by_player[who] = {"correct": 0, "total": 0, "points": 0}
+                bonus_by_player[who]["correct"] += int(br["correct"])
+                bonus_by_player[who]["total"] += 1
+                bonus_by_player[who]["points"] += int(br["points"])
+
     pred_rows = ""
     for _, row in df_match.iterrows():
         pts = int(row["pontos"])
@@ -1182,11 +1200,20 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
                 pts_color = "var(--text-muted)"
                 pts_bg = "transparent"
                 pts_border = "var(--card-border)"
+        bonus_text = ""
+        bdata = bonus_by_player.get(row["who"])
+        if bdata:
+            if bdata["total"] > 0 and bdata["correct"] == bdata["total"] and bdata["points"] > 0:
+                bonus_text = f' &middot; \U0001f3c6 Bônus: {bdata["correct"]}/{bdata["total"]} \u2705 +{bdata["points"]}pts'
+            elif bdata["points"] > 0:
+                bonus_text = f' &middot; \U0001f3c6 Bônus: {bdata["correct"]}/{bdata["total"]} \u2705 +{bdata["points"]}pts'
+            else:
+                bonus_text = f' &middot; \U0001f3c6 Bônus: {bdata["total"]} picks \U0001f550'
         pred_rows += (
             f'<div class="pred-row">'
             f'{_avatar_html(row["who"])}'
             f'<div class="pred-info">'
-            f'<div class="pred-name">{row["who"]}</div>'
+            f'<div class="pred-name">{row["who"]}{bonus_text}</div>'
             f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
             f'</div>'
             f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
@@ -1196,12 +1223,23 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     # Score display
     if has_result:
         parts = real_placar.split(" x ")
+        pen_html = ""
+        try:
+            hp = df_match.iloc[0].get("home_pen")
+            ap = df_match.iloc[0].get("away_pen")
+            if pd.notna(hp) and pd.notna(ap):
+                hp = int(hp)
+                ap = int(ap)
+                pen_html = f'<div class="penalty-score">{hp} - {ap} nos pênaltis</div>'
+        except (ValueError, TypeError):
+            pass
         score_html = f"""
 <div class="score-card">
     <div class="team">{home}</div>
     <div class="score">{parts[0]} - {parts[1]}</div>
     <div class="team">{away}</div>
 </div>
+{pen_html}
 <div style="text-align:center;"><span class="badge badge-success">Resultado Final</span></div>
 """
     else:
@@ -1259,6 +1297,20 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
     players = sorted(df_valid["who"].unique())
     options = "".join(f'<option value="{p}">{p}</option>' for p in players)
 
+    # Load bonus data for badge
+    bonus_by_player = {}
+    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
+    if os.path.exists(bonus_path):
+        df_bonus_arena = pd.read_csv(bonus_path)
+        if not df_bonus_arena.empty:
+            for _, br in df_bonus_arena.iterrows():
+                who = str(br["boleiro"])
+                if who not in bonus_by_player:
+                    bonus_by_player[who] = {"correct": 0, "total": 0, "points": 0}
+                bonus_by_player[who]["correct"] += int(br["correct"])
+                bonus_by_player[who]["total"] += 1
+                bonus_by_player[who]["points"] += int(br["points"])
+
     # Embed player data as JSON
     player_json = {}
     for p in players:
@@ -1268,10 +1320,14 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
         daily["date_str"] = daily["date"].dt.strftime("%d/%m")
         daily["cum"] = daily["pontos"].cumsum()
         recent = df_p.sort_values("date", ascending=False)
+        bdata = bonus_by_player.get(p, {})
         player_json[p] = {
             "total": int(df_p["pontos"].sum()),
             "avg": round(df_p["pontos"].mean(), 1),
             "games": len(df_p),
+            "bonus": bdata.get("points", 0),
+            "bonus_correct": bdata.get("correct", 0),
+            "bonus_total": bdata.get("total", 0),
             "daily": [{"date": r["date_str"], "pts": int(r["pontos"])} for _, r in daily.iterrows()],
             "cumulative": [{"date": r["date_str"], "cum": int(r["cum"])} for _, r in daily.iterrows()],
             "recent": [{"match": f"{r['home_team']} {r['resultado_real_placar']} {r['away_team']}", "pts": int(r["pontos"]), "date": pd.to_datetime(r["date"]).strftime("%d/%m")} for _, r in recent.iterrows()]
@@ -1317,6 +1373,19 @@ function updateArena() {
     document.getElementById('p2-avg').querySelector('.value').textContent = d2.avg;
     document.getElementById('p1-games').querySelector('.value').textContent = d1.games;
     document.getElementById('p2-games').querySelector('.value').textContent = d2.games;
+
+    const p1BonusEl = document.getElementById('p1-bonus').querySelector('.value');
+    const p2BonusEl = document.getElementById('p2-bonus').querySelector('.value');
+    if (d1.bonus_total > 0) {
+        p1BonusEl.textContent = '+' + d1.bonus + 'pts (' + d1.bonus_correct + '/' + d1.bonus_total + ' \u2705)';
+    } else {
+        p1BonusEl.textContent = '-';
+    }
+    if (d2.bonus_total > 0) {
+        p2BonusEl.textContent = '+' + d2.bonus + 'pts (' + d2.bonus_correct + '/' + d2.bonus_total + ' \u2705)';
+    } else {
+        p2BonusEl.textContent = '-';
+    }
 
     const voceColor = getCSSVar('--voce');
     const bolaoColor = getCSSVar('--bolao');
@@ -1585,6 +1654,17 @@ function updateArena() {
         <div class="stat-card" id="p2-games">
             <div class="value" style="font-size:1.1rem;color:var(--bolao)">-</div>
             <div class="label">Jogos</div>
+        </div>
+    </div>
+
+    <div class="stat-row" style="grid-template-columns:repeat(2,1fr);">
+        <div class="stat-card" id="p1-bonus">
+            <div class="value" style="font-size:1.1rem;color:var(--voce)">-</div>
+            <div class="label">\U0001f3c6 Bônus Times</div>
+        </div>
+        <div class="stat-card" id="p2-bonus">
+            <div class="value" style="font-size:1.1rem;color:var(--bolao)">-</div>
+            <div class="label">\U0001f3c6 Bônus Times</div>
         </div>
     </div>
 
