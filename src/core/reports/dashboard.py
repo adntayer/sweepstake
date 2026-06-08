@@ -425,7 +425,7 @@ def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
 
 
 def _build_full_ranking(config: ChampionshipConfig) -> str:
-    """Build the full ranking table (copied from Raio-X) with trend indicators."""
+    """Build the full ranking table with trend indicators and badges."""
     df_valid = _load_gold_data(config)
     if df_valid.empty:
         return "<div class='empty-state'>Nenhum participante encontrado</div>"
@@ -449,6 +449,74 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
             else:
                 trend_map[who] = '<span class="trend-flat">\u25b6</span>'
 
+    # Compute badges for all players
+    gold_dir = config._au_first_round()
+    badge_map: dict[str, list[str]] = {}
+
+    # Hot streak badge (consistency.csv)
+    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
+    if os.path.exists(cons_path):
+        df_cons = pd.read_csv(cons_path, sep=",")
+        for boleiro in df_cons["boleiro"].unique():
+            df_b = df_cons[df_cons["boleiro"] == boleiro].sort_values("date")
+            streak_len = 0
+            streak_type = ""
+            for _, r in reversed(list(df_b.iterrows())):
+                st = r.get("streak_type", "")
+                if st == "hit":
+                    if streak_type == "" or streak_type == "hit":
+                        streak_type = "hit"
+                        streak_len += 1
+                    else:
+                        break
+                elif st == "miss":
+                    if streak_type == "" or streak_type == "miss":
+                        streak_type = "miss"
+                        streak_len += 1
+                    else:
+                        break
+                else:
+                    break
+            if streak_type == "hit" and streak_len >= 3:
+                badge_map.setdefault(boleiro, []).append("\U0001f525")
+
+    # Zebra hunter badge
+    upset_path = _norm(os.path.join(gold_dir, "upset_tracker.csv"))
+    if os.path.exists(upset_path):
+        df_upset = pd.read_csv(upset_path, sep=",")
+        upset_only = df_upset[df_upset.get("is_upset", 0) == 1]
+        zebra_counts: dict[str, int] = {}
+        for _, r in upset_only.iterrows():
+            for p in [x.strip() for x in str(r.get("players_correct", "")).split("|") if x.strip()]:
+                zebra_counts[p] = zebra_counts.get(p, 0) + 1
+        sorted_zebras = sorted(zebra_counts.items(), key=lambda x: -x[1])
+        if len(sorted_zebras) >= 3:
+            for name, _ in sorted_zebras[:3]:
+                badge_map.setdefault(name, []).append("\U0001f993")
+
+    # Boldness badge
+    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
+    if os.path.exists(bold_path):
+        df_bold = pd.read_csv(bold_path, sep=",")
+        for _, r in df_bold.iterrows():
+            bs = float(r["boldness_score"])
+            if bs > 0.3:
+                badge_map.setdefault(r["boleiro"], []).append("\U0001f4a5")
+            elif bs < -0.3:
+                badge_map.setdefault(r["boleiro"], []).append("\U0001F9CA")
+
+    # Leader badge
+    rank_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
+    if os.path.exists(rank_path):
+        df_rank_hist = pd.read_csv(rank_path, sep=",")
+        df_rank_hist = df_rank_hist.sort_values("date")
+        latest_date = df_rank_hist["date"].iloc[-1] if not df_rank_hist.empty else None
+        if latest_date:
+            df_latest = df_rank_hist[df_rank_hist["date"] == latest_date]
+            top = df_latest.loc[df_latest["rank"].idxmin()] if not df_latest.empty else None
+            if top is not None:
+                badge_map.setdefault(top["boleiro"], []).append("\U0001f40d")
+
     score_names = config.scoring_rule_names()
     agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
     df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
@@ -461,7 +529,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         medal = "\U0001f947" if rank_num == 1 else "\U0001f948" if rank_num == 2 else "\U0001f949" if rank_num == 3 else ""
         rank_class = f"rank-{rank_num}" if rank_num <= 3 else ""
         trend = trend_map.get(row["who"], "&nbsp;")
-        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["who"]}.html">{row["who"]}</a> {trend}</td>'
+        badges = " ".join(badge_map.get(row["who"], []))
+        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["who"]}.html">{row["who"]}</a> {trend} <span style="font-size:0.75rem;">{badges}</span></td>'
         cells += f'<td style="font-weight:700;color:var(--accent)">{int(row["pontos"])}</td>'
         for sn in score_names:
             if sn in row.index:
@@ -477,9 +546,12 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     return f"""
 <div style="overflow-x:auto;">
     <table class="rank-table">
-        <thead><tr><th>#</th><th>Boleiro</th><th>Pts</th>{rank_header}</tr></thead>
+        <thead><tr><th>#</th><th>Boleiro</th><th>Jogos</th>{rank_header}</tr></thead>
         <tbody>{rank_rows}</tbody>
     </table>
+    <div style="font-size:0.65rem;color:var(--text-muted);padding:0.3rem 0.75rem;text-align:right;">
+        Jogos = pontos dos palpites (n\u00e3o inclui b\u00f4nus de times)
+    </div>
 </div>"""
 
 
@@ -544,7 +616,7 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
             f'<div class="player-avatar">{_initials(name)}</div>'
             f'<div>'
             f'<div class="player-name">{name} {hot_badge}</div>'
-            f'<div class="player-pts">{pts} pts</div>'
+            f'<div class="player-pts">{pts} <span style="font-size:0.6rem;color:var(--text-muted);font-weight:400;">jogos</span></div>'
             f'</div>'
             f'</a>\n'
         )
@@ -633,7 +705,7 @@ def _build_bottom_nav_dashboard(prefix: str = "") -> str:
         ("index.html", "\U0001f3e0", "In\u00edcio"),
         ("arena.html", "\u2694\ufe0f", "Arena"),
         ("zebras.html", "\U0001f993", "Zebras"),
-        ("momentum.html", "\U0001f525", "Momento"),
+        ("palpites.html", "\U0001f4cb", "Palpites"),
         ("bolao_xray.html", "\U0001f50d", "Raio-X"),
     ]
     links = ""
@@ -866,7 +938,7 @@ def _build_bonus_times_card(config: ChampionshipConfig) -> str:
             f'</div>\n'
         )
 
-    html = '<div class="section"><div class="section-title">\U0001f3c6 Bônus Times</div><div class="card">'
+    html = '<div class="section"><div class="section-title">\U0001f3c6 Bônus Times (extra)</div><div class="card">'
     if top_pts_html:
         html += '<div style="margin-bottom:0.75rem;"><strong>Maiores Pontuadores</strong></div>'
         html += f'<div class="bar-chart">{top_pts_html}</div>'
@@ -900,6 +972,15 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     player_grid = _build_player_grid(config)
     phase_accordion = _build_phase_accordion(config, slug_status)
     zebra_counter = _build_zebra_counter(config)
+    badge_legend = """<div class="card" style="margin:0.75rem;font-size:0.7rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:0.25rem 1rem;padding:0.5rem 0.75rem;">
+    <span>\U0001f525 Embrazado (streak \u2265 3 acertos)</span>
+    <span>\U0001f993 Ca\u00e7ador de Zebras (top 3 em zebras)</span>
+    <span>\U0001f40d L\u00edder (1\u00ba lugar geral)</span>
+    <span>\U0001f4a5 Ousado (aposta acima da m\u00e9dia)</span>
+    <span>\U0001F9CA Conservador (aposta abaixo da m\u00e9dia)</span>
+    <span>\U0001f3af Especialista (maior precis\u00e3o em time)</span>
+</div>
+"""
     bonus_card = _build_bonus_times_card(config)
     pending_summary = _build_pending_summary(pending_data)
     pending_games = _build_pending_games(pending_data, config)
@@ -924,6 +1005,8 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     {pending_summary}
 </div>
 
+{badge_legend}
+
 {last_result}
 
 {pending_games}
@@ -934,19 +1017,29 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 </div>
 
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
-    <a href="arena.html">
+    <a href="tabela_real.html">
         <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
-            \u2694\ufe0f Arena
+            \U0001f3c6 Grupos
         </div>
     </a>
-    <a href="zebras.html">
+    <a href="rodadas.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f993 Zebras
+            \U0001f4ca Rodadas
         </div>
     </a>
-    <a href="momentum.html">
+    <a href="times.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f525 Momento
+            \U0001f3c6 Times
+        </div>
+    </a>
+    <a href="similaridade.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f9ee S\u00f3sia
+        </div>
+    </a>
+    <a href="palpites.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f4cb Palpites
         </div>
     </a>
     <a href="ranking_evolution.html">
@@ -959,14 +1052,14 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
             \U0001f4ca Boldometro
         </div>
     </a>
+    <a href="zebras.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f993 Zebras
+        </div>
+    </a>
     <a href="bolao_xray.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
             \U0001f50d Raio-X
-        </div>
-    </a>
-    <a href="day_winners.html">
-        <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
-            \U0001f3c6 Vencedores do Dia
         </div>
     </a>
 </div>

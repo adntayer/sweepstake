@@ -230,6 +230,9 @@ class ChampionshipConfig:
     actual_top_scorer: str = ""
     striker_points: int = 0
 
+    # Group stage definition (list of {name, teams})
+    groups: list = field(default_factory=list)
+
     # Group standings format (e.g. 2026 World Cup)
     standings_format: bool = False
     standings_skiprows: int = 1
@@ -581,6 +584,8 @@ def load_config(championship_id: str) -> ChampionshipConfig:
     striker_cfg = raw.get("striker_scoring", {})
     striker_points = striker_cfg.get("points", 0)
 
+    groups_raw = raw.get("groups", [])
+
     return ChampionshipConfig(
         id=raw["id"],
         name=raw["name"],
@@ -589,6 +594,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         scoring_rules=scoring_rules,
         playoff_rounds=playoff_rounds,
         excel_layout=excel_layout,
+        groups=groups_raw,
         report_title=raw.get("report_title", raw["name"]),
         group_phase_label=raw.get("group_phase_label", "1a Fase"),
         theme=_parse_theme(raw.get("theme", {})),

@@ -508,6 +508,7 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
         _generate_boldness_index(df_all, config, df_valid)
         _generate_prediction_timing(config)
         _generate_goal_error_by_team(df_valid, config)
+        _generate_group_standings(config)
 
     print_colored("silver to gold completed", "green")
 
@@ -861,6 +862,68 @@ def _generate_prediction_timing(config: ChampionshipConfig) -> None:
     df_out = df_out.sort_values("lead_days", ascending=False)
     _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "prediction_timing.csv")))
     print_colored(f"\tprediction_timing.csv: {len(df_out)} rows", "green")
+
+
+# ------------------------------------------------------------------
+# New analytics: Group standings (real tournament table)
+# ------------------------------------------------------------------
+
+
+def _generate_group_standings(config: ChampionshipConfig) -> None:
+    """Compute real group standings from games.csv and save to gold."""
+    if not config.groups:
+        print_colored("\tskipping group standings (no groups configured)", "yellow")
+        return
+    print_colored("\tgenerating group standings", "ice")
+    df_games = pd.read_csv(config.games_file, sep=",")
+    group_rounds = ["1", "2", "3"]
+    df_group = df_games[df_games["round"].astype(str).str.strip().isin(group_rounds)]
+
+    rows = []
+    for grp in config.groups:
+        group_name = grp.get("name", "?")
+        teams = grp.get("teams", [])
+        standings = {}
+        for t in teams:
+            standings[t] = {"team": t, "group": group_name, "p": 0, "w": 0, "d": 0, "l": 0, "gf": 0, "ga": 0, "pts": 0}
+        for _, row in df_group.iterrows():
+            home = str(row.get("home_team", ""))
+            away = str(row.get("away_team", ""))
+            if home not in standings or away not in standings:
+                continue
+            try:
+                hg = int(row["home_goals"]) if pd.notna(row.get("home_goals")) else None
+                ag = int(row["away_goals"]) if pd.notna(row.get("away_goals")) else None
+            except (ValueError, TypeError):
+                continue
+            if hg is None or ag is None:
+                continue
+            standings[home]["p"] += 1
+            standings[away]["p"] += 1
+            standings[home]["gf"] += hg
+            standings[home]["ga"] += ag
+            standings[away]["gf"] += ag
+            standings[away]["ga"] += hg
+            if hg > ag:
+                standings[home]["w"] += 1; standings[home]["pts"] += 3
+                standings[away]["l"] += 1
+            elif ag > hg:
+                standings[away]["w"] += 1; standings[away]["pts"] += 3
+                standings[home]["l"] += 1
+            else:
+                standings[home]["d"] += 1; standings[away]["d"] += 1
+                standings[home]["pts"] += 1; standings[away]["pts"] += 1
+        for t, s in standings.items():
+            s["gd"] = s["gf"] - s["ga"]
+            rows.append(s)
+
+    if not rows:
+        print_colored("\tgroup_standings.csv: 0 rows (no data)", "yellow")
+        return
+    df_out = pd.DataFrame(rows)
+    df_out = df_out.sort_values(["group", "pts", "gd", "gf"], ascending=[True, False, False, False])
+    _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "group_standings.csv")))
+    print_colored(f"\tgroup_standings.csv: {len(df_out)} rows", "green")
 
 
 # ------------------------------------------------------------------
