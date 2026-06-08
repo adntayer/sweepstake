@@ -334,6 +334,18 @@ body { padding-bottom: 70px; }
     50% { transform: scale(1.2); }
 }
 
+/* Status badges for match results */
+.badge-result { display:inline-block; padding:0.1rem 0.4rem; border-radius:999px; font-size:0.65rem; font-weight:600; margin-left:0.3rem; }
+.badge-result.green { background:var(--success); color:#fff; }
+.badge-result.yellow { background:var(--warning); color:var(--text-inverse); }
+.badge-result.blue { background:var(--primary); color:#fff; }
+
+/* Pending summary badge in hero */
+.hero-badge { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.4rem; padding:0.3rem 0.8rem; border-radius:999px; font-size:0.8rem; }
+.hero-badge.green { background:rgba(34,197,94,0.2); }
+.hero-badge.yellow { background:rgba(245,158,11,0.2); }
+.hero-badge.gray { background:rgba(136,153,170,0.2); color:var(--text-muted); }
+
 /* Responsive */
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.4rem; }
@@ -359,7 +371,11 @@ body { padding-bottom: 70px; }
     <h1>🏆 2026 World Cup</h1>
     <div class="subtitle">Painel do Bolao</div>
     
+    <div class="hero-badge gray">🕐 Nenhum resultado ainda ‣ 72 jogos futuros</div>
+
 </div>
+
+
 
 
 
@@ -439,78 +455,78 @@ body { padding-bottom: 70px; }
     
 <details open>
     <summary>⚽ 1afase (72)</summary>
-    <div class="content"><a href="jogos/1afase/2026-06-11_19h_méxico-vs-áfrica_do_sul.html">2026-06-11 19h | méxico vs áfrica do sul</a>
-<a href="jogos/1afase/2026-06-12_02h_coréia_do_sul-vs-república_tcheca.html">2026-06-12 02h | coréia do sul vs república tcheca</a>
-<a href="jogos/1afase/2026-06-12_19h_canadá-vs-bósnia.html">2026-06-12 19h | canadá vs bósnia</a>
-<a href="jogos/1afase/2026-06-13_01h_estados_unidos-vs-paraguai.html">2026-06-13 01h | estados unidos vs paraguai</a>
-<a href="jogos/1afase/2026-06-13_19h_catar-vs-suíça.html">2026-06-13 19h | catar vs suíça</a>
-<a href="jogos/1afase/2026-06-13_22h_brasil-vs-marrocos.html">2026-06-13 22h | brasil vs marrocos</a>
-<a href="jogos/1afase/2026-06-14_01h_haiti-vs-escócia.html">2026-06-14 01h | haiti vs escócia</a>
-<a href="jogos/1afase/2026-06-14_04h_austrália-vs-turquia.html">2026-06-14 04h | austrália vs turquia</a>
-<a href="jogos/1afase/2026-06-14_17h_alemanha-vs-curaçao.html">2026-06-14 17h | alemanha vs curaçao</a>
-<a href="jogos/1afase/2026-06-14_20h_holanda-vs-japão.html">2026-06-14 20h | holanda vs japão</a>
-<a href="jogos/1afase/2026-06-14_23h_costa_do_marfim-vs-equador.html">2026-06-14 23h | costa do marfim vs equador</a>
-<a href="jogos/1afase/2026-06-15_02h_suécia-vs-tunísia.html">2026-06-15 02h | suécia vs tunísia</a>
-<a href="jogos/1afase/2026-06-15_16h_espanha-vs-cabo_verde.html">2026-06-15 16h | espanha vs cabo verde</a>
-<a href="jogos/1afase/2026-06-15_19h_bélgica-vs-egito.html">2026-06-15 19h | bélgica vs egito</a>
-<a href="jogos/1afase/2026-06-15_22h_arábia_saudita-vs-uruguai.html">2026-06-15 22h | arábia saudita vs uruguai</a>
-<a href="jogos/1afase/2026-06-16_01h_irã-vs-nova_zelândia.html">2026-06-16 01h | irã vs nova zelândia</a>
-<a href="jogos/1afase/2026-06-16_19h_frança-vs-senegal.html">2026-06-16 19h | frança vs senegal</a>
-<a href="jogos/1afase/2026-06-16_22h_iraque-vs-noruega.html">2026-06-16 22h | iraque vs noruega</a>
-<a href="jogos/1afase/2026-06-17_01h_argentina-vs-argélia.html">2026-06-17 01h | argentina vs argélia</a>
-<a href="jogos/1afase/2026-06-17_04h_áustria-vs-jordânia.html">2026-06-17 04h | áustria vs jordânia</a>
-<a href="jogos/1afase/2026-06-17_17h_portugal-vs-rd_congo.html">2026-06-17 17h | portugal vs rd congo</a>
-<a href="jogos/1afase/2026-06-17_20h_inglaterra-vs-croácia.html">2026-06-17 20h | inglaterra vs croácia</a>
-<a href="jogos/1afase/2026-06-17_23h_gana-vs-panamá.html">2026-06-17 23h | gana vs panamá</a>
-<a href="jogos/1afase/2026-06-18_02h_uzbequistão-vs-colômbia.html">2026-06-18 02h | uzbequistão vs colômbia</a>
-<a href="jogos/1afase/2026-06-18_16h_república_tcheca-vs-áfrica_do_sul.html">2026-06-18 16h | república tcheca vs áfrica do sul</a>
-<a href="jogos/1afase/2026-06-18_19h_suíça-vs-bósnia.html">2026-06-18 19h | suíça vs bósnia</a>
-<a href="jogos/1afase/2026-06-18_22h_canadá-vs-catar.html">2026-06-18 22h | canadá vs catar</a>
-<a href="jogos/1afase/2026-06-19_01h_méxico-vs-coréia_do_sul.html">2026-06-19 01h | méxico vs coréia do sul</a>
-<a href="jogos/1afase/2026-06-19_19h_estados_unidos-vs-austrália.html">2026-06-19 19h | estados unidos vs austrália</a>
-<a href="jogos/1afase/2026-06-19_22h_escócia-vs-marrocos.html">2026-06-19 22h | escócia vs marrocos</a>
-<a href="jogos/1afase/2026-06-20_01h_brasil-vs-haiti.html">2026-06-20 01h | brasil vs haiti</a>
-<a href="jogos/1afase/2026-06-20_04h_turquia-vs-paraguai.html">2026-06-20 04h | turquia vs paraguai</a>
-<a href="jogos/1afase/2026-06-20_17h_holanda-vs-suécia.html">2026-06-20 17h | holanda vs suécia</a>
-<a href="jogos/1afase/2026-06-20_20h_alemanha-vs-costa_do_marfim.html">2026-06-20 20h | alemanha vs costa do marfim</a>
-<a href="jogos/1afase/2026-06-21_00h_equador-vs-curaçao.html">2026-06-21 00h | equador vs curaçao</a>
-<a href="jogos/1afase/2026-06-21_04h_tunísia-vs-japão.html">2026-06-21 04h | tunísia vs japão</a>
-<a href="jogos/1afase/2026-06-21_16h_espanha-vs-arábia_saudita.html">2026-06-21 16h | espanha vs arábia saudita</a>
-<a href="jogos/1afase/2026-06-21_19h_bélgica-vs-irã.html">2026-06-21 19h | bélgica vs irã</a>
-<a href="jogos/1afase/2026-06-21_22h_uruguai-vs-cabo_verde.html">2026-06-21 22h | uruguai vs cabo verde</a>
-<a href="jogos/1afase/2026-06-22_01h_nova_zelândia-vs-egito.html">2026-06-22 01h | nova zelândia vs egito</a>
-<a href="jogos/1afase/2026-06-22_17h_argentina-vs-áustria.html">2026-06-22 17h | argentina vs áustria</a>
-<a href="jogos/1afase/2026-06-22_21h_frança-vs-iraque.html">2026-06-22 21h | frança vs iraque</a>
-<a href="jogos/1afase/2026-06-23_00h_noruega-vs-senegal.html">2026-06-23 00h | noruega vs senegal</a>
-<a href="jogos/1afase/2026-06-23_03h_jordânia-vs-argélia.html">2026-06-23 03h | jordânia vs argélia</a>
-<a href="jogos/1afase/2026-06-23_17h_portugal-vs-uzbequistão.html">2026-06-23 17h | portugal vs uzbequistão</a>
-<a href="jogos/1afase/2026-06-23_20h_inglaterra-vs-gana.html">2026-06-23 20h | inglaterra vs gana</a>
-<a href="jogos/1afase/2026-06-23_23h_panamá-vs-croácia.html">2026-06-23 23h | panamá vs croácia</a>
-<a href="jogos/1afase/2026-06-24_02h_colômbia-vs-rd_congo.html">2026-06-24 02h | colômbia vs rd congo</a>
-<a href="jogos/1afase/2026-06-24_19h_bósnia-vs-catar.html">2026-06-24 19h | bósnia vs catar</a>
-<a href="jogos/1afase/2026-06-24_19h_suíça-vs-canadá.html">2026-06-24 19h | suíça vs canadá</a>
-<a href="jogos/1afase/2026-06-24_22h_escócia-vs-brasil.html">2026-06-24 22h | escócia vs brasil</a>
-<a href="jogos/1afase/2026-06-24_22h_marrocos-vs-haiti.html">2026-06-24 22h | marrocos vs haiti</a>
-<a href="jogos/1afase/2026-06-25_01h_república_tcheca-vs-méxico.html">2026-06-25 01h | república tcheca vs méxico</a>
-<a href="jogos/1afase/2026-06-25_01h_áfrica_do_sul-vs-coréia_do_sul.html">2026-06-25 01h | áfrica do sul vs coréia do sul</a>
-<a href="jogos/1afase/2026-06-25_20h_curaçao-vs-costa_do_marfim.html">2026-06-25 20h | curaçao vs costa do marfim</a>
-<a href="jogos/1afase/2026-06-25_20h_equador-vs-alemanha.html">2026-06-25 20h | equador vs alemanha</a>
-<a href="jogos/1afase/2026-06-25_23h_japão-vs-suécia.html">2026-06-25 23h | japão vs suécia</a>
-<a href="jogos/1afase/2026-06-25_23h_tunísia-vs-holanda.html">2026-06-25 23h | tunísia vs holanda</a>
-<a href="jogos/1afase/2026-06-26_02h_paraguai-vs-austrália.html">2026-06-26 02h | paraguai vs austrália</a>
-<a href="jogos/1afase/2026-06-26_02h_turquia-vs-estados_unidos.html">2026-06-26 02h | turquia vs estados unidos</a>
-<a href="jogos/1afase/2026-06-26_19h_noruega-vs-frança.html">2026-06-26 19h | noruega vs frança</a>
-<a href="jogos/1afase/2026-06-26_19h_senegal-vs-iraque.html">2026-06-26 19h | senegal vs iraque</a>
-<a href="jogos/1afase/2026-06-27_00h_cabo_verde-vs-arábia_saudita.html">2026-06-27 00h | cabo verde vs arábia saudita</a>
-<a href="jogos/1afase/2026-06-27_00h_uruguai-vs-espanha.html">2026-06-27 00h | uruguai vs espanha</a>
-<a href="jogos/1afase/2026-06-27_03h_egito-vs-irã.html">2026-06-27 03h | egito vs irã</a>
-<a href="jogos/1afase/2026-06-27_03h_nova_zelândia-vs-bélgica.html">2026-06-27 03h | nova zelândia vs bélgica</a>
-<a href="jogos/1afase/2026-06-27_21h_croácia-vs-gana.html">2026-06-27 21h | croácia vs gana</a>
-<a href="jogos/1afase/2026-06-27_21h_panamá-vs-inglaterra.html">2026-06-27 21h | panamá vs inglaterra</a>
-<a href="jogos/1afase/2026-06-27_23h_colômbia-vs-portugal.html">2026-06-27 23h | colômbia vs portugal</a>
-<a href="jogos/1afase/2026-06-27_23h_rd_congo-vs-uzbequistão.html">2026-06-27 23h | rd congo vs uzbequistão</a>
-<a href="jogos/1afase/2026-06-28_02h_argélia-vs-áustria.html">2026-06-28 02h | argélia vs áustria</a>
-<a href="jogos/1afase/2026-06-28_02h_jordânia-vs-argentina.html">2026-06-28 02h | jordânia vs argentina</a>
+    <div class="content"><a href="jogos/1afase/2026-06-11_19h_méxico-vs-áfrica_do_sul.html">2026-06-11 19h | méxico vs áfrica do sul<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-12_02h_coréia_do_sul-vs-república_tcheca.html">2026-06-12 02h | coréia do sul vs república tcheca<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-12_19h_canadá-vs-bósnia.html">2026-06-12 19h | canadá vs bósnia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-13_01h_estados_unidos-vs-paraguai.html">2026-06-13 01h | estados unidos vs paraguai<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-13_19h_catar-vs-suíça.html">2026-06-13 19h | catar vs suíça<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-13_22h_brasil-vs-marrocos.html">2026-06-13 22h | brasil vs marrocos<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_01h_haiti-vs-escócia.html">2026-06-14 01h | haiti vs escócia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_04h_austrália-vs-turquia.html">2026-06-14 04h | austrália vs turquia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_17h_alemanha-vs-curaçao.html">2026-06-14 17h | alemanha vs curaçao<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_20h_holanda-vs-japão.html">2026-06-14 20h | holanda vs japão<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_23h_costa_do_marfim-vs-equador.html">2026-06-14 23h | costa do marfim vs equador<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_02h_suécia-vs-tunísia.html">2026-06-15 02h | suécia vs tunísia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_16h_espanha-vs-cabo_verde.html">2026-06-15 16h | espanha vs cabo verde<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_19h_bélgica-vs-egito.html">2026-06-15 19h | bélgica vs egito<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_22h_arábia_saudita-vs-uruguai.html">2026-06-15 22h | arábia saudita vs uruguai<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-16_01h_irã-vs-nova_zelândia.html">2026-06-16 01h | irã vs nova zelândia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-16_19h_frança-vs-senegal.html">2026-06-16 19h | frança vs senegal<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-16_22h_iraque-vs-noruega.html">2026-06-16 22h | iraque vs noruega<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_01h_argentina-vs-argélia.html">2026-06-17 01h | argentina vs argélia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_04h_áustria-vs-jordânia.html">2026-06-17 04h | áustria vs jordânia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_17h_portugal-vs-rd_congo.html">2026-06-17 17h | portugal vs rd congo<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_20h_inglaterra-vs-croácia.html">2026-06-17 20h | inglaterra vs croácia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_23h_gana-vs-panamá.html">2026-06-17 23h | gana vs panamá<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-18_02h_uzbequistão-vs-colômbia.html">2026-06-18 02h | uzbequistão vs colômbia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-18_16h_república_tcheca-vs-áfrica_do_sul.html">2026-06-18 16h | república tcheca vs áfrica do sul<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-18_19h_suíça-vs-bósnia.html">2026-06-18 19h | suíça vs bósnia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-18_22h_canadá-vs-catar.html">2026-06-18 22h | canadá vs catar<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-19_01h_méxico-vs-coréia_do_sul.html">2026-06-19 01h | méxico vs coréia do sul<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-19_19h_estados_unidos-vs-austrália.html">2026-06-19 19h | estados unidos vs austrália<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-19_22h_escócia-vs-marrocos.html">2026-06-19 22h | escócia vs marrocos<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_01h_brasil-vs-haiti.html">2026-06-20 01h | brasil vs haiti<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_04h_turquia-vs-paraguai.html">2026-06-20 04h | turquia vs paraguai<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_17h_holanda-vs-suécia.html">2026-06-20 17h | holanda vs suécia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_20h_alemanha-vs-costa_do_marfim.html">2026-06-20 20h | alemanha vs costa do marfim<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_00h_equador-vs-curaçao.html">2026-06-21 00h | equador vs curaçao<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_04h_tunísia-vs-japão.html">2026-06-21 04h | tunísia vs japão<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_16h_espanha-vs-arábia_saudita.html">2026-06-21 16h | espanha vs arábia saudita<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_19h_bélgica-vs-irã.html">2026-06-21 19h | bélgica vs irã<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_22h_uruguai-vs-cabo_verde.html">2026-06-21 22h | uruguai vs cabo verde<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-22_01h_nova_zelândia-vs-egito.html">2026-06-22 01h | nova zelândia vs egito<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-22_17h_argentina-vs-áustria.html">2026-06-22 17h | argentina vs áustria<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-22_21h_frança-vs-iraque.html">2026-06-22 21h | frança vs iraque<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_00h_noruega-vs-senegal.html">2026-06-23 00h | noruega vs senegal<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_03h_jordânia-vs-argélia.html">2026-06-23 03h | jordânia vs argélia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_17h_portugal-vs-uzbequistão.html">2026-06-23 17h | portugal vs uzbequistão<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_20h_inglaterra-vs-gana.html">2026-06-23 20h | inglaterra vs gana<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_23h_panamá-vs-croácia.html">2026-06-23 23h | panamá vs croácia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_02h_colômbia-vs-rd_congo.html">2026-06-24 02h | colômbia vs rd congo<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_19h_bósnia-vs-catar.html">2026-06-24 19h | bósnia vs catar<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_19h_suíça-vs-canadá.html">2026-06-24 19h | suíça vs canadá<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_22h_escócia-vs-brasil.html">2026-06-24 22h | escócia vs brasil<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_22h_marrocos-vs-haiti.html">2026-06-24 22h | marrocos vs haiti<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_01h_república_tcheca-vs-méxico.html">2026-06-25 01h | república tcheca vs méxico<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_01h_áfrica_do_sul-vs-coréia_do_sul.html">2026-06-25 01h | áfrica do sul vs coréia do sul<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_20h_curaçao-vs-costa_do_marfim.html">2026-06-25 20h | curaçao vs costa do marfim<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_20h_equador-vs-alemanha.html">2026-06-25 20h | equador vs alemanha<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_23h_japão-vs-suécia.html">2026-06-25 23h | japão vs suécia<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_23h_tunísia-vs-holanda.html">2026-06-25 23h | tunísia vs holanda<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_02h_paraguai-vs-austrália.html">2026-06-26 02h | paraguai vs austrália<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_02h_turquia-vs-estados_unidos.html">2026-06-26 02h | turquia vs estados unidos<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_19h_noruega-vs-frança.html">2026-06-26 19h | noruega vs frança<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_19h_senegal-vs-iraque.html">2026-06-26 19h | senegal vs iraque<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_00h_cabo_verde-vs-arábia_saudita.html">2026-06-27 00h | cabo verde vs arábia saudita<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_00h_uruguai-vs-espanha.html">2026-06-27 00h | uruguai vs espanha<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_03h_egito-vs-irã.html">2026-06-27 03h | egito vs irã<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_03h_nova_zelândia-vs-bélgica.html">2026-06-27 03h | nova zelândia vs bélgica<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_21h_croácia-vs-gana.html">2026-06-27 21h | croácia vs gana<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_21h_panamá-vs-inglaterra.html">2026-06-27 21h | panamá vs inglaterra<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_23h_colômbia-vs-portugal.html">2026-06-27 23h | colômbia vs portugal<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_23h_rd_congo-vs-uzbequistão.html">2026-06-27 23h | rd congo vs uzbequistão<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-28_02h_argélia-vs-áustria.html">2026-06-28 02h | argélia vs áustria<span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-28_02h_jordânia-vs-argentina.html">2026-06-28 02h | jordânia vs argentina<span class="badge-result blue">🔮</span></a>
 </div>
 </details>
 
@@ -547,7 +563,7 @@ body { padding-bottom: 70px; }
 </div>
 
 <div class="footer" style="padding-bottom:5rem;">
-    atualizado às 08/06/2026 00:08:02
+    atualizado às 08/06/2026 00:29:57
 </div>
 
 <nav class="bottom-nav"><a href="index.html" class="active"><span class="nav-icon">🏠</span>Início</a>

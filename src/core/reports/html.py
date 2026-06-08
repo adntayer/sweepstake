@@ -16,6 +16,7 @@ import pytz
 
 from src.core.config import ChampionshipConfig
 from src.core.printing import print_colored
+from src.core.reports.utils import compute_pending_matches
 
 
 def _norm(path: str) -> str:
@@ -690,6 +691,36 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'</div>\n'
                 )
 
+    # --- Detect pending matches (past but no result) for this player ---
+    n_pending = 0
+    pending_rows = ""
+    all_path = config.gold_all_path()
+    if os.path.exists(all_path):
+        df_all = pd.read_csv(all_path, sep=",")
+        df_player_all = df_all[df_all["who"] == boleiro].copy()
+        if not df_player_all.empty:
+            tz = pytz.timezone(config.timezone)
+            today_dt = datetime.now(tz).date()
+            df_player_all["date_dt"] = pd.to_datetime(df_player_all["date"], errors="coerce")
+            df_pending = df_player_all[
+                (df_player_all.get("valido", 0) == 0)
+                & (df_player_all["date_dt"].dt.date < today_dt)
+            ].drop_duplicates(subset=["match"])
+            n_pending = len(df_pending)
+            if n_pending:
+                for _, row in df_pending.sort_values(["date", "hour"], ascending=False).iterrows():
+                    date_str = pd.to_datetime(row["date"]).strftime("%d/%m")
+                    pending_rows += (
+                        f'<div class="pred-row">'
+                        f'<div class="pred-info">'
+                        f'<div class="pred-name">{row["home_team"]} vs {row["away_team"]}</div>'
+                        f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | \u23f3 Aguardando resultado</div>'
+                        f'<div class="pred-detail">{date_str}</div>'
+                        f'</div>'
+                        f'<div class="score-pill" style="color:var(--warning);background:rgba(245,158,11,0.1);border:1px solid var(--warning)">+0 \u23f3</div>'
+                        f'</div>\n'
+                    )
+
     # Match history rows (newest first)
     playoff_emoji_map = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
     df_hist = df_bol.sort_values(["date", "hour"], ascending=False)
@@ -744,11 +775,31 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     df_by_date_dt = df_hist["date"].apply(lambda d: pd.to_datetime(d).date())
     df_hist_past = df_hist[df_by_date_dt < today]
     df_hist_future = df_hist[df_by_date_dt >= today]
+
+    # Exclude pending matches from past (they'll be shown in pending section)
+    pending_slug_set = set()
+    if n_pending:
+        all_path_p = config.gold_all_path()
+        if os.path.exists(all_path_p):
+            df_all_p = pd.read_csv(all_path_p, sep=",")
+            df_pending_p = df_all_p[
+                (df_all_p["who"] == boleiro)
+                & (df_all_p.get("valido", 0) == 0)
+            ]
+            pending_slug_set = set(df_pending_p["match"].unique())
+        if pending_slug_set:
+            df_hist_past = df_hist_past[~df_hist_past["match"].isin(pending_slug_set)]
+
     n_past = len(df_hist_past)
     n_future = len(df_hist_future)
 
-    history_rows_past = _build_history_rows(df_hist_past) if n_past else '<div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">Nenhum jogo encerrado.</div>'
+    history_rows_past = _build_history_rows(df_hist_past) if n_past else ""
     history_rows_future = _build_history_rows(df_hist_future) if n_future else '<div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">Nenhum jogo futuro.</div>'
+
+    # Build stat rows: add pending stat if any
+    pending_stat_html = ""
+    if n_pending > 0:
+        pending_stat_html = f'<div class="stat-card"><div class="value" style="color:var(--warning);font-size:1.2rem;">\u23f3 {n_pending}</div><div class="label">Aguardando</div></div>'
 
     body = f"""
 <div class="hero">
@@ -775,6 +826,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         <div class="value" style="color:var(--voce)">{round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0}%</div>
         <div class="label">Aproveitamento</div>
     </div>
+    {pending_stat_html}
 </div>
 """
 
@@ -1080,11 +1132,26 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
     body += profile_html
 
+    encerrados_total = n_past + n_pending
     body += f"""
 <details class="section">
     <summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">
-    \U0001f4cb Jogos Encerrados ({n_past})</summary>
-    <div class="card">{history_rows_past}</div>
+    \U0001f4cb Jogos Encerrados ({encerrados_total})</summary>
+"""
+    if n_pending:
+        body += f"""    <div class="card" style="margin-bottom:0.5rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--warning);margin-bottom:0.3rem;">\u23f3 Aguardando Resultado ({n_pending})</div>
+        {pending_rows}</div>
+"""
+    if history_rows_past:
+        body += f"""    <div class="card">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\u2705 Com Resultado ({n_past})</div>
+        {history_rows_past}</div>
+"""
+    if not encerrados_total:
+        body += """    <div class="card"><div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">Nenhum jogo encerrado.</div></div>"""
+
+    body += f"""
 </details>
 <details class="section" open>
     <summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">

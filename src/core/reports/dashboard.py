@@ -12,6 +12,7 @@ import pytz
 
 from src.core.config import ChampionshipConfig
 from src.core.printing import print_colored
+from src.core.reports.utils import compute_pending_matches
 
 
 def _norm(path: str) -> str:
@@ -335,6 +336,18 @@ body { padding-bottom: 70px; }
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
 }
+
+/* Status badges for match results */
+.badge-result { display:inline-block; padding:0.1rem 0.4rem; border-radius:999px; font-size:0.65rem; font-weight:600; margin-left:0.3rem; }
+.badge-result.green { background:var(--success); color:#fff; }
+.badge-result.yellow { background:var(--warning); color:var(--text-inverse); }
+.badge-result.blue { background:var(--primary); color:#fff; }
+
+/* Pending summary badge in hero */
+.hero-badge { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.4rem; padding:0.3rem 0.8rem; border-radius:999px; font-size:0.8rem; }
+.hero-badge.green { background:rgba(34,197,94,0.2); }
+.hero-badge.yellow { background:rgba(245,158,11,0.2); }
+.hero-badge.gray { background:rgba(136,153,170,0.2); color:var(--text-muted); }
 
 /* Responsive */
 @media (max-width: 359px) {
@@ -664,30 +677,59 @@ def _build_last_result(config: ChampionshipConfig) -> str:
 """
 
 
-def _build_phase_accordion(config: ChampionshipConfig) -> str:
+def _slug_from_filename(filename: str) -> str:
+    """Extract match slug from an HTML filename.
+
+    Pattern: YYYY-MM-DD_HHh_<slug>.html -> <slug>
+    """
+    base = os.path.basename(filename).replace(".html", "")
+    m = re.match(r"\d{4}-\d{2}-\d{2}_\d{1,2}h_(.+)", base)
+    if m:
+        return m.group(1)
+    return base
+
+
+def _status_badge(slug: str, slug_status: dict[str, str]) -> str:
+    """Return a small colored badge for the match status."""
+    status = slug_status.get(slug, "result")
+    if status == "result":
+        return '<span class="badge-result green">\u2705</span>'
+    if status == "pending":
+        return '<span class="badge-result yellow">\u23f3</span>'
+    return '<span class="badge-result blue">\U0001f52e</span>'
+
+
+def _build_phase_accordion(config: ChampionshipConfig, slug_status: dict[str, str] | None = None) -> str:
     """Build collapsible phase sections with game links."""
+    if slug_status is None:
+        slug_status = {}
     html_base = _norm(os.path.join(config.reports_dir, "html"))
     sections = ""
+
+    def _build_links(file_list: list[str]) -> str:
+        out = ""
+        for fp in file_list:
+            href = fp.replace("\\", "/").replace(
+                f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
+            )
+            label = (
+                os.path.basename(fp)
+                .replace(".html", "")
+                .replace("_", " ")
+                .replace("-vs-", " vs ")
+                .replace("h ", "h | ")
+            )
+            slug = _slug_from_filename(fp)
+            badge = _status_badge(slug, slug_status)
+            out += f'<a href="{href}">{label}{badge}</a>\n'
+        return out
 
     # Group phase
     group_dir = _norm(os.path.join(html_base, "jogos", config.group_phase_label))
     group_files = sorted(glob(_norm(os.path.join(group_dir, "*.html"))))
     group_files = [f for f in group_files if "index" not in f]
 
-    links = ""
-    for fp in group_files:
-        href = fp.replace("\\", "/").replace(
-            f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
-        )
-        label = (
-            os.path.basename(fp)
-            .replace(".html", "")
-            .replace("_", " ")
-            .replace("-vs-", " vs ")
-            .replace("h ", "h | ")
-        )
-        links += f'<a href="{href}">{label}</a>\n'
-
+    links = _build_links(group_files)
     if not links:
         links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
@@ -706,20 +748,7 @@ def _build_phase_accordion(config: ChampionshipConfig) -> str:
         po_files = [f for f in po_files if "index" not in f]
         emoji = playoff_emojis.get(pr.key, "")
 
-        po_links = ""
-        for fp in po_files:
-            href = fp.replace("\\", "/").replace(
-                f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
-            )
-            label = (
-                os.path.basename(fp)
-                .replace(".html", "")
-                .replace("_", " ")
-                .replace("-vs-", " vs ")
-                .replace("h ", "h | ")
-            )
-            po_links += f'<a href="{href}">{label}</a>\n'
-
+        po_links = _build_links(po_files)
         if not po_links:
             po_links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
@@ -731,6 +760,60 @@ def _build_phase_accordion(config: ChampionshipConfig) -> str:
 """
 
     return sections
+
+
+def _build_pending_summary(pending_data: dict) -> str:
+    """Build a hero badge showing match result summary."""
+    total = pending_data["total_matches"]
+    if total == 0:
+        return ""
+
+    done = pending_data["with_result"]
+    pend = pending_data["pending"]
+    fut = pending_data["future"]
+
+    if pend == 0 and fut == 0:
+        css_class = "green"
+        text = f"\u2705 Todos os {total} jogos com resultado"
+    elif pend > 0:
+        css_class = "yellow"
+        text = f"\U0001f4cb {done}/{total} jogos com resultado  \u2022  \u23f3 {pend} aguardando"
+    else:
+        css_class = "gray"
+        text = f"\U0001f550 Nenhum resultado ainda \u2023 {fut} jogos futuros"
+
+    return f'<div class="hero-badge {css_class}">{text}</div>\n'
+
+
+def _build_pending_games(pending_data: dict, config: ChampionshipConfig) -> str:
+    """Build a horizontal scroll section for pending (past but no result) games."""
+    if not pending_data["pending_info"]:
+        return ""
+
+    cards = ""
+    for g in pending_data["pending_info"]:
+        slug = g["slug"]
+        href = f'jogos/{config.group_phase_label}/{g["date"]}_{g["hour"]}_{slug}.html'
+        date_display = g["date"]
+        if g.get("hour"):
+            date_display += f' {g["hour"]}'
+        cards += (
+            f'<div class="game-card">'
+            f'<div class="badge-live" style="background:var(--warning);color:var(--text-inverse);">\u23f3 AGUARDANDO</div>'
+            f'<div class="datetime">{date_display}</div>'
+            f'<div class="matchup"><a href="{href}">{g["home_team"]} vs {g["away_team"]}</a></div>'
+            f'</div>\n'
+        )
+
+    if not cards:
+        return ""
+
+    return f"""
+<div class="section">
+    <div class="section-title">\u23f3 Jogos Pendentes</div>
+    <div class="scroll-row">{cards}</div>
+</div>
+"""
 
 
 # ------------------------------------------------------------------
@@ -804,13 +887,22 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     tz = pytz.timezone(config.timezone)
     now_str = datetime.now(tz).strftime("%d/%m/%Y %H:%M:%S")
 
+    pending_data = compute_pending_matches(config)
+    slug_status: dict[str, str] = {}
+    for s in pending_data["pending_slugs"]:
+        slug_status[s] = "pending"
+    for s in pending_data["future_slugs"]:
+        slug_status[s] = "future"
+
     last_result = _build_last_result(config)
     full_ranking = _build_full_ranking(config)
     upcoming = _build_upcoming_games(config)
     player_grid = _build_player_grid(config)
-    phase_accordion = _build_phase_accordion(config)
+    phase_accordion = _build_phase_accordion(config, slug_status)
     zebra_counter = _build_zebra_counter(config)
     bonus_card = _build_bonus_times_card(config)
+    pending_summary = _build_pending_summary(pending_data)
+    pending_games = _build_pending_games(pending_data, config)
 
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -829,9 +921,12 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <h1>\U0001f3c6 {config.report_title}</h1>
     <div class="subtitle">Painel do Bolao</div>
     {zebra_counter}
+    {pending_summary}
 </div>
 
 {last_result}
+
+{pending_games}
 
 <div class="section">
     <div class="section-title">\U0001f3c6 Ranking</div>
