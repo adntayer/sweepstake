@@ -1,0 +1,73 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2026-06-11,19h,México,,2.0,x,0.0,,África do Sul,Mauricio Saraiva,méxico-vs-áfrica_do_sul
+2026-06-12,02h,Coréia do Sul,,2.0,x,0.0,,República Tcheca,Mauricio Saraiva,coréia_do_sul-vs-república_tcheca
+2026-06-12,19h,Canadá,,1.0,x,0.0,,Bósnia,Mauricio Saraiva,canadá-vs-bósnia
+2026-06-13,01h,Estados Unidos,,2.0,x,0.0,,Paraguai,Mauricio Saraiva,estados_unidos-vs-paraguai
+2026-06-13,19h,Catar,,0.0,x,1.0,,Suíça,Mauricio Saraiva,catar-vs-suíça
+2026-06-13,22h,Brasil,,1.0,x,0.0,,Marrocos,Mauricio Saraiva,brasil-vs-marrocos
+2026-06-14,01h,Haiti,,0.0,x,1.0,,Escócia,Mauricio Saraiva,haiti-vs-escócia
+2026-06-14,04h,Austrália,,0.0,x,1.0,,Turquia,Mauricio Saraiva,austrália-vs-turquia
+2026-06-14,17h,Alemanha,,2.0,x,0.0,,Curaçao,Mauricio Saraiva,alemanha-vs-curaçao
+2026-06-14,20h,Holanda,,2.0,x,0.0,,Japão,Mauricio Saraiva,holanda-vs-japão
+2026-06-14,23h,Costa do Marfim,,0.0,x,1.0,,Equador,Mauricio Saraiva,costa_do_marfim-vs-equador
+2026-06-15,02h,Suécia,,2.0,x,0.0,,Tunísia,Mauricio Saraiva,suécia-vs-tunísia
+2026-06-15,16h,Espanha,,2.0,x,0.0,,Cabo Verde,Mauricio Saraiva,espanha-vs-cabo_verde
+2026-06-15,19h,Bélgica,,2.0,x,0.0,,Egito,Mauricio Saraiva,bélgica-vs-egito
+2026-06-15,22h,Arábia Saudita,,0.0,x,1.0,,Uruguai,Mauricio Saraiva,arábia_saudita-vs-uruguai
+2026-06-16,01h,Irã,,0.0,x,1.0,,Nova Zelândia,Mauricio Saraiva,irã-vs-nova_zelândia
+2026-06-16,19h,França,,2.0,x,0.0,,Senegal,Mauricio Saraiva,frança-vs-senegal
+2026-06-16,22h,Iraque,,0.0,x,1.0,,Noruega,Mauricio Saraiva,iraque-vs-noruega
+2026-06-17,01h,Argentina,,1.0,x,0.0,,Argélia,Mauricio Saraiva,argentina-vs-argélia
+2026-06-17,04h,Áustria,,2.0,x,0.0,,Jordânia,Mauricio Saraiva,áustria-vs-jordânia
+2026-06-17,17h,Portugal,,2.0,x,0.0,,RD Congo,Mauricio Saraiva,portugal-vs-rd_congo
+2026-06-17,20h,Inglaterra,,0.0,x,1.0,,Croácia,Mauricio Saraiva,inglaterra-vs-croácia
+2026-06-17,23h,Gana,,2.0,x,0.0,,Panamá,Mauricio Saraiva,gana-vs-panamá
+2026-06-18,02h,Uzbequistão,,0.0,x,1.0,,Colômbia,Mauricio Saraiva,uzbequistão-vs-colômbia
+2026-06-18,16h,República Tcheca,,1.0,x,0.0,,África do Sul,Mauricio Saraiva,república_tcheca-vs-áfrica_do_sul
+2026-06-18,19h,Suíça,,2.0,x,0.0,,Bósnia,Mauricio Saraiva,suíça-vs-bósnia
+2026-06-18,22h,Canadá,,2.0,x,0.0,,Catar,Mauricio Saraiva,canadá-vs-catar
+2026-06-19,01h,México,,2.0,x,0.0,,Coréia do Sul,Mauricio Saraiva,méxico-vs-coréia_do_sul
+2026-06-19,19h,Estados Unidos,,1.0,x,0.0,,Austrália,Mauricio Saraiva,estados_unidos-vs-austrália
+2026-06-19,22h,Escócia,,0.0,x,1.0,,Marrocos,Mauricio Saraiva,escócia-vs-marrocos
+2026-06-20,01h,Brasil,,2.0,x,0.0,,Haiti,Mauricio Saraiva,brasil-vs-haiti
+2026-06-20,04h,Turquia,,2.0,x,0.0,,Paraguai,Mauricio Saraiva,turquia-vs-paraguai
+2026-06-20,17h,Holanda,,2.0,x,0.0,,Suécia,Mauricio Saraiva,holanda-vs-suécia
+2026-06-20,20h,Alemanha,,2.0,x,0.0,,Costa do Marfim,Mauricio Saraiva,alemanha-vs-costa_do_marfim
+2026-06-21,00h,Equador,,2.0,x,0.0,,Curaçao,Mauricio Saraiva,equador-vs-curaçao
+2026-06-21,04h,Tunísia,,0.0,x,1.0,,Japão,Mauricio Saraiva,tunísia-vs-japão
+2026-06-21,16h,Espanha,,2.0,x,0.0,,Arábia Saudita,Mauricio Saraiva,espanha-vs-arábia_saudita
+2026-06-21,19h,Bélgica,,2.0,x,0.0,,Irã,Mauricio Saraiva,bélgica-vs-irã
+2026-06-21,22h,Uruguai,,2.0,x,0.0,,Cabo Verde,Mauricio Saraiva,uruguai-vs-cabo_verde
+2026-06-22,01h,Nova Zelândia,,0.0,x,1.0,,Egito,Mauricio Saraiva,nova_zelândia-vs-egito
+2026-06-22,17h,Argentina,,2.0,x,0.0,,Áustria,Mauricio Saraiva,argentina-vs-áustria
+2026-06-22,21h,França,,2.0,x,0.0,,Iraque,Mauricio Saraiva,frança-vs-iraque
+2026-06-23,00h,Noruega,,0.0,x,1.0,,Senegal,Mauricio Saraiva,noruega-vs-senegal
+2026-06-23,03h,Jordânia,,0.0,x,1.0,,Argélia,Mauricio Saraiva,jordânia-vs-argélia
+2026-06-23,17h,Portugal,,2.0,x,0.0,,Uzbequistão,Mauricio Saraiva,portugal-vs-uzbequistão
+2026-06-23,20h,Inglaterra,,0.0,x,1.0,,Gana,Mauricio Saraiva,inglaterra-vs-gana
+2026-06-23,23h,Panamá,,0.0,x,1.0,,Croácia,Mauricio Saraiva,panamá-vs-croácia
+2026-06-24,02h,Colômbia,,2.0,x,0.0,,RD Congo,Mauricio Saraiva,colômbia-vs-rd_congo
+2026-06-24,19h,Suíça,,2.0,x,0.0,,Canadá,Mauricio Saraiva,suíça-vs-canadá
+2026-06-24,19h,Bósnia,,2.0,x,0.0,,Catar,Mauricio Saraiva,bósnia-vs-catar
+2026-06-24,22h,Escócia,,0.0,x,1.0,,Brasil,Mauricio Saraiva,escócia-vs-brasil
+2026-06-24,22h,Marrocos,,2.0,x,0.0,,Haiti,Mauricio Saraiva,marrocos-vs-haiti
+2026-06-25,01h,República Tcheca,,0.0,x,1.0,,México,Mauricio Saraiva,república_tcheca-vs-méxico
+2026-06-25,01h,África do Sul,,0.0,x,1.0,,Coréia do Sul,Mauricio Saraiva,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,20h,Curaçao,,1.0,x,0.0,,Costa do Marfim,Mauricio Saraiva,curaçao-vs-costa_do_marfim
+2026-06-25,20h,Equador,,0.0,x,1.0,,Alemanha,Mauricio Saraiva,equador-vs-alemanha
+2026-06-25,23h,Japão,,0.0,x,1.0,,Suécia,Mauricio Saraiva,japão-vs-suécia
+2026-06-25,23h,Tunísia,,0.0,x,1.0,,Holanda,Mauricio Saraiva,tunísia-vs-holanda
+2026-06-26,02h,Turquia,,1.0,x,0.0,,Estados Unidos,Mauricio Saraiva,turquia-vs-estados_unidos
+2026-06-26,02h,Paraguai,,0.0,x,1.0,,Austrália,Mauricio Saraiva,paraguai-vs-austrália
+2026-06-26,19h,Noruega,,0.0,x,1.0,,França,Mauricio Saraiva,noruega-vs-frança
+2026-06-26,19h,Senegal,,2.0,x,0.0,,Iraque,Mauricio Saraiva,senegal-vs-iraque
+2026-06-27,00h,Cabo Verde,,0.0,x,1.0,,Arábia Saudita,Mauricio Saraiva,cabo_verde-vs-arábia_saudita
+2026-06-27,00h,Uruguai,,0.0,x,1.0,,Espanha,Mauricio Saraiva,uruguai-vs-espanha
+2026-06-27,03h,Egito,,2.0,x,0.0,,Irã,Mauricio Saraiva,egito-vs-irã
+2026-06-27,03h,Nova Zelândia,,0.0,x,1.0,,Bélgica,Mauricio Saraiva,nova_zelândia-vs-bélgica
+2026-06-27,21h,Panamá,,0.0,x,1.0,,Inglaterra,Mauricio Saraiva,panamá-vs-inglaterra
+2026-06-27,21h,Croácia,,2.0,x,0.0,,Gana,Mauricio Saraiva,croácia-vs-gana
+2026-06-27,23h,Colômbia,,0.0,x,1.0,,Portugal,Mauricio Saraiva,colômbia-vs-portugal
+2026-06-27,23h,RD Congo,,1.0,x,0.0,,Uzbequistão,Mauricio Saraiva,rd_congo-vs-uzbequistão
+2026-06-28,02h,Argélia,,2.0,x,0.0,,Áustria,Mauricio Saraiva,argélia-vs-áustria
+2026-06-28,02h,Jordânia,,0.0,x,1.0,,Argentina,Mauricio Saraiva,jordânia-vs-argentina

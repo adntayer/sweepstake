@@ -1,0 +1,73 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2026-06-11,19h,México,,2.0,x,0.0,,África do Sul,Tiago,méxico-vs-áfrica_do_sul
+2026-06-12,02h,Coréia do Sul,,2.0,x,0.0,,República Tcheca,Tiago,coréia_do_sul-vs-república_tcheca
+2026-06-12,19h,Canadá,,1.0,x,0.0,,Bósnia,Tiago,canadá-vs-bósnia
+2026-06-13,01h,Estados Unidos,,2.0,x,0.0,,Paraguai,Tiago,estados_unidos-vs-paraguai
+2026-06-13,19h,Catar,,0.0,x,1.0,,Suíça,Tiago,catar-vs-suíça
+2026-06-13,22h,Brasil,,2.0,x,0.0,,Marrocos,Tiago,brasil-vs-marrocos
+2026-06-14,01h,Haiti,,0.0,x,1.0,,Escócia,Tiago,haiti-vs-escócia
+2026-06-14,04h,Austrália,,0.0,x,1.0,,Turquia,Tiago,austrália-vs-turquia
+2026-06-14,17h,Alemanha,,2.0,x,0.0,,Curaçao,Tiago,alemanha-vs-curaçao
+2026-06-14,20h,Holanda,,2.0,x,0.0,,Japão,Tiago,holanda-vs-japão
+2026-06-14,23h,Costa do Marfim,,0.0,x,1.0,,Equador,Tiago,costa_do_marfim-vs-equador
+2026-06-15,02h,Suécia,,2.0,x,0.0,,Tunísia,Tiago,suécia-vs-tunísia
+2026-06-15,16h,Espanha,,2.0,x,0.0,,Cabo Verde,Tiago,espanha-vs-cabo_verde
+2026-06-15,19h,Bélgica,,2.0,x,0.0,,Egito,Tiago,bélgica-vs-egito
+2026-06-15,22h,Arábia Saudita,,0.0,x,1.0,,Uruguai,Tiago,arábia_saudita-vs-uruguai
+2026-06-16,01h,Irã,,2.0,x,0.0,,Nova Zelândia,Tiago,irã-vs-nova_zelândia
+2026-06-16,19h,França,,2.0,x,0.0,,Senegal,Tiago,frança-vs-senegal
+2026-06-16,22h,Iraque,,0.0,x,1.0,,Noruega,Tiago,iraque-vs-noruega
+2026-06-17,01h,Argentina,,2.0,x,0.0,,Argélia,Tiago,argentina-vs-argélia
+2026-06-17,04h,Áustria,,2.0,x,0.0,,Jordânia,Tiago,áustria-vs-jordânia
+2026-06-17,17h,Portugal,,2.0,x,0.0,,RD Congo,Tiago,portugal-vs-rd_congo
+2026-06-17,20h,Inglaterra,,2.0,x,0.0,,Croácia,Tiago,inglaterra-vs-croácia
+2026-06-17,23h,Gana,,2.0,x,0.0,,Panamá,Tiago,gana-vs-panamá
+2026-06-18,02h,Uzbequistão,,0.0,x,1.0,,Colômbia,Tiago,uzbequistão-vs-colômbia
+2026-06-18,16h,República Tcheca,,2.0,x,0.0,,África do Sul,Tiago,república_tcheca-vs-áfrica_do_sul
+2026-06-18,19h,Suíça,,2.0,x,0.0,,Bósnia,Tiago,suíça-vs-bósnia
+2026-06-18,22h,Canadá,,2.0,x,0.0,,Catar,Tiago,canadá-vs-catar
+2026-06-19,01h,México,,2.0,x,0.0,,Coréia do Sul,Tiago,méxico-vs-coréia_do_sul
+2026-06-19,19h,Estados Unidos,,2.0,x,0.0,,Austrália,Tiago,estados_unidos-vs-austrália
+2026-06-19,22h,Escócia,,0.0,x,1.0,,Marrocos,Tiago,escócia-vs-marrocos
+2026-06-20,01h,Brasil,,2.0,x,0.0,,Haiti,Tiago,brasil-vs-haiti
+2026-06-20,04h,Turquia,,1.0,x,0.0,,Paraguai,Tiago,turquia-vs-paraguai
+2026-06-20,17h,Holanda,,2.0,x,0.0,,Suécia,Tiago,holanda-vs-suécia
+2026-06-20,20h,Alemanha,,2.0,x,0.0,,Costa do Marfim,Tiago,alemanha-vs-costa_do_marfim
+2026-06-21,00h,Equador,,2.0,x,0.0,,Curaçao,Tiago,equador-vs-curaçao
+2026-06-21,04h,Tunísia,,0.0,x,1.0,,Japão,Tiago,tunísia-vs-japão
+2026-06-21,16h,Espanha,,2.0,x,0.0,,Arábia Saudita,Tiago,espanha-vs-arábia_saudita
+2026-06-21,19h,Bélgica,,2.0,x,0.0,,Irã,Tiago,bélgica-vs-irã
+2026-06-21,22h,Uruguai,,2.0,x,0.0,,Cabo Verde,Tiago,uruguai-vs-cabo_verde
+2026-06-22,01h,Nova Zelândia,,0.0,x,1.0,,Egito,Tiago,nova_zelândia-vs-egito
+2026-06-22,17h,Argentina,,2.0,x,0.0,,Áustria,Tiago,argentina-vs-áustria
+2026-06-22,21h,França,,2.0,x,0.0,,Iraque,Tiago,frança-vs-iraque
+2026-06-23,00h,Noruega,,1.0,x,0.0,,Senegal,Tiago,noruega-vs-senegal
+2026-06-23,03h,Jordânia,,0.0,x,1.0,,Argélia,Tiago,jordânia-vs-argélia
+2026-06-23,17h,Portugal,,2.0,x,0.0,,Uzbequistão,Tiago,portugal-vs-uzbequistão
+2026-06-23,20h,Inglaterra,,2.0,x,0.0,,Gana,Tiago,inglaterra-vs-gana
+2026-06-23,23h,Panamá,,0.0,x,1.0,,Croácia,Tiago,panamá-vs-croácia
+2026-06-24,02h,Colômbia,,2.0,x,0.0,,RD Congo,Tiago,colômbia-vs-rd_congo
+2026-06-24,19h,Suíça,,2.0,x,0.0,,Canadá,Tiago,suíça-vs-canadá
+2026-06-24,19h,Bósnia,,2.0,x,0.0,,Catar,Tiago,bósnia-vs-catar
+2026-06-24,22h,Escócia,,0.0,x,1.0,,Brasil,Tiago,escócia-vs-brasil
+2026-06-24,22h,Marrocos,,2.0,x,0.0,,Haiti,Tiago,marrocos-vs-haiti
+2026-06-25,01h,República Tcheca,,0.0,x,1.0,,México,Tiago,república_tcheca-vs-méxico
+2026-06-25,01h,África do Sul,,0.0,x,1.0,,Coréia do Sul,Tiago,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,20h,Curaçao,,0.0,x,1.0,,Costa do Marfim,Tiago,curaçao-vs-costa_do_marfim
+2026-06-25,20h,Equador,,0.0,x,1.0,,Alemanha,Tiago,equador-vs-alemanha
+2026-06-25,23h,Japão,,2.0,x,0.0,,Suécia,Tiago,japão-vs-suécia
+2026-06-25,23h,Tunísia,,0.0,x,1.0,,Holanda,Tiago,tunísia-vs-holanda
+2026-06-26,02h,Turquia,,0.0,x,1.0,,Estados Unidos,Tiago,turquia-vs-estados_unidos
+2026-06-26,02h,Paraguai,,2.0,x,0.0,,Austrália,Tiago,paraguai-vs-austrália
+2026-06-26,19h,Noruega,,0.0,x,1.0,,França,Tiago,noruega-vs-frança
+2026-06-26,19h,Senegal,,2.0,x,0.0,,Iraque,Tiago,senegal-vs-iraque
+2026-06-27,00h,Cabo Verde,,0.0,x,1.0,,Arábia Saudita,Tiago,cabo_verde-vs-arábia_saudita
+2026-06-27,00h,Uruguai,,0.0,x,1.0,,Espanha,Tiago,uruguai-vs-espanha
+2026-06-27,03h,Egito,,2.0,x,0.0,,Irã,Tiago,egito-vs-irã
+2026-06-27,03h,Nova Zelândia,,0.0,x,1.0,,Bélgica,Tiago,nova_zelândia-vs-bélgica
+2026-06-27,21h,Panamá,,0.0,x,1.0,,Inglaterra,Tiago,panamá-vs-inglaterra
+2026-06-27,21h,Croácia,,1.0,x,0.0,,Gana,Tiago,croácia-vs-gana
+2026-06-27,23h,Colômbia,,0.0,x,1.0,,Portugal,Tiago,colômbia-vs-portugal
+2026-06-27,23h,RD Congo,,0.0,x,1.0,,Uzbequistão,Tiago,rd_congo-vs-uzbequistão
+2026-06-28,02h,Argélia,,1.0,x,0.0,,Áustria,Tiago,argélia-vs-áustria
+2026-06-28,02h,Jordânia,,0.0,x,1.0,,Argentina,Tiago,jordânia-vs-argentina
