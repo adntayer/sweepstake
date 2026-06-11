@@ -239,41 +239,68 @@ scoring:
   - name: "1-Placar exato"
     rule: "exact_score"
     points: 15
-    emoji: "\U0001f3af"
+    priority: 1
+    emoji: "🎯"
     color_text: "#00cc00"
-  - name: "2-Vencedor + acerto parcial"
-    rule: "correct_winner_and_goals_or_diff"
+  - name: "2-Vencedor + gols de um time (erro <= 2)"
+    rule: "correct_winner_and_one_goal"
     points: 10
+    priority: 2
     max_total_error: 2
-    emoji: "\u26bd"
+    emoji: "⚽"
     color_text: "#66ff66"
-  - name: "3-Vencedor + acerto parcial"
-    rule: "correct_winner_and_goals_or_diff"
+  - name: "3-Vencedor + diferenca de gols (erro <= 2)"
+    rule: "correct_winner_and_goal_diff"
     points: 7
-    min_total_error: 3
-    emoji: "\u26bd"
+    priority: 3
+    max_total_error: 2
+    emoji: "⚽"
     color_text: "#66ff66"
-  - name: "4-Vencedor correto"
+  - name: "4-Empate c/ erro total <= 2"
+    rule: "correct_draw_and_low_error"
+    points: 7
+    priority: 4
+    max_total_error: 2
+    emoji: "✅"
+    color_text: "#ffcc00"
+  - name: "5-Vencedor + gols de um time (erro > 2)"
+    rule: "correct_winner_and_one_goal"
+    points: 7
+    priority: 5
+    min_total_error: 3
+    emoji: "⚽"
+    color_text: "#ffcc00"
+  - name: "6-Vencedor correto"
     rule: "correct_winner"
     points: 5
-    emoji: "\u2705"
+    priority: 6
+    emoji: "✅"
     color_text: "#ffcc00"
-  - name: "5-Gols de um time"
+  - name: "7-Qualquer outro empate"
+    rule: "correct_draw"
+    points: 5
+    priority: 7
+    emoji: "✅"
+    color_text: "#ffcc00"
+  - name: "8-Gols de um time"
     rule: "one_team_goals"
     points: 1
-    emoji: "\U0001f44a"
+    priority: 8
+    emoji: "👊"
     color_text: "#ff9900"
-  - name: "6-Nenhum acerto"
+  - name: "9-Nenhum acerto"
     rule: "no_score"
     points: 0
-    emoji: "\u274c"
+    priority: 9
+    emoji: "❌"
     color_text: "#ff3333"
-  - name: "9-Sem jogo"
+  - name: "99-Sem jogo"
     rule: "missing_data"
     points: 0
     priority: 99
-    emoji: "\u2753"
+    emoji: "❓"
     color_text: "#888888"
+
 
 # Excel parsing layout
 excel_layout:

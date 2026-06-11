@@ -345,7 +345,7 @@ class TestScoringRuleUniqueness:
             cfg = load_config(champ_id)
             rule_keys = [r.rule for r in cfg.scoring_rules if r.rule]
             # Filter out intentional multi-tier duplicates
-            multi_tier = {"correct_winner_and_goals_or_diff"}
+            multi_tier = {"correct_winner_and_goals_or_diff", "correct_winner_and_one_goal"}
             seen: set[str] = set()
             dups: list[str] = []
             for k in rule_keys:

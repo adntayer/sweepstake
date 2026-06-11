@@ -45,6 +45,7 @@ def _matches_condition(
     away_real: int,
     pred_w: str,
     real_w: str,
+    has_draw_rule: bool = False,
 ) -> bool:
     """Check whether a ScoringRule's condition is satisfied.
 
@@ -54,7 +55,9 @@ def _matches_condition(
     if rule.rule == "exact_score":
         return home_pred == home_real and away_pred == away_real
 
-    if rule.rule == "correct_winner_and_goals":
+    if rule.rule in ("correct_winner_and_one_goal", "correct_winner_and_goals"):
+        if has_draw_rule and pred_w == "draw":
+            return False
         if pred_w != real_w:
             return False
         if not (home_pred == home_real or away_pred == away_real):
@@ -66,14 +69,12 @@ def _matches_condition(
             return False
         return True
 
-    if rule.rule == "correct_winner_and_goals_or_diff":
+    if rule.rule == "correct_winner_and_goal_diff":
+        if has_draw_rule and pred_w == "draw":
+            return False
         if pred_w != real_w:
             return False
-        if not (
-            home_pred == home_real
-            or away_pred == away_real
-            or (home_pred - away_pred) == (home_real - away_real)
-        ):
+        if not ((home_pred - away_pred) == (home_real - away_real)):
             return False
         total_err = int(abs(home_pred - home_real) + abs(away_pred - away_real))
         if rule.max_total_error is not None and total_err > rule.max_total_error:
@@ -82,7 +83,34 @@ def _matches_condition(
             return False
         return True
 
+    if rule.rule == "correct_winner_and_goals_or_diff":
+        if has_draw_rule and pred_w == "draw":
+            return False
+        if pred_w != real_w:
+            return False
+        if not (home_pred == home_real or away_pred == away_real or (home_pred - away_pred) == (home_real - away_real)):
+            return False
+        total_err = int(abs(home_pred - home_real) + abs(away_pred - away_real))
+        if rule.max_total_error is not None and total_err > rule.max_total_error:
+            return False
+        if rule.min_total_error is not None and total_err < rule.min_total_error:
+            return False
+        return True
+
+    if rule.rule == "correct_draw_and_low_error":
+        if pred_w != "draw" or real_w != "draw":
+            return False
+        total_err = int(abs(home_pred - home_real) + abs(away_pred - away_real))
+        if rule.max_total_error is not None and total_err > rule.max_total_error:
+            return False
+        return True
+        
+    if rule.rule == "correct_draw":
+        return pred_w == "draw" and real_w == "draw"
+
     if rule.rule == "correct_winner":
+        if has_draw_rule and pred_w == "draw":
+            return False
         return pred_w == real_w
 
     if rule.rule == "one_team_goals":
@@ -132,6 +160,11 @@ def score_prediction(
     # Sort rules by priority ascending — lower number = evaluated first
     sorted_rules = sorted(config.scoring_rules, key=lambda r: r.priority)
 
+    has_draw_rule = any(
+        r.rule in ("correct_draw", "correct_draw_and_low_error")
+        for r in config.scoring_rules
+    )
+
     for rule in sorted_rules:
         if rule.rule == "missing_data":
             continue  # handled above; not a scoring outcome
@@ -139,6 +172,7 @@ def score_prediction(
             rule,
             home_pred_i, away_pred_i, home_real_i, away_real_i,
             pred_w, real_w,
+            has_draw_rule=has_draw_rule,
         ):
             return pd.Series([rule.points, rule.name, 1])
 

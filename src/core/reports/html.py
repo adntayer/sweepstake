@@ -32,7 +32,7 @@ def _norm(path: str) -> str:
 
 
 # ------------------------------------------------------------------
-# Shared CSS block (theme-driven)
+# Shared CSS block (theme-driven) — now loaded from external styles/base.css
 # ------------------------------------------------------------------
 
 _CSS_BASE = """
