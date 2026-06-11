@@ -219,27 +219,42 @@ def logo_img_html(team_pt: str, team_en: str, config: ChampionshipConfig) -> str
         return f'<img src="{rel}" alt="{team_pt}" class="team-logo" loading="lazy">'
     return ""
 
-
-def _team_logo_tag(team_name: str, config: ChampionshipConfig, cls: str, *, use_en: bool = False) -> str:
-    """Return <img> tag for a team's logo.
-
-    ``team_name`` is the Portuguese name by default, or English if ``use_en=True``.
-    cls: Custom CSS class to apply to the img tag (e.g., "team-logo-sm").
-    """
+def _team_logo_tag(team_name: str, config: ChampionshipConfig, cls: str, start: str, *, use_en: bool = False) -> str:
+    """Return <img> tag for a team's logo based on start directory depth."""
     if use_en:
         en = team_name
     else:
         rev = {v: k for k, v in config.team_name_mapping.items()}
         en = rev.get(team_name, team_name)
 
-    pt_path = logo_local_path(en, config)
-    if os.path.exists(pt_path):
-        # Pega apenas o nome do arquivo (ex: "mexico.png")
-        filename = os.path.basename(pt_path)
-        # Cria o caminho direto a partir da pasta raiz de logos do site
-        rel = f"logos/{filename}"
-        return f'<img src="{rel}" alt="{en}" class="{cls}" loading="lazy">'
-    return ""
+    # Cria o nome do arquivo limpo (ex: "canada.png")
+    clean_name = en.lower().replace(" ", "-")
+    filename = f"{clean_name}.png"
+
+    # Força barras para frente para normalizar Windows/Linux
+    normalized_start = start.replace("\\", "/")
+
+    # Isola o caminho a partir da pasta 'html'
+    if "/html" in normalized_start:
+        relative_part = normalized_start.split("/html")[-1].strip("/")
+    else:
+        relative_part = ""
+
+    # Define o prefixo baseado no número de subpastas reais
+    if not relative_part:
+        prefix = ""                # Raiz (html/index.html) -> logos/
+    else:
+        depth = len(relative_part.split("/"))
+        if depth == 1:
+            prefix = "../"         # 1 nível (html/times/Canadá.html) -> ../logos/
+        else:
+            prefix = "../../"      # 2 níveis (html/jogos/1afase/jogo.html) -> ../../logos/
+
+    # Monta o caminho final
+    rel = f"{prefix}logos/{filename}"
+
+    return f'<img src="{rel}" alt="{en}" class="{cls}" loading="lazy">'
+
 
 
 def copy_logos_to_html(logo_dir_source: str, html_dir_dest: str) -> None:

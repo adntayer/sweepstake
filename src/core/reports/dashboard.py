@@ -580,8 +580,8 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
     for g in games:
         home_en = rev_map_pt.get(g["home_team"].lower(), g["home_team"])
         away_en = rev_map_pt.get(g["away_team"].lower(), g["away_team"])
-        home_logo = _team_logo_tag(home_en, config , cls="team-logo-sm")
-        away_logo = _team_logo_tag(away_en, config , cls="team-logo-sm")
+        home_logo = _team_logo_tag(home_en, config , cls="team-logo-sm", start=config.reports_dir + "/html")
+        away_logo = _team_logo_tag(away_en, config , cls="team-logo-sm", start=config.reports_dir + "/html")
         home_slug = config.team_slugs.get(home_en, "")
         away_slug = config.team_slugs.get(away_en, "")
         cards += (
@@ -811,7 +811,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
         idx = 0 if side == "home" else 1
         pt_name = parts[idx].replace("_", " ").strip()
         en_name = rev_map_pt.get(pt_name.lower(), pt_name)
-        logo = _team_logo_tag(en_name, config, cls="team-logo-sm")
+        logo = _team_logo_tag(en_name, config, cls="team-logo-sm", start=config.reports_dir + "/html")
         slug_code = config.team_slugs.get(en_name, "")
         return (pt_name, logo, slug_code)
 
