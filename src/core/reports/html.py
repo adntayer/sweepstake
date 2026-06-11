@@ -772,7 +772,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     match_slug = str(row.get("match", ""))
                     hour_p = str(row.get("hour", ""))
                     phase_v = str(row.get("phase", "")) if row.get("phase") else config.group_phase_label
-                    game_href = f"../jogos/{phase_v}/{row['date']}_{hour_p}_{match_slug}.html"
+                    game_href = f"../jogos/{phase_v}/{row['date'].strip()}_{hour_p}_{match_slug}.html"
                     pending_rows += (
                         f'<div class="pred-row">'
                         f'<div class="pred-info">'
@@ -1045,7 +1045,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             total_bonus_pts = 0
             phase_blocks = ""
             champion_team = ""
-            for phase_key, group in df_bonus.groupby("phase", sort=False):
+            # Exclude 'campeao' from the general phase blocks loop to handle it separately
+            for phase_key, group in df_bonus[df_bonus["phase"] != "campeao"].groupby("phase", sort=False):
                 label = phase_label_map.get(phase_key, phase_key)
                 emoji = phase_emoji_map.get(phase_key, "\u26bd")
                 pts_per_correct = playoff_scoring.get(phase_key, 0)
@@ -1092,17 +1093,20 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'</div>\n'
                 )
 
-            if phase_blocks:
-                champion_row = df_bonus[df_bonus["phase"] == "final"]
-                champion_team = champion_row.iloc[0]["team"] if not champion_row.empty else ""
-                champion_block = (
-                    f'<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">'
-                    f'<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:0.3rem;">'
-                    f'\U0001f3c6 Campe\u00e3o</div>'
-                    f'<div>{champion_team}</div>'
-                    f'</div>\n'
-                ) if champion_team else ""
+            # Champion block is separate and should be shown if available, regardless of other phases
+            champion_row = df_bonus[df_bonus["phase"] == "campeao"]
+            champion_team = champion_row.iloc[0]["team"] if not champion_row.empty else ""
+            champion_block = (
+                f'<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">'
+                f'<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:0.3rem;">'
+                f'\U0001f3c6 Campe\u00e3o</div>'
+                f'<div>{champion_team}</div>'
+                f'</div>\n'
+            ) if champion_team else ""
 
+            legend = ""
+            total_label = ""
+            if phase_blocks:
                 total_label = f'<span style="color:var(--accent);margin-left:0.5rem;font-weight:700;">+{total_bonus_pts}</span>'
                 legend = (
                     '<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem;'
@@ -1112,6 +1116,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     '<span style="color:var(--danger);">\u25cf time eliminado</span>'
                     '</div>'
                 )
+
+            bonus_html = ""
+            if phase_blocks or champion_block:
                 bonus_html = (
                     f'<details class="section" open>'
                     f'<summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">'
@@ -1119,6 +1126,10 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'<div class="card">{legend}{phase_blocks}{champion_block}</div>'
                     f'</details>\n'
                 )
+
+            # Ensure champion_team is available for the top badges later in the function
+            # Since champion_team is defined in this loop, we need to make sure it's accessible
+            # The variable champion_team is already in the current scope.
 
     # --- Build top-of-page: striker + champion + bonus + timeline + compare ---
     top_badges = ""
@@ -1645,19 +1656,19 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         ag = int(row["away_goals_bol"])
         heat_players.setdefault((hg, ag), []).append(str(row["who"]))
 
-    # Header row (home goals)
+    # Header row (away goals)
     header_row = '<div class="heat-row">'
     header_row += '<div class="heat-label" style="width:80px;min-width:80px;padding:0;"></div>'
-    for h in range(max_h + 1):
-        header_row += f'<div class="heat-cell-lg" style="font-size:0.6rem;font-weight:700;color:var(--text-muted);background:transparent;">{h}</div>'
+    for a in range(max_a + 1):
+        header_row += f'<div class="heat-cell-lg" style="font-size:0.6rem;font-weight:700;color:var(--text-muted);background:transparent;">{a}</div>'
     header_row += '</div>\n'
 
-    # Data rows (away goals)
+    # Data rows (home goals)
     data_rows = ""
-    for a in range(max_a + 1):
+    for h in range(max_h + 1):
         data_rows += '<div class="heat-row">'
-        data_rows += f'<div class="heat-label">{a}</div>'
-        for h in range(max_h + 1):
+        data_rows += f'<div class="heat-label">{h}</div>'
+        for a in range(max_a + 1):
             cnt = len(df_match[(df_match["home_goals_bol"] == h) & (df_match["away_goals_bol"] == a)])
             pct = round(cnt / total_s * 100) if total_s else 0
             if cnt:
@@ -1699,9 +1710,9 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     score_heatmap = (
         '<div class="heatmap-match">'
-        f'<div class="heatmap-top">{home_logo}<span>{home}</span></div>'
+        f'<div class="heatmap-top">{away_logo}<span>{away}</span></div>'
         '<div class="heatmap-body">'
-        f'<div class="heatmap-away">{away_logo}<span>{away}</span></div>'
+        f'<div class="heatmap-away">{home_logo}<span>{home}</span></div>'
         f'<div class="heatmap-grid"><div class="heat-container">{header_row}{data_rows}</div></div>'
         '</div></div>'
         '<div class="heat-legend">👆 clique nos números para ver quem apostou</div>'
@@ -3962,7 +3973,9 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         print_colored(f"generating match html: {match}", "blue")
         html = _build_match(config, match, config.group_phase_label, df_match)
         first = df_match.iloc[0]
-        filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
+        hour = first.get('hour', '')
+        hour_str = str(int(hour)) if pd.notna(hour) and isinstance(hour, (int, float)) else str(hour)
+        filename = f"{first['date']}_{hour_str}_{match}.html"
         path = _norm(os.path.join(html_base, "jogos", config.group_phase_label, filename))
         _save(path, html)
 
@@ -3980,7 +3993,9 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
             print_colored(f"generating match html: {phase} {match}", "blue")
             html = _build_match(config, match, pr.name, df_match)
             first = df_match.iloc[0]
-            filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
+            hour = first.get('hour', '')
+            hour_str = str(int(hour)) if pd.notna(hour) and isinstance(hour, (int, float)) else str(hour)
+            filename = f"{first['date']}_{hour_str}_{match}.html"
             path = _norm(os.path.join(html_base, "jogos", phase, filename))
             _save(path, html)
 

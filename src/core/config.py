@@ -160,6 +160,7 @@ class PlayoffsLayout:
     striker_label: str = "Artilheiro"
     striker_name_column: int = 2
     striker_name_fallback_column: int = 8
+    champion_cell: str = ""
     name_split_char: str = "-"
     name_split_index: int = 1
     rounds: list[dict] = field(default_factory=list)
@@ -564,6 +565,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         striker_label=po_cfg.get("striker_label", "Artilheiro"),
         striker_name_column=po_cfg.get("striker_name_column", 2),
         striker_name_fallback_column=po_cfg.get("striker_name_fallback_column", 8),
+        champion_cell=po_cfg.get("champion_cell", ""),
         name_split_char=po_cfg.get("name_split_char", "-"),
         name_split_index=po_cfg.get("name_split_index", 1),
         rounds=po_cfg.get("rounds", []),
