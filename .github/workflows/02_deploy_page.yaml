@@ -1,38 +1,54 @@
-name: Deploy Page
-
-env:
-  DOCS_PATH: src/championships/2025_club_world_cup/reports/html
+name: Update Content
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: null
+  schedule:
+    # 18:30 UTC / 15:30 Horário de Brasília (Pega os jogos das 13h)
+    - cron: '10 18 * * *'
+    # 21:30 UTC / 18:30 Horário de Brasília (Pega os jogos das 16h)
+    - cron: '10 21 * * *'
+    # 04:30 UTC / 01:30 Horário de Brasília (Pega os jogos das 19h e 22h + prorrogações)
+    - cron: '10 4 * * *'
   push:
     branches:
       - main
     paths:
-      - 'src/championships/2025_club_world_cup/reports/html/**'
+      - 'src/championships/2026_world_cup/data/games.csv'
 
 jobs:
-  build-and-deploy:
+  run:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     steps:
-      - name: Checkout code
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5 # Atualizado para a tag de versão recomendada
         with:
-          path: ${{ env.DOCS_PATH }}
+          activate-environment: true
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: setup python and libs
+        run: |
+          uv python install
+          uv sync
+          uv pip install -e .
+
+      - name: Run update content
+        run: |
+          ss run 2026_world_cup
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5 # Atualizado para a v5 estável
+        with:
+          commit-message: "update data at ${{ steps.date.outputs.date }}"
+          author: André Tayer <adntayer@://github.com>
+          committer: André Tayer <adntayer@://github.com>
+          signoff: false
+          branch: update_data
+          delete-branch: true
+          title: 'Update data'
+          draft: false

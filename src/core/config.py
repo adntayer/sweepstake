@@ -217,6 +217,8 @@ class ChampionshipConfig:
     # External data
     results_endpoint: str = ""
     team_name_mapping: dict = field(default_factory=dict)
+    team_logos: dict = field(default_factory=dict)  # {english_name: logo_url}
+    team_slugs: dict = field(default_factory=dict)  # {english_name: slug}
 
     # Report settings
     report_title: str = ""
@@ -492,15 +494,23 @@ def _parse_theme(raw: dict) -> ThemeConfig:
     return ThemeConfig(mode=raw.get("mode", "dark"), colors=colors)
 
 
-def _parse_team_mapping(raw: list) -> dict[str, str]:
-    """Parse team_name_mapping from YAML into {english: portuguese} dict."""
+def _parse_team_mapping(raw: list) -> tuple[dict[str, str], dict[str, str], dict[str, str]]:
+    """Parse team_name_mapping from YAML into ({en: pt}, {en: logo_url}, {en: slug})."""
     mapping: dict[str, str] = {}
+    logos: dict[str, str] = {}
+    slugs: dict[str, str] = {}
     for entry in raw:
         en = entry.get("en", "").strip()
         pt = entry.get("pt", "").strip()
         if en and pt:
             mapping[en] = pt
-    return mapping
+            logo = entry.get("logo", "").strip()
+            if logo:
+                logos[en] = logo
+            slug = entry.get("slug", "").strip()
+            if slug:
+                slugs[en] = slug
+    return mapping, logos, slugs
 
 
 def _find_championship_dir(championship_id: str) -> Path:
@@ -586,6 +596,8 @@ def load_config(championship_id: str) -> ChampionshipConfig:
 
     groups_raw = raw.get("groups", [])
 
+    _tm = _parse_team_mapping(raw.get("team_name_mapping", []))
+
     return ChampionshipConfig(
         id=raw["id"],
         name=raw["name"],
@@ -607,7 +619,9 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         gold_dir=_norm(raw.get("gold_dir", "")),
         reports_dir=_norm(raw.get("reports_dir", "")),
         results_endpoint=raw.get("results_endpoint", ""),
-        team_name_mapping=_parse_team_mapping(raw.get("team_name_mapping", [])),
+        team_name_mapping=_tm[0],
+        team_logos=_tm[1],
+        team_slugs=_tm[2],
         playoff_scoring=playoff_scoring,
         actual_top_scorer=raw.get("actual_top_scorer", ""),
         striker_points=striker_points,

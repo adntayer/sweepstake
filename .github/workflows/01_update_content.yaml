@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/championships/2025_club_world_cup/data/games.csv'
+      - 'src/championships/2026_world_cup/data/games.csv'
 
 jobs:
   run:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Run update content
         run: |
-          ss run 2025_club_world_cup
+          ss run 2026_world_cup
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3

@@ -1,73 +1,73 @@
 date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
 2026-06-11,19h,México,,2.0,x,0.0,,África do Sul,Marcelo,méxico-vs-áfrica_do_sul
-2026-06-12,02h,Coréia do Sul,,1.0,x,0.0,,República Tcheca,Marcelo,coréia_do_sul-vs-república_tcheca
-2026-06-12,19h,Canadá,,2.0,x,0.0,,Bósnia,Marcelo,canadá-vs-bósnia
-2026-06-13,01h,Estados Unidos,,2.0,x,0.0,,Paraguai,Marcelo,estados_unidos-vs-paraguai
-2026-06-13,19h,Catar,,0.0,x,1.0,,Suíça,Marcelo,catar-vs-suíça
-2026-06-13,22h,Brasil,,2.0,x,0.0,,Marrocos,Marcelo,brasil-vs-marrocos
-2026-06-14,01h,Haiti,,0.0,x,1.0,,Escócia,Marcelo,haiti-vs-escócia
-2026-06-14,04h,Austrália,,0.0,x,1.0,,Turquia,Marcelo,austrália-vs-turquia
-2026-06-14,17h,Alemanha,,2.0,x,0.0,,Curaçao,Marcelo,alemanha-vs-curaçao
-2026-06-14,20h,Holanda,,1.0,x,0.0,,Japão,Marcelo,holanda-vs-japão
-2026-06-14,23h,Costa do Marfim,,1.0,x,0.0,,Equador,Marcelo,costa_do_marfim-vs-equador
-2026-06-15,02h,Suécia,,2.0,x,0.0,,Tunísia,Marcelo,suécia-vs-tunísia
-2026-06-15,16h,Espanha,,2.0,x,0.0,,Cabo Verde,Marcelo,espanha-vs-cabo_verde
+2026-06-12,02h,Coréia do Sul,,1.0,x,1.0,,República Tcheca,Marcelo,coréia_do_sul-vs-república_tcheca
+2026-06-12,19h,Canadá,,2.0,x,1.0,,Bósnia,Marcelo,canadá-vs-bósnia
+2026-06-13,01h,Estados Unidos,,2.0,x,1.0,,Paraguai,Marcelo,estados_unidos-vs-paraguai
+2026-06-13,19h,Catar,,0.0,x,2.0,,Suíça,Marcelo,catar-vs-suíça
+2026-06-13,22h,Brasil,,2.0,x,1.0,,Marrocos,Marcelo,brasil-vs-marrocos
+2026-06-14,01h,Haiti,,1.0,x,2.0,,Escócia,Marcelo,haiti-vs-escócia
+2026-06-14,04h,Austrália,,0.0,x,2.0,,Turquia,Marcelo,austrália-vs-turquia
+2026-06-14,17h,Alemanha,,4.0,x,0.0,,Curaçao,Marcelo,alemanha-vs-curaçao
+2026-06-14,20h,Holanda,,1.0,x,1.0,,Japão,Marcelo,holanda-vs-japão
+2026-06-14,23h,Costa do Marfim,,1.0,x,1.0,,Equador,Marcelo,costa_do_marfim-vs-equador
+2026-06-15,02h,Suécia,,1.0,x,0.0,,Tunísia,Marcelo,suécia-vs-tunísia
+2026-06-15,16h,Espanha,,4.0,x,0.0,,Cabo Verde,Marcelo,espanha-vs-cabo_verde
 2026-06-15,19h,Bélgica,,2.0,x,0.0,,Egito,Marcelo,bélgica-vs-egito
 2026-06-15,22h,Arábia Saudita,,0.0,x,1.0,,Uruguai,Marcelo,arábia_saudita-vs-uruguai
-2026-06-16,01h,Irã,,2.0,x,0.0,,Nova Zelândia,Marcelo,irã-vs-nova_zelândia
-2026-06-16,19h,França,,2.0,x,0.0,,Senegal,Marcelo,frança-vs-senegal
-2026-06-16,22h,Iraque,,0.0,x,1.0,,Noruega,Marcelo,iraque-vs-noruega
-2026-06-17,01h,Argentina,,2.0,x,0.0,,Argélia,Marcelo,argentina-vs-argélia
+2026-06-16,01h,Irã,,2.0,x,1.0,,Nova Zelândia,Marcelo,irã-vs-nova_zelândia
+2026-06-16,19h,França,,2.0,x,1.0,,Senegal,Marcelo,frança-vs-senegal
+2026-06-16,22h,Iraque,,1.0,x,3.0,,Noruega,Marcelo,iraque-vs-noruega
+2026-06-17,01h,Argentina,,1.0,x,0.0,,Argélia,Marcelo,argentina-vs-argélia
 2026-06-17,04h,Áustria,,2.0,x,0.0,,Jordânia,Marcelo,áustria-vs-jordânia
-2026-06-17,17h,Portugal,,2.0,x,0.0,,RD Congo,Marcelo,portugal-vs-rd_congo
-2026-06-17,20h,Inglaterra,,2.0,x,0.0,,Croácia,Marcelo,inglaterra-vs-croácia
-2026-06-17,23h,Gana,,1.0,x,0.0,,Panamá,Marcelo,gana-vs-panamá
-2026-06-18,02h,Uzbequistão,,0.0,x,1.0,,Colômbia,Marcelo,uzbequistão-vs-colômbia
-2026-06-18,16h,República Tcheca,,2.0,x,0.0,,África do Sul,Marcelo,república_tcheca-vs-áfrica_do_sul
+2026-06-17,17h,Portugal,,4.0,x,1.0,,RD Congo,Marcelo,portugal-vs-rd_congo
+2026-06-17,20h,Inglaterra,,1.0,x,0.0,,Croácia,Marcelo,inglaterra-vs-croácia
+2026-06-17,23h,Gana,,1.0,x,1.0,,Panamá,Marcelo,gana-vs-panamá
+2026-06-18,02h,Uzbequistão,,1.0,x,2.0,,Colômbia,Marcelo,uzbequistão-vs-colômbia
+2026-06-18,16h,República Tcheca,,2.0,x,1.0,,África do Sul,Marcelo,república_tcheca-vs-áfrica_do_sul
 2026-06-18,19h,Suíça,,2.0,x,0.0,,Bósnia,Marcelo,suíça-vs-bósnia
 2026-06-18,22h,Canadá,,2.0,x,0.0,,Catar,Marcelo,canadá-vs-catar
-2026-06-19,01h,México,,2.0,x,0.0,,Coréia do Sul,Marcelo,méxico-vs-coréia_do_sul
-2026-06-19,19h,Estados Unidos,,2.0,x,0.0,,Austrália,Marcelo,estados_unidos-vs-austrália
-2026-06-19,22h,Escócia,,0.0,x,1.0,,Marrocos,Marcelo,escócia-vs-marrocos
-2026-06-20,01h,Brasil,,2.0,x,0.0,,Haiti,Marcelo,brasil-vs-haiti
-2026-06-20,04h,Turquia,,2.0,x,0.0,,Paraguai,Marcelo,turquia-vs-paraguai
-2026-06-20,17h,Holanda,,2.0,x,0.0,,Suécia,Marcelo,holanda-vs-suécia
-2026-06-20,20h,Alemanha,,2.0,x,0.0,,Costa do Marfim,Marcelo,alemanha-vs-costa_do_marfim
-2026-06-21,00h,Equador,,2.0,x,0.0,,Curaçao,Marcelo,equador-vs-curaçao
-2026-06-21,04h,Tunísia,,0.0,x,1.0,,Japão,Marcelo,tunísia-vs-japão
-2026-06-21,16h,Espanha,,2.0,x,0.0,,Arábia Saudita,Marcelo,espanha-vs-arábia_saudita
-2026-06-21,19h,Bélgica,,2.0,x,0.0,,Irã,Marcelo,bélgica-vs-irã
+2026-06-19,01h,México,,1.0,x,0.0,,Coréia do Sul,Marcelo,méxico-vs-coréia_do_sul
+2026-06-19,19h,Estados Unidos,,2.0,x,1.0,,Austrália,Marcelo,estados_unidos-vs-austrália
+2026-06-19,22h,Escócia,,1.0,x,2.0,,Marrocos,Marcelo,escócia-vs-marrocos
+2026-06-20,01h,Brasil,,4.0,x,0.0,,Haiti,Marcelo,brasil-vs-haiti
+2026-06-20,04h,Turquia,,2.0,x,1.0,,Paraguai,Marcelo,turquia-vs-paraguai
+2026-06-20,17h,Holanda,,2.0,x,1.0,,Suécia,Marcelo,holanda-vs-suécia
+2026-06-20,20h,Alemanha,,3.0,x,1.0,,Costa do Marfim,Marcelo,alemanha-vs-costa_do_marfim
+2026-06-21,00h,Equador,,3.0,x,0.0,,Curaçao,Marcelo,equador-vs-curaçao
+2026-06-21,04h,Tunísia,,0.0,x,2.0,,Japão,Marcelo,tunísia-vs-japão
+2026-06-21,16h,Espanha,,4.0,x,1.0,,Arábia Saudita,Marcelo,espanha-vs-arábia_saudita
+2026-06-21,19h,Bélgica,,2.0,x,1.0,,Irã,Marcelo,bélgica-vs-irã
 2026-06-21,22h,Uruguai,,2.0,x,0.0,,Cabo Verde,Marcelo,uruguai-vs-cabo_verde
 2026-06-22,01h,Nova Zelândia,,0.0,x,1.0,,Egito,Marcelo,nova_zelândia-vs-egito
-2026-06-22,17h,Argentina,,2.0,x,0.0,,Áustria,Marcelo,argentina-vs-áustria
-2026-06-22,21h,França,,2.0,x,0.0,,Iraque,Marcelo,frança-vs-iraque
-2026-06-23,00h,Noruega,,2.0,x,0.0,,Senegal,Marcelo,noruega-vs-senegal
-2026-06-23,03h,Jordânia,,0.0,x,1.0,,Argélia,Marcelo,jordânia-vs-argélia
-2026-06-23,17h,Portugal,,2.0,x,0.0,,Uzbequistão,Marcelo,portugal-vs-uzbequistão
-2026-06-23,20h,Inglaterra,,2.0,x,0.0,,Gana,Marcelo,inglaterra-vs-gana
-2026-06-23,23h,Panamá,,0.0,x,1.0,,Croácia,Marcelo,panamá-vs-croácia
-2026-06-24,02h,Colômbia,,2.0,x,0.0,,RD Congo,Marcelo,colômbia-vs-rd_congo
-2026-06-24,19h,Suíça,,2.0,x,0.0,,Canadá,Marcelo,suíça-vs-canadá
-2026-06-24,19h,Bósnia,,2.0,x,0.0,,Catar,Marcelo,bósnia-vs-catar
-2026-06-24,22h,Escócia,,0.0,x,1.0,,Brasil,Marcelo,escócia-vs-brasil
+2026-06-22,17h,Argentina,,2.0,x,1.0,,Áustria,Marcelo,argentina-vs-áustria
+2026-06-22,21h,França,,4.0,x,0.0,,Iraque,Marcelo,frança-vs-iraque
+2026-06-23,00h,Noruega,,2.0,x,1.0,,Senegal,Marcelo,noruega-vs-senegal
+2026-06-23,03h,Jordânia,,1.0,x,2.0,,Argélia,Marcelo,jordânia-vs-argélia
+2026-06-23,17h,Portugal,,3.0,x,0.0,,Uzbequistão,Marcelo,portugal-vs-uzbequistão
+2026-06-23,20h,Inglaterra,,3.0,x,1.0,,Gana,Marcelo,inglaterra-vs-gana
+2026-06-23,23h,Panamá,,1.0,x,3.0,,Croácia,Marcelo,panamá-vs-croácia
+2026-06-24,02h,Colômbia,,2.0,x,1.0,,RD Congo,Marcelo,colômbia-vs-rd_congo
+2026-06-24,19h,Suíça,,2.0,x,1.0,,Canadá,Marcelo,suíça-vs-canadá
+2026-06-24,19h,Bósnia,,1.0,x,0.0,,Catar,Marcelo,bósnia-vs-catar
+2026-06-24,22h,Escócia,,1.0,x,3.0,,Brasil,Marcelo,escócia-vs-brasil
 2026-06-24,22h,Marrocos,,2.0,x,0.0,,Haiti,Marcelo,marrocos-vs-haiti
-2026-06-25,01h,República Tcheca,,0.0,x,1.0,,México,Marcelo,república_tcheca-vs-méxico
-2026-06-25,01h,África do Sul,,0.0,x,1.0,,Coréia do Sul,Marcelo,áfrica_do_sul-vs-coréia_do_sul
-2026-06-25,20h,Curaçao,,0.0,x,1.0,,Costa do Marfim,Marcelo,curaçao-vs-costa_do_marfim
-2026-06-25,20h,Equador,,0.0,x,1.0,,Alemanha,Marcelo,equador-vs-alemanha
-2026-06-25,23h,Japão,,2.0,x,0.0,,Suécia,Marcelo,japão-vs-suécia
-2026-06-25,23h,Tunísia,,0.0,x,1.0,,Holanda,Marcelo,tunísia-vs-holanda
-2026-06-26,02h,Turquia,,1.0,x,0.0,,Estados Unidos,Marcelo,turquia-vs-estados_unidos
-2026-06-26,02h,Paraguai,,2.0,x,0.0,,Austrália,Marcelo,paraguai-vs-austrália
-2026-06-26,19h,Noruega,,0.0,x,1.0,,França,Marcelo,noruega-vs-frança
-2026-06-26,19h,Senegal,,2.0,x,0.0,,Iraque,Marcelo,senegal-vs-iraque
-2026-06-27,00h,Cabo Verde,,1.0,x,0.0,,Arábia Saudita,Marcelo,cabo_verde-vs-arábia_saudita
-2026-06-27,00h,Uruguai,,0.0,x,1.0,,Espanha,Marcelo,uruguai-vs-espanha
-2026-06-27,03h,Egito,,1.0,x,0.0,,Irã,Marcelo,egito-vs-irã
-2026-06-27,03h,Nova Zelândia,,0.0,x,1.0,,Bélgica,Marcelo,nova_zelândia-vs-bélgica
-2026-06-27,21h,Panamá,,0.0,x,1.0,,Inglaterra,Marcelo,panamá-vs-inglaterra
-2026-06-27,21h,Croácia,,2.0,x,0.0,,Gana,Marcelo,croácia-vs-gana
-2026-06-27,23h,Colômbia,,0.0,x,1.0,,Portugal,Marcelo,colômbia-vs-portugal
-2026-06-27,23h,RD Congo,,1.0,x,0.0,,Uzbequistão,Marcelo,rd_congo-vs-uzbequistão
-2026-06-28,02h,Argélia,,0.0,x,1.0,,Áustria,Marcelo,argélia-vs-áustria
-2026-06-28,02h,Jordânia,,0.0,x,1.0,,Argentina,Marcelo,jordânia-vs-argentina
+2026-06-25,01h,República Tcheca,,1.0,x,2.0,,México,Marcelo,república_tcheca-vs-méxico
+2026-06-25,01h,África do Sul,,1.0,x,2.0,,Coréia do Sul,Marcelo,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,20h,Curaçao,,1.0,x,3.0,,Costa do Marfim,Marcelo,curaçao-vs-costa_do_marfim
+2026-06-25,20h,Equador,,1.0,x,2.0,,Alemanha,Marcelo,equador-vs-alemanha
+2026-06-25,23h,Japão,,2.0,x,1.0,,Suécia,Marcelo,japão-vs-suécia
+2026-06-25,23h,Tunísia,,0.0,x,2.0,,Holanda,Marcelo,tunísia-vs-holanda
+2026-06-26,02h,Turquia,,2.0,x,2.0,,Estados Unidos,Marcelo,turquia-vs-estados_unidos
+2026-06-26,02h,Paraguai,,2.0,x,1.0,,Austrália,Marcelo,paraguai-vs-austrália
+2026-06-26,19h,Noruega,,1.0,x,3.0,,França,Marcelo,noruega-vs-frança
+2026-06-26,19h,Senegal,,2.0,x,1.0,,Iraque,Marcelo,senegal-vs-iraque
+2026-06-27,00h,Cabo Verde,,1.0,x,1.0,,Arábia Saudita,Marcelo,cabo_verde-vs-arábia_saudita
+2026-06-27,00h,Uruguai,,0.0,x,2.0,,Espanha,Marcelo,uruguai-vs-espanha
+2026-06-27,03h,Egito,,1.0,x,1.0,,Irã,Marcelo,egito-vs-irã
+2026-06-27,03h,Nova Zelândia,,1.0,x,3.0,,Bélgica,Marcelo,nova_zelândia-vs-bélgica
+2026-06-27,21h,Panamá,,0.0,x,4.0,,Inglaterra,Marcelo,panamá-vs-inglaterra
+2026-06-27,21h,Croácia,,1.0,x,0.0,,Gana,Marcelo,croácia-vs-gana
+2026-06-27,23h,Colômbia,,1.0,x,3.0,,Portugal,Marcelo,colômbia-vs-portugal
+2026-06-27,23h,RD Congo,,1.0,x,1.0,,Uzbequistão,Marcelo,rd_congo-vs-uzbequistão
+2026-06-28,02h,Argélia,,1.0,x,2.0,,Áustria,Marcelo,argélia-vs-áustria
+2026-06-28,02h,Jordânia,,0.0,x,3.0,,Argentina,Marcelo,jordânia-vs-argentina

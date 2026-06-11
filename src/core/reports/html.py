@@ -55,10 +55,11 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
 
 /* Hero banner */
 .hero {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: var(--bg);
     padding: 1.5rem 1rem;
     text-align: center;
     color: var(--text);
+    border-bottom: 1px solid var(--card-border);
 }
 .hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
 .hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
@@ -206,6 +207,7 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
 }
 .pred-info { flex: 1; min-width: 0; }
 .pred-name { font-weight: 600; font-size: 0.9rem; }
+.pred-date { font-weight: 400; font-size: 0.75rem; color: var(--text-muted); display: inline-block; }
 .pred-detail { font-size: 0.8rem; color: var(--text-muted); }
 .pred-points {
     font-weight: 700;
@@ -348,6 +350,15 @@ details .content { padding: 0.75rem 1rem; }
 .heat-cell { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--text); border-radius: 3px; flex-shrink: 0; }
 .heat-cell-header { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; color: var(--text-muted); flex-shrink: 0; border-radius: 3px; }
 .heat-total-label { width: 80px; min-width: 80px; font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; padding-right: 4px; line-height: 28px; text-align: right; border-top: 1px solid var(--card-border); }
+/* Larger cells for match-page heatmap */
+.heat-cell-lg { width: 34px; min-width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: var(--text); border-radius: 4px; flex-shrink: 0; }
+.heatmap-match { display:flex; flex-direction:column; gap:6px; }
+.heatmap-top { display:flex; align-items:center; justify-content:center; gap:6px; font-weight:600; font-size:0.9rem; padding:6px 0 2px 0; }
+.heatmap-top img { width:28px; height:28px; }
+.heatmap-body { display:flex; gap:10px; }
+.heatmap-away { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-weight:600; font-size:0.8rem; min-width:56px; text-align:center; }
+.heatmap-away img { width:28px; height:28px; }
+.heatmap-grid { flex:1; min-width:0; }
 
 /* Bottom navigation bar */
 .bottom-nav {
@@ -484,6 +495,11 @@ body { padding-bottom: 70px; }
 .mini-stat .val { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
 .mini-stat .lbl { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
 
+/* Team logos */
+.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
+.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
+.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 6px; }
+
 /* Responsive */
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.25rem; }
@@ -576,7 +592,7 @@ def _max_points_per_game(config: ChampionshipConfig) -> int:
     return max(r.points for r in config.scoring_rules)
 
 
-
+from src.core.logo_fetcher import _team_logo_tag
 
 
 # ------------------------------------------------------------------
@@ -711,6 +727,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'</div>\n'
                 )
 
+    boleiro_dir = _norm(os.path.join(config.reports_dir, "html", "boleiros"))
+
     # --- Detect pending matches (past but no result) for this player ---
     n_pending = 0
     pending_rows = ""
@@ -728,14 +746,18 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             ].drop_duplicates(subset=["match"])
             n_pending = len(df_pending)
             if n_pending:
+                rev_map = {v: k for k, v in config.team_name_mapping.items()}
                 for _, row in df_pending.sort_values(["date", "hour"], ascending=False).iterrows():
-                    date_str = pd.to_datetime(row["date"]).strftime("%d/%m")
+                    date_str = pd.to_datetime(row["date"]).strftime("%d/%m") + (f" {row['hour']}" if pd.notna(row.get("hour")) and str(row.get("hour", "")).strip() else "")
+                    home_en = rev_map.get(row["home_team"], row["home_team"])
+                    away_en = rev_map.get(row["away_team"], row["away_team"])
+                    home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=boleiro_dir)
+                    away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=boleiro_dir)
                     pending_rows += (
                         f'<div class="pred-row">'
                         f'<div class="pred-info">'
-                        f'<div class="pred-name">{row["home_team"]} vs {row["away_team"]}</div>'
+                        f'<div class="pred-name">{home_logo}{row["home_team"]} vs {away_logo}{row["away_team"]} <span class="pred-date">{date_str}</span></div>'
                         f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | \u23f3 Aguardando resultado</div>'
-                        f'<div class="pred-detail">{date_str}</div>'
                         f'</div>'
                         f'<div class="score-pill" style="color:var(--warning);background:rgba(245,158,11,0.1);border:1px solid var(--warning)">+0 \u23f3</div>'
                         f'</div>\n'
@@ -753,10 +775,12 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         return f'{row["home_team"]} {rrp} {row["away_team"]}'
 
     def _build_history_rows(rows_df: pd.DataFrame) -> str:
+        rev_map = {v: k for k, v in config.team_name_mapping.items()}
         out = ""
         for _, row in rows_df.iterrows():
             pts = int(row["pontos"])
-            date_str = pd.to_datetime(row["date"]).strftime("%d/%m")
+            hour_str = str(row.get("hour", ""))
+            date_str = pd.to_datetime(row["date"]).strftime("%d/%m") + (f" {hour_str}" if hour_str else "")
             criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
             css_var, css_bg, css_border = config.scoring_css_var(row.get("criterio", ""))
             if css_var:
@@ -778,12 +802,15 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             phase_val = row.get("phase", "")
             if phase_val and phase_val in playoff_emoji_map:
                 phase_label = f"{playoff_emoji_map[phase_val]} {phase_val} | "
+            home_en = rev_map.get(row["home_team"], row["home_team"])
+            away_en = rev_map.get(row["away_team"], row["away_team"])
+            home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=boleiro_dir)
+            away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=boleiro_dir)
             out += (
                 f'<div class="pred-row">'
                 f'<div class="pred-info">'
-                f'<div class="pred-name">{_format_real_placar(row)}</div>'
-                f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
-                f'<div class="pred-detail">{phase_label}{date_str}</div>'
+                f'<div class="pred-name">{_format_real_placar(row)} <span class="pred-date">{phase_label}{date_str}</span></div>'
+            f'<div class="pred-detail">{home_logo} {row["resultado_bol_placar"]} {away_logo} | {criterio_emoji} {row["criterio"]}</div>'
                 f'</div>'
                 f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
                 f'</div>\n'
@@ -794,7 +821,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     today = datetime.now(tz).date()
     df_by_date_dt = df_hist["date"].apply(lambda d: pd.to_datetime(d).date())
     df_hist_past = df_hist[df_by_date_dt < today]
-    df_hist_future = df_hist[df_by_date_dt >= today]
+    df_hist_future = df_hist[df_by_date_dt >= today].sort_values(["date", "hour"], ascending=True)
 
     # Exclude pending matches from past (they'll be shown in pending section)
     pending_slug_set = set()
@@ -962,6 +989,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
             total_bonus_pts = 0
             phase_blocks = ""
+            champion_team = ""
             for phase_key, group in df_bonus.groupby("phase", sort=False):
                 label = phase_label_map.get(phase_key, phase_key)
                 emoji = phase_emoji_map.get(phase_key, "\u26bd")
@@ -1010,6 +1038,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 )
 
             if phase_blocks:
+                champion_row = df_bonus[df_bonus["phase"] == "final"]
+                champion_team = champion_row.iloc[0]["team"] if not champion_row.empty else ""
+                champion_block = (
+                    f'<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">'
+                    f'<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:0.3rem;">'
+                    f'\U0001f3c6 Campe\u00e3o</div>'
+                    f'<div>{champion_team}</div>'
+                    f'</div>\n'
+                ) if champion_team else ""
+
                 total_label = f'<span style="color:var(--accent);margin-left:0.5rem;font-weight:700;">+{total_bonus_pts}</span>'
                 legend = (
                     '<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem;'
@@ -1023,13 +1061,17 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'<details class="section" open>'
                     f'<summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">'
                     f'\U0001f3c6 Times Bonus {total_label}</summary>'
-                    f'<div class="card">{legend}{phase_blocks}</div>'
+                    f'<div class="card">{legend}{phase_blocks}{champion_block}</div>'
                     f'</details>\n'
                 )
 
-    # --- Build top-of-page: striker + bonus + timeline + compare ---
+    # --- Build top-of-page: striker + champion + bonus + timeline + compare ---
+    top_badges = ""
     if striker_name:
-        body += f'<div class="striker-badge"><span class="icon">\U0001f3af</span> Artilheiro: <strong>{striker_name}</strong></div>\n'
+        top_badges += f'<div class="striker-badge"><span class="icon">\U0001f3af</span> Artilheiro: <strong>{striker_name}</strong></div>\n'
+    if champion_team:
+        top_badges += f'<div class="striker-badge"><span class="icon">\U0001f3c6</span> Campe\u00e3o: <strong>{champion_team}</strong></div>\n'
+    body += top_badges
 
     if bonus_html:
         body += bonus_html
@@ -1353,7 +1395,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             elif bs < -0.3:
                 badges.append(f'<span class="profile-badge" style="border-color:var(--bolao);background:rgba(59,130,246,0.15);">\U0001F9CA Conservador</span>')
 
-    # 4. Leader badge  
+    # 4. Leader badge
     rank_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
     if os.path.exists(rank_path):
         df_rank = pd.read_csv(rank_path, sep=",")
@@ -1504,6 +1546,13 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     date_str = str(df_match.iloc[0]["date"])
     hour_str = str(df_match.iloc[0].get("hour", ""))
 
+    rev_map = {v: k for k, v in config.team_name_mapping.items()}
+    home_en = rev_map.get(home, home)
+    away_en = rev_map.get(away, away)
+    match_dir = _norm(os.path.join(config.reports_dir, "html", "jogos", phase))
+    home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=match_dir)
+    away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=match_dir)
+
     # Check if result exists
     has_result = df_match["resultado_real_placar"].notna().any() and df_match["resultado_real_placar"].iloc[0] != "nan"
 
@@ -1527,20 +1576,105 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
             f'</div>\n'
         )
 
-    # Pre-game: score distribution
-    df_pre_placar = df_match[["resultado_bol_time", "resultado_bol_placar"]].value_counts().reset_index()
-    df_pre_placar.columns = ["vencedor", "placar", "#"]
-    df_pre_placar.sort_values("#", ascending=False, inplace=True)
+    # Pre-game: score heatmap
+    max_h = int(df_match["home_goals_bol"].max())
+    max_a = int(df_match["away_goals_bol"].max())
+    max_h = max(max_h, 4)
+    max_a = max(max_a, 4)
+    total_s = len(df_match)
+
+    # Header row (home goals)
+    header_row = '<div class="heat-row">'
+    header_row += '<div class="heat-label" style="width:80px;min-width:80px;padding:0;"></div>'
+    for h in range(max_h + 1):
+        header_row += f'<div class="heat-cell-lg" style="font-size:0.6rem;font-weight:700;color:var(--text-muted);background:transparent;">{h}</div>'
+    header_row += '</div>\n'
+
+    # Data rows (away goals)
+    data_rows = ""
+    for a in range(max_a + 1):
+        data_rows += '<div class="heat-row">'
+        data_rows += f'<div class="heat-label">{a}</div>'
+        for h in range(max_h + 1):
+            cnt = len(df_match[(df_match["home_goals_bol"] == h) & (df_match["away_goals_bol"] == a)])
+            pct = round(cnt / total_s * 100) if total_s else 0
+            if cnt:
+                if h > a:
+                    z = "success"
+                    zc = "34,197,94"
+                elif h == a:
+                    z = "warning"
+                    zc = "245,158,11"
+                else:
+                    z = "danger"
+                    zc = "239,68,68"
+                if pct >= 30:
+                    bg = f"var(--{z})"
+                    fc = "#fff"
+                elif pct >= 15:
+                    bg = f"rgba({zc},0.7)"
+                    fc = "#fff"
+                elif pct >= 5:
+                    bg = f"rgba({zc},0.4)"
+                    fc = "var(--text)"
+                else:
+                    bg = f"rgba({zc},0.2)"
+                    fc = "var(--text)"
+            else:
+                if h > a:
+                    bg = "rgba(34,197,94,0.06)"
+                elif h == a:
+                    bg = "rgba(245,158,11,0.06)"
+                else:
+                    bg = "rgba(239,68,68,0.06)"
+                fc = "var(--text-muted)"
+            label = str(cnt) if cnt else ""
+            data_rows += f'<div class="heat-cell-lg" style="background:{bg};color:{fc}">{label}</div>'
+        data_rows += '</div>\n'
+
+    score_heatmap = (
+        '<div class="heatmap-match">'
+        f'<div class="heatmap-top">{home_logo}<span>{home}</span></div>'
+        '<div class="heatmap-body">'
+        f'<div class="heatmap-away">{away_logo}<span>{away}</span></div>'
+        f'<div class="heatmap-grid"><div class="heat-container">{header_row}{data_rows}</div></div>'
+        '</div></div>'
+    )
+
+    # Pre-game: placar distribution bars
+    placar_counts = df_match["resultado_bol_placar"].value_counts().reset_index()
+    placar_counts.columns = ["placar", "#"]
+    placar_rows_resolved = []
+    for _, pr in placar_counts.iterrows():
+        parts = str(pr["placar"]).split(" x ")
+        if len(parts) == 2:
+            try:
+                hg = int(parts[0])
+                ag = int(parts[1])
+            except ValueError:
+                continue
+        else:
+            continue
+        if hg > ag:
+            rtype = 0  # home win
+        elif hg == ag:
+            rtype = 1  # draw
+        else:
+            rtype = 2  # away win
+        placar_rows_resolved.append({"placar": pr["placar"], "#": pr["#"], "rtype": rtype, "hg": hg, "ag": ag, "total": hg + ag})
+    placar_rows_resolved.sort(key=lambda x: (x["rtype"], -x["total"], -x["ag"] if x["rtype"] == 0 else (-x["hg"] if x["rtype"] == 2 else x["hg"])))
+    total_p = sum(r["#"] for r in placar_rows_resolved)
     score_bars = ""
-    total_s = int(df_pre_placar["#"].sum())
-    for _, row in df_pre_placar.head(8).iterrows():
-        pct = round(row["#"] / total_s * 100)
-        count = int(row["#"])
+    bar_colors = {"home": "var(--success)", "draw": "var(--warning)", "away": "var(--danger)"}
+    bar_bgs = {"home": "rgba(34,197,94,0.15)", "draw": "rgba(245,158,11,0.15)", "away": "rgba(239,68,68,0.15)"}
+    for r in placar_rows_resolved:
+        pct = round(r["#"] / total_p * 100)
+        tcolor = "home" if r["rtype"] == 0 else ("draw" if r["rtype"] == 1 else "away")
         score_bars += (
             f'<div class="bar-row">'
-            f'<span class="bar-label">{row["placar"]}</span>'
-            f'<div class="bar-track"><div class="bar-fill" style="width:{pct}%"></div></div>'
-            f'<span class="bar-pct">{pct}% ({count})</span>'
+            f'<span class="bar-label">{r["placar"]}</span>'
+            f'<div class="bar-track"><div class="bar-fill" style="width:{pct}%;background:{bar_colors[tcolor]}"></div></div>'
+            f'<span class="bar-pct" style="color:{bar_colors[tcolor]}">{int(r["#"])} ({pct}%)</span>'
             f'</div>\n'
         )
 
@@ -1628,9 +1762,9 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
             pass
         score_html = f"""
 <div class="score-card">
-    <div class="team">{home}</div>
+    <div class="team">{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a></div>
     <div class="score">{parts[0]} - {parts[1]}</div>
-    <div class="team">{away}</div>
+    <div class="team">{away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></div>
 </div>
 {pen_html}
 <div style="text-align:center;"><span class="badge badge-success">Resultado Final</span></div>
@@ -1638,16 +1772,17 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     else:
         score_html = f"""
 <div class="score-card">
-    <div class="team">{home}</div>
+    <div class="team">{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a></div>
     <div class="score">vs</div>
-    <div class="team">{away}</div>
+    <div class="team">{away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></div>
 </div>
 <div style="text-align:center;"><span class="badge badge-warning">Aguardando resultado</span></div>
 """
 
+    team_link = '../../times/{}.html'
     body = f"""
 <div class="hero">
-    <h1>\u26bd {home} x {away}</h1>
+    <h1>{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a> x {away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></h1>
     <div class="subtitle">{date_str} {hour_str} | {phase}</div>
 </div>
 
@@ -1660,7 +1795,8 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
 <div class="section">
     <div class="section-title">\U0001f52e Pre-Jogo - Distribuicao de Placar</div>
-    <div class="card"><div class="bar-chart">{score_bars}</div></div>
+    <div class="card">{score_heatmap}</div>
+    <div class="card" style="margin-top:0.5rem;"><div class="bar-chart">{score_bars}</div></div>
 </div>
 """
 
@@ -3527,24 +3663,24 @@ def _build_momentum(config: ChampionshipConfig) -> str:
     # Current hot streak champions
     hot_players = {p: v for p, v in current_streaks.items() if v["type"] == "hit"}
     top_hot = sorted(hot_players.items(), key=lambda x: -x[1]["length"])[:3]
-    hot_champs = ""
+    hot_championships = ""
     for i, (p, v) in enumerate(top_hot):
         medal = "\U0001f947" if i == 0 else "\U0001f948" if i == 1 else "\U0001f949"
-        hot_champs += f"<tr><td>{medal}</td><td><a href='boleiros/{p}.html'>{p}</a></td><td style='font-weight:700;color:var(--success)'>{v['length']} acertos</td></tr>\n"
+        hot_championships += f"<tr><td>{medal}</td><td><a href='boleiros/{p}.html'>{p}</a></td><td style='font-weight:700;color:var(--success)'>{v['length']} acertos</td></tr>\n"
 
-    if not hot_champs:
-        hot_champs = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Ninguem em streak quente</td></tr>'
+    if not hot_championships:
+        hot_championships = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Ninguem em streak quente</td></tr>'
 
     # Cold streak champions
     cold_players = {p: v for p, v in current_streaks.items() if v["type"] == "miss"}
     top_cold = sorted(cold_players.items(), key=lambda x: -x[1]["length"])[:3]
-    cold_champs = ""
+    cold_championships = ""
     for i, (p, v) in enumerate(top_cold):
         medal = "\U0001f947" if i == 0 else "\U0001f948" if i == 1 else "\U0001f949"
-        cold_champs += f"<tr><td>{medal}</td><td><a href='boleiros/{p}.html'>{p}</a></td><td style='font-weight:700;color:var(--danger)'>{v['length']} erros</td></tr>\n"
+        cold_championships += f"<tr><td>{medal}</td><td><a href='boleiros/{p}.html'>{p}</a></td><td style='font-weight:700;color:var(--danger)'>{v['length']} erros</td></tr>\n"
 
-    if not cold_champs:
-        cold_champs = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Ninguem em streak fria</td></tr>'
+    if not cold_championships:
+        cold_championships = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Ninguem em streak fria</td></tr>'
 
     body = f"""
 <div class="hero">
@@ -3570,14 +3706,14 @@ def _build_momentum(config: ChampionshipConfig) -> str:
         <div class="card-title">\U0001f525 Maiores Sequencias Quentes</div>
         <table class="rank-table">
             <thead><tr><th></th><th>Jogador</th><th>Streak</th></tr></thead>
-            <tbody>{hot_champs}</tbody>
+            <tbody>{hot_championships}</tbody>
         </table>
     </div>
     <div class="card" style="margin:0;">
         <div class="card-title">\U0001f4a9 Maiores Sequencias Frias</div>
         <table class="rank-table">
             <thead><tr><th></th><th>Jogador</th><th>Streak</th></tr></thead>
-            <tbody>{cold_champs}</tbody>
+            <tbody>{cold_championships}</tbody>
         </table>
     </div>
 </div>

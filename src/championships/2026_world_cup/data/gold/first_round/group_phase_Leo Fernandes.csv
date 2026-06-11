@@ -1,73 +1,73 @@
 date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_real,away_goals_real,home_pen_bol,away_pen_bol,home_pen_real,away_pen_real,resultado_bol_placar,resultado_bol_time,resultado_real_placar,resultado_real_time,who,pontos,criterio,valido,1-Placar exato,2-Vencedor + acerto parcial,3-Vencedor + acerto parcial,4-Vencedor correto,5-Gols de um time,6-Nenhum acerto,9-Sem jogo
 2026-06-11,19h,méxico-vs-áfrica_do_sul,México,África do Sul,2.0,0.0,,,,,,,2 x 0,México,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-12,02h,coréia_do_sul-vs-república_tcheca,Coréia do Sul,República Tcheca,1.0,0.0,,,,,,,1 x 0,Coréia do Sul,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-12,19h,canadá-vs-bósnia,Canadá,Bósnia,1.0,0.0,,,,,,,1 x 0,Canadá,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-13,01h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,0.0,,,,,,,2 x 0,Estados Unidos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-13,19h,catar-vs-suíça,Catar,Suíça,0.0,1.0,,,,,,,0 x 1,Suíça,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-13,22h,brasil-vs-marrocos,Brasil,Marrocos,2.0,0.0,,,,,,,2 x 0,Brasil,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-14,01h,haiti-vs-escócia,Haiti,Escócia,0.0,1.0,,,,,,,0 x 1,Escócia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-14,04h,austrália-vs-turquia,Austrália,Turquia,0.0,1.0,,,,,,,0 x 1,Turquia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-14,17h,alemanha-vs-curaçao,Alemanha,Curaçao,2.0,0.0,,,,,,,2 x 0,Alemanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-14,20h,holanda-vs-japão,Holanda,Japão,1.0,0.0,,,,,,,1 x 0,Holanda,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-12,02h,coréia_do_sul-vs-república_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-12,19h,canadá-vs-bósnia,Canadá,Bósnia,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,01h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,1.0,,,,,,,2 x 1,Estados Unidos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,19h,catar-vs-suíça,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,22h,brasil-vs-marrocos,Brasil,Marrocos,1.0,0.0,,,,,,,1 x 0,Brasil,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,01h,haiti-vs-escócia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,04h,austrália-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,17h,alemanha-vs-curaçao,Alemanha,Curaçao,6.0,0.0,,,,,,,6 x 0,Alemanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,20h,holanda-vs-japão,Holanda,Japão,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-14,23h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,0.0,1.0,,,,,,,0 x 1,Equador,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-15,02h,suécia-vs-tunísia,Suécia,Tunísia,2.0,0.0,,,,,,,2 x 0,Suécia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,02h,suécia-vs-tunísia,Suécia,Tunísia,2.0,1.0,,,,,,,2 x 1,Suécia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-15,16h,espanha-vs-cabo_verde,Espanha,Cabo Verde,2.0,0.0,,,,,,,2 x 0,Espanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-15,19h,bélgica-vs-egito,Bélgica,Egito,2.0,0.0,,,,,,,2 x 0,Bélgica,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-15,22h,arábia_saudita-vs-uruguai,Arábia Saudita,Uruguai,0.0,1.0,,,,,,,0 x 1,Uruguai,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,19h,bélgica-vs-egito,Bélgica,Egito,2.0,1.0,,,,,,,2 x 1,Bélgica,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,22h,arábia_saudita-vs-uruguai,Arábia Saudita,Uruguai,1.0,2.0,,,,,,,1 x 2,Uruguai,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-16,01h,irã-vs-nova_zelândia,Irã,Nova Zelândia,2.0,0.0,,,,,,,2 x 0,Irã,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-16,19h,frança-vs-senegal,França,Senegal,2.0,0.0,,,,,,,2 x 0,França,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-16,22h,iraque-vs-noruega,Iraque,Noruega,0.0,1.0,,,,,,,0 x 1,Noruega,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,19h,frança-vs-senegal,França,Senegal,2.0,1.0,,,,,,,2 x 1,França,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,22h,iraque-vs-noruega,Iraque,Noruega,0.0,3.0,,,,,,,0 x 3,Noruega,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-17,01h,argentina-vs-argélia,Argentina,Argélia,2.0,0.0,,,,,,,2 x 0,Argentina,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-17,04h,áustria-vs-jordânia,Áustria,Jordânia,2.0,0.0,,,,,,,2 x 0,Áustria,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-17,17h,portugal-vs-rd_congo,Portugal,RD Congo,2.0,0.0,,,,,,,2 x 0,Portugal,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-17,20h,inglaterra-vs-croácia,Inglaterra,Croácia,2.0,0.0,,,,,,,2 x 0,Inglaterra,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,17h,portugal-vs-rd_congo,Portugal,RD Congo,3.0,0.0,,,,,,,3 x 0,Portugal,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,20h,inglaterra-vs-croácia,Inglaterra,Croácia,1.0,0.0,,,,,,,1 x 0,Inglaterra,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-17,23h,gana-vs-panamá,Gana,Panamá,2.0,0.0,,,,,,,2 x 0,Gana,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-18,02h,uzbequistão-vs-colômbia,Uzbequistão,Colômbia,0.0,1.0,,,,,,,0 x 1,Colômbia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-18,16h,república_tcheca-vs-áfrica_do_sul,República Tcheca,África do Sul,2.0,0.0,,,,,,,2 x 0,República Tcheca,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-18,19h,suíça-vs-bósnia,Suíça,Bósnia,2.0,0.0,,,,,,,2 x 0,Suíça,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-18,22h,canadá-vs-catar,Canadá,Catar,2.0,0.0,,,,,,,2 x 0,Canadá,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-19,01h,méxico-vs-coréia_do_sul,México,Coréia do Sul,2.0,0.0,,,,,,,2 x 0,México,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-19,19h,estados_unidos-vs-austrália,Estados Unidos,Austrália,2.0,0.0,,,,,,,2 x 0,Estados Unidos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-19,22h,escócia-vs-marrocos,Escócia,Marrocos,0.0,1.0,,,,,,,0 x 1,Marrocos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-20,01h,brasil-vs-haiti,Brasil,Haiti,2.0,0.0,,,,,,,2 x 0,Brasil,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-20,04h,turquia-vs-paraguai,Turquia,Paraguai,2.0,0.0,,,,,,,2 x 0,Turquia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-20,17h,holanda-vs-suécia,Holanda,Suécia,2.0,0.0,,,,,,,2 x 0,Holanda,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-20,20h,alemanha-vs-costa_do_marfim,Alemanha,Costa do Marfim,2.0,0.0,,,,,,,2 x 0,Alemanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-21,00h,equador-vs-curaçao,Equador,Curaçao,2.0,0.0,,,,,,,2 x 0,Equador,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-21,04h,tunísia-vs-japão,Tunísia,Japão,0.0,1.0,,,,,,,0 x 1,Japão,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,02h,uzbequistão-vs-colômbia,Uzbequistão,Colômbia,1.0,2.0,,,,,,,1 x 2,Colômbia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,16h,república_tcheca-vs-áfrica_do_sul,República Tcheca,África do Sul,2.0,1.0,,,,,,,2 x 1,República Tcheca,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,19h,suíça-vs-bósnia,Suíça,Bósnia,2.0,1.0,,,,,,,2 x 1,Suíça,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,22h,canadá-vs-catar,Canadá,Catar,1.0,0.0,,,,,,,1 x 0,Canadá,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,01h,méxico-vs-coréia_do_sul,México,Coréia do Sul,1.0,0.0,,,,,,,1 x 0,México,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,19h,estados_unidos-vs-austrália,Estados Unidos,Austrália,1.0,0.0,,,,,,,1 x 0,Estados Unidos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,22h,escócia-vs-marrocos,Escócia,Marrocos,0.0,2.0,,,,,,,0 x 2,Marrocos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,01h,brasil-vs-haiti,Brasil,Haiti,5.0,0.0,,,,,,,5 x 0,Brasil,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,04h,turquia-vs-paraguai,Turquia,Paraguai,1.0,0.0,,,,,,,1 x 0,Turquia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,17h,holanda-vs-suécia,Holanda,Suécia,2.0,1.0,,,,,,,2 x 1,Holanda,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,20h,alemanha-vs-costa_do_marfim,Alemanha,Costa do Marfim,2.0,1.0,,,,,,,2 x 1,Alemanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,00h,equador-vs-curaçao,Equador,Curaçao,4.0,0.0,,,,,,,4 x 0,Equador,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,04h,tunísia-vs-japão,Tunísia,Japão,0.0,2.0,,,,,,,0 x 2,Japão,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-21,16h,espanha-vs-arábia_saudita,Espanha,Arábia Saudita,2.0,0.0,,,,,,,2 x 0,Espanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-21,19h,bélgica-vs-irã,Bélgica,Irã,2.0,0.0,,,,,,,2 x 0,Bélgica,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,19h,bélgica-vs-irã,Bélgica,Irã,1.0,0.0,,,,,,,1 x 0,Bélgica,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-21,22h,uruguai-vs-cabo_verde,Uruguai,Cabo Verde,2.0,0.0,,,,,,,2 x 0,Uruguai,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-22,01h,nova_zelândia-vs-egito,Nova Zelândia,Egito,0.0,1.0,,,,,,,0 x 1,Egito,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-22,17h,argentina-vs-áustria,Argentina,Áustria,2.0,0.0,,,,,,,2 x 0,Argentina,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-22,21h,frança-vs-iraque,França,Iraque,2.0,0.0,,,,,,,2 x 0,França,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-23,00h,noruega-vs-senegal,Noruega,Senegal,1.0,0.0,,,,,,,1 x 0,Noruega,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-23,03h,jordânia-vs-argélia,Jordânia,Argélia,0.0,1.0,,,,,,,0 x 1,Argélia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-23,17h,portugal-vs-uzbequistão,Portugal,Uzbequistão,2.0,0.0,,,,,,,2 x 0,Portugal,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,01h,nova_zelândia-vs-egito,Nova Zelândia,Egito,0.0,2.0,,,,,,,0 x 2,Egito,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,17h,argentina-vs-áustria,Argentina,Áustria,3.0,1.0,,,,,,,3 x 1,Argentina,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,21h,frança-vs-iraque,França,Iraque,4.0,0.0,,,,,,,4 x 0,França,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,00h,noruega-vs-senegal,Noruega,Senegal,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,03h,jordânia-vs-argélia,Jordânia,Argélia,0.0,2.0,,,,,,,0 x 2,Argélia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,17h,portugal-vs-uzbequistão,Portugal,Uzbequistão,3.0,1.0,,,,,,,3 x 1,Portugal,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-23,20h,inglaterra-vs-gana,Inglaterra,Gana,2.0,0.0,,,,,,,2 x 0,Inglaterra,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-23,23h,panamá-vs-croácia,Panamá,Croácia,0.0,1.0,,,,,,,0 x 1,Croácia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,23h,panamá-vs-croácia,Panamá,Croácia,0.0,3.0,,,,,,,0 x 3,Croácia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-24,02h,colômbia-vs-rd_congo,Colômbia,RD Congo,2.0,0.0,,,,,,,2 x 0,Colômbia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-24,19h,suíça-vs-canadá,Suíça,Canadá,2.0,0.0,,,,,,,2 x 0,Suíça,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,19h,suíça-vs-canadá,Suíça,Canadá,1.0,0.0,,,,,,,1 x 0,Suíça,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-24,19h,bósnia-vs-catar,Bósnia,Catar,2.0,0.0,,,,,,,2 x 0,Bósnia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-24,22h,escócia-vs-brasil,Escócia,Brasil,0.0,1.0,,,,,,,0 x 1,Brasil,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-24,22h,marrocos-vs-haiti,Marrocos,Haiti,2.0,0.0,,,,,,,2 x 0,Marrocos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-25,01h,república_tcheca-vs-méxico,República Tcheca,México,0.0,1.0,,,,,,,0 x 1,México,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-25,01h,áfrica_do_sul-vs-coréia_do_sul,África do Sul,Coréia do Sul,0.0,1.0,,,,,,,0 x 1,Coréia do Sul,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-25,20h,curaçao-vs-costa_do_marfim,Curaçao,Costa do Marfim,0.0,1.0,,,,,,,0 x 1,Costa do Marfim,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,22h,escócia-vs-brasil,Escócia,Brasil,1.0,2.0,,,,,,,1 x 2,Brasil,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,22h,marrocos-vs-haiti,Marrocos,Haiti,4.0,0.0,,,,,,,4 x 0,Marrocos,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,01h,república_tcheca-vs-méxico,República Tcheca,México,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,01h,áfrica_do_sul-vs-coréia_do_sul,África do Sul,Coréia do Sul,1.0,2.0,,,,,,,1 x 2,Coréia do Sul,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,20h,curaçao-vs-costa_do_marfim,Curaçao,Costa do Marfim,0.0,4.0,,,,,,,0 x 4,Costa do Marfim,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-25,20h,equador-vs-alemanha,Equador,Alemanha,0.0,1.0,,,,,,,0 x 1,Alemanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-25,23h,japão-vs-suécia,Japão,Suécia,2.0,0.0,,,,,,,2 x 0,Japão,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-25,23h,tunísia-vs-holanda,Tunísia,Holanda,0.0,1.0,,,,,,,0 x 1,Holanda,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-26,02h,turquia-vs-estados_unidos,Turquia,Estados Unidos,1.0,0.0,,,,,,,1 x 0,Turquia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-26,02h,paraguai-vs-austrália,Paraguai,Austrália,2.0,0.0,,,,,,,2 x 0,Paraguai,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-26,19h,noruega-vs-frança,Noruega,França,0.0,1.0,,,,,,,0 x 1,França,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,23h,japão-vs-suécia,Japão,Suécia,1.0,0.0,,,,,,,1 x 0,Japão,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,23h,tunísia-vs-holanda,Tunísia,Holanda,0.0,2.0,,,,,,,0 x 2,Holanda,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,02h,turquia-vs-estados_unidos,Turquia,Estados Unidos,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,02h,paraguai-vs-austrália,Paraguai,Austrália,3.0,1.0,,,,,,,3 x 1,Paraguai,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,19h,noruega-vs-frança,Noruega,França,1.0,2.0,,,,,,,1 x 2,França,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-26,19h,senegal-vs-iraque,Senegal,Iraque,2.0,0.0,,,,,,,2 x 0,Senegal,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-27,00h,cabo_verde-vs-arábia_saudita,Cabo Verde,Arábia Saudita,1.0,0.0,,,,,,,1 x 0,Cabo Verde,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-27,00h,uruguai-vs-espanha,Uruguai,Espanha,0.0,1.0,,,,,,,0 x 1,Espanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-27,03h,egito-vs-irã,Egito,Irã,1.0,0.0,,,,,,,1 x 0,Egito,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-27,03h,nova_zelândia-vs-bélgica,Nova Zelândia,Bélgica,0.0,1.0,,,,,,,0 x 1,Bélgica,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-27,21h,panamá-vs-inglaterra,Panamá,Inglaterra,0.0,1.0,,,,,,,0 x 1,Inglaterra,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-27,21h,croácia-vs-gana,Croácia,Gana,2.0,0.0,,,,,,,2 x 0,Croácia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,00h,cabo_verde-vs-arábia_saudita,Cabo Verde,Arábia Saudita,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,00h,uruguai-vs-espanha,Uruguai,Espanha,1.0,2.0,,,,,,,1 x 2,Espanha,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,03h,egito-vs-irã,Egito,Irã,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,03h,nova_zelândia-vs-bélgica,Nova Zelândia,Bélgica,0.0,2.0,,,,,,,0 x 2,Bélgica,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,21h,panamá-vs-inglaterra,Panamá,Inglaterra,0.0,3.0,,,,,,,0 x 3,Inglaterra,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,21h,croácia-vs-gana,Croácia,Gana,2.0,1.0,,,,,,,2 x 1,Croácia,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-27,23h,colômbia-vs-portugal,Colômbia,Portugal,0.0,1.0,,,,,,,0 x 1,Portugal,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-27,23h,rd_congo-vs-uzbequistão,RD Congo,Uzbequistão,1.0,0.0,,,,,,,1 x 0,RD Congo,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,23h,rd_congo-vs-uzbequistão,RD Congo,Uzbequistão,1.0,1.0,,,,,,,1 x 1,empate,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
 2026-06-28,02h,argélia-vs-áustria,Argélia,Áustria,0.0,1.0,,,,,,,0 x 1,Áustria,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
-2026-06-28,02h,jordânia-vs-argentina,Jordânia,Argentina,0.0,1.0,,,,,,,0 x 1,Argentina,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-28,02h,jordânia-vs-argentina,Jordânia,Argentina,0.0,3.0,,,,,,,0 x 3,Argentina,,,Leo Fernandes,0,9-Sem jogo,0,False,False,False,False,False,False,True

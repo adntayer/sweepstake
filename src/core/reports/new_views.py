@@ -11,6 +11,7 @@ import pytz
 
 from src.core.config import ChampionshipConfig
 from src.core.printing import print_colored
+from src.core.logo_fetcher import _team_logo_tag
 
 
 def _norm(path: str) -> str:
@@ -414,11 +415,14 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
             score = "? x ?"
         match_rows += f'<div style="padding:0.3rem 0;font-size:0.85rem;border-bottom:1px solid var(--card-border);">{home} <strong>{score}</strong> {away} <span style="color:var(--text-muted);font-size:0.7rem;">({row.get("round", "")})</span></div>'
 
+    rev_map = {v: k for k, v in config.team_name_mapping.items()}
     group_label = f" - Grupo {group_name}" if group_name else ""
+    en = rev_map.get(team, team)
+    logo_tag = _team_logo_tag(config, en, cls="team-logo", start=config.reports_dir + "/html/times")
 
     body = f"""<div class="hero">
-    <h1>\U0001f3c6 {team}</h1>
-    <div class="subtitle">Guia do Time{group_label} \u2022 {total_played} jogos \u2022 {wins}V {draws}E {losses}D ({gf}-{ga})</div>
+    <h1>{logo_tag} {team}</h1>
+    <div class="subtitle">Guia do Time{group_label} • {total_played} jogos • {wins}V {draws}E {losses}D ({gf}-{ga})</div>
 </div>
 
 <div class="section">
@@ -475,10 +479,14 @@ def _build_times_index(config: ChampionshipConfig, html_base: str) -> str:
     rows = ""
     for i, team in enumerate(teams_sorted, 1):
         grp = group_of_team.get(team, "-")
-        initials = "".join(p[0] for p in team.split()[:2]).upper()
+        en = {v: k for k, v in config.team_name_mapping.items()}.get(team, team)
+        logo_html = _team_logo_tag(config, en, cls="team-logo-sm")
+        if not logo_html:
+            initials = "".join(p[0] for p in team.split()[:2]).upper()
+            logo_html = f'<div class="player-avatar" style="width:32px;height:32px;font-size:0.7rem;">{initials}</div>'
         rows += f"""<tr>
             <td style="width:30px;">{i}</td>
-            <td style="width:36px;"><div class="player-avatar" style="width:32px;height:32px;font-size:0.7rem;">{initials}</div></td>
+            <td style="width:36px;">{logo_html}</td>
             <td><a href="times/{team}.html" style="font-weight:600;font-size:0.9rem;">{team}</a></td>
             <td style="color:var(--text-muted);font-size:0.8rem;">{grp}</td>
         </tr>

@@ -6,8 +6,8 @@
     <title>Guia do Time: Catar</title>
     <style>
     :root {
-    --primary: #1a5e1f;
-    --primary-light: #2d8a33;
+    --primary: #0f4a14;
+    --primary-light: #166320;
     --accent: #f5c518;
     --accent-dark: #b8940f;
     --bg: #060d1a;
@@ -15,7 +15,7 @@
     --card-border: #1a3050;
     --text: #ffffff;
     --text-muted: #8899aa;
-    --success: #22c55e;
+    --success: #15803d;
     --warning: #f59e0b;
     --danger: #ef4444;
     --voce: #f5c518;
@@ -68,10 +68,11 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
 
 /* Hero banner */
 .hero {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: var(--bg);
     padding: 1.5rem 1rem;
     text-align: center;
     color: var(--text);
+    border-bottom: 1px solid var(--card-border);
 }
 .hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
 .hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
@@ -219,6 +220,7 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
 }
 .pred-info { flex: 1; min-width: 0; }
 .pred-name { font-weight: 600; font-size: 0.9rem; }
+.pred-date { font-weight: 400; font-size: 0.75rem; color: var(--text-muted); display: inline-block; }
 .pred-detail { font-size: 0.8rem; color: var(--text-muted); }
 .pred-points {
     font-weight: 700;
@@ -361,6 +363,15 @@ details .content { padding: 0.75rem 1rem; }
 .heat-cell { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--text); border-radius: 3px; flex-shrink: 0; }
 .heat-cell-header { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; color: var(--text-muted); flex-shrink: 0; border-radius: 3px; }
 .heat-total-label { width: 80px; min-width: 80px; font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; padding-right: 4px; line-height: 28px; text-align: right; border-top: 1px solid var(--card-border); }
+/* Larger cells for match-page heatmap */
+.heat-cell-lg { width: 34px; min-width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: var(--text); border-radius: 4px; flex-shrink: 0; }
+.heatmap-match { display:flex; flex-direction:column; gap:6px; }
+.heatmap-top { display:flex; align-items:center; justify-content:center; gap:6px; font-weight:600; font-size:0.9rem; padding:6px 0 2px 0; }
+.heatmap-top img { width:28px; height:28px; }
+.heatmap-body { display:flex; gap:10px; }
+.heatmap-away { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-weight:600; font-size:0.8rem; min-width:56px; text-align:center; }
+.heatmap-away img { width:28px; height:28px; }
+.heatmap-grid { flex:1; min-width:0; }
 
 /* Bottom navigation bar */
 .bottom-nav {
@@ -497,6 +508,11 @@ body { padding-bottom: 70px; }
 .mini-stat .val { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
 .mini-stat .lbl { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
 
+/* Team logos */
+.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
+.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
+.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 6px; }
+
 /* Responsive */
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.25rem; }
@@ -514,8 +530,8 @@ body { padding-bottom: 70px; }
 <body>
 <div class="back-nav"><a href="../index.html">← Voltar</a></div>
 <div class="hero">
-    <h1>🏆 Catar</h1>
-    <div class="subtitle">Guia do Time • 0 jogos • 0V 0E 0D (0-0)</div>
+    <h1><img src="../../../logos/qatar.png" alt="Catar" class="team-logo" loading="lazy"> Catar</h1>
+    <div class="subtitle">Guia do Time - Grupo B • 0 jogos • 0V 0E 0D (0-0)</div>
 </div>
 
 <div class="section">
@@ -547,7 +563,7 @@ body { padding-bottom: 70px; }
 </div>
 
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 10/06/2026 21:18:50
+    atualizado às 10/06/2026 23:42:27
 </div>
 <nav class="bottom-nav"><a href="../index.html" class="active"><span class="nav-icon">🏠</span>Início</a>
 <a href="../arena.html"><span class="nav-icon">⚔️</span>Arena</a>

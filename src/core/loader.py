@@ -197,23 +197,41 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     df_games["round"] = df_games["round"].map(lambda r: _round_map.get(r, r))
     group_games = df_games[df_games["round"].isin(["1", "2", "3"])].copy()
 
-    # --- Generate match predictions from standings ---
-    team_strength = {}
-    for t in teams_data:
-        strength = t["pts"] / max(t["j"], 1) + t["sg"] * 0.1
-        team_strength[t["team"]] = strength
+    # --- Read actual predictions from the Tabela Jogos sheet ---
+    po_layout = config.excel_layout.playoffs
+    df_po = None
+    if po_layout.playoffs_sheet_name:
+        try:
+            df_po = pd.read_excel(path, sheet_name=po_layout.playoffs_sheet_name, header=None)
+        except Exception:
+            pass
+
+    if df_po is not None and len(df_po) > 3:
+        actual_scores = {}
+        for idx in range(len(df_po)):
+            row = df_po.iloc[idx]
+            col2 = str(row[2]).strip() if pd.notna(row[2]) else ""
+            col8 = str(row[8]).strip() if len(row) > 8 and pd.notna(row[8]) else ""
+            col4 = row[4]
+            col6 = row[6] if len(row) > 6 else None
+            if col2 and col8 and col2 != "nan" and col8 != "nan":
+                try:
+                    hg = float(col4) if pd.notna(col4) else None
+                    ag = float(col6) if pd.notna(col6) else None
+                    if hg is not None and ag is not None:
+                        actual_scores[(col2, col8)] = (hg, ag)
+                        actual_scores[(col8, col2)] = (ag, hg)
+                except (ValueError, TypeError):
+                    pass
 
     predictions = []
     for _, game in group_games.iterrows():
         home, away = game["home_team"], game["away_team"]
-        s_h = team_strength.get(home, 1)
-        s_a = team_strength.get(away, 1)
-        if s_h > s_a + 0.5:
-            pred_h, pred_a = 2, 0
-        elif s_a > s_h + 0.5:
-            pred_h, pred_a = 0, 1
+        key = (home, away)
+        if key in actual_scores:
+            pred_h, pred_a = actual_scores[key]
         else:
-            pred_h, pred_a = 1, 0
+            pred_h, pred_a = 2, 0
         raw_date = str(game["date"])
         if " " in raw_date and "h" in raw_date:
             pred_date = raw_date[:10]

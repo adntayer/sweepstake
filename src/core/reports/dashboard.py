@@ -11,6 +11,7 @@ import pandas as pd
 import pytz
 
 from src.core.config import ChampionshipConfig
+from src.core.logo_fetcher import _team_logo_tag
 from src.core.printing import print_colored
 from src.core.reports.utils import compute_pending_matches
 
@@ -68,10 +69,11 @@ a:hover { text-decoration: underline; }
 
 /* Hero */
 .hero {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: var(--bg);
     padding: 2rem 1rem;
     text-align: center;
     color: var(--text);
+    border-bottom: 1px solid var(--card-border);
 }
 .hero h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
 .hero .subtitle { font-size: 1rem; opacity: 0.85; }
@@ -173,26 +175,25 @@ a:hover { text-decoration: underline; }
 .scroll-row::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
 .game-card {
-    flex: 0 0 85%;
-    scroll-snap-align: start;
+    flex: 0 0 auto;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 1rem;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
     text-align: center;
-    min-width: 200px;
+    min-width: 140px;
 }
-.game-card .matchup { font-weight: 700; font-size: 1rem; margin: 0.5rem 0; }
-.game-card .datetime { font-size: 0.8rem; color: var(--text-muted); }
+.game-card .matchup { font-weight: 600; font-size: 0.85rem; margin: 0.25rem 0; }
+.game-card .datetime { font-size: 0.7rem; color: var(--text-muted); }
 .game-card .badge-live {
     display: inline-block;
     background: var(--danger);
     color: var(--text);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    padding: 0.15rem 0.5rem;
+    padding: 0.1rem 0.4rem;
     border-radius: 999px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 /* Player grid */
@@ -350,6 +351,11 @@ body { padding-bottom: 70px; }
 .hero-badge.gray { background:rgba(136,153,170,0.2); color:var(--text-muted); }
 
 /* Responsive */
+/* Team logos */
+.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
+.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
+.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 6px; }
+
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.4rem; }
     .hero .subtitle { font-size: 0.85rem; }
@@ -415,13 +421,16 @@ def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
 
     # Extract teams from filename
     rest = fname[match.end():]
-    teams = rest.replace("_vs_", " vs ").replace("_", " ")
+    teams = rest.replace("_vs_", " vs ").replace("_", " ").lstrip("_").replace("-vs-", " vs ").strip()
+    raw_teams = rest.lstrip("_").split("-vs-")
+    home_team = raw_teams[0].replace("_", " ").strip() if len(raw_teams) > 0 else ""
+    away_team = raw_teams[1].replace("_", " ").strip() if len(raw_teams) > 1 else ""
 
     href = filepath.replace("\\", "/").replace(
         f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
     )
 
-    return {"dt": dt, "teams": teams, "href": href, "date_str": f"{day:02d}/{month:02d} {hour:02d}h"}
+    return {"dt": dt, "teams": teams, "home_team": home_team, "away_team": away_team, "href": href, "date_str": f"{day:02d}/{month:02d} {hour:02d}h"}
 
 
 def _build_full_ranking(config: ChampionshipConfig) -> str:
@@ -556,27 +565,34 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
 
 
 def _build_upcoming_games(config: ChampionshipConfig) -> str:
-    """Build the upcoming games horizontal scroll section."""
+    """Build the upcoming games section (first 5, no scroll)."""
     html_base = _norm(os.path.join(config.reports_dir, "html"))
-    games = _get_upcoming_games(html_base, config)
+    games = _get_upcoming_games(html_base, config, limit=5)
 
     if not games:
         return ""
 
     cards = ""
+    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
     for g in games:
+        home_en = rev_map_pt.get(g["home_team"].lower(), g["home_team"])
+        away_en = rev_map_pt.get(g["away_team"].lower(), g["away_team"])
+        home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=config.reports_dir + "/html")
+        away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=config.reports_dir + "/html")
+        home_slug = config.team_slugs.get(home_en, "")
+        away_slug = config.team_slugs.get(away_en, "")
         cards += (
             f'<div class="game-card">'
             f'<div class="badge-live">PROXIMO</div>'
             f'<div class="datetime">{g["date_str"]}</div>'
-            f'<div class="matchup"><a href="{g["href"]}">{g["teams"]}</a></div>'
+            f'<div class="matchup">{home_logo}<a href="{g["href"]}">{home_slug}</a> vs {away_logo}<a href="{g["href"]}">{away_slug}</a></div>'
             f'</div>\n'
         )
 
     return f"""
 <div class="section">
     <div class="section-title">\U0001f552 Proximos Jogos</div>
-    <div class="scroll-row">{cards}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;padding:0 0.75rem;">{cards}</div>
 </div>
 """
 
@@ -734,14 +750,18 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     ag = int(last["away_goals"])
     date = str(last["date"])
 
+    rev_map = {v: k for k, v in config.team_name_mapping.items()}
+    home_logo = _team_logo_tag(config, rev_map.get(home, home), start=config.reports_dir + "/html")
+    away_logo = _team_logo_tag(config, rev_map.get(away, away), start=config.reports_dir + "/html")
+
     return f"""
 <div class="section">
     <div class="section-title">\U0001f4ca Ultimo Resultado</div>
     <div class="card">
         <div class="result-card">
-            <div class="team">{home}</div>
+            <div class="team">{home_logo} {home}</div>
             <div class="score">{hg} - {ag}</div>
-            <div class="team">{away}</div>
+            <div class="team">{away_logo} {away}</div>
         </div>
         <div class="date">{date}</div>
     </div>
@@ -778,22 +798,42 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
     html_base = _norm(os.path.join(config.reports_dir, "html"))
     sections = ""
 
+    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
+
+    def _team_part(fp: str, side: str) -> tuple[str, str, str]:
+        slug = _slug_from_filename(fp)
+        parts = slug.split("-vs-")
+        if len(parts) < 2:
+            return ("", "", "")
+        idx = 0 if side == "home" else 1
+        pt_name = parts[idx].replace("_", " ").strip()
+        en_name = rev_map_pt.get(pt_name.lower(), pt_name)
+        logo = _team_logo_tag(config, en_name, cls="team-logo-sm", start=config.reports_dir + "/html")
+        slug_code = config.team_slugs.get(en_name, "")
+        return (pt_name, logo, slug_code)
+
     def _build_compact_grid(file_list: list[str]) -> str:
         out = '<div style="display:flex;flex-direction:column;gap:0.25rem;">'
         for fp in file_list:
             href = fp.replace("\\", "/").replace(
                 f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
             )
-            label = (
+            raw_date = (
                 os.path.basename(fp)
                 .replace(".html", "")
-                .replace("_", " ")
-                .replace("-vs-", " vs ")
-                .replace("h ", "h | ")
             )
+            # Extract date part
+            date_part = ""
+            m = re.match(r"(\d{4}-\d{2}-\d{2}_\d{1,2}h)", raw_date)
+            if m:
+                date_part = m.group(1).replace("_", " ").replace("h", "h | ")
+            else:
+                date_part = ""
             slug = _slug_from_filename(fp)
             badge = _status_badge(slug, slug_status)
-            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'">{label} {badge}</a>\n'
+            home_name, home_logo, home_slug = _team_part(fp, "home")
+            away_name, away_logo, away_slug = _team_part(fp, "away")
+            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug} vs {away_logo}{away_slug}</span> {badge}</a>\n'
         out += "</div>"
         return out if file_list else '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
@@ -873,17 +913,24 @@ def _build_pending_games(pending_data: dict, config: ChampionshipConfig) -> str:
         return ""
 
     cards = ""
+    rev_map = {v: k for k, v in config.team_name_mapping.items()}
     for g in pending_data["pending_info"]:
         slug = g["slug"]
         href = f'jogos/{config.group_phase_label}/{g["date"]}_{g["hour"]}_{slug}.html'
         date_display = g["date"]
         if g.get("hour"):
             date_display += f' {g["hour"]}'
+        home_en = rev_map.get(g["home_team"], g["home_team"])
+        away_en = rev_map.get(g["away_team"], g["away_team"])
+        home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=config.reports_dir + "/html")
+        away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=config.reports_dir + "/html")
+        home_slug = config.team_slugs.get(home_en, "")
+        away_slug = config.team_slugs.get(away_en, "")
         cards += (
             f'<div class="game-card">'
             f'<div class="badge-live" style="background:var(--warning);color:var(--text-inverse);">\u23f3 AGUARDANDO</div>'
             f'<div class="datetime">{date_display}</div>'
-            f'<div class="matchup"><a href="{href}">{g["home_team"]} vs {g["away_team"]}</a></div>'
+            f'<div class="matchup">{home_logo}<a href="{href}">{home_slug}</a> vs {away_logo}<a href="{href}">{away_slug}</a></div>'
             f'</div>\n'
         )
 
