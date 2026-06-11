@@ -772,7 +772,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     match_slug = str(row.get("match", ""))
                     hour_p = str(row.get("hour", ""))
                     phase_v = str(row.get("phase", "")) if row.get("phase") else config.group_phase_label
-                    game_href = f"../jogos/{phase_v}/{row['date']}_{hour_p}_{match_slug}.html"
+                    game_href = f"../jogos/{phase_v}/{row['date'].strip()}_{hour_p}_{match_slug}.html"
                     pending_rows += (
                         f'<div class="pred-row">'
                         f'<div class="pred-info">'
@@ -3973,7 +3973,9 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         print_colored(f"generating match html: {match}", "blue")
         html = _build_match(config, match, config.group_phase_label, df_match)
         first = df_match.iloc[0]
-        filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
+        hour = first.get('hour', '')
+        hour_str = str(int(hour)) if pd.notna(hour) and isinstance(hour, (int, float)) else str(hour)
+        filename = f"{first['date']}_{hour_str}_{match}.html"
         path = _norm(os.path.join(html_base, "jogos", config.group_phase_label, filename))
         _save(path, html)
 
@@ -3991,7 +3993,9 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
             print_colored(f"generating match html: {phase} {match}", "blue")
             html = _build_match(config, match, pr.name, df_match)
             first = df_match.iloc[0]
-            filename = f"{first['date']}_{first.get('hour', '')}_{match}.html"
+            hour = first.get('hour', '')
+            hour_str = str(int(hour)) if pd.notna(hour) and isinstance(hour, (int, float)) else str(hour)
+            filename = f"{first['date']}_{hour_str}_{match}.html"
             path = _norm(os.path.join(html_base, "jogos", phase, filename))
             _save(path, html)
 

@@ -413,7 +413,21 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
             score = f"{hg} x {ag}"
         else:
             score = "? x ?"
-        match_rows += f'<div style="padding:0.3rem 0;font-size:0.85rem;border-bottom:1px solid var(--card-border);">{home} <strong>{score}</strong> {away} <span style="color:var(--text-muted);font-size:0.7rem;">({row.get("round", "")})</span></div>'
+        
+        # Game link
+        match_slug = str(row.get("match", ""))
+        date_hour = str(row.get("date", "")).replace(' ', '_')
+        
+        round_raw = row.get("round", "")
+        if pd.notna(round_raw) and isinstance(round_raw, (int, float)):
+            round_val = str(int(round_raw))
+        else:
+            round_val = str(round_raw).strip()
+            
+        phase_v = round_val if round_val not in ["1", "2", "3"] else config.group_phase_label
+        game_href = f"../jogos/{phase_v}/{date_hour}_{match_slug}.html"
+
+        match_rows += f'<div style="padding:0.3rem 0;font-size:0.85rem;border-bottom:1px solid var(--card-border);">{home} <strong>{score}</strong> {away} <span style="color:var(--text-muted);font-size:0.7rem;">({row.get("round", "")})</span> <a href="{game_href}" style="color:var(--accent);font-size:0.7rem;margin-left:0.5rem;">ver jogo</a></div>'
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
     group_label = f" - Grupo {group_name}" if group_name else ""
