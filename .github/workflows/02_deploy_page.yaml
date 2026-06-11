@@ -1,7 +1,7 @@
 name: Deploy Page
 
 env:
-  DOCS_PATH: src/championships/2025_club_world_cup/reports/html
+  DOCS_PATH: src/championships/2026_world_cup/reports/html
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/championships/2025_club_world_cup/reports/html/**'
+      - 'src/championships/2026_world_cup/reports/html/**'
 
 jobs:
   build-and-deploy:
