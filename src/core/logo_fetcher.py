@@ -228,8 +228,7 @@ def _team_logo_tag(team_name: str, config: ChampionshipConfig, cls: str, start: 
         en = rev.get(team_name, team_name)
 
     # Cria o nome do arquivo limpo (ex: "canada.png")
-    clean_name = en.lower().replace(" ", "-")
-    filename = f"{clean_name}.png"
+    filename = f"{_slugify(en)}.png"
 
     # Força barras para frente para normalizar Windows/Linux
     normalized_start = start.replace("\\", "/")
