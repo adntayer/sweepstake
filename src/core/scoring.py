@@ -269,7 +269,13 @@ def score_playoff_bonus(config: ChampionshipConfig) -> pd.DataFrame:
             boleiro = str(row["boleiro"])
             phase = str(row["phase"])
             team_picked = str(row["team"])
-            actual_teams = advancing.get(phase, [])
+            
+            # Resolve actual teams for this phase
+            if phase == "campeao":
+                actual_teams = advancing.get("final", [])
+            else:
+                actual_teams = advancing.get(phase, [])
+                
             correct = 1 if team_picked in actual_teams else 0
             pts = config.playoff_scoring.get(phase, 0) if correct else 0
             rows.append({

@@ -1045,7 +1045,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             total_bonus_pts = 0
             phase_blocks = ""
             champion_team = ""
-            for phase_key, group in df_bonus.groupby("phase", sort=False):
+            # Exclude 'campeao' from the general phase blocks loop to handle it separately
+            for phase_key, group in df_bonus[df_bonus["phase"] != "campeao"].groupby("phase", sort=False):
                 label = phase_label_map.get(phase_key, phase_key)
                 emoji = phase_emoji_map.get(phase_key, "\u26bd")
                 pts_per_correct = playoff_scoring.get(phase_key, 0)
@@ -1092,17 +1093,20 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'</div>\n'
                 )
 
-            if phase_blocks:
-                champion_row = df_bonus[df_bonus["phase"] == "final"]
-                champion_team = champion_row.iloc[0]["team"] if not champion_row.empty else ""
-                champion_block = (
-                    f'<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">'
-                    f'<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:0.3rem;">'
-                    f'\U0001f3c6 Campe\u00e3o</div>'
-                    f'<div>{champion_team}</div>'
-                    f'</div>\n'
-                ) if champion_team else ""
+            # Champion block is separate and should be shown if available, regardless of other phases
+            champion_row = df_bonus[df_bonus["phase"] == "campeao"]
+            champion_team = champion_row.iloc[0]["team"] if not champion_row.empty else ""
+            champion_block = (
+                f'<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">'
+                f'<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:0.3rem;">'
+                f'\U0001f3c6 Campe\u00e3o</div>'
+                f'<div>{champion_team}</div>'
+                f'</div>\n'
+            ) if champion_team else ""
 
+            legend = ""
+            total_label = ""
+            if phase_blocks:
                 total_label = f'<span style="color:var(--accent);margin-left:0.5rem;font-weight:700;">+{total_bonus_pts}</span>'
                 legend = (
                     '<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem;'
@@ -1112,6 +1116,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     '<span style="color:var(--danger);">\u25cf time eliminado</span>'
                     '</div>'
                 )
+
+            bonus_html = ""
+            if phase_blocks or champion_block:
                 bonus_html = (
                     f'<details class="section" open>'
                     f'<summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">'
@@ -1119,6 +1126,10 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'<div class="card">{legend}{phase_blocks}{champion_block}</div>'
                     f'</details>\n'
                 )
+
+            # Ensure champion_team is available for the top badges later in the function
+            # Since champion_team is defined in this loop, we need to make sure it's accessible
+            # The variable champion_team is already in the current scope.
 
     # --- Build top-of-page: striker + champion + bonus + timeline + compare ---
     top_badges = ""

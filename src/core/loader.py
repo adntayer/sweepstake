@@ -332,6 +332,42 @@ def _parse_playoffs_and_striker(
     label_cols = list(range(min(9, len(df_po.columns) if not df_po.empty else 9)))
 
     bonus_rows = []
+
+    # --- Extract Champion (Absolute Cell Reference) ---
+    if po_layout.champion_cell:
+        try:
+            # Try configured playoffs sheet first, then fallback to the first sheet
+            sheets_to_try = []
+            if po_layout.playoffs_sheet_name:
+                sheets_to_try.append(po_layout.playoffs_sheet_name)
+            sheets_to_try.append(0)
+
+            champ_team = None
+            for sheet in sheets_to_try:
+                try:
+                    df_champ = pd.read_excel(path, sheet_name=sheet, header=None)
+                    import re
+                    match = re.match(r"([A-Z]+)([0-9]+)", po_layout.champion_cell.upper())
+                    if match:
+                        col_str, row_str = match.groups()
+                        col = 0
+                        for char in col_str:
+                            col = col * 26 + (ord(char) - ord('A') + 1)
+                        col -= 1
+                        row = int(row_str) - 1
+                        if row < len(df_champ) and col < len(df_champ.columns):
+                            val = str(df_champ.iloc[row, col]).strip()
+                            if val and val.lower() not in ("nan", "none", ""):
+                                champ_team = val
+                                break
+                except Exception:
+                    continue
+
+            if champ_team:
+                bonus_rows.append({"boleiro": who, "phase": "campeao", "team": champ_team})
+        except Exception:
+            pass
+
     current_phase = None
     striker_name = ""
     skip_next = False

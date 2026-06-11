@@ -225,7 +225,7 @@ playoff_scoring:
   quartas: 12
   semi: 20
   final: 30
-  # campeao: 45  # reserved for future champion bonus pick
+  campeao: 45
 
 # Striker scoring (points if player's pick matches actual_top_scorer)
 striker_scoring:
@@ -312,6 +312,7 @@ excel_layout:
     striker_label: "Artilheiro"
     striker_name_column: 2
     striker_name_fallback_column: 8
+    champion_cell: "M119"
     name_split_char: "-"
     name_split_index: 0
     playoffs_sheet_name: "Tabela Jogos"
