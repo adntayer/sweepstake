@@ -767,8 +767,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     date_str = pd.to_datetime(row["date"]).strftime("%d/%m") + (f" {row['hour']}" if pd.notna(row.get("hour")) and str(row.get("hour", "")).strip() else "")
                     home_en = rev_map.get(row["home_team"], row["home_team"])
                     away_en = rev_map.get(row["away_team"], row["away_team"])
-                    home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=boleiro_dir)
-                    away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=boleiro_dir)
+                    home_logo = _team_logo_tag(home_en, config, cls="team-logo-sm", )
+                    away_logo = _team_logo_tag(away_en, config, cls="team-logo-sm", )
                     match_slug = str(row.get("match", ""))
                     hour_p = str(row.get("hour", ""))
                     phase_v = str(row.get("phase", "")) if row.get("phase") else config.group_phase_label
@@ -849,8 +849,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 phase_label = f"{playoff_emoji_map[phase_val]} {phase_val} | "
             home_en = rev_map.get(row["home_team"], row["home_team"])
             away_en = rev_map.get(row["away_team"], row["away_team"])
-            home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=boleiro_dir)
-            away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=boleiro_dir)
+            home_logo = _team_logo_tag(home_en, config, cls="team-logo-sm", )
+            away_logo = _team_logo_tag(away_en, config, cls="team-logo-sm", )
             # Game link
             match_slug = str(row.get("match", ""))
             phase_v = str(phase_val) if phase_val else config.group_phase_label
@@ -1605,8 +1605,8 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     home_en = rev_map.get(home, home)
     away_en = rev_map.get(away, away)
     match_dir = _norm(os.path.join(config.reports_dir, "html", "jogos", phase))
-    home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=match_dir)
-    away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=match_dir)
+    home_logo = _team_logo_tag(home_en, config, cls="team-logo-sm", )
+    away_logo = _team_logo_tag(away_en, config, cls="team-logo-sm", )
 
     # Check if result exists
     has_result = df_match["resultado_real_placar"].notna().any() and df_match["resultado_real_placar"].iloc[0] != "nan"

@@ -418,7 +418,7 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
     group_label = f" - Grupo {group_name}" if group_name else ""
     en = rev_map.get(team, team)
-    logo_tag = _team_logo_tag(config, en, cls="team-logo", start=config.reports_dir + "/html/times")
+    logo_tag = _team_logo_tag(en, config, cls="team-logo",)
 
     body = f"""<div class="hero">
     <h1>{logo_tag} {team}</h1>
@@ -480,7 +480,7 @@ def _build_times_index(config: ChampionshipConfig, html_base: str) -> str:
     for i, team in enumerate(teams_sorted, 1):
         grp = group_of_team.get(team, "-")
         en = {v: k for k, v in config.team_name_mapping.items()}.get(team, team)
-        logo_html = _team_logo_tag(config, en, cls="team-logo-sm")
+        logo_html = _team_logo_tag(en, config, cls="team-logo-sm")
         if not logo_html:
             initials = "".join(p[0] for p in team.split()[:2]).upper()
             logo_html = f'<div class="player-avatar" style="width:32px;height:32px;font-size:0.7rem;">{initials}</div>'

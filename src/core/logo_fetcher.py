@@ -127,6 +127,7 @@ def fetch_all_logos(config: ChampionshipConfig, force: bool = False) -> None:
     if not to_fetch:
         teams = len(config.team_name_mapping)
         print_colored(f"All {teams} team logos already cached. Use --force to re-download.", "green")
+        copy_logos_to_html('src/championships/2026_world_cup/logos', 'src/championships/2026_world_cup/reports/html/logos' )
         return
 
     # --- Phase 1: use YAML logo URLs directly ---
@@ -208,7 +209,7 @@ def fetch_all_logos(config: ChampionshipConfig, force: bool = False) -> None:
 
     total = len(config.team_name_mapping)
     print_colored(f"Processed logos for {len(from_config) + found}/{total} teams", "green")
-
+    copy_logos_to_html('src/championships/2026_world_cup/logos', 'src/championships/2026_world_cup/reports/html/logos' )
 
 def logo_img_html(team_pt: str, team_en: str, config: ChampionshipConfig) -> str:
     """Return an <img> tag HTML for a team's logo, or empty string if not cached."""
@@ -219,31 +220,72 @@ def logo_img_html(team_pt: str, team_en: str, config: ChampionshipConfig) -> str
     return ""
 
 
-def team_logo_html(team_name: str, config: ChampionshipConfig, *, use_en: bool = False) -> str:
+def _team_logo_tag(team_name: str, config: ChampionshipConfig, cls: str, *, use_en: bool = False) -> str:
     """Return <img> tag for a team's logo.
 
     ``team_name`` is the Portuguese name by default, or English if ``use_en=True``.
+    cls: Custom CSS class to apply to the img tag (e.g., "team-logo-sm").
     """
     if use_en:
         en = team_name
     else:
         rev = {v: k for k, v in config.team_name_mapping.items()}
         en = rev.get(team_name, team_name)
-    return logo_img_html(team_name, en, config)
 
-
-def _team_logo_tag(config: ChampionshipConfig, en_name: str, cls: str = "team-logo", start: str | None = None) -> str:
-    """Return an <img> tag for a team's cached logo, or empty string.
-
-    ``start`` is the directory the HTML file lives in (relative to CWD),
-    used to compute a correct relative path to the cached logo.
-    Defaults to ``config.reports_dir + "/html"``.
-    """
-    pt = config.team_name_mapping.get(en_name, en_name)
-    path = logo_local_path(en_name, config)
-    if os.path.exists(path):
-        if start is None:
-            start = config.reports_dir + "/html"
-        rel = os.path.relpath(path, start=start).replace("\\", "/")
-        return f'<img src="{rel}" alt="{pt}" class="{cls}" loading="lazy">'
+    pt_path = logo_local_path(en, config)
+    if os.path.exists(pt_path):
+        # Pega apenas o nome do arquivo (ex: "mexico.png")
+        filename = os.path.basename(pt_path)
+        # Cria o caminho direto a partir da pasta raiz de logos do site
+        rel = f"logos/{filename}"
+        return f'<img src="{rel}" alt="{en}" class="{cls}" loading="lazy">'
     return ""
+
+
+def copy_logos_to_html(logo_dir_source: str, html_dir_dest: str) -> None:
+    """
+    Copies all PNG logos from the source directory (e.g., src/championships/2026_world_cup/logos)
+    to the target HTML directory (e.g., src/core/reports/html).
+
+    This is a temporary fix to ensure build assets are available in the static HTML output.
+    """
+    print_colored("--- Starting Logo Copy to HTML Directory ---", "sand")
+
+    # Ensure destination directory exists
+    os.makedirs(html_dir_dest, exist_ok=True)
+    print_colored(f"Target directory ensured: {html_dir_dest}", "sand")
+
+    try:
+        # Lista todos os arquivos do diretório e filtra apenas os .png
+        list_of_files = [f for f in os.listdir(logo_dir_source) if f.lower().endswith('.png')]
+    except FileNotFoundError:
+        print_colored(f"[CRITICAL ERROR] Source directory not found: {logo_dir_source}", "red")
+        return
+    except Exception as e:
+        print_colored(f"[CRITICAL ERROR] Failed to read source directory: {e}", "red")
+        return
+
+    total_files = len(list_of_files)
+    copied_count = 0
+
+    for filename in list_of_files:
+        src_path = _norm(os.path.join(logo_dir_source, filename))
+        dest_path = _norm(os.path.join(html_dir_dest, filename))
+
+        try:
+            # Read the file content
+            with open(src_path, "rb") as f_in:
+                content = f_in.read()
+
+            # Write the file content to the destination
+            with open(dest_path, "wb") as f_out:
+                f_out.write(content)
+
+            print_colored(f"  [SUCCESS] Copied {filename}", "green")
+            copied_count += 1
+        except FileNotFoundError:
+            print_colored(f"  [ERROR] Source file not found: {filename}", "red")
+        except Exception as e:
+            print_colored(f"  [ERROR] Failed to copy {filename}: {e}", "red")
+
+    print_colored(f"--- Logo Copy Finished. Copied {copied_count}/{total_files} files. ---", "sand")

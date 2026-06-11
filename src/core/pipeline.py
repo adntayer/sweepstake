@@ -48,6 +48,7 @@ from src.core.loader import (
 from src.core.printing import print_colored
 from src.core.scoring import score_prediction, score_playoff_bonus, score_strikers
 from src.core.get_results import get_results
+from src.core.logo_fetcher import fetch_all_logos
 
 # ------------------------------------------------------------------
 # Helpers
@@ -997,6 +998,7 @@ def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipCon
 
 def run_pipeline(config: ChampionshipConfig) -> None:
     """Run the full medallion pipeline."""
+    fetch_all_logos(config)
     get_results(config)
     run_raw_to_bronze(config)
     run_bronze_to_silver(config)
