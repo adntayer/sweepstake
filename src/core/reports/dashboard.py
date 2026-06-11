@@ -174,7 +174,7 @@ a:hover { text-decoration: underline; }
 .scroll-row::-webkit-scrollbar { height: 4px; }
 .scroll-row::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
-.game-card {
+.game-card, a.game-card {
     flex: 0 0 auto;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -182,6 +182,9 @@ a:hover { text-decoration: underline; }
     padding: 0.5rem 0.75rem;
     text-align: center;
     min-width: 140px;
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 .game-card .matchup { font-weight: 600; font-size: 0.85rem; margin: 0.25rem 0; }
 .game-card .datetime { font-size: 0.7rem; color: var(--text-muted); }
@@ -582,11 +585,11 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
         home_slug = config.team_slugs.get(home_en, "")
         away_slug = config.team_slugs.get(away_en, "")
         cards += (
-            f'<div class="game-card">'
+            f'<a href="{g["href"]}" class="game-card">'
             f'<div class="badge-live">PROXIMO</div>'
             f'<div class="datetime">{g["date_str"]}</div>'
-            f'<div class="matchup">{home_logo}<a href="{g["href"]}">{home_slug}</a> vs {away_logo}<a href="{g["href"]}">{away_slug}</a></div>'
-            f'</div>\n'
+            f'<div class="matchup">{home_logo}{home_slug} vs {away_logo}{away_slug}</div>'
+            f'</a>\n'
         )
 
     return f"""
@@ -884,65 +887,8 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
     return sections
 
 
-def _build_pending_summary(pending_data: dict) -> str:
-    """Build a hero badge showing match result summary."""
-    total = pending_data["total_matches"]
-    if total == 0:
-        return ""
-
-    done = pending_data["with_result"]
-    pend = pending_data["pending"]
-    fut = pending_data["future"]
-
-    if pend == 0 and fut == 0:
-        css_class = "green"
-        text = f"\u2705 Todos os {total} jogos com resultado"
-    elif pend > 0:
-        css_class = "yellow"
-        text = f"\U0001f4cb {done}/{total} jogos com resultado  \u2022  \u23f3 {pend} aguardando"
-    else:
-        css_class = "gray"
-        text = f"\U0001f550 Nenhum resultado ainda \u2023 {fut} jogos futuros"
-
-    return f'<div class="hero-badge {css_class}">{text}</div>\n'
 
 
-def _build_pending_games(pending_data: dict, config: ChampionshipConfig) -> str:
-    """Build a horizontal scroll section for pending (past but no result) games."""
-    if not pending_data["pending_info"]:
-        return ""
-
-    cards = ""
-    rev_map = {v: k for k, v in config.team_name_mapping.items()}
-    for g in pending_data["pending_info"]:
-        slug = g["slug"]
-        href = f'jogos/{config.group_phase_label}/{g["date"]}_{g["hour"]}_{slug}.html'
-        date_display = g["date"]
-        if g.get("hour"):
-            date_display += f' {g["hour"]}'
-        home_en = rev_map.get(g["home_team"], g["home_team"])
-        away_en = rev_map.get(g["away_team"], g["away_team"])
-        home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=config.reports_dir + "/html")
-        away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=config.reports_dir + "/html")
-        home_slug = config.team_slugs.get(home_en, "")
-        away_slug = config.team_slugs.get(away_en, "")
-        cards += (
-            f'<div class="game-card">'
-            f'<div class="badge-live" style="background:var(--warning);color:var(--text-inverse);">\u23f3 AGUARDANDO</div>'
-            f'<div class="datetime">{date_display}</div>'
-            f'<div class="matchup">{home_logo}<a href="{href}">{home_slug}</a> vs {away_logo}<a href="{href}">{away_slug}</a></div>'
-            f'</div>\n'
-        )
-
-    if not cards:
-        return ""
-
-    return f"""
-<div class="section">
-    <div class="section-title">\u23f3 Jogos Pendentes</div>
-    <div class="scroll-row">{cards}</div>
-</div>
-"""
 
 
 # ------------------------------------------------------------------
@@ -1038,9 +984,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 </div>
 """
     bonus_card = _build_bonus_times_card(config)
-    pending_summary = _build_pending_summary(pending_data)
-    pending_games = _build_pending_games(pending_data, config)
-
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1058,14 +1001,11 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <h1>\U0001f3c6 {config.report_title}</h1>
     <div class="subtitle">Painel do Bolao</div>
     {zebra_counter}
-    {pending_summary}
 </div>
 
 {badge_legend}
 
 {last_result}
-
-{pending_games}
 
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
     <a href="tabela_real.html">

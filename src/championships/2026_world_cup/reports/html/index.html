@@ -170,7 +170,7 @@ a:hover { text-decoration: underline; }
 .scroll-row::-webkit-scrollbar { height: 4px; }
 .scroll-row::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
-.game-card {
+.game-card, a.game-card {
     flex: 0 0 auto;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -178,6 +178,9 @@ a:hover { text-decoration: underline; }
     padding: 0.5rem 0.75rem;
     text-align: center;
     min-width: 140px;
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 .game-card .matchup { font-weight: 600; font-size: 0.85rem; margin: 0.25rem 0; }
 .game-card .datetime { font-size: 0.7rem; color: var(--text-muted); }
@@ -376,8 +379,6 @@ body { padding-bottom: 70px; }
     <h1>🏆 2026 World Cup</h1>
     <div class="subtitle">Painel do Bolao</div>
     
-    <div class="hero-badge gray">🕐 Nenhum resultado ainda ‣ 72 jogos futuros</div>
-
 </div>
 
 <div class="card" style="margin:0.75rem;font-size:0.7rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:0.25rem 1rem;padding:0.5rem 0.75rem;">
@@ -388,8 +389,6 @@ body { padding-bottom: 70px; }
     <span>🧊 Conservador (aposta abaixo da média)</span>
     <span>🎯 Especialista (maior precisão em time)</span>
 </div>
-
-
 
 
 
@@ -492,11 +491,11 @@ body { padding-bottom: 70px; }
 
 <div class="section">
     <div class="section-title">🕒 Proximos Jogos</div>
-    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;padding:0 0.75rem;"><div class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">11/06 19h</div><div class="matchup"><img src="../../logos/mexico.png" alt="México" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-11_19h_méxico-vs-áfrica_do_sul.html">MEX</a> vs <img src="../../logos/south-africa.png" alt="África do Sul" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-11_19h_méxico-vs-áfrica_do_sul.html">RSA</a></div></div>
-<div class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">12/06 02h</div><div class="matchup"><img src="../../logos/korea-republic.png" alt="Coréia do Sul" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-12_02h_coréia_do_sul-vs-república_tcheca.html">KOR</a> vs <img src="../../logos/czechia.png" alt="República Tcheca" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-12_02h_coréia_do_sul-vs-república_tcheca.html">CZE</a></div></div>
-<div class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">12/06 19h</div><div class="matchup"><img src="../../logos/canada.png" alt="Canadá" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-12_19h_canadá-vs-bósnia.html">CAN</a> vs <img src="../../logos/bosnia-and-herzegovina.png" alt="Bósnia" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-12_19h_canadá-vs-bósnia.html">BIH</a></div></div>
-<div class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 01h</div><div class="matchup"><img src="../../logos/usa.png" alt="Estados Unidos" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-13_01h_estados_unidos-vs-paraguai.html">USA</a> vs <img src="../../logos/paraguay.png" alt="Paraguai" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-13_01h_estados_unidos-vs-paraguai.html">PAR</a></div></div>
-<div class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 19h</div><div class="matchup"><img src="../../logos/qatar.png" alt="Catar" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-13_19h_catar-vs-suíça.html">QAT</a> vs <img src="../../logos/switzerland.png" alt="Suíça" class="team-logo-sm" loading="lazy"><a href="jogos/1afase/2026-06-13_19h_catar-vs-suíça.html">SUI</a></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;padding:0 0.75rem;"><a href="jogos/1afase/2026-06-11_19h_méxico-vs-áfrica_do_sul.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">11/06 19h</div><div class="matchup"><img src="../../logos/mexico.png" alt="México" class="team-logo-sm" loading="lazy">MEX vs <img src="../../logos/south-africa.png" alt="África do Sul" class="team-logo-sm" loading="lazy">RSA</div></a>
+<a href="jogos/1afase/2026-06-12_02h_coréia_do_sul-vs-república_tcheca.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">12/06 02h</div><div class="matchup"><img src="../../logos/korea-republic.png" alt="Coréia do Sul" class="team-logo-sm" loading="lazy">KOR vs <img src="../../logos/czechia.png" alt="República Tcheca" class="team-logo-sm" loading="lazy">CZE</div></a>
+<a href="jogos/1afase/2026-06-12_19h_canadá-vs-bósnia.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">12/06 19h</div><div class="matchup"><img src="../../logos/canada.png" alt="Canadá" class="team-logo-sm" loading="lazy">CAN vs <img src="../../logos/bosnia-and-herzegovina.png" alt="Bósnia" class="team-logo-sm" loading="lazy">BIH</div></a>
+<a href="jogos/1afase/2026-06-13_01h_estados_unidos-vs-paraguai.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 01h</div><div class="matchup"><img src="../../logos/usa.png" alt="Estados Unidos" class="team-logo-sm" loading="lazy">USA vs <img src="../../logos/paraguay.png" alt="Paraguai" class="team-logo-sm" loading="lazy">PAR</div></a>
+<a href="jogos/1afase/2026-06-13_19h_catar-vs-suíça.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 19h</div><div class="matchup"><img src="../../logos/qatar.png" alt="Catar" class="team-logo-sm" loading="lazy">QAT vs <img src="../../logos/switzerland.png" alt="Suíça" class="team-logo-sm" loading="lazy">SUI</div></a>
 </div>
 </div>
 
@@ -508,7 +507,7 @@ body { padding-bottom: 70px; }
     <div style="margin:0 0.75rem;">
 <details open>
     <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">1ª Rodada (24)</summary>
-    <div class="content" style="padding:0.5rem 0.75rem 0.75rem;"><div style="display:flex;flex-direction:column;gap:0.25rem;"><a href="jogos/1afase/2026-06-11_19h_méxico-vs-áfrica_do_sul.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-11 19h | </span><img src="../../logos/mexico.png" alt="México" class="team-logo-sm" loading="lazy">MEX vs <img src="../../logos/south-africa.png" alt="África do Sul" class="team-logo-sm" loading="lazy">RSA</span> <span class="badge-result blue">🔮</span></a>
+    <div class="content" style="padding:0.5rem 0.75rem 0.75rem;"><div style="display:flex;flex-direction:column;gap:0.25rem;"><a href="jogos/1afase/2026-06-11_19h_méxico-vs-áfrica_do_sul.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-11 19h | </span><img src="../../logos/mexico.png" alt="México" class="team-logo-sm" loading="lazy">MEX vs <img src="../../logos/south-africa.png" alt="África do Sul" class="team-logo-sm" loading="lazy">RSA</span> <span class="badge-result yellow">⏳</span></a>
 <a href="jogos/1afase/2026-06-12_02h_coréia_do_sul-vs-república_tcheca.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-12 02h | </span><img src="../../logos/korea-republic.png" alt="Coréia do Sul" class="team-logo-sm" loading="lazy">KOR vs <img src="../../logos/czechia.png" alt="República Tcheca" class="team-logo-sm" loading="lazy">CZE</span> <span class="badge-result blue">🔮</span></a>
 <a href="jogos/1afase/2026-06-12_19h_canadá-vs-bósnia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-12 19h | </span><img src="../../logos/canada.png" alt="Canadá" class="team-logo-sm" loading="lazy">CAN vs <img src="../../logos/bosnia-and-herzegovina.png" alt="Bósnia" class="team-logo-sm" loading="lazy">BIH</span> <span class="badge-result blue">🔮</span></a>
 <a href="jogos/1afase/2026-06-13_01h_estados_unidos-vs-paraguai.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-13 01h | </span><img src="../../logos/usa.png" alt="Estados Unidos" class="team-logo-sm" loading="lazy">USA vs <img src="../../logos/paraguay.png" alt="Paraguai" class="team-logo-sm" loading="lazy">PAR</span> <span class="badge-result blue">🔮</span></a>
@@ -626,7 +625,7 @@ body { padding-bottom: 70px; }
 </div>
 
 <div class="footer" style="padding-bottom:5rem;">
-    atualizado às 10/06/2026 23:42:27
+    atualizado às 11/06/2026 00:24:58
 </div>
 
 <nav class="bottom-nav"><a href="index.html" class="active"><span class="nav-icon">🏠</span>Início</a>

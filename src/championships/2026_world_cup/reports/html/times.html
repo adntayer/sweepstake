@@ -195,6 +195,11 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     transition: width 0.3s;
 }
 .bar-pct { min-width: 40px; text-align: right; color: var(--text-muted); }
+.bar-row { cursor: pointer; }
+.bar-players { display: none; width: 100%; padding: 0.3rem 0 0 100px; font-size: 0.75rem; color: var(--text-muted); }
+.bar-row.expanded .bar-players { display: flex; flex-direction: column; gap: 0.15rem; }
+.bar-player { padding: 0.1rem 0; }
+.bar-player::before { content: "2 "; }
 
 /* Player prediction rows */
 .pred-row {
@@ -372,6 +377,17 @@ details .content { padding: 0.75rem 1rem; }
 .heatmap-away { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-weight:600; font-size:0.8rem; min-width:56px; text-align:center; }
 .heatmap-away img { width:28px; height:28px; }
 .heatmap-grid { flex:1; min-width:0; }
+.heat-cell-lg { cursor: pointer; }
+.heat-legend { font-size: 0.65rem; color: var(--text-muted); text-align: center; padding: 0.25rem 0; }
+.heat-popup {
+    display: none; position: fixed; z-index: 999;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 8px; padding: 0.6rem 0.8rem;
+    font-size: 0.75rem; color: var(--text);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    max-width: 200px;
+}
+.heat-popup.show { display: block; }
 
 /* Bottom navigation bar */
 .bottom-nav {
@@ -834,7 +850,7 @@ body { padding-bottom: 70px; }
     </div>
 </div>
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 10/06/2026 23:42:27
+    atualizado às 11/06/2026 00:24:58
 </div>
 <nav class="bottom-nav"><a href="index.html" class="active"><span class="nav-icon">🏠</span>Início</a>
 <a href="arena.html"><span class="nav-icon">⚔️</span>Arena</a>

@@ -182,6 +182,11 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
     transition: width 0.3s;
 }
 .bar-pct { min-width: 40px; text-align: right; color: var(--text-muted); }
+.bar-row { cursor: pointer; }
+.bar-players { display: none; width: 100%; padding: 0.3rem 0 0 100px; font-size: 0.75rem; color: var(--text-muted); }
+.bar-row.expanded .bar-players { display: flex; flex-direction: column; gap: 0.15rem; }
+.bar-player { padding: 0.1rem 0; }
+.bar-player::before { content: "\2022 "; }
 
 /* Player prediction rows */
 .pred-row {
@@ -359,6 +364,17 @@ details .content { padding: 0.75rem 1rem; }
 .heatmap-away { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-weight:600; font-size:0.8rem; min-width:56px; text-align:center; }
 .heatmap-away img { width:28px; height:28px; }
 .heatmap-grid { flex:1; min-width:0; }
+.heat-cell-lg { cursor: pointer; }
+.heat-legend { font-size: 0.65rem; color: var(--text-muted); text-align: center; padding: 0.25rem 0; }
+.heat-popup {
+    display: none; position: fixed; z-index: 999;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 8px; padding: 0.6rem 0.8rem;
+    font-size: 0.75rem; color: var(--text);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    max-width: 200px;
+}
+.heat-popup.show { display: block; }
 
 /* Bottom navigation bar */
 .bottom-nav {
@@ -753,11 +769,15 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     away_en = rev_map.get(row["away_team"], row["away_team"])
                     home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=boleiro_dir)
                     away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=boleiro_dir)
+                    match_slug = str(row.get("match", ""))
+                    hour_p = str(row.get("hour", ""))
+                    phase_v = str(row.get("phase", "")) if row.get("phase") else config.group_phase_label
+                    game_href = f"../jogos/{phase_v}/{row['date']}_{hour_p}_{match_slug}.html"
                     pending_rows += (
                         f'<div class="pred-row">'
                         f'<div class="pred-info">'
-                        f'<div class="pred-name">{home_logo}{row["home_team"]} vs {away_logo}{row["away_team"]} <span class="pred-date">{date_str}</span></div>'
-                        f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | \u23f3 Aguardando resultado</div>'
+                        f'<div class="pred-name"><a href="{game_href}" style="color:var(--text);text-decoration:none;">{home_logo}{row["home_team"]} vs {away_logo}{row["away_team"]}</a> <span class="pred-date">{date_str}</span></div>'
+                        f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | \u23f3 Aguardando resultado | <a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
                         f'</div>'
                         f'<div class="score-pill" style="color:var(--warning);background:rgba(245,158,11,0.1);border:1px solid var(--warning)">+0 \u23f3</div>'
                         f'</div>\n'
@@ -773,6 +793,31 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         if pd.isna(rrp) or str(rrp).strip().lower() in ("nan", "", "none"):
             return f'{row["home_team"]} vs {row["away_team"]}'
         return f'{row["home_team"]} {rrp} {row["away_team"]}'
+
+    # Pre-compute per-match ranking for all players (group + playoff)
+    match_ranks: dict[str, dict[str, int]] = {}
+    def _add_match_ranks(df: pd.DataFrame) -> None:
+        if "match" not in df.columns:
+            return
+        for match_slug, grp in df[df["match"].notna()].groupby("match"):
+            if not match_slug:
+                continue
+            ranked = grp.sort_values("pontos", ascending=False)
+            rank_map: dict[str, int] = {}
+            current_rank = 1
+            prev_pts = None
+            for i, (_, r) in enumerate(ranked.iterrows()):
+                p = int(r["pontos"])
+                if prev_pts is not None and p < prev_pts:
+                    current_rank = i + 1
+                rank_map[str(r["who"])] = current_rank
+                prev_pts = p
+            match_ranks[str(match_slug)] = rank_map
+    _add_match_ranks(df_valid)
+    for pr in (config.playoff_rounds or []):
+        path = config.gold_playoff_valid_path(pr.key)
+        if os.path.exists(path):
+            _add_match_ranks(pd.read_csv(path, sep=","))
 
     def _build_history_rows(rows_df: pd.DataFrame) -> str:
         rev_map = {v: k for k, v in config.team_name_mapping.items()}
@@ -806,11 +851,21 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             away_en = rev_map.get(row["away_team"], row["away_team"])
             home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=boleiro_dir)
             away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=boleiro_dir)
+            # Game link
+            match_slug = str(row.get("match", ""))
+            phase_v = str(phase_val) if phase_val else config.group_phase_label
+            game_href = f"../jogos/{phase_v}/{row['date']}_{hour_str}_{match_slug}.html"
+            # Player rank for this match
+            rank_str = ""
+            if match_slug in match_ranks:
+                player_rank = match_ranks[match_slug].get(boleiro)
+                if player_rank is not None:
+                    rank_str = f"{player_rank}\u00ba lugar | "
             out += (
                 f'<div class="pred-row">'
                 f'<div class="pred-info">'
-                f'<div class="pred-name">{_format_real_placar(row)} <span class="pred-date">{phase_label}{date_str}</span></div>'
-            f'<div class="pred-detail">{home_logo} {row["resultado_bol_placar"]} {away_logo} | {criterio_emoji} {row["criterio"]}</div>'
+                f'<div class="pred-name"><a href="{game_href}" style="color:var(--text);text-decoration:none;">{_format_real_placar(row)}</a> <span class="pred-date">{phase_label}{date_str}</span></div>'
+            f'<div class="pred-detail">{home_logo} {row["resultado_bol_placar"]} {away_logo} | {criterio_emoji} {row["criterio"]} | {rank_str}<a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
                 f'</div>'
                 f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
                 f'</div>\n'
@@ -1583,6 +1638,13 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     max_a = max(max_a, 4)
     total_s = len(df_match)
 
+    # Build player-per-score mapping for heatmap
+    heat_players: dict[tuple[int, int], list[str]] = {}
+    for _, row in df_match.iterrows():
+        hg = int(row["home_goals_bol"])
+        ag = int(row["away_goals_bol"])
+        heat_players.setdefault((hg, ag), []).append(str(row["who"]))
+
     # Header row (home goals)
     header_row = '<div class="heat-row">'
     header_row += '<div class="heat-label" style="width:80px;min-width:80px;padding:0;"></div>'
@@ -1629,7 +1691,10 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
                     bg = "rgba(239,68,68,0.06)"
                 fc = "var(--text-muted)"
             label = str(cnt) if cnt else ""
-            data_rows += f'<div class="heat-cell-lg" style="background:{bg};color:{fc}">{label}</div>'
+            players = heat_players.get((h, a), [])
+            title = ", ".join(players).replace('"', "&quot;") if players else ""
+            has_click = 'onclick="showHeatPlayers([&quot;' + '&quot;,&quot;'.join(players) + '&quot;],this)"' if players else ""
+            data_rows += f'<div class="heat-cell-lg" style="background:{bg};color:{fc}" title="{title}" {has_click}>{label}</div>'
         data_rows += '</div>\n'
 
     score_heatmap = (
@@ -1639,7 +1704,25 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         f'<div class="heatmap-away">{away_logo}<span>{away}</span></div>'
         f'<div class="heatmap-grid"><div class="heat-container">{header_row}{data_rows}</div></div>'
         '</div></div>'
+        '<div class="heat-legend">👆 clique nos números para ver quem apostou</div>'
+        '<div id="heatPopup" class="heat-popup" onclick="this.classList.remove(\'show\')"></div>'
+        '<script>'
+        'function showHeatPlayers(players,el){'
+        "var p=document.getElementById('heatPopup');"
+        "p.innerHTML='<strong>Boleiros:</strong><br>'+players.join('<br>');"
+        'var r=el.getBoundingClientRect();'
+        "p.style.left=Math.min(r.left,window.innerWidth-200)+'px';"
+        "p.style.top=(r.bottom+4)+'px';"
+        "p.classList.add('show');"
+        'setTimeout(function(){document.addEventListener("click",function hide(e){if(!p.contains(e.target)&&e.target!=el){p.classList.remove("show");document.removeEventListener("click",hide)}})},0)}'
+        '</script>'
     )
+
+    # Build player-per-placar mapping
+    placar_players: dict[str, list[str]] = {}
+    for _, row in df_match.iterrows():
+        placar = str(row["resultado_bol_placar"])
+        placar_players.setdefault(placar, []).append(str(row["who"]))
 
     # Pre-game: placar distribution bars
     placar_counts = df_match["resultado_bol_placar"].value_counts().reset_index()
@@ -1670,11 +1753,16 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     for r in placar_rows_resolved:
         pct = round(r["#"] / total_p * 100)
         tcolor = "home" if r["rtype"] == 0 else ("draw" if r["rtype"] == 1 else "away")
+        players = placar_players.get(r["placar"], [])
+        title = ", ".join(players).replace('"', "&quot;") if players else ""
+        escaped_players = [p.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;") for p in players]
+        player_list = "".join(f'<div class="bar-player">{ep}</div>' for ep in escaped_players)
         score_bars += (
-            f'<div class="bar-row">'
+            f'<div class="bar-row" onclick="this.classList.toggle(\'expanded\')" title="{title}">'
             f'<span class="bar-label">{r["placar"]}</span>'
             f'<div class="bar-track"><div class="bar-fill" style="width:{pct}%;background:{bar_colors[tcolor]}"></div></div>'
             f'<span class="bar-pct" style="color:{bar_colors[tcolor]}">{int(r["#"])} ({pct}%)</span>'
+            f'<div class="bar-players">{player_list}</div>'
             f'</div>\n'
         )
 
@@ -1796,7 +1884,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 <div class="section">
     <div class="section-title">\U0001f52e Pre-Jogo - Distribuicao de Placar</div>
     <div class="card">{score_heatmap}</div>
-    <div class="card" style="margin-top:0.5rem;"><div class="bar-chart">{score_bars}</div></div>
+    <div class="card" style="margin-top:0.5rem;"><div class="bar-chart">{score_bars}</div><div class="heat-legend">👆 clique na linha para ver quem apostou</div></div>
 </div>
 """
 
