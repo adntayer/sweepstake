@@ -1,0 +1,73 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2026-06-11,19h,México,,2.0,x,1.0,,África do Sul,Luiz Augusto,méxico-vs-áfrica_do_sul
+2026-06-12,02h,Coréia do Sul,,1.0,x,2.0,,República Tcheca,Luiz Augusto,coréia_do_sul-vs-república_tcheca
+2026-06-12,19h,Canadá,,2.0,x,1.0,,Bósnia,Luiz Augusto,canadá-vs-bósnia
+2026-06-13,01h,Estados Unidos,,3.0,x,1.0,,Paraguai,Luiz Augusto,estados_unidos-vs-paraguai
+2026-06-13,19h,Catar,,0.0,x,1.0,,Suíça,Luiz Augusto,catar-vs-suíça
+2026-06-13,22h,Brasil,,3.0,x,0.0,,Marrocos,Luiz Augusto,brasil-vs-marrocos
+2026-06-14,01h,Haiti,,1.0,x,2.0,,Escócia,Luiz Augusto,haiti-vs-escócia
+2026-06-14,04h,Austrália,,2.0,x,0.0,,Turquia,Luiz Augusto,austrália-vs-turquia
+2026-06-14,17h,Alemanha,,4.0,x,1.0,,Curaçao,Luiz Augusto,alemanha-vs-curaçao
+2026-06-14,20h,Holanda,,2.0,x,1.0,,Japão,Luiz Augusto,holanda-vs-japão
+2026-06-14,23h,Costa do Marfim,,1.0,x,1.0,,Equador,Luiz Augusto,costa_do_marfim-vs-equador
+2026-06-15,02h,Suécia,,2.0,x,0.0,,Tunísia,Luiz Augusto,suécia-vs-tunísia
+2026-06-15,16h,Espanha,,3.0,x,0.0,,Cabo Verde,Luiz Augusto,espanha-vs-cabo_verde
+2026-06-15,19h,Bélgica,,0.0,x,0.0,,Egito,Luiz Augusto,bélgica-vs-egito
+2026-06-15,22h,Arábia Saudita,,1.0,x,2.0,,Uruguai,Luiz Augusto,arábia_saudita-vs-uruguai
+2026-06-16,01h,Irã,,0.0,x,1.0,,Nova Zelândia,Luiz Augusto,irã-vs-nova_zelândia
+2026-06-16,19h,França,,3.0,x,0.0,,Senegal,Luiz Augusto,frança-vs-senegal
+2026-06-16,22h,Iraque,,1.0,x,2.0,,Noruega,Luiz Augusto,iraque-vs-noruega
+2026-06-17,01h,Argentina,,3.0,x,1.0,,Argélia,Luiz Augusto,argentina-vs-argélia
+2026-06-17,04h,Áustria,,2.0,x,1.0,,Jordânia,Luiz Augusto,áustria-vs-jordânia
+2026-06-17,17h,Portugal,,2.0,x,0.0,,RD Congo,Luiz Augusto,portugal-vs-rd_congo
+2026-06-17,20h,Inglaterra,,3.0,x,1.0,,Croácia,Luiz Augusto,inglaterra-vs-croácia
+2026-06-17,23h,Gana,,0.0,x,0.0,,Panamá,Luiz Augusto,gana-vs-panamá
+2026-06-18,02h,Uzbequistão,,0.0,x,1.0,,Colômbia,Luiz Augusto,uzbequistão-vs-colômbia
+2026-06-18,16h,República Tcheca,,1.0,x,1.0,,África do Sul,Luiz Augusto,república_tcheca-vs-áfrica_do_sul
+2026-06-18,19h,Suíça,,2.0,x,1.0,,Bósnia,Luiz Augusto,suíça-vs-bósnia
+2026-06-18,22h,Canadá,,2.0,x,0.0,,Catar,Luiz Augusto,canadá-vs-catar
+2026-06-19,01h,México,,2.0,x,0.0,,Coréia do Sul,Luiz Augusto,méxico-vs-coréia_do_sul
+2026-06-19,19h,Estados Unidos,,3.0,x,2.0,,Austrália,Luiz Augusto,estados_unidos-vs-austrália
+2026-06-19,22h,Escócia,,1.0,x,0.0,,Marrocos,Luiz Augusto,escócia-vs-marrocos
+2026-06-20,01h,Brasil,,2.0,x,0.0,,Haiti,Luiz Augusto,brasil-vs-haiti
+2026-06-20,04h,Turquia,,2.0,x,0.0,,Paraguai,Luiz Augusto,turquia-vs-paraguai
+2026-06-20,17h,Holanda,,2.0,x,0.0,,Suécia,Luiz Augusto,holanda-vs-suécia
+2026-06-20,20h,Alemanha,,3.0,x,0.0,,Costa do Marfim,Luiz Augusto,alemanha-vs-costa_do_marfim
+2026-06-21,00h,Equador,,2.0,x,1.0,,Curaçao,Luiz Augusto,equador-vs-curaçao
+2026-06-21,04h,Tunísia,,1.0,x,2.0,,Japão,Luiz Augusto,tunísia-vs-japão
+2026-06-21,16h,Espanha,,2.0,x,0.0,,Arábia Saudita,Luiz Augusto,espanha-vs-arábia_saudita
+2026-06-21,19h,Bélgica,,1.0,x,0.0,,Irã,Luiz Augusto,bélgica-vs-irã
+2026-06-21,22h,Uruguai,,1.0,x,0.0,,Cabo Verde,Luiz Augusto,uruguai-vs-cabo_verde
+2026-06-22,01h,Nova Zelândia,,1.0,x,1.0,,Egito,Luiz Augusto,nova_zelândia-vs-egito
+2026-06-22,17h,Argentina,,2.0,x,1.0,,Áustria,Luiz Augusto,argentina-vs-áustria
+2026-06-22,21h,França,,3.0,x,0.0,,Iraque,Luiz Augusto,frança-vs-iraque
+2026-06-23,00h,Noruega,,1.0,x,0.0,,Senegal,Luiz Augusto,noruega-vs-senegal
+2026-06-23,03h,Jordânia,,1.0,x,1.0,,Argélia,Luiz Augusto,jordânia-vs-argélia
+2026-06-23,17h,Portugal,,2.0,x,0.0,,Uzbequistão,Luiz Augusto,portugal-vs-uzbequistão
+2026-06-23,20h,Inglaterra,,2.0,x,0.0,,Gana,Luiz Augusto,inglaterra-vs-gana
+2026-06-23,23h,Panamá,,1.0,x,1.0,,Croácia,Luiz Augusto,panamá-vs-croácia
+2026-06-24,02h,Colômbia,,2.0,x,1.0,,RD Congo,Luiz Augusto,colômbia-vs-rd_congo
+2026-06-24,19h,Suíça,,1.0,x,2.0,,Canadá,Luiz Augusto,suíça-vs-canadá
+2026-06-24,19h,Bósnia,,1.0,x,0.0,,Catar,Luiz Augusto,bósnia-vs-catar
+2026-06-24,22h,Escócia,,1.0,x,3.0,,Brasil,Luiz Augusto,escócia-vs-brasil
+2026-06-24,22h,Marrocos,,1.0,x,0.0,,Haiti,Luiz Augusto,marrocos-vs-haiti
+2026-06-25,01h,República Tcheca,,2.0,x,2.0,,México,Luiz Augusto,república_tcheca-vs-méxico
+2026-06-25,01h,África do Sul,,0.0,x,1.0,,Coréia do Sul,Luiz Augusto,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,20h,Curaçao,,1.0,x,1.0,,Costa do Marfim,Luiz Augusto,curaçao-vs-costa_do_marfim
+2026-06-25,20h,Equador,,1.0,x,4.0,,Alemanha,Luiz Augusto,equador-vs-alemanha
+2026-06-25,23h,Japão,,2.0,x,2.0,,Suécia,Luiz Augusto,japão-vs-suécia
+2026-06-25,23h,Tunísia,,1.0,x,3.0,,Holanda,Luiz Augusto,tunísia-vs-holanda
+2026-06-26,02h,Turquia,,1.0,x,3.0,,Estados Unidos,Luiz Augusto,turquia-vs-estados_unidos
+2026-06-26,02h,Paraguai,,0.0,x,2.0,,Austrália,Luiz Augusto,paraguai-vs-austrália
+2026-06-26,19h,Noruega,,1.0,x,2.0,,França,Luiz Augusto,noruega-vs-frança
+2026-06-26,19h,Senegal,,0.0,x,0.0,,Iraque,Luiz Augusto,senegal-vs-iraque
+2026-06-27,00h,Cabo Verde,,0.0,x,1.0,,Arábia Saudita,Luiz Augusto,cabo_verde-vs-arábia_saudita
+2026-06-27,00h,Uruguai,,2.0,x,2.0,,Espanha,Luiz Augusto,uruguai-vs-espanha
+2026-06-27,03h,Egito,,2.0,x,1.0,,Irã,Luiz Augusto,egito-vs-irã
+2026-06-27,03h,Nova Zelândia,,1.0,x,3.0,,Bélgica,Luiz Augusto,nova_zelândia-vs-bélgica
+2026-06-27,21h,Panamá,,0.0,x,2.0,,Inglaterra,Luiz Augusto,panamá-vs-inglaterra
+2026-06-27,21h,Croácia,,1.0,x,1.0,,Gana,Luiz Augusto,croácia-vs-gana
+2026-06-27,23h,Colômbia,,1.0,x,3.0,,Portugal,Luiz Augusto,colômbia-vs-portugal
+2026-06-27,23h,RD Congo,,1.0,x,1.0,,Uzbequistão,Luiz Augusto,rd_congo-vs-uzbequistão
+2026-06-28,02h,Argélia,,1.0,x,1.0,,Áustria,Luiz Augusto,argélia-vs-áustria
+2026-06-28,02h,Jordânia,,1.0,x,3.0,,Argentina,Luiz Augusto,jordânia-vs-argentina

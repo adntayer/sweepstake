@@ -1,0 +1,73 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2026-06-11,19h,México,,2.0,x,0.0,,África do Sul,Rafael Conte,méxico-vs-áfrica_do_sul
+2026-06-12,02h,Coréia do Sul,,1.0,x,1.0,,República Tcheca,Rafael Conte,coréia_do_sul-vs-república_tcheca
+2026-06-12,19h,Canadá,,1.0,x,1.0,,Bósnia,Rafael Conte,canadá-vs-bósnia
+2026-06-13,01h,Estados Unidos,,2.0,x,1.0,,Paraguai,Rafael Conte,estados_unidos-vs-paraguai
+2026-06-13,19h,Catar,,0.0,x,3.0,,Suíça,Rafael Conte,catar-vs-suíça
+2026-06-13,22h,Brasil,,2.0,x,0.0,,Marrocos,Rafael Conte,brasil-vs-marrocos
+2026-06-14,01h,Haiti,,0.0,x,2.0,,Escócia,Rafael Conte,haiti-vs-escócia
+2026-06-14,04h,Austrália,,0.0,x,2.0,,Turquia,Rafael Conte,austrália-vs-turquia
+2026-06-14,17h,Alemanha,,5.0,x,0.0,,Curaçao,Rafael Conte,alemanha-vs-curaçao
+2026-06-14,20h,Holanda,,2.0,x,1.0,,Japão,Rafael Conte,holanda-vs-japão
+2026-06-14,23h,Costa do Marfim,,1.0,x,2.0,,Equador,Rafael Conte,costa_do_marfim-vs-equador
+2026-06-15,02h,Suécia,,1.0,x,0.0,,Tunísia,Rafael Conte,suécia-vs-tunísia
+2026-06-15,16h,Espanha,,6.0,x,0.0,,Cabo Verde,Rafael Conte,espanha-vs-cabo_verde
+2026-06-15,19h,Bélgica,,2.0,x,1.0,,Egito,Rafael Conte,bélgica-vs-egito
+2026-06-15,22h,Arábia Saudita,,1.0,x,3.0,,Uruguai,Rafael Conte,arábia_saudita-vs-uruguai
+2026-06-16,01h,Irã,,2.0,x,1.0,,Nova Zelândia,Rafael Conte,irã-vs-nova_zelândia
+2026-06-16,19h,França,,4.0,x,0.0,,Senegal,Rafael Conte,frança-vs-senegal
+2026-06-16,22h,Iraque,,0.0,x,2.0,,Noruega,Rafael Conte,iraque-vs-noruega
+2026-06-17,01h,Argentina,,1.0,x,0.0,,Argélia,Rafael Conte,argentina-vs-argélia
+2026-06-17,04h,Áustria,,2.0,x,0.0,,Jordânia,Rafael Conte,áustria-vs-jordânia
+2026-06-17,17h,Portugal,,4.0,x,0.0,,RD Congo,Rafael Conte,portugal-vs-rd_congo
+2026-06-17,20h,Inglaterra,,1.0,x,2.0,,Croácia,Rafael Conte,inglaterra-vs-croácia
+2026-06-17,23h,Gana,,2.0,x,0.0,,Panamá,Rafael Conte,gana-vs-panamá
+2026-06-18,02h,Uzbequistão,,1.0,x,3.0,,Colômbia,Rafael Conte,uzbequistão-vs-colômbia
+2026-06-18,16h,República Tcheca,,1.0,x,0.0,,África do Sul,Rafael Conte,república_tcheca-vs-áfrica_do_sul
+2026-06-18,19h,Suíça,,2.0,x,1.0,,Bósnia,Rafael Conte,suíça-vs-bósnia
+2026-06-18,22h,Canadá,,1.0,x,0.0,,Catar,Rafael Conte,canadá-vs-catar
+2026-06-19,01h,México,,2.0,x,2.0,,Coréia do Sul,Rafael Conte,méxico-vs-coréia_do_sul
+2026-06-19,19h,Estados Unidos,,1.0,x,0.0,,Austrália,Rafael Conte,estados_unidos-vs-austrália
+2026-06-19,22h,Escócia,,1.0,x,2.0,,Marrocos,Rafael Conte,escócia-vs-marrocos
+2026-06-20,01h,Brasil,,6.0,x,1.0,,Haiti,Rafael Conte,brasil-vs-haiti
+2026-06-20,04h,Turquia,,2.0,x,1.0,,Paraguai,Rafael Conte,turquia-vs-paraguai
+2026-06-20,17h,Holanda,,3.0,x,1.0,,Suécia,Rafael Conte,holanda-vs-suécia
+2026-06-20,20h,Alemanha,,3.0,x,1.0,,Costa do Marfim,Rafael Conte,alemanha-vs-costa_do_marfim
+2026-06-21,00h,Equador,,4.0,x,0.0,,Curaçao,Rafael Conte,equador-vs-curaçao
+2026-06-21,04h,Tunísia,,1.0,x,2.0,,Japão,Rafael Conte,tunísia-vs-japão
+2026-06-21,16h,Espanha,,3.0,x,0.0,,Arábia Saudita,Rafael Conte,espanha-vs-arábia_saudita
+2026-06-21,19h,Bélgica,,3.0,x,1.0,,Irã,Rafael Conte,bélgica-vs-irã
+2026-06-21,22h,Uruguai,,4.0,x,0.0,,Cabo Verde,Rafael Conte,uruguai-vs-cabo_verde
+2026-06-22,01h,Nova Zelândia,,1.0,x,2.0,,Egito,Rafael Conte,nova_zelândia-vs-egito
+2026-06-22,17h,Argentina,,3.0,x,1.0,,Áustria,Rafael Conte,argentina-vs-áustria
+2026-06-22,21h,França,,4.0,x,0.0,,Iraque,Rafael Conte,frança-vs-iraque
+2026-06-23,00h,Noruega,,3.0,x,3.0,,Senegal,Rafael Conte,noruega-vs-senegal
+2026-06-23,03h,Jordânia,,1.0,x,2.0,,Argélia,Rafael Conte,jordânia-vs-argélia
+2026-06-23,17h,Portugal,,3.0,x,0.0,,Uzbequistão,Rafael Conte,portugal-vs-uzbequistão
+2026-06-23,20h,Inglaterra,,1.0,x,0.0,,Gana,Rafael Conte,inglaterra-vs-gana
+2026-06-23,23h,Panamá,,0.0,x,3.0,,Croácia,Rafael Conte,panamá-vs-croácia
+2026-06-24,02h,Colômbia,,3.0,x,0.0,,RD Congo,Rafael Conte,colômbia-vs-rd_congo
+2026-06-24,19h,Suíça,,3.0,x,1.0,,Canadá,Rafael Conte,suíça-vs-canadá
+2026-06-24,19h,Bósnia,,1.0,x,0.0,,Catar,Rafael Conte,bósnia-vs-catar
+2026-06-24,22h,Escócia,,0.0,x,3.0,,Brasil,Rafael Conte,escócia-vs-brasil
+2026-06-24,22h,Marrocos,,3.0,x,0.0,,Haiti,Rafael Conte,marrocos-vs-haiti
+2026-06-25,01h,República Tcheca,,0.0,x,1.0,,México,Rafael Conte,república_tcheca-vs-méxico
+2026-06-25,01h,África do Sul,,1.0,x,3.0,,Coréia do Sul,Rafael Conte,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,20h,Curaçao,,0.0,x,3.0,,Costa do Marfim,Rafael Conte,curaçao-vs-costa_do_marfim
+2026-06-25,20h,Equador,,1.0,x,2.0,,Alemanha,Rafael Conte,equador-vs-alemanha
+2026-06-25,23h,Japão,,2.0,x,1.0,,Suécia,Rafael Conte,japão-vs-suécia
+2026-06-25,23h,Tunísia,,0.0,x,3.0,,Holanda,Rafael Conte,tunísia-vs-holanda
+2026-06-26,02h,Turquia,,2.0,x,0.0,,Estados Unidos,Rafael Conte,turquia-vs-estados_unidos
+2026-06-26,02h,Paraguai,,3.0,x,1.0,,Austrália,Rafael Conte,paraguai-vs-austrália
+2026-06-26,19h,Noruega,,1.0,x,3.0,,França,Rafael Conte,noruega-vs-frança
+2026-06-26,19h,Senegal,,2.0,x,0.0,,Iraque,Rafael Conte,senegal-vs-iraque
+2026-06-27,00h,Cabo Verde,,0.0,x,2.0,,Arábia Saudita,Rafael Conte,cabo_verde-vs-arábia_saudita
+2026-06-27,00h,Uruguai,,1.0,x,3.0,,Espanha,Rafael Conte,uruguai-vs-espanha
+2026-06-27,03h,Egito,,2.0,x,0.0,,Irã,Rafael Conte,egito-vs-irã
+2026-06-27,03h,Nova Zelândia,,1.0,x,4.0,,Bélgica,Rafael Conte,nova_zelândia-vs-bélgica
+2026-06-27,21h,Panamá,,0.0,x,3.0,,Inglaterra,Rafael Conte,panamá-vs-inglaterra
+2026-06-27,21h,Croácia,,3.0,x,1.0,,Gana,Rafael Conte,croácia-vs-gana
+2026-06-27,23h,Colômbia,,1.0,x,2.0,,Portugal,Rafael Conte,colômbia-vs-portugal
+2026-06-27,23h,RD Congo,,2.0,x,2.0,,Uzbequistão,Rafael Conte,rd_congo-vs-uzbequistão
+2026-06-28,02h,Argélia,,0.0,x,2.0,,Áustria,Rafael Conte,argélia-vs-áustria
+2026-06-28,02h,Jordânia,,0.0,x,3.0,,Argentina,Rafael Conte,jordânia-vs-argentina

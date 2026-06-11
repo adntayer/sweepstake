@@ -1,0 +1,413 @@
+# Championship: 2026 FIFA World Cup
+id: 2026_world_cup
+name: "2026 World Cup"
+year: 2026
+timezone: "America/Sao_Paulo"
+report_title: "2026 World Cup"
+group_phase_label: "1afase"
+
+# 2026 uses group standings format (not individual match predictions)
+standings_format: true
+standings_skiprows: 1
+
+# All paths (relative to project root)
+base_dir: "src/championships/2026_world_cup/data"
+raw_dir: "src/championships/2026_world_cup/data/raw"
+results_file: "src/championships/2026_world_cup/data/games.csv"
+games_file: "src/championships/2026_world_cup/data/games.csv"
+bronze_dir: "src/championships/2026_world_cup/data/bronze"
+silver_dir: "src/championships/2026_world_cup/data/silver"
+gold_dir: "src/championships/2026_world_cup/data/gold"
+reports_dir: "src/championships/2026_world_cup/reports"
+
+# External results source
+results_endpoint: "https://fixturedownload.com/download/fifa-world-cup-2026-UTC.csv"
+
+# English → Portuguese team name mapping (Excel uses Portuguese names)
+team_name_mapping:
+  - en: "South Africa"
+    pt: "África do Sul"
+    slug: "RSA"
+    logo: "https://assets.football-logos.cc/logos/south-africa/1500x1500/south-africa-national-team.69ffdba0.png"
+  - en: "Korea Republic"
+    pt: "Coréia do Sul"
+    slug: "KOR"
+    logo: "https://assets.football-logos.cc/logos/south-korea/1500x1500/south-korea-national-team.2081e769.png"
+  - en: "Czechia"
+    pt: "República Tcheca"
+    slug: "CZE"
+    logo: "https://assets.football-logos.cc/logos/czech-republic/1500x1500/czech-republic-national-team.885f7471.png"
+  - en: "Mexico"
+    pt: "México"
+    slug: "MEX"
+    logo: "https://assets.football-logos.cc/logos/mexico/1500x1500/mexico-national-team.17c86184.png"
+  - en: "Canada"
+    pt: "Canadá"
+    slug: "CAN"
+    logo: "https://assets.football-logos.cc/logos/canada/1500x1500/canada-national-team.59961a8a.png"
+  - en: "Bosnia and Herzegovina"
+    pt: "Bósnia"
+    slug: "BIH"
+    logo: "https://assets.football-logos.cc/logos/bosnia-and-herzegovina/1500x1500/bosnia-and-herzegovina-national-team.e7d1965c.png"
+  - en: "Qatar"
+    pt: "Catar"
+    slug: "QAT"
+    logo: "https://assets.football-logos.cc/logos/qatar/1500x1500/qatar-national-team.7cdb4fd6.png"
+  - en: "Switzerland"
+    pt: "Suíça"
+    slug: "SUI"
+    logo: "https://assets.football-logos.cc/logos/switzerland/1500x1500/switzerland-national-team.c50f88e5.png"
+  - en: "Brazil"
+    pt: "Brasil"
+    slug: "BRA"
+    logo: "https://assets.football-logos.cc/logos/brazil/1500x1500/brazil-national-team.85d32216.png"
+  - en: "Morocco"
+    pt: "Marrocos"
+    slug: "MAR"
+    logo: "https://assets.football-logos.cc/logos/morocco/1500x1500/morocco-national-team.219ca75f.png"
+  - en: "Haiti"
+    pt: "Haiti"
+    slug: "HAI"
+    logo: "https://assets.football-logos.cc/logos/haiti/1500x1500/haiti-national-team.a861763a.png"
+  - en: "Scotland"
+    pt: "Escócia"
+    slug: "SCO"
+    logo: "https://assets.football-logos.cc/logos/scotland/1500x1500/scotland-national-team.34c985b6.png"
+  - en: "USA"
+    pt: "Estados Unidos"
+    slug: "USA"
+    logo: "https://assets.football-logos.cc/logos/usa/1500x1500/usa-national-team.e66d4bfb.png"
+  - en: "Paraguay"
+    pt: "Paraguai"
+    slug: "PAR"
+    logo: "https://assets.football-logos.cc/logos/paraguay/1500x1500/paraguay-national-team.e593a7cf.png"
+  - en: "Australia"
+    pt: "Austrália"
+    slug: "AUS"
+    logo: "https://assets.football-logos.cc/logos/australia/1500x1500/australia-national-team.abfa2226.png"
+  - en: "Türkiye"
+    pt: "Turquia"
+    slug: "TUR"
+    logo: "https://assets.football-logos.cc/logos/turkey/1500x1500/turkey-national-team.d3a4077e.png"
+  - en: "Germany"
+    pt: "Alemanha"
+    slug: "GER"
+    logo: "https://assets.football-logos.cc/logos/germany/1500x1500/germany-national-team.0c1f52af.png"
+  - en: "Curaçao"
+    pt: "Curaçao"
+    slug: "CUW"
+    logo: "https://assets.football-logos.cc/logos/curacao/1500x1500/curacao-national-team.2798e991.png"
+  - en: "Côte d'Ivoire"
+    pt: "Costa do Marfim"
+    slug: "CIV"
+    logo: "https://assets.football-logos.cc/logos/cote-d-ivoire/1500x1500/cote-d-ivoire-national-team.8fe92489.png"
+  - en: "Ecuador"
+    pt: "Equador"
+    slug: "ECU"
+    logo: "https://assets.football-logos.cc/logos/ecuador/1500x1500/ecuador-national-team.9587f28a.png"
+  - en: "Netherlands"
+    pt: "Holanda"
+    slug: "NED"
+    logo: "https://assets.football-logos.cc/logos/netherlands/1500x1500/dutch-national-team.a34ce2b6.png"
+  - en: "Japan"
+    pt: "Japão"
+    slug: "JPN"
+    logo: "https://assets.football-logos.cc/logos/japan/1500x1500/japan-national-team.d5f74c77.png"
+  - en: "Sweden"
+    pt: "Suécia"
+    slug: "SWE"
+    logo: "https://assets.football-logos.cc/logos/sweden/1500x1500/sweden-national-team.6051a047.png"
+  - en: "Tunisia"
+    pt: "Tunísia"
+    slug: "TUN"
+    logo: "https://assets.football-logos.cc/logos/tunisia/1500x1500/tunisia-national-team.0ae62b2f.png"
+  - en: "Belgium"
+    pt: "Bélgica"
+    slug: "BEL"
+    logo: "https://assets.football-logos.cc/logos/belgium/1500x1500/belgium-national-team.fa9a5779.png"
+  - en: "Egypt"
+    pt: "Egito"
+    slug: "EGY"
+    logo: "https://assets.football-logos.cc/logos/egypt/1500x1500/egypt-national-team.900bb95c.png"
+  - en: "IR Iran"
+    pt: "Irã"
+    slug: "IRN"
+    logo: "https://assets.football-logos.cc/logos/iran/1500x1500/iran-national-team.c2d18212.png"
+  - en: "New Zealand"
+    pt: "Nova Zelândia"
+    slug: "NZL"
+    logo: "https://assets.football-logos.cc/logos/new-zealand/1500x1500/new-zealand-national-team.8d95187f.png"
+  - en: "Spain"
+    pt: "Espanha"
+    slug: "ESP"
+    logo: "https://assets.football-logos.cc/logos/spain/1500x1500/spain-national-team.2ae426fa.png"
+  - en: "Cabo Verde"
+    pt: "Cabo Verde"
+    slug: "CPV"
+    logo: "https://assets.football-logos.cc/logos/cabo-verde/1500x1500/cabo-verde-national-team.47faf891.png"
+  - en: "Saudi Arabia"
+    pt: "Arábia Saudita"
+    slug: "KSA"
+    logo: "https://assets.football-logos.cc/logos/saudi-arabia/1500x1500/saudi-arabia-national-team.ea57e41d.png"
+  - en: "Uruguay"
+    pt: "Uruguai"
+    slug: "URU"
+    logo: "https://assets.football-logos.cc/logos/uruguay/1500x1500/uruguay-national-team.cebe78ec.png"
+  - en: "France"
+    pt: "França"
+    slug: "FRA"
+    logo: "https://assets.football-logos.cc/logos/france/1500x1500/france-national-team.fba1205a.png"
+  - en: "Senegal"
+    pt: "Senegal"
+    slug: "SEN"
+    logo: "https://assets.football-logos.cc/logos/senegal/1500x1500/senegal-national-team.87192f29.png"
+  - en: "Iraq"
+    pt: "Iraque"
+    slug: "IRQ"
+    logo: "https://assets.football-logos.cc/logos/iraq/1500x1500/iraq-national-team.6fe407bc.png"
+  - en: "Norway"
+    pt: "Noruega"
+    slug: "NOR"
+    logo: "https://assets.football-logos.cc/logos/norway/1500x1500/norway-national-team.28a2f277.png"
+  - en: "Argentina"
+    pt: "Argentina"
+    slug: "ARG"
+    logo: "https://assets.football-logos.cc/logos/argentina/1500x1500/argentina-national-team.25139a90.png"
+  - en: "Algeria"
+    pt: "Argélia"
+    slug: "ALG"
+    logo: "https://assets.football-logos.cc/logos/algeria/1500x1500/algeria-national-team.0dd94db2.png"
+  - en: "Austria"
+    pt: "Áustria"
+    slug: "AUT"
+    logo: "https://assets.football-logos.cc/logos/austria/1500x1500/austria-national-team.263bce87.png"
+  - en: "Jordan"
+    pt: "Jordânia"
+    slug: "JOR"
+    logo: "https://assets.football-logos.cc/logos/jordan/1500x1500/jordan-national-team.5a2c6689.png"
+  - en: "Portugal"
+    pt: "Portugal"
+    slug: "POR"
+    logo: "https://assets.football-logos.cc/logos/portugal/1500x1500/portuguese-football-federation.e6f5b2d5.png"
+  - en: "Congo DR"
+    pt: "RD Congo"
+    slug: "COD"
+    logo: "https://assets.football-logos.cc/logos/congo-dr/1500x1500/congo-dr-national-team.6307a41b.png"
+  - en: "Uzbekistan"
+    pt: "Uzbequistão"
+    slug: "UZB"
+    logo: "https://assets.football-logos.cc/logos/uzbekistan/1500x1500/uzbekistan-national-team.2eb400a4.png"
+  - en: "Colombia"
+    pt: "Colômbia"
+    slug: "COL"
+    logo: "https://assets.football-logos.cc/logos/colombia/1500x1500/colombia-national-team.c34b0b53.png"
+  - en: "England"
+    pt: "Inglaterra"
+    slug: "ENG"
+    logo: "https://assets.football-logos.cc/logos/england/1500x1500/england-national-team.3819f697.png"
+  - en: "Croatia"
+    pt: "Croácia"
+    slug: "CRO"
+    logo: "https://assets.football-logos.cc/logos/croatia/1500x1500/croatia-national-team.88f85184.png"
+  - en: "Ghana"
+    pt: "Gana"
+    slug: "GHA"
+    logo: "https://assets.football-logos.cc/logos/ghana/1500x1500/ghana-national-team.c5680848.png"
+  - en: "Panama"
+    pt: "Panamá"
+    slug: "PAN"
+    logo: "https://assets.football-logos.cc/logos/panama/1500x1500/panama-national-team.66beecfd.png"
+
+# Playoff bonus scoring (per correct pick per phase)
+playoff_scoring:
+  segunda_fase: 4
+  oitavas: 8
+  quartas: 12
+  semi: 20
+  final: 30
+  # campeao: 45  # reserved for future champion bonus pick
+
+# Striker scoring (points if player's pick matches actual_top_scorer)
+striker_scoring:
+  points: 25
+
+# Actual top scorer of the championship
+actual_top_scorer: "Harry Kane"
+
+# Scoring rules (checked in rule order)
+scoring:
+  - name: "1-Placar exato"
+    rule: "exact_score"
+    points: 15
+    priority: 1
+    emoji: "🎯"
+    color_text: "#00cc00"
+  - name: "2-Vencedor + gols de um time (erro <= 2)"
+    rule: "correct_winner_and_one_goal"
+    points: 10
+    priority: 2
+    max_total_error: 2
+    emoji: "⚽"
+    color_text: "#66ff66"
+  - name: "3-Vencedor + diferenca de gols (erro <= 2)"
+    rule: "correct_winner_and_goal_diff"
+    points: 7
+    priority: 3
+    max_total_error: 2
+    emoji: "⚽"
+    color_text: "#66ff66"
+  - name: "4-Empate c/ erro total <= 2"
+    rule: "correct_draw_and_low_error"
+    points: 7
+    priority: 4
+    max_total_error: 2
+    emoji: "✅"
+    color_text: "#ffcc00"
+  - name: "5-Vencedor + gols de um time (erro > 2)"
+    rule: "correct_winner_and_one_goal"
+    points: 7
+    priority: 5
+    min_total_error: 3
+    emoji: "⚽"
+    color_text: "#ffcc00"
+  - name: "6-Vencedor correto"
+    rule: "correct_winner"
+    points: 5
+    priority: 6
+    emoji: "✅"
+    color_text: "#ffcc00"
+  - name: "7-Qualquer outro empate"
+    rule: "correct_draw"
+    points: 5
+    priority: 7
+    emoji: "✅"
+    color_text: "#ffcc00"
+  - name: "8-Gols de um time"
+    rule: "one_team_goals"
+    points: 1
+    priority: 8
+    emoji: "👊"
+    color_text: "#ff9900"
+  - name: "9-Nenhum acerto"
+    rule: "no_score"
+    points: 0
+    priority: 9
+    emoji: "❌"
+    color_text: "#ff3333"
+  - name: "99-Sem jogo"
+    rule: "missing_data"
+    points: 0
+    priority: 99
+    emoji: "❓"
+    color_text: "#888888"
+
+
+# Excel parsing layout
+excel_layout:
+  first_round:
+    matches: 72
+    skiprows: 2
+  playoffs:
+    striker_row_offset: 1
+    striker_label: "Artilheiro"
+    striker_name_column: 2
+    striker_name_fallback_column: 8
+    name_split_char: "-"
+    name_split_index: 0
+    playoffs_sheet_name: "Tabela Jogos"
+    rounds:
+      - name: "Segunda Fase"
+        key: "segunda_fase"
+        matches: 16
+        tail_offset: 33
+      - name: "Oitavas de Final"
+        key: "oitavas"
+        matches: 8
+        tail_offset: 17
+      - name: "Quartas de Final"
+        key: "quartas"
+        matches: 4
+        tail_offset: 9
+      - name: "Semifinal"
+        key: "semi"
+        matches: 2
+        tail_offset: 5
+      - name: "Disputa 3\u00ba Lugar"
+        key: "terceiro_lugar"
+        matches: 1
+        tail_offset: 3
+      - name: "Final"
+        key: "final"
+        matches: 1
+        tail_offset: 2
+
+# Groups (48 teams, 12 groups of 4)
+groups:
+  - name: "A"
+    teams: ["México", "África do Sul", "Coréia do Sul", "República Tcheca"]
+  - name: "B"
+    teams: ["Canadá", "Bósnia", "Catar", "Suíça"]
+  - name: "C"
+    teams: ["Estados Unidos", "Paraguai", "Austrália", "Turquia"]
+  - name: "D"
+    teams: ["Brasil", "Marrocos", "Haiti", "Escócia"]
+  - name: "E"
+    teams: ["Alemanha", "Curaçao", "Costa do Marfim", "Equador"]
+  - name: "F"
+    teams: ["Holanda", "Japão", "Suécia", "Tunísia"]
+  - name: "G"
+    teams: ["Espanha", "Cabo Verde", "Arábia Saudita", "Uruguai"]
+  - name: "H"
+    teams: ["Bélgica", "Egito", "Irã", "Nova Zelândia"]
+  - name: "I"
+    teams: ["França", "Senegal", "Iraque", "Noruega"]
+  - name: "J"
+    teams: ["Argentina", "Argélia", "Áustria", "Jordânia"]
+  - name: "K"
+    teams: ["Portugal", "RD Congo", "Uzbequistão", "Colômbia"]
+  - name: "L"
+    teams: ["Inglaterra", "Croácia", "Gana", "Panamá"]
+
+# HTML report theme
+theme:
+  mode: "dark"
+  colors:
+    primary: "#0f4a14"
+    primary_light: "#166320"
+    accent: "#f5c518"
+    accent_dark: "#b8940f"
+    bg: "#060d1a"
+    card_bg: "#0d1b2e"
+    card_border: "#1a3050"
+    text: "#ffffff"
+    text_muted: "#8899aa"
+    text_inverse: "#000000"
+    success: "#15803d"
+    warning: "#f59e0b"
+    danger: "#ef4444"
+    voce: "#f5c518"
+    bolao: "#3b82f6"
+    silver: "#c0c0c0"
+    bronze: "#cd7f32"
+    accent_highlight: "rgba(245,197,24,0.1)"
+    silver_highlight: "rgba(192,192,192,0.08)"
+    bronze_highlight: "rgba(205,127,50,0.08)"
+    zebra_stripe: "rgba(255,255,255,0.02)"
+    hover_overlay: "rgba(255,255,255,0.03)"
+    shadow_color: "rgba(0,0,0,0.4)"
+    player_card_active: "rgba(245,197,24,0.05)"
+    score_exact: "#00cc00"
+    score_exact_bg: "rgba(0,204,0,0.1)"
+    score_exact_border: "rgba(0,204,0,0.4)"
+    score_winner_goals: "#66ff66"
+    score_winner_goals_bg: "rgba(102,255,102,0.1)"
+    score_winner_goals_border: "rgba(102,255,102,0.4)"
+    score_winner: "#ffcc00"
+    score_winner_bg: "rgba(255,204,0,0.1)"
+    score_winner_border: "rgba(255,204,0,0.4)"
+    score_one_team: "#ff9900"
+    score_one_team_bg: "rgba(255,153,0,0.1)"
+    score_one_team_border: "rgba(255,153,0,0.4)"
+    score_none: "#ff3333"
+    score_none_bg: "rgba(255,51,51,0.1)"
+    score_none_border: "rgba(255,51,51,0.4)"

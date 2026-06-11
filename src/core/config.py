@@ -157,10 +157,16 @@ class PlayoffsLayout:
     """Playoff rounds Excel slicing config."""
 
     striker_row_offset: int = 1
+    striker_label: str = "Artilheiro"
+    striker_name_column: int = 2
+    striker_name_fallback_column: int = 8
     name_split_char: str = "-"
     name_split_index: int = 1
     rounds: list[dict] = field(default_factory=list)
     # Each dict: {"name": "...", "key": "...", "matches": N, "tail_offset": N}
+    # Sheet name for playoffs/striker data (standings-format only).
+    # When empty, the loader falls back to the main sheet read for standings.
+    playoffs_sheet_name: str = ""
 
 
 @dataclass
@@ -211,6 +217,8 @@ class ChampionshipConfig:
     # External data
     results_endpoint: str = ""
     team_name_mapping: dict = field(default_factory=dict)
+    team_logos: dict = field(default_factory=dict)  # {english_name: logo_url}
+    team_slugs: dict = field(default_factory=dict)  # {english_name: slug}
 
     # Report settings
     report_title: str = ""
@@ -223,6 +231,16 @@ class ChampionshipConfig:
     # Striker scoring
     actual_top_scorer: str = ""
     striker_points: int = 0
+
+    # Group stage definition (list of {name, teams})
+    groups: list = field(default_factory=list)
+
+    # Group standings format (e.g. 2026 World Cup)
+    standings_format: bool = False
+    standings_skiprows: int = 1
+    # Fallback bonus/striker for standings format (when not parseable from Excel)
+    bonus_team_picks: dict[str, str] = field(default_factory=dict)
+    striker_pick: str = ""
 
     def __post_init__(self) -> None:
         self.base_dir = _norm(self.base_dir) if self.base_dir else _norm(os.path.join("src", "data", self.id))
@@ -410,6 +428,7 @@ class ChampionshipConfig:
         type_map = {
             "exact_score": ("--score-exact", "--score-exact-bg", "--score-exact-border"),
             "correct_winner_and_goals": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
+            "correct_winner_and_goals_or_diff": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
             "correct_winner": ("--score-winner", "--score-winner-bg", "--score-winner-border"),
             "one_team_goals": ("--score-one-team", "--score-one-team-bg", "--score-one-team-border"),
             "no_score": ("--score-none", "--score-none-bg", "--score-none-border"),
@@ -475,15 +494,23 @@ def _parse_theme(raw: dict) -> ThemeConfig:
     return ThemeConfig(mode=raw.get("mode", "dark"), colors=colors)
 
 
-def _parse_team_mapping(raw: list) -> dict[str, str]:
-    """Parse team_name_mapping from YAML into {english: portuguese} dict."""
+def _parse_team_mapping(raw: list) -> tuple[dict[str, str], dict[str, str], dict[str, str]]:
+    """Parse team_name_mapping from YAML into ({en: pt}, {en: logo_url}, {en: slug})."""
     mapping: dict[str, str] = {}
+    logos: dict[str, str] = {}
+    slugs: dict[str, str] = {}
     for entry in raw:
         en = entry.get("en", "").strip()
         pt = entry.get("pt", "").strip()
         if en and pt:
             mapping[en] = pt
-    return mapping
+            logo = entry.get("logo", "").strip()
+            if logo:
+                logos[en] = logo
+            slug = entry.get("slug", "").strip()
+            if slug:
+                slugs[en] = slug
+    return mapping, logos, slugs
 
 
 def _find_championship_dir(championship_id: str) -> Path:
@@ -534,9 +561,13 @@ def load_config(championship_id: str) -> ChampionshipConfig:
 
     playoffs = PlayoffsLayout(
         striker_row_offset=po_cfg.get("striker_row_offset", 1),
+        striker_label=po_cfg.get("striker_label", "Artilheiro"),
+        striker_name_column=po_cfg.get("striker_name_column", 2),
+        striker_name_fallback_column=po_cfg.get("striker_name_fallback_column", 8),
         name_split_char=po_cfg.get("name_split_char", "-"),
         name_split_index=po_cfg.get("name_split_index", 1),
         rounds=po_cfg.get("rounds", []),
+        playoffs_sheet_name=po_cfg.get("playoffs_sheet_name", ""),
     )
 
     excel_layout = ExcelLayout(
@@ -563,6 +594,10 @@ def load_config(championship_id: str) -> ChampionshipConfig:
     striker_cfg = raw.get("striker_scoring", {})
     striker_points = striker_cfg.get("points", 0)
 
+    groups_raw = raw.get("groups", [])
+
+    _tm = _parse_team_mapping(raw.get("team_name_mapping", []))
+
     return ChampionshipConfig(
         id=raw["id"],
         name=raw["name"],
@@ -571,6 +606,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         scoring_rules=scoring_rules,
         playoff_rounds=playoff_rounds,
         excel_layout=excel_layout,
+        groups=groups_raw,
         report_title=raw.get("report_title", raw["name"]),
         group_phase_label=raw.get("group_phase_label", "1a Fase"),
         theme=_parse_theme(raw.get("theme", {})),
@@ -583,10 +619,16 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         gold_dir=_norm(raw.get("gold_dir", "")),
         reports_dir=_norm(raw.get("reports_dir", "")),
         results_endpoint=raw.get("results_endpoint", ""),
-        team_name_mapping=_parse_team_mapping(raw.get("team_name_mapping", [])),
+        team_name_mapping=_tm[0],
+        team_logos=_tm[1],
+        team_slugs=_tm[2],
         playoff_scoring=playoff_scoring,
         actual_top_scorer=raw.get("actual_top_scorer", ""),
         striker_points=striker_points,
+        standings_format=raw.get("standings_format", False),
+        standings_skiprows=raw.get("standings_skiprows", 1),
+        bonus_team_picks=raw.get("bonus_team_picks", {}),
+        striker_pick=raw.get("striker_pick", ""),
     )
 
 

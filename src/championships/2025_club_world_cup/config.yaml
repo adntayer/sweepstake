@@ -117,6 +117,25 @@ team_name_mapping:
   - en: "Juventus FC"
     pt: "Juventus"
 
+# Group stage configuration for real group standings
+groups:
+  - name: "A"
+    teams: ["Palmeiras", "Porto", "Al Ahly", "Inter Miami"]
+  - name: "B"
+    teams: ["Paris Saint-Germain", "AtlǸtico de Madrid", "Botafogo", "Seattle Sounders"]
+  - name: "C"
+    teams: ["Bayern de Munique", "Boca Juniors", "Benfica", "Auckland City"]
+  - name: "D"
+    teams: ["Flamengo", "Chelsea", "EspǸrance", "Los Angeles FC"]
+  - name: "E"
+    teams: ["River Plate", "Urawa Reds", "Monterrey", "Internazionale"]
+  - name: "F"
+    teams: ["Fluminense", "Borussia Dortmund", "Ulsan HD", "Mamelodi Sundowns"]
+  - name: "G"
+    teams: ["Manchester City", "Wydad Casablanca", "Al-Ain", "Juventus"]
+  - name: "H"
+    teams: ["Real Madrid", "Al-Hilal", "Pachuca", "RB Salzburg"]
+
 # Actual top scorer of the championship
 actual_top_scorer: "Haaland"
 

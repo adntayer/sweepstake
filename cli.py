@@ -21,17 +21,29 @@ from src.championships import list_championships, load_config
 from src.core.pipeline import run_raw_to_bronze, run_silver_to_gold, run_pipeline, run_bronze_to_silver
 from src.core.reports.dashboard import generate_dashboard
 from src.core.reports.html import generate_html_reports
+from src.core.logo_fetcher import fetch_all_logos
 from src.core.printing import print_colored
+
+
+def cmd_fetch_logos(args: argparse.Namespace) -> None:
+    """Download and cache team logos."""
+    champ_id = args.championship
+    try:
+        config = load_config(champ_id)
+    except FileNotFoundError as e:
+        print_colored(f"Error: {e}", "red")
+        sys.exit(1)
+    fetch_all_logos(config, force=args.force)
 
 
 def cmd_list(_args: argparse.Namespace) -> None:
     """List all available championships."""
-    champs = list_championships()
-    if not champs:
+    championships = list_championships()
+    if not championships:
         print_colored("No championships found.", "gray")
         return
     print_colored("Available championships:", "sand")
-    for c in champs:
+    for c in championships:
         cfg = load_config(c)
         print_colored(f"  {c}  ({cfg.name}, {cfg.year})", "ice")
 
@@ -114,6 +126,12 @@ def main() -> None:
         "--gold", action="store_true", help="Run gold stage only"
     )
     run_parser.set_defaults(func=cmd_run)
+
+    # ss fetch-logos
+    logos_parser = subparsers.add_parser("fetch-logos", help="Download and cache team logos")
+    logos_parser.add_argument("championship", help="Championship ID (e.g. 2026_world_cup)")
+    logos_parser.add_argument("--force", action="store_true", help="Redownload even if cached")
+    logos_parser.set_defaults(func=cmd_fetch_logos)
 
     args = parser.parse_args()
 

@@ -14,6 +14,7 @@ import pandas as pd
 import requests
 
 from src.core.config import ChampionshipConfig
+from src.core.printing import print_colored
 
 
 # ------------------------------------------------------------------
@@ -71,10 +72,13 @@ def _parse_result(result: str) -> tuple[int | None, int | None]:
 
 
 _ROUND_MAP = {
+    "Round of 32": "segunda_fase",
     "Round of 16": "oitavas",
     "Quarter Finals": "quartas",
     "Semi Finals": "semi",
+    "Third Place": "terceiro_lugar",
     "Final": "final",
+    "Finals": "final",
 }
 
 
@@ -100,14 +104,29 @@ def get_results(config: ChampionshipConfig) -> None:
     The output format matches the internal convention expected by the
     bronze→silver pipeline:
         date, home_team, home_pen, home_goals, x, away_goals, away_pen, away_team, match
+
+    If the download fails and a games.csv already exists, the existing
+    file is reused so the pipeline does not break before the tournament
+    starts or when the remote endpoint is unreachable.
     """
     url = config.results_endpoint
     if not url:
         raise ValueError("results_endpoint not configured")
 
     # Fetch raw CSV
-    response = requests.get(url)
-    response.raise_for_status()
+    try:
+        response = requests.get(url, timeout=15)
+        response.raise_for_status()
+    except Exception as e:
+        if os.path.exists(config.games_file):
+            print_colored(
+                f"Warning: could not download results ({e}), "
+                f"using existing {config.games_file}",
+                "yellow",
+            )
+            return
+        print_colored(f"Error: could not download results and no existing file: {e}", "red")
+        raise
 
     # Parse the fixturedownload CSV
     # Columns: Match Number, Round Number, Date, Location, Home Team, Away Team, Group, Result

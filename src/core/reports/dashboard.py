@@ -11,12 +11,33 @@ import pandas as pd
 import pytz
 
 from src.core.config import ChampionshipConfig
+from src.core.logo_fetcher import _team_logo_tag
 from src.core.printing import print_colored
+from src.core.reports.utils import compute_pending_matches
 
 
 def _norm(path: str) -> str:
     """Normalize a path to the current OS format."""
     return os.path.normpath(path)
+
+
+def _load_gold_data(config: ChampionshipConfig) -> pd.DataFrame:
+    """Load gold data — prefers valid, falls back to all predictions.
+
+    This ensures the dashboard shows participants even when no real
+    results exist yet (all predictions have ``valido=0``).
+    """
+    valid_path = config.gold_valid_path()
+    all_path = config.gold_all_path()
+    if os.path.exists(valid_path):
+        df = pd.read_csv(valid_path, sep=",")
+        if not df.empty:
+            return df
+    if os.path.exists(all_path):
+        df = pd.read_csv(all_path, sep=",")
+        if not df.empty and "who" in df.columns:
+            return df
+    return pd.DataFrame()
 
 
 def _initials(name: str) -> str:
@@ -48,10 +69,11 @@ a:hover { text-decoration: underline; }
 
 /* Hero */
 .hero {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: var(--bg);
     padding: 2rem 1rem;
     text-align: center;
     color: var(--text);
+    border-bottom: 1px solid var(--card-border);
 }
 .hero h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
 .hero .subtitle { font-size: 1rem; opacity: 0.85; }
@@ -152,27 +174,29 @@ a:hover { text-decoration: underline; }
 .scroll-row::-webkit-scrollbar { height: 4px; }
 .scroll-row::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
-.game-card {
-    flex: 0 0 85%;
-    scroll-snap-align: start;
+.game-card, a.game-card {
+    flex: 0 0 auto;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 1rem;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
     text-align: center;
-    min-width: 200px;
+    min-width: 140px;
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
-.game-card .matchup { font-weight: 700; font-size: 1rem; margin: 0.5rem 0; }
-.game-card .datetime { font-size: 0.8rem; color: var(--text-muted); }
+.game-card .matchup { font-weight: 600; font-size: 0.85rem; margin: 0.25rem 0; }
+.game-card .datetime { font-size: 0.7rem; color: var(--text-muted); }
 .game-card .badge-live {
     display: inline-block;
     background: var(--danger);
     color: var(--text);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    padding: 0.15rem 0.5rem;
+    padding: 0.1rem 0.4rem;
     border-radius: 999px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 /* Player grid */
@@ -317,7 +341,24 @@ body { padding-bottom: 70px; }
     50% { transform: scale(1.2); }
 }
 
+/* Status badges for match results */
+.badge-result { display:inline-block; padding:0.1rem 0.4rem; border-radius:999px; font-size:0.65rem; font-weight:600; margin-left:0.3rem; }
+.badge-result.green { background:var(--success); color:#fff; }
+.badge-result.yellow { background:var(--warning); color:var(--text-inverse); }
+.badge-result.blue { background:var(--primary); color:#fff; }
+
+/* Pending summary badge in hero */
+.hero-badge { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.4rem; padding:0.3rem 0.8rem; border-radius:999px; font-size:0.8rem; }
+.hero-badge.green { background:rgba(34,197,94,0.2); }
+.hero-badge.yellow { background:rgba(245,158,11,0.2); }
+.hero-badge.gray { background:rgba(136,153,170,0.2); color:var(--text-muted); }
+
 /* Responsive */
+/* Team logos */
+.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
+.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
+.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 6px; }
+
 @media (max-width: 359px) {
     .hero h1 { font-size: 1.4rem; }
     .hero .subtitle { font-size: 0.85rem; }
@@ -383,18 +424,23 @@ def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
 
     # Extract teams from filename
     rest = fname[match.end():]
-    teams = rest.replace("_vs_", " vs ").replace("_", " ")
+    teams = rest.replace("_vs_", " vs ").replace("_", " ").lstrip("_").replace("-vs-", " vs ").strip()
+    raw_teams = rest.lstrip("_").split("-vs-")
+    home_team = raw_teams[0].replace("_", " ").strip() if len(raw_teams) > 0 else ""
+    away_team = raw_teams[1].replace("_", " ").strip() if len(raw_teams) > 1 else ""
 
     href = filepath.replace("\\", "/").replace(
         f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
     )
 
-    return {"dt": dt, "teams": teams, "href": href, "date_str": f"{day:02d}/{month:02d} {hour:02d}h"}
+    return {"dt": dt, "teams": teams, "home_team": home_team, "away_team": away_team, "href": href, "date_str": f"{day:02d}/{month:02d} {hour:02d}h"}
 
 
 def _build_full_ranking(config: ChampionshipConfig) -> str:
-    """Build the full ranking table (copied from Raio-X) with trend indicators."""
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    """Build the full ranking table with trend indicators and badges."""
+    df_valid = _load_gold_data(config)
+    if df_valid.empty:
+        return "<div class='empty-state'>Nenhum participante encontrado</div>"
 
     # Compute trend: compare last 3 days vs previous 3 days
     df_valid["date_dt"] = pd.to_datetime(df_valid["date"])
@@ -415,6 +461,74 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
             else:
                 trend_map[who] = '<span class="trend-flat">\u25b6</span>'
 
+    # Compute badges for all players
+    gold_dir = config._au_first_round()
+    badge_map: dict[str, list[str]] = {}
+
+    # Hot streak badge (consistency.csv)
+    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
+    if os.path.exists(cons_path):
+        df_cons = pd.read_csv(cons_path, sep=",")
+        for boleiro in df_cons["boleiro"].unique():
+            df_b = df_cons[df_cons["boleiro"] == boleiro].sort_values("date")
+            streak_len = 0
+            streak_type = ""
+            for _, r in reversed(list(df_b.iterrows())):
+                st = r.get("streak_type", "")
+                if st == "hit":
+                    if streak_type == "" or streak_type == "hit":
+                        streak_type = "hit"
+                        streak_len += 1
+                    else:
+                        break
+                elif st == "miss":
+                    if streak_type == "" or streak_type == "miss":
+                        streak_type = "miss"
+                        streak_len += 1
+                    else:
+                        break
+                else:
+                    break
+            if streak_type == "hit" and streak_len >= 3:
+                badge_map.setdefault(boleiro, []).append("\U0001f525")
+
+    # Zebra hunter badge
+    upset_path = _norm(os.path.join(gold_dir, "upset_tracker.csv"))
+    if os.path.exists(upset_path):
+        df_upset = pd.read_csv(upset_path, sep=",")
+        upset_only = df_upset[df_upset.get("is_upset", 0) == 1]
+        zebra_counts: dict[str, int] = {}
+        for _, r in upset_only.iterrows():
+            for p in [x.strip() for x in str(r.get("players_correct", "")).split("|") if x.strip()]:
+                zebra_counts[p] = zebra_counts.get(p, 0) + 1
+        sorted_zebras = sorted(zebra_counts.items(), key=lambda x: -x[1])
+        if len(sorted_zebras) >= 3:
+            for name, _ in sorted_zebras[:3]:
+                badge_map.setdefault(name, []).append("\U0001f993")
+
+    # Boldness badge
+    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
+    if os.path.exists(bold_path):
+        df_bold = pd.read_csv(bold_path, sep=",")
+        for _, r in df_bold.iterrows():
+            bs = float(r["boldness_score"])
+            if bs > 0.3:
+                badge_map.setdefault(r["boleiro"], []).append("\U0001f4a5")
+            elif bs < -0.3:
+                badge_map.setdefault(r["boleiro"], []).append("\U0001F9CA")
+
+    # Leader badge
+    rank_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
+    if os.path.exists(rank_path):
+        df_rank_hist = pd.read_csv(rank_path, sep=",")
+        df_rank_hist = df_rank_hist.sort_values("date")
+        latest_date = df_rank_hist["date"].iloc[-1] if not df_rank_hist.empty else None
+        if latest_date:
+            df_latest = df_rank_hist[df_rank_hist["date"] == latest_date]
+            top = df_latest.loc[df_latest["rank"].idxmin()] if not df_latest.empty else None
+            if top is not None:
+                badge_map.setdefault(top["boleiro"], []).append("\U0001f40d")
+
     score_names = config.scoring_rule_names()
     agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
     df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
@@ -427,7 +541,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         medal = "\U0001f947" if rank_num == 1 else "\U0001f948" if rank_num == 2 else "\U0001f949" if rank_num == 3 else ""
         rank_class = f"rank-{rank_num}" if rank_num <= 3 else ""
         trend = trend_map.get(row["who"], "&nbsp;")
-        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["who"]}.html">{row["who"]}</a> {trend}</td>'
+        badges = " ".join(badge_map.get(row["who"], []))
+        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["who"]}.html">{row["who"]}</a> {trend} <span style="font-size:0.75rem;">{badges}</span></td>'
         cells += f'<td style="font-weight:700;color:var(--accent)">{int(row["pontos"])}</td>'
         for sn in score_names:
             if sn in row.index:
@@ -443,41 +558,53 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     return f"""
 <div style="overflow-x:auto;">
     <table class="rank-table">
-        <thead><tr><th>#</th><th>Boleiro</th><th>Pts</th>{rank_header}</tr></thead>
+        <thead><tr><th>#</th><th>Boleiro</th><th>Jogos</th>{rank_header}</tr></thead>
         <tbody>{rank_rows}</tbody>
     </table>
+    <div style="font-size:0.65rem;color:var(--text-muted);padding:0.3rem 0.75rem;text-align:right;">
+        Jogos = pontos dos palpites (n\u00e3o inclui b\u00f4nus de times)
+    </div>
 </div>"""
 
 
 def _build_upcoming_games(config: ChampionshipConfig) -> str:
-    """Build the upcoming games horizontal scroll section."""
+    """Build the upcoming games section (first 5, no scroll)."""
     html_base = _norm(os.path.join(config.reports_dir, "html"))
-    games = _get_upcoming_games(html_base, config)
+    games = _get_upcoming_games(html_base, config, limit=5)
 
     if not games:
         return ""
 
     cards = ""
+    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
     for g in games:
+        home_en = rev_map_pt.get(g["home_team"].lower(), g["home_team"])
+        away_en = rev_map_pt.get(g["away_team"].lower(), g["away_team"])
+        home_logo = _team_logo_tag(config, home_en, cls="team-logo-sm", start=config.reports_dir + "/html")
+        away_logo = _team_logo_tag(config, away_en, cls="team-logo-sm", start=config.reports_dir + "/html")
+        home_slug = config.team_slugs.get(home_en, "")
+        away_slug = config.team_slugs.get(away_en, "")
         cards += (
-            f'<div class="game-card">'
+            f'<a href="{g["href"]}" class="game-card">'
             f'<div class="badge-live">PROXIMO</div>'
             f'<div class="datetime">{g["date_str"]}</div>'
-            f'<div class="matchup"><a href="{g["href"]}">{g["teams"]}</a></div>'
-            f'</div>\n'
+            f'<div class="matchup">{home_logo}{home_slug} vs {away_logo}{away_slug}</div>'
+            f'</a>\n'
         )
 
     return f"""
 <div class="section">
     <div class="section-title">\U0001f552 Proximos Jogos</div>
-    <div class="scroll-row">{cards}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;padding:0 0.75rem;">{cards}</div>
 </div>
 """
 
 
 def _build_player_grid(config: ChampionshipConfig) -> str:
     """Build the player avatar grid with points and hot streak indicators."""
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_valid = _load_gold_data(config)
+    if df_valid.empty:
+        return ""
     df_pts = df_valid.groupby("who", as_index=False)["pontos"].sum()
     df_pts.sort_values("pontos", ascending=False, inplace=True)
 
@@ -508,7 +635,7 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
             f'<div class="player-avatar">{_initials(name)}</div>'
             f'<div>'
             f'<div class="player-name">{name} {hot_badge}</div>'
-            f'<div class="player-pts">{pts} pts</div>'
+            f'<div class="player-pts">{pts} <span style="font-size:0.6rem;color:var(--text-muted);font-weight:400;">jogos</span></div>'
             f'</div>'
             f'</a>\n'
         )
@@ -523,9 +650,8 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
 
 def _build_distribution_bars(config: ChampionshipConfig) -> str:
     """Build a distribution bar showing how many players are in each score bracket."""
-    try:
-        df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
-    except (FileNotFoundError, pd.errors.EmptyDataError):
+    df_valid = _load_gold_data(config)
+    if df_valid.empty:
         return ""
 
     df_pts = df_valid.groupby("who")["pontos"].sum()
@@ -592,19 +718,19 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
         return ""
 
 
-def _build_bottom_nav_dashboard() -> str:
+def _build_bottom_nav_dashboard(prefix: str = "") -> str:
     """Build the bottom navigation for the dashboard."""
     items = [
         ("index.html", "\U0001f3e0", "In\u00edcio"),
         ("arena.html", "\u2694\ufe0f", "Arena"),
         ("zebras.html", "\U0001f993", "Zebras"),
-        ("momentum.html", "\U0001f525", "Momento"),
+        ("palpites.html", "\U0001f4cb", "Palpites"),
         ("bolao_xray.html", "\U0001f50d", "Raio-X"),
     ]
     links = ""
     for href, icon, label in items:
         cls = ' class="active"' if href == "index.html" else ""
-        links += f'<a href="{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
+        links += f'<a href="{prefix}{href}"{cls}><span class="nav-icon">{icon}</span>{label}</a>\n'
     return f'<nav class="bottom-nav">{links}</nav>'
 
 
@@ -627,14 +753,18 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     ag = int(last["away_goals"])
     date = str(last["date"])
 
+    rev_map = {v: k for k, v in config.team_name_mapping.items()}
+    home_logo = _team_logo_tag(config, rev_map.get(home, home), start=config.reports_dir + "/html")
+    away_logo = _team_logo_tag(config, rev_map.get(away, away), start=config.reports_dir + "/html")
+
     return f"""
 <div class="section">
     <div class="section-title">\U0001f4ca Ultimo Resultado</div>
     <div class="card">
         <div class="result-card">
-            <div class="team">{home}</div>
+            <div class="team">{home_logo} {home}</div>
             <div class="score">{hg} - {ag}</div>
-            <div class="team">{away}</div>
+            <div class="team">{away_logo} {away}</div>
         </div>
         <div class="date">{date}</div>
     </div>
@@ -642,93 +772,218 @@ def _build_last_result(config: ChampionshipConfig) -> str:
 """
 
 
-def _build_phase_accordion(config: ChampionshipConfig) -> str:
-    """Build collapsible phase sections with game links."""
+def _slug_from_filename(filename: str) -> str:
+    """Extract match slug from an HTML filename.
+
+    Pattern: YYYY-MM-DD_HHh_<slug>.html -> <slug>
+    """
+    base = os.path.basename(filename).replace(".html", "")
+    m = re.match(r"\d{4}-\d{2}-\d{2}_\d{1,2}h_(.+)", base)
+    if m:
+        return m.group(1)
+    return base
+
+
+def _status_badge(slug: str, slug_status: dict[str, str]) -> str:
+    """Return a small colored badge for the match status."""
+    status = slug_status.get(slug, "result")
+    if status == "result":
+        return '<span class="badge-result green">\u2705</span>'
+    if status == "pending":
+        return '<span class="badge-result yellow">\u23f3</span>'
+    return '<span class="badge-result blue">\U0001f52e</span>'
+
+
+def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str] | None = None) -> str:
+    """Build phase sections with compact button-style game links, grouped by round."""
+    if slug_status is None:
+        slug_status = {}
     html_base = _norm(os.path.join(config.reports_dir, "html"))
     sections = ""
 
-    # Group phase
+    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
+
+    def _team_part(fp: str, side: str) -> tuple[str, str, str]:
+        slug = _slug_from_filename(fp)
+        parts = slug.split("-vs-")
+        if len(parts) < 2:
+            return ("", "", "")
+        idx = 0 if side == "home" else 1
+        pt_name = parts[idx].replace("_", " ").strip()
+        en_name = rev_map_pt.get(pt_name.lower(), pt_name)
+        logo = _team_logo_tag(config, en_name, cls="team-logo-sm", start=config.reports_dir + "/html")
+        slug_code = config.team_slugs.get(en_name, "")
+        return (pt_name, logo, slug_code)
+
+    def _build_compact_grid(file_list: list[str]) -> str:
+        out = '<div style="display:flex;flex-direction:column;gap:0.25rem;">'
+        for fp in file_list:
+            href = fp.replace("\\", "/").replace(
+                f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
+            )
+            raw_date = (
+                os.path.basename(fp)
+                .replace(".html", "")
+            )
+            # Extract date part
+            date_part = ""
+            m = re.match(r"(\d{4}-\d{2}-\d{2}_\d{1,2}h)", raw_date)
+            if m:
+                date_part = m.group(1).replace("_", " ").replace("h", "h | ")
+            else:
+                date_part = ""
+            slug = _slug_from_filename(fp)
+            badge = _status_badge(slug, slug_status)
+            home_name, home_logo, home_slug = _team_part(fp, "home")
+            away_name, away_logo, away_slug = _team_part(fp, "away")
+            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug} vs {away_logo}{away_slug}</span> {badge}</a>\n'
+        out += "</div>"
+        return out if file_list else '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
+
+    # Group phase – split into 3 rounds of 24 games each
     group_dir = _norm(os.path.join(html_base, "jogos", config.group_phase_label))
     group_files = sorted(glob(_norm(os.path.join(group_dir, "*.html"))))
     group_files = [f for f in group_files if "index" not in f]
 
-    links = ""
-    for fp in group_files:
-        href = fp.replace("\\", "/").replace(
-            f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
-        )
-        label = (
-            os.path.basename(fp)
-            .replace(".html", "")
-            .replace("_", " ")
-            .replace("-vs-", " vs ")
-            .replace("h ", "h | ")
-        )
-        links += f'<a href="{href}">{label}</a>\n'
-
-    if not links:
-        links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
-
-    sections += f"""
-<details open>
-    <summary>\u26bd {config.group_phase_label} ({len(group_files)})</summary>
-    <div class="content">{links}</div>
+    group_size = len(group_files)
+    round_size = max(1, group_size // 3)
+    round_labels = ["1\u00aa Rodada", "2\u00aa Rodada", "3\u00aa Rodada"]
+    sections += f"""<div class="section">
+    <div class="section-title">\u26bd {config.group_phase_label} ({group_size})</div>
+    <div style="margin:0 0.75rem;">
+"""
+    for i in range(3):
+        start = i * round_size
+        end = start + round_size if i < 2 else group_size
+        chunk = group_files[start:end]
+        if chunk:
+            links = _build_compact_grid(chunk)
+            sections += f"""<details {"open" if i == 0 else ""}>
+    <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">{round_labels[i]} ({len(chunk)})</summary>
+    <div class="content" style="padding:0.5rem 0.75rem 0.75rem;">{links}</div>
 </details>
+"""
+    sections += """    </div>
+</div>
 """
 
     # Playoff rounds
-    playoff_emojis = {"oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "final": "\U0001f3c6"}
+    playoff_emojis = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
     for pr in config.playoff_rounds:
         po_dir = _norm(os.path.join(html_base, "jogos", pr.key))
         po_files = sorted(glob(_norm(os.path.join(po_dir, "*.html"))))
         po_files = [f for f in po_files if "index" not in f]
         emoji = playoff_emojis.get(pr.key, "")
 
-        po_links = ""
-        for fp in po_files:
-            href = fp.replace("\\", "/").replace(
-                f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
-            )
-            label = (
-                os.path.basename(fp)
-                .replace(".html", "")
-                .replace("_", " ")
-                .replace("-vs-", " vs ")
-                .replace("h ", "h | ")
-            )
-            po_links += f'<a href="{href}">{label}</a>\n'
-
-        if not po_links:
-            po_links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
+        po_links = _build_compact_grid(po_files)
 
         sections += f"""
-<details>
-    <summary>{emoji} {pr.name} ({len(po_files)})</summary>
-    <div class="content">{po_links}</div>
-</details>
+<div class="section">
+    <div class="section-title">{emoji} {pr.name} ({len(po_files)})</div>
+    <div style="margin:0 0.75rem;">{po_links}</div>
+</div>
 """
 
     return sections
+
+
+
+
 
 
 # ------------------------------------------------------------------
 # Main
 # ------------------------------------------------------------------
 
+def _build_bonus_times_card(config: ChampionshipConfig) -> str:
+    """Build bonus times leaderboard card for the dashboard."""
+    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
+    if not os.path.exists(bonus_path):
+        return ""
+    df = pd.read_csv(bonus_path)
+    if df.empty:
+        return ""
+
+    top_pts = (
+        df.groupby("boleiro")["points"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(3)
+        .reset_index()
+    )
+    top_pts_html = ""
+    for i, (_, r) in enumerate(top_pts.iterrows(), 1):
+        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
+        top_pts_html += (
+            f'<div class="bar-row">'
+            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
+            f'<span class="bar-pct">+{int(r["points"])}pts</span>'
+            f'</div>\n'
+        )
+
+    acc = df.groupby("boleiro").agg(
+        correct=("correct", "sum"), total=("correct", "count")
+    )
+    acc = acc[acc["total"] >= 5].copy()
+    if not acc.empty:
+        acc["rate"] = (acc["correct"] / acc["total"] * 100).round(0)
+        top_acc = acc.sort_values("rate", ascending=False).head(3).reset_index()
+    else:
+        top_acc = pd.DataFrame()
+
+    top_acc_html = ""
+    for i, (_, r) in enumerate(top_acc.iterrows(), 1):
+        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
+        top_acc_html += (
+            f'<div class="bar-row">'
+            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
+            f'<span class="bar-pct">{int(r["correct"])}/{int(r["total"])} - {int(r["rate"])}%</span>'
+            f'</div>\n'
+        )
+
+    html = '<div class="section"><div class="section-title">\U0001f3c6 Bônus Times (extra)</div><div class="card">'
+    if top_pts_html:
+        html += '<div style="margin-bottom:0.75rem;"><strong>Maiores Pontuadores</strong></div>'
+        html += f'<div class="bar-chart">{top_pts_html}</div>'
+    if top_acc_html:
+        html += '<div style="margin-top:0.75rem;margin-bottom:0.75rem;"><strong>Maiores Acertadores</strong></div>'
+        html += f'<div class="bar-chart">{top_acc_html}</div>'
+    html += "</div></div>\n"
+    return html
+
+
 def generate_dashboard(config: ChampionshipConfig) -> None:
     """Create the index.html dashboard."""
+    if not os.path.exists(config.gold_valid_path()) and not os.path.exists(config.gold_all_path()):
+        print_colored(f"no gold data at {config.gold_valid_path()} or {config.gold_all_path()}, skipping dashboard", "yellow")
+        return
     print_colored("creating index.html dashboard", "sand")
 
     tz = pytz.timezone(config.timezone)
     now_str = datetime.now(tz).strftime("%d/%m/%Y %H:%M:%S")
 
+    pending_data = compute_pending_matches(config)
+    slug_status: dict[str, str] = {}
+    for s in pending_data["pending_slugs"]:
+        slug_status[s] = "pending"
+    for s in pending_data["future_slugs"]:
+        slug_status[s] = "future"
+
     last_result = _build_last_result(config)
     full_ranking = _build_full_ranking(config)
     upcoming = _build_upcoming_games(config)
-    player_grid = _build_player_grid(config)
-    phase_accordion = _build_phase_accordion(config)
+    phase_buttons = _build_phase_buttons(config, slug_status)
     zebra_counter = _build_zebra_counter(config)
-
+    badge_legend = """<div class="card" style="margin:0.75rem;font-size:0.7rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:0.25rem 1rem;padding:0.5rem 0.75rem;">
+    <span>\U0001f525 Embrazado (streak \u2265 3 acertos)</span>
+    <span>\U0001f993 Ca\u00e7ador de Zebras (top 3 em zebras)</span>
+    <span>\U0001f40d L\u00edder (1\u00ba lugar geral)</span>
+    <span>\U0001f4a5 Ousado (aposta acima da m\u00e9dia)</span>
+    <span>\U0001F9CA Conservador (aposta abaixo da m\u00e9dia)</span>
+    <span>\U0001f3af Especialista (maior precis\u00e3o em time)</span>
+</div>
+"""
+    bonus_card = _build_bonus_times_card(config)
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -748,27 +1003,34 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     {zebra_counter}
 </div>
 
+{badge_legend}
+
 {last_result}
 
-<div class="section">
-    <div class="section-title">\U0001f3c6 Ranking</div>
-    <div class="card">{full_ranking}</div>
-</div>
-
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
-    <a href="arena.html">
+    <a href="tabela_real.html">
         <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
-            \u2694\ufe0f Arena
+            \U0001f3c6 Grupos
         </div>
     </a>
-    <a href="zebras.html">
+    <a href="rodadas.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f993 Zebras
+            \U0001f4ca Rodadas
         </div>
     </a>
-    <a href="momentum.html">
+    <a href="times.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f525 Momento
+            \U0001f3c6 Times
+        </div>
+    </a>
+    <a href="similaridade.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f9ee S\u00f3sia
+        </div>
+    </a>
+    <a href="palpites.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f4cb Palpites
         </div>
     </a>
     <a href="ranking_evolution.html">
@@ -781,25 +1043,30 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
             \U0001f4ca Boldometro
         </div>
     </a>
+    <a href="zebras.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f993 Zebras
+        </div>
+    </a>
     <a href="bolao_xray.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
             \U0001f50d Raio-X
         </div>
     </a>
-    <a href="day_winners.html">
-        <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
-            \U0001f3c6 Vencedores do Dia
-        </div>
-    </a>
 </div>
+
+<div class="section">
+    <div class="section-title">\U0001f3c6 Ranking</div>
+    <div class="card">{full_ranking}</div>
+</div>
+
+{bonus_card}
 
 {upcoming}
 
-{player_grid}
-
 <div class="section">
     <div class="section-title">\U0001f4c2 Jogos por Fase</div>
-    {phase_accordion}
+    {phase_buttons}
 </div>
 
 <div class="footer" style="padding-bottom:5rem;">

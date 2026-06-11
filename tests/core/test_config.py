@@ -286,7 +286,7 @@ class TestLoadConfig:
         assert cfg.id == "2025_club_world_cup"
         assert cfg.name == "2025 Club World Cup"
         assert cfg.year == 2025
-        assert len(cfg.scoring_rules) == 5
+        assert len(cfg.scoring_rules) == 6
         assert len(cfg.playoff_rounds) == 4
         assert cfg.excel_layout is not None
         assert cfg.excel_layout.first_round.matches == 48
@@ -336,13 +336,26 @@ class TestScoringRuleUniqueness:
     """
 
     def test_no_duplicate_rule_types(self):
-        """All loaded championships must have unique rule.rule values."""
+        """All loaded championships must have unique rule.rule values.
+
+        Exceptions: ``correct_winner_and_goals_or_diff`` may appear more
+        than once to define multi-tier scoring (e.g. error ≤ 2 vs error ≥ 3).
+        """
         for champ_id in list_championships():
             cfg = load_config(champ_id)
             rule_keys = [r.rule for r in cfg.scoring_rules if r.rule]
-            assert len(rule_keys) == len(set(rule_keys)), (
-                f"{champ_id}: duplicate rule types found: "
-                f"{[k for k in rule_keys if rule_keys.count(k) > 1]}"
+            # Filter out intentional multi-tier duplicates
+            multi_tier = {"correct_winner_and_goals_or_diff", "correct_winner_and_one_goal"}
+            seen: set[str] = set()
+            dups: list[str] = []
+            for k in rule_keys:
+                if k in multi_tier:
+                    continue
+                if k in seen:
+                    dups.append(k)
+                seen.add(k)
+            assert not dups, (
+                f"{champ_id}: duplicate rule types found: {dups}"
             )
 
     def test_no_duplicate_rule_types_explicit(self):

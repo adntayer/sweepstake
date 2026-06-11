@@ -1,0 +1,73 @@
+date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_real,away_goals_real,home_pen_bol,away_pen_bol,home_pen_real,away_pen_real,resultado_bol_placar,resultado_bol_time,resultado_real_placar,resultado_real_time,who,pontos,criterio,valido,1-Placar exato,2-Vencedor + acerto parcial,3-Vencedor + acerto parcial,4-Vencedor correto,5-Gols de um time,6-Nenhum acerto,9-Sem jogo
+2026-06-11,19h,méxico-vs-áfrica_do_sul,México,África do Sul,1.0,1.0,,,,,,,1 x 1,empate,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-12,02h,coréia_do_sul-vs-república_tcheca,Coréia do Sul,República Tcheca,1.0,2.0,,,,,,,1 x 2,República Tcheca,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-12,19h,canadá-vs-bósnia,Canadá,Bósnia,1.0,2.0,,,,,,,1 x 2,Bósnia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,01h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,1.0,2.0,,,,,,,1 x 2,Paraguai,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,19h,catar-vs-suíça,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,22h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,01h,haiti-vs-escócia,Haiti,Escócia,0.0,5.0,,,,,,,0 x 5,Escócia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,04h,austrália-vs-turquia,Austrália,Turquia,1.0,3.0,,,,,,,1 x 3,Turquia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,17h,alemanha-vs-curaçao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,20h,holanda-vs-japão,Holanda,Japão,3.0,2.0,,,,,,,3 x 2,Holanda,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,23h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,2.0,1.0,,,,,,,2 x 1,Costa do Marfim,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,02h,suécia-vs-tunísia,Suécia,Tunísia,1.0,0.0,,,,,,,1 x 0,Suécia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,16h,espanha-vs-cabo_verde,Espanha,Cabo Verde,5.0,0.0,,,,,,,5 x 0,Espanha,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,19h,bélgica-vs-egito,Bélgica,Egito,3.0,1.0,,,,,,,3 x 1,Bélgica,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,22h,arábia_saudita-vs-uruguai,Arábia Saudita,Uruguai,1.0,3.0,,,,,,,1 x 3,Uruguai,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,01h,irã-vs-nova_zelândia,Irã,Nova Zelândia,2.0,0.0,,,,,,,2 x 0,Irã,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,19h,frança-vs-senegal,França,Senegal,2.0,0.0,,,,,,,2 x 0,França,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,22h,iraque-vs-noruega,Iraque,Noruega,0.0,3.0,,,,,,,0 x 3,Noruega,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,01h,argentina-vs-argélia,Argentina,Argélia,3.0,0.0,,,,,,,3 x 0,Argentina,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,04h,áustria-vs-jordânia,Áustria,Jordânia,2.0,0.0,,,,,,,2 x 0,Áustria,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,17h,portugal-vs-rd_congo,Portugal,RD Congo,2.0,0.0,,,,,,,2 x 0,Portugal,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,20h,inglaterra-vs-croácia,Inglaterra,Croácia,1.0,0.0,,,,,,,1 x 0,Inglaterra,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,23h,gana-vs-panamá,Gana,Panamá,3.0,0.0,,,,,,,3 x 0,Gana,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,02h,uzbequistão-vs-colômbia,Uzbequistão,Colômbia,1.0,4.0,,,,,,,1 x 4,Colômbia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,16h,república_tcheca-vs-áfrica_do_sul,República Tcheca,África do Sul,1.0,1.0,,,,,,,1 x 1,empate,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,19h,suíça-vs-bósnia,Suíça,Bósnia,1.0,1.0,,,,,,,1 x 1,empate,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,22h,canadá-vs-catar,Canadá,Catar,3.0,0.0,,,,,,,3 x 0,Canadá,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,01h,méxico-vs-coréia_do_sul,México,Coréia do Sul,2.0,1.0,,,,,,,2 x 1,México,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,19h,estados_unidos-vs-austrália,Estados Unidos,Austrália,2.0,1.0,,,,,,,2 x 1,Estados Unidos,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,22h,escócia-vs-marrocos,Escócia,Marrocos,1.0,2.0,,,,,,,1 x 2,Marrocos,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,01h,brasil-vs-haiti,Brasil,Haiti,6.0,0.0,,,,,,,6 x 0,Brasil,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,04h,turquia-vs-paraguai,Turquia,Paraguai,2.0,1.0,,,,,,,2 x 1,Turquia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,17h,holanda-vs-suécia,Holanda,Suécia,2.0,0.0,,,,,,,2 x 0,Holanda,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,20h,alemanha-vs-costa_do_marfim,Alemanha,Costa do Marfim,3.0,1.0,,,,,,,3 x 1,Alemanha,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,00h,equador-vs-curaçao,Equador,Curaçao,3.0,0.0,,,,,,,3 x 0,Equador,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,04h,tunísia-vs-japão,Tunísia,Japão,0.0,1.0,,,,,,,0 x 1,Japão,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,16h,espanha-vs-arábia_saudita,Espanha,Arábia Saudita,4.0,0.0,,,,,,,4 x 0,Espanha,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,19h,bélgica-vs-irã,Bélgica,Irã,2.0,0.0,,,,,,,2 x 0,Bélgica,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,22h,uruguai-vs-cabo_verde,Uruguai,Cabo Verde,2.0,0.0,,,,,,,2 x 0,Uruguai,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,01h,nova_zelândia-vs-egito,Nova Zelândia,Egito,0.0,3.0,,,,,,,0 x 3,Egito,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,17h,argentina-vs-áustria,Argentina,Áustria,2.0,0.0,,,,,,,2 x 0,Argentina,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,21h,frança-vs-iraque,França,Iraque,4.0,0.0,,,,,,,4 x 0,França,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,00h,noruega-vs-senegal,Noruega,Senegal,2.0,1.0,,,,,,,2 x 1,Noruega,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,03h,jordânia-vs-argélia,Jordânia,Argélia,1.0,2.0,,,,,,,1 x 2,Argélia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,17h,portugal-vs-uzbequistão,Portugal,Uzbequistão,4.0,0.0,,,,,,,4 x 0,Portugal,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,20h,inglaterra-vs-gana,Inglaterra,Gana,2.0,0.0,,,,,,,2 x 0,Inglaterra,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,23h,panamá-vs-croácia,Panamá,Croácia,0.0,5.0,,,,,,,0 x 5,Croácia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,02h,colômbia-vs-rd_congo,Colômbia,RD Congo,1.0,1.0,,,,,,,1 x 1,empate,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,19h,suíça-vs-canadá,Suíça,Canadá,1.0,0.0,,,,,,,1 x 0,Suíça,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,19h,bósnia-vs-catar,Bósnia,Catar,3.0,0.0,,,,,,,3 x 0,Bósnia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,22h,escócia-vs-brasil,Escócia,Brasil,0.0,2.0,,,,,,,0 x 2,Brasil,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,22h,marrocos-vs-haiti,Marrocos,Haiti,4.0,0.0,,,,,,,4 x 0,Marrocos,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,01h,república_tcheca-vs-méxico,República Tcheca,México,1.0,0.0,,,,,,,1 x 0,República Tcheca,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,01h,áfrica_do_sul-vs-coréia_do_sul,África do Sul,Coréia do Sul,1.0,0.0,,,,,,,1 x 0,África do Sul,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,20h,curaçao-vs-costa_do_marfim,Curaçao,Costa do Marfim,0.0,4.0,,,,,,,0 x 4,Costa do Marfim,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,20h,equador-vs-alemanha,Equador,Alemanha,1.0,3.0,,,,,,,1 x 3,Alemanha,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,23h,japão-vs-suécia,Japão,Suécia,2.0,1.0,,,,,,,2 x 1,Japão,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,23h,tunísia-vs-holanda,Tunísia,Holanda,0.0,1.0,,,,,,,0 x 1,Holanda,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,02h,turquia-vs-estados_unidos,Turquia,Estados Unidos,2.0,1.0,,,,,,,2 x 1,Turquia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,02h,paraguai-vs-austrália,Paraguai,Austrália,2.0,0.0,,,,,,,2 x 0,Paraguai,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,19h,noruega-vs-frança,Noruega,França,0.0,2.0,,,,,,,0 x 2,França,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,19h,senegal-vs-iraque,Senegal,Iraque,3.0,1.0,,,,,,,3 x 1,Senegal,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,00h,cabo_verde-vs-arábia_saudita,Cabo Verde,Arábia Saudita,2.0,1.0,,,,,,,2 x 1,Cabo Verde,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,00h,uruguai-vs-espanha,Uruguai,Espanha,0.0,2.0,,,,,,,0 x 2,Espanha,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,03h,egito-vs-irã,Egito,Irã,2.0,1.0,,,,,,,2 x 1,Egito,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,03h,nova_zelândia-vs-bélgica,Nova Zelândia,Bélgica,0.0,5.0,,,,,,,0 x 5,Bélgica,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,21h,panamá-vs-inglaterra,Panamá,Inglaterra,0.0,6.0,,,,,,,0 x 6,Inglaterra,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,21h,croácia-vs-gana,Croácia,Gana,2.0,1.0,,,,,,,2 x 1,Croácia,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,23h,colômbia-vs-portugal,Colômbia,Portugal,1.0,2.0,,,,,,,1 x 2,Portugal,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,23h,rd_congo-vs-uzbequistão,RD Congo,Uzbequistão,3.0,1.0,,,,,,,3 x 1,RD Congo,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-28,02h,argélia-vs-áustria,Argélia,Áustria,1.0,2.0,,,,,,,1 x 2,Áustria,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-28,02h,jordânia-vs-argentina,Jordânia,Argentina,0.0,4.0,,,,,,,0 x 4,Argentina,,,Thales Oliveira,0,9-Sem jogo,0,False,False,False,False,False,False,True

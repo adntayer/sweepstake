@@ -1,0 +1,73 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2026-06-11,19h,México,,1.0,x,1.0,,África do Sul,Davi & Cesar,méxico-vs-áfrica_do_sul
+2026-06-12,02h,Coréia do Sul,,2.0,x,1.0,,República Tcheca,Davi & Cesar,coréia_do_sul-vs-república_tcheca
+2026-06-12,19h,Canadá,,2.0,x,1.0,,Bósnia,Davi & Cesar,canadá-vs-bósnia
+2026-06-13,01h,Estados Unidos,,0.0,x,2.0,,Paraguai,Davi & Cesar,estados_unidos-vs-paraguai
+2026-06-13,19h,Catar,,1.0,x,1.0,,Suíça,Davi & Cesar,catar-vs-suíça
+2026-06-13,22h,Brasil,,2.0,x,2.0,,Marrocos,Davi & Cesar,brasil-vs-marrocos
+2026-06-14,01h,Haiti,,0.0,x,1.0,,Escócia,Davi & Cesar,haiti-vs-escócia
+2026-06-14,04h,Austrália,,2.0,x,2.0,,Turquia,Davi & Cesar,austrália-vs-turquia
+2026-06-14,17h,Alemanha,,3.0,x,0.0,,Curaçao,Davi & Cesar,alemanha-vs-curaçao
+2026-06-14,20h,Holanda,,1.0,x,0.0,,Japão,Davi & Cesar,holanda-vs-japão
+2026-06-14,23h,Costa do Marfim,,1.0,x,2.0,,Equador,Davi & Cesar,costa_do_marfim-vs-equador
+2026-06-15,02h,Suécia,,0.0,x,0.0,,Tunísia,Davi & Cesar,suécia-vs-tunísia
+2026-06-15,16h,Espanha,,3.0,x,0.0,,Cabo Verde,Davi & Cesar,espanha-vs-cabo_verde
+2026-06-15,19h,Bélgica,,1.0,x,1.0,,Egito,Davi & Cesar,bélgica-vs-egito
+2026-06-15,22h,Arábia Saudita,,0.0,x,2.0,,Uruguai,Davi & Cesar,arábia_saudita-vs-uruguai
+2026-06-16,01h,Irã,,0.0,x,0.0,,Nova Zelândia,Davi & Cesar,irã-vs-nova_zelândia
+2026-06-16,19h,França,,3.0,x,0.0,,Senegal,Davi & Cesar,frança-vs-senegal
+2026-06-16,22h,Iraque,,0.0,x,1.0,,Noruega,Davi & Cesar,iraque-vs-noruega
+2026-06-17,01h,Argentina,,2.0,x,0.0,,Argélia,Davi & Cesar,argentina-vs-argélia
+2026-06-17,04h,Áustria,,1.0,x,1.0,,Jordânia,Davi & Cesar,áustria-vs-jordânia
+2026-06-17,17h,Portugal,,2.0,x,0.0,,RD Congo,Davi & Cesar,portugal-vs-rd_congo
+2026-06-17,20h,Inglaterra,,2.0,x,1.0,,Croácia,Davi & Cesar,inglaterra-vs-croácia
+2026-06-17,23h,Gana,,1.0,x,0.0,,Panamá,Davi & Cesar,gana-vs-panamá
+2026-06-18,02h,Uzbequistão,,0.0,x,2.0,,Colômbia,Davi & Cesar,uzbequistão-vs-colômbia
+2026-06-18,16h,República Tcheca,,1.0,x,2.0,,África do Sul,Davi & Cesar,república_tcheca-vs-áfrica_do_sul
+2026-06-18,19h,Suíça,,2.0,x,1.0,,Bósnia,Davi & Cesar,suíça-vs-bósnia
+2026-06-18,22h,Canadá,,1.0,x,0.0,,Catar,Davi & Cesar,canadá-vs-catar
+2026-06-19,01h,México,,3.0,x,1.0,,Coréia do Sul,Davi & Cesar,méxico-vs-coréia_do_sul
+2026-06-19,19h,Estados Unidos,,0.0,x,0.0,,Austrália,Davi & Cesar,estados_unidos-vs-austrália
+2026-06-19,22h,Escócia,,1.0,x,1.0,,Marrocos,Davi & Cesar,escócia-vs-marrocos
+2026-06-20,01h,Brasil,,2.0,x,0.0,,Haiti,Davi & Cesar,brasil-vs-haiti
+2026-06-20,04h,Turquia,,1.0,x,1.0,,Paraguai,Davi & Cesar,turquia-vs-paraguai
+2026-06-20,17h,Holanda,,1.0,x,0.0,,Suécia,Davi & Cesar,holanda-vs-suécia
+2026-06-20,20h,Alemanha,,1.0,x,0.0,,Costa do Marfim,Davi & Cesar,alemanha-vs-costa_do_marfim
+2026-06-21,00h,Equador,,2.0,x,0.0,,Curaçao,Davi & Cesar,equador-vs-curaçao
+2026-06-21,04h,Tunísia,,1.0,x,1.0,,Japão,Davi & Cesar,tunísia-vs-japão
+2026-06-21,16h,Espanha,,1.0,x,0.0,,Arábia Saudita,Davi & Cesar,espanha-vs-arábia_saudita
+2026-06-21,19h,Bélgica,,2.0,x,0.0,,Irã,Davi & Cesar,bélgica-vs-irã
+2026-06-21,22h,Uruguai,,2.0,x,1.0,,Cabo Verde,Davi & Cesar,uruguai-vs-cabo_verde
+2026-06-22,01h,Nova Zelândia,,0.0,x,2.0,,Egito,Davi & Cesar,nova_zelândia-vs-egito
+2026-06-22,17h,Argentina,,2.0,x,1.0,,Áustria,Davi & Cesar,argentina-vs-áustria
+2026-06-22,21h,França,,2.0,x,0.0,,Iraque,Davi & Cesar,frança-vs-iraque
+2026-06-23,00h,Noruega,,1.0,x,1.0,,Senegal,Davi & Cesar,noruega-vs-senegal
+2026-06-23,03h,Jordânia,,0.0,x,0.0,,Argélia,Davi & Cesar,jordânia-vs-argélia
+2026-06-23,17h,Portugal,,1.0,x,0.0,,Uzbequistão,Davi & Cesar,portugal-vs-uzbequistão
+2026-06-23,20h,Inglaterra,,2.0,x,0.0,,Gana,Davi & Cesar,inglaterra-vs-gana
+2026-06-23,23h,Panamá,,1.0,x,2.0,,Croácia,Davi & Cesar,panamá-vs-croácia
+2026-06-24,02h,Colômbia,,1.0,x,0.0,,RD Congo,Davi & Cesar,colômbia-vs-rd_congo
+2026-06-24,19h,Suíça,,2.0,x,2.0,,Canadá,Davi & Cesar,suíça-vs-canadá
+2026-06-24,19h,Bósnia,,0.0,x,0.0,,Catar,Davi & Cesar,bósnia-vs-catar
+2026-06-24,22h,Escócia,,0.0,x,1.0,,Brasil,Davi & Cesar,escócia-vs-brasil
+2026-06-24,22h,Marrocos,,1.0,x,0.0,,Haiti,Davi & Cesar,marrocos-vs-haiti
+2026-06-25,01h,República Tcheca,,0.0,x,2.0,,México,Davi & Cesar,república_tcheca-vs-méxico
+2026-06-25,01h,África do Sul,,1.0,x,0.0,,Coréia do Sul,Davi & Cesar,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,20h,Curaçao,,0.0,x,0.0,,Costa do Marfim,Davi & Cesar,curaçao-vs-costa_do_marfim
+2026-06-25,20h,Equador,,1.0,x,1.0,,Alemanha,Davi & Cesar,equador-vs-alemanha
+2026-06-25,23h,Japão,,0.0,x,1.0,,Suécia,Davi & Cesar,japão-vs-suécia
+2026-06-25,23h,Tunísia,,0.0,x,2.0,,Holanda,Davi & Cesar,tunísia-vs-holanda
+2026-06-26,02h,Turquia,,1.0,x,0.0,,Estados Unidos,Davi & Cesar,turquia-vs-estados_unidos
+2026-06-26,02h,Paraguai,,2.0,x,0.0,,Austrália,Davi & Cesar,paraguai-vs-austrália
+2026-06-26,19h,Noruega,,1.0,x,2.0,,França,Davi & Cesar,noruega-vs-frança
+2026-06-26,19h,Senegal,,1.0,x,0.0,,Iraque,Davi & Cesar,senegal-vs-iraque
+2026-06-27,00h,Cabo Verde,,0.0,x,0.0,,Arábia Saudita,Davi & Cesar,cabo_verde-vs-arábia_saudita
+2026-06-27,00h,Uruguai,,2.0,x,2.0,,Espanha,Davi & Cesar,uruguai-vs-espanha
+2026-06-27,03h,Egito,,1.0,x,0.0,,Irã,Davi & Cesar,egito-vs-irã
+2026-06-27,03h,Nova Zelândia,,0.0,x,2.0,,Bélgica,Davi & Cesar,nova_zelândia-vs-bélgica
+2026-06-27,21h,Panamá,,0.0,x,3.0,,Inglaterra,Davi & Cesar,panamá-vs-inglaterra
+2026-06-27,21h,Croácia,,2.0,x,1.0,,Gana,Davi & Cesar,croácia-vs-gana
+2026-06-27,23h,Colômbia,,1.0,x,2.0,,Portugal,Davi & Cesar,colômbia-vs-portugal
+2026-06-27,23h,RD Congo,,0.0,x,0.0,,Uzbequistão,Davi & Cesar,rd_congo-vs-uzbequistão
+2026-06-28,02h,Argélia,,1.0,x,1.0,,Áustria,Davi & Cesar,argélia-vs-áustria
+2026-06-28,02h,Jordânia,,0.0,x,2.0,,Argentina,Davi & Cesar,jordânia-vs-argentina

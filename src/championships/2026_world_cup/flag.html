@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mapeamento de Times e Ligas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f6f9;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        th {
+            background-color: #1e3a8a;
+            color: white;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .club {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .league {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        .national_team {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .logo-container {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Mapeamento de Times e Ligas</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="center" style="width: 100px;">Visual</th>
+                <th style="width: 140px;">Tipo</th>
+                <th>Nome (EN)</th>
+                <th>Nome (PT)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Real Madrid -->
+            <tr>
+                <td class="center">
+                    <div class="logo-container">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 100 130'><ellipse cx='50' cy='65' rx='35' ry='45' fill='%23fff' stroke='%23ecc94b' stroke-width='6'/><circle cx='50' cy='65' r='25' fill='%231e3a8a'/><path d='M35 85 L65 45' stroke='%23fff' stroke-width='8'/><text x='50' y='73' font-family='Arial' font-size='22' font-weight='bold' fill='%23ecc94b' text-anchor='middle'>MC</text><path d='M35 23 L65 23 M50 12 L50 23' stroke='%23ecc94b' stroke-width='4'/></svg>"
+                            alt="Real Madrid">
+                    </div>
+                </td>
+                <td><span class="badge club">Clube</span></td>
+                <td><strong>Real Madrid</strong></td>
+                <td>Real Madrid</td>
+            </tr>
+            <!-- Liga Italiana -->
+            <tr>
+                <td class="center">
+                    <div class="logo-container">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><rect x='10' y='10' width='80' height='80' rx='15' fill='%230052cc'/><text x='50' y='55' font-family='Impact' font-size='42' fill='%23fff' text-anchor='middle'>A</text><path d='M20 75 L80 75' stroke='%2300a86b' stroke-width='6'/><path d='M20 83 L80 83' stroke='%23d62828' stroke-width='6'/></svg>"
+                            alt="Serie A">
+                    </div>
+                </td>
+                <td><span class="badge league">Liga</span></td>
+                <td><strong>Serie A</strong></td>
+                <td>Liga Italiana</td>
+            </tr>
+            <!-- Brasil -->
+            <tr>
+                <td class="center">
+                    <div class="logo-container">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 100 70'><rect width='100' height='70' fill='%23009c3b'/><path d='M50 5 L95 35 L50 65 L5 35 Z' fill='%23ffdf00'/><circle cx='50' cy='35' r='18' fill='%23002776'/><path d='M33 38 Q50 32 67 38' stroke='%23fff' stroke-width='2' fill='none'/></svg>"
+                            alt="Brasil">
+                    </div>
+                </td>
+                <td><span class="badge national_team">Seleção</span></td>
+                <td><strong>Brazil</strong></td>
+                <td>Brasil</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

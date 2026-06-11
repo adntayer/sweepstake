@@ -1,0 +1,73 @@
+date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_real,away_goals_real,home_pen_bol,away_pen_bol,home_pen_real,away_pen_real,resultado_bol_placar,resultado_bol_time,resultado_real_placar,resultado_real_time,who,pontos,criterio,valido,1-Placar exato,2-Vencedor + acerto parcial,3-Vencedor + acerto parcial,4-Vencedor correto,5-Gols de um time,6-Nenhum acerto,9-Sem jogo
+2026-06-11,19h,méxico-vs-áfrica_do_sul,México,África do Sul,2.0,0.0,,,,,,,2 x 0,México,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-12,02h,coréia_do_sul-vs-república_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,,,,,,,1 x 1,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-12,19h,canadá-vs-bósnia,Canadá,Bósnia,2.0,0.0,,,,,,,2 x 0,Canadá,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,01h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,2.0,,,,,,,2 x 2,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,19h,catar-vs-suíça,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-13,22h,brasil-vs-marrocos,Brasil,Marrocos,3.0,2.0,,,,,,,3 x 2,Brasil,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,01h,haiti-vs-escócia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,04h,austrália-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,17h,alemanha-vs-curaçao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,20h,holanda-vs-japão,Holanda,Japão,3.0,0.0,,,,,,,3 x 0,Holanda,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-14,23h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,0.0,2.0,,,,,,,0 x 2,Equador,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,02h,suécia-vs-tunísia,Suécia,Tunísia,1.0,0.0,,,,,,,1 x 0,Suécia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,16h,espanha-vs-cabo_verde,Espanha,Cabo Verde,4.0,0.0,,,,,,,4 x 0,Espanha,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,19h,bélgica-vs-egito,Bélgica,Egito,2.0,2.0,,,,,,,2 x 2,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-15,22h,arábia_saudita-vs-uruguai,Arábia Saudita,Uruguai,1.0,3.0,,,,,,,1 x 3,Uruguai,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,01h,irã-vs-nova_zelândia,Irã,Nova Zelândia,1.0,0.0,,,,,,,1 x 0,Irã,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,19h,frança-vs-senegal,França,Senegal,4.0,1.0,,,,,,,4 x 1,França,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-16,22h,iraque-vs-noruega,Iraque,Noruega,0.0,3.0,,,,,,,0 x 3,Noruega,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,01h,argentina-vs-argélia,Argentina,Argélia,4.0,0.0,,,,,,,4 x 0,Argentina,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,04h,áustria-vs-jordânia,Áustria,Jordânia,2.0,1.0,,,,,,,2 x 1,Áustria,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,17h,portugal-vs-rd_congo,Portugal,RD Congo,4.0,0.0,,,,,,,4 x 0,Portugal,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,20h,inglaterra-vs-croácia,Inglaterra,Croácia,2.0,0.0,,,,,,,2 x 0,Inglaterra,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-17,23h,gana-vs-panamá,Gana,Panamá,1.0,1.0,,,,,,,1 x 1,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,02h,uzbequistão-vs-colômbia,Uzbequistão,Colômbia,0.0,3.0,,,,,,,0 x 3,Colômbia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,16h,república_tcheca-vs-áfrica_do_sul,República Tcheca,África do Sul,3.0,1.0,,,,,,,3 x 1,República Tcheca,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,19h,suíça-vs-bósnia,Suíça,Bósnia,2.0,0.0,,,,,,,2 x 0,Suíça,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-18,22h,canadá-vs-catar,Canadá,Catar,4.0,0.0,,,,,,,4 x 0,Canadá,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,01h,méxico-vs-coréia_do_sul,México,Coréia do Sul,1.0,0.0,,,,,,,1 x 0,México,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,19h,estados_unidos-vs-austrália,Estados Unidos,Austrália,3.0,1.0,,,,,,,3 x 1,Estados Unidos,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-19,22h,escócia-vs-marrocos,Escócia,Marrocos,0.0,2.0,,,,,,,0 x 2,Marrocos,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,01h,brasil-vs-haiti,Brasil,Haiti,5.0,0.0,,,,,,,5 x 0,Brasil,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,04h,turquia-vs-paraguai,Turquia,Paraguai,1.0,1.0,,,,,,,1 x 1,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,17h,holanda-vs-suécia,Holanda,Suécia,3.0,1.0,,,,,,,3 x 1,Holanda,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-20,20h,alemanha-vs-costa_do_marfim,Alemanha,Costa do Marfim,4.0,1.0,,,,,,,4 x 1,Alemanha,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,00h,equador-vs-curaçao,Equador,Curaçao,3.0,0.0,,,,,,,3 x 0,Equador,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,04h,tunísia-vs-japão,Tunísia,Japão,0.0,1.0,,,,,,,0 x 1,Japão,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,16h,espanha-vs-arábia_saudita,Espanha,Arábia Saudita,3.0,0.0,,,,,,,3 x 0,Espanha,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,19h,bélgica-vs-irã,Bélgica,Irã,3.0,1.0,,,,,,,3 x 1,Bélgica,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-21,22h,uruguai-vs-cabo_verde,Uruguai,Cabo Verde,3.0,0.0,,,,,,,3 x 0,Uruguai,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,01h,nova_zelândia-vs-egito,Nova Zelândia,Egito,0.0,2.0,,,,,,,0 x 2,Egito,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,17h,argentina-vs-áustria,Argentina,Áustria,4.0,1.0,,,,,,,4 x 1,Argentina,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-22,21h,frança-vs-iraque,França,Iraque,4.0,0.0,,,,,,,4 x 0,França,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,00h,noruega-vs-senegal,Noruega,Senegal,3.0,1.0,,,,,,,3 x 1,Noruega,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,03h,jordânia-vs-argélia,Jordânia,Argélia,0.0,1.0,,,,,,,0 x 1,Argélia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,17h,portugal-vs-uzbequistão,Portugal,Uzbequistão,5.0,0.0,,,,,,,5 x 0,Portugal,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,20h,inglaterra-vs-gana,Inglaterra,Gana,3.0,1.0,,,,,,,3 x 1,Inglaterra,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-23,23h,panamá-vs-croácia,Panamá,Croácia,0.0,2.0,,,,,,,0 x 2,Croácia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,02h,colômbia-vs-rd_congo,Colômbia,RD Congo,2.0,0.0,,,,,,,2 x 0,Colômbia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,19h,suíça-vs-canadá,Suíça,Canadá,1.0,0.0,,,,,,,1 x 0,Suíça,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,19h,bósnia-vs-catar,Bósnia,Catar,2.0,0.0,,,,,,,2 x 0,Bósnia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,22h,escócia-vs-brasil,Escócia,Brasil,1.0,3.0,,,,,,,1 x 3,Brasil,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-24,22h,marrocos-vs-haiti,Marrocos,Haiti,2.0,1.0,,,,,,,2 x 1,Marrocos,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,01h,república_tcheca-vs-méxico,República Tcheca,México,0.0,2.0,,,,,,,0 x 2,México,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,01h,áfrica_do_sul-vs-coréia_do_sul,África do Sul,Coréia do Sul,0.0,2.0,,,,,,,0 x 2,Coréia do Sul,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,20h,curaçao-vs-costa_do_marfim,Curaçao,Costa do Marfim,0.0,3.0,,,,,,,0 x 3,Costa do Marfim,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,20h,equador-vs-alemanha,Equador,Alemanha,1.0,3.0,,,,,,,1 x 3,Alemanha,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,23h,japão-vs-suécia,Japão,Suécia,2.0,2.0,,,,,,,2 x 2,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-25,23h,tunísia-vs-holanda,Tunísia,Holanda,1.0,3.0,,,,,,,1 x 3,Holanda,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,02h,turquia-vs-estados_unidos,Turquia,Estados Unidos,1.0,1.0,,,,,,,1 x 1,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,02h,paraguai-vs-austrália,Paraguai,Austrália,1.0,1.0,,,,,,,1 x 1,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,19h,noruega-vs-frança,Noruega,França,1.0,3.0,,,,,,,1 x 3,França,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-26,19h,senegal-vs-iraque,Senegal,Iraque,2.0,1.0,,,,,,,2 x 1,Senegal,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,00h,cabo_verde-vs-arábia_saudita,Cabo Verde,Arábia Saudita,2.0,2.0,,,,,,,2 x 2,empate,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,00h,uruguai-vs-espanha,Uruguai,Espanha,2.0,4.0,,,,,,,2 x 4,Espanha,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,03h,egito-vs-irã,Egito,Irã,2.0,0.0,,,,,,,2 x 0,Egito,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,03h,nova_zelândia-vs-bélgica,Nova Zelândia,Bélgica,1.0,3.0,,,,,,,1 x 3,Bélgica,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,21h,panamá-vs-inglaterra,Panamá,Inglaterra,0.0,4.0,,,,,,,0 x 4,Inglaterra,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,21h,croácia-vs-gana,Croácia,Gana,3.0,1.0,,,,,,,3 x 1,Croácia,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,23h,colômbia-vs-portugal,Colômbia,Portugal,2.0,3.0,,,,,,,2 x 3,Portugal,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-27,23h,rd_congo-vs-uzbequistão,RD Congo,Uzbequistão,2.0,1.0,,,,,,,2 x 1,RD Congo,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-28,02h,argélia-vs-áustria,Argélia,Áustria,1.0,2.0,,,,,,,1 x 2,Áustria,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
+2026-06-28,02h,jordânia-vs-argentina,Jordânia,Argentina,1.0,4.0,,,,,,,1 x 4,Argentina,,,André Tayer,0,9-Sem jogo,0,False,False,False,False,False,False,True
