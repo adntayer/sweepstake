@@ -1656,19 +1656,19 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         ag = int(row["away_goals_bol"])
         heat_players.setdefault((hg, ag), []).append(str(row["who"]))
 
-    # Header row (home goals)
+    # Header row (away goals)
     header_row = '<div class="heat-row">'
     header_row += '<div class="heat-label" style="width:80px;min-width:80px;padding:0;"></div>'
-    for h in range(max_h + 1):
-        header_row += f'<div class="heat-cell-lg" style="font-size:0.6rem;font-weight:700;color:var(--text-muted);background:transparent;">{h}</div>'
+    for a in range(max_a + 1):
+        header_row += f'<div class="heat-cell-lg" style="font-size:0.6rem;font-weight:700;color:var(--text-muted);background:transparent;">{a}</div>'
     header_row += '</div>\n'
 
-    # Data rows (away goals)
+    # Data rows (home goals)
     data_rows = ""
-    for a in range(max_a + 1):
+    for h in range(max_h + 1):
         data_rows += '<div class="heat-row">'
-        data_rows += f'<div class="heat-label">{a}</div>'
-        for h in range(max_h + 1):
+        data_rows += f'<div class="heat-label">{h}</div>'
+        for a in range(max_a + 1):
             cnt = len(df_match[(df_match["home_goals_bol"] == h) & (df_match["away_goals_bol"] == a)])
             pct = round(cnt / total_s * 100) if total_s else 0
             if cnt:
@@ -1710,9 +1710,9 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     score_heatmap = (
         '<div class="heatmap-match">'
-        f'<div class="heatmap-top">{home_logo}<span>{home}</span></div>'
+        f'<div class="heatmap-top">{away_logo}<span>{away}</span></div>'
         '<div class="heatmap-body">'
-        f'<div class="heatmap-away">{away_logo}<span>{away}</span></div>'
+        f'<div class="heatmap-away">{home_logo}<span>{home}</span></div>'
         f'<div class="heatmap-grid"><div class="heat-container">{header_row}{data_rows}</div></div>'
         '</div></div>'
         '<div class="heat-legend">👆 clique nos números para ver quem apostou</div>'
