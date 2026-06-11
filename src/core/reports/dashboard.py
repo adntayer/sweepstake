@@ -771,15 +771,15 @@ def _status_badge(slug: str, slug_status: dict[str, str]) -> str:
     return '<span class="badge-result blue">\U0001f52e</span>'
 
 
-def _build_phase_accordion(config: ChampionshipConfig, slug_status: dict[str, str] | None = None) -> str:
-    """Build collapsible phase sections with game links."""
+def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str] | None = None) -> str:
+    """Build phase sections with compact button-style game links, grouped by round."""
     if slug_status is None:
         slug_status = {}
     html_base = _norm(os.path.join(config.reports_dir, "html"))
     sections = ""
 
-    def _build_links(file_list: list[str]) -> str:
-        out = ""
+    def _build_compact_grid(file_list: list[str]) -> str:
+        out = '<div style="display:flex;flex-direction:column;gap:0.25rem;">'
         for fp in file_list:
             href = fp.replace("\\", "/").replace(
                 f"{config.reports_dir.replace(chr(92), '/')}/html/", ""
@@ -793,23 +793,35 @@ def _build_phase_accordion(config: ChampionshipConfig, slug_status: dict[str, st
             )
             slug = _slug_from_filename(fp)
             badge = _status_badge(slug, slug_status)
-            out += f'<a href="{href}">{label}{badge}</a>\n'
-        return out
+            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'">{label} {badge}</a>\n'
+        out += "</div>"
+        return out if file_list else '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
-    # Group phase
+    # Group phase – split into 3 rounds of 24 games each
     group_dir = _norm(os.path.join(html_base, "jogos", config.group_phase_label))
     group_files = sorted(glob(_norm(os.path.join(group_dir, "*.html"))))
     group_files = [f for f in group_files if "index" not in f]
 
-    links = _build_links(group_files)
-    if not links:
-        links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
-
-    sections += f"""
-<details open>
-    <summary>\u26bd {config.group_phase_label} ({len(group_files)})</summary>
-    <div class="content">{links}</div>
+    group_size = len(group_files)
+    round_size = max(1, group_size // 3)
+    round_labels = ["1\u00aa Rodada", "2\u00aa Rodada", "3\u00aa Rodada"]
+    sections += f"""<div class="section">
+    <div class="section-title">\u26bd {config.group_phase_label} ({group_size})</div>
+    <div style="margin:0 0.75rem;">
+"""
+    for i in range(3):
+        start = i * round_size
+        end = start + round_size if i < 2 else group_size
+        chunk = group_files[start:end]
+        if chunk:
+            links = _build_compact_grid(chunk)
+            sections += f"""<details {"open" if i == 0 else ""}>
+    <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">{round_labels[i]} ({len(chunk)})</summary>
+    <div class="content" style="padding:0.5rem 0.75rem 0.75rem;">{links}</div>
 </details>
+"""
+    sections += """    </div>
+</div>
 """
 
     # Playoff rounds
@@ -820,15 +832,13 @@ def _build_phase_accordion(config: ChampionshipConfig, slug_status: dict[str, st
         po_files = [f for f in po_files if "index" not in f]
         emoji = playoff_emojis.get(pr.key, "")
 
-        po_links = _build_links(po_files)
-        if not po_links:
-            po_links = '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
+        po_links = _build_compact_grid(po_files)
 
         sections += f"""
-<details>
-    <summary>{emoji} {pr.name} ({len(po_files)})</summary>
-    <div class="content">{po_links}</div>
-</details>
+<div class="section">
+    <div class="section-title">{emoji} {pr.name} ({len(po_files)})</div>
+    <div style="margin:0 0.75rem;">{po_links}</div>
+</div>
 """
 
     return sections
@@ -969,8 +979,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     last_result = _build_last_result(config)
     full_ranking = _build_full_ranking(config)
     upcoming = _build_upcoming_games(config)
-    player_grid = _build_player_grid(config)
-    phase_accordion = _build_phase_accordion(config, slug_status)
+    phase_buttons = _build_phase_buttons(config, slug_status)
     zebra_counter = _build_zebra_counter(config)
     badge_legend = """<div class="card" style="margin:0.75rem;font-size:0.7rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:0.25rem 1rem;padding:0.5rem 0.75rem;">
     <span>\U0001f525 Embrazado (streak \u2265 3 acertos)</span>
@@ -1010,11 +1019,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 {last_result}
 
 {pending_games}
-
-<div class="section">
-    <div class="section-title">\U0001f3c6 Ranking</div>
-    <div class="card">{full_ranking}</div>
-</div>
 
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
     <a href="tabela_real.html">
@@ -1064,15 +1068,18 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     </a>
 </div>
 
+<div class="section">
+    <div class="section-title">\U0001f3c6 Ranking</div>
+    <div class="card">{full_ranking}</div>
+</div>
+
 {bonus_card}
 
 {upcoming}
 
-{player_grid}
-
 <div class="section">
     <div class="section-title">\U0001f4c2 Jogos por Fase</div>
-    {phase_accordion}
+    {phase_buttons}
 </div>
 
 <div class="footer" style="padding-bottom:5rem;">

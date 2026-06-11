@@ -234,13 +234,9 @@ def _build_knockout_bracket(config: ChampionshipConfig, df_games: pd.DataFrame) 
 # ------------------------------------------------------------------
 
 def _all_teams(config: ChampionshipConfig) -> list[str]:
-    """Get all unique team names from games.csv."""
-    df = pd.read_csv(config.games_file, sep=",")
-    teams = set()
-    for col in ("home_team", "away_team"):
-        if col in df.columns:
-            teams.update(df[col].dropna().unique())
-    return sorted(teams)
+    """Get all team names from config team_name_mapping values, sorted alphabetically."""
+    teams = sorted(config.team_name_mapping.values())
+    return teams
 
 
 def _build_team_page(config: ChampionshipConfig, team: str) -> str:
