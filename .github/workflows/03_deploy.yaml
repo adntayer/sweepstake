@@ -42,7 +42,7 @@ jobs:
       # Seu DAG / Task do Airflow roda aqui
       - name: Run update content
         run: |
-          ss run 2026_world_cup
+          uv run ss run 2026_world_cup
 
       # O deploy lê a pasta gerada localmente no runner e publica no site
       - name: Setup Pages
