@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zebras - 2026 World Cup</title>
+    <style>
+    :root {
+    --primary: #0f4a14;
+    --primary-light: #166320;
+    --accent: #f5c518;
+    --accent-dark: #b8940f;
+    --bg: #060d1a;
+    --card-bg: #0d1b2e;
+    --card-border: #1a3050;
+    --text: #ffffff;
+    --text-muted: #8899aa;
+    --success: #15803d;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --voce: #f5c518;
+    --bolao: #3b82f6;
+    --text-inverse: #000000;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --leader: #8899aa;
+    --accent-highlight: rgba(245,197,24,0.1);
+    --silver-highlight: rgba(192,192,192,0.08);
+    --bronze-highlight: rgba(205,127,50,0.08);
+    --zebra-stripe: rgba(255,255,255,0.02);
+    --hover-overlay: rgba(255,255,255,0.03);
+    --shadow-color: rgba(0,0,0,0.4);
+    --score-exact: #00cc00;
+    --score-winner-goals: #66ff66;
+    --score-winner: #ffcc00;
+    --score-one-team: #ff9900;
+    --score-none: #ff3333;
+    --score-exact-bg: rgba(0,204,0,0.1);
+    --score-exact-border: rgba(0,204,0,0.4);
+    --score-winner-goals-bg: rgba(102,255,102,0.1);
+    --score-winner-goals-border: rgba(102,255,102,0.4);
+    --score-winner-bg: rgba(255,204,0,0.1);
+    --score-winner-border: rgba(255,204,0,0.4);
+    --score-one-team-bg: rgba(255,153,0,0.1);
+    --score-one-team-border: rgba(255,153,0,0.4);
+    --score-none-bg: rgba(255,51,51,0.1);
+    --score-none-border: rgba(255,51,51,0.4);
+    --player-card-active: rgba(245,197,24,0.05);
+}
+
+    
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Hero banner */
+.hero {
+    background: var(--bg);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: var(--text);
+    border-bottom: 1px solid var(--card-border);
+}
+.hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
+.hero .timestamp { font-size: 0.75rem; opacity: 0.65; margin-top: 0.5rem; }
+
+/* Back navigation */
+.back-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.back-nav a {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0.75rem;
+}
+.card-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+/* Stat cards row */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.75rem;
+}
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-align: center;
+}
+.stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+.stat-card .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
+/* Score display */
+.score-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+.score-card .team { flex: 1; text-align: center; font-size: 1rem; }
+.score-card .score {
+    color: var(--accent);
+    font-size: 2rem;
+    white-space: nowrap;
+}
+.score-card .vs { color: var(--text-muted); font-size: 0.9rem; }
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-success { background: var(--success); color: #fff; }
+.badge-warning { background: var(--warning); color: var(--text-inverse); }
+.badge-danger { background: var(--danger); color: #fff; }
+
+/* CSS bar charts */
+.bar-chart { padding: 0.5rem 0; }
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+}
+.bar-label { width: 100px; color: var(--text-muted); text-align: right; font-size: 0.7rem; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track {
+    flex: 1;
+    height: 20px;
+    background: var(--card-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+.bar-pct { min-width: 40px; text-align: right; color: var(--text-muted); }
+.bar-row { cursor: pointer; }
+.bar-players { display: none; width: 100%; padding: 0.3rem 0 0 100px; font-size: 0.75rem; color: var(--text-muted); }
+.bar-row.expanded .bar-players { display: flex; flex-direction: column; gap: 0.15rem; }
+.bar-player { padding: 0.1rem 0; }
+.bar-player::before { content: "2 "; }
+
+/* Player prediction rows */
+.pred-row {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+    gap: 0.75rem;
+}
+.pred-row:last-child { border-bottom: none; }
+.pred-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+.pred-info { flex: 1; min-width: 0; }
+.pred-name { font-weight: 600; font-size: 0.9rem; }
+.pred-date { font-weight: 400; font-size: 0.75rem; color: var(--text-muted); display: inline-block; }
+.pred-detail { font-size: 0.8rem; color: var(--text-muted); }
+.pred-points {
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    min-width: 50px;
+    text-align: right;
+}
+
+/* Ranking table */
+.rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+.rank-table th {
+    background: var(--card-border);
+    color: var(--text-muted);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.rank-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+}
+.rank-table tr:nth-child(even) { background: var(--zebra-stripe); }
+.rank-table .rank-1 td { background: var(--accent-highlight); }
+.rank-table .rank-2 td { background: var(--silver-highlight); }
+.rank-table .rank-3 td { background: var(--bronze-highlight); }
+
+/* Section spacing */
+.section { margin: 1rem 0; }
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Accordion / details */
+details {
+    margin: 0.5rem 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+summary {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+}
+summary:hover { background: var(--hover-overlay); }
+details[open] summary { border-bottom: 1px solid var(--card-border); }
+details .content { padding: 0.75rem 1rem; }
+
+/* Striker badge */
+.striker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 0.75rem;
+    font-size: 0.9rem;
+}
+.striker-badge .icon { font-size: 1.2rem; }
+
+/* Score pill */
+.score-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+/* Utility */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.mt-0 { margin-top: 0; }
+.mb-1 { margin-bottom: 0.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.stat-card-sm { padding: 0.5rem; }
+.stat-card-sm .value { font-size: 1.1rem; }
+.stat-card-sm .label { font-size: 0.6rem; }
+.card-link {
+    display: block;
+    margin: 0 0.75rem;
+    text-align: center;
+    font-weight: 600;
+}
+.card-link.accent { border-color: var(--accent); }
+.arena-select {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+.arena-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.arena-label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem; }
+.compare-date { color: var(--text-muted); margin-bottom: 0.15rem; }
+.compare-row { margin-bottom: 0.4rem; font-size: 0.8rem; }
+.compare-label-p1 { min-width: 30px; color: var(--accent); font-size: 0.75rem; }
+.compare-label-p2 { min-width: 30px; color: var(--text-muted); font-size: 0.75rem; }
+.compare-bar-track { height: 12px; }
+.compare-bar-fill-accent { background: var(--accent); }
+.compare-bar-fill-voce { background: var(--voce); }
+.compare-bar-fill-bolao { background: var(--bolao); }
+.compare-val { min-width: 25px; text-align: right; font-size: 0.75rem; }
+.compare-diff { text-align: right; font-size: 0.7rem; font-weight: 700; }
+
+/* Heatmap */
+.heat-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.heat-row { display: flex; gap: 0; margin-bottom: 2px; }
+.heat-label { width: 80px; min-width: 80px; font-size: 0.7rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 4px; line-height: 28px; text-align: right; }
+.heat-cells { display: flex; gap: 2px; }
+.heat-cell { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--text); border-radius: 3px; flex-shrink: 0; }
+.heat-cell-header { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; color: var(--text-muted); flex-shrink: 0; border-radius: 3px; }
+.heat-total-label { width: 80px; min-width: 80px; font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; padding-right: 4px; line-height: 28px; text-align: right; border-top: 1px solid var(--card-border); }
+/* Larger cells for match-page heatmap */
+.heat-cell-lg { width: 34px; min-width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: var(--text); border-radius: 4px; flex-shrink: 0; }
+.heatmap-match { display:flex; flex-direction:column; gap:6px; }
+.heatmap-top { display:flex; align-items:center; justify-content:center; gap:6px; font-weight:600; font-size:0.9rem; padding:6px 0 2px 0; }
+.heatmap-top img { width:28px; height:28px; }
+.heatmap-body { display:flex; gap:10px; }
+.heatmap-away { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-weight:600; font-size:0.8rem; min-width:56px; text-align:center; }
+.heatmap-away img { width:28px; height:28px; }
+.heatmap-grid { flex:1; min-width:0; }
+.heat-cell-lg { cursor: pointer; }
+.heat-legend { font-size: 0.65rem; color: var(--text-muted); text-align: center; padding: 0.25rem 0; }
+.heat-popup {
+    display: none; position: fixed; z-index: 999;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 8px; padding: 0.6rem 0.8rem;
+    font-size: 0.75rem; color: var(--text);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    max-width: 200px;
+}
+.heat-popup.show { display: block; }
+
+/* Bottom navigation bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.25rem 0;
+    padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 10px var(--shadow-color);
+}
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    min-height: 44px;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav a:active { background: var(--hover-overlay); }
+.bottom-nav a .nav-icon { font-size: 1.2rem; line-height: 1; }
+.bottom-nav a.active { color: var(--accent); }
+body { padding-bottom: 70px; }
+
+/* Zebra cards */
+.zebra-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0.75rem;
+}
+.zebra-card.upset { border-color: var(--danger); border-width: 2px; }
+.zebra-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.zebra-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.zebra-badge.upset { background: var(--danger); color: #fff; }
+.zebra-badge.favorite { background: var(--success); color: #fff; }
+.zebra-matchup { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+.zebra-detail { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+.zebra-players { margin-top: 0.5rem; font-size: 0.8rem; }
+.zebra-players .tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    margin: 0.1rem;
+    background: var(--accent-highlight);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    color: var(--accent);
+}
+
+/* Momentum / streak styles */
+.streak-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 0.85rem;
+}
+.streak-row:last-child { border-bottom: none; }
+.streak-name { flex: 1; font-weight: 600; }
+.streak-bar-mini {
+    height: 6px;
+    border-radius: 3px;
+    flex: 0 0 80px;
+    background: var(--card-border);
+    overflow: hidden;
+}
+.streak-bar-mini .fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+.streak-bar-mini .fill.hot { background: var(--success); }
+.streak-bar-mini .fill.cold { background: var(--danger); }
+.streak-val { min-width: 30px; text-align: right; font-size: 0.75rem; font-weight: 700; }
+
+/* Profile badge */
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid var(--accent);
+    background: var(--accent-highlight);
+}
+
+/* Trend indicators */
+.trend-up { color: var(--success); }
+.trend-down { color: var(--danger); }
+.trend-flat { color: var(--text-muted); }
+
+/* Hot streak indicator */
+.hot-streak {
+    display: inline-block;
+    font-size: 0.9rem;
+    animation: pulse-fire 1.5s ease-in-out infinite;
+}
+@keyframes pulse-fire {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Mini stat columns */
+.mini-stat { text-align: center; padding: 0.3rem; }
+.mini-stat .val { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+.mini-stat .lbl { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+
+/* Team logos */
+.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
+.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
+.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 6px; }
+
+/* Responsive */
+@media (max-width: 359px) {
+    .hero h1 { font-size: 1.25rem; }
+    .hero .subtitle { font-size: 0.8rem; }
+    .bottom-nav a { font-size: 0.55rem; }
+    .bottom-nav a .nav-icon { font-size: 1rem; }
+}
+@media (min-width: 768px) {
+    body { max-width: 800px; margin: 0 auto; }
+    .stat-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+    </style>
+</head>
+<body>
+
+
+<div class="hero">
+    <h1>🦓 Zebras & Favoritos</h1>
+    <div class="subtitle">Partidas onde o bolaao inteiro errou — e quem acertou</div>
+</div>
+
+<div class="card" style="margin:1rem 0.75rem;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;">
+        <div class="mini-stat">
+            <div class="val">72</div>
+            <div class="lbl">Partidas</div>
+        </div>
+        <div class="mini-stat">
+            <div class="val" style="color:var(--danger);">66</div>
+            <div class="lbl">Zebras</div>
+        </div>
+        <div class="mini-stat">
+            <div class="val">91.7%</div>
+            <div class="lbl">% de Zebras</div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">💥 Zebras do Torneio</div>
+    
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Argentina</span>
+    </div>
+    <div class="zebra-matchup">Argentina vs Áustria</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Argentina</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Alemanha</span>
+    </div>
+    <div class="zebra-matchup">Alemanha vs Curaçao</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Alemanha</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no França</span>
+    </div>
+    <div class="zebra-matchup">França vs Iraque</div>
+    <div class="zebra-detail">
+        Favorito: <strong>França</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Portugal</span>
+    </div>
+    <div class="zebra-matchup">Portugal vs Uzbequistão</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Portugal</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Brasil</span>
+    </div>
+    <div class="zebra-matchup">Brasil vs Haiti</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Brasil</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Bélgica</span>
+    </div>
+    <div class="zebra-matchup">Bélgica vs Irã</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Bélgica</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Espanha</span>
+    </div>
+    <div class="zebra-matchup">Espanha vs Arábia Saudita</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Espanha</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Espanha</span>
+    </div>
+    <div class="zebra-matchup">Espanha vs Cabo Verde</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Espanha</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Equador</span>
+    </div>
+    <div class="zebra-matchup">Equador vs Curaçao</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Equador</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Brasil</span>
+    </div>
+    <div class="zebra-matchup">Escócia vs Brasil</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Brasil</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Portugal</span>
+    </div>
+    <div class="zebra-matchup">Portugal vs RD Congo</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Portugal</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Inglaterra</span>
+    </div>
+    <div class="zebra-matchup">Panamá vs Inglaterra</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Inglaterra</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Uruguai</span>
+    </div>
+    <div class="zebra-matchup">Uruguai vs Cabo Verde</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Uruguai</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Colômbia</span>
+    </div>
+    <div class="zebra-matchup">Uzbequistão vs Colômbia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Colômbia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Marrocos</span>
+    </div>
+    <div class="zebra-matchup">Marrocos vs Haiti</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Marrocos</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">33/33 (100%) acreditavam no Argentina</span>
+    </div>
+    <div class="zebra-matchup">Jordânia vs Argentina</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Argentina</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">32/33 (97%) acreditavam no Bélgica</span>
+    </div>
+    <div class="zebra-matchup">Nova Zelândia vs Bélgica</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Bélgica</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">32/33 (97%) acreditavam no Uruguai</span>
+    </div>
+    <div class="zebra-matchup">Arábia Saudita vs Uruguai</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Uruguai</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">32/33 (97%) acreditavam no Holanda</span>
+    </div>
+    <div class="zebra-matchup">Tunísia vs Holanda</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Holanda</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">32/33 (97%) acreditavam no Croácia</span>
+    </div>
+    <div class="zebra-matchup">Panamá vs Croácia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Croácia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">32/33 (97%) acreditavam no França</span>
+    </div>
+    <div class="zebra-matchup">França vs Senegal</div>
+    <div class="zebra-detail">
+        Favorito: <strong>França</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">32/33 (97%) acreditavam no Suíça</span>
+    </div>
+    <div class="zebra-matchup">Catar vs Suíça</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Suíça</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">31/33 (94%) acreditavam no Escócia</span>
+    </div>
+    <div class="zebra-matchup">Haiti vs Escócia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Escócia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">31/33 (94%) acreditavam no Alemanha</span>
+    </div>
+    <div class="zebra-matchup">Alemanha vs Costa do Marfim</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Alemanha</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">31/33 (94%) acreditavam no Inglaterra</span>
+    </div>
+    <div class="zebra-matchup">Inglaterra vs Gana</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Inglaterra</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">31/33 (94%) acreditavam no Noruega</span>
+    </div>
+    <div class="zebra-matchup">Iraque vs Noruega</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Noruega</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">31/33 (94%) acreditavam no Canadá</span>
+    </div>
+    <div class="zebra-matchup">Canadá vs Catar</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Canadá</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">31/33 (94%) acreditavam no Colômbia</span>
+    </div>
+    <div class="zebra-matchup">Colômbia vs RD Congo</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Colômbia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">31/33 (94%) acreditavam no França</span>
+    </div>
+    <div class="zebra-matchup">Noruega vs França</div>
+    <div class="zebra-detail">
+        Favorito: <strong>França</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">30/33 (91%) acreditavam no Suíça</span>
+    </div>
+    <div class="zebra-matchup">Suíça vs Bósnia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Suíça</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">30/33 (91%) acreditavam no Costa do Marfim</span>
+    </div>
+    <div class="zebra-matchup">Curaçao vs Costa do Marfim</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Costa do Marfim</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">30/33 (91%) acreditavam no Japão</span>
+    </div>
+    <div class="zebra-matchup">Tunísia vs Japão</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Japão</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">30/33 (91%) acreditavam no Senegal</span>
+    </div>
+    <div class="zebra-matchup">Senegal vs Iraque</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Senegal</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">30/33 (91%) acreditavam no Bósnia</span>
+    </div>
+    <div class="zebra-matchup">Bósnia vs Catar</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Bósnia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">29/33 (88%) acreditavam no Argentina</span>
+    </div>
+    <div class="zebra-matchup">Argentina vs Argélia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Argentina</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">29/33 (88%) acreditavam no Egito</span>
+    </div>
+    <div class="zebra-matchup">Nova Zelândia vs Egito</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Egito</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">29/33 (88%) acreditavam no Áustria</span>
+    </div>
+    <div class="zebra-matchup">Áustria vs Jordânia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Áustria</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">29/33 (88%) acreditavam no Marrocos</span>
+    </div>
+    <div class="zebra-matchup">Escócia vs Marrocos</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Marrocos</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">29/33 (88%) acreditavam no Estados Unidos</span>
+    </div>
+    <div class="zebra-matchup">Estados Unidos vs Austrália</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Estados Unidos</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">29/33 (88%) acreditavam no Bélgica</span>
+    </div>
+    <div class="zebra-matchup">Bélgica vs Egito</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Bélgica</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">28/33 (85%) acreditavam no Coréia do Sul</span>
+    </div>
+    <div class="zebra-matchup">África do Sul vs Coréia do Sul</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Coréia do Sul</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">28/33 (85%) acreditavam no Holanda</span>
+    </div>
+    <div class="zebra-matchup">Holanda vs Suécia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Holanda</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">28/33 (85%) acreditavam no Turquia</span>
+    </div>
+    <div class="zebra-matchup">Austrália vs Turquia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Turquia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">27/33 (82%) acreditavam no Gana</span>
+    </div>
+    <div class="zebra-matchup">Gana vs Panamá</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Gana</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">27/33 (82%) acreditavam no Espanha</span>
+    </div>
+    <div class="zebra-matchup">Uruguai vs Espanha</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Espanha</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">27/33 (82%) acreditavam no Argélia</span>
+    </div>
+    <div class="zebra-matchup">Jordânia vs Argélia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Argélia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">25/33 (76%) acreditavam no Irã</span>
+    </div>
+    <div class="zebra-matchup">Irã vs Nova Zelândia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Irã</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">25/33 (76%) acreditavam no Suécia</span>
+    </div>
+    <div class="zebra-matchup">Suécia vs Tunísia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Suécia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">25/33 (76%) acreditavam no Alemanha</span>
+    </div>
+    <div class="zebra-matchup">Equador vs Alemanha</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Alemanha</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">24/33 (73%) acreditavam no Paraguai</span>
+    </div>
+    <div class="zebra-matchup">Paraguai vs Austrália</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Paraguai</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">24/33 (73%) acreditavam no Inglaterra</span>
+    </div>
+    <div class="zebra-matchup">Inglaterra vs Croácia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Inglaterra</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">23/33 (70%) acreditavam no Suíça</span>
+    </div>
+    <div class="zebra-matchup">Suíça vs Canadá</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Suíça</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">23/33 (70%) acreditavam no Croácia</span>
+    </div>
+    <div class="zebra-matchup">Croácia vs Gana</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Croácia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">23/33 (70%) acreditavam no República Tcheca</span>
+    </div>
+    <div class="zebra-matchup">República Tcheca vs África do Sul</div>
+    <div class="zebra-detail">
+        Favorito: <strong>República Tcheca</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">23/33 (70%) acreditavam no Portugal</span>
+    </div>
+    <div class="zebra-matchup">Colômbia vs Portugal</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Portugal</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">21/33 (64%) acreditavam no México</span>
+    </div>
+    <div class="zebra-matchup">República Tcheca vs México</div>
+    <div class="zebra-detail">
+        Favorito: <strong>México</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">20/33 (61%) acreditavam no Brasil</span>
+    </div>
+    <div class="zebra-matchup">Brasil vs Marrocos</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Brasil</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">20/33 (61%) acreditavam no Holanda</span>
+    </div>
+    <div class="zebra-matchup">Holanda vs Japão</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Holanda</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">20/33 (61%) acreditavam no Arábia Saudita</span>
+    </div>
+    <div class="zebra-matchup">Cabo Verde vs Arábia Saudita</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Arábia Saudita</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Media</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">19/33 (58%) acreditavam no México</span>
+    </div>
+    <div class="zebra-matchup">México vs Coréia do Sul</div>
+    <div class="zebra-detail">
+        Favorito: <strong>México</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Media</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">19/33 (58%) acreditavam no Turquia</span>
+    </div>
+    <div class="zebra-matchup">Turquia vs Paraguai</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Turquia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Media</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">18/33 (55%) acreditavam no Egito</span>
+    </div>
+    <div class="zebra-matchup">Egito vs Irã</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Egito</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Media</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">17/33 (52%) acreditavam no Áustria</span>
+    </div>
+    <div class="zebra-matchup">Argélia vs Áustria</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Áustria</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Media</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">17/33 (52%) acreditavam no Japão</span>
+    </div>
+    <div class="zebra-matchup">Japão vs Suécia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Japão</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Media</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">15/33 (45%) acreditavam no Noruega</span>
+    </div>
+    <div class="zebra-matchup">Noruega vs Senegal</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Noruega</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 Zebra Leve</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">12/33 (36%) acreditavam no Turquia</span>
+    </div>
+    <div class="zebra-matchup">Turquia vs Estados Unidos</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Turquia</strong> | Resultado: <strong>nan</strong><br>
+        Acertaram essa zebra: 0 jogadores
+    </div>
+    <div class="zebra-players"><span style="color:var(--text-muted);font-style:italic;">ninguém acertou</span></div>
+</div>
+
+</div>
+
+<div class="section">
+    <div class="section-title">👑 Rei das Zebras</div>
+    <div class="card" style="overflow-x:auto;">
+        <table class="rank-table">
+            <thead><tr><th>#</th><th>Boleiro</th><th>Zebras acertadas</th></tr></thead>
+            <tbody><tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Nenhum dado</td></tr></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">💀 Partidas Mais Difíceis</div>
+    <div class="card" style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;padding:0.5rem 0.75rem;">
+        <strong>💡 Cálculo:</strong> <strong>% que errou o vencedor</strong> (peso 60%) + <strong>raridade do placar exato</strong> (peso 40%). Se foi zebra, ganha bônus de +30% + 10pts. Quanto maior, mais a partida derrubou o bolão.
+    </div>
+    <div class="card">
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;">🥇 África do Sul vs Coréia do Sul<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Coréia do Sul</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;">🥈 Alemanha vs Costa do Marfim<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Alemanha</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;">🥉 Alemanha vs Curaçao<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Alemanha</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Arábia Saudita vs Uruguai<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Uruguai</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Argélia vs Áustria<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Áustria</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Argentina vs Argélia<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Argentina</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Argentina vs Áustria<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Argentina</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Austrália vs Turquia<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Turquia</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Áustria vs Jordânia<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Áustria</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Bélgica vs Egito<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">88.0</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>0/33 acertaram</span>
+        <span>Favorito: Bélgica</span>
+        <span>Resultado: nan</span>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="section">
+    <div class="section-title">✅ Favoritos que Confirmaram</div>
+    
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">48% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Canadá vs Bósnia</div>
+    <div class="zebra-detail">Favorito empate confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">55% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Coréia do Sul vs República Tcheca</div>
+    <div class="zebra-detail">Favorito empate confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">45% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Costa do Marfim vs Equador</div>
+    <div class="zebra-detail">Favorito empate confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">55% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Estados Unidos vs Paraguai</div>
+    <div class="zebra-detail">Favorito Estados Unidos confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">91% no favorito</span>
+    </div>
+    <div class="zebra-matchup">México vs África do Sul</div>
+    <div class="zebra-detail">Favorito México confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">61% no favorito</span>
+    </div>
+    <div class="zebra-matchup">RD Congo vs Uzbequistão</div>
+    <div class="zebra-detail">Favorito empate confirmou</div>
+</div>
+
+</div>
+
+<div class="card" style="margin:0.75rem;font-size:0.8rem;color:var(--text-muted);">
+    <p><strong>💡 O que e uma Zebra?</strong> Quando o time mais votado como vencedor pelo bolaao PERDEU ou empatou. Quanto maior a porcentagem de votos no favorito, maior a zebra.</p>
+</div>
+
+<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
+    atualizado às 13/06/2026 01:20:45
+</div>
+<nav class="bottom-nav"><a href="index.html"><span class="nav-icon">🏠</span>Início</a>
+<a href="arena.html"><span class="nav-icon">⚔️</span>Arena</a>
+<a href="zebras.html" class="active"><span class="nav-icon">🦓</span>Zebras</a>
+<a href="palpites.html"><span class="nav-icon">📋</span>Palpites</a>
+<a href="bolao_xray.html"><span class="nav-icon">🔍</span>Raio-X</a>
+</nav>
+</body>
+</html>

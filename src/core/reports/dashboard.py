@@ -99,6 +99,20 @@ a:hover { text-decoration: underline; }
     margin: 0 0.75rem;
 }
 
+/* Live badge */
+.live-badge {
+    position: absolute;
+    top: -0.25rem;
+    right: 0.75rem;
+    background: var(--danger);
+    color: var(--text);
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    z-index: 1;
+}
+
 /* Score card (last result) */
 .result-card {
     display: flex;
@@ -734,9 +748,49 @@ def _build_bottom_nav_dashboard(prefix: str = "") -> str:
     return f'<nav class="bottom-nav">{links}</nav>'
 
 
+def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
+    """Build a card for each match currently marked as 'live' in games.csv."""
+    df = pd.read_csv(config.results_file, sep=",")
+    live = df[df["time_elapsed"] == "live"].copy()
+    if live.empty:
+        return ""
+
+    rev_map = {v: k for k, v in config.team_name_mapping.items()}
+    cards = ""
+    for _, row in live.iterrows():
+        home = str(row["home_team"])
+        away = str(row["away_team"])
+        hg = int(row["home_goals"]) if pd.notna(row.get("home_goals")) else 0
+        ag = int(row["away_goals"]) if pd.notna(row.get("away_goals")) else 0
+        date = str(row["date"])
+
+        home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
+        away_logo = _team_logo_tag(rev_map.get(away, away), config, cls="team-logo-sm", start=config.reports_dir + "/html")
+
+        cards += f"""
+    <div class="card" style="position:relative;">
+        <div class="live-badge">\U0001f534 AO VIVO</div>
+        <div class="result-card">
+            <div class="team">{home_logo} {home}</div>
+            <div class="score">{hg} - {ag}</div>
+            <div class="team">{away_logo} {away}</div>
+        </div>
+        <div class="date">{date}</div>
+        <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);padding-bottom:0.5rem;">atualizado \u00e0s {now_str}</div>
+    </div>
+"""
+    return f"""
+<div class="section">
+    <div class="section-title">\U0001f4fa Ao Vivo</div>
+    <div style="display:flex;flex-direction:column;gap:0.75rem;padding:0 0.75rem;">{cards}</div>
+</div>
+"""
+
+
 def _build_last_result(config: ChampionshipConfig) -> str:
-    """Build the last result card (by date, not CSV row order)."""
+    """Build the last result card from *finished* matches only."""
     df_results = pd.read_csv(config.results_file, sep=",")
+    df_results = df_results[df_results["time_elapsed"] == "finished"].copy()
     df_results.dropna(subset=["home_goals"], inplace=True)
     if df_results.empty:
         return ""
@@ -970,6 +1024,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
         slug_status[s] = "future"
 
     last_result = _build_last_result(config)
+    live_games = _build_live_games(config, now_str)
     full_ranking = _build_full_ranking(config)
     upcoming = _build_upcoming_games(config)
     phase_buttons = _build_phase_buttons(config, slug_status)
@@ -1007,6 +1062,8 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 </div>
 
 {badge_legend}
+
+{live_games}
 
 {last_result}
 

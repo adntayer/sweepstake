@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 World Cup</title>
+    <style>
+    :root {
+    --primary: #0f4a14;
+    --primary-light: #166320;
+    --accent: #f5c518;
+    --accent-dark: #b8940f;
+    --bg: #060d1a;
+    --card-bg: #0d1b2e;
+    --card-border: #1a3050;
+    --text: #ffffff;
+    --text-muted: #8899aa;
+    --success: #15803d;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --voce: #f5c518;
+    --bolao: #3b82f6;
+    --text-inverse: #000000;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --leader: #8899aa;
+    --accent-highlight: rgba(245,197,24,0.1);
+    --silver-highlight: rgba(192,192,192,0.08);
+    --bronze-highlight: rgba(205,127,50,0.08);
+    --zebra-stripe: rgba(255,255,255,0.02);
+    --hover-overlay: rgba(255,255,255,0.03);
+    --shadow-color: rgba(0,0,0,0.4);
+    --score-exact: #00cc00;
+    --score-winner-goals: #66ff66;
+    --score-winner: #ffcc00;
+    --score-one-team: #ff9900;
+    --score-none: #ff3333;
+    --score-exact-bg: rgba(0,204,0,0.1);
+    --score-exact-border: rgba(0,204,0,0.4);
+    --score-winner-goals-bg: rgba(102,255,102,0.1);
+    --score-winner-goals-border: rgba(102,255,102,0.4);
+    --score-winner-bg: rgba(255,204,0,0.1);
+    --score-winner-border: rgba(255,204,0,0.4);
+    --score-one-team-bg: rgba(255,153,0,0.1);
+    --score-one-team-border: rgba(255,153,0,0.4);
+    --score-none-bg: rgba(255,51,51,0.1);
+    --score-none-border: rgba(255,51,51,0.4);
+    --player-card-active: rgba(245,197,24,0.05);
+}
+
+    
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Hero */
+.hero {
+    background: var(--bg);
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--text);
+    border-bottom: 1px solid var(--card-border);
+}
+.hero h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+.hero .subtitle { font-size: 1rem; opacity: 0.85; }
+
+/* Section */
+.section { margin: 1rem 0; }
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Card */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 0 0.75rem;
+}
+
+/* Live badge */
+.live-badge {
+    position: absolute;
+    top: -0.25rem;
+    right: 0.75rem;
+    background: var(--danger);
+    color: var(--text);
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    z-index: 1;
+}
+
+/* Score card (last result) */
+.result-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1rem;
+}
+.result-card .team { flex: 1; text-align: center; font-size: 1rem; font-weight: 600; }
+.result-card .score {
+    color: var(--accent);
+    font-size: 1.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.result-card .date {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Leaderboard */
+.lb-row {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--card-border);
+    gap: 0.75rem;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-rank {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+.lb-rank-1 { background: var(--accent); color: var(--text-inverse); }
+.lb-rank-2 { background: var(--silver); color: var(--text-inverse); }
+.lb-rank-3 { background: var(--bronze); color: var(--text); }
+.lb-rank-n { background: var(--card-border); color: var(--text-muted); }
+.lb-name { flex: 1; font-weight: 600; font-size: 0.9rem; }
+.lb-pts {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+/* Rank table (copied from html.py for the full ranking) */
+.rank-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.rank-table th { text-align: left; padding: 0.4rem 0.5rem; font-size: 0.7rem; color: var(--text-muted); border-bottom: 1px solid var(--card-border); white-space: nowrap; }
+.rank-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--card-border); white-space: nowrap; }
+.rank-table tr:nth-child(even) { background: var(--zebra-stripe); }
+.rank-table .rank-1 td { background: var(--accent-highlight); }
+.rank-table .rank-2 td { background: var(--silver-highlight); }
+.rank-table .rank-3 td { background: var(--bronze-highlight); }
+
+/* Horizontal scroll for upcoming games */
+.scroll-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+.scroll-row::-webkit-scrollbar { height: 4px; }
+.scroll-row::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
+
+.game-card, a.game-card {
+    flex: 0 0 auto;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+    min-width: 140px;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.game-card .matchup { font-weight: 600; font-size: 0.85rem; margin: 0.25rem 0; }
+.game-card .datetime { font-size: 0.7rem; color: var(--text-muted); }
+.game-card .badge-live {
+    display: inline-block;
+    background: var(--danger);
+    color: var(--text);
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    margin-bottom: 0.25rem;
+}
+
+/* Player grid */
+.player-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0 0.75rem;
+}
+.player-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: border-color 0.2s;
+}
+.player-card:hover { border-color: var(--accent); }
+.player-card:active { border-color: var(--accent); background: var(--player-card-active); }
+.player-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.player-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.player-pts {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Accordion */
+details {
+    margin: 0.5rem 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+summary {
+    padding: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+}
+summary:hover { background: var(--hover-overlay); }
+details[open] summary { border-bottom: 1px solid var(--card-border); }
+details .content { padding: 0.5rem 1rem; }
+details .content a {
+    display: block;
+    padding: 0.4rem 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--card-border);
+}
+details .content a:last-child { border-bottom: none; }
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* Bottom navigation bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.25rem 0;
+    padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 10px var(--shadow-color);
+}
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    min-height: 44px;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav a:active { background: var(--hover-overlay); }
+.bottom-nav a .nav-icon { font-size: 1.2rem; line-height: 1; }
+.bottom-nav a.active { color: var(--accent); }
+body { padding-bottom: 70px; }
+
+/* Trend indicators */
+.trend-up { color: var(--success); }
+.trend-down { color: var(--danger); }
+.trend-flat { color: var(--text-muted); }
+
+/* Hot streak indicator */
+.hot-streak {
+    display: inline-block;
+    font-size: 0.9rem;
+    animation: pulse-fire 1.5s ease-in-out infinite;
+}
+@keyframes pulse-fire {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Status badges for match results */
+.badge-result { display:inline-block; padding:0.1rem 0.4rem; border-radius:999px; font-size:0.65rem; font-weight:600; margin-left:0.3rem; }
+.badge-result.green { background:var(--success); color:#fff; }
+.badge-result.yellow { background:var(--warning); color:var(--text-inverse); }
+.badge-result.blue { background:var(--primary); color:#fff; }
+
+/* Pending summary badge in hero */
+.hero-badge { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.4rem; padding:0.3rem 0.8rem; border-radius:999px; font-size:0.8rem; }
+.hero-badge.green { background:rgba(34,197,94,0.2); }
+.hero-badge.yellow { background:rgba(245,158,11,0.2); }
+.hero-badge.gray { background:rgba(136,153,170,0.2); color:var(--text-muted); }
+
+/* Responsive */
+/* Team logos */
+.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
+.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
+.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 6px; }
+
+@media (max-width: 359px) {
+    .hero h1 { font-size: 1.4rem; }
+    .hero .subtitle { font-size: 0.85rem; }
+    .bottom-nav a { font-size: 0.55rem; }
+    .bottom-nav a .nav-icon { font-size: 1rem; }
+}
+@media (min-width: 768px) {
+    body { max-width: 800px; margin: 0 auto; }
+    .player-grid { grid-template-columns: repeat(3, 1fr); }
+    .game-card { flex: 0 0 45%; }
+}
+@media (min-width: 1024px) {
+    .player-grid { grid-template-columns: repeat(4, 1fr); }
+    .game-card { flex: 0 0 30%; }
+}
+
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>🏆 2026 World Cup</h1>
+    <div class="subtitle">Painel do Bolao</div>
+    <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:rgba(239,68,68,0.2);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.8rem;"><span>🦓</span> <strong>66</strong> zebras em 72 jogos (91.7%)</div>
+
+</div>
+<div style="text-align:center;font-size:0.75rem;color:var(--text-muted);padding:0 0.75rem 0.5rem;">
+    atualizado às 13/06/2026 01:20:48
+</div>
+
+<div class="card" style="margin:0.75rem;font-size:0.7rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:0.25rem 1rem;padding:0.5rem 0.75rem;">
+    <span>🔥 Embrazado (streak ≥ 3 acertos)</span>
+    <span>🦓 Caçador de Zebras (top 3 em zebras)</span>
+    <span>🐍 Líder (1º lugar geral)</span>
+    <span>💥 Ousado (aposta acima da média)</span>
+    <span>🧊 Conservador (aposta abaixo da média)</span>
+    <span>🎯 Especialista (maior precisão em time)</span>
+</div>
+
+
+
+
+
+<div class="section">
+    <div class="section-title">📊 Ultimo Resultado</div>
+    <div class="card">
+        <div class="result-card">
+            <div class="team"><img src="logos/united-states.png" alt="United States" class="team-logo-sm" loading="lazy"> Estados Unidos</div>
+            <div class="score">4 - 1</div>
+            <div class="team"><img src="logos/paraguay.png" alt="Paraguay" class="team-logo-sm" loading="lazy"> Paraguai</div>
+        </div>
+        <div class="date">2026-06-12 18h</div>
+    </div>
+</div>
+
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
+    <a href="tabela_real.html">
+        <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
+            🏆 Grupos
+        </div>
+    </a>
+    <a href="rodadas.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            📊 Rodadas
+        </div>
+    </a>
+    <a href="times.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            🏆 Times
+        </div>
+    </a>
+    <a href="similaridade.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            🧮 Sósia
+        </div>
+    </a>
+    <a href="palpites.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            📋 Palpites
+        </div>
+    </a>
+    <a href="ranking_evolution.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            📈 Evolucao
+        </div>
+    </a>
+    <a href="boldometer.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            📊 Boldometro
+        </div>
+    </a>
+    <a href="zebras.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            🦓 Zebras
+        </div>
+    </a>
+    <a href="bolao_xray.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            🔍 Raio-X
+        </div>
+    </a>
+</div>
+
+<div class="section">
+    <div class="section-title">🏆 Ranking</div>
+    <div class="card">
+<div style="overflow-x:auto;">
+    <table class="rank-table">
+        <thead><tr><th>#</th><th>Boleiro</th><th>Pontos</th><th>🎯 1</th><th>⚽ 2</th><th>⚽ 3</th><th>✅ 4</th><th>⚽ 5</th><th>✅ 6</th><th>✅ 7</th><th>👊 8</th><th>❌ 9</th><th>❓ 99</th></tr></thead>
+        <tbody><tr class="rank-1"><td>🥇 1</td><td><a href="boleiros/João Henrique.html">João Henrique</a> &nbsp; <span style="font-size:0.75rem;">🔥 🧊 🐍</span></td><td style="font-weight:700;color:var(--accent)">47</td><td>2</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="rank-2"><td>🥈 2</td><td><a href="boleiros/Frederico Soter.html">Frederico Soter</a> &nbsp; <span style="font-size:0.75rem;">🔥 💥</span></td><td style="font-weight:700;color:var(--accent)">42</td><td>1</td><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="rank-3"><td>🥉 3</td><td><a href="boleiros/LLM GPT.html">LLM GPT</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">41</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 4</td><td><a href="boleiros/Leo Fernandes.html">Leo Fernandes</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">41</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 5</td><td><a href="boleiros/Marcelo Boix.html">Marcelo Boix</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">41</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 6</td><td><a href="boleiros/Rafael Conte.html">Rafael Conte</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">41</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 7</td><td><a href="boleiros/Tiago.html">Tiago</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">41</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 8</td><td><a href="boleiros/Haroldo.html">Haroldo</a> &nbsp; <span style="font-size:0.75rem;">🔥 💥</span></td><td style="font-weight:700;color:var(--accent)">36</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 9</td><td><a href="boleiros/José Ricardo.html">José Ricardo</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">36</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 10</td><td><a href="boleiros/LLM Gemini.html">LLM Gemini</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">36</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 11</td><td><a href="boleiros/Thiago Bahiense.html">Thiago Bahiense</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">36</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 12</td><td><a href="boleiros/Lucas Ubertini.html">Lucas Ubertini</a> &nbsp; <span style="font-size:0.75rem;">🔥 🧊</span></td><td style="font-weight:700;color:var(--accent)">32</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 13</td><td><a href="boleiros/Mauricio Saraiva.html">Mauricio Saraiva</a> &nbsp; <span style="font-size:0.75rem;">💥</span></td><td style="font-weight:700;color:var(--accent)">32</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 14</td><td><a href="boleiros/Mateus Tone.html">Mateus Tone</a> &nbsp; <span style="font-size:0.75rem;"></span></td><td style="font-weight:700;color:var(--accent)">31</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 15</td><td><a href="boleiros/Francisco Camargo.html">Francisco Camargo</a> &nbsp; <span style="font-size:0.75rem;">🧊</span></td><td style="font-weight:700;color:var(--accent)">30</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 16</td><td><a href="boleiros/Marcelo.html">Marcelo</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">27</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 17</td><td><a href="boleiros/Pedro Tayer.html">Pedro Tayer</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">27</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 18</td><td><a href="boleiros/André Mendes.html">André Mendes</a> &nbsp; <span style="font-size:0.75rem;">🧊</span></td><td style="font-weight:700;color:var(--accent)">26</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 19</td><td><a href="boleiros/Luca Caviglia Del Soldato.html">Luca Caviglia Del Soldato</a> &nbsp; <span style="font-size:0.75rem;"></span></td><td style="font-weight:700;color:var(--accent)">26</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 20</td><td><a href="boleiros/RODRIGO ALBERNAZ.html">RODRIGO ALBERNAZ</a> &nbsp; <span style="font-size:0.75rem;"></span></td><td style="font-weight:700;color:var(--accent)">26</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 21</td><td><a href="boleiros/Marco Lavander.html">Marco Lavander</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">24</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 22</td><td><a href="boleiros/Cipriano L..html">Cipriano L.</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">22</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 23</td><td><a href="boleiros/Ditchos.html">Ditchos</a> &nbsp; <span style="font-size:0.75rem;">🧊</span></td><td style="font-weight:700;color:var(--accent)">21</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 24</td><td><a href="boleiros/Luiz Augusto.html">Luiz Augusto</a> &nbsp; <span style="font-size:0.75rem;">💥</span></td><td style="font-weight:700;color:var(--accent)">21</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 25</td><td><a href="boleiros/Felipe Giannoni.html">Felipe Giannoni</a> &nbsp; <span style="font-size:0.75rem;">💥</span></td><td style="font-weight:700;color:var(--accent)">18</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 26</td><td><a href="boleiros/Giancarlo.html">Giancarlo</a> &nbsp; <span style="font-size:0.75rem;">🧊</span></td><td style="font-weight:700;color:var(--accent)">18</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr class=""><td> 27</td><td><a href="boleiros/Gabão.html">Gabão</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">17</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 28</td><td><a href="boleiros/André Tayer.html">André Tayer</a> &nbsp; <span style="font-size:0.75rem;"></span></td><td style="font-weight:700;color:var(--accent)">16</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td></tr>
+<tr class=""><td> 29</td><td><a href="boleiros/Davi & Cesar.html">Davi & Cesar</a> &nbsp; <span style="font-size:0.75rem;"></span></td><td style="font-weight:700;color:var(--accent)">16</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td></tr>
+<tr class=""><td> 30</td><td><a href="boleiros/Guilherne.html">Guilherne</a> &nbsp; <span style="font-size:0.75rem;"></span></td><td style="font-weight:700;color:var(--accent)">16</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td></tr>
+<tr class=""><td> 31</td><td><a href="boleiros/Kiko Toloza.html">Kiko Toloza</a> &nbsp; <span style="font-size:0.75rem;">🔥 🧊</span></td><td style="font-weight:700;color:var(--accent)">13</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td></tr>
+<tr class=""><td> 32</td><td><a href="boleiros/André Bonito.html">André Bonito</a> &nbsp; <span style="font-size:0.75rem;">💥</span></td><td style="font-weight:700;color:var(--accent)">11</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td></tr>
+<tr class=""><td> 33</td><td><a href="boleiros/Thales Oliveira.html">Thales Oliveira</a> &nbsp; <span style="font-size:0.75rem;"></span></td><td style="font-weight:700;color:var(--accent)">1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>3</td><td>0</td></tr>
+</tbody>
+    </table>
+    <div style="font-size:0.65rem;color:var(--text-muted);padding:0.3rem 0.75rem;text-align:right;">
+        Pontos = pontos dos palpites (não inclui bônus de times)
+    </div>
+</div></div>
+</div>
+
+
+
+
+<div class="section">
+    <div class="section-title">🕒 Proximos Jogos</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;padding:0 0.75rem;"><a href="jogos/1afase/2026-06-13_12h_catar-vs-suica.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 12h</div><div class="matchup"><img src="logos/qatar.png" alt="Qatar" class="team-logo-sm" loading="lazy">QAT vs <img src="logos/switzerland.png" alt="Switzerland" class="team-logo-sm" loading="lazy">SUI</div></a>
+<a href="jogos/1afase/2026-06-13_18h_brasil-vs-marrocos.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 18h</div><div class="matchup"><img src="logos/brazil.png" alt="Brazil" class="team-logo-sm" loading="lazy">BRA vs <img src="logos/morocco.png" alt="Morocco" class="team-logo-sm" loading="lazy">MAR</div></a>
+<a href="jogos/1afase/2026-06-13_21h_australia-vs-turquia.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 21h</div><div class="matchup"><img src="logos/australia.png" alt="Australia" class="team-logo-sm" loading="lazy">AUS vs <img src="logos/turkey.png" alt="Turkey" class="team-logo-sm" loading="lazy">TUR</div></a>
+<a href="jogos/1afase/2026-06-13_21h_haiti-vs-escocia.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">13/06 21h</div><div class="matchup"><img src="logos/haiti.png" alt="Haiti" class="team-logo-sm" loading="lazy">HAI vs <img src="logos/scotland.png" alt="Scotland" class="team-logo-sm" loading="lazy">SCO</div></a>
+<a href="jogos/1afase/2026-06-14_12h_alemanha-vs-curacao.html" class="game-card"><div class="badge-live">PROXIMO</div><div class="datetime">14/06 12h</div><div class="matchup"><img src="logos/germany.png" alt="Germany" class="team-logo-sm" loading="lazy">GER vs <img src="logos/curacao.png" alt="Curaçao" class="team-logo-sm" loading="lazy">CUW</div></a>
+</div>
+</div>
+
+
+<div class="section">
+    <div class="section-title">📂 Jogos por Fase</div>
+    <div class="section">
+    <div class="section-title">⚽ 1afase (72)</div>
+    <div style="margin:0 0.75rem;">
+<details open>
+    <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">1ª Rodada (24)</summary>
+    <div class="content" style="padding:0.5rem 0.75rem 0.75rem;"><div style="display:flex;flex-direction:column;gap:0.25rem;"><a href="jogos/1afase/2026-06-11_13h_mexico-vs-africa_do_sul.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-11 13h | </span><img src="logos/mexico.png" alt="Mexico" class="team-logo-sm" loading="lazy">MEX vs <img src="logos/south-africa.png" alt="South Africa" class="team-logo-sm" loading="lazy">RSA</span> <span class="badge-result green">✅</span></a>
+<a href="jogos/1afase/2026-06-11_20h_coreia_do_sul-vs-republica_tcheca.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-11 20h | </span><img src="logos/south-korea.png" alt="South Korea" class="team-logo-sm" loading="lazy">KOR vs <img src="logos/czech-republic.png" alt="Czech Republic" class="team-logo-sm" loading="lazy">CZE</span> <span class="badge-result green">✅</span></a>
+<a href="jogos/1afase/2026-06-12_15h_canada-vs-bosnia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-12 15h | </span><img src="logos/canada.png" alt="Canada" class="team-logo-sm" loading="lazy">CAN vs <img src="logos/bosnia-and-herzegovina.png" alt="Bosnia and Herzegovina" class="team-logo-sm" loading="lazy">BIH</span> <span class="badge-result green">✅</span></a>
+<a href="jogos/1afase/2026-06-12_18h_estados_unidos-vs-paraguai.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-12 18h | </span><img src="logos/united-states.png" alt="United States" class="team-logo-sm" loading="lazy">USA vs <img src="logos/paraguay.png" alt="Paraguay" class="team-logo-sm" loading="lazy">PAR</span> <span class="badge-result green">✅</span></a>
+<a href="jogos/1afase/2026-06-13_12h_catar-vs-suica.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-13 12h | </span><img src="logos/qatar.png" alt="Qatar" class="team-logo-sm" loading="lazy">QAT vs <img src="logos/switzerland.png" alt="Switzerland" class="team-logo-sm" loading="lazy">SUI</span> <span class="badge-result yellow">⏳</span></a>
+<a href="jogos/1afase/2026-06-13_18h_brasil-vs-marrocos.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-13 18h | </span><img src="logos/brazil.png" alt="Brazil" class="team-logo-sm" loading="lazy">BRA vs <img src="logos/morocco.png" alt="Morocco" class="team-logo-sm" loading="lazy">MAR</span> <span class="badge-result yellow">⏳</span></a>
+<a href="jogos/1afase/2026-06-13_21h_australia-vs-turquia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-13 21h | </span><img src="logos/australia.png" alt="Australia" class="team-logo-sm" loading="lazy">AUS vs <img src="logos/turkey.png" alt="Turkey" class="team-logo-sm" loading="lazy">TUR</span> <span class="badge-result yellow">⏳</span></a>
+<a href="jogos/1afase/2026-06-13_21h_haiti-vs-escocia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-13 21h | </span><img src="logos/haiti.png" alt="Haiti" class="team-logo-sm" loading="lazy">HAI vs <img src="logos/scotland.png" alt="Scotland" class="team-logo-sm" loading="lazy">SCO</span> <span class="badge-result yellow">⏳</span></a>
+<a href="jogos/1afase/2026-06-14_12h_alemanha-vs-curacao.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-14 12h | </span><img src="logos/germany.png" alt="Germany" class="team-logo-sm" loading="lazy">GER vs <img src="logos/curacao.png" alt="Curaçao" class="team-logo-sm" loading="lazy">CUW</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_15h_holanda-vs-japao.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-14 15h | </span><img src="logos/netherlands.png" alt="Netherlands" class="team-logo-sm" loading="lazy">NED vs <img src="logos/japan.png" alt="Japan" class="team-logo-sm" loading="lazy">JPN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_19h_costa_do_marfim-vs-equador.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-14 19h | </span><img src="logos/ivory-coast.png" alt="Ivory Coast" class="team-logo-sm" loading="lazy">CIV vs <img src="logos/ecuador.png" alt="Ecuador" class="team-logo-sm" loading="lazy">ECU</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-14_20h_suecia-vs-tunisia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-14 20h | </span><img src="logos/sweden.png" alt="Sweden" class="team-logo-sm" loading="lazy">SWE vs <img src="logos/tunisia.png" alt="Tunisia" class="team-logo-sm" loading="lazy">TUN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_12h_belgica-vs-egito.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-15 12h | </span><img src="logos/belgium.png" alt="Belgium" class="team-logo-sm" loading="lazy">BEL vs <img src="logos/egypt.png" alt="Egypt" class="team-logo-sm" loading="lazy">EGY</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_12h_espanha-vs-cabo_verde.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-15 12h | </span><img src="logos/spain.png" alt="Spain" class="team-logo-sm" loading="lazy">ESP vs <img src="logos/cape-verde.png" alt="Cape Verde" class="team-logo-sm" loading="lazy">CPV</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_18h_arabia_saudita-vs-uruguai.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-15 18h | </span><img src="logos/saudi-arabia.png" alt="Saudi Arabia" class="team-logo-sm" loading="lazy">KSA vs <img src="logos/uruguay.png" alt="Uruguay" class="team-logo-sm" loading="lazy">URU</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-15_18h_ira-vs-nova_zelandia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-15 18h | </span><img src="logos/iran.png" alt="Iran" class="team-logo-sm" loading="lazy">IRN vs <img src="logos/new-zealand.png" alt="New Zealand" class="team-logo-sm" loading="lazy">NZL</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-16_15h_franca-vs-senegal.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-16 15h | </span><img src="logos/france.png" alt="France" class="team-logo-sm" loading="lazy">FRA vs <img src="logos/senegal.png" alt="Senegal" class="team-logo-sm" loading="lazy">SEN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-16_18h_iraque-vs-noruega.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-16 18h | </span><img src="logos/iraq.png" alt="Iraq" class="team-logo-sm" loading="lazy">IRQ vs <img src="logos/norway.png" alt="Norway" class="team-logo-sm" loading="lazy">NOR</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-16_20h_argentina-vs-argelia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-16 20h | </span><img src="logos/argentina.png" alt="Argentina" class="team-logo-sm" loading="lazy">ARG vs <img src="logos/algeria.png" alt="Algeria" class="team-logo-sm" loading="lazy">ALG</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-16_21h_austria-vs-jordania.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-16 21h | </span><img src="logos/austria.png" alt="Austria" class="team-logo-sm" loading="lazy">AUT vs <img src="logos/jordan.png" alt="Jordan" class="team-logo-sm" loading="lazy">JOR</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_12h_portugal-vs-rd_congo.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-17 12h | </span><img src="logos/portugal.png" alt="Portugal" class="team-logo-sm" loading="lazy">POR vs <img src="logos/democratic-republic-of-the-congo.png" alt="Democratic Republic of the Congo" class="team-logo-sm" loading="lazy">COD</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_15h_inglaterra-vs-croacia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-17 15h | </span><img src="logos/england.png" alt="England" class="team-logo-sm" loading="lazy">ENG vs <img src="logos/croatia.png" alt="Croatia" class="team-logo-sm" loading="lazy">CRO</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_19h_gana-vs-panama.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-17 19h | </span><img src="logos/ghana.png" alt="Ghana" class="team-logo-sm" loading="lazy">GHA vs <img src="logos/panama.png" alt="Panama" class="team-logo-sm" loading="lazy">PAN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-17_20h_uzbequistao-vs-colombia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-17 20h | </span><img src="logos/uzbekistan.png" alt="Uzbekistan" class="team-logo-sm" loading="lazy">UZB vs <img src="logos/colombia.png" alt="Colombia" class="team-logo-sm" loading="lazy">COL</span> <span class="badge-result blue">🔮</span></a>
+</div></div>
+</details>
+<details >
+    <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">2ª Rodada (24)</summary>
+    <div class="content" style="padding:0.5rem 0.75rem 0.75rem;"><div style="display:flex;flex-direction:column;gap:0.25rem;"><a href="jogos/1afase/2026-06-18_12h_republica_tcheca-vs-africa_do_sul.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-18 12h | </span><img src="logos/czech-republic.png" alt="Czech Republic" class="team-logo-sm" loading="lazy">CZE vs <img src="logos/south-africa.png" alt="South Africa" class="team-logo-sm" loading="lazy">RSA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-18_12h_suica-vs-bosnia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-18 12h | </span><img src="logos/switzerland.png" alt="Switzerland" class="team-logo-sm" loading="lazy">SUI vs <img src="logos/bosnia-and-herzegovina.png" alt="Bosnia and Herzegovina" class="team-logo-sm" loading="lazy">BIH</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-18_15h_canada-vs-catar.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-18 15h | </span><img src="logos/canada.png" alt="Canada" class="team-logo-sm" loading="lazy">CAN vs <img src="logos/qatar.png" alt="Qatar" class="team-logo-sm" loading="lazy">QAT</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-18_19h_mexico-vs-coreia_do_sul.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-18 19h | </span><img src="logos/mexico.png" alt="Mexico" class="team-logo-sm" loading="lazy">MEX vs <img src="logos/south-korea.png" alt="South Korea" class="team-logo-sm" loading="lazy">KOR</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-19_12h_estados_unidos-vs-australia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-19 12h | </span><img src="logos/united-states.png" alt="United States" class="team-logo-sm" loading="lazy">USA vs <img src="logos/australia.png" alt="Australia" class="team-logo-sm" loading="lazy">AUS</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-19_18h_escocia-vs-marrocos.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-19 18h | </span><img src="logos/scotland.png" alt="Scotland" class="team-logo-sm" loading="lazy">SCO vs <img src="logos/morocco.png" alt="Morocco" class="team-logo-sm" loading="lazy">MAR</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-19_20h_turquia-vs-paraguai.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-19 20h | </span><img src="logos/turkey.png" alt="Turkey" class="team-logo-sm" loading="lazy">TUR vs <img src="logos/paraguay.png" alt="Paraguay" class="team-logo-sm" loading="lazy">PAR</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-19_21h_brasil-vs-haiti.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-19 21h | </span><img src="logos/brazil.png" alt="Brazil" class="team-logo-sm" loading="lazy">BRA vs <img src="logos/haiti.png" alt="Haiti" class="team-logo-sm" loading="lazy">HAI</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_12h_holanda-vs-suecia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-20 12h | </span><img src="logos/netherlands.png" alt="Netherlands" class="team-logo-sm" loading="lazy">NED vs <img src="logos/sweden.png" alt="Sweden" class="team-logo-sm" loading="lazy">SWE</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_16h_alemanha-vs-costa_do_marfim.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-20 16h | </span><img src="logos/germany.png" alt="Germany" class="team-logo-sm" loading="lazy">GER vs <img src="logos/ivory-coast.png" alt="Ivory Coast" class="team-logo-sm" loading="lazy">CIV</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_19h_equador-vs-curacao.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-20 19h | </span><img src="logos/ecuador.png" alt="Ecuador" class="team-logo-sm" loading="lazy">ECU vs <img src="logos/curacao.png" alt="Curaçao" class="team-logo-sm" loading="lazy">CUW</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-20_22h_tunisia-vs-japao.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-20 22h | </span><img src="logos/tunisia.png" alt="Tunisia" class="team-logo-sm" loading="lazy">TUN vs <img src="logos/japan.png" alt="Japan" class="team-logo-sm" loading="lazy">JPN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_12h_belgica-vs-ira.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-21 12h | </span><img src="logos/belgium.png" alt="Belgium" class="team-logo-sm" loading="lazy">BEL vs <img src="logos/iran.png" alt="Iran" class="team-logo-sm" loading="lazy">IRN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_12h_espanha-vs-arabia_saudita.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-21 12h | </span><img src="logos/spain.png" alt="Spain" class="team-logo-sm" loading="lazy">ESP vs <img src="logos/saudi-arabia.png" alt="Saudi Arabia" class="team-logo-sm" loading="lazy">KSA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_18h_nova_zelandia-vs-egito.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-21 18h | </span><img src="logos/new-zealand.png" alt="New Zealand" class="team-logo-sm" loading="lazy">NZL vs <img src="logos/egypt.png" alt="Egypt" class="team-logo-sm" loading="lazy">EGY</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-21_18h_uruguai-vs-cabo_verde.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-21 18h | </span><img src="logos/uruguay.png" alt="Uruguay" class="team-logo-sm" loading="lazy">URU vs <img src="logos/cape-verde.png" alt="Cape Verde" class="team-logo-sm" loading="lazy">CPV</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-22_12h_argentina-vs-austria.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-22 12h | </span><img src="logos/argentina.png" alt="Argentina" class="team-logo-sm" loading="lazy">ARG vs <img src="logos/austria.png" alt="Austria" class="team-logo-sm" loading="lazy">AUT</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-22_17h_franca-vs-iraque.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-22 17h | </span><img src="logos/france.png" alt="France" class="team-logo-sm" loading="lazy">FRA vs <img src="logos/iraq.png" alt="Iraq" class="team-logo-sm" loading="lazy">IRQ</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-22_20h_jordania-vs-argelia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-22 20h | </span><img src="logos/jordan.png" alt="Jordan" class="team-logo-sm" loading="lazy">JOR vs <img src="logos/algeria.png" alt="Algeria" class="team-logo-sm" loading="lazy">ALG</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-22_20h_noruega-vs-senegal.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-22 20h | </span><img src="logos/norway.png" alt="Norway" class="team-logo-sm" loading="lazy">NOR vs <img src="logos/senegal.png" alt="Senegal" class="team-logo-sm" loading="lazy">SEN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_12h_portugal-vs-uzbequistao.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-23 12h | </span><img src="logos/portugal.png" alt="Portugal" class="team-logo-sm" loading="lazy">POR vs <img src="logos/uzbekistan.png" alt="Uzbekistan" class="team-logo-sm" loading="lazy">UZB</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_16h_inglaterra-vs-gana.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-23 16h | </span><img src="logos/england.png" alt="England" class="team-logo-sm" loading="lazy">ENG vs <img src="logos/ghana.png" alt="Ghana" class="team-logo-sm" loading="lazy">GHA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_19h_panama-vs-croacia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-23 19h | </span><img src="logos/panama.png" alt="Panama" class="team-logo-sm" loading="lazy">PAN vs <img src="logos/croatia.png" alt="Croatia" class="team-logo-sm" loading="lazy">CRO</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-23_20h_colombia-vs-rd_congo.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-23 20h | </span><img src="logos/colombia.png" alt="Colombia" class="team-logo-sm" loading="lazy">COL vs <img src="logos/democratic-republic-of-the-congo.png" alt="Democratic Republic of the Congo" class="team-logo-sm" loading="lazy">COD</span> <span class="badge-result blue">🔮</span></a>
+</div></div>
+</details>
+<details >
+    <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">3ª Rodada (24)</summary>
+    <div class="content" style="padding:0.5rem 0.75rem 0.75rem;"><div style="display:flex;flex-direction:column;gap:0.25rem;"><a href="jogos/1afase/2026-06-24_12h_bosnia-vs-catar.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-24 12h | </span><img src="logos/bosnia-and-herzegovina.png" alt="Bosnia and Herzegovina" class="team-logo-sm" loading="lazy">BIH vs <img src="logos/qatar.png" alt="Qatar" class="team-logo-sm" loading="lazy">QAT</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_12h_suica-vs-canada.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-24 12h | </span><img src="logos/switzerland.png" alt="Switzerland" class="team-logo-sm" loading="lazy">SUI vs <img src="logos/canada.png" alt="Canada" class="team-logo-sm" loading="lazy">CAN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_18h_escocia-vs-brasil.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-24 18h | </span><img src="logos/scotland.png" alt="Scotland" class="team-logo-sm" loading="lazy">SCO vs <img src="logos/brazil.png" alt="Brazil" class="team-logo-sm" loading="lazy">BRA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_18h_marrocos-vs-haiti.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-24 18h | </span><img src="logos/morocco.png" alt="Morocco" class="team-logo-sm" loading="lazy">MAR vs <img src="logos/haiti.png" alt="Haiti" class="team-logo-sm" loading="lazy">HAI</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_19h_africa_do_sul-vs-coreia_do_sul.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-24 19h | </span><img src="logos/south-africa.png" alt="South Africa" class="team-logo-sm" loading="lazy">RSA vs <img src="logos/south-korea.png" alt="South Korea" class="team-logo-sm" loading="lazy">KOR</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-24_19h_republica_tcheca-vs-mexico.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-24 19h | </span><img src="logos/czech-republic.png" alt="Czech Republic" class="team-logo-sm" loading="lazy">CZE vs <img src="logos/mexico.png" alt="Mexico" class="team-logo-sm" loading="lazy">MEX</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_16h_curacao-vs-costa_do_marfim.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-25 16h | </span><img src="logos/curacao.png" alt="Curaçao" class="team-logo-sm" loading="lazy">CUW vs <img src="logos/ivory-coast.png" alt="Ivory Coast" class="team-logo-sm" loading="lazy">CIV</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_16h_equador-vs-alemanha.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-25 16h | </span><img src="logos/ecuador.png" alt="Ecuador" class="team-logo-sm" loading="lazy">ECU vs <img src="logos/germany.png" alt="Germany" class="team-logo-sm" loading="lazy">GER</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_18h_japao-vs-suecia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-25 18h | </span><img src="logos/japan.png" alt="Japan" class="team-logo-sm" loading="lazy">JPN vs <img src="logos/sweden.png" alt="Sweden" class="team-logo-sm" loading="lazy">SWE</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_18h_tunisia-vs-holanda.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-25 18h | </span><img src="logos/tunisia.png" alt="Tunisia" class="team-logo-sm" loading="lazy">TUN vs <img src="logos/netherlands.png" alt="Netherlands" class="team-logo-sm" loading="lazy">NED</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_19h_paraguai-vs-australia.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-25 19h | </span><img src="logos/paraguay.png" alt="Paraguay" class="team-logo-sm" loading="lazy">PAR vs <img src="logos/australia.png" alt="Australia" class="team-logo-sm" loading="lazy">AUS</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-25_19h_turquia-vs-estados_unidos.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-25 19h | </span><img src="logos/turkey.png" alt="Turkey" class="team-logo-sm" loading="lazy">TUR vs <img src="logos/united-states.png" alt="United States" class="team-logo-sm" loading="lazy">USA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_15h_noruega-vs-franca.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-26 15h | </span><img src="logos/norway.png" alt="Norway" class="team-logo-sm" loading="lazy">NOR vs <img src="logos/france.png" alt="France" class="team-logo-sm" loading="lazy">FRA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_15h_senegal-vs-iraque.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-26 15h | </span><img src="logos/senegal.png" alt="Senegal" class="team-logo-sm" loading="lazy">SEN vs <img src="logos/iraq.png" alt="Iraq" class="team-logo-sm" loading="lazy">IRQ</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_18h_uruguai-vs-espanha.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-26 18h | </span><img src="logos/uruguay.png" alt="Uruguay" class="team-logo-sm" loading="lazy">URU vs <img src="logos/spain.png" alt="Spain" class="team-logo-sm" loading="lazy">ESP</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_19h_cabo_verde-vs-arabia_saudita.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-26 19h | </span><img src="logos/cape-verde.png" alt="Cape Verde" class="team-logo-sm" loading="lazy">CPV vs <img src="logos/saudi-arabia.png" alt="Saudi Arabia" class="team-logo-sm" loading="lazy">KSA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_20h_egito-vs-ira.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-26 20h | </span><img src="logos/egypt.png" alt="Egypt" class="team-logo-sm" loading="lazy">EGY vs <img src="logos/iran.png" alt="Iran" class="team-logo-sm" loading="lazy">IRN</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-26_20h_nova_zelandia-vs-belgica.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-26 20h | </span><img src="logos/new-zealand.png" alt="New Zealand" class="team-logo-sm" loading="lazy">NZL vs <img src="logos/belgium.png" alt="Belgium" class="team-logo-sm" loading="lazy">BEL</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_17h_croacia-vs-gana.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-27 17h | </span><img src="logos/croatia.png" alt="Croatia" class="team-logo-sm" loading="lazy">CRO vs <img src="logos/ghana.png" alt="Ghana" class="team-logo-sm" loading="lazy">GHA</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_17h_panama-vs-inglaterra.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-27 17h | </span><img src="logos/panama.png" alt="Panama" class="team-logo-sm" loading="lazy">PAN vs <img src="logos/england.png" alt="England" class="team-logo-sm" loading="lazy">ENG</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_19h_colombia-vs-portugal.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-27 19h | </span><img src="logos/colombia.png" alt="Colombia" class="team-logo-sm" loading="lazy">COL vs <img src="logos/portugal.png" alt="Portugal" class="team-logo-sm" loading="lazy">POR</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_19h_rd_congo-vs-uzbequistao.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-27 19h | </span><img src="logos/democratic-republic-of-the-congo.png" alt="Democratic Republic of the Congo" class="team-logo-sm" loading="lazy">COD vs <img src="logos/uzbekistan.png" alt="Uzbekistan" class="team-logo-sm" loading="lazy">UZB</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_21h_argelia-vs-austria.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-27 21h | </span><img src="logos/algeria.png" alt="Algeria" class="team-logo-sm" loading="lazy">ALG vs <img src="logos/austria.png" alt="Austria" class="team-logo-sm" loading="lazy">AUT</span> <span class="badge-result blue">🔮</span></a>
+<a href="jogos/1afase/2026-06-27_21h_jordania-vs-argentina.html" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--card-border)'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">2026-06-27 21h | </span><img src="logos/jordan.png" alt="Jordan" class="team-logo-sm" loading="lazy">JOR vs <img src="logos/argentina.png" alt="Argentina" class="team-logo-sm" loading="lazy">ARG</span> <span class="badge-result blue">🔮</span></a>
+</div></div>
+</details>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">🏆 Segunda Fase (0)</div>
+    <div style="margin:0 0.75rem;"><div class="empty-state">Nenhum jogo disponivel ainda</div></div>
+</div>
+
+<div class="section">
+    <div class="section-title">🏁 Oitavas de Final (0)</div>
+    <div style="margin:0 0.75rem;"><div class="empty-state">Nenhum jogo disponivel ainda</div></div>
+</div>
+
+<div class="section">
+    <div class="section-title">🔥 Quartas de Final (0)</div>
+    <div style="margin:0 0.75rem;"><div class="empty-state">Nenhum jogo disponivel ainda</div></div>
+</div>
+
+<div class="section">
+    <div class="section-title">🎯 Semifinal (0)</div>
+    <div style="margin:0 0.75rem;"><div class="empty-state">Nenhum jogo disponivel ainda</div></div>
+</div>
+
+<div class="section">
+    <div class="section-title">🥉 Disputa 3º Lugar (0)</div>
+    <div style="margin:0 0.75rem;"><div class="empty-state">Nenhum jogo disponivel ainda</div></div>
+</div>
+
+<div class="section">
+    <div class="section-title">🏆 Final (0)</div>
+    <div style="margin:0 0.75rem;"><div class="empty-state">Nenhum jogo disponivel ainda</div></div>
+</div>
+
+</div>
+
+<nav class="bottom-nav"><a href="index.html" class="active"><span class="nav-icon">🏠</span>Início</a>
+<a href="arena.html"><span class="nav-icon">⚔️</span>Arena</a>
+<a href="zebras.html"><span class="nav-icon">🦓</span>Zebras</a>
+<a href="palpites.html"><span class="nav-icon">📋</span>Palpites</a>
+<a href="bolao_xray.html"><span class="nav-icon">🔍</span>Raio-X</a>
+</nav>
+
+</body>
+</html>
