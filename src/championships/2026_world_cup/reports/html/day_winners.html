@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vencedores do Dia - sem dados</title>
+    <title>Vencedores do Dia - 2026 World Cup</title>
     <style>
     :root {
     --primary: #0f4a14;
@@ -545,9 +545,138 @@ body { padding-bottom: 70px; }
 </head>
 <body>
 <div class="back-nav"><a href="index.html">← Voltar</a></div>
-<div class='hero'><h1>🏆 Vencedores do Dia</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>
+
+<div class="hero">
+    <h1>🏆 Vencedores do Dia</h1>
+    <div class="subtitle">Quem venceu cada dia, zebras e palpites originais</div>
+</div>
+
+<div class="card" style="margin:1rem 0.75rem;">
+    <label class="arena-label" for="day-select">Selecione o dia</label>
+    <select id="day-select" class="arena-select" onchange="onDayChange()">
+        <option value="2026-06-11">11/06 (Thu)</option><option value="2026-06-12">12/06 (Fri)</option>
+    </select>
+</div>
+
+<div id="day-cards-container">
+    
+<div class="card" id="day-card-2026-06-11" style="display:none;">
+    <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="color:var(--voce);font-size:1.3rem;">30</div>
+            <div class="label">Melhor do dia</div>
+            <div style="font-size:0.8rem;"><a href="boleiros/Lucas Ubertini.html" style="color:var(--accent);">Lucas Ubertini</a></div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">15.8</div>
+            <div class="label">Media do dia</div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">0</div>
+            <div class="label">Zebras</div>
+        </div>
+    </div>
+<div style="font-size:0.85rem;margin-top:0.5rem;">🥈 Vice: Marcelo Boix (30 pts)</div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">Resultados do dia</div>
+        <div style='font-size:0.85rem;padding:0.2rem 0;'>México 2-0 África do Sul</div>
+<div style='font-size:0.85rem;padding:0.2rem 0;'>Coréia do Sul 2-1 República Tcheca</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">💥 Zebras</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">
+            Zebra = quando o time mais votado como vencedor PERDEU ou empatou. O favorito errou.
+        </div>
+        <div style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">Nenhuma zebra neste dia</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.85rem;margin-top:0.5rem;"><span style="color:var(--accent);font-weight:600;">🎯 Palpite mais original:</span> Coréia do Sul 1 x 0 República Tcheca por João Henrique (7 pts)</div>
+
+    </div>
+</div>
+
+<div class="card" id="day-card-2026-06-12" style="display:none;">
+    <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="color:var(--voce);font-size:1.3rem;">25</div>
+            <div class="label">Melhor do dia</div>
+            <div style="font-size:0.8rem;"><a href="boleiros/José Ricardo.html" style="color:var(--accent);">José Ricardo</a></div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">11.8</div>
+            <div class="label">Media do dia</div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">0</div>
+            <div class="label">Zebras</div>
+        </div>
+    </div>
+<div style="font-size:0.85rem;margin-top:0.5rem;">🥈 Vice: João Henrique (25 pts)</div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">Resultados do dia</div>
+        <div style='font-size:0.85rem;padding:0.2rem 0;'>Canadá 1-1 Bósnia</div>
+<div style='font-size:0.85rem;padding:0.2rem 0;'>Estados Unidos 4-1 Paraguai</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">💥 Zebras</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">
+            Zebra = quando o time mais votado como vencedor PERDEU ou empatou. O favorito errou.
+        </div>
+        <div style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">Nenhuma zebra neste dia</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.85rem;margin-top:0.5rem;"><span style="color:var(--accent);font-weight:600;">🎯 Palpite mais original:</span> Canadá 0 x 0 Bósnia por Giancarlo (7 pts)</div>
+
+    </div>
+</div>
+
+</div>
+
+<div class="card" style="margin:1rem 0.75rem 0.25rem;font-size:0.85rem;color:var(--text-muted);">
+    <p><strong>Criterio de Zebra:</strong> Em cada partida, o sistema calcula o time mais votado como vencedor (o "favorito" do bolaao).
+    Se o favorito perdeu ou empatou, a partida e marcada como ZEBRA. Quanto mais zebras, mais imprevisivel foi o dia.</p>
+</div>
+<div class="card" style="margin:0.25rem 0.75rem 1rem;font-size:0.85rem;color:var(--text-muted);">
+    <p><strong>🎯 Palpite mais original:</strong> Dentre todos os palpites <strong>corretos</strong> do dia, o sistema procura o placar que <strong>menos pessoas acertaram</strong>.
+    Ou seja, a aposta certa que foi a mais incomum — quase ninguém acreditou naquele placar, mas o jogador acertou.
+    Não é necessariamente o maior pontuador do dia; é o reconhecimento de uma "aposta ousada que deu certo".</p>
+    <p style="margin-top:0.3rem;">Exemplo: Se todo mundo acertou Brasil 2 x 0 Argentina, mas só uma pessoa acertou Alemanha 3 x 2 França,
+    essa pessoa leva o "palpite mais original" — mesmo que não seja a líder de pontos do dia.</p>
+</div>
+
+<script>
+
+function showDay(day) {
+    document.querySelectorAll('[id^="day-card-"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
+    const card = document.getElementById('day-card-' + day);
+    if (card) card.style.display = 'block';
+}
+function onDayChange() {
+    const sel = document.getElementById('day-select');
+    showDay(sel.value);
+}
+
+// Show first day on load
+document.addEventListener('DOMContentLoaded', function() {
+    const sel = document.getElementById('day-select');
+    if (sel && sel.value) showDay(sel.value);
+});
+</script>
+
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 11/06/2026 23:17:12
+    atualizado às 13/06/2026 02:21:43
 </div>
 <nav class="bottom-nav"><a href="index.html"><span class="nav-icon">🏠</span>Início</a>
 <a href="arena.html"><span class="nav-icon">⚔️</span>Arena</a>

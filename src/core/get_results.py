@@ -165,7 +165,7 @@ def get_results(config: ChampionshipConfig) -> None:
         "away_team": df["away_team"],
         "match": df["match"],
     })
-
+    
     # Save
     output_path = config.games_file
     os.makedirs(os.path.dirname(output_path), exist_ok=True)

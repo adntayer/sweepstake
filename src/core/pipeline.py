@@ -26,7 +26,9 @@ Structure:
 from __future__ import annotations
 
 import os
+import re
 import shutil
+import unicodedata
 from glob import glob
 
 import pandas as pd
@@ -47,7 +49,7 @@ from src.core.loader import (
 )
 from src.core.printing import print_colored
 from src.core.scoring import score_prediction, score_playoff_bonus, score_strikers
-from src.core.get_results import get_results
+from src.core.matches.wc2026 import build_world_cup_csv
 from src.core.logo_fetcher import fetch_all_logos
 
 # ------------------------------------------------------------------
@@ -136,11 +138,26 @@ def _playoff_files_from_raw(config: ChampionshipConfig) -> list[tuple[str, str, 
 # Result merge helpers
 # ------------------------------------------------------------------
 
+def _strip_accents(text: str) -> str:
+    """Remove diacritics/accents from a string (e.g. São -> Sao)."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text) if not unicodedata.combining(c)
+    )
+
+
 def _merge_with_results(df_pred: pd.DataFrame, df_results: pd.DataFrame) -> pd.DataFrame:
     """Merge predictions with official results on 'match' key.
 
     Adds real goals and result description columns.
+
+    Normalises Unicode accents on the match key so that accented
+    match slugs from player Excel files (e.g. ``méxico-vs-áfrica_do_sul``)
+    match the ASCII-only slugs in ``games.csv`` (``mexico-vs-africa_do_sul``).
     """
+    df_pred = df_pred.copy()
+    df_results = df_results.copy()
+    df_pred["match"] = df_pred["match"].apply(_strip_accents)
+    df_results["match"] = df_results["match"].apply(_strip_accents)
     df = df_pred.merge(df_results, on="match", how="left", suffixes=("_bol", "_real"))
 
     # Build result strings
@@ -606,7 +623,13 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         first = group.iloc[0]
         home = first["home_team"]
         away = first["away_team"]
-        real_winner = first.get("resultado_real_time", "")
+        real_winner_raw = first.get("resultado_real_time", "")
+        # CSV round-trip converts empty strings to NaN; pd.isna catches both
+        real_winner = "" if pd.isna(real_winner_raw) else str(real_winner_raw)
+
+        # Skip unfinished matches — no real result yet
+        if not real_winner:
+            continue
 
         # Determine favorite (most predicted winner)
         vote_counts = group["resultado_bol_time"].value_counts()
@@ -615,7 +638,7 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         total_votes = len(group)
 
         is_upset = 0
-        if real_winner and real_winner != "empate" and favorite and favorite != "empate":
+        if real_winner != "empate" and favorite and favorite != "empate":
             if real_winner != favorite:
                 is_upset = 1
 
@@ -999,7 +1022,7 @@ def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipCon
 def run_pipeline(config: ChampionshipConfig) -> None:
     """Run the full medallion pipeline."""
     fetch_all_logos(config)
-    get_results(config)
+    build_world_cup_csv(config.games_file)
     run_raw_to_bronze(config)
     run_bronze_to_silver(config)
     run_silver_to_gold(config)

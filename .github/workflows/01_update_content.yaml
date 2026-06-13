@@ -2,11 +2,11 @@ name: Update Content
 
 on:
   workflow_dispatch: null
+  schedule:
+    - cron: '0 0 * * *'
   push:
     branches:
       - main
-    paths:
-      - 'src/championships/2026_world_cup/data/games.csv'
 
 jobs:
   run:

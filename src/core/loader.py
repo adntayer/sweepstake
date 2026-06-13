@@ -175,13 +175,8 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
             "Expected a standings-format Excel with 'Grupo X' headers."
         )
 
-    # --- Clear stale scores from group stage only (preserve playoff results) ---
+    # --- Load games.csv to read match schedule (scores kept intact from API) ---
     df_games = pd.read_csv(config.games_file, sep=",")
-    group_mask = df_games["round"].astype(str).str.strip().isin(["1", "2", "3"])
-    for col in ["home_goals", "away_goals", "home_pen", "away_pen"]:
-        if col in df_games.columns:
-            df_games.loc[group_mask, col] = None
-    df_games.to_csv(config.games_file, sep=",", decimal=".", index=False)
 
     # --- Normalize round names ---
     _round_map = {

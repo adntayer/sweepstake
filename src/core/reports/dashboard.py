@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import re
+import unicodedata
 from datetime import datetime, timedelta
 from glob import glob
 
@@ -97,6 +98,20 @@ a:hover { text-decoration: underline; }
     border-radius: 12px;
     padding: 1rem;
     margin: 0 0.75rem;
+}
+
+/* Live badge */
+.live-badge {
+    position: absolute;
+    top: -0.25rem;
+    right: 0.75rem;
+    background: var(--danger);
+    color: var(--text);
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    z-index: 1;
 }
 
 /* Score card (last result) */
@@ -532,7 +547,7 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     score_names = config.scoring_rule_names()
     agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
     df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
-    df_rank.sort_values("pontos", ascending=False, inplace=True)
+    df_rank.sort_values(["pontos", "who"], ascending=[False, True], inplace=True)
     df_rank.reset_index(drop=True, inplace=True)
     df_rank["#"] = range(1, len(df_rank) + 1)
     rank_rows = ""
@@ -576,10 +591,10 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
         return ""
 
     cards = ""
-    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
+    rev_map_pt = {_strip_accents(v.lower()): k for k, v in config.team_name_mapping.items()}
     for g in games:
-        home_en = rev_map_pt.get(g["home_team"].lower(), g["home_team"])
-        away_en = rev_map_pt.get(g["away_team"].lower(), g["away_team"])
+        home_en = rev_map_pt.get(_strip_accents(g["home_team"].lower()), g["home_team"])
+        away_en = rev_map_pt.get(_strip_accents(g["away_team"].lower()), g["away_team"])
         home_logo = _team_logo_tag(home_en, config , cls="team-logo-sm", start=config.reports_dir + "/html")
         away_logo = _team_logo_tag(away_en, config , cls="team-logo-sm", start=config.reports_dir + "/html")
         home_slug = config.team_slugs.get(home_en, "")
@@ -606,7 +621,7 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
     if df_valid.empty:
         return ""
     df_pts = df_valid.groupby("who", as_index=False)["pontos"].sum()
-    df_pts.sort_values("pontos", ascending=False, inplace=True)
+    df_pts.sort_values(["pontos", "who"], ascending=[False, True], inplace=True)
 
     # Check for hot streaks from consistency.csv
     hot_players: set[str] = set()
@@ -709,6 +724,7 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
         return ""
     try:
         df_upset = pd.read_csv(upset_path, sep=",")
+        df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy()
         total = len(df_upset)
         upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else pd.DataFrame()
         num_upsets = len(upsets)
@@ -734,9 +750,49 @@ def _build_bottom_nav_dashboard(prefix: str = "") -> str:
     return f'<nav class="bottom-nav">{links}</nav>'
 
 
+def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
+    """Build a card for each match currently marked as 'live' in games.csv."""
+    df = pd.read_csv(config.results_file, sep=",")
+    live = df[df["time_elapsed"] == "live"].copy()
+    if live.empty:
+        return ""
+
+    rev_map = {v: k for k, v in config.team_name_mapping.items()}
+    cards = ""
+    for _, row in live.iterrows():
+        home = str(row["home_team"])
+        away = str(row["away_team"])
+        hg = int(row["home_goals"]) if pd.notna(row.get("home_goals")) else 0
+        ag = int(row["away_goals"]) if pd.notna(row.get("away_goals")) else 0
+        date = str(row["date"])
+
+        home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
+        away_logo = _team_logo_tag(rev_map.get(away, away), config, cls="team-logo-sm", start=config.reports_dir + "/html")
+
+        cards += f"""
+    <div class="card" style="position:relative;">
+        <div class="live-badge">\U0001f534 AO VIVO</div>
+        <div class="result-card">
+            <div class="team">{home_logo} {home}</div>
+            <div class="score">{hg} - {ag}</div>
+            <div class="team">{away_logo} {away}</div>
+        </div>
+        <div class="date">{date}</div>
+        <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);padding-bottom:0.5rem;">atualizado \u00e0s {now_str}</div>
+    </div>
+"""
+    return f"""
+<div class="section">
+    <div class="section-title">\U0001f4fa Ao Vivo</div>
+    <div style="display:flex;flex-direction:column;gap:0.75rem;padding:0 0.75rem;">{cards}</div>
+</div>
+"""
+
+
 def _build_last_result(config: ChampionshipConfig) -> str:
-    """Build the last result card (by date, not CSV row order)."""
+    """Build the last result card from *finished* matches only."""
     df_results = pd.read_csv(config.results_file, sep=",")
+    df_results = df_results[df_results["time_elapsed"] == "finished"].copy()
     df_results.dropna(subset=["home_goals"], inplace=True)
     if df_results.empty:
         return ""
@@ -754,8 +810,8 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     date = str(last["date"])
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
-    home_logo = _team_logo_tag(config, rev_map.get(home, home), start=config.reports_dir + "/html")
-    away_logo = _team_logo_tag(config, rev_map.get(away, away), start=config.reports_dir + "/html")
+    home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
+    away_logo = _team_logo_tag(rev_map.get(away, away), config, cls="team-logo-sm", start=config.reports_dir + "/html")
 
     return f"""
 <div class="section">
@@ -794,6 +850,13 @@ def _status_badge(slug: str, slug_status: dict[str, str]) -> str:
     return '<span class="badge-result blue">\U0001f52e</span>'
 
 
+def _strip_accents(text: str) -> str:
+    """Remove diacritics/accents from a string (e.g. São -> Sao)."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text) if not unicodedata.combining(c)
+    )
+
+
 def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str] | None = None) -> str:
     """Build phase sections with compact button-style game links, grouped by round."""
     if slug_status is None:
@@ -801,7 +864,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
     html_base = _norm(os.path.join(config.reports_dir, "html"))
     sections = ""
 
-    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
+    rev_map_pt = {_strip_accents(v.lower()): k for k, v in config.team_name_mapping.items()}
 
     def _team_part(fp: str, side: str) -> tuple[str, str, str]:
         slug = _slug_from_filename(fp)
@@ -810,7 +873,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
             return ("", "", "")
         idx = 0 if side == "home" else 1
         pt_name = parts[idx].replace("_", " ").strip()
-        en_name = rev_map_pt.get(pt_name.lower(), pt_name)
+        en_name = rev_map_pt.get(_strip_accents(pt_name.lower()), pt_name)
         logo = _team_logo_tag(en_name, config, cls="team-logo-sm", start=config.reports_dir + "/html")
         slug_code = config.team_slugs.get(en_name, "")
         return (pt_name, logo, slug_code)
@@ -970,6 +1033,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
         slug_status[s] = "future"
 
     last_result = _build_last_result(config)
+    live_games = _build_live_games(config, now_str)
     full_ranking = _build_full_ranking(config)
     upcoming = _build_upcoming_games(config)
     phase_buttons = _build_phase_buttons(config, slug_status)
@@ -1002,8 +1066,13 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <div class="subtitle">Painel do Bolao</div>
     {zebra_counter}
 </div>
+<div style="text-align:center;font-size:0.75rem;color:var(--text-muted);padding:0 0.75rem 0.5rem;">
+    atualizado \u00e0s {now_str}
+</div>
 
 {badge_legend}
+
+{live_games}
 
 {last_result}
 
@@ -1067,10 +1136,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 <div class="section">
     <div class="section-title">\U0001f4c2 Jogos por Fase</div>
     {phase_buttons}
-</div>
-
-<div class="footer" style="padding-bottom:5rem;">
-    atualizado às {now_str}
 </div>
 
 {_build_bottom_nav_dashboard()}

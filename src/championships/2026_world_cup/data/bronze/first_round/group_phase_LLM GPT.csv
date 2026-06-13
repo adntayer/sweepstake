@@ -1,73 +1,73 @@
 date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
-2026-06-11,19h,México,,2.0,x,0.0,,África do Sul,LLM GPT,méxico-vs-áfrica_do_sul
-2026-06-12,02h,Coréia do Sul,,1.0,x,1.0,,República Tcheca,LLM GPT,coréia_do_sul-vs-república_tcheca
-2026-06-12,19h,Canadá,,1.0,x,1.0,,Bósnia,LLM GPT,canadá-vs-bósnia
-2026-06-13,01h,Estados Unidos,,2.0,x,1.0,,Paraguai,LLM GPT,estados_unidos-vs-paraguai
-2026-06-13,19h,Catar,,0.0,x,2.0,,Suíça,LLM GPT,catar-vs-suíça
-2026-06-13,22h,Brasil,,2.0,x,1.0,,Marrocos,LLM GPT,brasil-vs-marrocos
-2026-06-14,01h,Haiti,,0.0,x,2.0,,Escócia,LLM GPT,haiti-vs-escócia
-2026-06-14,04h,Austrália,,1.0,x,2.0,,Turquia,LLM GPT,austrália-vs-turquia
-2026-06-14,17h,Alemanha,,4.0,x,0.0,,Curaçao,LLM GPT,alemanha-vs-curaçao
-2026-06-14,20h,Holanda,,2.0,x,1.0,,Japão,LLM GPT,holanda-vs-japão
-2026-06-14,23h,Costa do Marfim,,1.0,x,1.0,,Equador,LLM GPT,costa_do_marfim-vs-equador
-2026-06-15,02h,Suécia,,1.0,x,0.0,,Tunísia,LLM GPT,suécia-vs-tunísia
-2026-06-15,16h,Espanha,,3.0,x,0.0,,Cabo Verde,LLM GPT,espanha-vs-cabo_verde
-2026-06-15,19h,Bélgica,,2.0,x,1.0,,Egito,LLM GPT,bélgica-vs-egito
-2026-06-15,22h,Arábia Saudita,,0.0,x,2.0,,Uruguai,LLM GPT,arábia_saudita-vs-uruguai
-2026-06-16,01h,Irã,,2.0,x,0.0,,Nova Zelândia,LLM GPT,irã-vs-nova_zelândia
-2026-06-16,19h,França,,2.0,x,1.0,,Senegal,LLM GPT,frança-vs-senegal
-2026-06-16,22h,Iraque,,1.0,x,2.0,,Noruega,LLM GPT,iraque-vs-noruega
-2026-06-17,01h,Argentina,,2.0,x,0.0,,Argélia,LLM GPT,argentina-vs-argélia
-2026-06-17,04h,Áustria,,2.0,x,0.0,,Jordânia,LLM GPT,áustria-vs-jordânia
-2026-06-17,17h,Portugal,,3.0,x,0.0,,RD Congo,LLM GPT,portugal-vs-rd_congo
-2026-06-17,20h,Inglaterra,,2.0,x,1.0,,Croácia,LLM GPT,inglaterra-vs-croácia
-2026-06-17,23h,Gana,,2.0,x,0.0,,Panamá,LLM GPT,gana-vs-panamá
-2026-06-18,02h,Uzbequistão,,1.0,x,2.0,,Colômbia,LLM GPT,uzbequistão-vs-colômbia
-2026-06-18,16h,República Tcheca,,2.0,x,1.0,,África do Sul,LLM GPT,república_tcheca-vs-áfrica_do_sul
-2026-06-18,19h,Suíça,,2.0,x,0.0,,Bósnia,LLM GPT,suíça-vs-bósnia
-2026-06-18,22h,Canadá,,2.0,x,0.0,,Catar,LLM GPT,canadá-vs-catar
-2026-06-19,01h,México,,2.0,x,1.0,,Coréia do Sul,LLM GPT,méxico-vs-coréia_do_sul
-2026-06-19,19h,Estados Unidos,,2.0,x,0.0,,Austrália,LLM GPT,estados_unidos-vs-austrália
-2026-06-19,22h,Escócia,,1.0,x,1.0,,Marrocos,LLM GPT,escócia-vs-marrocos
-2026-06-20,01h,Brasil,,3.0,x,0.0,,Haiti,LLM GPT,brasil-vs-haiti
-2026-06-20,04h,Turquia,,1.0,x,1.0,,Paraguai,LLM GPT,turquia-vs-paraguai
-2026-06-20,17h,Holanda,,2.0,x,1.0,,Suécia,LLM GPT,holanda-vs-suécia
-2026-06-20,20h,Alemanha,,2.0,x,1.0,,Costa do Marfim,LLM GPT,alemanha-vs-costa_do_marfim
-2026-06-21,00h,Equador,,2.0,x,0.0,,Curaçao,LLM GPT,equador-vs-curaçao
-2026-06-21,04h,Tunísia,,0.0,x,1.0,,Japão,LLM GPT,tunísia-vs-japão
-2026-06-21,16h,Espanha,,3.0,x,0.0,,Arábia Saudita,LLM GPT,espanha-vs-arábia_saudita
-2026-06-21,19h,Bélgica,,2.0,x,0.0,,Irã,LLM GPT,bélgica-vs-irã
-2026-06-21,22h,Uruguai,,2.0,x,0.0,,Cabo Verde,LLM GPT,uruguai-vs-cabo_verde
-2026-06-22,01h,Nova Zelândia,,0.0,x,1.0,,Egito,LLM GPT,nova_zelândia-vs-egito
-2026-06-22,17h,Argentina,,2.0,x,1.0,,Áustria,LLM GPT,argentina-vs-áustria
-2026-06-22,21h,França,,3.0,x,0.0,,Iraque,LLM GPT,frança-vs-iraque
-2026-06-23,00h,Noruega,,2.0,x,1.0,,Senegal,LLM GPT,noruega-vs-senegal
-2026-06-23,03h,Jordânia,,0.0,x,1.0,,Argélia,LLM GPT,jordânia-vs-argélia
-2026-06-23,17h,Portugal,,2.0,x,0.0,,Uzbequistão,LLM GPT,portugal-vs-uzbequistão
-2026-06-23,20h,Inglaterra,,2.0,x,0.0,,Gana,LLM GPT,inglaterra-vs-gana
-2026-06-23,23h,Panamá,,0.0,x,2.0,,Croácia,LLM GPT,panamá-vs-croácia
-2026-06-24,02h,Colômbia,,2.0,x,0.0,,RD Congo,LLM GPT,colômbia-vs-rd_congo
-2026-06-24,19h,Suíça,,2.0,x,1.0,,Canadá,LLM GPT,suíça-vs-canadá
-2026-06-24,19h,Bósnia,,1.0,x,0.0,,Catar,LLM GPT,bósnia-vs-catar
-2026-06-24,22h,Escócia,,0.0,x,2.0,,Brasil,LLM GPT,escócia-vs-brasil
-2026-06-24,22h,Marrocos,,3.0,x,0.0,,Haiti,LLM GPT,marrocos-vs-haiti
-2026-06-25,01h,República Tcheca,,1.0,x,1.0,,México,LLM GPT,república_tcheca-vs-méxico
-2026-06-25,01h,África do Sul,,0.0,x,1.0,,Coréia do Sul,LLM GPT,áfrica_do_sul-vs-coréia_do_sul
-2026-06-25,20h,Curaçao,,0.0,x,2.0,,Costa do Marfim,LLM GPT,curaçao-vs-costa_do_marfim
-2026-06-25,20h,Equador,,1.0,x,2.0,,Alemanha,LLM GPT,equador-vs-alemanha
-2026-06-25,23h,Japão,,1.0,x,1.0,,Suécia,LLM GPT,japão-vs-suécia
-2026-06-25,23h,Tunísia,,0.0,x,2.0,,Holanda,LLM GPT,tunísia-vs-holanda
-2026-06-26,02h,Turquia,,1.0,x,1.0,,Estados Unidos,LLM GPT,turquia-vs-estados_unidos
-2026-06-26,02h,Paraguai,,1.0,x,0.0,,Austrália,LLM GPT,paraguai-vs-austrália
-2026-06-26,19h,Noruega,,1.0,x,2.0,,França,LLM GPT,noruega-vs-frança
-2026-06-26,19h,Senegal,,2.0,x,0.0,,Iraque,LLM GPT,senegal-vs-iraque
-2026-06-27,00h,Cabo Verde,,1.0,x,1.0,,Arábia Saudita,LLM GPT,cabo_verde-vs-arábia_saudita
-2026-06-27,00h,Uruguai,,1.0,x,2.0,,Espanha,LLM GPT,uruguai-vs-espanha
-2026-06-27,03h,Egito,,2.0,x,1.0,,Irã,LLM GPT,egito-vs-irã
-2026-06-27,03h,Nova Zelândia,,0.0,x,3.0,,Bélgica,LLM GPT,nova_zelândia-vs-bélgica
-2026-06-27,21h,Panamá,,0.0,x,3.0,,Inglaterra,LLM GPT,panamá-vs-inglaterra
-2026-06-27,21h,Croácia,,1.0,x,1.0,,Gana,LLM GPT,croácia-vs-gana
-2026-06-27,23h,Colômbia,,1.0,x,1.0,,Portugal,LLM GPT,colômbia-vs-portugal
-2026-06-27,23h,RD Congo,,1.0,x,1.0,,Uzbequistão,LLM GPT,rd_congo-vs-uzbequistão
-2026-06-28,02h,Argélia,,1.0,x,1.0,,Áustria,LLM GPT,argélia-vs-áustria
-2026-06-28,02h,Jordânia,,0.0,x,3.0,,Argentina,LLM GPT,jordânia-vs-argentina
+2026-06-11,13h,México,,2.0,x,0.0,,África do Sul,LLM GPT,méxico-vs-áfrica_do_sul
+2026-06-11,20h,Coréia do Sul,,1.0,x,1.0,,República Tcheca,LLM GPT,coréia_do_sul-vs-república_tcheca
+2026-06-12,15h,Canadá,,1.0,x,1.0,,Bósnia,LLM GPT,canadá-vs-bósnia
+2026-06-12,18h,Estados Unidos,,2.0,x,1.0,,Paraguai,LLM GPT,estados_unidos-vs-paraguai
+2026-06-13,12h,Catar,,0.0,x,2.0,,Suíça,LLM GPT,catar-vs-suíça
+2026-06-13,18h,Brasil,,2.0,x,1.0,,Marrocos,LLM GPT,brasil-vs-marrocos
+2026-06-13,21h,Haiti,,0.0,x,2.0,,Escócia,LLM GPT,haiti-vs-escócia
+2026-06-13,21h,Austrália,,1.0,x,2.0,,Turquia,LLM GPT,austrália-vs-turquia
+2026-06-14,12h,Alemanha,,4.0,x,0.0,,Curaçao,LLM GPT,alemanha-vs-curaçao
+2026-06-14,15h,Holanda,,2.0,x,1.0,,Japão,LLM GPT,holanda-vs-japão
+2026-06-14,19h,Costa do Marfim,,1.0,x,1.0,,Equador,LLM GPT,costa_do_marfim-vs-equador
+2026-06-14,20h,Suécia,,1.0,x,0.0,,Tunísia,LLM GPT,suécia-vs-tunísia
+2026-06-15,12h,Espanha,,3.0,x,0.0,,Cabo Verde,LLM GPT,espanha-vs-cabo_verde
+2026-06-15,12h,Bélgica,,2.0,x,1.0,,Egito,LLM GPT,bélgica-vs-egito
+2026-06-15,18h,Arábia Saudita,,0.0,x,2.0,,Uruguai,LLM GPT,arábia_saudita-vs-uruguai
+2026-06-15,18h,Irã,,2.0,x,0.0,,Nova Zelândia,LLM GPT,irã-vs-nova_zelândia
+2026-06-16,15h,França,,2.0,x,1.0,,Senegal,LLM GPT,frança-vs-senegal
+2026-06-16,18h,Iraque,,1.0,x,2.0,,Noruega,LLM GPT,iraque-vs-noruega
+2026-06-16,20h,Argentina,,2.0,x,0.0,,Argélia,LLM GPT,argentina-vs-argélia
+2026-06-16,21h,Áustria,,2.0,x,0.0,,Jordânia,LLM GPT,áustria-vs-jordânia
+2026-06-17,12h,Portugal,,3.0,x,0.0,,RD Congo,LLM GPT,portugal-vs-rd_congo
+2026-06-17,15h,Inglaterra,,2.0,x,1.0,,Croácia,LLM GPT,inglaterra-vs-croácia
+2026-06-17,19h,Gana,,2.0,x,0.0,,Panamá,LLM GPT,gana-vs-panamá
+2026-06-17,20h,Uzbequistão,,1.0,x,2.0,,Colômbia,LLM GPT,uzbequistão-vs-colômbia
+2026-06-18,12h,República Tcheca,,2.0,x,1.0,,África do Sul,LLM GPT,república_tcheca-vs-áfrica_do_sul
+2026-06-18,12h,Suíça,,2.0,x,0.0,,Bósnia,LLM GPT,suíça-vs-bósnia
+2026-06-18,15h,Canadá,,2.0,x,0.0,,Catar,LLM GPT,canadá-vs-catar
+2026-06-18,19h,México,,2.0,x,1.0,,Coréia do Sul,LLM GPT,méxico-vs-coréia_do_sul
+2026-06-19,12h,Estados Unidos,,2.0,x,0.0,,Austrália,LLM GPT,estados_unidos-vs-austrália
+2026-06-19,18h,Escócia,,1.0,x,1.0,,Marrocos,LLM GPT,escócia-vs-marrocos
+2026-06-19,20h,Turquia,,1.0,x,1.0,,Paraguai,LLM GPT,turquia-vs-paraguai
+2026-06-19,21h,Brasil,,3.0,x,0.0,,Haiti,LLM GPT,brasil-vs-haiti
+2026-06-20,12h,Holanda,,2.0,x,1.0,,Suécia,LLM GPT,holanda-vs-suécia
+2026-06-20,16h,Alemanha,,2.0,x,1.0,,Costa do Marfim,LLM GPT,alemanha-vs-costa_do_marfim
+2026-06-20,19h,Equador,,2.0,x,0.0,,Curaçao,LLM GPT,equador-vs-curaçao
+2026-06-20,22h,Tunísia,,0.0,x,1.0,,Japão,LLM GPT,tunísia-vs-japão
+2026-06-21,12h,Espanha,,3.0,x,0.0,,Arábia Saudita,LLM GPT,espanha-vs-arábia_saudita
+2026-06-21,12h,Bélgica,,2.0,x,0.0,,Irã,LLM GPT,bélgica-vs-irã
+2026-06-21,18h,Nova Zelândia,,0.0,x,1.0,,Egito,LLM GPT,nova_zelândia-vs-egito
+2026-06-21,18h,Uruguai,,2.0,x,0.0,,Cabo Verde,LLM GPT,uruguai-vs-cabo_verde
+2026-06-22,12h,Argentina,,2.0,x,1.0,,Áustria,LLM GPT,argentina-vs-áustria
+2026-06-22,17h,França,,3.0,x,0.0,,Iraque,LLM GPT,frança-vs-iraque
+2026-06-22,20h,Noruega,,2.0,x,1.0,,Senegal,LLM GPT,noruega-vs-senegal
+2026-06-22,20h,Jordânia,,0.0,x,1.0,,Argélia,LLM GPT,jordânia-vs-argélia
+2026-06-23,12h,Portugal,,2.0,x,0.0,,Uzbequistão,LLM GPT,portugal-vs-uzbequistão
+2026-06-23,16h,Inglaterra,,2.0,x,0.0,,Gana,LLM GPT,inglaterra-vs-gana
+2026-06-23,19h,Panamá,,0.0,x,2.0,,Croácia,LLM GPT,panamá-vs-croácia
+2026-06-23,20h,Colômbia,,2.0,x,0.0,,RD Congo,LLM GPT,colômbia-vs-rd_congo
+2026-06-24,12h,Suíça,,2.0,x,1.0,,Canadá,LLM GPT,suíça-vs-canadá
+2026-06-24,12h,Bósnia,,1.0,x,0.0,,Catar,LLM GPT,bósnia-vs-catar
+2026-06-24,18h,Escócia,,0.0,x,2.0,,Brasil,LLM GPT,escócia-vs-brasil
+2026-06-24,18h,Marrocos,,3.0,x,0.0,,Haiti,LLM GPT,marrocos-vs-haiti
+2026-06-24,19h,República Tcheca,,1.0,x,1.0,,México,LLM GPT,república_tcheca-vs-méxico
+2026-06-24,19h,África do Sul,,0.0,x,1.0,,Coréia do Sul,LLM GPT,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,16h,Curaçao,,0.0,x,2.0,,Costa do Marfim,LLM GPT,curaçao-vs-costa_do_marfim
+2026-06-25,16h,Equador,,1.0,x,2.0,,Alemanha,LLM GPT,equador-vs-alemanha
+2026-06-25,18h,Japão,,1.0,x,1.0,,Suécia,LLM GPT,japão-vs-suécia
+2026-06-25,18h,Tunísia,,0.0,x,2.0,,Holanda,LLM GPT,tunísia-vs-holanda
+2026-06-25,19h,Paraguai,,1.0,x,0.0,,Austrália,LLM GPT,paraguai-vs-austrália
+2026-06-25,19h,Turquia,,1.0,x,1.0,,Estados Unidos,LLM GPT,turquia-vs-estados_unidos
+2026-06-26,15h,Senegal,,2.0,x,0.0,,Iraque,LLM GPT,senegal-vs-iraque
+2026-06-26,15h,Noruega,,1.0,x,2.0,,França,LLM GPT,noruega-vs-frança
+2026-06-26,18h,Uruguai,,1.0,x,2.0,,Espanha,LLM GPT,uruguai-vs-espanha
+2026-06-26,19h,Cabo Verde,,1.0,x,1.0,,Arábia Saudita,LLM GPT,cabo_verde-vs-arábia_saudita
+2026-06-26,20h,Nova Zelândia,,0.0,x,3.0,,Bélgica,LLM GPT,nova_zelândia-vs-bélgica
+2026-06-26,20h,Egito,,2.0,x,1.0,,Irã,LLM GPT,egito-vs-irã
+2026-06-27,17h,Panamá,,0.0,x,3.0,,Inglaterra,LLM GPT,panamá-vs-inglaterra
+2026-06-27,17h,Croácia,,1.0,x,1.0,,Gana,LLM GPT,croácia-vs-gana
+2026-06-27,19h,Colômbia,,1.0,x,1.0,,Portugal,LLM GPT,colômbia-vs-portugal
+2026-06-27,19h,RD Congo,,1.0,x,1.0,,Uzbequistão,LLM GPT,rd_congo-vs-uzbequistão
+2026-06-27,21h,Argélia,,1.0,x,1.0,,Áustria,LLM GPT,argélia-vs-áustria
+2026-06-27,21h,Jordânia,,0.0,x,3.0,,Argentina,LLM GPT,jordânia-vs-argentina

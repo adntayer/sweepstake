@@ -12,11 +12,11 @@ on:
     - cron: '10 21 * * *'
     # 04:30 UTC / 01:30 Horário de Brasília (Pega os jogos das 19h e 22h + prorrogações)
     - cron: '10 4 * * *'
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/championships/2026_world_cup/reports/html/**'
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'src/championships/2026_world_cup/reports/html/**'
 
 jobs:
   build-and-deploy:
