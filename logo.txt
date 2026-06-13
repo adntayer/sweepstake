@@ -193,6 +193,7 @@ team_name_mapping:
     logo: "https://assets.football-logos.cc/logos/panama/1500x1500/panama-national-team.66beecfd.png"
 
 
+
 team_name_mapping:
   - en: "South Africa"
     pt: "África do Sul"
