@@ -3,9 +3,8 @@ name: Update Content and Deploy Page
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 16,17,18,19,20,21,22,23 * * *'
-    - cron: '*/15 0,1,2 * * *'
-    - cron: '*/15 3,4 * * *'
+    - cron: '*/30 16-23 * * *'
+    - cron: '*/30 0-4 * * *'
   push:
     branches:
       - main
