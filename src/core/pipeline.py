@@ -606,7 +606,13 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         first = group.iloc[0]
         home = first["home_team"]
         away = first["away_team"]
-        real_winner = first.get("resultado_real_time", "")
+        real_winner_raw = first.get("resultado_real_time", "")
+        # CSV round-trip converts empty strings to NaN; pd.isna catches both
+        real_winner = "" if pd.isna(real_winner_raw) else str(real_winner_raw)
+
+        # Skip unfinished matches — no real result yet
+        if not real_winner:
+            continue
 
         # Determine favorite (most predicted winner)
         vote_counts = group["resultado_bol_time"].value_counts()
@@ -615,7 +621,7 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         total_votes = len(group)
 
         is_upset = 0
-        if real_winner and real_winner != "empate" and favorite and favorite != "empate":
+        if real_winner != "empate" and favorite and favorite != "empate":
             if real_winner != favorite:
                 is_upset = 1
 

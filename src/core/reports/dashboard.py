@@ -723,6 +723,7 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
         return ""
     try:
         df_upset = pd.read_csv(upset_path, sep=",")
+        df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy()
         total = len(df_upset)
         upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else pd.DataFrame()
         num_upsets = len(upsets)

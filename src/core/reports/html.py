@@ -3431,6 +3431,9 @@ def _build_zebras(config: ChampionshipConfig) -> str:
     if "is_upset" not in df_upset.columns:
         df_upset["is_upset"] = 0
 
+    # Only finished matches with a real result should be counted
+    df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy()
+
     total_matches = len(df_upset)
     upset_matches = df_upset[df_upset["is_upset"] == 1]
     num_upsets = len(upset_matches)
