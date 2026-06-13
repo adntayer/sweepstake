@@ -1,73 +1,73 @@
 date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
-2026-06-11,19h,México,,2.0,x,0.0,,África do Sul,Marco Lavander,méxico-vs-áfrica_do_sul
-2026-06-12,02h,Coréia do Sul,,1.0,x,1.0,,República Tcheca,Marco Lavander,coréia_do_sul-vs-república_tcheca
-2026-06-12,19h,Canadá,,2.0,x,2.0,,Bósnia,Marco Lavander,canadá-vs-bósnia
-2026-06-13,01h,Estados Unidos,,1.0,x,1.0,,Paraguai,Marco Lavander,estados_unidos-vs-paraguai
-2026-06-13,19h,Catar,,1.0,x,3.0,,Suíça,Marco Lavander,catar-vs-suíça
-2026-06-13,22h,Brasil,,2.0,x,1.0,,Marrocos,Marco Lavander,brasil-vs-marrocos
-2026-06-14,01h,Haiti,,0.0,x,3.0,,Escócia,Marco Lavander,haiti-vs-escócia
-2026-06-14,04h,Austrália,,0.0,x,2.0,,Turquia,Marco Lavander,austrália-vs-turquia
-2026-06-14,17h,Alemanha,,3.0,x,0.0,,Curaçao,Marco Lavander,alemanha-vs-curaçao
-2026-06-14,20h,Holanda,,2.0,x,1.0,,Japão,Marco Lavander,holanda-vs-japão
-2026-06-14,23h,Costa do Marfim,,1.0,x,1.0,,Equador,Marco Lavander,costa_do_marfim-vs-equador
-2026-06-15,02h,Suécia,,1.0,x,0.0,,Tunísia,Marco Lavander,suécia-vs-tunísia
-2026-06-15,16h,Espanha,,3.0,x,0.0,,Cabo Verde,Marco Lavander,espanha-vs-cabo_verde
-2026-06-15,19h,Bélgica,,2.0,x,1.0,,Egito,Marco Lavander,bélgica-vs-egito
-2026-06-15,22h,Arábia Saudita,,2.0,x,2.0,,Uruguai,Marco Lavander,arábia_saudita-vs-uruguai
-2026-06-16,01h,Irã,,1.0,x,0.0,,Nova Zelândia,Marco Lavander,irã-vs-nova_zelândia
-2026-06-16,19h,França,,2.0,x,0.0,,Senegal,Marco Lavander,frança-vs-senegal
-2026-06-16,22h,Iraque,,1.0,x,3.0,,Noruega,Marco Lavander,iraque-vs-noruega
-2026-06-17,01h,Argentina,,3.0,x,1.0,,Argélia,Marco Lavander,argentina-vs-argélia
-2026-06-17,04h,Áustria,,2.0,x,0.0,,Jordânia,Marco Lavander,áustria-vs-jordânia
-2026-06-17,17h,Portugal,,2.0,x,0.0,,RD Congo,Marco Lavander,portugal-vs-rd_congo
-2026-06-17,20h,Inglaterra,,2.0,x,2.0,,Croácia,Marco Lavander,inglaterra-vs-croácia
-2026-06-17,23h,Gana,,2.0,x,1.0,,Panamá,Marco Lavander,gana-vs-panamá
-2026-06-18,02h,Uzbequistão,,1.0,x,2.0,,Colômbia,Marco Lavander,uzbequistão-vs-colômbia
-2026-06-18,16h,República Tcheca,,2.0,x,1.0,,África do Sul,Marco Lavander,república_tcheca-vs-áfrica_do_sul
-2026-06-18,19h,Suíça,,2.0,x,0.0,,Bósnia,Marco Lavander,suíça-vs-bósnia
-2026-06-18,22h,Canadá,,2.0,x,1.0,,Catar,Marco Lavander,canadá-vs-catar
-2026-06-19,01h,México,,1.0,x,1.0,,Coréia do Sul,Marco Lavander,méxico-vs-coréia_do_sul
-2026-06-19,19h,Estados Unidos,,2.0,x,0.0,,Austrália,Marco Lavander,estados_unidos-vs-austrália
-2026-06-19,22h,Escócia,,1.0,x,2.0,,Marrocos,Marco Lavander,escócia-vs-marrocos
-2026-06-20,01h,Brasil,,3.0,x,1.0,,Haiti,Marco Lavander,brasil-vs-haiti
-2026-06-20,04h,Turquia,,2.0,x,1.0,,Paraguai,Marco Lavander,turquia-vs-paraguai
-2026-06-20,17h,Holanda,,1.0,x,1.0,,Suécia,Marco Lavander,holanda-vs-suécia
-2026-06-20,20h,Alemanha,,2.0,x,0.0,,Costa do Marfim,Marco Lavander,alemanha-vs-costa_do_marfim
-2026-06-21,00h,Equador,,3.0,x,1.0,,Curaçao,Marco Lavander,equador-vs-curaçao
-2026-06-21,04h,Tunísia,,0.0,x,2.0,,Japão,Marco Lavander,tunísia-vs-japão
-2026-06-21,16h,Espanha,,2.0,x,1.0,,Arábia Saudita,Marco Lavander,espanha-vs-arábia_saudita
-2026-06-21,19h,Bélgica,,2.0,x,1.0,,Irã,Marco Lavander,bélgica-vs-irã
-2026-06-21,22h,Uruguai,,2.0,x,0.0,,Cabo Verde,Marco Lavander,uruguai-vs-cabo_verde
-2026-06-22,01h,Nova Zelândia,,0.0,x,2.0,,Egito,Marco Lavander,nova_zelândia-vs-egito
-2026-06-22,17h,Argentina,,2.0,x,1.0,,Áustria,Marco Lavander,argentina-vs-áustria
-2026-06-22,21h,França,,3.0,x,0.0,,Iraque,Marco Lavander,frança-vs-iraque
-2026-06-23,00h,Noruega,,2.0,x,2.0,,Senegal,Marco Lavander,noruega-vs-senegal
-2026-06-23,03h,Jordânia,,0.0,x,2.0,,Argélia,Marco Lavander,jordânia-vs-argélia
-2026-06-23,17h,Portugal,,2.0,x,1.0,,Uzbequistão,Marco Lavander,portugal-vs-uzbequistão
-2026-06-23,20h,Inglaterra,,3.0,x,2.0,,Gana,Marco Lavander,inglaterra-vs-gana
-2026-06-23,23h,Panamá,,0.0,x,3.0,,Croácia,Marco Lavander,panamá-vs-croácia
-2026-06-24,02h,Colômbia,,2.0,x,0.0,,RD Congo,Marco Lavander,colômbia-vs-rd_congo
-2026-06-24,19h,Suíça,,1.0,x,1.0,,Canadá,Marco Lavander,suíça-vs-canadá
-2026-06-24,19h,Bósnia,,2.0,x,1.0,,Catar,Marco Lavander,bósnia-vs-catar
-2026-06-24,22h,Escócia,,0.0,x,2.0,,Brasil,Marco Lavander,escócia-vs-brasil
-2026-06-24,22h,Marrocos,,2.0,x,0.0,,Haiti,Marco Lavander,marrocos-vs-haiti
-2026-06-25,01h,República Tcheca,,1.0,x,2.0,,México,Marco Lavander,república_tcheca-vs-méxico
-2026-06-25,01h,África do Sul,,0.0,x,2.0,,Coréia do Sul,Marco Lavander,áfrica_do_sul-vs-coréia_do_sul
-2026-06-25,20h,Curaçao,,0.0,x,2.0,,Costa do Marfim,Marco Lavander,curaçao-vs-costa_do_marfim
-2026-06-25,20h,Equador,,1.0,x,2.0,,Alemanha,Marco Lavander,equador-vs-alemanha
-2026-06-25,23h,Japão,,2.0,x,1.0,,Suécia,Marco Lavander,japão-vs-suécia
-2026-06-25,23h,Tunísia,,0.0,x,2.0,,Holanda,Marco Lavander,tunísia-vs-holanda
-2026-06-26,02h,Turquia,,1.0,x,2.0,,Estados Unidos,Marco Lavander,turquia-vs-estados_unidos
-2026-06-26,02h,Paraguai,,1.0,x,1.0,,Austrália,Marco Lavander,paraguai-vs-austrália
-2026-06-26,19h,Noruega,,1.0,x,2.0,,França,Marco Lavander,noruega-vs-frança
-2026-06-26,19h,Senegal,,2.0,x,1.0,,Iraque,Marco Lavander,senegal-vs-iraque
-2026-06-27,00h,Cabo Verde,,1.0,x,1.0,,Arábia Saudita,Marco Lavander,cabo_verde-vs-arábia_saudita
-2026-06-27,00h,Uruguai,,1.0,x,1.0,,Espanha,Marco Lavander,uruguai-vs-espanha
-2026-06-27,03h,Egito,,1.0,x,1.0,,Irã,Marco Lavander,egito-vs-irã
-2026-06-27,03h,Nova Zelândia,,1.0,x,3.0,,Bélgica,Marco Lavander,nova_zelândia-vs-bélgica
-2026-06-27,21h,Panamá,,0.0,x,3.0,,Inglaterra,Marco Lavander,panamá-vs-inglaterra
-2026-06-27,21h,Croácia,,1.0,x,1.0,,Gana,Marco Lavander,croácia-vs-gana
-2026-06-27,23h,Colômbia,,1.0,x,1.0,,Portugal,Marco Lavander,colômbia-vs-portugal
-2026-06-27,23h,RD Congo,,1.0,x,1.0,,Uzbequistão,Marco Lavander,rd_congo-vs-uzbequistão
-2026-06-28,02h,Argélia,,1.0,x,1.0,,Áustria,Marco Lavander,argélia-vs-áustria
-2026-06-28,02h,Jordânia,,1.0,x,3.0,,Argentina,Marco Lavander,jordânia-vs-argentina
+2026-06-11,13h,México,,2.0,x,0.0,,África do Sul,Marco Lavander,méxico-vs-áfrica_do_sul
+2026-06-11,20h,Coréia do Sul,,1.0,x,1.0,,República Tcheca,Marco Lavander,coréia_do_sul-vs-república_tcheca
+2026-06-12,15h,Canadá,,2.0,x,2.0,,Bósnia,Marco Lavander,canadá-vs-bósnia
+2026-06-12,18h,Estados Unidos,,1.0,x,1.0,,Paraguai,Marco Lavander,estados_unidos-vs-paraguai
+2026-06-13,12h,Catar,,1.0,x,3.0,,Suíça,Marco Lavander,catar-vs-suíça
+2026-06-13,18h,Brasil,,2.0,x,1.0,,Marrocos,Marco Lavander,brasil-vs-marrocos
+2026-06-13,21h,Haiti,,0.0,x,3.0,,Escócia,Marco Lavander,haiti-vs-escócia
+2026-06-13,21h,Austrália,,0.0,x,2.0,,Turquia,Marco Lavander,austrália-vs-turquia
+2026-06-14,12h,Alemanha,,3.0,x,0.0,,Curaçao,Marco Lavander,alemanha-vs-curaçao
+2026-06-14,15h,Holanda,,2.0,x,1.0,,Japão,Marco Lavander,holanda-vs-japão
+2026-06-14,19h,Costa do Marfim,,1.0,x,1.0,,Equador,Marco Lavander,costa_do_marfim-vs-equador
+2026-06-14,20h,Suécia,,1.0,x,0.0,,Tunísia,Marco Lavander,suécia-vs-tunísia
+2026-06-15,12h,Espanha,,3.0,x,0.0,,Cabo Verde,Marco Lavander,espanha-vs-cabo_verde
+2026-06-15,12h,Bélgica,,2.0,x,1.0,,Egito,Marco Lavander,bélgica-vs-egito
+2026-06-15,18h,Arábia Saudita,,2.0,x,2.0,,Uruguai,Marco Lavander,arábia_saudita-vs-uruguai
+2026-06-15,18h,Irã,,1.0,x,0.0,,Nova Zelândia,Marco Lavander,irã-vs-nova_zelândia
+2026-06-16,15h,França,,2.0,x,0.0,,Senegal,Marco Lavander,frança-vs-senegal
+2026-06-16,18h,Iraque,,1.0,x,3.0,,Noruega,Marco Lavander,iraque-vs-noruega
+2026-06-16,20h,Argentina,,3.0,x,1.0,,Argélia,Marco Lavander,argentina-vs-argélia
+2026-06-16,21h,Áustria,,2.0,x,0.0,,Jordânia,Marco Lavander,áustria-vs-jordânia
+2026-06-17,12h,Portugal,,2.0,x,0.0,,RD Congo,Marco Lavander,portugal-vs-rd_congo
+2026-06-17,15h,Inglaterra,,2.0,x,2.0,,Croácia,Marco Lavander,inglaterra-vs-croácia
+2026-06-17,19h,Gana,,2.0,x,1.0,,Panamá,Marco Lavander,gana-vs-panamá
+2026-06-17,20h,Uzbequistão,,1.0,x,2.0,,Colômbia,Marco Lavander,uzbequistão-vs-colômbia
+2026-06-18,12h,República Tcheca,,2.0,x,1.0,,África do Sul,Marco Lavander,república_tcheca-vs-áfrica_do_sul
+2026-06-18,12h,Suíça,,2.0,x,0.0,,Bósnia,Marco Lavander,suíça-vs-bósnia
+2026-06-18,15h,Canadá,,2.0,x,1.0,,Catar,Marco Lavander,canadá-vs-catar
+2026-06-18,19h,México,,1.0,x,1.0,,Coréia do Sul,Marco Lavander,méxico-vs-coréia_do_sul
+2026-06-19,12h,Estados Unidos,,2.0,x,0.0,,Austrália,Marco Lavander,estados_unidos-vs-austrália
+2026-06-19,18h,Escócia,,1.0,x,2.0,,Marrocos,Marco Lavander,escócia-vs-marrocos
+2026-06-19,20h,Turquia,,2.0,x,1.0,,Paraguai,Marco Lavander,turquia-vs-paraguai
+2026-06-19,21h,Brasil,,3.0,x,1.0,,Haiti,Marco Lavander,brasil-vs-haiti
+2026-06-20,12h,Holanda,,1.0,x,1.0,,Suécia,Marco Lavander,holanda-vs-suécia
+2026-06-20,16h,Alemanha,,2.0,x,0.0,,Costa do Marfim,Marco Lavander,alemanha-vs-costa_do_marfim
+2026-06-20,19h,Equador,,3.0,x,1.0,,Curaçao,Marco Lavander,equador-vs-curaçao
+2026-06-20,22h,Tunísia,,0.0,x,2.0,,Japão,Marco Lavander,tunísia-vs-japão
+2026-06-21,12h,Espanha,,2.0,x,1.0,,Arábia Saudita,Marco Lavander,espanha-vs-arábia_saudita
+2026-06-21,12h,Bélgica,,2.0,x,1.0,,Irã,Marco Lavander,bélgica-vs-irã
+2026-06-21,18h,Nova Zelândia,,0.0,x,2.0,,Egito,Marco Lavander,nova_zelândia-vs-egito
+2026-06-21,18h,Uruguai,,2.0,x,0.0,,Cabo Verde,Marco Lavander,uruguai-vs-cabo_verde
+2026-06-22,12h,Argentina,,2.0,x,1.0,,Áustria,Marco Lavander,argentina-vs-áustria
+2026-06-22,17h,França,,3.0,x,0.0,,Iraque,Marco Lavander,frança-vs-iraque
+2026-06-22,20h,Noruega,,2.0,x,2.0,,Senegal,Marco Lavander,noruega-vs-senegal
+2026-06-22,20h,Jordânia,,0.0,x,2.0,,Argélia,Marco Lavander,jordânia-vs-argélia
+2026-06-23,12h,Portugal,,2.0,x,1.0,,Uzbequistão,Marco Lavander,portugal-vs-uzbequistão
+2026-06-23,16h,Inglaterra,,3.0,x,2.0,,Gana,Marco Lavander,inglaterra-vs-gana
+2026-06-23,19h,Panamá,,0.0,x,3.0,,Croácia,Marco Lavander,panamá-vs-croácia
+2026-06-23,20h,Colômbia,,2.0,x,0.0,,RD Congo,Marco Lavander,colômbia-vs-rd_congo
+2026-06-24,12h,Suíça,,1.0,x,1.0,,Canadá,Marco Lavander,suíça-vs-canadá
+2026-06-24,12h,Bósnia,,2.0,x,1.0,,Catar,Marco Lavander,bósnia-vs-catar
+2026-06-24,18h,Escócia,,0.0,x,2.0,,Brasil,Marco Lavander,escócia-vs-brasil
+2026-06-24,18h,Marrocos,,2.0,x,0.0,,Haiti,Marco Lavander,marrocos-vs-haiti
+2026-06-24,19h,República Tcheca,,1.0,x,2.0,,México,Marco Lavander,república_tcheca-vs-méxico
+2026-06-24,19h,África do Sul,,0.0,x,2.0,,Coréia do Sul,Marco Lavander,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,16h,Curaçao,,0.0,x,2.0,,Costa do Marfim,Marco Lavander,curaçao-vs-costa_do_marfim
+2026-06-25,16h,Equador,,1.0,x,2.0,,Alemanha,Marco Lavander,equador-vs-alemanha
+2026-06-25,18h,Japão,,2.0,x,1.0,,Suécia,Marco Lavander,japão-vs-suécia
+2026-06-25,18h,Tunísia,,0.0,x,2.0,,Holanda,Marco Lavander,tunísia-vs-holanda
+2026-06-25,19h,Paraguai,,1.0,x,1.0,,Austrália,Marco Lavander,paraguai-vs-austrália
+2026-06-25,19h,Turquia,,1.0,x,2.0,,Estados Unidos,Marco Lavander,turquia-vs-estados_unidos
+2026-06-26,15h,Senegal,,2.0,x,1.0,,Iraque,Marco Lavander,senegal-vs-iraque
+2026-06-26,15h,Noruega,,1.0,x,2.0,,França,Marco Lavander,noruega-vs-frança
+2026-06-26,18h,Uruguai,,1.0,x,1.0,,Espanha,Marco Lavander,uruguai-vs-espanha
+2026-06-26,19h,Cabo Verde,,1.0,x,1.0,,Arábia Saudita,Marco Lavander,cabo_verde-vs-arábia_saudita
+2026-06-26,20h,Nova Zelândia,,1.0,x,3.0,,Bélgica,Marco Lavander,nova_zelândia-vs-bélgica
+2026-06-26,20h,Egito,,1.0,x,1.0,,Irã,Marco Lavander,egito-vs-irã
+2026-06-27,17h,Panamá,,0.0,x,3.0,,Inglaterra,Marco Lavander,panamá-vs-inglaterra
+2026-06-27,17h,Croácia,,1.0,x,1.0,,Gana,Marco Lavander,croácia-vs-gana
+2026-06-27,19h,Colômbia,,1.0,x,1.0,,Portugal,Marco Lavander,colômbia-vs-portugal
+2026-06-27,19h,RD Congo,,1.0,x,1.0,,Uzbequistão,Marco Lavander,rd_congo-vs-uzbequistão
+2026-06-27,21h,Argélia,,1.0,x,1.0,,Áustria,Marco Lavander,argélia-vs-áustria
+2026-06-27,21h,Jordânia,,1.0,x,3.0,,Argentina,Marco Lavander,jordânia-vs-argentina

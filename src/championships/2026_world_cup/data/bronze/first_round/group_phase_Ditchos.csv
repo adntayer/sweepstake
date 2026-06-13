@@ -1,73 +1,73 @@
 date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
-2026-06-11,19h,México,,2.0,x,0.0,,África do Sul,Ditchos,méxico-vs-áfrica_do_sul
-2026-06-12,02h,Coréia do Sul,,1.0,x,2.0,,República Tcheca,Ditchos,coréia_do_sul-vs-república_tcheca
-2026-06-12,19h,Canadá,,1.0,x,0.0,,Bósnia,Ditchos,canadá-vs-bósnia
-2026-06-13,01h,Estados Unidos,,2.0,x,0.0,,Paraguai,Ditchos,estados_unidos-vs-paraguai
-2026-06-13,19h,Catar,,0.0,x,2.0,,Suíça,Ditchos,catar-vs-suíça
-2026-06-13,22h,Brasil,,1.0,x,1.0,,Marrocos,Ditchos,brasil-vs-marrocos
-2026-06-14,01h,Haiti,,0.0,x,1.0,,Escócia,Ditchos,haiti-vs-escócia
-2026-06-14,04h,Austrália,,1.0,x,2.0,,Turquia,Ditchos,austrália-vs-turquia
-2026-06-14,17h,Alemanha,,4.0,x,0.0,,Curaçao,Ditchos,alemanha-vs-curaçao
-2026-06-14,20h,Holanda,,1.0,x,1.0,,Japão,Ditchos,holanda-vs-japão
-2026-06-14,23h,Costa do Marfim,,1.0,x,1.0,,Equador,Ditchos,costa_do_marfim-vs-equador
-2026-06-15,02h,Suécia,,1.0,x,1.0,,Tunísia,Ditchos,suécia-vs-tunísia
-2026-06-15,16h,Espanha,,3.0,x,0.0,,Cabo Verde,Ditchos,espanha-vs-cabo_verde
-2026-06-15,19h,Bélgica,,2.0,x,0.0,,Egito,Ditchos,bélgica-vs-egito
-2026-06-15,22h,Arábia Saudita,,0.0,x,1.0,,Uruguai,Ditchos,arábia_saudita-vs-uruguai
-2026-06-16,01h,Irã,,1.0,x,0.0,,Nova Zelândia,Ditchos,irã-vs-nova_zelândia
-2026-06-16,19h,França,,2.0,x,0.0,,Senegal,Ditchos,frança-vs-senegal
-2026-06-16,22h,Iraque,,1.0,x,1.0,,Noruega,Ditchos,iraque-vs-noruega
-2026-06-17,01h,Argentina,,3.0,x,0.0,,Argélia,Ditchos,argentina-vs-argélia
-2026-06-17,04h,Áustria,,2.0,x,0.0,,Jordânia,Ditchos,áustria-vs-jordânia
-2026-06-17,17h,Portugal,,2.0,x,0.0,,RD Congo,Ditchos,portugal-vs-rd_congo
-2026-06-17,20h,Inglaterra,,1.0,x,1.0,,Croácia,Ditchos,inglaterra-vs-croácia
-2026-06-17,23h,Gana,,1.0,x,1.0,,Panamá,Ditchos,gana-vs-panamá
-2026-06-18,02h,Uzbequistão,,0.0,x,1.0,,Colômbia,Ditchos,uzbequistão-vs-colômbia
-2026-06-18,16h,República Tcheca,,1.0,x,0.0,,África do Sul,Ditchos,república_tcheca-vs-áfrica_do_sul
-2026-06-18,19h,Suíça,,2.0,x,1.0,,Bósnia,Ditchos,suíça-vs-bósnia
-2026-06-18,22h,Canadá,,2.0,x,1.0,,Catar,Ditchos,canadá-vs-catar
-2026-06-19,01h,México,,1.0,x,1.0,,Coréia do Sul,Ditchos,méxico-vs-coréia_do_sul
-2026-06-19,19h,Estados Unidos,,2.0,x,2.0,,Austrália,Ditchos,estados_unidos-vs-austrália
-2026-06-19,22h,Escócia,,0.0,x,1.0,,Marrocos,Ditchos,escócia-vs-marrocos
-2026-06-20,01h,Brasil,,4.0,x,0.0,,Haiti,Ditchos,brasil-vs-haiti
-2026-06-20,04h,Turquia,,1.0,x,0.0,,Paraguai,Ditchos,turquia-vs-paraguai
-2026-06-20,17h,Holanda,,2.0,x,1.0,,Suécia,Ditchos,holanda-vs-suécia
-2026-06-20,20h,Alemanha,,2.0,x,1.0,,Costa do Marfim,Ditchos,alemanha-vs-costa_do_marfim
-2026-06-21,00h,Equador,,1.0,x,0.0,,Curaçao,Ditchos,equador-vs-curaçao
-2026-06-21,04h,Tunísia,,0.0,x,1.0,,Japão,Ditchos,tunísia-vs-japão
-2026-06-21,16h,Espanha,,3.0,x,1.0,,Arábia Saudita,Ditchos,espanha-vs-arábia_saudita
-2026-06-21,19h,Bélgica,,2.0,x,0.0,,Irã,Ditchos,bélgica-vs-irã
-2026-06-21,22h,Uruguai,,2.0,x,0.0,,Cabo Verde,Ditchos,uruguai-vs-cabo_verde
-2026-06-22,01h,Nova Zelândia,,0.0,x,1.0,,Egito,Ditchos,nova_zelândia-vs-egito
-2026-06-22,17h,Argentina,,2.0,x,0.0,,Áustria,Ditchos,argentina-vs-áustria
-2026-06-22,21h,França,,2.0,x,0.0,,Iraque,Ditchos,frança-vs-iraque
-2026-06-23,00h,Noruega,,1.0,x,1.0,,Senegal,Ditchos,noruega-vs-senegal
-2026-06-23,03h,Jordânia,,0.0,x,2.0,,Argélia,Ditchos,jordânia-vs-argélia
-2026-06-23,17h,Portugal,,2.0,x,0.0,,Uzbequistão,Ditchos,portugal-vs-uzbequistão
-2026-06-23,20h,Inglaterra,,2.0,x,0.0,,Gana,Ditchos,inglaterra-vs-gana
-2026-06-23,23h,Panamá,,0.0,x,1.0,,Croácia,Ditchos,panamá-vs-croácia
-2026-06-24,02h,Colômbia,,1.0,x,0.0,,RD Congo,Ditchos,colômbia-vs-rd_congo
-2026-06-24,19h,Suíça,,1.0,x,1.0,,Canadá,Ditchos,suíça-vs-canadá
-2026-06-24,19h,Bósnia,,1.0,x,1.0,,Catar,Ditchos,bósnia-vs-catar
-2026-06-24,22h,Escócia,,1.0,x,2.0,,Brasil,Ditchos,escócia-vs-brasil
-2026-06-24,22h,Marrocos,,3.0,x,0.0,,Haiti,Ditchos,marrocos-vs-haiti
-2026-06-25,01h,República Tcheca,,1.0,x,2.0,,México,Ditchos,república_tcheca-vs-méxico
-2026-06-25,01h,África do Sul,,0.0,x,2.0,,Coréia do Sul,Ditchos,áfrica_do_sul-vs-coréia_do_sul
-2026-06-25,20h,Curaçao,,0.0,x,2.0,,Costa do Marfim,Ditchos,curaçao-vs-costa_do_marfim
-2026-06-25,20h,Equador,,0.0,x,2.0,,Alemanha,Ditchos,equador-vs-alemanha
-2026-06-25,23h,Japão,,1.0,x,1.0,,Suécia,Ditchos,japão-vs-suécia
-2026-06-25,23h,Tunísia,,0.0,x,2.0,,Holanda,Ditchos,tunísia-vs-holanda
-2026-06-26,02h,Turquia,,0.0,x,1.0,,Estados Unidos,Ditchos,turquia-vs-estados_unidos
-2026-06-26,02h,Paraguai,,1.0,x,1.0,,Austrália,Ditchos,paraguai-vs-austrália
-2026-06-26,19h,Noruega,,0.0,x,2.0,,França,Ditchos,noruega-vs-frança
-2026-06-26,19h,Senegal,,1.0,x,0.0,,Iraque,Ditchos,senegal-vs-iraque
-2026-06-27,00h,Cabo Verde,,1.0,x,1.0,,Arábia Saudita,Ditchos,cabo_verde-vs-arábia_saudita
-2026-06-27,00h,Uruguai,,0.0,x,2.0,,Espanha,Ditchos,uruguai-vs-espanha
-2026-06-27,03h,Egito,,2.0,x,2.0,,Irã,Ditchos,egito-vs-irã
-2026-06-27,03h,Nova Zelândia,,0.0,x,2.0,,Bélgica,Ditchos,nova_zelândia-vs-bélgica
-2026-06-27,21h,Panamá,,0.0,x,2.0,,Inglaterra,Ditchos,panamá-vs-inglaterra
-2026-06-27,21h,Croácia,,2.0,x,0.0,,Gana,Ditchos,croácia-vs-gana
-2026-06-27,23h,Colômbia,,1.0,x,2.0,,Portugal,Ditchos,colômbia-vs-portugal
-2026-06-27,23h,RD Congo,,1.0,x,1.0,,Uzbequistão,Ditchos,rd_congo-vs-uzbequistão
-2026-06-28,02h,Argélia,,1.0,x,1.0,,Áustria,Ditchos,argélia-vs-áustria
-2026-06-28,02h,Jordânia,,0.0,x,3.0,,Argentina,Ditchos,jordânia-vs-argentina
+2026-06-11,13h,México,,2.0,x,0.0,,África do Sul,Ditchos,méxico-vs-áfrica_do_sul
+2026-06-11,20h,Coréia do Sul,,1.0,x,2.0,,República Tcheca,Ditchos,coréia_do_sul-vs-república_tcheca
+2026-06-12,15h,Canadá,,1.0,x,0.0,,Bósnia,Ditchos,canadá-vs-bósnia
+2026-06-12,18h,Estados Unidos,,2.0,x,0.0,,Paraguai,Ditchos,estados_unidos-vs-paraguai
+2026-06-13,12h,Catar,,0.0,x,2.0,,Suíça,Ditchos,catar-vs-suíça
+2026-06-13,18h,Brasil,,1.0,x,1.0,,Marrocos,Ditchos,brasil-vs-marrocos
+2026-06-13,21h,Haiti,,0.0,x,1.0,,Escócia,Ditchos,haiti-vs-escócia
+2026-06-13,21h,Austrália,,1.0,x,2.0,,Turquia,Ditchos,austrália-vs-turquia
+2026-06-14,12h,Alemanha,,4.0,x,0.0,,Curaçao,Ditchos,alemanha-vs-curaçao
+2026-06-14,15h,Holanda,,1.0,x,1.0,,Japão,Ditchos,holanda-vs-japão
+2026-06-14,19h,Costa do Marfim,,1.0,x,1.0,,Equador,Ditchos,costa_do_marfim-vs-equador
+2026-06-14,20h,Suécia,,1.0,x,1.0,,Tunísia,Ditchos,suécia-vs-tunísia
+2026-06-15,12h,Espanha,,3.0,x,0.0,,Cabo Verde,Ditchos,espanha-vs-cabo_verde
+2026-06-15,12h,Bélgica,,2.0,x,0.0,,Egito,Ditchos,bélgica-vs-egito
+2026-06-15,18h,Arábia Saudita,,0.0,x,1.0,,Uruguai,Ditchos,arábia_saudita-vs-uruguai
+2026-06-15,18h,Irã,,1.0,x,0.0,,Nova Zelândia,Ditchos,irã-vs-nova_zelândia
+2026-06-16,15h,França,,2.0,x,0.0,,Senegal,Ditchos,frança-vs-senegal
+2026-06-16,18h,Iraque,,1.0,x,1.0,,Noruega,Ditchos,iraque-vs-noruega
+2026-06-16,20h,Argentina,,3.0,x,0.0,,Argélia,Ditchos,argentina-vs-argélia
+2026-06-16,21h,Áustria,,2.0,x,0.0,,Jordânia,Ditchos,áustria-vs-jordânia
+2026-06-17,12h,Portugal,,2.0,x,0.0,,RD Congo,Ditchos,portugal-vs-rd_congo
+2026-06-17,15h,Inglaterra,,1.0,x,1.0,,Croácia,Ditchos,inglaterra-vs-croácia
+2026-06-17,19h,Gana,,1.0,x,1.0,,Panamá,Ditchos,gana-vs-panamá
+2026-06-17,20h,Uzbequistão,,0.0,x,1.0,,Colômbia,Ditchos,uzbequistão-vs-colômbia
+2026-06-18,12h,República Tcheca,,1.0,x,0.0,,África do Sul,Ditchos,república_tcheca-vs-áfrica_do_sul
+2026-06-18,12h,Suíça,,2.0,x,1.0,,Bósnia,Ditchos,suíça-vs-bósnia
+2026-06-18,15h,Canadá,,2.0,x,1.0,,Catar,Ditchos,canadá-vs-catar
+2026-06-18,19h,México,,1.0,x,1.0,,Coréia do Sul,Ditchos,méxico-vs-coréia_do_sul
+2026-06-19,12h,Estados Unidos,,2.0,x,2.0,,Austrália,Ditchos,estados_unidos-vs-austrália
+2026-06-19,18h,Escócia,,0.0,x,1.0,,Marrocos,Ditchos,escócia-vs-marrocos
+2026-06-19,20h,Turquia,,1.0,x,0.0,,Paraguai,Ditchos,turquia-vs-paraguai
+2026-06-19,21h,Brasil,,4.0,x,0.0,,Haiti,Ditchos,brasil-vs-haiti
+2026-06-20,12h,Holanda,,2.0,x,1.0,,Suécia,Ditchos,holanda-vs-suécia
+2026-06-20,16h,Alemanha,,2.0,x,1.0,,Costa do Marfim,Ditchos,alemanha-vs-costa_do_marfim
+2026-06-20,19h,Equador,,1.0,x,0.0,,Curaçao,Ditchos,equador-vs-curaçao
+2026-06-20,22h,Tunísia,,0.0,x,1.0,,Japão,Ditchos,tunísia-vs-japão
+2026-06-21,12h,Espanha,,3.0,x,1.0,,Arábia Saudita,Ditchos,espanha-vs-arábia_saudita
+2026-06-21,12h,Bélgica,,2.0,x,0.0,,Irã,Ditchos,bélgica-vs-irã
+2026-06-21,18h,Nova Zelândia,,0.0,x,1.0,,Egito,Ditchos,nova_zelândia-vs-egito
+2026-06-21,18h,Uruguai,,2.0,x,0.0,,Cabo Verde,Ditchos,uruguai-vs-cabo_verde
+2026-06-22,12h,Argentina,,2.0,x,0.0,,Áustria,Ditchos,argentina-vs-áustria
+2026-06-22,17h,França,,2.0,x,0.0,,Iraque,Ditchos,frança-vs-iraque
+2026-06-22,20h,Noruega,,1.0,x,1.0,,Senegal,Ditchos,noruega-vs-senegal
+2026-06-22,20h,Jordânia,,0.0,x,2.0,,Argélia,Ditchos,jordânia-vs-argélia
+2026-06-23,12h,Portugal,,2.0,x,0.0,,Uzbequistão,Ditchos,portugal-vs-uzbequistão
+2026-06-23,16h,Inglaterra,,2.0,x,0.0,,Gana,Ditchos,inglaterra-vs-gana
+2026-06-23,19h,Panamá,,0.0,x,1.0,,Croácia,Ditchos,panamá-vs-croácia
+2026-06-23,20h,Colômbia,,1.0,x,0.0,,RD Congo,Ditchos,colômbia-vs-rd_congo
+2026-06-24,12h,Suíça,,1.0,x,1.0,,Canadá,Ditchos,suíça-vs-canadá
+2026-06-24,12h,Bósnia,,1.0,x,1.0,,Catar,Ditchos,bósnia-vs-catar
+2026-06-24,18h,Escócia,,1.0,x,2.0,,Brasil,Ditchos,escócia-vs-brasil
+2026-06-24,18h,Marrocos,,3.0,x,0.0,,Haiti,Ditchos,marrocos-vs-haiti
+2026-06-24,19h,República Tcheca,,1.0,x,2.0,,México,Ditchos,república_tcheca-vs-méxico
+2026-06-24,19h,África do Sul,,0.0,x,2.0,,Coréia do Sul,Ditchos,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,16h,Curaçao,,0.0,x,2.0,,Costa do Marfim,Ditchos,curaçao-vs-costa_do_marfim
+2026-06-25,16h,Equador,,0.0,x,2.0,,Alemanha,Ditchos,equador-vs-alemanha
+2026-06-25,18h,Japão,,1.0,x,1.0,,Suécia,Ditchos,japão-vs-suécia
+2026-06-25,18h,Tunísia,,0.0,x,2.0,,Holanda,Ditchos,tunísia-vs-holanda
+2026-06-25,19h,Paraguai,,1.0,x,1.0,,Austrália,Ditchos,paraguai-vs-austrália
+2026-06-25,19h,Turquia,,0.0,x,1.0,,Estados Unidos,Ditchos,turquia-vs-estados_unidos
+2026-06-26,15h,Senegal,,1.0,x,0.0,,Iraque,Ditchos,senegal-vs-iraque
+2026-06-26,15h,Noruega,,0.0,x,2.0,,França,Ditchos,noruega-vs-frança
+2026-06-26,18h,Uruguai,,0.0,x,2.0,,Espanha,Ditchos,uruguai-vs-espanha
+2026-06-26,19h,Cabo Verde,,1.0,x,1.0,,Arábia Saudita,Ditchos,cabo_verde-vs-arábia_saudita
+2026-06-26,20h,Nova Zelândia,,0.0,x,2.0,,Bélgica,Ditchos,nova_zelândia-vs-bélgica
+2026-06-26,20h,Egito,,2.0,x,2.0,,Irã,Ditchos,egito-vs-irã
+2026-06-27,17h,Panamá,,0.0,x,2.0,,Inglaterra,Ditchos,panamá-vs-inglaterra
+2026-06-27,17h,Croácia,,2.0,x,0.0,,Gana,Ditchos,croácia-vs-gana
+2026-06-27,19h,Colômbia,,1.0,x,2.0,,Portugal,Ditchos,colômbia-vs-portugal
+2026-06-27,19h,RD Congo,,1.0,x,1.0,,Uzbequistão,Ditchos,rd_congo-vs-uzbequistão
+2026-06-27,21h,Argélia,,1.0,x,1.0,,Áustria,Ditchos,argélia-vs-áustria
+2026-06-27,21h,Jordânia,,0.0,x,3.0,,Argentina,Ditchos,jordânia-vs-argentina
