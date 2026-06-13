@@ -1,0 +1,92 @@
+name: Update Content and Deploy Page
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 16,17,18,19,20,21,22,23 * * *'
+    - cron: '*/10 0,1,2 * * *'
+    - cron: '*/10 3,4 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/championships/2026_world_cup/reports/html/**'
+
+env:
+  DOCS_PATH: src/championships/2026_world_cup/reports/html
+
+# Evita que execuções de 10 em 10 minutos batam cabeça entre si
+concurrency:
+  group: deploy-workflow
+  cancel-in-progress: false
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write      # Movido para cá para permitir o upload do artefato
+      id-token: write   # Movido para cá
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Baixa o histórico completo para evitar conflitos de push
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          activate-environment: true
+
+      - name: Setup python and libs
+        run: |
+          uv python install
+          uv sync
+          uv pip install -e .
+
+      - name: Run update content
+        run: |
+          ss run 2026_world_cup
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "André Tayer"
+          git config --global user.email "adntayer@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            # O [skip ci] evita o loop infinito de execução da action
+            git commit -m "score update at ${{ steps.date.outputs.date }} [skip ci]"
+            git push origin main
+          else
+            echo "Nenhuma alteração detectada nos dados."
+          fi
+
+      # Fazemos o upload do HTML aqui dentro, garantindo que pegamos o arquivo gerado AGORA
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static files as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.DOCS_PATH }}
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    needs: update-content
+    if: success() || github.event_name == 'push'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      # O deploy apenas consome o artefato gerado de forma segura no job anterior
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

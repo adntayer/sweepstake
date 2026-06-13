@@ -591,10 +591,10 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
         return ""
 
     cards = ""
-    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
+    rev_map_pt = {_strip_accents(v.lower()): k for k, v in config.team_name_mapping.items()}
     for g in games:
-        home_en = rev_map_pt.get(g["home_team"].lower(), g["home_team"])
-        away_en = rev_map_pt.get(g["away_team"].lower(), g["away_team"])
+        home_en = rev_map_pt.get(_strip_accents(g["home_team"].lower()), g["home_team"])
+        away_en = rev_map_pt.get(_strip_accents(g["away_team"].lower()), g["away_team"])
         home_logo = _team_logo_tag(home_en, config , cls="team-logo-sm", start=config.reports_dir + "/html")
         away_logo = _team_logo_tag(away_en, config , cls="team-logo-sm", start=config.reports_dir + "/html")
         home_slug = config.team_slugs.get(home_en, "")
