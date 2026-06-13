@@ -282,6 +282,22 @@ details .content a {
 }
 details .content a:last-child { border-bottom: none; }
 
+/* Compact accordion (emoji legend) */
+details.accordion-emoji { margin: 0.75rem 0.75rem 0.5rem; }
+details.accordion-emoji summary { padding: 0.4rem 0.6rem; font-size: 0.75rem; min-height: 32px; }
+details.accordion-emoji .content { padding: 0.25rem 0.6rem 0.4rem; }
+details.accordion-emoji .emoji-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+    font-size: 0.7rem;
+    border-bottom: 1px solid var(--card-border);
+}
+details.accordion-emoji .emoji-row:last-child { border-bottom: none; }
+details.accordion-emoji .emoji-row .e { font-size: 0.9rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
+details.accordion-emoji .emoji-row .pts { color: var(--accent); font-weight: 600; width: 1.8rem; text-align: right; flex-shrink: 0; }
+
 /* Footer */
 .footer {
     text-align: center;
@@ -396,7 +412,7 @@ body { padding-bottom: 70px; }
 
 </div>
 <div style="text-align:center;font-size:0.75rem;color:var(--text-muted);padding:0 0.75rem 0.5rem;">
-    atualizado às 13/06/2026 02:21:57
+    atualizado às 13/06/2026 02:47:35
 </div>
 
 <div class="card" style="margin:0.75rem;font-size:0.7rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:0.25rem 1rem;padding:0.5rem 0.75rem;">
@@ -473,12 +489,28 @@ body { padding-bottom: 70px; }
     </a>
 </div>
 
+<details class="accordion-emoji">
+<summary>🧩 Legenda dos acertos</summary>
+<div class="content"><div class="emoji-row"><span class="e">🎯</span><span class="desc">Acertou o placar exato da partida</span><span class="pts">+15</span></div>
+<div class="emoji-row"><span class="e">🥅</span><span class="desc">Acertou o vencedor e o nº de gols de um time, com erro total ≤ 2</span><span class="pts">+10</span></div>
+<div class="emoji-row"><span class="e">📊</span><span class="desc">Acertou o vencedor e a diferença de gols, com erro ≤ 2</span><span class="pts">+7</span></div>
+<div class="emoji-row"><span class="e">🤝</span><span class="desc">Acertou o empate com erro total ≤ 2</span><span class="pts">+7</span></div>
+<div class="emoji-row"><span class="e">🔶</span><span class="desc">Acertou o vencedor e o nº de gols de um time, com erro > 2</span><span class="pts">+7</span></div>
+<div class="emoji-row"><span class="e">✔️</span><span class="desc">Acertou apenas o vencedor da partida</span><span class="pts">+5</span></div>
+<div class="emoji-row"><span class="e">⚖️</span><span class="desc">Acertou o empate, mas com erro > 2</span><span class="pts">+5</span></div>
+<div class="emoji-row"><span class="e">👊</span><span class="desc">Acertou o nº de gols de um time, mas não o vencedor</span><span class="pts">+1</span></div>
+<div class="emoji-row"><span class="e">❌</span><span class="desc">Não acertou nenhum dos critérios</span><span class="pts">+0</span></div>
+<div class="emoji-row"><span class="e">❓</span><span class="desc">Partida não realizada ou sem palpite</span><span class="pts">+0</span></div>
+</div>
+</details>
+
+
 <div class="section">
     <div class="section-title">🏆 Ranking</div>
     <div class="card">
 <div style="overflow-x:auto;">
     <table class="rank-table">
-        <thead><tr><th>#</th><th>Boleiro</th><th>Jogos</th><th>🎯 1</th><th>⚽ 2</th><th>⚽ 3</th><th>✅ 4</th><th>⚽ 5</th><th>✅ 6</th><th>✅ 7</th><th>👊 8</th><th>❌ 9</th><th>❓ 99</th></tr></thead>
+        <thead><tr><th>#</th><th>Boleiro</th><th>Jogos</th><th>🎯 1</th><th>🥅 2</th><th>📊 3</th><th>🤝 4</th><th>🔶 5</th><th>✔️ 6</th><th>⚖️ 7</th><th>👊 8</th><th>❌ 9</th><th>❓ 99</th></tr></thead>
         <tbody><tr class="rank-1"><td>🥇 1</td><td><a href="boleiros/João Henrique.html">João Henrique</a> &nbsp; <span style="font-size:0.75rem;">🔥 🧊 🐍</span></td><td style="font-weight:700;color:var(--accent)">47</td><td>2</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
 <tr class="rank-2"><td>🥈 2</td><td><a href="boleiros/Frederico Soter.html">Frederico Soter</a> &nbsp; <span style="font-size:0.75rem;">🔥 💥</span></td><td style="font-weight:700;color:var(--accent)">42</td><td>1</td><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
 <tr class="rank-3"><td>🥉 3</td><td><a href="boleiros/LLM GPT.html">LLM GPT</a> &nbsp; <span style="font-size:0.75rem;">🔥</span></td><td style="font-weight:700;color:var(--accent)">41</td><td>2</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>

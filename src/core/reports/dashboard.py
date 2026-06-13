@@ -287,6 +287,22 @@ details .content a {
 }
 details .content a:last-child { border-bottom: none; }
 
+/* Compact accordion (emoji legend) */
+details.accordion-emoji { margin: 0.75rem 0.75rem 0.5rem; }
+details.accordion-emoji summary { padding: 0.4rem 0.6rem; font-size: 0.75rem; min-height: 32px; }
+details.accordion-emoji .content { padding: 0.25rem 0.6rem 0.4rem; }
+details.accordion-emoji .emoji-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+    font-size: 0.7rem;
+    border-bottom: 1px solid var(--card-border);
+}
+details.accordion-emoji .emoji-row:last-child { border-bottom: none; }
+details.accordion-emoji .emoji-row .e { font-size: 0.9rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
+details.accordion-emoji .emoji-row .pts { color: var(--accent); font-weight: 600; width: 1.8rem; text-align: right; flex-shrink: 0; }
+
 /* Footer */
 .footer {
     text-align: center;
@@ -1015,6 +1031,27 @@ def _build_bonus_times_card(config: ChampionshipConfig) -> str:
     return html
 
 
+def _build_emoji_accordion(config: ChampionshipConfig) -> str:
+    """Build a compact accordion explaining each scoring emoji."""
+    rows = ""
+    for r in sorted(config.scoring_rules, key=lambda x: x.priority):
+        emoji = r.emoji or ""
+        desc = r.description or ""
+        pts = r.points
+        rows += (
+            f'<div class="emoji-row">'
+            f'<span class="e">{emoji}</span>'
+            f'<span class="desc">{desc}</span>'
+            f'<span class="pts">+{pts}</span>'
+            f'</div>\n'
+        )
+    return f"""<details class="accordion-emoji">
+<summary>\U0001f9e9 Legenda dos acertos</summary>
+<div class="content">{rows}</div>
+</details>
+"""
+
+
 def generate_dashboard(config: ChampionshipConfig) -> None:
     """Create the index.html dashboard."""
     if not os.path.exists(config.gold_valid_path()) and not os.path.exists(config.gold_all_path()):
@@ -1047,6 +1084,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <span>\U0001f3af Especialista (maior precis\u00e3o em time)</span>
 </div>
 """
+    emoji_accordion = _build_emoji_accordion(config)
     bonus_card = _build_bonus_times_card(config)
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1123,6 +1161,8 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
         </div>
     </a>
 </div>
+
+{emoji_accordion}
 
 <div class="section">
     <div class="section-title">\U0001f3c6 Ranking</div>

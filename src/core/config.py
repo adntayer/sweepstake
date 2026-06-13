@@ -28,6 +28,7 @@ class ScoringRule:
     priority: int = 0
     rule: str = ""
     emoji: str = ""
+    description: str = ""
     color_text: str = ""
     max_total_error: int | None = None
     min_total_error: int | None = None
@@ -543,6 +544,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
             priority=r.get("priority", i),
             rule=r.get("rule", ""),
             emoji=r.get("emoji", ""),
+            description=r.get("description", ""),
             color_text=r.get("color_text", ""),
             max_total_error=r.get("max_total_error"),
             min_total_error=r.get("min_total_error"),
