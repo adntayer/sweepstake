@@ -532,7 +532,7 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     score_names = config.scoring_rule_names()
     agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
     df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
-    df_rank.sort_values("pontos", ascending=False, inplace=True)
+    df_rank.sort_values(["pontos", "who"], ascending=[False, True], inplace=True)
     df_rank.reset_index(drop=True, inplace=True)
     df_rank["#"] = range(1, len(df_rank) + 1)
     rank_rows = ""
@@ -606,7 +606,7 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
     if df_valid.empty:
         return ""
     df_pts = df_valid.groupby("who", as_index=False)["pontos"].sum()
-    df_pts.sort_values("pontos", ascending=False, inplace=True)
+    df_pts.sort_values(["pontos", "who"], ascending=[False, True], inplace=True)
 
     # Check for hot streaks from consistency.csv
     hot_players: set[str] = set()
@@ -801,7 +801,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
     html_base = _norm(os.path.join(config.reports_dir, "html"))
     sections = ""
 
-    rev_map_pt = {v.lower(): k for k, v in config.team_name_mapping.items()}
+    rev_map_pt = {_strip_accents(v.lower()): k for k, v in config.team_name_mapping.items()}
 
     def _team_part(fp: str, side: str) -> tuple[str, str, str]:
         slug = _slug_from_filename(fp)
@@ -810,7 +810,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
             return ("", "", "")
         idx = 0 if side == "home" else 1
         pt_name = parts[idx].replace("_", " ").strip()
-        en_name = rev_map_pt.get(pt_name.lower(), pt_name)
+        en_name = rev_map_pt.get(_strip_accents(pt_name.lower()), pt_name)
         logo = _team_logo_tag(en_name, config, cls="team-logo-sm", start=config.reports_dir + "/html")
         slug_code = config.team_slugs.get(en_name, "")
         return (pt_name, logo, slug_code)
@@ -1002,6 +1002,9 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <div class="subtitle">Painel do Bolao</div>
     {zebra_counter}
 </div>
+<div style="text-align:center;font-size:0.75rem;color:var(--text-muted);padding:0 0.75rem 0.5rem;">
+    atualizado \u00e0s {now_str}
+</div>
 
 {badge_legend}
 
@@ -1067,10 +1070,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 <div class="section">
     <div class="section-title">\U0001f4c2 Jogos por Fase</div>
     {phase_buttons}
-</div>
-
-<div class="footer" style="padding-bottom:5rem;">
-    atualizado às {now_str}
 </div>
 
 {_build_bottom_nav_dashboard()}

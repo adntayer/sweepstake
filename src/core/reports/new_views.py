@@ -494,7 +494,8 @@ def _build_times_index(config: ChampionshipConfig, html_base: str) -> str:
     for i, team in enumerate(teams_sorted, 1):
         grp = group_of_team.get(team, "-")
         en = {v: k for k, v in config.team_name_mapping.items()}.get(team, team)
-        logo_html = _team_logo_tag(en, config, cls="team-logo-sm", start=os.path.join(html_base, "times"))
+        # times.html is at root level (html_base), not inside times/ subdir
+        logo_html = _team_logo_tag(en, config, cls="team-logo-sm", start=html_base)
         if not logo_html:
             initials = "".join(p[0] for p in team.split()[:2]).upper()
             logo_html = f'<div class="player-avatar" style="width:32px;height:32px;font-size:0.7rem;">{initials}</div>'

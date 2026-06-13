@@ -878,6 +878,15 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     df_hist_past = df_hist[df_by_date_dt < today]
     df_hist_future = df_hist[df_by_date_dt >= today].sort_values(["date", "hour"], ascending=True)
 
+    # Show future predictions (valido=0, date >= today) as "Jogos Futuros"
+    if len(df_hist_future) == 0 and os.path.exists(all_path):
+        df_future_preds = df_player_all[
+            (df_player_all.get("valido", 0) == 0)
+            & (pd.to_datetime(df_player_all["date"], errors="coerce").dt.date >= today)
+        ].drop_duplicates(subset=["match"]).sort_values(["date", "hour"], ascending=True)
+        if len(df_future_preds):
+            df_hist_future = df_future_preds
+
     # Exclude pending matches from past (they'll be shown in pending section)
     pending_slug_set = set()
     if n_pending:
