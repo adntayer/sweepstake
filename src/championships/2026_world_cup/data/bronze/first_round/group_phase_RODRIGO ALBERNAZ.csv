@@ -1,0 +1,73 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2026-06-11,13h,México,,2.0,x,1.0,,África do Sul,RODRIGO ALBERNAZ,méxico-vs-áfrica_do_sul
+2026-06-11,20h,Coréia do Sul,,1.0,x,1.0,,República Tcheca,RODRIGO ALBERNAZ,coréia_do_sul-vs-república_tcheca
+2026-06-12,15h,Canadá,,1.0,x,1.0,,Bósnia,RODRIGO ALBERNAZ,canadá-vs-bósnia
+2026-06-12,18h,Estados Unidos,,1.0,x,2.0,,Paraguai,RODRIGO ALBERNAZ,estados_unidos-vs-paraguai
+2026-06-13,12h,Catar,,1.0,x,2.0,,Suíça,RODRIGO ALBERNAZ,catar-vs-suíça
+2026-06-13,18h,Brasil,,2.0,x,2.0,,Marrocos,RODRIGO ALBERNAZ,brasil-vs-marrocos
+2026-06-13,21h,Haiti,,2.0,x,2.0,,Escócia,RODRIGO ALBERNAZ,haiti-vs-escócia
+2026-06-13,21h,Austrália,,1.0,x,2.0,,Turquia,RODRIGO ALBERNAZ,austrália-vs-turquia
+2026-06-14,12h,Alemanha,,3.0,x,0.0,,Curaçao,RODRIGO ALBERNAZ,alemanha-vs-curaçao
+2026-06-14,15h,Holanda,,2.0,x,1.0,,Japão,RODRIGO ALBERNAZ,holanda-vs-japão
+2026-06-14,19h,Costa do Marfim,,1.0,x,3.0,,Equador,RODRIGO ALBERNAZ,costa_do_marfim-vs-equador
+2026-06-14,20h,Suécia,,1.0,x,1.0,,Tunísia,RODRIGO ALBERNAZ,suécia-vs-tunísia
+2026-06-15,12h,Espanha,,4.0,x,0.0,,Cabo Verde,RODRIGO ALBERNAZ,espanha-vs-cabo_verde
+2026-06-15,12h,Bélgica,,1.0,x,0.0,,Egito,RODRIGO ALBERNAZ,bélgica-vs-egito
+2026-06-15,18h,Arábia Saudita,,0.0,x,3.0,,Uruguai,RODRIGO ALBERNAZ,arábia_saudita-vs-uruguai
+2026-06-15,18h,Irã,,1.0,x,3.0,,Nova Zelândia,RODRIGO ALBERNAZ,irã-vs-nova_zelândia
+2026-06-16,15h,França,,3.0,x,1.0,,Senegal,RODRIGO ALBERNAZ,frança-vs-senegal
+2026-06-16,18h,Iraque,,0.0,x,2.0,,Noruega,RODRIGO ALBERNAZ,iraque-vs-noruega
+2026-06-16,20h,Argentina,,1.0,x,1.0,,Argélia,RODRIGO ALBERNAZ,argentina-vs-argélia
+2026-06-16,21h,Áustria,,2.0,x,0.0,,Jordânia,RODRIGO ALBERNAZ,áustria-vs-jordânia
+2026-06-17,12h,Portugal,,2.0,x,0.0,,RD Congo,RODRIGO ALBERNAZ,portugal-vs-rd_congo
+2026-06-17,15h,Inglaterra,,2.0,x,1.0,,Croácia,RODRIGO ALBERNAZ,inglaterra-vs-croácia
+2026-06-17,19h,Gana,,1.0,x,1.0,,Panamá,RODRIGO ALBERNAZ,gana-vs-panamá
+2026-06-17,20h,Uzbequistão,,1.0,x,2.0,,Colômbia,RODRIGO ALBERNAZ,uzbequistão-vs-colômbia
+2026-06-18,12h,República Tcheca,,1.0,x,0.0,,África do Sul,RODRIGO ALBERNAZ,república_tcheca-vs-áfrica_do_sul
+2026-06-18,12h,Suíça,,1.0,x,0.0,,Bósnia,RODRIGO ALBERNAZ,suíça-vs-bósnia
+2026-06-18,15h,Canadá,,0.0,x,0.0,,Catar,RODRIGO ALBERNAZ,canadá-vs-catar
+2026-06-18,19h,México,,2.0,x,0.0,,Coréia do Sul,RODRIGO ALBERNAZ,méxico-vs-coréia_do_sul
+2026-06-19,12h,Estados Unidos,,2.0,x,1.0,,Austrália,RODRIGO ALBERNAZ,estados_unidos-vs-austrália
+2026-06-19,18h,Escócia,,1.0,x,3.0,,Marrocos,RODRIGO ALBERNAZ,escócia-vs-marrocos
+2026-06-19,20h,Turquia,,0.0,x,2.0,,Paraguai,RODRIGO ALBERNAZ,turquia-vs-paraguai
+2026-06-19,21h,Brasil,,3.0,x,0.0,,Haiti,RODRIGO ALBERNAZ,brasil-vs-haiti
+2026-06-20,12h,Holanda,,2.0,x,0.0,,Suécia,RODRIGO ALBERNAZ,holanda-vs-suécia
+2026-06-20,16h,Alemanha,,2.0,x,0.0,,Costa do Marfim,RODRIGO ALBERNAZ,alemanha-vs-costa_do_marfim
+2026-06-20,19h,Equador,,3.0,x,0.0,,Curaçao,RODRIGO ALBERNAZ,equador-vs-curaçao
+2026-06-20,22h,Tunísia,,0.0,x,2.0,,Japão,RODRIGO ALBERNAZ,tunísia-vs-japão
+2026-06-21,12h,Espanha,,2.0,x,0.0,,Arábia Saudita,RODRIGO ALBERNAZ,espanha-vs-arábia_saudita
+2026-06-21,12h,Bélgica,,2.0,x,0.0,,Irã,RODRIGO ALBERNAZ,bélgica-vs-irã
+2026-06-21,18h,Nova Zelândia,,1.0,x,1.0,,Egito,RODRIGO ALBERNAZ,nova_zelândia-vs-egito
+2026-06-21,18h,Uruguai,,3.0,x,1.0,,Cabo Verde,RODRIGO ALBERNAZ,uruguai-vs-cabo_verde
+2026-06-22,12h,Argentina,,3.0,x,1.0,,Áustria,RODRIGO ALBERNAZ,argentina-vs-áustria
+2026-06-22,17h,França,,4.0,x,0.0,,Iraque,RODRIGO ALBERNAZ,frança-vs-iraque
+2026-06-22,20h,Noruega,,1.0,x,2.0,,Senegal,RODRIGO ALBERNAZ,noruega-vs-senegal
+2026-06-22,20h,Jordânia,,0.0,x,1.0,,Argélia,RODRIGO ALBERNAZ,jordânia-vs-argélia
+2026-06-23,12h,Portugal,,3.0,x,1.0,,Uzbequistão,RODRIGO ALBERNAZ,portugal-vs-uzbequistão
+2026-06-23,16h,Inglaterra,,3.0,x,0.0,,Gana,RODRIGO ALBERNAZ,inglaterra-vs-gana
+2026-06-23,19h,Panamá,,0.0,x,2.0,,Croácia,RODRIGO ALBERNAZ,panamá-vs-croácia
+2026-06-23,20h,Colômbia,,2.0,x,0.0,,RD Congo,RODRIGO ALBERNAZ,colômbia-vs-rd_congo
+2026-06-24,12h,Suíça,,3.0,x,1.0,,Canadá,RODRIGO ALBERNAZ,suíça-vs-canadá
+2026-06-24,12h,Bósnia,,2.0,x,0.0,,Catar,RODRIGO ALBERNAZ,bósnia-vs-catar
+2026-06-24,18h,Escócia,,1.0,x,2.0,,Brasil,RODRIGO ALBERNAZ,escócia-vs-brasil
+2026-06-24,18h,Marrocos,,2.0,x,0.0,,Haiti,RODRIGO ALBERNAZ,marrocos-vs-haiti
+2026-06-24,19h,República Tcheca,,0.0,x,2.0,,México,RODRIGO ALBERNAZ,república_tcheca-vs-méxico
+2026-06-24,19h,África do Sul,,2.0,x,2.0,,Coréia do Sul,RODRIGO ALBERNAZ,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,16h,Curaçao,,1.0,x,2.0,,Costa do Marfim,RODRIGO ALBERNAZ,curaçao-vs-costa_do_marfim
+2026-06-25,16h,Equador,,2.0,x,2.0,,Alemanha,RODRIGO ALBERNAZ,equador-vs-alemanha
+2026-06-25,18h,Japão,,2.0,x,1.0,,Suécia,RODRIGO ALBERNAZ,japão-vs-suécia
+2026-06-25,18h,Tunísia,,1.0,x,3.0,,Holanda,RODRIGO ALBERNAZ,tunísia-vs-holanda
+2026-06-25,19h,Paraguai,,2.0,x,0.0,,Austrália,RODRIGO ALBERNAZ,paraguai-vs-austrália
+2026-06-25,19h,Turquia,,1.0,x,0.0,,Estados Unidos,RODRIGO ALBERNAZ,turquia-vs-estados_unidos
+2026-06-26,15h,Senegal,,2.0,x,1.0,,Iraque,RODRIGO ALBERNAZ,senegal-vs-iraque
+2026-06-26,15h,Noruega,,1.0,x,3.0,,França,RODRIGO ALBERNAZ,noruega-vs-frança
+2026-06-26,18h,Uruguai,,2.0,x,2.0,,Espanha,RODRIGO ALBERNAZ,uruguai-vs-espanha
+2026-06-26,19h,Cabo Verde,,1.0,x,2.0,,Arábia Saudita,RODRIGO ALBERNAZ,cabo_verde-vs-arábia_saudita
+2026-06-26,20h,Nova Zelândia,,2.0,x,2.0,,Bélgica,RODRIGO ALBERNAZ,nova_zelândia-vs-bélgica
+2026-06-26,20h,Egito,,2.0,x,1.0,,Irã,RODRIGO ALBERNAZ,egito-vs-irã
+2026-06-27,17h,Panamá,,1.0,x,2.0,,Inglaterra,RODRIGO ALBERNAZ,panamá-vs-inglaterra
+2026-06-27,17h,Croácia,,3.0,x,0.0,,Gana,RODRIGO ALBERNAZ,croácia-vs-gana
+2026-06-27,19h,Colômbia,,1.0,x,2.0,,Portugal,RODRIGO ALBERNAZ,colômbia-vs-portugal
+2026-06-27,19h,RD Congo,,1.0,x,1.0,,Uzbequistão,RODRIGO ALBERNAZ,rd_congo-vs-uzbequistão
+2026-06-27,21h,Argélia,,2.0,x,1.0,,Áustria,RODRIGO ALBERNAZ,argélia-vs-áustria
+2026-06-27,21h,Jordânia,,0.0,x,3.0,,Argentina,RODRIGO ALBERNAZ,jordânia-vs-argentina

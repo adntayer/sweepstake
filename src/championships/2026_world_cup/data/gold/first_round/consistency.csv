@@ -1,34 +1,133 @@
 boleiro,date,match,streak_type,streak_length,running_avg_5
-André Bonito,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-André Mendes,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-André Tayer,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Cipriano L.,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Davi & Cesar,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Ditchos,2026-06-12,estados_unidos-vs-paraguai,hit,1,5.0
-Felipe Giannoni,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Francisco Camargo,2026-06-12,estados_unidos-vs-paraguai,hit,1,5.0
-Frederico Soter,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Gabão,2026-06-12,estados_unidos-vs-paraguai,hit,1,5.0
-Giancarlo,2026-06-12,estados_unidos-vs-paraguai,hit,1,1.0
-Guilherne,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Haroldo,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-José Ricardo,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-João Henrique,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Kiko Toloza,2026-06-12,estados_unidos-vs-paraguai,hit,1,1.0
-LLM GPT,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-LLM Gemini,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Leo Fernandes,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Luca Caviglia Del Soldato,2026-06-12,estados_unidos-vs-paraguai,hit,1,1.0
-Lucas Ubertini,2026-06-12,estados_unidos-vs-paraguai,hit,1,1.0
-Luiz Augusto,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Marcelo,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Marcelo Boix,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Marco Lavander,2026-06-12,estados_unidos-vs-paraguai,hit,1,1.0
-Mateus Tone,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Mauricio Saraiva,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Pedro Tayer,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-RODRIGO ALBERNAZ,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Rafael Conte,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
-Thales Oliveira,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.0
-Thiago Bahiense,2026-06-12,estados_unidos-vs-paraguai,hit,1,5.0
-Tiago,2026-06-12,estados_unidos-vs-paraguai,hit,1,10.0
+André Bonito,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+André Bonito,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,5.0
+André Bonito,2026-06-12,canada-vs-bosnia,hit,1,3.7
+André Bonito,2026-06-12,estados_unidos-vs-paraguai,miss,1,2.8
+André Mendes,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+André Mendes,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+André Mendes,2026-06-12,canada-vs-bosnia,hit,3,8.7
+André Mendes,2026-06-12,estados_unidos-vs-paraguai,miss,1,6.5
+André Tayer,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+André Tayer,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+André Tayer,2026-06-12,canada-vs-bosnia,miss,1,5.3
+André Tayer,2026-06-12,estados_unidos-vs-paraguai,miss,2,4.0
+Cipriano L.,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Cipriano L.,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+Cipriano L.,2026-06-12,canada-vs-bosnia,hit,3,4.0
+Cipriano L.,2026-06-12,estados_unidos-vs-paraguai,hit,4,5.5
+Davi & Cesar,2026-06-11,mexico-vs-africa_do_sul,miss,1,0.0
+Davi & Cesar,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,1,7.5
+Davi & Cesar,2026-06-12,canada-vs-bosnia,hit,2,5.3
+Davi & Cesar,2026-06-12,estados_unidos-vs-paraguai,miss,1,4.0
+Ditchos,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Ditchos,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,7.5
+Ditchos,2026-06-12,canada-vs-bosnia,hit,1,5.3
+Ditchos,2026-06-12,estados_unidos-vs-paraguai,hit,2,5.2
+Felipe Giannoni,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Felipe Giannoni,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+Felipe Giannoni,2026-06-12,canada-vs-bosnia,hit,3,6.0
+Felipe Giannoni,2026-06-12,estados_unidos-vs-paraguai,miss,1,4.5
+Francisco Camargo,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Francisco Camargo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,12.5
+Francisco Camargo,2026-06-12,canada-vs-bosnia,miss,1,8.3
+Francisco Camargo,2026-06-12,estados_unidos-vs-paraguai,hit,1,7.5
+Frederico Soter,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Frederico Soter,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,12.5
+Frederico Soter,2026-06-12,canada-vs-bosnia,hit,3,10.7
+Frederico Soter,2026-06-12,estados_unidos-vs-paraguai,hit,4,10.5
+Gabão,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Gabão,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+Gabão,2026-06-12,canada-vs-bosnia,hit,3,4.0
+Gabão,2026-06-12,estados_unidos-vs-paraguai,hit,4,4.2
+Giancarlo,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Giancarlo,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,5.0
+Giancarlo,2026-06-12,canada-vs-bosnia,hit,1,5.7
+Giancarlo,2026-06-12,estados_unidos-vs-paraguai,hit,2,4.5
+Guilherne,2026-06-11,mexico-vs-africa_do_sul,miss,1,0.0
+Guilherne,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,1,7.5
+Guilherne,2026-06-12,canada-vs-bosnia,hit,2,5.3
+Guilherne,2026-06-12,estados_unidos-vs-paraguai,miss,1,4.0
+Haroldo,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Haroldo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,12.5
+Haroldo,2026-06-12,canada-vs-bosnia,hit,3,8.7
+Haroldo,2026-06-12,estados_unidos-vs-paraguai,hit,4,9.0
+José Ricardo,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+José Ricardo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+José Ricardo,2026-06-12,canada-vs-bosnia,hit,3,8.7
+José Ricardo,2026-06-12,estados_unidos-vs-paraguai,hit,4,9.0
+João Henrique,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+João Henrique,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,11.0
+João Henrique,2026-06-12,canada-vs-bosnia,hit,3,12.3
+João Henrique,2026-06-12,estados_unidos-vs-paraguai,hit,4,11.8
+Kiko Toloza,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Kiko Toloza,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+Kiko Toloza,2026-06-12,canada-vs-bosnia,hit,3,4.0
+Kiko Toloza,2026-06-12,estados_unidos-vs-paraguai,hit,4,3.2
+LLM GPT,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+LLM GPT,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+LLM GPT,2026-06-12,canada-vs-bosnia,hit,3,10.3
+LLM GPT,2026-06-12,estados_unidos-vs-paraguai,hit,4,10.2
+LLM Gemini,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+LLM Gemini,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+LLM Gemini,2026-06-12,canada-vs-bosnia,hit,3,8.7
+LLM Gemini,2026-06-12,estados_unidos-vs-paraguai,hit,4,9.0
+Leo Fernandes,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Leo Fernandes,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+Leo Fernandes,2026-06-12,canada-vs-bosnia,hit,3,10.3
+Leo Fernandes,2026-06-12,estados_unidos-vs-paraguai,hit,4,10.2
+Luca Caviglia Del Soldato,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Luca Caviglia Del Soldato,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,5.0
+Luca Caviglia Del Soldato,2026-06-12,canada-vs-bosnia,hit,1,8.3
+Luca Caviglia Del Soldato,2026-06-12,estados_unidos-vs-paraguai,hit,2,6.5
+Lucas Ubertini,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Lucas Ubertini,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,15.0
+Lucas Ubertini,2026-06-12,canada-vs-bosnia,hit,3,10.3
+Lucas Ubertini,2026-06-12,estados_unidos-vs-paraguai,hit,4,8.0
+Luiz Augusto,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+Luiz Augusto,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,5.0
+Luiz Augusto,2026-06-12,canada-vs-bosnia,hit,1,3.7
+Luiz Augusto,2026-06-12,estados_unidos-vs-paraguai,hit,2,5.2
+Marcelo,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Marcelo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+Marcelo,2026-06-12,canada-vs-bosnia,hit,3,5.7
+Marcelo,2026-06-12,estados_unidos-vs-paraguai,hit,4,6.8
+Marcelo Boix,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Marcelo Boix,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,15.0
+Marcelo Boix,2026-06-12,canada-vs-bosnia,hit,3,10.3
+Marcelo Boix,2026-06-12,estados_unidos-vs-paraguai,hit,4,10.2
+Marco Lavander,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Marco Lavander,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+Marco Lavander,2026-06-12,canada-vs-bosnia,hit,3,7.7
+Marco Lavander,2026-06-12,estados_unidos-vs-paraguai,hit,4,6.0
+Mateus Tone,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Mateus Tone,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+Mateus Tone,2026-06-12,canada-vs-bosnia,hit,3,10.3
+Mateus Tone,2026-06-12,estados_unidos-vs-paraguai,miss,1,7.8
+Mauricio Saraiva,2026-06-11,mexico-vs-africa_do_sul,hit,1,7.0
+Mauricio Saraiva,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.5
+Mauricio Saraiva,2026-06-12,canada-vs-bosnia,hit,3,10.7
+Mauricio Saraiva,2026-06-12,estados_unidos-vs-paraguai,miss,1,8.0
+Pedro Tayer,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Pedro Tayer,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+Pedro Tayer,2026-06-12,canada-vs-bosnia,hit,3,5.7
+Pedro Tayer,2026-06-12,estados_unidos-vs-paraguai,hit,4,6.8
+RODRIGO ALBERNAZ,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
+RODRIGO ALBERNAZ,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
+RODRIGO ALBERNAZ,2026-06-12,canada-vs-bosnia,hit,3,8.7
+RODRIGO ALBERNAZ,2026-06-12,estados_unidos-vs-paraguai,miss,1,6.5
+Rafael Conte,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Rafael Conte,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+Rafael Conte,2026-06-12,canada-vs-bosnia,hit,3,10.3
+Rafael Conte,2026-06-12,estados_unidos-vs-paraguai,hit,4,10.2
+Thales Oliveira,2026-06-11,mexico-vs-africa_do_sul,miss,1,0.0
+Thales Oliveira,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,2,0.0
+Thales Oliveira,2026-06-12,canada-vs-bosnia,hit,1,0.3
+Thales Oliveira,2026-06-12,estados_unidos-vs-paraguai,miss,1,0.2
+Thiago Bahiense,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Thiago Bahiense,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,15.0
+Thiago Bahiense,2026-06-12,canada-vs-bosnia,hit,3,10.3
+Thiago Bahiense,2026-06-12,estados_unidos-vs-paraguai,hit,4,9.0
+Tiago,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
+Tiago,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
+Tiago,2026-06-12,canada-vs-bosnia,hit,3,10.3
+Tiago,2026-06-12,estados_unidos-vs-paraguai,hit,4,10.2

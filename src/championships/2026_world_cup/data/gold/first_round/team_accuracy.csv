@@ -1,4 +1,70 @@
 team,role,boleiro,total_bets,correct_winner,exact_score,accuracy_pct
+Canadá,home,André Bonito,1,0,0,0.0
+Canadá,home,André Mendes,1,1,1,100.0
+Canadá,home,André Tayer,1,0,0,0.0
+Canadá,home,Cipriano L.,1,0,0,0.0
+Canadá,home,Davi & Cesar,1,0,0,0.0
+Canadá,home,Ditchos,1,0,0,0.0
+Canadá,home,Felipe Giannoni,1,1,0,100.0
+Canadá,home,Francisco Camargo,1,0,0,0.0
+Canadá,home,Frederico Soter,1,1,0,100.0
+Canadá,home,Gabão,1,0,0,0.0
+Canadá,home,Giancarlo,1,1,0,100.0
+Canadá,home,Guilherne,1,0,0,0.0
+Canadá,home,Haroldo,1,0,0,0.0
+Canadá,home,José Ricardo,1,1,1,100.0
+Canadá,home,João Henrique,1,1,1,100.0
+Canadá,home,Kiko Toloza,1,0,0,0.0
+Canadá,home,LLM GPT,1,1,1,100.0
+Canadá,home,LLM Gemini,1,1,1,100.0
+Canadá,home,Leo Fernandes,1,1,1,100.0
+Canadá,home,Luca Caviglia Del Soldato,1,1,1,100.0
+Canadá,home,Lucas Ubertini,1,0,0,0.0
+Canadá,home,Luiz Augusto,1,0,0,0.0
+Canadá,home,Marcelo,1,0,0,0.0
+Canadá,home,Marcelo Boix,1,0,0,0.0
+Canadá,home,Marco Lavander,1,1,0,100.0
+Canadá,home,Mateus Tone,1,1,1,100.0
+Canadá,home,Mauricio Saraiva,1,1,1,100.0
+Canadá,home,Pedro Tayer,1,0,0,0.0
+Canadá,home,RODRIGO ALBERNAZ,1,1,1,100.0
+Canadá,home,Rafael Conte,1,1,1,100.0
+Canadá,home,Thales Oliveira,1,0,0,0.0
+Canadá,home,Thiago Bahiense,1,0,0,0.0
+Canadá,home,Tiago,1,1,1,100.0
+Coréia do Sul,home,André Bonito,1,0,0,0.0
+Coréia do Sul,home,André Mendes,1,0,0,0.0
+Coréia do Sul,home,André Tayer,1,0,0,0.0
+Coréia do Sul,home,Cipriano L.,1,0,0,0.0
+Coréia do Sul,home,Davi & Cesar,1,1,1,100.0
+Coréia do Sul,home,Ditchos,1,0,0,0.0
+Coréia do Sul,home,Felipe Giannoni,1,0,0,0.0
+Coréia do Sul,home,Francisco Camargo,1,1,0,100.0
+Coréia do Sul,home,Frederico Soter,1,1,0,100.0
+Coréia do Sul,home,Gabão,1,0,0,0.0
+Coréia do Sul,home,Giancarlo,1,0,0,0.0
+Coréia do Sul,home,Guilherne,1,1,1,100.0
+Coréia do Sul,home,Haroldo,1,1,1,100.0
+Coréia do Sul,home,José Ricardo,1,0,0,0.0
+Coréia do Sul,home,João Henrique,1,1,0,100.0
+Coréia do Sul,home,Kiko Toloza,1,0,0,0.0
+Coréia do Sul,home,LLM GPT,1,0,0,0.0
+Coréia do Sul,home,LLM Gemini,1,0,0,0.0
+Coréia do Sul,home,Leo Fernandes,1,0,0,0.0
+Coréia do Sul,home,Luca Caviglia Del Soldato,1,0,0,0.0
+Coréia do Sul,home,Lucas Ubertini,1,1,1,100.0
+Coréia do Sul,home,Luiz Augusto,1,0,0,0.0
+Coréia do Sul,home,Marcelo,1,0,0,0.0
+Coréia do Sul,home,Marcelo Boix,1,1,1,100.0
+Coréia do Sul,home,Marco Lavander,1,0,0,0.0
+Coréia do Sul,home,Mateus Tone,1,0,0,0.0
+Coréia do Sul,home,Mauricio Saraiva,1,1,0,100.0
+Coréia do Sul,home,Pedro Tayer,1,0,0,0.0
+Coréia do Sul,home,RODRIGO ALBERNAZ,1,0,0,0.0
+Coréia do Sul,home,Rafael Conte,1,0,0,0.0
+Coréia do Sul,home,Thales Oliveira,1,0,0,0.0
+Coréia do Sul,home,Thiago Bahiense,1,1,1,100.0
+Coréia do Sul,home,Tiago,1,0,0,0.0
 Estados Unidos,home,André Bonito,1,0,0,0.0
 Estados Unidos,home,André Mendes,1,0,0,0.0
 Estados Unidos,home,André Tayer,1,0,0,0.0
@@ -32,6 +98,72 @@ Estados Unidos,home,Rafael Conte,1,1,0,100.0
 Estados Unidos,home,Thales Oliveira,1,0,0,0.0
 Estados Unidos,home,Thiago Bahiense,1,1,0,100.0
 Estados Unidos,home,Tiago,1,1,0,100.0
+México,home,André Bonito,1,1,0,100.0
+México,home,André Mendes,1,1,0,100.0
+México,home,André Tayer,1,1,1,100.0
+México,home,Cipriano L.,1,1,0,100.0
+México,home,Davi & Cesar,1,0,0,0.0
+México,home,Ditchos,1,1,1,100.0
+México,home,Felipe Giannoni,1,1,0,100.0
+México,home,Francisco Camargo,1,1,1,100.0
+México,home,Frederico Soter,1,1,1,100.0
+México,home,Gabão,1,1,0,100.0
+México,home,Giancarlo,1,1,0,100.0
+México,home,Guilherne,1,0,0,0.0
+México,home,Haroldo,1,1,0,100.0
+México,home,José Ricardo,1,1,0,100.0
+México,home,João Henrique,1,1,1,100.0
+México,home,Kiko Toloza,1,1,0,100.0
+México,home,LLM GPT,1,1,1,100.0
+México,home,LLM Gemini,1,1,0,100.0
+México,home,Leo Fernandes,1,1,1,100.0
+México,home,Luca Caviglia Del Soldato,1,1,0,100.0
+México,home,Lucas Ubertini,1,1,1,100.0
+México,home,Luiz Augusto,1,1,0,100.0
+México,home,Marcelo,1,1,1,100.0
+México,home,Marcelo Boix,1,1,1,100.0
+México,home,Marco Lavander,1,1,1,100.0
+México,home,Mateus Tone,1,1,1,100.0
+México,home,Mauricio Saraiva,1,1,0,100.0
+México,home,Pedro Tayer,1,1,1,100.0
+México,home,RODRIGO ALBERNAZ,1,1,0,100.0
+México,home,Rafael Conte,1,1,1,100.0
+México,home,Thales Oliveira,1,0,0,0.0
+México,home,Thiago Bahiense,1,1,1,100.0
+México,home,Tiago,1,1,1,100.0
+Bósnia,away,André Bonito,1,0,0,0.0
+Bósnia,away,André Mendes,1,1,1,100.0
+Bósnia,away,André Tayer,1,0,0,0.0
+Bósnia,away,Cipriano L.,1,0,0,0.0
+Bósnia,away,Davi & Cesar,1,0,0,0.0
+Bósnia,away,Ditchos,1,0,0,0.0
+Bósnia,away,Felipe Giannoni,1,1,0,100.0
+Bósnia,away,Francisco Camargo,1,0,0,0.0
+Bósnia,away,Frederico Soter,1,1,0,100.0
+Bósnia,away,Gabão,1,0,0,0.0
+Bósnia,away,Giancarlo,1,1,0,100.0
+Bósnia,away,Guilherne,1,0,0,0.0
+Bósnia,away,Haroldo,1,0,0,0.0
+Bósnia,away,José Ricardo,1,1,1,100.0
+Bósnia,away,João Henrique,1,1,1,100.0
+Bósnia,away,Kiko Toloza,1,0,0,0.0
+Bósnia,away,LLM GPT,1,1,1,100.0
+Bósnia,away,LLM Gemini,1,1,1,100.0
+Bósnia,away,Leo Fernandes,1,1,1,100.0
+Bósnia,away,Luca Caviglia Del Soldato,1,1,1,100.0
+Bósnia,away,Lucas Ubertini,1,0,0,0.0
+Bósnia,away,Luiz Augusto,1,0,0,0.0
+Bósnia,away,Marcelo,1,0,0,0.0
+Bósnia,away,Marcelo Boix,1,0,0,0.0
+Bósnia,away,Marco Lavander,1,1,0,100.0
+Bósnia,away,Mateus Tone,1,1,1,100.0
+Bósnia,away,Mauricio Saraiva,1,1,1,100.0
+Bósnia,away,Pedro Tayer,1,0,0,0.0
+Bósnia,away,RODRIGO ALBERNAZ,1,1,1,100.0
+Bósnia,away,Rafael Conte,1,1,1,100.0
+Bósnia,away,Thales Oliveira,1,0,0,0.0
+Bósnia,away,Thiago Bahiense,1,0,0,0.0
+Bósnia,away,Tiago,1,1,1,100.0
 Paraguai,away,André Bonito,1,0,0,0.0
 Paraguai,away,André Mendes,1,0,0,0.0
 Paraguai,away,André Tayer,1,0,0,0.0
@@ -65,3 +197,69 @@ Paraguai,away,Rafael Conte,1,1,0,100.0
 Paraguai,away,Thales Oliveira,1,0,0,0.0
 Paraguai,away,Thiago Bahiense,1,1,0,100.0
 Paraguai,away,Tiago,1,1,0,100.0
+República Tcheca,away,André Bonito,1,0,0,0.0
+República Tcheca,away,André Mendes,1,0,0,0.0
+República Tcheca,away,André Tayer,1,0,0,0.0
+República Tcheca,away,Cipriano L.,1,0,0,0.0
+República Tcheca,away,Davi & Cesar,1,1,1,100.0
+República Tcheca,away,Ditchos,1,0,0,0.0
+República Tcheca,away,Felipe Giannoni,1,0,0,0.0
+República Tcheca,away,Francisco Camargo,1,1,0,100.0
+República Tcheca,away,Frederico Soter,1,1,0,100.0
+República Tcheca,away,Gabão,1,0,0,0.0
+República Tcheca,away,Giancarlo,1,0,0,0.0
+República Tcheca,away,Guilherne,1,1,1,100.0
+República Tcheca,away,Haroldo,1,1,1,100.0
+República Tcheca,away,José Ricardo,1,0,0,0.0
+República Tcheca,away,João Henrique,1,1,0,100.0
+República Tcheca,away,Kiko Toloza,1,0,0,0.0
+República Tcheca,away,LLM GPT,1,0,0,0.0
+República Tcheca,away,LLM Gemini,1,0,0,0.0
+República Tcheca,away,Leo Fernandes,1,0,0,0.0
+República Tcheca,away,Luca Caviglia Del Soldato,1,0,0,0.0
+República Tcheca,away,Lucas Ubertini,1,1,1,100.0
+República Tcheca,away,Luiz Augusto,1,0,0,0.0
+República Tcheca,away,Marcelo,1,0,0,0.0
+República Tcheca,away,Marcelo Boix,1,1,1,100.0
+República Tcheca,away,Marco Lavander,1,0,0,0.0
+República Tcheca,away,Mateus Tone,1,0,0,0.0
+República Tcheca,away,Mauricio Saraiva,1,1,0,100.0
+República Tcheca,away,Pedro Tayer,1,0,0,0.0
+República Tcheca,away,RODRIGO ALBERNAZ,1,0,0,0.0
+República Tcheca,away,Rafael Conte,1,0,0,0.0
+República Tcheca,away,Thales Oliveira,1,0,0,0.0
+República Tcheca,away,Thiago Bahiense,1,1,1,100.0
+República Tcheca,away,Tiago,1,0,0,0.0
+África do Sul,away,André Bonito,1,1,0,100.0
+África do Sul,away,André Mendes,1,1,0,100.0
+África do Sul,away,André Tayer,1,1,1,100.0
+África do Sul,away,Cipriano L.,1,1,0,100.0
+África do Sul,away,Davi & Cesar,1,0,0,0.0
+África do Sul,away,Ditchos,1,1,1,100.0
+África do Sul,away,Felipe Giannoni,1,1,0,100.0
+África do Sul,away,Francisco Camargo,1,1,1,100.0
+África do Sul,away,Frederico Soter,1,1,1,100.0
+África do Sul,away,Gabão,1,1,0,100.0
+África do Sul,away,Giancarlo,1,1,0,100.0
+África do Sul,away,Guilherne,1,0,0,0.0
+África do Sul,away,Haroldo,1,1,0,100.0
+África do Sul,away,José Ricardo,1,1,0,100.0
+África do Sul,away,João Henrique,1,1,1,100.0
+África do Sul,away,Kiko Toloza,1,1,0,100.0
+África do Sul,away,LLM GPT,1,1,1,100.0
+África do Sul,away,LLM Gemini,1,1,0,100.0
+África do Sul,away,Leo Fernandes,1,1,1,100.0
+África do Sul,away,Luca Caviglia Del Soldato,1,1,0,100.0
+África do Sul,away,Lucas Ubertini,1,1,1,100.0
+África do Sul,away,Luiz Augusto,1,1,0,100.0
+África do Sul,away,Marcelo,1,1,1,100.0
+África do Sul,away,Marcelo Boix,1,1,1,100.0
+África do Sul,away,Marco Lavander,1,1,1,100.0
+África do Sul,away,Mateus Tone,1,1,1,100.0
+África do Sul,away,Mauricio Saraiva,1,1,0,100.0
+África do Sul,away,Pedro Tayer,1,1,1,100.0
+África do Sul,away,RODRIGO ALBERNAZ,1,1,0,100.0
+África do Sul,away,Rafael Conte,1,1,1,100.0
+África do Sul,away,Thales Oliveira,1,0,0,0.0
+África do Sul,away,Thiago Bahiense,1,1,1,100.0
+África do Sul,away,Tiago,1,1,1,100.0

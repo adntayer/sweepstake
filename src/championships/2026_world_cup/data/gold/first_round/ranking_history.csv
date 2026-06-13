@@ -1,34 +1,67 @@
 boleiro,date,daily_points,cumulative_points,rank,leader_name,leader_distance
-André Bonito,2026-06-12,0,0,24,Cipriano L.,10
-André Mendes,2026-06-12,0,0,24,Cipriano L.,10
-André Tayer,2026-06-12,0,0,24,Cipriano L.,10
-Cipriano L.,2026-06-12,10,10,1,Cipriano L.,0
-Davi & Cesar,2026-06-12,0,0,24,Cipriano L.,10
-Ditchos,2026-06-12,5,5,15,Cipriano L.,5
-Felipe Giannoni,2026-06-12,0,0,24,Cipriano L.,10
-Francisco Camargo,2026-06-12,5,5,15,Cipriano L.,5
-Frederico Soter,2026-06-12,10,10,1,Cipriano L.,0
-Gabão,2026-06-12,5,5,15,Cipriano L.,5
-Giancarlo,2026-06-12,1,1,19,Cipriano L.,9
-Guilherne,2026-06-12,0,0,24,Cipriano L.,10
-Haroldo,2026-06-12,10,10,1,Cipriano L.,0
-José Ricardo,2026-06-12,10,10,1,Cipriano L.,0
-João Henrique,2026-06-12,10,10,1,Cipriano L.,0
-Kiko Toloza,2026-06-12,1,1,19,Cipriano L.,9
-LLM GPT,2026-06-12,10,10,1,Cipriano L.,0
-LLM Gemini,2026-06-12,10,10,1,Cipriano L.,0
-Leo Fernandes,2026-06-12,10,10,1,Cipriano L.,0
-Luca Caviglia Del Soldato,2026-06-12,1,1,19,Cipriano L.,9
-Lucas Ubertini,2026-06-12,1,1,19,Cipriano L.,9
-Luiz Augusto,2026-06-12,10,10,1,Cipriano L.,0
-Marcelo,2026-06-12,10,10,1,Cipriano L.,0
-Marcelo Boix,2026-06-12,10,10,1,Cipriano L.,0
-Marco Lavander,2026-06-12,1,1,19,Cipriano L.,9
-Mateus Tone,2026-06-12,0,0,24,Cipriano L.,10
-Mauricio Saraiva,2026-06-12,0,0,24,Cipriano L.,10
-Pedro Tayer,2026-06-12,10,10,1,Cipriano L.,0
-RODRIGO ALBERNAZ,2026-06-12,0,0,24,Cipriano L.,10
-Rafael Conte,2026-06-12,10,10,1,Cipriano L.,0
-Thales Oliveira,2026-06-12,0,0,24,Cipriano L.,10
-Thiago Bahiense,2026-06-12,5,5,15,Cipriano L.,5
-Tiago,2026-06-12,10,10,1,Cipriano L.,0
+André Bonito,2026-06-11,10,10,29,Lucas Ubertini,20
+André Mendes,2026-06-11,11,11,21,Lucas Ubertini,19
+André Tayer,2026-06-11,16,16,9,Lucas Ubertini,14
+Cipriano L.,2026-06-11,11,11,21,Lucas Ubertini,19
+Davi & Cesar,2026-06-11,15,15,18,Lucas Ubertini,15
+Ditchos,2026-06-11,15,15,18,Lucas Ubertini,15
+Felipe Giannoni,2026-06-11,11,11,21,Lucas Ubertini,19
+Francisco Camargo,2026-06-11,25,25,4,Lucas Ubertini,5
+Frederico Soter,2026-06-11,25,25,4,Lucas Ubertini,5
+Gabão,2026-06-11,11,11,21,Lucas Ubertini,19
+Giancarlo,2026-06-11,10,10,29,Lucas Ubertini,20
+Guilherne,2026-06-11,15,15,18,Lucas Ubertini,15
+Haroldo,2026-06-11,25,25,4,Lucas Ubertini,5
+José Ricardo,2026-06-11,11,11,21,Lucas Ubertini,19
+João Henrique,2026-06-11,22,22,7,Lucas Ubertini,8
+Kiko Toloza,2026-06-11,11,11,21,Lucas Ubertini,19
+LLM GPT,2026-06-11,16,16,9,Lucas Ubertini,14
+LLM Gemini,2026-06-11,11,11,21,Lucas Ubertini,19
+Leo Fernandes,2026-06-11,16,16,9,Lucas Ubertini,14
+Luca Caviglia Del Soldato,2026-06-11,10,10,29,Lucas Ubertini,20
+Lucas Ubertini,2026-06-11,30,30,1,Lucas Ubertini,0
+Luiz Augusto,2026-06-11,10,10,29,Lucas Ubertini,20
+Marcelo,2026-06-11,16,16,9,Lucas Ubertini,14
+Marcelo Boix,2026-06-11,30,30,1,Lucas Ubertini,0
+Marco Lavander,2026-06-11,16,16,9,Lucas Ubertini,14
+Mateus Tone,2026-06-11,16,16,9,Lucas Ubertini,14
+Mauricio Saraiva,2026-06-11,17,17,8,Lucas Ubertini,13
+Pedro Tayer,2026-06-11,16,16,9,Lucas Ubertini,14
+RODRIGO ALBERNAZ,2026-06-11,11,11,21,Lucas Ubertini,19
+Rafael Conte,2026-06-11,16,16,9,Lucas Ubertini,14
+Thales Oliveira,2026-06-11,0,0,33,Lucas Ubertini,30
+Thiago Bahiense,2026-06-11,30,30,1,Lucas Ubertini,0
+Tiago,2026-06-11,16,16,9,Lucas Ubertini,14
+André Bonito,2026-06-12,1,11,32,João Henrique,36
+André Mendes,2026-06-12,15,26,18,João Henrique,21
+André Tayer,2026-06-12,0,16,28,João Henrique,31
+Cipriano L.,2026-06-12,11,22,22,João Henrique,25
+Davi & Cesar,2026-06-12,1,16,28,João Henrique,31
+Ditchos,2026-06-12,6,21,23,João Henrique,26
+Felipe Giannoni,2026-06-12,7,18,25,João Henrique,29
+Francisco Camargo,2026-06-12,5,30,15,João Henrique,17
+Frederico Soter,2026-06-12,17,42,2,João Henrique,5
+Gabão,2026-06-12,6,17,27,João Henrique,30
+Giancarlo,2026-06-12,8,18,25,João Henrique,29
+Guilherne,2026-06-12,1,16,28,João Henrique,31
+Haroldo,2026-06-12,11,36,8,João Henrique,11
+José Ricardo,2026-06-12,25,36,8,João Henrique,11
+João Henrique,2026-06-12,25,47,1,João Henrique,0
+Kiko Toloza,2026-06-12,2,13,31,João Henrique,34
+LLM GPT,2026-06-12,25,41,3,João Henrique,6
+LLM Gemini,2026-06-12,25,36,8,João Henrique,11
+Leo Fernandes,2026-06-12,25,41,3,João Henrique,6
+Luca Caviglia Del Soldato,2026-06-12,16,26,18,João Henrique,21
+Lucas Ubertini,2026-06-12,2,32,12,João Henrique,15
+Luiz Augusto,2026-06-12,11,21,23,João Henrique,26
+Marcelo,2026-06-12,11,27,16,João Henrique,20
+Marcelo Boix,2026-06-12,11,41,3,João Henrique,6
+Marco Lavander,2026-06-12,8,24,21,João Henrique,23
+Mateus Tone,2026-06-12,15,31,14,João Henrique,16
+Mauricio Saraiva,2026-06-12,15,32,12,João Henrique,15
+Pedro Tayer,2026-06-12,11,27,16,João Henrique,20
+RODRIGO ALBERNAZ,2026-06-12,15,26,18,João Henrique,21
+Rafael Conte,2026-06-12,25,41,3,João Henrique,6
+Thales Oliveira,2026-06-12,1,1,33,João Henrique,46
+Thiago Bahiense,2026-06-12,6,36,8,João Henrique,11
+Tiago,2026-06-12,25,41,3,João Henrique,6

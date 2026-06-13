@@ -1,0 +1,73 @@
+date,hour,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,who,match
+2026-06-11,13h,México,,2.0,x,0.0,,África do Sul,Thiago Bahiense,méxico-vs-áfrica_do_sul
+2026-06-11,20h,Coréia do Sul,,2.0,x,1.0,,República Tcheca,Thiago Bahiense,coréia_do_sul-vs-república_tcheca
+2026-06-12,15h,Canadá,,2.0,x,1.0,,Bósnia,Thiago Bahiense,canadá-vs-bósnia
+2026-06-12,18h,Estados Unidos,,1.0,x,0.0,,Paraguai,Thiago Bahiense,estados_unidos-vs-paraguai
+2026-06-13,12h,Catar,,0.0,x,3.0,,Suíça,Thiago Bahiense,catar-vs-suíça
+2026-06-13,18h,Brasil,,1.0,x,1.0,,Marrocos,Thiago Bahiense,brasil-vs-marrocos
+2026-06-13,21h,Haiti,,0.0,x,3.0,,Escócia,Thiago Bahiense,haiti-vs-escócia
+2026-06-13,21h,Austrália,,0.0,x,2.0,,Turquia,Thiago Bahiense,austrália-vs-turquia
+2026-06-14,12h,Alemanha,,5.0,x,0.0,,Curaçao,Thiago Bahiense,alemanha-vs-curaçao
+2026-06-14,15h,Holanda,,1.0,x,2.0,,Japão,Thiago Bahiense,holanda-vs-japão
+2026-06-14,19h,Costa do Marfim,,1.0,x,2.0,,Equador,Thiago Bahiense,costa_do_marfim-vs-equador
+2026-06-14,20h,Suécia,,1.0,x,0.0,,Tunísia,Thiago Bahiense,suécia-vs-tunísia
+2026-06-15,12h,Espanha,,4.0,x,0.0,,Cabo Verde,Thiago Bahiense,espanha-vs-cabo_verde
+2026-06-15,12h,Bélgica,,2.0,x,1.0,,Egito,Thiago Bahiense,bélgica-vs-egito
+2026-06-15,18h,Arábia Saudita,,0.0,x,2.0,,Uruguai,Thiago Bahiense,arábia_saudita-vs-uruguai
+2026-06-15,18h,Irã,,3.0,x,0.0,,Nova Zelândia,Thiago Bahiense,irã-vs-nova_zelândia
+2026-06-16,15h,França,,3.0,x,1.0,,Senegal,Thiago Bahiense,frança-vs-senegal
+2026-06-16,18h,Iraque,,0.0,x,2.0,,Noruega,Thiago Bahiense,iraque-vs-noruega
+2026-06-16,20h,Argentina,,3.0,x,0.0,,Argélia,Thiago Bahiense,argentina-vs-argélia
+2026-06-16,21h,Áustria,,2.0,x,0.0,,Jordânia,Thiago Bahiense,áustria-vs-jordânia
+2026-06-17,12h,Portugal,,3.0,x,0.0,,RD Congo,Thiago Bahiense,portugal-vs-rd_congo
+2026-06-17,15h,Inglaterra,,2.0,x,1.0,,Croácia,Thiago Bahiense,inglaterra-vs-croácia
+2026-06-17,19h,Gana,,3.0,x,0.0,,Panamá,Thiago Bahiense,gana-vs-panamá
+2026-06-17,20h,Uzbequistão,,0.0,x,3.0,,Colômbia,Thiago Bahiense,uzbequistão-vs-colômbia
+2026-06-18,12h,República Tcheca,,2.0,x,1.0,,África do Sul,Thiago Bahiense,república_tcheca-vs-áfrica_do_sul
+2026-06-18,12h,Suíça,,2.0,x,1.0,,Bósnia,Thiago Bahiense,suíça-vs-bósnia
+2026-06-18,15h,Canadá,,2.0,x,0.0,,Catar,Thiago Bahiense,canadá-vs-catar
+2026-06-18,19h,México,,2.0,x,1.0,,Coréia do Sul,Thiago Bahiense,méxico-vs-coréia_do_sul
+2026-06-19,12h,Estados Unidos,,2.0,x,1.0,,Austrália,Thiago Bahiense,estados_unidos-vs-austrália
+2026-06-19,18h,Escócia,,1.0,x,2.0,,Marrocos,Thiago Bahiense,escócia-vs-marrocos
+2026-06-19,20h,Turquia,,2.0,x,1.0,,Paraguai,Thiago Bahiense,turquia-vs-paraguai
+2026-06-19,21h,Brasil,,5.0,x,0.0,,Haiti,Thiago Bahiense,brasil-vs-haiti
+2026-06-20,12h,Holanda,,2.0,x,1.0,,Suécia,Thiago Bahiense,holanda-vs-suécia
+2026-06-20,16h,Alemanha,,2.0,x,0.0,,Costa do Marfim,Thiago Bahiense,alemanha-vs-costa_do_marfim
+2026-06-20,19h,Equador,,3.0,x,0.0,,Curaçao,Thiago Bahiense,equador-vs-curaçao
+2026-06-20,22h,Tunísia,,0.0,x,2.0,,Japão,Thiago Bahiense,tunísia-vs-japão
+2026-06-21,12h,Espanha,,3.0,x,0.0,,Arábia Saudita,Thiago Bahiense,espanha-vs-arábia_saudita
+2026-06-21,12h,Bélgica,,2.0,x,0.0,,Irã,Thiago Bahiense,bélgica-vs-irã
+2026-06-21,18h,Nova Zelândia,,0.0,x,3.0,,Egito,Thiago Bahiense,nova_zelândia-vs-egito
+2026-06-21,18h,Uruguai,,2.0,x,0.0,,Cabo Verde,Thiago Bahiense,uruguai-vs-cabo_verde
+2026-06-22,12h,Argentina,,2.0,x,1.0,,Áustria,Thiago Bahiense,argentina-vs-áustria
+2026-06-22,17h,França,,5.0,x,0.0,,Iraque,Thiago Bahiense,frança-vs-iraque
+2026-06-22,20h,Noruega,,2.0,x,1.0,,Senegal,Thiago Bahiense,noruega-vs-senegal
+2026-06-22,20h,Jordânia,,0.0,x,2.0,,Argélia,Thiago Bahiense,jordânia-vs-argélia
+2026-06-23,12h,Portugal,,4.0,x,0.0,,Uzbequistão,Thiago Bahiense,portugal-vs-uzbequistão
+2026-06-23,16h,Inglaterra,,3.0,x,0.0,,Gana,Thiago Bahiense,inglaterra-vs-gana
+2026-06-23,19h,Panamá,,0.0,x,3.0,,Croácia,Thiago Bahiense,panamá-vs-croácia
+2026-06-23,20h,Colômbia,,3.0,x,1.0,,RD Congo,Thiago Bahiense,colômbia-vs-rd_congo
+2026-06-24,12h,Suíça,,1.0,x,2.0,,Canadá,Thiago Bahiense,suíça-vs-canadá
+2026-06-24,12h,Bósnia,,2.0,x,0.0,,Catar,Thiago Bahiense,bósnia-vs-catar
+2026-06-24,18h,Escócia,,1.0,x,2.0,,Brasil,Thiago Bahiense,escócia-vs-brasil
+2026-06-24,18h,Marrocos,,4.0,x,0.0,,Haiti,Thiago Bahiense,marrocos-vs-haiti
+2026-06-24,19h,República Tcheca,,0.0,x,2.0,,México,Thiago Bahiense,república_tcheca-vs-méxico
+2026-06-24,19h,África do Sul,,0.0,x,3.0,,Coréia do Sul,Thiago Bahiense,áfrica_do_sul-vs-coréia_do_sul
+2026-06-25,16h,Curaçao,,0.0,x,3.0,,Costa do Marfim,Thiago Bahiense,curaçao-vs-costa_do_marfim
+2026-06-25,16h,Equador,,1.0,x,2.0,,Alemanha,Thiago Bahiense,equador-vs-alemanha
+2026-06-25,18h,Japão,,1.0,x,0.0,,Suécia,Thiago Bahiense,japão-vs-suécia
+2026-06-25,18h,Tunísia,,0.0,x,3.0,,Holanda,Thiago Bahiense,tunísia-vs-holanda
+2026-06-25,19h,Paraguai,,2.0,x,1.0,,Austrália,Thiago Bahiense,paraguai-vs-austrália
+2026-06-25,19h,Turquia,,1.0,x,1.0,,Estados Unidos,Thiago Bahiense,turquia-vs-estados_unidos
+2026-06-26,15h,Senegal,,3.0,x,0.0,,Iraque,Thiago Bahiense,senegal-vs-iraque
+2026-06-26,15h,Noruega,,1.0,x,3.0,,França,Thiago Bahiense,noruega-vs-frança
+2026-06-26,18h,Uruguai,,1.0,x,3.0,,Espanha,Thiago Bahiense,uruguai-vs-espanha
+2026-06-26,19h,Cabo Verde,,1.0,x,2.0,,Arábia Saudita,Thiago Bahiense,cabo_verde-vs-arábia_saudita
+2026-06-26,20h,Nova Zelândia,,0.0,x,4.0,,Bélgica,Thiago Bahiense,nova_zelândia-vs-bélgica
+2026-06-26,20h,Egito,,1.0,x,0.0,,Irã,Thiago Bahiense,egito-vs-irã
+2026-06-27,17h,Panamá,,0.0,x,4.0,,Inglaterra,Thiago Bahiense,panamá-vs-inglaterra
+2026-06-27,17h,Croácia,,2.0,x,1.0,,Gana,Thiago Bahiense,croácia-vs-gana
+2026-06-27,19h,Colômbia,,1.0,x,2.0,,Portugal,Thiago Bahiense,colômbia-vs-portugal
+2026-06-27,19h,RD Congo,,2.0,x,0.0,,Uzbequistão,Thiago Bahiense,rd_congo-vs-uzbequistão
+2026-06-27,21h,Argélia,,1.0,x,2.0,,Áustria,Thiago Bahiense,argélia-vs-áustria
+2026-06-27,21h,Jordânia,,0.0,x,4.0,,Argentina,Thiago Bahiense,jordânia-vs-argentina

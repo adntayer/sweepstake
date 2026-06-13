@@ -1,73 +1,73 @@
 date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_real,away_goals_real,home_pen_bol,away_pen_bol,home_pen_real,away_pen_real,resultado_bol_placar,resultado_bol_time,resultado_real_placar,resultado_real_time,who
-2026-06-11,13h,méxico-vs-áfrica_do_sul,México,África do Sul,2.0,1.0,,,,,,,2 x 1,México,,,José Ricardo
-2026-06-11,20h,coréia_do_sul-vs-república_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-12,15h,canadá-vs-bósnia,Canadá,Bósnia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-11,13h,mexico-vs-africa_do_sul,México,África do Sul,2.0,1.0,2.0,0.0,,,,,2 x 1,México,2 x 0,México,José Ricardo
+2026-06-11,20h,coreia_do_sul-vs-republica_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,2.0,1.0,,,,,1 x 1,empate,2 x 1,Coréia do Sul,José Ricardo
+2026-06-12,15h,canada-vs-bosnia,Canadá,Bósnia,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,José Ricardo
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,1.0,4.0,1.0,,,,,2 x 1,Estados Unidos,4 x 1,Estados Unidos,José Ricardo
-2026-06-13,12h,catar-vs-suíça,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,José Ricardo
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,José Ricardo
 2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,José Ricardo
-2026-06-13,21h,haiti-vs-escócia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,José Ricardo
-2026-06-13,21h,austrália-vs-turquia,Austrália,Turquia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-14,12h,alemanha-vs-curaçao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,José Ricardo
-2026-06-14,15h,holanda-vs-japão,Holanda,Japão,3.0,1.0,,,,,,,3 x 1,Holanda,,,José Ricardo
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,José Ricardo
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,José Ricardo
+2026-06-14,15h,holanda-vs-japao,Holanda,Japão,3.0,1.0,,,,,,,3 x 1,Holanda,,,José Ricardo
 2026-06-14,19h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,2.0,2.0,,,,,,,2 x 2,empate,,,José Ricardo
-2026-06-14,20h,suécia-vs-tunísia,Suécia,Tunísia,2.0,0.0,,,,,,,2 x 0,Suécia,,,José Ricardo
+2026-06-14,20h,suecia-vs-tunisia,Suécia,Tunísia,2.0,0.0,,,,,,,2 x 0,Suécia,,,José Ricardo
 2026-06-15,12h,espanha-vs-cabo_verde,Espanha,Cabo Verde,3.0,0.0,,,,,,,3 x 0,Espanha,,,José Ricardo
-2026-06-15,12h,bélgica-vs-egito,Bélgica,Egito,2.0,0.0,,,,,,,2 x 0,Bélgica,,,José Ricardo
-2026-06-15,18h,arábia_saudita-vs-uruguai,Arábia Saudita,Uruguai,1.0,2.0,,,,,,,1 x 2,Uruguai,,,José Ricardo
-2026-06-15,18h,irã-vs-nova_zelândia,Irã,Nova Zelândia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-16,15h,frança-vs-senegal,França,Senegal,3.0,1.0,,,,,,,3 x 1,França,,,José Ricardo
+2026-06-15,12h,belgica-vs-egito,Bélgica,Egito,2.0,0.0,,,,,,,2 x 0,Bélgica,,,José Ricardo
+2026-06-15,18h,arabia_saudita-vs-uruguai,Arábia Saudita,Uruguai,1.0,2.0,,,,,,,1 x 2,Uruguai,,,José Ricardo
+2026-06-15,18h,ira-vs-nova_zelandia,Irã,Nova Zelândia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-16,15h,franca-vs-senegal,França,Senegal,3.0,1.0,,,,,,,3 x 1,França,,,José Ricardo
 2026-06-16,18h,iraque-vs-noruega,Iraque,Noruega,0.0,2.0,,,,,,,0 x 2,Noruega,,,José Ricardo
-2026-06-16,20h,argentina-vs-argélia,Argentina,Argélia,3.0,1.0,,,,,,,3 x 1,Argentina,,,José Ricardo
-2026-06-16,21h,áustria-vs-jordânia,Áustria,Jordânia,2.0,0.0,,,,,,,2 x 0,Áustria,,,José Ricardo
+2026-06-16,20h,argentina-vs-argelia,Argentina,Argélia,3.0,1.0,,,,,,,3 x 1,Argentina,,,José Ricardo
+2026-06-16,21h,austria-vs-jordania,Áustria,Jordânia,2.0,0.0,,,,,,,2 x 0,Áustria,,,José Ricardo
 2026-06-17,12h,portugal-vs-rd_congo,Portugal,RD Congo,3.0,1.0,,,,,,,3 x 1,Portugal,,,José Ricardo
-2026-06-17,15h,inglaterra-vs-croácia,Inglaterra,Croácia,2.0,1.0,,,,,,,2 x 1,Inglaterra,,,José Ricardo
-2026-06-17,19h,gana-vs-panamá,Gana,Panamá,2.0,1.0,,,,,,,2 x 1,Gana,,,José Ricardo
-2026-06-17,20h,uzbequistão-vs-colômbia,Uzbequistão,Colômbia,0.0,2.0,,,,,,,0 x 2,Colômbia,,,José Ricardo
-2026-06-18,12h,república_tcheca-vs-áfrica_do_sul,República Tcheca,África do Sul,2.0,1.0,,,,,,,2 x 1,República Tcheca,,,José Ricardo
-2026-06-18,12h,suíça-vs-bósnia,Suíça,Bósnia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-18,15h,canadá-vs-catar,Canadá,Catar,2.0,0.0,,,,,,,2 x 0,Canadá,,,José Ricardo
-2026-06-18,19h,méxico-vs-coréia_do_sul,México,Coréia do Sul,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-19,12h,estados_unidos-vs-austrália,Estados Unidos,Austrália,2.0,0.0,,,,,,,2 x 0,Estados Unidos,,,José Ricardo
-2026-06-19,18h,escócia-vs-marrocos,Escócia,Marrocos,1.0,2.0,,,,,,,1 x 2,Marrocos,,,José Ricardo
+2026-06-17,15h,inglaterra-vs-croacia,Inglaterra,Croácia,2.0,1.0,,,,,,,2 x 1,Inglaterra,,,José Ricardo
+2026-06-17,19h,gana-vs-panama,Gana,Panamá,2.0,1.0,,,,,,,2 x 1,Gana,,,José Ricardo
+2026-06-17,20h,uzbequistao-vs-colombia,Uzbequistão,Colômbia,0.0,2.0,,,,,,,0 x 2,Colômbia,,,José Ricardo
+2026-06-18,12h,republica_tcheca-vs-africa_do_sul,República Tcheca,África do Sul,2.0,1.0,,,,,,,2 x 1,República Tcheca,,,José Ricardo
+2026-06-18,12h,suica-vs-bosnia,Suíça,Bósnia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-18,15h,canada-vs-catar,Canadá,Catar,2.0,0.0,,,,,,,2 x 0,Canadá,,,José Ricardo
+2026-06-18,19h,mexico-vs-coreia_do_sul,México,Coréia do Sul,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-19,12h,estados_unidos-vs-australia,Estados Unidos,Austrália,2.0,0.0,,,,,,,2 x 0,Estados Unidos,,,José Ricardo
+2026-06-19,18h,escocia-vs-marrocos,Escócia,Marrocos,1.0,2.0,,,,,,,1 x 2,Marrocos,,,José Ricardo
 2026-06-19,20h,turquia-vs-paraguai,Turquia,Paraguai,2.0,1.0,,,,,,,2 x 1,Turquia,,,José Ricardo
 2026-06-19,21h,brasil-vs-haiti,Brasil,Haiti,4.0,0.0,,,,,,,4 x 0,Brasil,,,José Ricardo
-2026-06-20,12h,holanda-vs-suécia,Holanda,Suécia,2.0,1.0,,,,,,,2 x 1,Holanda,,,José Ricardo
+2026-06-20,12h,holanda-vs-suecia,Holanda,Suécia,2.0,1.0,,,,,,,2 x 1,Holanda,,,José Ricardo
 2026-06-20,16h,alemanha-vs-costa_do_marfim,Alemanha,Costa do Marfim,2.0,0.0,,,,,,,2 x 0,Alemanha,,,José Ricardo
-2026-06-20,19h,equador-vs-curaçao,Equador,Curaçao,2.0,0.0,,,,,,,2 x 0,Equador,,,José Ricardo
-2026-06-20,22h,tunísia-vs-japão,Tunísia,Japão,0.0,2.0,,,,,,,0 x 2,Japão,,,José Ricardo
-2026-06-21,12h,espanha-vs-arábia_saudita,Espanha,Arábia Saudita,2.0,0.0,,,,,,,2 x 0,Espanha,,,José Ricardo
-2026-06-21,12h,bélgica-vs-irã,Bélgica,Irã,3.0,0.0,,,,,,,3 x 0,Bélgica,,,José Ricardo
-2026-06-21,18h,nova_zelândia-vs-egito,Nova Zelândia,Egito,0.0,1.0,,,,,,,0 x 1,Egito,,,José Ricardo
+2026-06-20,19h,equador-vs-curacao,Equador,Curaçao,2.0,0.0,,,,,,,2 x 0,Equador,,,José Ricardo
+2026-06-20,22h,tunisia-vs-japao,Tunísia,Japão,0.0,2.0,,,,,,,0 x 2,Japão,,,José Ricardo
+2026-06-21,12h,espanha-vs-arabia_saudita,Espanha,Arábia Saudita,2.0,0.0,,,,,,,2 x 0,Espanha,,,José Ricardo
+2026-06-21,12h,belgica-vs-ira,Bélgica,Irã,3.0,0.0,,,,,,,3 x 0,Bélgica,,,José Ricardo
+2026-06-21,18h,nova_zelandia-vs-egito,Nova Zelândia,Egito,0.0,1.0,,,,,,,0 x 1,Egito,,,José Ricardo
 2026-06-21,18h,uruguai-vs-cabo_verde,Uruguai,Cabo Verde,3.0,0.0,,,,,,,3 x 0,Uruguai,,,José Ricardo
-2026-06-22,12h,argentina-vs-áustria,Argentina,Áustria,2.0,0.0,,,,,,,2 x 0,Argentina,,,José Ricardo
-2026-06-22,17h,frança-vs-iraque,França,Iraque,3.0,0.0,,,,,,,3 x 0,França,,,José Ricardo
+2026-06-22,12h,argentina-vs-austria,Argentina,Áustria,2.0,0.0,,,,,,,2 x 0,Argentina,,,José Ricardo
+2026-06-22,17h,franca-vs-iraque,França,Iraque,3.0,0.0,,,,,,,3 x 0,França,,,José Ricardo
 2026-06-22,20h,noruega-vs-senegal,Noruega,Senegal,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-22,20h,jordânia-vs-argélia,Jordânia,Argélia,0.0,1.0,,,,,,,0 x 1,Argélia,,,José Ricardo
-2026-06-23,12h,portugal-vs-uzbequistão,Portugal,Uzbequistão,2.0,0.0,,,,,,,2 x 0,Portugal,,,José Ricardo
+2026-06-22,20h,jordania-vs-argelia,Jordânia,Argélia,0.0,1.0,,,,,,,0 x 1,Argélia,,,José Ricardo
+2026-06-23,12h,portugal-vs-uzbequistao,Portugal,Uzbequistão,2.0,0.0,,,,,,,2 x 0,Portugal,,,José Ricardo
 2026-06-23,16h,inglaterra-vs-gana,Inglaterra,Gana,2.0,0.0,,,,,,,2 x 0,Inglaterra,,,José Ricardo
-2026-06-23,19h,panamá-vs-croácia,Panamá,Croácia,0.0,1.0,,,,,,,0 x 1,Croácia,,,José Ricardo
-2026-06-23,20h,colômbia-vs-rd_congo,Colômbia,RD Congo,2.0,0.0,,,,,,,2 x 0,Colômbia,,,José Ricardo
-2026-06-24,12h,suíça-vs-canadá,Suíça,Canadá,2.0,0.0,,,,,,,2 x 0,Suíça,,,José Ricardo
-2026-06-24,12h,bósnia-vs-catar,Bósnia,Catar,2.0,1.0,,,,,,,2 x 1,Bósnia,,,José Ricardo
-2026-06-24,18h,escócia-vs-brasil,Escócia,Brasil,0.0,2.0,,,,,,,0 x 2,Brasil,,,José Ricardo
+2026-06-23,19h,panama-vs-croacia,Panamá,Croácia,0.0,1.0,,,,,,,0 x 1,Croácia,,,José Ricardo
+2026-06-23,20h,colombia-vs-rd_congo,Colômbia,RD Congo,2.0,0.0,,,,,,,2 x 0,Colômbia,,,José Ricardo
+2026-06-24,12h,suica-vs-canada,Suíça,Canadá,2.0,0.0,,,,,,,2 x 0,Suíça,,,José Ricardo
+2026-06-24,12h,bosnia-vs-catar,Bósnia,Catar,2.0,1.0,,,,,,,2 x 1,Bósnia,,,José Ricardo
+2026-06-24,18h,escocia-vs-brasil,Escócia,Brasil,0.0,2.0,,,,,,,0 x 2,Brasil,,,José Ricardo
 2026-06-24,18h,marrocos-vs-haiti,Marrocos,Haiti,3.0,0.0,,,,,,,3 x 0,Marrocos,,,José Ricardo
-2026-06-24,19h,república_tcheca-vs-méxico,República Tcheca,México,1.0,2.0,,,,,,,1 x 2,México,,,José Ricardo
-2026-06-24,19h,áfrica_do_sul-vs-coréia_do_sul,África do Sul,Coréia do Sul,1.0,2.0,,,,,,,1 x 2,Coréia do Sul,,,José Ricardo
-2026-06-25,16h,curaçao-vs-costa_do_marfim,Curaçao,Costa do Marfim,0.0,2.0,,,,,,,0 x 2,Costa do Marfim,,,José Ricardo
+2026-06-24,19h,republica_tcheca-vs-mexico,República Tcheca,México,1.0,2.0,,,,,,,1 x 2,México,,,José Ricardo
+2026-06-24,19h,africa_do_sul-vs-coreia_do_sul,África do Sul,Coréia do Sul,1.0,2.0,,,,,,,1 x 2,Coréia do Sul,,,José Ricardo
+2026-06-25,16h,curacao-vs-costa_do_marfim,Curaçao,Costa do Marfim,0.0,2.0,,,,,,,0 x 2,Costa do Marfim,,,José Ricardo
 2026-06-25,16h,equador-vs-alemanha,Equador,Alemanha,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-25,18h,japão-vs-suécia,Japão,Suécia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-25,18h,tunísia-vs-holanda,Tunísia,Holanda,0.0,3.0,,,,,,,0 x 3,Holanda,,,José Ricardo
-2026-06-25,19h,paraguai-vs-austrália,Paraguai,Austrália,2.0,1.0,,,,,,,2 x 1,Paraguai,,,José Ricardo
+2026-06-25,18h,japao-vs-suecia,Japão,Suécia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-25,18h,tunisia-vs-holanda,Tunísia,Holanda,0.0,3.0,,,,,,,0 x 3,Holanda,,,José Ricardo
+2026-06-25,19h,paraguai-vs-australia,Paraguai,Austrália,2.0,1.0,,,,,,,2 x 1,Paraguai,,,José Ricardo
 2026-06-25,19h,turquia-vs-estados_unidos,Turquia,Estados Unidos,1.0,2.0,,,,,,,1 x 2,Estados Unidos,,,José Ricardo
 2026-06-26,15h,senegal-vs-iraque,Senegal,Iraque,2.0,0.0,,,,,,,2 x 0,Senegal,,,José Ricardo
-2026-06-26,15h,noruega-vs-frança,Noruega,França,1.0,2.0,,,,,,,1 x 2,França,,,José Ricardo
+2026-06-26,15h,noruega-vs-franca,Noruega,França,1.0,2.0,,,,,,,1 x 2,França,,,José Ricardo
 2026-06-26,18h,uruguai-vs-espanha,Uruguai,Espanha,1.0,2.0,,,,,,,1 x 2,Espanha,,,José Ricardo
-2026-06-26,19h,cabo_verde-vs-arábia_saudita,Cabo Verde,Arábia Saudita,1.0,3.0,,,,,,,1 x 3,Arábia Saudita,,,José Ricardo
-2026-06-26,20h,nova_zelândia-vs-bélgica,Nova Zelândia,Bélgica,1.0,4.0,,,,,,,1 x 4,Bélgica,,,José Ricardo
-2026-06-26,20h,egito-vs-irã,Egito,Irã,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-27,17h,panamá-vs-inglaterra,Panamá,Inglaterra,0.0,3.0,,,,,,,0 x 3,Inglaterra,,,José Ricardo
-2026-06-27,17h,croácia-vs-gana,Croácia,Gana,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-27,19h,colômbia-vs-portugal,Colômbia,Portugal,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-27,19h,rd_congo-vs-uzbequistão,RD Congo,Uzbequistão,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
-2026-06-27,21h,argélia-vs-áustria,Argélia,Áustria,1.0,2.0,,,,,,,1 x 2,Áustria,,,José Ricardo
-2026-06-27,21h,jordânia-vs-argentina,Jordânia,Argentina,0.0,4.0,,,,,,,0 x 4,Argentina,,,José Ricardo
+2026-06-26,19h,cabo_verde-vs-arabia_saudita,Cabo Verde,Arábia Saudita,1.0,3.0,,,,,,,1 x 3,Arábia Saudita,,,José Ricardo
+2026-06-26,20h,nova_zelandia-vs-belgica,Nova Zelândia,Bélgica,1.0,4.0,,,,,,,1 x 4,Bélgica,,,José Ricardo
+2026-06-26,20h,egito-vs-ira,Egito,Irã,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-27,17h,panama-vs-inglaterra,Panamá,Inglaterra,0.0,3.0,,,,,,,0 x 3,Inglaterra,,,José Ricardo
+2026-06-27,17h,croacia-vs-gana,Croácia,Gana,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-27,19h,colombia-vs-portugal,Colômbia,Portugal,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-27,19h,rd_congo-vs-uzbequistao,RD Congo,Uzbequistão,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo
+2026-06-27,21h,argelia-vs-austria,Argélia,Áustria,1.0,2.0,,,,,,,1 x 2,Áustria,,,José Ricardo
+2026-06-27,21h,jordania-vs-argentina,Jordânia,Argentina,0.0,4.0,,,,,,,0 x 4,Argentina,,,José Ricardo

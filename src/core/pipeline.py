@@ -26,7 +26,9 @@ Structure:
 from __future__ import annotations
 
 import os
+import re
 import shutil
+import unicodedata
 from glob import glob
 
 import pandas as pd
@@ -136,11 +138,26 @@ def _playoff_files_from_raw(config: ChampionshipConfig) -> list[tuple[str, str, 
 # Result merge helpers
 # ------------------------------------------------------------------
 
+def _strip_accents(text: str) -> str:
+    """Remove diacritics/accents from a string (e.g. São -> Sao)."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text) if not unicodedata.combining(c)
+    )
+
+
 def _merge_with_results(df_pred: pd.DataFrame, df_results: pd.DataFrame) -> pd.DataFrame:
     """Merge predictions with official results on 'match' key.
 
     Adds real goals and result description columns.
+
+    Normalises Unicode accents on the match key so that accented
+    match slugs from player Excel files (e.g. ``méxico-vs-áfrica_do_sul``)
+    match the ASCII-only slugs in ``games.csv`` (``mexico-vs-africa_do_sul``).
     """
+    df_pred = df_pred.copy()
+    df_results = df_results.copy()
+    df_pred["match"] = df_pred["match"].apply(_strip_accents)
+    df_results["match"] = df_results["match"].apply(_strip_accents)
     df = df_pred.merge(df_results, on="match", how="left", suffixes=("_bol", "_real"))
 
     # Build result strings

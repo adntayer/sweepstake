@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import re
+import unicodedata
 from datetime import datetime, timedelta
 from glob import glob
 
@@ -847,6 +848,13 @@ def _status_badge(slug: str, slug_status: dict[str, str]) -> str:
     if status == "pending":
         return '<span class="badge-result yellow">\u23f3</span>'
     return '<span class="badge-result blue">\U0001f52e</span>'
+
+
+def _strip_accents(text: str) -> str:
+    """Remove diacritics/accents from a string (e.g. São -> Sao)."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text) if not unicodedata.combining(c)
+    )
 
 
 def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str] | None = None) -> str:
