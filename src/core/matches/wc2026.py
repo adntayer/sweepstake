@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import re
 import unicodedata
 
 import yaml
@@ -8,11 +9,21 @@ import pandas as pd
 
 
 def normalizar_slug(texto):
-    """Remove acentos, substitui espaços por sublinhados e põe em minúsculo."""
-    if not texto:
+    """Cria slug compatível com o formato interno do bolão.
+
+    Remove acentos, converte para minúsculas e substitui
+    espaços/pontuação por sublinhados — compatível com a
+    função ``_slug`` do loader e com o formato histórico de
+    ``games.csv`` (ex.: ``mexico-vs-africa_do_sul``).
+    Devolve string vazia para entradas nulas ou não-string (ex.: NaN).
+    """
+    if not isinstance(texto, str) or not texto:
         return ""
-    texto = unicodedata.normalize("NFKD", str(texto)).encode("ASCII", "ignore").decode("ASCII")
-    return texto.lower().replace(" ", "_")
+    s = unicodedata.normalize("NFKD", texto)
+    s = s.encode("ascii", "ignore").decode("ascii")
+    s = s.lower().strip()
+    s = re.sub(r"[^a-z0-9]+", "_", s)
+    return s.strip("_")
 
 
 def _load_config_mapping():
@@ -77,8 +88,14 @@ def _assign_group_rounds(df):
         df.at[idx, "round"] = rnd
 
 
-def build_world_cup_csv():
+def build_world_cup_csv(games_file: str | None = None):
     """Fetch games from the API, normalise, and return a DataFrame.
+
+    Parameters
+    ----------
+    games_file : str, optional
+        Path to write the CSV.  Defaults to
+        ``src/championships/2026_world_cup/data/games.csv``.
 
     Returns a DataFrame with columns matching the internal games.csv
     format plus ``time_elapsed``, or ``None`` on failure.
@@ -159,7 +176,14 @@ def build_world_cup_csv():
             "match",
             "time_elapsed",
         ]
-        return df[colunas_finais]
+        df_out = df[colunas_finais]
+
+        # ---- save CSV (side effect so pipeline calls also persist) ----
+        output_path = games_file or "src/championships/2026_world_cup/data/games.csv"
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        df_out.to_csv(output_path, index=False)
+
+        return df_out
 
     except Exception as e:
         print(f"❌ Erro ao processar parser: {e}")
@@ -169,9 +193,6 @@ def build_world_cup_csv():
 if __name__ == "__main__":
     df_resultado = build_world_cup_csv()
     if df_resultado is not None:
-        output_path = "src/championships/2026_world_cup/data/games.csv"
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        df_resultado.to_csv(output_path, index=False)
-        print(f"✅ {output_path} — {len(df_resultado)} jogos salvos")
+        print(f"✅ {len(df_resultado)} jogos salvos")
     else:
         print("❌ Erro ao processar parser")

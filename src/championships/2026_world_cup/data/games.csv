@@ -1,8 +1,8 @@
 date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,time_elapsed
-2026-06-11 13h,1,México,,,x,,,África do Sul,mexico-vs-africa_do_sul,finished
-2026-06-11 20h,1,Coréia do Sul,,,x,,,República Tcheca,coreia_do_sul-vs-republica_tcheca,finished
-2026-06-12 15h,1,Canadá,,,x,,,Bósnia,canada-vs-bosnia,finished
-2026-06-12 18h,1,Estados Unidos,,,x,,,Paraguai,estados_unidos-vs-paraguai,live
+2026-06-11 13h,1,México,,2,x,0,,África do Sul,mexico-vs-africa_do_sul,finished
+2026-06-11 20h,1,Coréia do Sul,,2,x,1,,República Tcheca,coreia_do_sul-vs-republica_tcheca,finished
+2026-06-12 15h,1,Canadá,,1,x,1,,Bósnia,canada-vs-bosnia,finished
+2026-06-12 18h,1,Estados Unidos,,4,x,1,,Paraguai,estados_unidos-vs-paraguai,finished
 2026-06-13 12h,1,Catar,,,x,,,Suíça,catar-vs-suica,notstarted
 2026-06-13 18h,1,Brasil,,,x,,,Marrocos,brasil-vs-marrocos,notstarted
 2026-06-13 21h,1,Haiti,,,x,,,Escócia,haiti-vs-escocia,notstarted
@@ -71,35 +71,35 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-27 19h,3,RD Congo,,,x,,,Uzbequistão,rd_congo-vs-uzbequistao,notstarted
 2026-06-27 21h,3,Argélia,,,x,,,Áustria,argelia-vs-austria,notstarted
 2026-06-27 21h,3,Jordânia,,,x,,,Argentina,jordania-vs-argentina,notstarted
-2026-06-28 12h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-06-29 12h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-06-29 16h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-06-29 19h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-06-30 12h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-06-30 17h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-06-30 19h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-01 12h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-01 13h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-01 17h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-02 12h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-02 19h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-02 20h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-03 13h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-03 18h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-03 20h,r32,,,,x,,,,nan-vs-nan,notstarted
-2026-07-04 12h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-04 17h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-05 16h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-05 18h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-06 14h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-06 17h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-07 12h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-07 13h,r16,,,,x,,,,nan-vs-nan,notstarted
-2026-07-09 16h,qf,,,,x,,,,nan-vs-nan,notstarted
-2026-07-10 12h,qf,,,,x,,,,nan-vs-nan,notstarted
-2026-07-11 17h,qf,,,,x,,,,nan-vs-nan,notstarted
-2026-07-11 20h,qf,,,,x,,,,nan-vs-nan,notstarted
-2026-07-14 14h,sf,,,,x,,,,nan-vs-nan,notstarted
-2026-07-15 15h,sf,,,,x,,,,nan-vs-nan,notstarted
-2026-07-18 17h,third,,,,x,,,,nan-vs-nan,notstarted
-2026-07-19 15h,final,,,,x,,,,nan-vs-nan,notstarted
+2026-06-28 12h,r32,,,,x,,,,-vs-,notstarted
+2026-06-29 12h,r32,,,,x,,,,-vs-,notstarted
+2026-06-29 16h,r32,,,,x,,,,-vs-,notstarted
+2026-06-29 19h,r32,,,,x,,,,-vs-,notstarted
+2026-06-30 12h,r32,,,,x,,,,-vs-,notstarted
+2026-06-30 17h,r32,,,,x,,,,-vs-,notstarted
+2026-06-30 19h,r32,,,,x,,,,-vs-,notstarted
+2026-07-01 12h,r32,,,,x,,,,-vs-,notstarted
+2026-07-01 13h,r32,,,,x,,,,-vs-,notstarted
+2026-07-01 17h,r32,,,,x,,,,-vs-,notstarted
+2026-07-02 12h,r32,,,,x,,,,-vs-,notstarted
+2026-07-02 19h,r32,,,,x,,,,-vs-,notstarted
+2026-07-02 20h,r32,,,,x,,,,-vs-,notstarted
+2026-07-03 13h,r32,,,,x,,,,-vs-,notstarted
+2026-07-03 18h,r32,,,,x,,,,-vs-,notstarted
+2026-07-03 20h,r32,,,,x,,,,-vs-,notstarted
+2026-07-04 12h,r16,,,,x,,,,-vs-,notstarted
+2026-07-04 17h,r16,,,,x,,,,-vs-,notstarted
+2026-07-05 16h,r16,,,,x,,,,-vs-,notstarted
+2026-07-05 18h,r16,,,,x,,,,-vs-,notstarted
+2026-07-06 14h,r16,,,,x,,,,-vs-,notstarted
+2026-07-06 17h,r16,,,,x,,,,-vs-,notstarted
+2026-07-07 12h,r16,,,,x,,,,-vs-,notstarted
+2026-07-07 13h,r16,,,,x,,,,-vs-,notstarted
+2026-07-09 16h,qf,,,,x,,,,-vs-,notstarted
+2026-07-10 12h,qf,,,,x,,,,-vs-,notstarted
+2026-07-11 17h,qf,,,,x,,,,-vs-,notstarted
+2026-07-11 20h,qf,,,,x,,,,-vs-,notstarted
+2026-07-14 14h,sf,,,,x,,,,-vs-,notstarted
+2026-07-15 15h,sf,,,,x,,,,-vs-,notstarted
+2026-07-18 17h,third,,,,x,,,,-vs-,notstarted
+2026-07-19 15h,final,,,,x,,,,-vs-,notstarted

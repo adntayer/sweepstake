@@ -999,7 +999,7 @@ def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipCon
 def run_pipeline(config: ChampionshipConfig) -> None:
     """Run the full medallion pipeline."""
     fetch_all_logos(config)
-    build_world_cup_csv()
+    build_world_cup_csv(config.games_file)
     run_raw_to_bronze(config)
     run_bronze_to_silver(config)
     run_silver_to_gold(config)

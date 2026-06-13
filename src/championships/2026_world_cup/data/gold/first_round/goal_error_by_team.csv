@@ -1,0 +1,133 @@
+boleiro,team,role,games,mae,goal_bias,avg_predicted,avg_real
+André Bonito,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+André Bonito,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+André Bonito,Paraguai,away,1,1.0,1.0,2.0,1.0
+André Bonito,Paraguai,total,1,1.0,1.0,2.0,1.0
+André Mendes,Estados Unidos,home,1,4.0,-4.0,0.0,4.0
+André Mendes,Estados Unidos,total,1,4.0,-4.0,0.0,4.0
+André Mendes,Paraguai,away,1,1.0,-1.0,0.0,1.0
+André Mendes,Paraguai,total,1,1.0,-1.0,0.0,1.0
+André Tayer,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+André Tayer,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+André Tayer,Paraguai,away,1,1.0,1.0,2.0,1.0
+André Tayer,Paraguai,total,1,1.0,1.0,2.0,1.0
+Cipriano L.,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Cipriano L.,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Cipriano L.,Paraguai,away,1,0.0,0.0,1.0,1.0
+Cipriano L.,Paraguai,total,1,0.0,0.0,1.0,1.0
+Davi & Cesar,Estados Unidos,home,1,4.0,-4.0,0.0,4.0
+Davi & Cesar,Estados Unidos,total,1,4.0,-4.0,0.0,4.0
+Davi & Cesar,Paraguai,away,1,1.0,1.0,2.0,1.0
+Davi & Cesar,Paraguai,total,1,1.0,1.0,2.0,1.0
+Ditchos,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Ditchos,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Ditchos,Paraguai,away,1,1.0,-1.0,0.0,1.0
+Ditchos,Paraguai,total,1,1.0,-1.0,0.0,1.0
+Felipe Giannoni,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Felipe Giannoni,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Felipe Giannoni,Paraguai,away,1,1.0,1.0,2.0,1.0
+Felipe Giannoni,Paraguai,total,1,1.0,1.0,2.0,1.0
+Francisco Camargo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Francisco Camargo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Francisco Camargo,Paraguai,away,1,1.0,-1.0,0.0,1.0
+Francisco Camargo,Paraguai,total,1,1.0,-1.0,0.0,1.0
+Frederico Soter,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Frederico Soter,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Frederico Soter,Paraguai,away,1,0.0,0.0,1.0,1.0
+Frederico Soter,Paraguai,total,1,0.0,0.0,1.0,1.0
+Gabão,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Gabão,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Gabão,Paraguai,away,1,1.0,-1.0,0.0,1.0
+Gabão,Paraguai,total,1,1.0,-1.0,0.0,1.0
+Giancarlo,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Giancarlo,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Giancarlo,Paraguai,away,1,0.0,0.0,1.0,1.0
+Giancarlo,Paraguai,total,1,0.0,0.0,1.0,1.0
+Guilherne,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Guilherne,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Guilherne,Paraguai,away,1,1.0,1.0,2.0,1.0
+Guilherne,Paraguai,total,1,1.0,1.0,2.0,1.0
+Haroldo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Haroldo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Haroldo,Paraguai,away,1,0.0,0.0,1.0,1.0
+Haroldo,Paraguai,total,1,0.0,0.0,1.0,1.0
+José Ricardo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+José Ricardo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+José Ricardo,Paraguai,away,1,0.0,0.0,1.0,1.0
+José Ricardo,Paraguai,total,1,0.0,0.0,1.0,1.0
+João Henrique,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+João Henrique,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+João Henrique,Paraguai,away,1,0.0,0.0,1.0,1.0
+João Henrique,Paraguai,total,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Kiko Toloza,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Kiko Toloza,Paraguai,away,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Paraguai,total,1,0.0,0.0,1.0,1.0
+LLM GPT,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+LLM GPT,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+LLM GPT,Paraguai,away,1,0.0,0.0,1.0,1.0
+LLM GPT,Paraguai,total,1,0.0,0.0,1.0,1.0
+LLM Gemini,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+LLM Gemini,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+LLM Gemini,Paraguai,away,1,0.0,0.0,1.0,1.0
+LLM Gemini,Paraguai,total,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Leo Fernandes,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Leo Fernandes,Paraguai,away,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Paraguai,total,1,0.0,0.0,1.0,1.0
+Luca Caviglia Del Soldato,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Luca Caviglia Del Soldato,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Luca Caviglia Del Soldato,Paraguai,away,1,0.0,0.0,1.0,1.0
+Luca Caviglia Del Soldato,Paraguai,total,1,0.0,0.0,1.0,1.0
+Lucas Ubertini,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Lucas Ubertini,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Lucas Ubertini,Paraguai,away,1,0.0,0.0,1.0,1.0
+Lucas Ubertini,Paraguai,total,1,0.0,0.0,1.0,1.0
+Luiz Augusto,Estados Unidos,home,1,1.0,-1.0,3.0,4.0
+Luiz Augusto,Estados Unidos,total,1,1.0,-1.0,3.0,4.0
+Luiz Augusto,Paraguai,away,1,0.0,0.0,1.0,1.0
+Luiz Augusto,Paraguai,total,1,0.0,0.0,1.0,1.0
+Marcelo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Marcelo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Marcelo,Paraguai,away,1,0.0,0.0,1.0,1.0
+Marcelo,Paraguai,total,1,0.0,0.0,1.0,1.0
+Marcelo Boix,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Marcelo Boix,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Marcelo Boix,Paraguai,away,1,0.0,0.0,1.0,1.0
+Marcelo Boix,Paraguai,total,1,0.0,0.0,1.0,1.0
+Marco Lavander,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Marco Lavander,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Marco Lavander,Paraguai,away,1,0.0,0.0,1.0,1.0
+Marco Lavander,Paraguai,total,1,0.0,0.0,1.0,1.0
+Mateus Tone,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Mateus Tone,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Mateus Tone,Paraguai,away,1,1.0,1.0,2.0,1.0
+Mateus Tone,Paraguai,total,1,1.0,1.0,2.0,1.0
+Mauricio Saraiva,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Mauricio Saraiva,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Mauricio Saraiva,Paraguai,away,1,1.0,1.0,2.0,1.0
+Mauricio Saraiva,Paraguai,total,1,1.0,1.0,2.0,1.0
+Pedro Tayer,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Pedro Tayer,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Pedro Tayer,Paraguai,away,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Paraguai,total,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+RODRIGO ALBERNAZ,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+RODRIGO ALBERNAZ,Paraguai,away,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Paraguai,total,1,1.0,1.0,2.0,1.0
+Rafael Conte,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Rafael Conte,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Rafael Conte,Paraguai,away,1,0.0,0.0,1.0,1.0
+Rafael Conte,Paraguai,total,1,0.0,0.0,1.0,1.0
+Thales Oliveira,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Thales Oliveira,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Thales Oliveira,Paraguai,away,1,1.0,1.0,2.0,1.0
+Thales Oliveira,Paraguai,total,1,1.0,1.0,2.0,1.0
+Thiago Bahiense,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
+Thiago Bahiense,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Thiago Bahiense,Paraguai,away,1,1.0,-1.0,0.0,1.0
+Thiago Bahiense,Paraguai,total,1,1.0,-1.0,0.0,1.0
+Tiago,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
+Tiago,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Tiago,Paraguai,away,1,0.0,0.0,1.0,1.0
+Tiago,Paraguai,total,1,0.0,0.0,1.0,1.0

@@ -2,7 +2,7 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-11,13h,méxico-vs-áfrica_do_sul,México,África do Sul,2.0,1.0,,,,,,,2 x 1,México,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-11,20h,coréia_do_sul-vs-república_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,,,,,,,1 x 1,empate,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-12,15h,canadá-vs-bósnia,Canadá,Bósnia,1.0,1.0,,,,,,,1 x 1,empate,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,1.0,2.0,,,,,,,1 x 2,Paraguai,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
+2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,1.0,2.0,4.0,1.0,,,,,1 x 2,Paraguai,4 x 1,Estados Unidos,RODRIGO ALBERNAZ,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
 2026-06-13,12h,catar-vs-suíça,Catar,Suíça,1.0,2.0,,,,,,,1 x 2,Suíça,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,,,,,,,2 x 2,empate,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-13,21h,haiti-vs-escócia,Haiti,Escócia,2.0,2.0,,,,,,,2 x 2,empate,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True

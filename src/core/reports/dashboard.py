@@ -754,8 +754,8 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     date = str(last["date"])
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
-    home_logo = _team_logo_tag(config, rev_map.get(home, home), start=config.reports_dir + "/html")
-    away_logo = _team_logo_tag(config, rev_map.get(away, away), start=config.reports_dir + "/html")
+    home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
+    away_logo = _team_logo_tag(rev_map.get(away, away), config, cls="team-logo-sm", start=config.reports_dir + "/html")
 
     return f"""
 <div class="section">
