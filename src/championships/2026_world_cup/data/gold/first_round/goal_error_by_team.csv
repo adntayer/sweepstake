@@ -1,6 +1,6 @@
 boleiro,team,role,games,mae,goal_bias,avg_predicted,avg_real
-André Bonito,Alemanha,home,1,1.0,-1.0,5.0,6.0
-André Bonito,Alemanha,total,1,1.0,-1.0,5.0,6.0
+André Bonito,Alemanha,home,1,2.0,-2.0,5.0,7.0
+André Bonito,Alemanha,total,1,2.0,-2.0,5.0,7.0
 André Bonito,Austrália,home,1,2.0,-2.0,0.0,2.0
 André Bonito,Austrália,total,1,2.0,-2.0,0.0,2.0
 André Bonito,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -35,8 +35,8 @@ André Bonito,Turquia,away,1,2.0,2.0,2.0,0.0
 André Bonito,Turquia,total,1,2.0,2.0,2.0,0.0
 André Bonito,África do Sul,away,1,0.0,0.0,0.0,0.0
 André Bonito,África do Sul,total,1,0.0,0.0,0.0,0.0
-André Mendes,Alemanha,home,1,3.0,-3.0,3.0,6.0
-André Mendes,Alemanha,total,1,3.0,-3.0,3.0,6.0
+André Mendes,Alemanha,home,1,4.0,-4.0,3.0,7.0
+André Mendes,Alemanha,total,1,4.0,-4.0,3.0,7.0
 André Mendes,Austrália,home,1,1.0,-1.0,1.0,2.0
 André Mendes,Austrália,total,1,1.0,-1.0,1.0,2.0
 André Mendes,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -71,8 +71,8 @@ André Mendes,Turquia,away,1,2.0,2.0,2.0,0.0
 André Mendes,Turquia,total,1,2.0,2.0,2.0,0.0
 André Mendes,África do Sul,away,1,1.0,1.0,1.0,0.0
 André Mendes,África do Sul,total,1,1.0,1.0,1.0,0.0
-André Tayer,Alemanha,home,1,1.0,-1.0,5.0,6.0
-André Tayer,Alemanha,total,1,1.0,-1.0,5.0,6.0
+André Tayer,Alemanha,home,1,2.0,-2.0,5.0,7.0
+André Tayer,Alemanha,total,1,2.0,-2.0,5.0,7.0
 André Tayer,Austrália,home,1,1.0,-1.0,1.0,2.0
 André Tayer,Austrália,total,1,1.0,-1.0,1.0,2.0
 André Tayer,Brasil,home,1,2.0,2.0,3.0,1.0
@@ -107,8 +107,8 @@ André Tayer,Turquia,away,1,2.0,2.0,2.0,0.0
 André Tayer,Turquia,total,1,2.0,2.0,2.0,0.0
 André Tayer,África do Sul,away,1,0.0,0.0,0.0,0.0
 André Tayer,África do Sul,total,1,0.0,0.0,0.0,0.0
-Cipriano L.,Alemanha,home,1,1.0,-1.0,5.0,6.0
-Cipriano L.,Alemanha,total,1,1.0,-1.0,5.0,6.0
+Cipriano L.,Alemanha,home,1,2.0,-2.0,5.0,7.0
+Cipriano L.,Alemanha,total,1,2.0,-2.0,5.0,7.0
 Cipriano L.,Austrália,home,1,1.0,-1.0,1.0,2.0
 Cipriano L.,Austrália,total,1,1.0,-1.0,1.0,2.0
 Cipriano L.,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -143,8 +143,8 @@ Cipriano L.,Turquia,away,1,3.0,3.0,3.0,0.0
 Cipriano L.,Turquia,total,1,3.0,3.0,3.0,0.0
 Cipriano L.,África do Sul,away,1,1.0,1.0,1.0,0.0
 Cipriano L.,África do Sul,total,1,1.0,1.0,1.0,0.0
-Davi & Cesar,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Davi & Cesar,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Davi & Cesar,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Davi & Cesar,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Davi & Cesar,Austrália,home,1,0.0,0.0,2.0,2.0
 Davi & Cesar,Austrália,total,1,0.0,0.0,2.0,2.0
 Davi & Cesar,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -179,8 +179,8 @@ Davi & Cesar,Turquia,away,1,2.0,2.0,2.0,0.0
 Davi & Cesar,Turquia,total,1,2.0,2.0,2.0,0.0
 Davi & Cesar,África do Sul,away,1,1.0,1.0,1.0,0.0
 Davi & Cesar,África do Sul,total,1,1.0,1.0,1.0,0.0
-Ditchos,Alemanha,home,1,2.0,-2.0,4.0,6.0
-Ditchos,Alemanha,total,1,2.0,-2.0,4.0,6.0
+Ditchos,Alemanha,home,1,3.0,-3.0,4.0,7.0
+Ditchos,Alemanha,total,1,3.0,-3.0,4.0,7.0
 Ditchos,Austrália,home,1,1.0,-1.0,1.0,2.0
 Ditchos,Austrália,total,1,1.0,-1.0,1.0,2.0
 Ditchos,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -215,8 +215,8 @@ Ditchos,Turquia,away,1,2.0,2.0,2.0,0.0
 Ditchos,Turquia,total,1,2.0,2.0,2.0,0.0
 Ditchos,África do Sul,away,1,0.0,0.0,0.0,0.0
 Ditchos,África do Sul,total,1,0.0,0.0,0.0,0.0
-Felipe Giannoni,Alemanha,home,1,0.0,0.0,6.0,6.0
-Felipe Giannoni,Alemanha,total,1,0.0,0.0,6.0,6.0
+Felipe Giannoni,Alemanha,home,1,1.0,-1.0,6.0,7.0
+Felipe Giannoni,Alemanha,total,1,1.0,-1.0,6.0,7.0
 Felipe Giannoni,Austrália,home,1,2.0,-2.0,0.0,2.0
 Felipe Giannoni,Austrália,total,1,2.0,-2.0,0.0,2.0
 Felipe Giannoni,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -251,8 +251,8 @@ Felipe Giannoni,Turquia,away,1,1.0,1.0,1.0,0.0
 Felipe Giannoni,Turquia,total,1,1.0,1.0,1.0,0.0
 Felipe Giannoni,África do Sul,away,1,1.0,1.0,1.0,0.0
 Felipe Giannoni,África do Sul,total,1,1.0,1.0,1.0,0.0
-Francisco Camargo,Alemanha,home,1,2.0,-2.0,4.0,6.0
-Francisco Camargo,Alemanha,total,1,2.0,-2.0,4.0,6.0
+Francisco Camargo,Alemanha,home,1,3.0,-3.0,4.0,7.0
+Francisco Camargo,Alemanha,total,1,3.0,-3.0,4.0,7.0
 Francisco Camargo,Austrália,home,1,1.0,-1.0,1.0,2.0
 Francisco Camargo,Austrália,total,1,1.0,-1.0,1.0,2.0
 Francisco Camargo,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -287,8 +287,8 @@ Francisco Camargo,Turquia,away,1,2.0,2.0,2.0,0.0
 Francisco Camargo,Turquia,total,1,2.0,2.0,2.0,0.0
 Francisco Camargo,África do Sul,away,1,0.0,0.0,0.0,0.0
 Francisco Camargo,África do Sul,total,1,0.0,0.0,0.0,0.0
-Frederico Soter,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Frederico Soter,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Frederico Soter,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Frederico Soter,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Frederico Soter,Austrália,home,1,1.0,-1.0,1.0,2.0
 Frederico Soter,Austrália,total,1,1.0,-1.0,1.0,2.0
 Frederico Soter,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -323,8 +323,8 @@ Frederico Soter,Turquia,away,1,3.0,3.0,3.0,0.0
 Frederico Soter,Turquia,total,1,3.0,3.0,3.0,0.0
 Frederico Soter,África do Sul,away,1,0.0,0.0,0.0,0.0
 Frederico Soter,África do Sul,total,1,0.0,0.0,0.0,0.0
-Gabão,Alemanha,home,1,2.0,-2.0,4.0,6.0
-Gabão,Alemanha,total,1,2.0,-2.0,4.0,6.0
+Gabão,Alemanha,home,1,3.0,-3.0,4.0,7.0
+Gabão,Alemanha,total,1,3.0,-3.0,4.0,7.0
 Gabão,Austrália,home,1,0.0,0.0,2.0,2.0
 Gabão,Austrália,total,1,0.0,0.0,2.0,2.0
 Gabão,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -359,8 +359,8 @@ Gabão,Turquia,away,1,2.0,2.0,2.0,0.0
 Gabão,Turquia,total,1,2.0,2.0,2.0,0.0
 Gabão,África do Sul,away,1,1.0,1.0,1.0,0.0
 Gabão,África do Sul,total,1,1.0,1.0,1.0,0.0
-Giancarlo,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Giancarlo,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Giancarlo,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Giancarlo,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Giancarlo,Austrália,home,1,1.0,-1.0,1.0,2.0
 Giancarlo,Austrália,total,1,1.0,-1.0,1.0,2.0
 Giancarlo,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -395,8 +395,8 @@ Giancarlo,Turquia,away,1,3.0,3.0,3.0,0.0
 Giancarlo,Turquia,total,1,3.0,3.0,3.0,0.0
 Giancarlo,África do Sul,away,1,1.0,1.0,1.0,0.0
 Giancarlo,África do Sul,total,1,1.0,1.0,1.0,0.0
-Guilherne,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Guilherne,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Guilherne,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Guilherne,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Guilherne,Austrália,home,1,2.0,-2.0,0.0,2.0
 Guilherne,Austrália,total,1,2.0,-2.0,0.0,2.0
 Guilherne,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -431,8 +431,8 @@ Guilherne,Turquia,away,1,1.0,1.0,1.0,0.0
 Guilherne,Turquia,total,1,1.0,1.0,1.0,0.0
 Guilherne,África do Sul,away,1,1.0,1.0,1.0,0.0
 Guilherne,África do Sul,total,1,1.0,1.0,1.0,0.0
-Haroldo,Alemanha,home,1,0.0,0.0,6.0,6.0
-Haroldo,Alemanha,total,1,0.0,0.0,6.0,6.0
+Haroldo,Alemanha,home,1,1.0,-1.0,6.0,7.0
+Haroldo,Alemanha,total,1,1.0,-1.0,6.0,7.0
 Haroldo,Austrália,home,1,1.0,-1.0,1.0,2.0
 Haroldo,Austrália,total,1,1.0,-1.0,1.0,2.0
 Haroldo,Brasil,home,1,2.0,2.0,3.0,1.0
@@ -467,8 +467,8 @@ Haroldo,Turquia,away,1,2.0,2.0,2.0,0.0
 Haroldo,Turquia,total,1,2.0,2.0,2.0,0.0
 Haroldo,África do Sul,away,1,1.0,1.0,1.0,0.0
 Haroldo,África do Sul,total,1,1.0,1.0,1.0,0.0
-José Ricardo,Alemanha,home,1,3.0,-3.0,3.0,6.0
-José Ricardo,Alemanha,total,1,3.0,-3.0,3.0,6.0
+José Ricardo,Alemanha,home,1,4.0,-4.0,3.0,7.0
+José Ricardo,Alemanha,total,1,4.0,-4.0,3.0,7.0
 José Ricardo,Austrália,home,1,1.0,-1.0,1.0,2.0
 José Ricardo,Austrália,total,1,1.0,-1.0,1.0,2.0
 José Ricardo,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -503,8 +503,8 @@ José Ricardo,Turquia,away,1,1.0,1.0,1.0,0.0
 José Ricardo,Turquia,total,1,1.0,1.0,1.0,0.0
 José Ricardo,África do Sul,away,1,1.0,1.0,1.0,0.0
 José Ricardo,África do Sul,total,1,1.0,1.0,1.0,0.0
-João Henrique,Alemanha,home,1,1.0,-1.0,5.0,6.0
-João Henrique,Alemanha,total,1,1.0,-1.0,5.0,6.0
+João Henrique,Alemanha,home,1,2.0,-2.0,5.0,7.0
+João Henrique,Alemanha,total,1,2.0,-2.0,5.0,7.0
 João Henrique,Austrália,home,1,1.0,-1.0,1.0,2.0
 João Henrique,Austrália,total,1,1.0,-1.0,1.0,2.0
 João Henrique,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -539,8 +539,8 @@ João Henrique,Turquia,away,1,2.0,2.0,2.0,0.0
 João Henrique,Turquia,total,1,2.0,2.0,2.0,0.0
 João Henrique,África do Sul,away,1,0.0,0.0,0.0,0.0
 João Henrique,África do Sul,total,1,0.0,0.0,0.0,0.0
-Kiko Toloza,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Kiko Toloza,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Kiko Toloza,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Kiko Toloza,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Kiko Toloza,Austrália,home,1,1.0,-1.0,1.0,2.0
 Kiko Toloza,Austrália,total,1,1.0,-1.0,1.0,2.0
 Kiko Toloza,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -575,8 +575,8 @@ Kiko Toloza,Turquia,away,1,2.0,2.0,2.0,0.0
 Kiko Toloza,Turquia,total,1,2.0,2.0,2.0,0.0
 Kiko Toloza,África do Sul,away,1,0.0,0.0,0.0,0.0
 Kiko Toloza,África do Sul,total,1,0.0,0.0,0.0,0.0
-LLM GPT,Alemanha,home,1,2.0,-2.0,4.0,6.0
-LLM GPT,Alemanha,total,1,2.0,-2.0,4.0,6.0
+LLM GPT,Alemanha,home,1,3.0,-3.0,4.0,7.0
+LLM GPT,Alemanha,total,1,3.0,-3.0,4.0,7.0
 LLM GPT,Austrália,home,1,1.0,-1.0,1.0,2.0
 LLM GPT,Austrália,total,1,1.0,-1.0,1.0,2.0
 LLM GPT,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -611,8 +611,8 @@ LLM GPT,Turquia,away,1,2.0,2.0,2.0,0.0
 LLM GPT,Turquia,total,1,2.0,2.0,2.0,0.0
 LLM GPT,África do Sul,away,1,0.0,0.0,0.0,0.0
 LLM GPT,África do Sul,total,1,0.0,0.0,0.0,0.0
-LLM Gemini,Alemanha,home,1,2.0,-2.0,4.0,6.0
-LLM Gemini,Alemanha,total,1,2.0,-2.0,4.0,6.0
+LLM Gemini,Alemanha,home,1,3.0,-3.0,4.0,7.0
+LLM Gemini,Alemanha,total,1,3.0,-3.0,4.0,7.0
 LLM Gemini,Austrália,home,1,1.0,-1.0,1.0,2.0
 LLM Gemini,Austrália,total,1,1.0,-1.0,1.0,2.0
 LLM Gemini,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -647,8 +647,8 @@ LLM Gemini,Turquia,away,1,1.0,1.0,1.0,0.0
 LLM Gemini,Turquia,total,1,1.0,1.0,1.0,0.0
 LLM Gemini,África do Sul,away,1,1.0,1.0,1.0,0.0
 LLM Gemini,África do Sul,total,1,1.0,1.0,1.0,0.0
-Leo Fernandes,Alemanha,home,1,0.0,0.0,6.0,6.0
-Leo Fernandes,Alemanha,total,1,0.0,0.0,6.0,6.0
+Leo Fernandes,Alemanha,home,1,1.0,-1.0,6.0,7.0
+Leo Fernandes,Alemanha,total,1,1.0,-1.0,6.0,7.0
 Leo Fernandes,Austrália,home,1,2.0,-2.0,0.0,2.0
 Leo Fernandes,Austrália,total,1,2.0,-2.0,0.0,2.0
 Leo Fernandes,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -683,8 +683,8 @@ Leo Fernandes,Turquia,away,1,2.0,2.0,2.0,0.0
 Leo Fernandes,Turquia,total,1,2.0,2.0,2.0,0.0
 Leo Fernandes,África do Sul,away,1,0.0,0.0,0.0,0.0
 Leo Fernandes,África do Sul,total,1,0.0,0.0,0.0,0.0
-Luca Caviglia Del Soldato,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Luca Caviglia Del Soldato,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Luca Caviglia Del Soldato,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Luca Caviglia Del Soldato,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Luca Caviglia Del Soldato,Austrália,home,1,1.0,-1.0,1.0,2.0
 Luca Caviglia Del Soldato,Austrália,total,1,1.0,-1.0,1.0,2.0
 Luca Caviglia Del Soldato,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -719,8 +719,8 @@ Luca Caviglia Del Soldato,Turquia,away,1,2.0,2.0,2.0,0.0
 Luca Caviglia Del Soldato,Turquia,total,1,2.0,2.0,2.0,0.0
 Luca Caviglia Del Soldato,África do Sul,away,1,1.0,1.0,1.0,0.0
 Luca Caviglia Del Soldato,África do Sul,total,1,1.0,1.0,1.0,0.0
-Lucas Ubertini,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Lucas Ubertini,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Lucas Ubertini,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Lucas Ubertini,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Lucas Ubertini,Austrália,home,1,1.0,-1.0,1.0,2.0
 Lucas Ubertini,Austrália,total,1,1.0,-1.0,1.0,2.0
 Lucas Ubertini,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -755,8 +755,8 @@ Lucas Ubertini,Turquia,away,1,2.0,2.0,2.0,0.0
 Lucas Ubertini,Turquia,total,1,2.0,2.0,2.0,0.0
 Lucas Ubertini,África do Sul,away,1,0.0,0.0,0.0,0.0
 Lucas Ubertini,África do Sul,total,1,0.0,0.0,0.0,0.0
-Luiz Augusto,Alemanha,home,1,2.0,-2.0,4.0,6.0
-Luiz Augusto,Alemanha,total,1,2.0,-2.0,4.0,6.0
+Luiz Augusto,Alemanha,home,1,3.0,-3.0,4.0,7.0
+Luiz Augusto,Alemanha,total,1,3.0,-3.0,4.0,7.0
 Luiz Augusto,Austrália,home,1,0.0,0.0,2.0,2.0
 Luiz Augusto,Austrália,total,1,0.0,0.0,2.0,2.0
 Luiz Augusto,Brasil,home,1,2.0,2.0,3.0,1.0
@@ -791,8 +791,8 @@ Luiz Augusto,Turquia,away,1,0.0,0.0,0.0,0.0
 Luiz Augusto,Turquia,total,1,0.0,0.0,0.0,0.0
 Luiz Augusto,África do Sul,away,1,1.0,1.0,1.0,0.0
 Luiz Augusto,África do Sul,total,1,1.0,1.0,1.0,0.0
-Marcelo,Alemanha,home,1,2.0,-2.0,4.0,6.0
-Marcelo,Alemanha,total,1,2.0,-2.0,4.0,6.0
+Marcelo,Alemanha,home,1,3.0,-3.0,4.0,7.0
+Marcelo,Alemanha,total,1,3.0,-3.0,4.0,7.0
 Marcelo,Austrália,home,1,2.0,-2.0,0.0,2.0
 Marcelo,Austrália,total,1,2.0,-2.0,0.0,2.0
 Marcelo,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -827,8 +827,8 @@ Marcelo,Turquia,away,1,2.0,2.0,2.0,0.0
 Marcelo,Turquia,total,1,2.0,2.0,2.0,0.0
 Marcelo,África do Sul,away,1,0.0,0.0,0.0,0.0
 Marcelo,África do Sul,total,1,0.0,0.0,0.0,0.0
-Marcelo Boix,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Marcelo Boix,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Marcelo Boix,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Marcelo Boix,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Marcelo Boix,Austrália,home,1,1.0,-1.0,1.0,2.0
 Marcelo Boix,Austrália,total,1,1.0,-1.0,1.0,2.0
 Marcelo Boix,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -863,8 +863,8 @@ Marcelo Boix,Turquia,away,1,2.0,2.0,2.0,0.0
 Marcelo Boix,Turquia,total,1,2.0,2.0,2.0,0.0
 Marcelo Boix,África do Sul,away,1,0.0,0.0,0.0,0.0
 Marcelo Boix,África do Sul,total,1,0.0,0.0,0.0,0.0
-Marco Lavander,Alemanha,home,1,3.0,-3.0,3.0,6.0
-Marco Lavander,Alemanha,total,1,3.0,-3.0,3.0,6.0
+Marco Lavander,Alemanha,home,1,4.0,-4.0,3.0,7.0
+Marco Lavander,Alemanha,total,1,4.0,-4.0,3.0,7.0
 Marco Lavander,Austrália,home,1,2.0,-2.0,0.0,2.0
 Marco Lavander,Austrália,total,1,2.0,-2.0,0.0,2.0
 Marco Lavander,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -899,8 +899,8 @@ Marco Lavander,Turquia,away,1,2.0,2.0,2.0,0.0
 Marco Lavander,Turquia,total,1,2.0,2.0,2.0,0.0
 Marco Lavander,África do Sul,away,1,0.0,0.0,0.0,0.0
 Marco Lavander,África do Sul,total,1,0.0,0.0,0.0,0.0
-Mateus Tone,Alemanha,home,1,1.0,-1.0,5.0,6.0
-Mateus Tone,Alemanha,total,1,1.0,-1.0,5.0,6.0
+Mateus Tone,Alemanha,home,1,2.0,-2.0,5.0,7.0
+Mateus Tone,Alemanha,total,1,2.0,-2.0,5.0,7.0
 Mateus Tone,Austrália,home,1,1.0,-1.0,1.0,2.0
 Mateus Tone,Austrália,total,1,1.0,-1.0,1.0,2.0
 Mateus Tone,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -935,8 +935,8 @@ Mateus Tone,Turquia,away,1,2.0,2.0,2.0,0.0
 Mateus Tone,Turquia,total,1,2.0,2.0,2.0,0.0
 Mateus Tone,África do Sul,away,1,0.0,0.0,0.0,0.0
 Mateus Tone,África do Sul,total,1,0.0,0.0,0.0,0.0
-Mauricio Saraiva,Alemanha,home,1,1.0,-1.0,5.0,6.0
-Mauricio Saraiva,Alemanha,total,1,1.0,-1.0,5.0,6.0
+Mauricio Saraiva,Alemanha,home,1,2.0,-2.0,5.0,7.0
+Mauricio Saraiva,Alemanha,total,1,2.0,-2.0,5.0,7.0
 Mauricio Saraiva,Austrália,home,1,1.0,-1.0,1.0,2.0
 Mauricio Saraiva,Austrália,total,1,1.0,-1.0,1.0,2.0
 Mauricio Saraiva,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -971,8 +971,8 @@ Mauricio Saraiva,Turquia,away,1,2.0,2.0,2.0,0.0
 Mauricio Saraiva,Turquia,total,1,2.0,2.0,2.0,0.0
 Mauricio Saraiva,África do Sul,away,1,1.0,1.0,1.0,0.0
 Mauricio Saraiva,África do Sul,total,1,1.0,1.0,1.0,0.0
-Pedro Tayer,Alemanha,home,1,2.0,-2.0,4.0,6.0
-Pedro Tayer,Alemanha,total,1,2.0,-2.0,4.0,6.0
+Pedro Tayer,Alemanha,home,1,3.0,-3.0,4.0,7.0
+Pedro Tayer,Alemanha,total,1,3.0,-3.0,4.0,7.0
 Pedro Tayer,Austrália,home,1,2.0,-2.0,0.0,2.0
 Pedro Tayer,Austrália,total,1,2.0,-2.0,0.0,2.0
 Pedro Tayer,Brasil,home,1,2.0,2.0,3.0,1.0
@@ -1007,8 +1007,8 @@ Pedro Tayer,Turquia,away,1,2.0,2.0,2.0,0.0
 Pedro Tayer,Turquia,total,1,2.0,2.0,2.0,0.0
 Pedro Tayer,África do Sul,away,1,0.0,0.0,0.0,0.0
 Pedro Tayer,África do Sul,total,1,0.0,0.0,0.0,0.0
-RODRIGO ALBERNAZ,Alemanha,home,1,3.0,-3.0,3.0,6.0
-RODRIGO ALBERNAZ,Alemanha,total,1,3.0,-3.0,3.0,6.0
+RODRIGO ALBERNAZ,Alemanha,home,1,4.0,-4.0,3.0,7.0
+RODRIGO ALBERNAZ,Alemanha,total,1,4.0,-4.0,3.0,7.0
 RODRIGO ALBERNAZ,Austrália,home,1,1.0,-1.0,1.0,2.0
 RODRIGO ALBERNAZ,Austrália,total,1,1.0,-1.0,1.0,2.0
 RODRIGO ALBERNAZ,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -1043,8 +1043,8 @@ RODRIGO ALBERNAZ,Turquia,away,1,2.0,2.0,2.0,0.0
 RODRIGO ALBERNAZ,Turquia,total,1,2.0,2.0,2.0,0.0
 RODRIGO ALBERNAZ,África do Sul,away,1,1.0,1.0,1.0,0.0
 RODRIGO ALBERNAZ,África do Sul,total,1,1.0,1.0,1.0,0.0
-Rafael Conte,Alemanha,home,1,1.0,-1.0,5.0,6.0
-Rafael Conte,Alemanha,total,1,1.0,-1.0,5.0,6.0
+Rafael Conte,Alemanha,home,1,2.0,-2.0,5.0,7.0
+Rafael Conte,Alemanha,total,1,2.0,-2.0,5.0,7.0
 Rafael Conte,Austrália,home,1,2.0,-2.0,0.0,2.0
 Rafael Conte,Austrália,total,1,2.0,-2.0,0.0,2.0
 Rafael Conte,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -1079,8 +1079,8 @@ Rafael Conte,Turquia,away,1,2.0,2.0,2.0,0.0
 Rafael Conte,Turquia,total,1,2.0,2.0,2.0,0.0
 Rafael Conte,África do Sul,away,1,0.0,0.0,0.0,0.0
 Rafael Conte,África do Sul,total,1,0.0,0.0,0.0,0.0
-Thales Oliveira,Alemanha,home,1,1.0,-1.0,5.0,6.0
-Thales Oliveira,Alemanha,total,1,1.0,-1.0,5.0,6.0
+Thales Oliveira,Alemanha,home,1,2.0,-2.0,5.0,7.0
+Thales Oliveira,Alemanha,total,1,2.0,-2.0,5.0,7.0
 Thales Oliveira,Austrália,home,1,1.0,-1.0,1.0,2.0
 Thales Oliveira,Austrália,total,1,1.0,-1.0,1.0,2.0
 Thales Oliveira,Brasil,home,1,1.0,1.0,2.0,1.0
@@ -1115,8 +1115,8 @@ Thales Oliveira,Turquia,away,1,3.0,3.0,3.0,0.0
 Thales Oliveira,Turquia,total,1,3.0,3.0,3.0,0.0
 Thales Oliveira,África do Sul,away,1,1.0,1.0,1.0,0.0
 Thales Oliveira,África do Sul,total,1,1.0,1.0,1.0,0.0
-Thiago Bahiense,Alemanha,home,1,1.0,-1.0,5.0,6.0
-Thiago Bahiense,Alemanha,total,1,1.0,-1.0,5.0,6.0
+Thiago Bahiense,Alemanha,home,1,2.0,-2.0,5.0,7.0
+Thiago Bahiense,Alemanha,total,1,2.0,-2.0,5.0,7.0
 Thiago Bahiense,Austrália,home,1,2.0,-2.0,0.0,2.0
 Thiago Bahiense,Austrália,total,1,2.0,-2.0,0.0,2.0
 Thiago Bahiense,Brasil,home,1,0.0,0.0,1.0,1.0
@@ -1151,8 +1151,8 @@ Thiago Bahiense,Turquia,away,1,2.0,2.0,2.0,0.0
 Thiago Bahiense,Turquia,total,1,2.0,2.0,2.0,0.0
 Thiago Bahiense,África do Sul,away,1,0.0,0.0,0.0,0.0
 Thiago Bahiense,África do Sul,total,1,0.0,0.0,0.0,0.0
-Tiago,Alemanha,home,1,1.0,-1.0,5.0,6.0
-Tiago,Alemanha,total,1,1.0,-1.0,5.0,6.0
+Tiago,Alemanha,home,1,2.0,-2.0,5.0,7.0
+Tiago,Alemanha,total,1,2.0,-2.0,5.0,7.0
 Tiago,Austrália,home,1,1.0,-1.0,1.0,2.0
 Tiago,Austrália,total,1,1.0,-1.0,1.0,2.0
 Tiago,Brasil,home,1,1.0,1.0,2.0,1.0

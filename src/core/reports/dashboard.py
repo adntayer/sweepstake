@@ -785,6 +785,24 @@ def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
         hg = int(row["home_goals"]) if pd.notna(row.get("home_goals")) else 0
         ag = int(row["away_goals"]) if pd.notna(row.get("away_goals")) else 0
         date = str(row["date"])
+        match_slug = str(row.get("match", ""))
+        round_val = row.get("round", "")
+
+        # Determine phase directory for the match HTML link
+        try:
+            int(round_val)
+            phase_dir = config.group_phase_label
+        except (ValueError, TypeError):
+            phase_dir = str(round_val) if round_val else config.group_phase_label
+
+        # Parse date_part and hour_part from "YYYY-MM-DD HHh" format
+        # hour keeps the "h" suffix to match the gold data hour format (e.g. "13h")
+        date_parts = date.split(" ")
+        date_part = date_parts[0] if date_parts else date
+        hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
+
+        # Link to the per-match page
+        game_href = f"jogos/{phase_dir}/{date_part}_{hour_part}_{match_slug}.html"
 
         home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
         away_logo = _team_logo_tag(rev_map.get(away, away), config, cls="team-logo-sm", start=config.reports_dir + "/html")
@@ -798,7 +816,8 @@ def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
             <div class="team">{away_logo} {away}</div>
         </div>
         <div class="date">{date}</div>
-        <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);padding-bottom:0.5rem;">atualizado \u00e0s {now_str}</div>
+        <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);padding-bottom:0.3rem;">atualizado \u00e0s {now_str}</div>
+        <div style="text-align:center;"><a href="{game_href}" style="font-size:0.75rem;font-weight:600;color:var(--accent);text-decoration:none;">\U0001f4fa ver jogo</a></div>
     </div>
 """
     return f"""

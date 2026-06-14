@@ -7,7 +7,7 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,André Mendes,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
 2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,André Mendes,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
 2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,André Mendes,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,6.0,1.0,,,,,3 x 0,Alemanha,6 x 1,Alemanha,André Mendes,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,7.0,1.0,,,,,3 x 0,Alemanha,7 x 1,Alemanha,André Mendes,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,1.0,1.0,,,,,,,1 x 1,empate,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-14,19h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,2.0,3.0,,,,,,,2 x 3,Equador,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-14,20h,suecia-vs-tunisia,Suécia,Tunísia,2.0,1.0,,,,,,,2 x 1,Suécia,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True

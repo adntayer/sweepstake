@@ -127,7 +127,7 @@ def fetch_all_logos(config: ChampionshipConfig, force: bool = False) -> None:
     if not to_fetch:
         teams = len(config.team_name_mapping)
         print_colored(f"All {teams} team logos already cached. Use --force to re-download.", "green")
-        copy_logos_to_html('src/championships/2026_world_cup/logos', 'src/championships/2026_world_cup/reports/html/logos' )
+        copy_logos_to_html(logos_dir(config), os.path.join(config.reports_dir, "html", "logos"))
         return
 
     # --- Phase 1: use YAML logo URLs directly ---
@@ -209,7 +209,7 @@ def fetch_all_logos(config: ChampionshipConfig, force: bool = False) -> None:
 
     total = len(config.team_name_mapping)
     print_colored(f"Processed logos for {len(from_config) + found}/{total} teams", "green")
-    copy_logos_to_html('src/championships/2026_world_cup/logos', 'src/championships/2026_world_cup/reports/html/logos' )
+    copy_logos_to_html(logos_dir(config), os.path.join(config.reports_dir, "html", "logos"))
 
 def logo_img_html(team_pt: str, team_en: str, config: ChampionshipConfig) -> str:
     """Return an <img> tag HTML for a team's logo, or empty string if not cached."""
@@ -258,20 +258,18 @@ def _team_logo_tag(team_name: str, config: ChampionshipConfig, cls: str, start: 
 
 def copy_logos_to_html(logo_dir_source: str, html_dir_dest: str) -> None:
     """
-    Copies all PNG logos from the source directory (e.g., src/championships/2026_world_cup/logos)
-    to the target HTML directory (e.g., src/core/reports/html).
+    Syncs all PNG logos from the source directory to the target HTML directory.
 
-    This is a temporary fix to ensure build assets are available in the static HTML output.
+    Removes any stale PNG files in the destination that no longer exist in the source,
+    then copies over all current source files. This ensures no orphaned old logos remain.
     """
-    print_colored("--- Starting Logo Copy to HTML Directory ---", "sand")
+    print_colored("--- Syncing Logos to HTML Directory ---", "sand")
 
     # Ensure destination directory exists
     os.makedirs(html_dir_dest, exist_ok=True)
-    print_colored(f"Target directory ensured: {html_dir_dest}", "sand")
 
     try:
-        # Lista todos os arquivos do diretório e filtra apenas os .png
-        list_of_files = [f for f in os.listdir(logo_dir_source) if f.lower().endswith('.png')]
+        source_files = set(f for f in os.listdir(logo_dir_source) if f.lower().endswith('.png'))
     except FileNotFoundError:
         print_colored(f"[CRITICAL ERROR] Source directory not found: {logo_dir_source}", "red")
         return
@@ -279,27 +277,28 @@ def copy_logos_to_html(logo_dir_source: str, html_dir_dest: str) -> None:
         print_colored(f"[CRITICAL ERROR] Failed to read source directory: {e}", "red")
         return
 
-    total_files = len(list_of_files)
-    copied_count = 0
+    # Remove stale PNG files from destination that are no longer in source
+    try:
+        for f in os.listdir(html_dir_dest):
+            if f.lower().endswith('.png') and f not in source_files:
+                os.remove(_norm(os.path.join(html_dir_dest, f)))
+                print_colored(f"  Removed stale: {f}", "yellow")
+    except Exception as e:
+        print_colored(f"  [WARN] Failed to clean destination: {e}", "yellow")
 
-    for filename in list_of_files:
+    # Copy all source files to destination
+    copied_count = 0
+    for filename in sorted(source_files):
         src_path = _norm(os.path.join(logo_dir_source, filename))
         dest_path = _norm(os.path.join(html_dir_dest, filename))
 
         try:
-            # Read the file content
             with open(src_path, "rb") as f_in:
                 content = f_in.read()
-
-            # Write the file content to the destination
             with open(dest_path, "wb") as f_out:
                 f_out.write(content)
-
-            print_colored(f"  [SUCCESS] Copied {filename}", "green")
             copied_count += 1
-        except FileNotFoundError:
-            print_colored(f"  [ERROR] Source file not found: {filename}", "red")
         except Exception as e:
             print_colored(f"  [ERROR] Failed to copy {filename}: {e}", "red")
 
-    print_colored(f"--- Logo Copy Finished. Copied {copied_count}/{total_files} files. ---", "sand")
+    print_colored(f"--- Logo Sync Finished. {copied_count}/{len(source_files)} files copied. ---", "sand")
