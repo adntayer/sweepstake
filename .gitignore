@@ -195,3 +195,11 @@ cython_debug/
 
 src/championships/*/reports/**
 !src/championships/*/reports/.gitkeep
+
+# bronze/silver/gold são dados gerados pelo pipeline (derivados dos Excels em data/raw/)
+src/championships/*/data/bronze/**
+!src/championships/*/data/bronze/**/.gitkeep
+src/championships/*/data/silver/**
+!src/championships/*/data/silver/**/.gitkeep
+src/championships/*/data/gold/**
+!src/championships/*/data/gold/**/.gitkeep

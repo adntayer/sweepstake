@@ -5,8 +5,8 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-12 18h,1,Estados Unidos,,4,x,1,,Paraguai,estados_unidos-vs-paraguai,finished
 2026-06-13 12h,1,Catar,,1,x,1,,Suíça,catar-vs-suica,finished
 2026-06-13 18h,1,Brasil,,1,x,1,,Marrocos,brasil-vs-marrocos,finished
-2026-06-13 21h,1,Haiti,,0,x,1,,Escócia,haiti-vs-escocia,finished
 2026-06-13 21h,1,Austrália,,2,x,0,,Turquia,australia-vs-turquia,finished
+2026-06-13 21h,1,Haiti,,0,x,1,,Escócia,haiti-vs-escocia,finished
 2026-06-14 12h,1,Alemanha,,7,x,1,,Curaçao,alemanha-vs-curacao,finished
 2026-06-14 15h,1,Holanda,,0,x,0,,Japão,holanda-vs-japao,live
 2026-06-14 19h,1,Costa do Marfim,,,x,,,Equador,costa_do_marfim-vs-equador,notstarted
@@ -23,8 +23,8 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-17 15h,1,Inglaterra,,,x,,,Croácia,inglaterra-vs-croacia,notstarted
 2026-06-17 19h,1,Gana,,,x,,,Panamá,gana-vs-panama,notstarted
 2026-06-17 20h,1,Uzbequistão,,,x,,,Colômbia,uzbequistao-vs-colombia,notstarted
-2026-06-18 12h,2,República Tcheca,,,x,,,África do Sul,republica_tcheca-vs-africa_do_sul,notstarted
 2026-06-18 12h,2,Suíça,,,x,,,Bósnia,suica-vs-bosnia,notstarted
+2026-06-18 12h,2,República Tcheca,,,x,,,África do Sul,republica_tcheca-vs-africa_do_sul,notstarted
 2026-06-18 15h,2,Canadá,,,x,,,Catar,canada-vs-catar,notstarted
 2026-06-18 19h,2,México,,,x,,,Coréia do Sul,mexico-vs-coreia_do_sul,notstarted
 2026-06-19 12h,2,Estados Unidos,,,x,,,Austrália,estados_unidos-vs-australia,notstarted
@@ -35,24 +35,24 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-20 16h,2,Alemanha,,,x,,,Costa do Marfim,alemanha-vs-costa_do_marfim,notstarted
 2026-06-20 19h,2,Equador,,,x,,,Curaçao,equador-vs-curacao,notstarted
 2026-06-20 22h,2,Tunísia,,,x,,,Japão,tunisia-vs-japao,notstarted
-2026-06-21 12h,2,Espanha,,,x,,,Arábia Saudita,espanha-vs-arabia_saudita,notstarted
 2026-06-21 12h,2,Bélgica,,,x,,,Irã,belgica-vs-ira,notstarted
-2026-06-21 18h,2,Nova Zelândia,,,x,,,Egito,nova_zelandia-vs-egito,notstarted
+2026-06-21 12h,2,Espanha,,,x,,,Arábia Saudita,espanha-vs-arabia_saudita,notstarted
 2026-06-21 18h,2,Uruguai,,,x,,,Cabo Verde,uruguai-vs-cabo_verde,notstarted
+2026-06-21 18h,2,Nova Zelândia,,,x,,,Egito,nova_zelandia-vs-egito,notstarted
 2026-06-22 12h,2,Argentina,,,x,,,Áustria,argentina-vs-austria,notstarted
 2026-06-22 17h,2,França,,,x,,,Iraque,franca-vs-iraque,notstarted
-2026-06-22 20h,2,Noruega,,,x,,,Senegal,noruega-vs-senegal,notstarted
 2026-06-22 20h,2,Jordânia,,,x,,,Argélia,jordania-vs-argelia,notstarted
+2026-06-22 20h,2,Noruega,,,x,,,Senegal,noruega-vs-senegal,notstarted
 2026-06-23 12h,2,Portugal,,,x,,,Uzbequistão,portugal-vs-uzbequistao,notstarted
 2026-06-23 16h,2,Inglaterra,,,x,,,Gana,inglaterra-vs-gana,notstarted
 2026-06-23 19h,2,Panamá,,,x,,,Croácia,panama-vs-croacia,notstarted
 2026-06-23 20h,2,Colômbia,,,x,,,RD Congo,colombia-vs-rd_congo,notstarted
-2026-06-24 12h,3,Suíça,,,x,,,Canadá,suica-vs-canada,notstarted
 2026-06-24 12h,3,Bósnia,,,x,,,Catar,bosnia-vs-catar,notstarted
-2026-06-24 18h,3,Escócia,,,x,,,Brasil,escocia-vs-brasil,notstarted
+2026-06-24 12h,3,Suíça,,,x,,,Canadá,suica-vs-canada,notstarted
 2026-06-24 18h,3,Marrocos,,,x,,,Haiti,marrocos-vs-haiti,notstarted
-2026-06-24 19h,3,República Tcheca,,,x,,,México,republica_tcheca-vs-mexico,notstarted
+2026-06-24 18h,3,Escócia,,,x,,,Brasil,escocia-vs-brasil,notstarted
 2026-06-24 19h,3,África do Sul,,,x,,,Coréia do Sul,africa_do_sul-vs-coreia_do_sul,notstarted
+2026-06-24 19h,3,República Tcheca,,,x,,,México,republica_tcheca-vs-mexico,notstarted
 2026-06-25 16h,3,Curaçao,,,x,,,Costa do Marfim,curacao-vs-costa_do_marfim,notstarted
 2026-06-25 16h,3,Equador,,,x,,,Alemanha,equador-vs-alemanha,notstarted
 2026-06-25 18h,3,Japão,,,x,,,Suécia,japao-vs-suecia,notstarted
@@ -63,12 +63,12 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-26 15h,3,Noruega,,,x,,,França,noruega-vs-franca,notstarted
 2026-06-26 18h,3,Uruguai,,,x,,,Espanha,uruguai-vs-espanha,notstarted
 2026-06-26 19h,3,Cabo Verde,,,x,,,Arábia Saudita,cabo_verde-vs-arabia_saudita,notstarted
-2026-06-26 20h,3,Nova Zelândia,,,x,,,Bélgica,nova_zelandia-vs-belgica,notstarted
 2026-06-26 20h,3,Egito,,,x,,,Irã,egito-vs-ira,notstarted
-2026-06-27 17h,3,Panamá,,,x,,,Inglaterra,panama-vs-inglaterra,notstarted
+2026-06-26 20h,3,Nova Zelândia,,,x,,,Bélgica,nova_zelandia-vs-belgica,notstarted
 2026-06-27 17h,3,Croácia,,,x,,,Gana,croacia-vs-gana,notstarted
-2026-06-27 19h,3,Colômbia,,,x,,,Portugal,colombia-vs-portugal,notstarted
+2026-06-27 17h,3,Panamá,,,x,,,Inglaterra,panama-vs-inglaterra,notstarted
 2026-06-27 19h,3,RD Congo,,,x,,,Uzbequistão,rd_congo-vs-uzbequistao,notstarted
+2026-06-27 19h,3,Colômbia,,,x,,,Portugal,colombia-vs-portugal,notstarted
 2026-06-27 21h,3,Argélia,,,x,,,Áustria,argelia-vs-austria,notstarted
 2026-06-27 21h,3,Jordânia,,,x,,,Argentina,jordania-vs-argentina,notstarted
 2026-06-28 12h,r32,,,,x,,,,-vs-,notstarted

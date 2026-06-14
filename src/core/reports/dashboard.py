@@ -936,6 +936,23 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
         except Exception:
             pass
 
+    # Load results for score display
+    results_map: dict[str, tuple[str, str]] = {}
+    results_path = config.results_file
+    if os.path.exists(results_path):
+        try:
+            df_res = pd.read_csv(results_path, sep=",")
+            for _, r in df_res.iterrows():
+                ms = str(r.get("match", ""))
+                hg = r.get("home_goals", "")
+                ag = r.get("away_goals", "")
+                if ms:
+                    hg_str = str(int(float(hg))) if pd.notna(hg) and str(hg).strip() else ""
+                    ag_str = str(int(float(ag))) if pd.notna(ag) and str(ag).strip() else ""
+                    results_map[ms] = (hg_str, ag_str)
+        except Exception:
+            pass
+
     def _team_part(fp: str, side: str) -> tuple[str, str, str]:
         slug = _slug_from_filename(fp)
         parts = slug.split("-vs-")
@@ -948,7 +965,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
         slug_code = config.team_slugs.get(en_name, "")
         return (pt_name, logo, slug_code)
 
-    def _build_compact_grid(file_list: list[str]) -> str:
+    def _build_compact_grid(file_list: list[str], results_map: dict[str, tuple[str, str]] | None = None) -> str:
         out = '<div style="display:flex;flex-direction:column;gap:0.25rem;">'
         for fp in file_list:
             href = fp.replace("\\", "/").replace(
@@ -970,7 +987,13 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
             zebra_icon = upset_icons.get(slug, "")
             home_name, home_logo, home_slug = _team_part(fp, "home")
             away_name, away_logo, away_slug = _team_part(fp, "away")
-            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug} vs {away_logo}{away_slug}</span> <span style="display:flex;align-items:center;gap:0.2rem;">{zebra_icon}{badge}</span></a>\n'
+            # Look up score from results_map
+            score_str = ""
+            if results_map:
+                hg, ag = results_map.get(slug, ("", ""))
+                if hg and ag:
+                    score_str = f' <span style="font-weight:700;color:var(--accent);">{hg}</span> vs <span style="font-weight:700;color:var(--accent);">{ag}</span> '
+            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug}{score_str or f" vs "}{away_logo}{away_slug}</span> <span style="display:flex;align-items:center;gap:0.2rem;">{zebra_icon}{badge}</span></a>\n'
         out += "</div>"
         return out if file_list else '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
@@ -982,17 +1005,35 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
     group_size = len(group_files)
     round_size = max(1, group_size // 3)
     round_labels = ["1\u00aa Rodada", "2\u00aa Rodada", "3\u00aa Rodada"]
+
+    # Build chunks first so we can find which round has the next game
+    chunks: list[list[str]] = []
+    for i in range(3):
+        start = i * round_size
+        end = start + round_size if i < 2 else group_size
+        chunks.append(group_files[start:end])
+
+    # Find the round index that contains the next upcoming game
+    open_round = 0
+    for idx, chk in enumerate(chunks):
+        for fp in chk:
+            slug = _slug_from_filename(fp)
+            if slug_status.get(slug) in ("pending", "future"):
+                open_round = idx
+                break
+        else:
+            continue
+        break
+
     sections += f"""<div class="section">
     <div class="section-title">\u26bd {config.group_phase_label} ({group_size})</div>
     <div style="margin:0 0.75rem;">
 """
     for i in range(3):
-        start = i * round_size
-        end = start + round_size if i < 2 else group_size
-        chunk = group_files[start:end]
+        chunk = chunks[i]
         if chunk:
-            links = _build_compact_grid(chunk)
-            sections += f"""<details {"open" if i == 0 else ""}>
+            links = _build_compact_grid(chunk, results_map)
+            sections += f"""<details {"open" if i == open_round else ""}>
     <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">{round_labels[i]} ({len(chunk)})</summary>
     <div class="content" style="padding:0.5rem 0.75rem 0.75rem;">{links}</div>
 </details>
@@ -1009,7 +1050,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
         po_files = [f for f in po_files if "index" not in f]
         emoji = playoff_emojis.get(pr.key, "")
 
-        po_links = _build_compact_grid(po_files)
+        po_links = _build_compact_grid(po_files, results_map)
 
         sections += f"""
 <div class="section">
