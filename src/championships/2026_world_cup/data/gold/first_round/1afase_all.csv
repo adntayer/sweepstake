@@ -131,171 +131,171 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,1.0,2.0,4.0,1.0,,,,,1 x 2,Paraguai,4 x 1,Estados Unidos,Thales Oliveira,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,1.0,0.0,4.0,1.0,,,,,1 x 0,Estados Unidos,4 x 1,Estados Unidos,Thiago Bahiense,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,1.0,4.0,1.0,,,,,2 x 1,Estados Unidos,4 x 1,Estados Unidos,Tiago,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,André Bonito,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Cipriano L.,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,1.0,,,,,,,1 x 1,empate,,,Davi & Cesar,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Ditchos,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Felipe Giannoni,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Francisco Camargo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,4.0,,,,,,,1 x 4,Suíça,,,Frederico Soter,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Gabão,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,,,,,,,0 x 1,Suíça,,,Giancarlo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,,,,,,,0 x 1,Suíça,,,Guilherne,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Haroldo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,José Ricardo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,João Henrique,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,2.0,,,,,,,1 x 2,Suíça,,,Kiko Toloza,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,LLM GPT,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,LLM Gemini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Leo Fernandes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,,,,,,,0 x 1,Suíça,,,Luca Caviglia Del Soldato,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Lucas Ubertini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,,,,,,,0 x 1,Suíça,,,Luiz Augusto,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Marcelo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Marcelo Boix,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,3.0,,,,,,,1 x 3,Suíça,,,Marco Lavander,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Mateus Tone,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Mauricio Saraiva,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Pedro Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,2.0,,,,,,,1 x 2,Suíça,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Rafael Conte,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Thales Oliveira,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Thiago Bahiense,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Tiago,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,André Bonito,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,2.0,,,,,,,3 x 2,Brasil,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Cipriano L.,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,,,,,,,2 x 2,empate,,,Davi & Cesar,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Ditchos,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Felipe Giannoni,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Francisco Camargo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,,,,,,,2 x 2,empate,,,Frederico Soter,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Gabão,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Giancarlo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Guilherne,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,1.0,,,,,,,3 x 1,Brasil,,,Haroldo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,José Ricardo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,João Henrique,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Kiko Toloza,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,LLM GPT,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,LLM Gemini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,0.0,,,,,,,1 x 0,Brasil,,,Leo Fernandes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,,,,,,,2 x 2,empate,,,Luca Caviglia Del Soldato,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Lucas Ubertini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,0.0,,,,,,,3 x 0,Brasil,,,Luiz Augusto,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Marcelo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,0.0,,,,,,,1 x 0,Brasil,,,Marcelo Boix,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Marco Lavander,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Mateus Tone,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Mauricio Saraiva,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,1.0,,,,,,,3 x 1,Brasil,,,Pedro Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,,,,,,,2 x 2,empate,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,0.0,,,,,,,2 x 0,Brasil,,,Rafael Conte,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Thales Oliveira,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Thiago Bahiense,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Tiago,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,André Bonito,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,André Bonito,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,3.0,,,,,,,1 x 3,Escócia,,,Cipriano L.,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,,,,,,,1 x 3,Turquia,,,Cipriano L.,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,,,,,,,0 x 1,Escócia,,,Davi & Cesar,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,2.0,2.0,,,,,,,2 x 2,empate,,,Davi & Cesar,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,,,,,,,0 x 1,Escócia,,,Ditchos,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Ditchos,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Felipe Giannoni,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,,,,,,,0 x 1,Turquia,,,Felipe Giannoni,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,Francisco Camargo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Francisco Camargo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,4.0,,,,,,,0 x 4,Escócia,,,Frederico Soter,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,,,,,,,1 x 3,Turquia,,,Frederico Soter,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,,,,,,,0 x 1,Escócia,,,Gabão,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,2.0,2.0,,,,,,,2 x 2,empate,,,Gabão,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Giancarlo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,,,,,,,1 x 3,Turquia,,,Giancarlo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,,,,,,,0 x 1,Escócia,,,Guilherne,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,,,,,,,0 x 1,Turquia,,,Guilherne,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,Haroldo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Haroldo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,José Ricardo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,1.0,,,,,,,1 x 1,empate,,,José Ricardo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,João Henrique,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,João Henrique,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,1.0,,,,,,,1 x 1,empate,,,Kiko Toloza,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Kiko Toloza,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,LLM GPT,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,LLM GPT,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,LLM Gemini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,1.0,,,,,,,1 x 1,empate,,,LLM Gemini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Leo Fernandes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Leo Fernandes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,Luca Caviglia Del Soldato,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Luca Caviglia Del Soldato,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Lucas Ubertini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Lucas Ubertini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,Luiz Augusto,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,2.0,0.0,,,,,,,2 x 0,Austrália,,,Luiz Augusto,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,Marcelo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Marcelo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,Marcelo Boix,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Marcelo Boix,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Marco Lavander,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Marco Lavander,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,Mateus Tone,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Mateus Tone,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,Mauricio Saraiva,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Mauricio Saraiva,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,Pedro Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Pedro Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,2.0,2.0,,,,,,,2 x 2,empate,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,Rafael Conte,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Rafael Conte,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,5.0,,,,,,,0 x 5,Escócia,,,Thales Oliveira,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,,,,,,,1 x 3,Turquia,,,Thales Oliveira,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Thiago Bahiense,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Thiago Bahiense,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,Tiago,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,Tiago,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,André Bonito,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Cipriano L.,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Davi & Cesar,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,,,,,,,4 x 0,Alemanha,,,Ditchos,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,,,,,,,6 x 0,Alemanha,,,Felipe Giannoni,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,,,,,,,4 x 0,Alemanha,,,Francisco Camargo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,1.0,,,,,,,3 x 1,Alemanha,,,Frederico Soter,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,,,,,,,4 x 0,Alemanha,,,Gabão,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Giancarlo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Guilherne,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,,,,,,,6 x 0,Alemanha,,,Haroldo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,José Ricardo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,João Henrique,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Kiko Toloza,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,,,,,,,4 x 0,Alemanha,,,LLM GPT,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,,,,,,,4 x 0,Alemanha,,,LLM Gemini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,,,,,,,6 x 0,Alemanha,,,Leo Fernandes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Luca Caviglia Del Soldato,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Lucas Ubertini,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,1.0,,,,,,,4 x 1,Alemanha,,,Luiz Augusto,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,,,,,,,4 x 0,Alemanha,,,Marcelo,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Marcelo Boix,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Marco Lavander,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Mateus Tone,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,1.0,,,,,,,5 x 1,Alemanha,,,Mauricio Saraiva,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,,,,,,,4 x 0,Alemanha,,,Pedro Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,RODRIGO ALBERNAZ,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Rafael Conte,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Thales Oliveira,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Thiago Bahiense,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Tiago,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,André Bonito,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,André Mendes,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Cipriano L.,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Davi & Cesar,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Ditchos,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Felipe Giannoni,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Francisco Camargo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,4.0,1.0,1.0,,,,,1 x 4,Suíça,1 x 1,empate,Frederico Soter,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Gabão,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,1.0,1.0,,,,,0 x 1,Suíça,1 x 1,empate,Giancarlo,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,1.0,1.0,,,,,0 x 1,Suíça,1 x 1,empate,Guilherne,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Haroldo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,José Ricardo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,João Henrique,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,2.0,1.0,1.0,,,,,1 x 2,Suíça,1 x 1,empate,Kiko Toloza,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,LLM GPT,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,LLM Gemini,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Leo Fernandes,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,1.0,1.0,,,,,0 x 1,Suíça,1 x 1,empate,Luca Caviglia Del Soldato,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Lucas Ubertini,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,1.0,1.0,,,,,0 x 1,Suíça,1 x 1,empate,Luiz Augusto,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Marcelo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Marcelo Boix,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,3.0,1.0,1.0,,,,,1 x 3,Suíça,1 x 1,empate,Marco Lavander,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,Mateus Tone,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,Mauricio Saraiva,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,Pedro Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,1.0,2.0,1.0,1.0,,,,,1 x 2,Suíça,1 x 1,empate,RODRIGO ALBERNAZ,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,Rafael Conte,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,Thales Oliveira,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,Thiago Bahiense,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Tiago,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,André Bonito,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,André Mendes,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,2.0,1.0,1.0,,,,,3 x 2,Brasil,1 x 1,empate,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Cipriano L.,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,1.0,1.0,,,,,2 x 2,empate,1 x 1,empate,Davi & Cesar,7,4-Empate c/ erro total <= 2,1,False,False,False,True,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Ditchos,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Felipe Giannoni,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Francisco Camargo,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,1.0,1.0,,,,,2 x 2,empate,1 x 1,empate,Frederico Soter,7,4-Empate c/ erro total <= 2,1,False,False,False,True,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Gabão,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Giancarlo,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Guilherne,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,1.0,1.0,1.0,,,,,3 x 1,Brasil,1 x 1,empate,Haroldo,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,José Ricardo,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,João Henrique,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Kiko Toloza,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,LLM GPT,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,LLM Gemini,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,0.0,1.0,1.0,,,,,1 x 0,Brasil,1 x 1,empate,Leo Fernandes,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,1.0,1.0,,,,,2 x 2,empate,1 x 1,empate,Luca Caviglia Del Soldato,7,4-Empate c/ erro total <= 2,1,False,False,False,True,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Lucas Ubertini,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,0.0,1.0,1.0,,,,,3 x 0,Brasil,1 x 1,empate,Luiz Augusto,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Marcelo,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,0.0,1.0,1.0,,,,,1 x 0,Brasil,1 x 1,empate,Marcelo Boix,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Marco Lavander,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Mateus Tone,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Mauricio Saraiva,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,1.0,1.0,1.0,,,,,3 x 1,Brasil,1 x 1,empate,Pedro Tayer,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,2.0,1.0,1.0,,,,,2 x 2,empate,1 x 1,empate,RODRIGO ALBERNAZ,7,4-Empate c/ erro total <= 2,1,False,False,False,True,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,0.0,1.0,1.0,,,,,2 x 0,Brasil,1 x 1,empate,Rafael Conte,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Thales Oliveira,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Thiago Bahiense,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Tiago,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,André Bonito,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,André Bonito,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,André Mendes,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,André Mendes,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,0.0,1.0,,,,,1 x 2,Escócia,0 x 1,Escócia,André Tayer,7,3-Vencedor + diferenca de gols (erro <= 2),1,False,False,True,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,3.0,0.0,1.0,,,,,1 x 3,Escócia,0 x 1,Escócia,Cipriano L.,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,2.0,0.0,,,,,1 x 3,Turquia,2 x 0,Austrália,Cipriano L.,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,0.0,1.0,,,,,0 x 1,Escócia,0 x 1,Escócia,Davi & Cesar,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,2.0,2.0,2.0,0.0,,,,,2 x 2,empate,2 x 0,Austrália,Davi & Cesar,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,0.0,1.0,,,,,0 x 1,Escócia,0 x 1,Escócia,Ditchos,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Ditchos,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,0.0,1.0,,,,,0 x 3,Escócia,0 x 1,Escócia,Felipe Giannoni,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,2.0,0.0,,,,,0 x 1,Turquia,2 x 0,Austrália,Felipe Giannoni,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,Francisco Camargo,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Francisco Camargo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,4.0,0.0,1.0,,,,,0 x 4,Escócia,0 x 1,Escócia,Frederico Soter,7,5-Vencedor + gols de um time (erro > 2),1,False,False,False,False,True,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,2.0,0.0,,,,,1 x 3,Turquia,2 x 0,Austrália,Frederico Soter,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,0.0,1.0,,,,,0 x 1,Escócia,0 x 1,Escócia,Gabão,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,2.0,2.0,2.0,0.0,,,,,2 x 2,empate,2 x 0,Austrália,Gabão,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,0.0,1.0,,,,,0 x 3,Escócia,0 x 1,Escócia,Giancarlo,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,2.0,0.0,,,,,1 x 3,Turquia,2 x 0,Austrália,Giancarlo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,0.0,1.0,,,,,0 x 1,Escócia,0 x 1,Escócia,Guilherne,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,2.0,0.0,,,,,0 x 1,Turquia,2 x 0,Austrália,Guilherne,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,0.0,1.0,,,,,1 x 2,Escócia,0 x 1,Escócia,Haroldo,7,3-Vencedor + diferenca de gols (erro <= 2),1,False,False,True,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Haroldo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,José Ricardo,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,1.0,2.0,0.0,,,,,1 x 1,empate,2 x 0,Austrália,José Ricardo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,João Henrique,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,João Henrique,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,1.0,0.0,1.0,,,,,1 x 1,empate,0 x 1,Escócia,Kiko Toloza,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Kiko Toloza,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,LLM GPT,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,LLM GPT,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,LLM Gemini,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,1.0,2.0,0.0,,,,,1 x 1,empate,2 x 0,Austrália,LLM Gemini,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,0.0,1.0,,,,,0 x 3,Escócia,0 x 1,Escócia,Leo Fernandes,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,Leo Fernandes,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,0.0,1.0,,,,,1 x 2,Escócia,0 x 1,Escócia,Luca Caviglia Del Soldato,7,3-Vencedor + diferenca de gols (erro <= 2),1,False,False,True,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Luca Caviglia Del Soldato,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,0.0,1.0,,,,,0 x 3,Escócia,0 x 1,Escócia,Lucas Ubertini,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Lucas Ubertini,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,0.0,1.0,,,,,1 x 2,Escócia,0 x 1,Escócia,Luiz Augusto,7,3-Vencedor + diferenca de gols (erro <= 2),1,False,False,True,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,2.0,0.0,2.0,0.0,,,,,2 x 0,Austrália,2 x 0,Austrália,Luiz Augusto,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,0.0,1.0,,,,,1 x 2,Escócia,0 x 1,Escócia,Marcelo,7,3-Vencedor + diferenca de gols (erro <= 2),1,False,False,True,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,Marcelo,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,Marcelo Boix,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Marcelo Boix,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,0.0,1.0,,,,,0 x 3,Escócia,0 x 1,Escócia,Marco Lavander,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,Marco Lavander,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,0.0,1.0,,,,,1 x 2,Escócia,0 x 1,Escócia,Mateus Tone,7,3-Vencedor + diferenca de gols (erro <= 2),1,False,False,True,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Mateus Tone,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,Mauricio Saraiva,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Mauricio Saraiva,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,Pedro Tayer,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,Pedro Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,2.0,2.0,0.0,1.0,,,,,2 x 2,empate,0 x 1,Escócia,RODRIGO ALBERNAZ,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,RODRIGO ALBERNAZ,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,Rafael Conte,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,Rafael Conte,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,5.0,0.0,1.0,,,,,0 x 5,Escócia,0 x 1,Escócia,Thales Oliveira,7,5-Vencedor + gols de um time (erro > 2),1,False,False,False,False,True,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,3.0,2.0,0.0,,,,,1 x 3,Turquia,2 x 0,Austrália,Thales Oliveira,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,0.0,1.0,,,,,0 x 3,Escócia,0 x 1,Escócia,Thiago Bahiense,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,Thiago Bahiense,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,Tiago,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,Tiago,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,André Bonito,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,André Mendes,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,André Tayer,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,Cipriano L.,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Davi & Cesar,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,3.0,1.0,,,,,4 x 0,Alemanha,3 x 1,Alemanha,Ditchos,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,3.0,1.0,,,,,6 x 0,Alemanha,3 x 1,Alemanha,Felipe Giannoni,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,3.0,1.0,,,,,4 x 0,Alemanha,3 x 1,Alemanha,Francisco Camargo,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,1.0,3.0,1.0,,,,,3 x 1,Alemanha,3 x 1,Alemanha,Frederico Soter,15,1-Placar exato,1,True,False,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,3.0,1.0,,,,,4 x 0,Alemanha,3 x 1,Alemanha,Gabão,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Giancarlo,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Guilherne,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,3.0,1.0,,,,,6 x 0,Alemanha,3 x 1,Alemanha,Haroldo,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,José Ricardo,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,João Henrique,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Kiko Toloza,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,3.0,1.0,,,,,4 x 0,Alemanha,3 x 1,Alemanha,LLM GPT,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,3.0,1.0,,,,,4 x 0,Alemanha,3 x 1,Alemanha,LLM Gemini,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,3.0,1.0,,,,,6 x 0,Alemanha,3 x 1,Alemanha,Leo Fernandes,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Luca Caviglia Del Soldato,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Lucas Ubertini,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,1.0,3.0,1.0,,,,,4 x 1,Alemanha,3 x 1,Alemanha,Luiz Augusto,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,3.0,1.0,,,,,4 x 0,Alemanha,3 x 1,Alemanha,Marcelo,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Marcelo Boix,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Marco Lavander,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,Mateus Tone,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,1.0,3.0,1.0,,,,,5 x 1,Alemanha,3 x 1,Alemanha,Mauricio Saraiva,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,4.0,0.0,3.0,1.0,,,,,4 x 0,Alemanha,3 x 1,Alemanha,Pedro Tayer,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,RODRIGO ALBERNAZ,10,2-Vencedor + gols de um time (erro <= 2),1,False,True,False,False,False,False,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,Rafael Conte,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,Thales Oliveira,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,Thiago Bahiense,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,Tiago,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,1.0,1.0,,,,,,,1 x 1,empate,,,André Bonito,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,1.0,1.0,,,,,,,1 x 1,empate,,,André Mendes,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,3.0,0.0,,,,,,,3 x 0,Holanda,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True

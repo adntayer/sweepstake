@@ -1,529 +1,1189 @@
 boleiro,team,role,games,mae,goal_bias,avg_predicted,avg_real
+André Bonito,Alemanha,home,1,2.0,2.0,5.0,3.0
+André Bonito,Alemanha,total,1,2.0,2.0,5.0,3.0
+André Bonito,Austrália,home,1,2.0,-2.0,0.0,2.0
+André Bonito,Austrália,total,1,2.0,-2.0,0.0,2.0
+André Bonito,Brasil,home,1,1.0,1.0,2.0,1.0
+André Bonito,Brasil,total,1,1.0,1.0,2.0,1.0
 André Bonito,Bósnia,away,1,0.0,0.0,1.0,1.0
 André Bonito,Bósnia,total,1,0.0,0.0,1.0,1.0
 André Bonito,Canadá,home,1,1.0,1.0,2.0,1.0
 André Bonito,Canadá,total,1,1.0,1.0,2.0,1.0
+André Bonito,Catar,home,1,1.0,-1.0,0.0,1.0
+André Bonito,Catar,total,1,1.0,-1.0,0.0,1.0
 André Bonito,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 André Bonito,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+André Bonito,Curaçao,away,1,1.0,-1.0,0.0,1.0
+André Bonito,Curaçao,total,1,1.0,-1.0,0.0,1.0
+André Bonito,Escócia,away,1,1.0,1.0,2.0,1.0
+André Bonito,Escócia,total,1,1.0,1.0,2.0,1.0
 André Bonito,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 André Bonito,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+André Bonito,Haiti,home,1,0.0,0.0,0.0,0.0
+André Bonito,Haiti,total,1,0.0,0.0,0.0,0.0
+André Bonito,Marrocos,away,1,0.0,0.0,1.0,1.0
+André Bonito,Marrocos,total,1,0.0,0.0,1.0,1.0
 André Bonito,México,home,1,1.0,1.0,3.0,2.0
 André Bonito,México,total,1,1.0,1.0,3.0,2.0
 André Bonito,Paraguai,away,1,1.0,1.0,2.0,1.0
 André Bonito,Paraguai,total,1,1.0,1.0,2.0,1.0
 André Bonito,República Tcheca,away,1,1.0,1.0,2.0,1.0
 André Bonito,República Tcheca,total,1,1.0,1.0,2.0,1.0
+André Bonito,Suíça,away,1,2.0,2.0,3.0,1.0
+André Bonito,Suíça,total,1,2.0,2.0,3.0,1.0
+André Bonito,Turquia,away,1,2.0,2.0,2.0,0.0
+André Bonito,Turquia,total,1,2.0,2.0,2.0,0.0
 André Bonito,África do Sul,away,1,0.0,0.0,0.0,0.0
 André Bonito,África do Sul,total,1,0.0,0.0,0.0,0.0
+André Mendes,Alemanha,home,1,0.0,0.0,3.0,3.0
+André Mendes,Alemanha,total,1,0.0,0.0,3.0,3.0
+André Mendes,Austrália,home,1,1.0,-1.0,1.0,2.0
+André Mendes,Austrália,total,1,1.0,-1.0,1.0,2.0
+André Mendes,Brasil,home,1,1.0,1.0,2.0,1.0
+André Mendes,Brasil,total,1,1.0,1.0,2.0,1.0
 André Mendes,Bósnia,away,1,0.0,0.0,1.0,1.0
 André Mendes,Bósnia,total,1,0.0,0.0,1.0,1.0
 André Mendes,Canadá,home,1,0.0,0.0,1.0,1.0
 André Mendes,Canadá,total,1,0.0,0.0,1.0,1.0
+André Mendes,Catar,home,1,1.0,-1.0,0.0,1.0
+André Mendes,Catar,total,1,1.0,-1.0,0.0,1.0
 André Mendes,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 André Mendes,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+André Mendes,Curaçao,away,1,1.0,-1.0,0.0,1.0
+André Mendes,Curaçao,total,1,1.0,-1.0,0.0,1.0
+André Mendes,Escócia,away,1,1.0,1.0,2.0,1.0
+André Mendes,Escócia,total,1,1.0,1.0,2.0,1.0
 André Mendes,Estados Unidos,home,1,4.0,-4.0,0.0,4.0
 André Mendes,Estados Unidos,total,1,4.0,-4.0,0.0,4.0
+André Mendes,Haiti,home,1,0.0,0.0,0.0,0.0
+André Mendes,Haiti,total,1,0.0,0.0,0.0,0.0
+André Mendes,Marrocos,away,1,0.0,0.0,1.0,1.0
+André Mendes,Marrocos,total,1,0.0,0.0,1.0,1.0
 André Mendes,México,home,1,0.0,0.0,2.0,2.0
 André Mendes,México,total,1,0.0,0.0,2.0,2.0
 André Mendes,Paraguai,away,1,1.0,-1.0,0.0,1.0
 André Mendes,Paraguai,total,1,1.0,-1.0,0.0,1.0
 André Mendes,República Tcheca,away,1,0.0,0.0,1.0,1.0
 André Mendes,República Tcheca,total,1,0.0,0.0,1.0,1.0
+André Mendes,Suíça,away,1,1.0,1.0,2.0,1.0
+André Mendes,Suíça,total,1,1.0,1.0,2.0,1.0
+André Mendes,Turquia,away,1,2.0,2.0,2.0,0.0
+André Mendes,Turquia,total,1,2.0,2.0,2.0,0.0
 André Mendes,África do Sul,away,1,1.0,1.0,1.0,0.0
 André Mendes,África do Sul,total,1,1.0,1.0,1.0,0.0
+André Tayer,Alemanha,home,1,2.0,2.0,5.0,3.0
+André Tayer,Alemanha,total,1,2.0,2.0,5.0,3.0
+André Tayer,Austrália,home,1,1.0,-1.0,1.0,2.0
+André Tayer,Austrália,total,1,1.0,-1.0,1.0,2.0
+André Tayer,Brasil,home,1,2.0,2.0,3.0,1.0
+André Tayer,Brasil,total,1,2.0,2.0,3.0,1.0
 André Tayer,Bósnia,away,1,1.0,-1.0,0.0,1.0
 André Tayer,Bósnia,total,1,1.0,-1.0,0.0,1.0
 André Tayer,Canadá,home,1,1.0,1.0,2.0,1.0
 André Tayer,Canadá,total,1,1.0,1.0,2.0,1.0
+André Tayer,Catar,home,1,1.0,-1.0,0.0,1.0
+André Tayer,Catar,total,1,1.0,-1.0,0.0,1.0
 André Tayer,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 André Tayer,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+André Tayer,Curaçao,away,1,1.0,-1.0,0.0,1.0
+André Tayer,Curaçao,total,1,1.0,-1.0,0.0,1.0
+André Tayer,Escócia,away,1,1.0,1.0,2.0,1.0
+André Tayer,Escócia,total,1,1.0,1.0,2.0,1.0
 André Tayer,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 André Tayer,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+André Tayer,Haiti,home,1,1.0,1.0,1.0,0.0
+André Tayer,Haiti,total,1,1.0,1.0,1.0,0.0
+André Tayer,Marrocos,away,1,1.0,1.0,2.0,1.0
+André Tayer,Marrocos,total,1,1.0,1.0,2.0,1.0
 André Tayer,México,home,1,0.0,0.0,2.0,2.0
 André Tayer,México,total,1,0.0,0.0,2.0,2.0
 André Tayer,Paraguai,away,1,1.0,1.0,2.0,1.0
 André Tayer,Paraguai,total,1,1.0,1.0,2.0,1.0
 André Tayer,República Tcheca,away,1,0.0,0.0,1.0,1.0
 André Tayer,República Tcheca,total,1,0.0,0.0,1.0,1.0
+André Tayer,Suíça,away,1,1.0,1.0,2.0,1.0
+André Tayer,Suíça,total,1,1.0,1.0,2.0,1.0
+André Tayer,Turquia,away,1,2.0,2.0,2.0,0.0
+André Tayer,Turquia,total,1,2.0,2.0,2.0,0.0
 André Tayer,África do Sul,away,1,0.0,0.0,0.0,0.0
 André Tayer,África do Sul,total,1,0.0,0.0,0.0,0.0
+Cipriano L.,Alemanha,home,1,2.0,2.0,5.0,3.0
+Cipriano L.,Alemanha,total,1,2.0,2.0,5.0,3.0
+Cipriano L.,Austrália,home,1,1.0,-1.0,1.0,2.0
+Cipriano L.,Austrália,total,1,1.0,-1.0,1.0,2.0
+Cipriano L.,Brasil,home,1,0.0,0.0,1.0,1.0
+Cipriano L.,Brasil,total,1,0.0,0.0,1.0,1.0
 Cipriano L.,Bósnia,away,1,0.0,0.0,1.0,1.0
 Cipriano L.,Bósnia,total,1,0.0,0.0,1.0,1.0
 Cipriano L.,Canadá,home,1,1.0,1.0,2.0,1.0
 Cipriano L.,Canadá,total,1,1.0,1.0,2.0,1.0
+Cipriano L.,Catar,home,1,1.0,-1.0,0.0,1.0
+Cipriano L.,Catar,total,1,1.0,-1.0,0.0,1.0
 Cipriano L.,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Cipriano L.,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Cipriano L.,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Cipriano L.,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Cipriano L.,Escócia,away,1,2.0,2.0,3.0,1.0
+Cipriano L.,Escócia,total,1,2.0,2.0,3.0,1.0
 Cipriano L.,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Cipriano L.,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Cipriano L.,Haiti,home,1,1.0,1.0,1.0,0.0
+Cipriano L.,Haiti,total,1,1.0,1.0,1.0,0.0
+Cipriano L.,Marrocos,away,1,0.0,0.0,1.0,1.0
+Cipriano L.,Marrocos,total,1,0.0,0.0,1.0,1.0
 Cipriano L.,México,home,1,0.0,0.0,2.0,2.0
 Cipriano L.,México,total,1,0.0,0.0,2.0,2.0
 Cipriano L.,Paraguai,away,1,0.0,0.0,1.0,1.0
 Cipriano L.,Paraguai,total,1,0.0,0.0,1.0,1.0
 Cipriano L.,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Cipriano L.,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Cipriano L.,Suíça,away,1,1.0,1.0,2.0,1.0
+Cipriano L.,Suíça,total,1,1.0,1.0,2.0,1.0
+Cipriano L.,Turquia,away,1,3.0,3.0,3.0,0.0
+Cipriano L.,Turquia,total,1,3.0,3.0,3.0,0.0
 Cipriano L.,África do Sul,away,1,1.0,1.0,1.0,0.0
 Cipriano L.,África do Sul,total,1,1.0,1.0,1.0,0.0
+Davi & Cesar,Alemanha,home,1,0.0,0.0,3.0,3.0
+Davi & Cesar,Alemanha,total,1,0.0,0.0,3.0,3.0
+Davi & Cesar,Austrália,home,1,0.0,0.0,2.0,2.0
+Davi & Cesar,Austrália,total,1,0.0,0.0,2.0,2.0
+Davi & Cesar,Brasil,home,1,1.0,1.0,2.0,1.0
+Davi & Cesar,Brasil,total,1,1.0,1.0,2.0,1.0
 Davi & Cesar,Bósnia,away,1,0.0,0.0,1.0,1.0
 Davi & Cesar,Bósnia,total,1,0.0,0.0,1.0,1.0
 Davi & Cesar,Canadá,home,1,1.0,1.0,2.0,1.0
 Davi & Cesar,Canadá,total,1,1.0,1.0,2.0,1.0
+Davi & Cesar,Catar,home,1,0.0,0.0,1.0,1.0
+Davi & Cesar,Catar,total,1,0.0,0.0,1.0,1.0
 Davi & Cesar,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Davi & Cesar,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Davi & Cesar,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Davi & Cesar,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Davi & Cesar,Escócia,away,1,0.0,0.0,1.0,1.0
+Davi & Cesar,Escócia,total,1,0.0,0.0,1.0,1.0
 Davi & Cesar,Estados Unidos,home,1,4.0,-4.0,0.0,4.0
 Davi & Cesar,Estados Unidos,total,1,4.0,-4.0,0.0,4.0
+Davi & Cesar,Haiti,home,1,0.0,0.0,0.0,0.0
+Davi & Cesar,Haiti,total,1,0.0,0.0,0.0,0.0
+Davi & Cesar,Marrocos,away,1,1.0,1.0,2.0,1.0
+Davi & Cesar,Marrocos,total,1,1.0,1.0,2.0,1.0
 Davi & Cesar,México,home,1,1.0,-1.0,1.0,2.0
 Davi & Cesar,México,total,1,1.0,-1.0,1.0,2.0
 Davi & Cesar,Paraguai,away,1,1.0,1.0,2.0,1.0
 Davi & Cesar,Paraguai,total,1,1.0,1.0,2.0,1.0
 Davi & Cesar,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Davi & Cesar,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Davi & Cesar,Suíça,away,1,0.0,0.0,1.0,1.0
+Davi & Cesar,Suíça,total,1,0.0,0.0,1.0,1.0
+Davi & Cesar,Turquia,away,1,2.0,2.0,2.0,0.0
+Davi & Cesar,Turquia,total,1,2.0,2.0,2.0,0.0
 Davi & Cesar,África do Sul,away,1,1.0,1.0,1.0,0.0
 Davi & Cesar,África do Sul,total,1,1.0,1.0,1.0,0.0
+Ditchos,Alemanha,home,1,1.0,1.0,4.0,3.0
+Ditchos,Alemanha,total,1,1.0,1.0,4.0,3.0
+Ditchos,Austrália,home,1,1.0,-1.0,1.0,2.0
+Ditchos,Austrália,total,1,1.0,-1.0,1.0,2.0
+Ditchos,Brasil,home,1,0.0,0.0,1.0,1.0
+Ditchos,Brasil,total,1,0.0,0.0,1.0,1.0
 Ditchos,Bósnia,away,1,1.0,-1.0,0.0,1.0
 Ditchos,Bósnia,total,1,1.0,-1.0,0.0,1.0
 Ditchos,Canadá,home,1,0.0,0.0,1.0,1.0
 Ditchos,Canadá,total,1,0.0,0.0,1.0,1.0
+Ditchos,Catar,home,1,1.0,-1.0,0.0,1.0
+Ditchos,Catar,total,1,1.0,-1.0,0.0,1.0
 Ditchos,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Ditchos,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Ditchos,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Ditchos,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Ditchos,Escócia,away,1,0.0,0.0,1.0,1.0
+Ditchos,Escócia,total,1,0.0,0.0,1.0,1.0
 Ditchos,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Ditchos,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Ditchos,Haiti,home,1,0.0,0.0,0.0,0.0
+Ditchos,Haiti,total,1,0.0,0.0,0.0,0.0
+Ditchos,Marrocos,away,1,0.0,0.0,1.0,1.0
+Ditchos,Marrocos,total,1,0.0,0.0,1.0,1.0
 Ditchos,México,home,1,0.0,0.0,2.0,2.0
 Ditchos,México,total,1,0.0,0.0,2.0,2.0
 Ditchos,Paraguai,away,1,1.0,-1.0,0.0,1.0
 Ditchos,Paraguai,total,1,1.0,-1.0,0.0,1.0
 Ditchos,República Tcheca,away,1,1.0,1.0,2.0,1.0
 Ditchos,República Tcheca,total,1,1.0,1.0,2.0,1.0
+Ditchos,Suíça,away,1,1.0,1.0,2.0,1.0
+Ditchos,Suíça,total,1,1.0,1.0,2.0,1.0
+Ditchos,Turquia,away,1,2.0,2.0,2.0,0.0
+Ditchos,Turquia,total,1,2.0,2.0,2.0,0.0
 Ditchos,África do Sul,away,1,0.0,0.0,0.0,0.0
 Ditchos,África do Sul,total,1,0.0,0.0,0.0,0.0
+Felipe Giannoni,Alemanha,home,1,3.0,3.0,6.0,3.0
+Felipe Giannoni,Alemanha,total,1,3.0,3.0,6.0,3.0
+Felipe Giannoni,Austrália,home,1,2.0,-2.0,0.0,2.0
+Felipe Giannoni,Austrália,total,1,2.0,-2.0,0.0,2.0
+Felipe Giannoni,Brasil,home,1,0.0,0.0,1.0,1.0
+Felipe Giannoni,Brasil,total,1,0.0,0.0,1.0,1.0
 Felipe Giannoni,Bósnia,away,1,1.0,1.0,2.0,1.0
 Felipe Giannoni,Bósnia,total,1,1.0,1.0,2.0,1.0
 Felipe Giannoni,Canadá,home,1,1.0,1.0,2.0,1.0
 Felipe Giannoni,Canadá,total,1,1.0,1.0,2.0,1.0
+Felipe Giannoni,Catar,home,1,1.0,-1.0,0.0,1.0
+Felipe Giannoni,Catar,total,1,1.0,-1.0,0.0,1.0
 Felipe Giannoni,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Felipe Giannoni,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Felipe Giannoni,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Felipe Giannoni,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Felipe Giannoni,Escócia,away,1,2.0,2.0,3.0,1.0
+Felipe Giannoni,Escócia,total,1,2.0,2.0,3.0,1.0
 Felipe Giannoni,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Felipe Giannoni,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Felipe Giannoni,Haiti,home,1,0.0,0.0,0.0,0.0
+Felipe Giannoni,Haiti,total,1,0.0,0.0,0.0,0.0
+Felipe Giannoni,Marrocos,away,1,0.0,0.0,1.0,1.0
+Felipe Giannoni,Marrocos,total,1,0.0,0.0,1.0,1.0
 Felipe Giannoni,México,home,1,0.0,0.0,2.0,2.0
 Felipe Giannoni,México,total,1,0.0,0.0,2.0,2.0
 Felipe Giannoni,Paraguai,away,1,1.0,1.0,2.0,1.0
 Felipe Giannoni,Paraguai,total,1,1.0,1.0,2.0,1.0
 Felipe Giannoni,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Felipe Giannoni,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Felipe Giannoni,Suíça,away,1,1.0,1.0,2.0,1.0
+Felipe Giannoni,Suíça,total,1,1.0,1.0,2.0,1.0
+Felipe Giannoni,Turquia,away,1,1.0,1.0,1.0,0.0
+Felipe Giannoni,Turquia,total,1,1.0,1.0,1.0,0.0
 Felipe Giannoni,África do Sul,away,1,1.0,1.0,1.0,0.0
 Felipe Giannoni,África do Sul,total,1,1.0,1.0,1.0,0.0
+Francisco Camargo,Alemanha,home,1,1.0,1.0,4.0,3.0
+Francisco Camargo,Alemanha,total,1,1.0,1.0,4.0,3.0
+Francisco Camargo,Austrália,home,1,1.0,-1.0,1.0,2.0
+Francisco Camargo,Austrália,total,1,1.0,-1.0,1.0,2.0
+Francisco Camargo,Brasil,home,1,0.0,0.0,1.0,1.0
+Francisco Camargo,Brasil,total,1,0.0,0.0,1.0,1.0
 Francisco Camargo,Bósnia,away,1,1.0,-1.0,0.0,1.0
 Francisco Camargo,Bósnia,total,1,1.0,-1.0,0.0,1.0
 Francisco Camargo,Canadá,home,1,1.0,1.0,2.0,1.0
 Francisco Camargo,Canadá,total,1,1.0,1.0,2.0,1.0
+Francisco Camargo,Catar,home,1,1.0,-1.0,0.0,1.0
+Francisco Camargo,Catar,total,1,1.0,-1.0,0.0,1.0
 Francisco Camargo,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Francisco Camargo,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Francisco Camargo,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Francisco Camargo,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Francisco Camargo,Escócia,away,1,1.0,1.0,2.0,1.0
+Francisco Camargo,Escócia,total,1,1.0,1.0,2.0,1.0
 Francisco Camargo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Francisco Camargo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Francisco Camargo,Haiti,home,1,0.0,0.0,0.0,0.0
+Francisco Camargo,Haiti,total,1,0.0,0.0,0.0,0.0
+Francisco Camargo,Marrocos,away,1,0.0,0.0,1.0,1.0
+Francisco Camargo,Marrocos,total,1,0.0,0.0,1.0,1.0
 Francisco Camargo,México,home,1,0.0,0.0,2.0,2.0
 Francisco Camargo,México,total,1,0.0,0.0,2.0,2.0
 Francisco Camargo,Paraguai,away,1,1.0,-1.0,0.0,1.0
 Francisco Camargo,Paraguai,total,1,1.0,-1.0,0.0,1.0
 Francisco Camargo,República Tcheca,away,1,1.0,-1.0,0.0,1.0
 Francisco Camargo,República Tcheca,total,1,1.0,-1.0,0.0,1.0
+Francisco Camargo,Suíça,away,1,1.0,1.0,2.0,1.0
+Francisco Camargo,Suíça,total,1,1.0,1.0,2.0,1.0
+Francisco Camargo,Turquia,away,1,2.0,2.0,2.0,0.0
+Francisco Camargo,Turquia,total,1,2.0,2.0,2.0,0.0
 Francisco Camargo,África do Sul,away,1,0.0,0.0,0.0,0.0
 Francisco Camargo,África do Sul,total,1,0.0,0.0,0.0,0.0
+Frederico Soter,Alemanha,home,1,0.0,0.0,3.0,3.0
+Frederico Soter,Alemanha,total,1,0.0,0.0,3.0,3.0
+Frederico Soter,Austrália,home,1,1.0,-1.0,1.0,2.0
+Frederico Soter,Austrália,total,1,1.0,-1.0,1.0,2.0
+Frederico Soter,Brasil,home,1,1.0,1.0,2.0,1.0
+Frederico Soter,Brasil,total,1,1.0,1.0,2.0,1.0
 Frederico Soter,Bósnia,away,1,1.0,1.0,2.0,1.0
 Frederico Soter,Bósnia,total,1,1.0,1.0,2.0,1.0
 Frederico Soter,Canadá,home,1,1.0,1.0,2.0,1.0
 Frederico Soter,Canadá,total,1,1.0,1.0,2.0,1.0
+Frederico Soter,Catar,home,1,0.0,0.0,1.0,1.0
+Frederico Soter,Catar,total,1,0.0,0.0,1.0,1.0
 Frederico Soter,Coréia do Sul,home,1,1.0,1.0,3.0,2.0
 Frederico Soter,Coréia do Sul,total,1,1.0,1.0,3.0,2.0
+Frederico Soter,Curaçao,away,1,0.0,0.0,1.0,1.0
+Frederico Soter,Curaçao,total,1,0.0,0.0,1.0,1.0
+Frederico Soter,Escócia,away,1,3.0,3.0,4.0,1.0
+Frederico Soter,Escócia,total,1,3.0,3.0,4.0,1.0
 Frederico Soter,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Frederico Soter,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Frederico Soter,Haiti,home,1,0.0,0.0,0.0,0.0
+Frederico Soter,Haiti,total,1,0.0,0.0,0.0,0.0
+Frederico Soter,Marrocos,away,1,1.0,1.0,2.0,1.0
+Frederico Soter,Marrocos,total,1,1.0,1.0,2.0,1.0
 Frederico Soter,México,home,1,0.0,0.0,2.0,2.0
 Frederico Soter,México,total,1,0.0,0.0,2.0,2.0
 Frederico Soter,Paraguai,away,1,0.0,0.0,1.0,1.0
 Frederico Soter,Paraguai,total,1,0.0,0.0,1.0,1.0
 Frederico Soter,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Frederico Soter,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Frederico Soter,Suíça,away,1,3.0,3.0,4.0,1.0
+Frederico Soter,Suíça,total,1,3.0,3.0,4.0,1.0
+Frederico Soter,Turquia,away,1,3.0,3.0,3.0,0.0
+Frederico Soter,Turquia,total,1,3.0,3.0,3.0,0.0
 Frederico Soter,África do Sul,away,1,0.0,0.0,0.0,0.0
 Frederico Soter,África do Sul,total,1,0.0,0.0,0.0,0.0
+Gabão,Alemanha,home,1,1.0,1.0,4.0,3.0
+Gabão,Alemanha,total,1,1.0,1.0,4.0,3.0
+Gabão,Austrália,home,1,0.0,0.0,2.0,2.0
+Gabão,Austrália,total,1,0.0,0.0,2.0,2.0
+Gabão,Brasil,home,1,0.0,0.0,1.0,1.0
+Gabão,Brasil,total,1,0.0,0.0,1.0,1.0
 Gabão,Bósnia,away,1,0.0,0.0,1.0,1.0
 Gabão,Bósnia,total,1,0.0,0.0,1.0,1.0
 Gabão,Canadá,home,1,1.0,-1.0,0.0,1.0
 Gabão,Canadá,total,1,1.0,-1.0,0.0,1.0
+Gabão,Catar,home,1,1.0,-1.0,0.0,1.0
+Gabão,Catar,total,1,1.0,-1.0,0.0,1.0
 Gabão,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Gabão,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Gabão,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Gabão,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Gabão,Escócia,away,1,0.0,0.0,1.0,1.0
+Gabão,Escócia,total,1,0.0,0.0,1.0,1.0
 Gabão,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Gabão,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Gabão,Haiti,home,1,0.0,0.0,0.0,0.0
+Gabão,Haiti,total,1,0.0,0.0,0.0,0.0
+Gabão,Marrocos,away,1,0.0,0.0,1.0,1.0
+Gabão,Marrocos,total,1,0.0,0.0,1.0,1.0
 Gabão,México,home,1,0.0,0.0,2.0,2.0
 Gabão,México,total,1,0.0,0.0,2.0,2.0
 Gabão,Paraguai,away,1,1.0,-1.0,0.0,1.0
 Gabão,Paraguai,total,1,1.0,-1.0,0.0,1.0
 Gabão,República Tcheca,away,1,1.0,1.0,2.0,1.0
 Gabão,República Tcheca,total,1,1.0,1.0,2.0,1.0
+Gabão,Suíça,away,1,1.0,1.0,2.0,1.0
+Gabão,Suíça,total,1,1.0,1.0,2.0,1.0
+Gabão,Turquia,away,1,2.0,2.0,2.0,0.0
+Gabão,Turquia,total,1,2.0,2.0,2.0,0.0
 Gabão,África do Sul,away,1,1.0,1.0,1.0,0.0
 Gabão,África do Sul,total,1,1.0,1.0,1.0,0.0
+Giancarlo,Alemanha,home,1,0.0,0.0,3.0,3.0
+Giancarlo,Alemanha,total,1,0.0,0.0,3.0,3.0
+Giancarlo,Austrália,home,1,1.0,-1.0,1.0,2.0
+Giancarlo,Austrália,total,1,1.0,-1.0,1.0,2.0
+Giancarlo,Brasil,home,1,1.0,1.0,2.0,1.0
+Giancarlo,Brasil,total,1,1.0,1.0,2.0,1.0
 Giancarlo,Bósnia,away,1,1.0,-1.0,0.0,1.0
 Giancarlo,Bósnia,total,1,1.0,-1.0,0.0,1.0
 Giancarlo,Canadá,home,1,1.0,-1.0,0.0,1.0
 Giancarlo,Canadá,total,1,1.0,-1.0,0.0,1.0
+Giancarlo,Catar,home,1,1.0,-1.0,0.0,1.0
+Giancarlo,Catar,total,1,1.0,-1.0,0.0,1.0
 Giancarlo,Coréia do Sul,home,1,2.0,-2.0,0.0,2.0
 Giancarlo,Coréia do Sul,total,1,2.0,-2.0,0.0,2.0
+Giancarlo,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Giancarlo,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Giancarlo,Escócia,away,1,2.0,2.0,3.0,1.0
+Giancarlo,Escócia,total,1,2.0,2.0,3.0,1.0
 Giancarlo,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Giancarlo,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Giancarlo,Haiti,home,1,0.0,0.0,0.0,0.0
+Giancarlo,Haiti,total,1,0.0,0.0,0.0,0.0
+Giancarlo,Marrocos,away,1,0.0,0.0,1.0,1.0
+Giancarlo,Marrocos,total,1,0.0,0.0,1.0,1.0
 Giancarlo,México,home,1,0.0,0.0,2.0,2.0
 Giancarlo,México,total,1,0.0,0.0,2.0,2.0
 Giancarlo,Paraguai,away,1,0.0,0.0,1.0,1.0
 Giancarlo,Paraguai,total,1,0.0,0.0,1.0,1.0
 Giancarlo,República Tcheca,away,1,1.0,-1.0,0.0,1.0
 Giancarlo,República Tcheca,total,1,1.0,-1.0,0.0,1.0
+Giancarlo,Suíça,away,1,0.0,0.0,1.0,1.0
+Giancarlo,Suíça,total,1,0.0,0.0,1.0,1.0
+Giancarlo,Turquia,away,1,3.0,3.0,3.0,0.0
+Giancarlo,Turquia,total,1,3.0,3.0,3.0,0.0
 Giancarlo,África do Sul,away,1,1.0,1.0,1.0,0.0
 Giancarlo,África do Sul,total,1,1.0,1.0,1.0,0.0
+Guilherne,Alemanha,home,1,0.0,0.0,3.0,3.0
+Guilherne,Alemanha,total,1,0.0,0.0,3.0,3.0
+Guilherne,Austrália,home,1,2.0,-2.0,0.0,2.0
+Guilherne,Austrália,total,1,2.0,-2.0,0.0,2.0
+Guilherne,Brasil,home,1,1.0,1.0,2.0,1.0
+Guilherne,Brasil,total,1,1.0,1.0,2.0,1.0
 Guilherne,Bósnia,away,1,1.0,1.0,2.0,1.0
 Guilherne,Bósnia,total,1,1.0,1.0,2.0,1.0
 Guilherne,Canadá,home,1,0.0,0.0,1.0,1.0
 Guilherne,Canadá,total,1,0.0,0.0,1.0,1.0
+Guilherne,Catar,home,1,1.0,-1.0,0.0,1.0
+Guilherne,Catar,total,1,1.0,-1.0,0.0,1.0
 Guilherne,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Guilherne,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Guilherne,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Guilherne,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Guilherne,Escócia,away,1,0.0,0.0,1.0,1.0
+Guilherne,Escócia,total,1,0.0,0.0,1.0,1.0
 Guilherne,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Guilherne,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Guilherne,Haiti,home,1,0.0,0.0,0.0,0.0
+Guilherne,Haiti,total,1,0.0,0.0,0.0,0.0
+Guilherne,Marrocos,away,1,0.0,0.0,1.0,1.0
+Guilherne,Marrocos,total,1,0.0,0.0,1.0,1.0
 Guilherne,México,home,1,1.0,-1.0,1.0,2.0
 Guilherne,México,total,1,1.0,-1.0,1.0,2.0
 Guilherne,Paraguai,away,1,1.0,1.0,2.0,1.0
 Guilherne,Paraguai,total,1,1.0,1.0,2.0,1.0
 Guilherne,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Guilherne,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Guilherne,Suíça,away,1,0.0,0.0,1.0,1.0
+Guilherne,Suíça,total,1,0.0,0.0,1.0,1.0
+Guilherne,Turquia,away,1,1.0,1.0,1.0,0.0
+Guilherne,Turquia,total,1,1.0,1.0,1.0,0.0
 Guilherne,África do Sul,away,1,1.0,1.0,1.0,0.0
 Guilherne,África do Sul,total,1,1.0,1.0,1.0,0.0
+Haroldo,Alemanha,home,1,3.0,3.0,6.0,3.0
+Haroldo,Alemanha,total,1,3.0,3.0,6.0,3.0
+Haroldo,Austrália,home,1,1.0,-1.0,1.0,2.0
+Haroldo,Austrália,total,1,1.0,-1.0,1.0,2.0
+Haroldo,Brasil,home,1,2.0,2.0,3.0,1.0
+Haroldo,Brasil,total,1,2.0,2.0,3.0,1.0
 Haroldo,Bósnia,away,1,0.0,0.0,1.0,1.0
 Haroldo,Bósnia,total,1,0.0,0.0,1.0,1.0
 Haroldo,Canadá,home,1,1.0,1.0,2.0,1.0
 Haroldo,Canadá,total,1,1.0,1.0,2.0,1.0
+Haroldo,Catar,home,1,1.0,-1.0,0.0,1.0
+Haroldo,Catar,total,1,1.0,-1.0,0.0,1.0
 Haroldo,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Haroldo,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Haroldo,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Haroldo,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Haroldo,Escócia,away,1,1.0,1.0,2.0,1.0
+Haroldo,Escócia,total,1,1.0,1.0,2.0,1.0
 Haroldo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Haroldo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Haroldo,Haiti,home,1,1.0,1.0,1.0,0.0
+Haroldo,Haiti,total,1,1.0,1.0,1.0,0.0
+Haroldo,Marrocos,away,1,0.0,0.0,1.0,1.0
+Haroldo,Marrocos,total,1,0.0,0.0,1.0,1.0
 Haroldo,México,home,1,0.0,0.0,2.0,2.0
 Haroldo,México,total,1,0.0,0.0,2.0,2.0
 Haroldo,Paraguai,away,1,0.0,0.0,1.0,1.0
 Haroldo,Paraguai,total,1,0.0,0.0,1.0,1.0
 Haroldo,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Haroldo,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Haroldo,Suíça,away,1,1.0,1.0,2.0,1.0
+Haroldo,Suíça,total,1,1.0,1.0,2.0,1.0
+Haroldo,Turquia,away,1,2.0,2.0,2.0,0.0
+Haroldo,Turquia,total,1,2.0,2.0,2.0,0.0
 Haroldo,África do Sul,away,1,1.0,1.0,1.0,0.0
 Haroldo,África do Sul,total,1,1.0,1.0,1.0,0.0
+José Ricardo,Alemanha,home,1,0.0,0.0,3.0,3.0
+José Ricardo,Alemanha,total,1,0.0,0.0,3.0,3.0
+José Ricardo,Austrália,home,1,1.0,-1.0,1.0,2.0
+José Ricardo,Austrália,total,1,1.0,-1.0,1.0,2.0
+José Ricardo,Brasil,home,1,1.0,1.0,2.0,1.0
+José Ricardo,Brasil,total,1,1.0,1.0,2.0,1.0
 José Ricardo,Bósnia,away,1,0.0,0.0,1.0,1.0
 José Ricardo,Bósnia,total,1,0.0,0.0,1.0,1.0
 José Ricardo,Canadá,home,1,0.0,0.0,1.0,1.0
 José Ricardo,Canadá,total,1,0.0,0.0,1.0,1.0
+José Ricardo,Catar,home,1,1.0,-1.0,0.0,1.0
+José Ricardo,Catar,total,1,1.0,-1.0,0.0,1.0
 José Ricardo,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 José Ricardo,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+José Ricardo,Curaçao,away,1,1.0,-1.0,0.0,1.0
+José Ricardo,Curaçao,total,1,1.0,-1.0,0.0,1.0
+José Ricardo,Escócia,away,1,1.0,1.0,2.0,1.0
+José Ricardo,Escócia,total,1,1.0,1.0,2.0,1.0
 José Ricardo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 José Ricardo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+José Ricardo,Haiti,home,1,0.0,0.0,0.0,0.0
+José Ricardo,Haiti,total,1,0.0,0.0,0.0,0.0
+José Ricardo,Marrocos,away,1,0.0,0.0,1.0,1.0
+José Ricardo,Marrocos,total,1,0.0,0.0,1.0,1.0
 José Ricardo,México,home,1,0.0,0.0,2.0,2.0
 José Ricardo,México,total,1,0.0,0.0,2.0,2.0
 José Ricardo,Paraguai,away,1,0.0,0.0,1.0,1.0
 José Ricardo,Paraguai,total,1,0.0,0.0,1.0,1.0
 José Ricardo,República Tcheca,away,1,0.0,0.0,1.0,1.0
 José Ricardo,República Tcheca,total,1,0.0,0.0,1.0,1.0
+José Ricardo,Suíça,away,1,1.0,1.0,2.0,1.0
+José Ricardo,Suíça,total,1,1.0,1.0,2.0,1.0
+José Ricardo,Turquia,away,1,1.0,1.0,1.0,0.0
+José Ricardo,Turquia,total,1,1.0,1.0,1.0,0.0
 José Ricardo,África do Sul,away,1,1.0,1.0,1.0,0.0
 José Ricardo,África do Sul,total,1,1.0,1.0,1.0,0.0
+João Henrique,Alemanha,home,1,2.0,2.0,5.0,3.0
+João Henrique,Alemanha,total,1,2.0,2.0,5.0,3.0
+João Henrique,Austrália,home,1,1.0,-1.0,1.0,2.0
+João Henrique,Austrália,total,1,1.0,-1.0,1.0,2.0
+João Henrique,Brasil,home,1,0.0,0.0,1.0,1.0
+João Henrique,Brasil,total,1,0.0,0.0,1.0,1.0
 João Henrique,Bósnia,away,1,0.0,0.0,1.0,1.0
 João Henrique,Bósnia,total,1,0.0,0.0,1.0,1.0
 João Henrique,Canadá,home,1,0.0,0.0,1.0,1.0
 João Henrique,Canadá,total,1,0.0,0.0,1.0,1.0
+João Henrique,Catar,home,1,1.0,-1.0,0.0,1.0
+João Henrique,Catar,total,1,1.0,-1.0,0.0,1.0
 João Henrique,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 João Henrique,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+João Henrique,Curaçao,away,1,1.0,-1.0,0.0,1.0
+João Henrique,Curaçao,total,1,1.0,-1.0,0.0,1.0
+João Henrique,Escócia,away,1,1.0,1.0,2.0,1.0
+João Henrique,Escócia,total,1,1.0,1.0,2.0,1.0
 João Henrique,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 João Henrique,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+João Henrique,Haiti,home,1,0.0,0.0,0.0,0.0
+João Henrique,Haiti,total,1,0.0,0.0,0.0,0.0
+João Henrique,Marrocos,away,1,0.0,0.0,1.0,1.0
+João Henrique,Marrocos,total,1,0.0,0.0,1.0,1.0
 João Henrique,México,home,1,0.0,0.0,2.0,2.0
 João Henrique,México,total,1,0.0,0.0,2.0,2.0
 João Henrique,Paraguai,away,1,0.0,0.0,1.0,1.0
 João Henrique,Paraguai,total,1,0.0,0.0,1.0,1.0
 João Henrique,República Tcheca,away,1,1.0,-1.0,0.0,1.0
 João Henrique,República Tcheca,total,1,1.0,-1.0,0.0,1.0
+João Henrique,Suíça,away,1,1.0,1.0,2.0,1.0
+João Henrique,Suíça,total,1,1.0,1.0,2.0,1.0
+João Henrique,Turquia,away,1,2.0,2.0,2.0,0.0
+João Henrique,Turquia,total,1,2.0,2.0,2.0,0.0
 João Henrique,África do Sul,away,1,0.0,0.0,0.0,0.0
 João Henrique,África do Sul,total,1,0.0,0.0,0.0,0.0
+Kiko Toloza,Alemanha,home,1,0.0,0.0,3.0,3.0
+Kiko Toloza,Alemanha,total,1,0.0,0.0,3.0,3.0
+Kiko Toloza,Austrália,home,1,1.0,-1.0,1.0,2.0
+Kiko Toloza,Austrália,total,1,1.0,-1.0,1.0,2.0
+Kiko Toloza,Brasil,home,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Brasil,total,1,0.0,0.0,1.0,1.0
 Kiko Toloza,Bósnia,away,1,1.0,1.0,2.0,1.0
 Kiko Toloza,Bósnia,total,1,1.0,1.0,2.0,1.0
 Kiko Toloza,Canadá,home,1,0.0,0.0,1.0,1.0
 Kiko Toloza,Canadá,total,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Catar,home,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Catar,total,1,0.0,0.0,1.0,1.0
 Kiko Toloza,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Kiko Toloza,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Kiko Toloza,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Kiko Toloza,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Kiko Toloza,Escócia,away,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Escócia,total,1,0.0,0.0,1.0,1.0
 Kiko Toloza,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Kiko Toloza,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Kiko Toloza,Haiti,home,1,1.0,1.0,1.0,0.0
+Kiko Toloza,Haiti,total,1,1.0,1.0,1.0,0.0
+Kiko Toloza,Marrocos,away,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Marrocos,total,1,0.0,0.0,1.0,1.0
 Kiko Toloza,México,home,1,1.0,-1.0,1.0,2.0
 Kiko Toloza,México,total,1,1.0,-1.0,1.0,2.0
 Kiko Toloza,Paraguai,away,1,0.0,0.0,1.0,1.0
 Kiko Toloza,Paraguai,total,1,0.0,0.0,1.0,1.0
 Kiko Toloza,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Kiko Toloza,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Kiko Toloza,Suíça,away,1,1.0,1.0,2.0,1.0
+Kiko Toloza,Suíça,total,1,1.0,1.0,2.0,1.0
+Kiko Toloza,Turquia,away,1,2.0,2.0,2.0,0.0
+Kiko Toloza,Turquia,total,1,2.0,2.0,2.0,0.0
 Kiko Toloza,África do Sul,away,1,0.0,0.0,0.0,0.0
 Kiko Toloza,África do Sul,total,1,0.0,0.0,0.0,0.0
+LLM GPT,Alemanha,home,1,1.0,1.0,4.0,3.0
+LLM GPT,Alemanha,total,1,1.0,1.0,4.0,3.0
+LLM GPT,Austrália,home,1,1.0,-1.0,1.0,2.0
+LLM GPT,Austrália,total,1,1.0,-1.0,1.0,2.0
+LLM GPT,Brasil,home,1,1.0,1.0,2.0,1.0
+LLM GPT,Brasil,total,1,1.0,1.0,2.0,1.0
 LLM GPT,Bósnia,away,1,0.0,0.0,1.0,1.0
 LLM GPT,Bósnia,total,1,0.0,0.0,1.0,1.0
 LLM GPT,Canadá,home,1,0.0,0.0,1.0,1.0
 LLM GPT,Canadá,total,1,0.0,0.0,1.0,1.0
+LLM GPT,Catar,home,1,1.0,-1.0,0.0,1.0
+LLM GPT,Catar,total,1,1.0,-1.0,0.0,1.0
 LLM GPT,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 LLM GPT,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+LLM GPT,Curaçao,away,1,1.0,-1.0,0.0,1.0
+LLM GPT,Curaçao,total,1,1.0,-1.0,0.0,1.0
+LLM GPT,Escócia,away,1,1.0,1.0,2.0,1.0
+LLM GPT,Escócia,total,1,1.0,1.0,2.0,1.0
 LLM GPT,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 LLM GPT,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+LLM GPT,Haiti,home,1,0.0,0.0,0.0,0.0
+LLM GPT,Haiti,total,1,0.0,0.0,0.0,0.0
+LLM GPT,Marrocos,away,1,0.0,0.0,1.0,1.0
+LLM GPT,Marrocos,total,1,0.0,0.0,1.0,1.0
 LLM GPT,México,home,1,0.0,0.0,2.0,2.0
 LLM GPT,México,total,1,0.0,0.0,2.0,2.0
 LLM GPT,Paraguai,away,1,0.0,0.0,1.0,1.0
 LLM GPT,Paraguai,total,1,0.0,0.0,1.0,1.0
 LLM GPT,República Tcheca,away,1,0.0,0.0,1.0,1.0
 LLM GPT,República Tcheca,total,1,0.0,0.0,1.0,1.0
+LLM GPT,Suíça,away,1,1.0,1.0,2.0,1.0
+LLM GPT,Suíça,total,1,1.0,1.0,2.0,1.0
+LLM GPT,Turquia,away,1,2.0,2.0,2.0,0.0
+LLM GPT,Turquia,total,1,2.0,2.0,2.0,0.0
 LLM GPT,África do Sul,away,1,0.0,0.0,0.0,0.0
 LLM GPT,África do Sul,total,1,0.0,0.0,0.0,0.0
+LLM Gemini,Alemanha,home,1,1.0,1.0,4.0,3.0
+LLM Gemini,Alemanha,total,1,1.0,1.0,4.0,3.0
+LLM Gemini,Austrália,home,1,1.0,-1.0,1.0,2.0
+LLM Gemini,Austrália,total,1,1.0,-1.0,1.0,2.0
+LLM Gemini,Brasil,home,1,1.0,1.0,2.0,1.0
+LLM Gemini,Brasil,total,1,1.0,1.0,2.0,1.0
 LLM Gemini,Bósnia,away,1,0.0,0.0,1.0,1.0
 LLM Gemini,Bósnia,total,1,0.0,0.0,1.0,1.0
 LLM Gemini,Canadá,home,1,0.0,0.0,1.0,1.0
 LLM Gemini,Canadá,total,1,0.0,0.0,1.0,1.0
+LLM Gemini,Catar,home,1,1.0,-1.0,0.0,1.0
+LLM Gemini,Catar,total,1,1.0,-1.0,0.0,1.0
 LLM Gemini,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 LLM Gemini,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+LLM Gemini,Curaçao,away,1,1.0,-1.0,0.0,1.0
+LLM Gemini,Curaçao,total,1,1.0,-1.0,0.0,1.0
+LLM Gemini,Escócia,away,1,1.0,1.0,2.0,1.0
+LLM Gemini,Escócia,total,1,1.0,1.0,2.0,1.0
 LLM Gemini,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 LLM Gemini,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+LLM Gemini,Haiti,home,1,0.0,0.0,0.0,0.0
+LLM Gemini,Haiti,total,1,0.0,0.0,0.0,0.0
+LLM Gemini,Marrocos,away,1,0.0,0.0,1.0,1.0
+LLM Gemini,Marrocos,total,1,0.0,0.0,1.0,1.0
 LLM Gemini,México,home,1,0.0,0.0,2.0,2.0
 LLM Gemini,México,total,1,0.0,0.0,2.0,2.0
 LLM Gemini,Paraguai,away,1,0.0,0.0,1.0,1.0
 LLM Gemini,Paraguai,total,1,0.0,0.0,1.0,1.0
 LLM Gemini,República Tcheca,away,1,0.0,0.0,1.0,1.0
 LLM Gemini,República Tcheca,total,1,0.0,0.0,1.0,1.0
+LLM Gemini,Suíça,away,1,1.0,1.0,2.0,1.0
+LLM Gemini,Suíça,total,1,1.0,1.0,2.0,1.0
+LLM Gemini,Turquia,away,1,1.0,1.0,1.0,0.0
+LLM Gemini,Turquia,total,1,1.0,1.0,1.0,0.0
 LLM Gemini,África do Sul,away,1,1.0,1.0,1.0,0.0
 LLM Gemini,África do Sul,total,1,1.0,1.0,1.0,0.0
+Leo Fernandes,Alemanha,home,1,3.0,3.0,6.0,3.0
+Leo Fernandes,Alemanha,total,1,3.0,3.0,6.0,3.0
+Leo Fernandes,Austrália,home,1,2.0,-2.0,0.0,2.0
+Leo Fernandes,Austrália,total,1,2.0,-2.0,0.0,2.0
+Leo Fernandes,Brasil,home,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Brasil,total,1,0.0,0.0,1.0,1.0
 Leo Fernandes,Bósnia,away,1,0.0,0.0,1.0,1.0
 Leo Fernandes,Bósnia,total,1,0.0,0.0,1.0,1.0
 Leo Fernandes,Canadá,home,1,0.0,0.0,1.0,1.0
 Leo Fernandes,Canadá,total,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Catar,home,1,1.0,-1.0,0.0,1.0
+Leo Fernandes,Catar,total,1,1.0,-1.0,0.0,1.0
 Leo Fernandes,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Leo Fernandes,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Leo Fernandes,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Leo Fernandes,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Leo Fernandes,Escócia,away,1,2.0,2.0,3.0,1.0
+Leo Fernandes,Escócia,total,1,2.0,2.0,3.0,1.0
 Leo Fernandes,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Leo Fernandes,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Leo Fernandes,Haiti,home,1,0.0,0.0,0.0,0.0
+Leo Fernandes,Haiti,total,1,0.0,0.0,0.0,0.0
+Leo Fernandes,Marrocos,away,1,1.0,-1.0,0.0,1.0
+Leo Fernandes,Marrocos,total,1,1.0,-1.0,0.0,1.0
 Leo Fernandes,México,home,1,0.0,0.0,2.0,2.0
 Leo Fernandes,México,total,1,0.0,0.0,2.0,2.0
 Leo Fernandes,Paraguai,away,1,0.0,0.0,1.0,1.0
 Leo Fernandes,Paraguai,total,1,0.0,0.0,1.0,1.0
 Leo Fernandes,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Leo Fernandes,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Leo Fernandes,Suíça,away,1,1.0,1.0,2.0,1.0
+Leo Fernandes,Suíça,total,1,1.0,1.0,2.0,1.0
+Leo Fernandes,Turquia,away,1,2.0,2.0,2.0,0.0
+Leo Fernandes,Turquia,total,1,2.0,2.0,2.0,0.0
 Leo Fernandes,África do Sul,away,1,0.0,0.0,0.0,0.0
 Leo Fernandes,África do Sul,total,1,0.0,0.0,0.0,0.0
+Luca Caviglia Del Soldato,Alemanha,home,1,0.0,0.0,3.0,3.0
+Luca Caviglia Del Soldato,Alemanha,total,1,0.0,0.0,3.0,3.0
+Luca Caviglia Del Soldato,Austrália,home,1,1.0,-1.0,1.0,2.0
+Luca Caviglia Del Soldato,Austrália,total,1,1.0,-1.0,1.0,2.0
+Luca Caviglia Del Soldato,Brasil,home,1,1.0,1.0,2.0,1.0
+Luca Caviglia Del Soldato,Brasil,total,1,1.0,1.0,2.0,1.0
 Luca Caviglia Del Soldato,Bósnia,away,1,0.0,0.0,1.0,1.0
 Luca Caviglia Del Soldato,Bósnia,total,1,0.0,0.0,1.0,1.0
 Luca Caviglia Del Soldato,Canadá,home,1,0.0,0.0,1.0,1.0
 Luca Caviglia Del Soldato,Canadá,total,1,0.0,0.0,1.0,1.0
+Luca Caviglia Del Soldato,Catar,home,1,1.0,-1.0,0.0,1.0
+Luca Caviglia Del Soldato,Catar,total,1,1.0,-1.0,0.0,1.0
 Luca Caviglia Del Soldato,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Luca Caviglia Del Soldato,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Luca Caviglia Del Soldato,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Luca Caviglia Del Soldato,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Luca Caviglia Del Soldato,Escócia,away,1,1.0,1.0,2.0,1.0
+Luca Caviglia Del Soldato,Escócia,total,1,1.0,1.0,2.0,1.0
 Luca Caviglia Del Soldato,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Luca Caviglia Del Soldato,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Luca Caviglia Del Soldato,Haiti,home,1,1.0,1.0,1.0,0.0
+Luca Caviglia Del Soldato,Haiti,total,1,1.0,1.0,1.0,0.0
+Luca Caviglia Del Soldato,Marrocos,away,1,1.0,1.0,2.0,1.0
+Luca Caviglia Del Soldato,Marrocos,total,1,1.0,1.0,2.0,1.0
 Luca Caviglia Del Soldato,México,home,1,0.0,0.0,2.0,2.0
 Luca Caviglia Del Soldato,México,total,1,0.0,0.0,2.0,2.0
 Luca Caviglia Del Soldato,Paraguai,away,1,0.0,0.0,1.0,1.0
 Luca Caviglia Del Soldato,Paraguai,total,1,0.0,0.0,1.0,1.0
 Luca Caviglia Del Soldato,República Tcheca,away,1,1.0,1.0,2.0,1.0
 Luca Caviglia Del Soldato,República Tcheca,total,1,1.0,1.0,2.0,1.0
+Luca Caviglia Del Soldato,Suíça,away,1,0.0,0.0,1.0,1.0
+Luca Caviglia Del Soldato,Suíça,total,1,0.0,0.0,1.0,1.0
+Luca Caviglia Del Soldato,Turquia,away,1,2.0,2.0,2.0,0.0
+Luca Caviglia Del Soldato,Turquia,total,1,2.0,2.0,2.0,0.0
 Luca Caviglia Del Soldato,África do Sul,away,1,1.0,1.0,1.0,0.0
 Luca Caviglia Del Soldato,África do Sul,total,1,1.0,1.0,1.0,0.0
+Lucas Ubertini,Alemanha,home,1,0.0,0.0,3.0,3.0
+Lucas Ubertini,Alemanha,total,1,0.0,0.0,3.0,3.0
+Lucas Ubertini,Austrália,home,1,1.0,-1.0,1.0,2.0
+Lucas Ubertini,Austrália,total,1,1.0,-1.0,1.0,2.0
+Lucas Ubertini,Brasil,home,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Brasil,total,1,1.0,1.0,2.0,1.0
 Lucas Ubertini,Bósnia,away,1,1.0,-1.0,0.0,1.0
 Lucas Ubertini,Bósnia,total,1,1.0,-1.0,0.0,1.0
 Lucas Ubertini,Canadá,home,1,0.0,0.0,1.0,1.0
 Lucas Ubertini,Canadá,total,1,0.0,0.0,1.0,1.0
+Lucas Ubertini,Catar,home,1,1.0,-1.0,0.0,1.0
+Lucas Ubertini,Catar,total,1,1.0,-1.0,0.0,1.0
 Lucas Ubertini,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Lucas Ubertini,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Lucas Ubertini,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Lucas Ubertini,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Lucas Ubertini,Escócia,away,1,2.0,2.0,3.0,1.0
+Lucas Ubertini,Escócia,total,1,2.0,2.0,3.0,1.0
 Lucas Ubertini,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Lucas Ubertini,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Lucas Ubertini,Haiti,home,1,0.0,0.0,0.0,0.0
+Lucas Ubertini,Haiti,total,1,0.0,0.0,0.0,0.0
+Lucas Ubertini,Marrocos,away,1,0.0,0.0,1.0,1.0
+Lucas Ubertini,Marrocos,total,1,0.0,0.0,1.0,1.0
 Lucas Ubertini,México,home,1,0.0,0.0,2.0,2.0
 Lucas Ubertini,México,total,1,0.0,0.0,2.0,2.0
 Lucas Ubertini,Paraguai,away,1,0.0,0.0,1.0,1.0
 Lucas Ubertini,Paraguai,total,1,0.0,0.0,1.0,1.0
 Lucas Ubertini,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Lucas Ubertini,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Lucas Ubertini,Suíça,away,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Suíça,total,1,1.0,1.0,2.0,1.0
+Lucas Ubertini,Turquia,away,1,2.0,2.0,2.0,0.0
+Lucas Ubertini,Turquia,total,1,2.0,2.0,2.0,0.0
 Lucas Ubertini,África do Sul,away,1,0.0,0.0,0.0,0.0
 Lucas Ubertini,África do Sul,total,1,0.0,0.0,0.0,0.0
+Luiz Augusto,Alemanha,home,1,1.0,1.0,4.0,3.0
+Luiz Augusto,Alemanha,total,1,1.0,1.0,4.0,3.0
+Luiz Augusto,Austrália,home,1,0.0,0.0,2.0,2.0
+Luiz Augusto,Austrália,total,1,0.0,0.0,2.0,2.0
+Luiz Augusto,Brasil,home,1,2.0,2.0,3.0,1.0
+Luiz Augusto,Brasil,total,1,2.0,2.0,3.0,1.0
 Luiz Augusto,Bósnia,away,1,0.0,0.0,1.0,1.0
 Luiz Augusto,Bósnia,total,1,0.0,0.0,1.0,1.0
 Luiz Augusto,Canadá,home,1,1.0,1.0,2.0,1.0
 Luiz Augusto,Canadá,total,1,1.0,1.0,2.0,1.0
+Luiz Augusto,Catar,home,1,1.0,-1.0,0.0,1.0
+Luiz Augusto,Catar,total,1,1.0,-1.0,0.0,1.0
 Luiz Augusto,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Luiz Augusto,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Luiz Augusto,Curaçao,away,1,0.0,0.0,1.0,1.0
+Luiz Augusto,Curaçao,total,1,0.0,0.0,1.0,1.0
+Luiz Augusto,Escócia,away,1,1.0,1.0,2.0,1.0
+Luiz Augusto,Escócia,total,1,1.0,1.0,2.0,1.0
 Luiz Augusto,Estados Unidos,home,1,1.0,-1.0,3.0,4.0
 Luiz Augusto,Estados Unidos,total,1,1.0,-1.0,3.0,4.0
+Luiz Augusto,Haiti,home,1,1.0,1.0,1.0,0.0
+Luiz Augusto,Haiti,total,1,1.0,1.0,1.0,0.0
+Luiz Augusto,Marrocos,away,1,1.0,-1.0,0.0,1.0
+Luiz Augusto,Marrocos,total,1,1.0,-1.0,0.0,1.0
 Luiz Augusto,México,home,1,0.0,0.0,2.0,2.0
 Luiz Augusto,México,total,1,0.0,0.0,2.0,2.0
 Luiz Augusto,Paraguai,away,1,0.0,0.0,1.0,1.0
 Luiz Augusto,Paraguai,total,1,0.0,0.0,1.0,1.0
 Luiz Augusto,República Tcheca,away,1,1.0,1.0,2.0,1.0
 Luiz Augusto,República Tcheca,total,1,1.0,1.0,2.0,1.0
+Luiz Augusto,Suíça,away,1,0.0,0.0,1.0,1.0
+Luiz Augusto,Suíça,total,1,0.0,0.0,1.0,1.0
+Luiz Augusto,Turquia,away,1,0.0,0.0,0.0,0.0
+Luiz Augusto,Turquia,total,1,0.0,0.0,0.0,0.0
 Luiz Augusto,África do Sul,away,1,1.0,1.0,1.0,0.0
 Luiz Augusto,África do Sul,total,1,1.0,1.0,1.0,0.0
+Marcelo,Alemanha,home,1,1.0,1.0,4.0,3.0
+Marcelo,Alemanha,total,1,1.0,1.0,4.0,3.0
+Marcelo,Austrália,home,1,2.0,-2.0,0.0,2.0
+Marcelo,Austrália,total,1,2.0,-2.0,0.0,2.0
+Marcelo,Brasil,home,1,1.0,1.0,2.0,1.0
+Marcelo,Brasil,total,1,1.0,1.0,2.0,1.0
 Marcelo,Bósnia,away,1,0.0,0.0,1.0,1.0
 Marcelo,Bósnia,total,1,0.0,0.0,1.0,1.0
 Marcelo,Canadá,home,1,1.0,1.0,2.0,1.0
 Marcelo,Canadá,total,1,1.0,1.0,2.0,1.0
+Marcelo,Catar,home,1,1.0,-1.0,0.0,1.0
+Marcelo,Catar,total,1,1.0,-1.0,0.0,1.0
 Marcelo,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Marcelo,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Marcelo,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Marcelo,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Marcelo,Escócia,away,1,1.0,1.0,2.0,1.0
+Marcelo,Escócia,total,1,1.0,1.0,2.0,1.0
 Marcelo,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Marcelo,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Marcelo,Haiti,home,1,1.0,1.0,1.0,0.0
+Marcelo,Haiti,total,1,1.0,1.0,1.0,0.0
+Marcelo,Marrocos,away,1,0.0,0.0,1.0,1.0
+Marcelo,Marrocos,total,1,0.0,0.0,1.0,1.0
 Marcelo,México,home,1,0.0,0.0,2.0,2.0
 Marcelo,México,total,1,0.0,0.0,2.0,2.0
 Marcelo,Paraguai,away,1,0.0,0.0,1.0,1.0
 Marcelo,Paraguai,total,1,0.0,0.0,1.0,1.0
 Marcelo,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Marcelo,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Marcelo,Suíça,away,1,1.0,1.0,2.0,1.0
+Marcelo,Suíça,total,1,1.0,1.0,2.0,1.0
+Marcelo,Turquia,away,1,2.0,2.0,2.0,0.0
+Marcelo,Turquia,total,1,2.0,2.0,2.0,0.0
 Marcelo,África do Sul,away,1,0.0,0.0,0.0,0.0
 Marcelo,África do Sul,total,1,0.0,0.0,0.0,0.0
+Marcelo Boix,Alemanha,home,1,0.0,0.0,3.0,3.0
+Marcelo Boix,Alemanha,total,1,0.0,0.0,3.0,3.0
+Marcelo Boix,Austrália,home,1,1.0,-1.0,1.0,2.0
+Marcelo Boix,Austrália,total,1,1.0,-1.0,1.0,2.0
+Marcelo Boix,Brasil,home,1,0.0,0.0,1.0,1.0
+Marcelo Boix,Brasil,total,1,0.0,0.0,1.0,1.0
 Marcelo Boix,Bósnia,away,1,0.0,0.0,1.0,1.0
 Marcelo Boix,Bósnia,total,1,0.0,0.0,1.0,1.0
 Marcelo Boix,Canadá,home,1,1.0,1.0,2.0,1.0
 Marcelo Boix,Canadá,total,1,1.0,1.0,2.0,1.0
+Marcelo Boix,Catar,home,1,1.0,-1.0,0.0,1.0
+Marcelo Boix,Catar,total,1,1.0,-1.0,0.0,1.0
 Marcelo Boix,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Marcelo Boix,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Marcelo Boix,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Marcelo Boix,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Marcelo Boix,Escócia,away,1,1.0,1.0,2.0,1.0
+Marcelo Boix,Escócia,total,1,1.0,1.0,2.0,1.0
 Marcelo Boix,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Marcelo Boix,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Marcelo Boix,Haiti,home,1,0.0,0.0,0.0,0.0
+Marcelo Boix,Haiti,total,1,0.0,0.0,0.0,0.0
+Marcelo Boix,Marrocos,away,1,1.0,-1.0,0.0,1.0
+Marcelo Boix,Marrocos,total,1,1.0,-1.0,0.0,1.0
 Marcelo Boix,México,home,1,0.0,0.0,2.0,2.0
 Marcelo Boix,México,total,1,0.0,0.0,2.0,2.0
 Marcelo Boix,Paraguai,away,1,0.0,0.0,1.0,1.0
 Marcelo Boix,Paraguai,total,1,0.0,0.0,1.0,1.0
 Marcelo Boix,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Marcelo Boix,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Marcelo Boix,Suíça,away,1,1.0,1.0,2.0,1.0
+Marcelo Boix,Suíça,total,1,1.0,1.0,2.0,1.0
+Marcelo Boix,Turquia,away,1,2.0,2.0,2.0,0.0
+Marcelo Boix,Turquia,total,1,2.0,2.0,2.0,0.0
 Marcelo Boix,África do Sul,away,1,0.0,0.0,0.0,0.0
 Marcelo Boix,África do Sul,total,1,0.0,0.0,0.0,0.0
+Marco Lavander,Alemanha,home,1,0.0,0.0,3.0,3.0
+Marco Lavander,Alemanha,total,1,0.0,0.0,3.0,3.0
+Marco Lavander,Austrália,home,1,2.0,-2.0,0.0,2.0
+Marco Lavander,Austrália,total,1,2.0,-2.0,0.0,2.0
+Marco Lavander,Brasil,home,1,1.0,1.0,2.0,1.0
+Marco Lavander,Brasil,total,1,1.0,1.0,2.0,1.0
 Marco Lavander,Bósnia,away,1,1.0,1.0,2.0,1.0
 Marco Lavander,Bósnia,total,1,1.0,1.0,2.0,1.0
 Marco Lavander,Canadá,home,1,1.0,1.0,2.0,1.0
 Marco Lavander,Canadá,total,1,1.0,1.0,2.0,1.0
+Marco Lavander,Catar,home,1,0.0,0.0,1.0,1.0
+Marco Lavander,Catar,total,1,0.0,0.0,1.0,1.0
 Marco Lavander,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Marco Lavander,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Marco Lavander,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Marco Lavander,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Marco Lavander,Escócia,away,1,2.0,2.0,3.0,1.0
+Marco Lavander,Escócia,total,1,2.0,2.0,3.0,1.0
 Marco Lavander,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Marco Lavander,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Marco Lavander,Haiti,home,1,0.0,0.0,0.0,0.0
+Marco Lavander,Haiti,total,1,0.0,0.0,0.0,0.0
+Marco Lavander,Marrocos,away,1,0.0,0.0,1.0,1.0
+Marco Lavander,Marrocos,total,1,0.0,0.0,1.0,1.0
 Marco Lavander,México,home,1,0.0,0.0,2.0,2.0
 Marco Lavander,México,total,1,0.0,0.0,2.0,2.0
 Marco Lavander,Paraguai,away,1,0.0,0.0,1.0,1.0
 Marco Lavander,Paraguai,total,1,0.0,0.0,1.0,1.0
 Marco Lavander,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Marco Lavander,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Marco Lavander,Suíça,away,1,2.0,2.0,3.0,1.0
+Marco Lavander,Suíça,total,1,2.0,2.0,3.0,1.0
+Marco Lavander,Turquia,away,1,2.0,2.0,2.0,0.0
+Marco Lavander,Turquia,total,1,2.0,2.0,2.0,0.0
 Marco Lavander,África do Sul,away,1,0.0,0.0,0.0,0.0
 Marco Lavander,África do Sul,total,1,0.0,0.0,0.0,0.0
+Mateus Tone,Alemanha,home,1,2.0,2.0,5.0,3.0
+Mateus Tone,Alemanha,total,1,2.0,2.0,5.0,3.0
+Mateus Tone,Austrália,home,1,1.0,-1.0,1.0,2.0
+Mateus Tone,Austrália,total,1,1.0,-1.0,1.0,2.0
+Mateus Tone,Brasil,home,1,1.0,1.0,2.0,1.0
+Mateus Tone,Brasil,total,1,1.0,1.0,2.0,1.0
 Mateus Tone,Bósnia,away,1,0.0,0.0,1.0,1.0
 Mateus Tone,Bósnia,total,1,0.0,0.0,1.0,1.0
 Mateus Tone,Canadá,home,1,0.0,0.0,1.0,1.0
 Mateus Tone,Canadá,total,1,0.0,0.0,1.0,1.0
+Mateus Tone,Catar,home,1,1.0,-1.0,0.0,1.0
+Mateus Tone,Catar,total,1,1.0,-1.0,0.0,1.0
 Mateus Tone,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Mateus Tone,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Mateus Tone,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Mateus Tone,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Mateus Tone,Escócia,away,1,1.0,1.0,2.0,1.0
+Mateus Tone,Escócia,total,1,1.0,1.0,2.0,1.0
 Mateus Tone,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Mateus Tone,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Mateus Tone,Haiti,home,1,1.0,1.0,1.0,0.0
+Mateus Tone,Haiti,total,1,1.0,1.0,1.0,0.0
+Mateus Tone,Marrocos,away,1,0.0,0.0,1.0,1.0
+Mateus Tone,Marrocos,total,1,0.0,0.0,1.0,1.0
 Mateus Tone,México,home,1,0.0,0.0,2.0,2.0
 Mateus Tone,México,total,1,0.0,0.0,2.0,2.0
 Mateus Tone,Paraguai,away,1,1.0,1.0,2.0,1.0
 Mateus Tone,Paraguai,total,1,1.0,1.0,2.0,1.0
 Mateus Tone,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Mateus Tone,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Mateus Tone,Suíça,away,1,2.0,2.0,3.0,1.0
+Mateus Tone,Suíça,total,1,2.0,2.0,3.0,1.0
+Mateus Tone,Turquia,away,1,2.0,2.0,2.0,0.0
+Mateus Tone,Turquia,total,1,2.0,2.0,2.0,0.0
 Mateus Tone,África do Sul,away,1,0.0,0.0,0.0,0.0
 Mateus Tone,África do Sul,total,1,0.0,0.0,0.0,0.0
+Mauricio Saraiva,Alemanha,home,1,2.0,2.0,5.0,3.0
+Mauricio Saraiva,Alemanha,total,1,2.0,2.0,5.0,3.0
+Mauricio Saraiva,Austrália,home,1,1.0,-1.0,1.0,2.0
+Mauricio Saraiva,Austrália,total,1,1.0,-1.0,1.0,2.0
+Mauricio Saraiva,Brasil,home,1,0.0,0.0,1.0,1.0
+Mauricio Saraiva,Brasil,total,1,0.0,0.0,1.0,1.0
 Mauricio Saraiva,Bósnia,away,1,0.0,0.0,1.0,1.0
 Mauricio Saraiva,Bósnia,total,1,0.0,0.0,1.0,1.0
 Mauricio Saraiva,Canadá,home,1,0.0,0.0,1.0,1.0
 Mauricio Saraiva,Canadá,total,1,0.0,0.0,1.0,1.0
+Mauricio Saraiva,Catar,home,1,1.0,-1.0,0.0,1.0
+Mauricio Saraiva,Catar,total,1,1.0,-1.0,0.0,1.0
 Mauricio Saraiva,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Mauricio Saraiva,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Mauricio Saraiva,Curaçao,away,1,0.0,0.0,1.0,1.0
+Mauricio Saraiva,Curaçao,total,1,0.0,0.0,1.0,1.0
+Mauricio Saraiva,Escócia,away,1,1.0,1.0,2.0,1.0
+Mauricio Saraiva,Escócia,total,1,1.0,1.0,2.0,1.0
 Mauricio Saraiva,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Mauricio Saraiva,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Mauricio Saraiva,Haiti,home,1,0.0,0.0,0.0,0.0
+Mauricio Saraiva,Haiti,total,1,0.0,0.0,0.0,0.0
+Mauricio Saraiva,Marrocos,away,1,0.0,0.0,1.0,1.0
+Mauricio Saraiva,Marrocos,total,1,0.0,0.0,1.0,1.0
 Mauricio Saraiva,México,home,1,1.0,1.0,3.0,2.0
 Mauricio Saraiva,México,total,1,1.0,1.0,3.0,2.0
 Mauricio Saraiva,Paraguai,away,1,1.0,1.0,2.0,1.0
 Mauricio Saraiva,Paraguai,total,1,1.0,1.0,2.0,1.0
 Mauricio Saraiva,República Tcheca,away,1,1.0,-1.0,0.0,1.0
 Mauricio Saraiva,República Tcheca,total,1,1.0,-1.0,0.0,1.0
+Mauricio Saraiva,Suíça,away,1,2.0,2.0,3.0,1.0
+Mauricio Saraiva,Suíça,total,1,2.0,2.0,3.0,1.0
+Mauricio Saraiva,Turquia,away,1,2.0,2.0,2.0,0.0
+Mauricio Saraiva,Turquia,total,1,2.0,2.0,2.0,0.0
 Mauricio Saraiva,África do Sul,away,1,1.0,1.0,1.0,0.0
 Mauricio Saraiva,África do Sul,total,1,1.0,1.0,1.0,0.0
+Pedro Tayer,Alemanha,home,1,1.0,1.0,4.0,3.0
+Pedro Tayer,Alemanha,total,1,1.0,1.0,4.0,3.0
+Pedro Tayer,Austrália,home,1,2.0,-2.0,0.0,2.0
+Pedro Tayer,Austrália,total,1,2.0,-2.0,0.0,2.0
+Pedro Tayer,Brasil,home,1,2.0,2.0,3.0,1.0
+Pedro Tayer,Brasil,total,1,2.0,2.0,3.0,1.0
 Pedro Tayer,Bósnia,away,1,0.0,0.0,1.0,1.0
 Pedro Tayer,Bósnia,total,1,0.0,0.0,1.0,1.0
 Pedro Tayer,Canadá,home,1,1.0,1.0,2.0,1.0
 Pedro Tayer,Canadá,total,1,1.0,1.0,2.0,1.0
+Pedro Tayer,Catar,home,1,1.0,-1.0,0.0,1.0
+Pedro Tayer,Catar,total,1,1.0,-1.0,0.0,1.0
 Pedro Tayer,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Pedro Tayer,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Pedro Tayer,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Pedro Tayer,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Pedro Tayer,Escócia,away,1,1.0,1.0,2.0,1.0
+Pedro Tayer,Escócia,total,1,1.0,1.0,2.0,1.0
 Pedro Tayer,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Pedro Tayer,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Pedro Tayer,Haiti,home,1,0.0,0.0,0.0,0.0
+Pedro Tayer,Haiti,total,1,0.0,0.0,0.0,0.0
+Pedro Tayer,Marrocos,away,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Marrocos,total,1,0.0,0.0,1.0,1.0
 Pedro Tayer,México,home,1,0.0,0.0,2.0,2.0
 Pedro Tayer,México,total,1,0.0,0.0,2.0,2.0
 Pedro Tayer,Paraguai,away,1,0.0,0.0,1.0,1.0
 Pedro Tayer,Paraguai,total,1,0.0,0.0,1.0,1.0
 Pedro Tayer,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Pedro Tayer,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Pedro Tayer,Suíça,away,1,2.0,2.0,3.0,1.0
+Pedro Tayer,Suíça,total,1,2.0,2.0,3.0,1.0
+Pedro Tayer,Turquia,away,1,2.0,2.0,2.0,0.0
+Pedro Tayer,Turquia,total,1,2.0,2.0,2.0,0.0
 Pedro Tayer,África do Sul,away,1,0.0,0.0,0.0,0.0
 Pedro Tayer,África do Sul,total,1,0.0,0.0,0.0,0.0
+RODRIGO ALBERNAZ,Alemanha,home,1,0.0,0.0,3.0,3.0
+RODRIGO ALBERNAZ,Alemanha,total,1,0.0,0.0,3.0,3.0
+RODRIGO ALBERNAZ,Austrália,home,1,1.0,-1.0,1.0,2.0
+RODRIGO ALBERNAZ,Austrália,total,1,1.0,-1.0,1.0,2.0
+RODRIGO ALBERNAZ,Brasil,home,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Brasil,total,1,1.0,1.0,2.0,1.0
 RODRIGO ALBERNAZ,Bósnia,away,1,0.0,0.0,1.0,1.0
 RODRIGO ALBERNAZ,Bósnia,total,1,0.0,0.0,1.0,1.0
 RODRIGO ALBERNAZ,Canadá,home,1,0.0,0.0,1.0,1.0
 RODRIGO ALBERNAZ,Canadá,total,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Catar,home,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Catar,total,1,0.0,0.0,1.0,1.0
 RODRIGO ALBERNAZ,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 RODRIGO ALBERNAZ,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+RODRIGO ALBERNAZ,Curaçao,away,1,1.0,-1.0,0.0,1.0
+RODRIGO ALBERNAZ,Curaçao,total,1,1.0,-1.0,0.0,1.0
+RODRIGO ALBERNAZ,Escócia,away,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Escócia,total,1,1.0,1.0,2.0,1.0
 RODRIGO ALBERNAZ,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 RODRIGO ALBERNAZ,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+RODRIGO ALBERNAZ,Haiti,home,1,2.0,2.0,2.0,0.0
+RODRIGO ALBERNAZ,Haiti,total,1,2.0,2.0,2.0,0.0
+RODRIGO ALBERNAZ,Marrocos,away,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Marrocos,total,1,1.0,1.0,2.0,1.0
 RODRIGO ALBERNAZ,México,home,1,0.0,0.0,2.0,2.0
 RODRIGO ALBERNAZ,México,total,1,0.0,0.0,2.0,2.0
 RODRIGO ALBERNAZ,Paraguai,away,1,1.0,1.0,2.0,1.0
 RODRIGO ALBERNAZ,Paraguai,total,1,1.0,1.0,2.0,1.0
 RODRIGO ALBERNAZ,República Tcheca,away,1,0.0,0.0,1.0,1.0
 RODRIGO ALBERNAZ,República Tcheca,total,1,0.0,0.0,1.0,1.0
+RODRIGO ALBERNAZ,Suíça,away,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Suíça,total,1,1.0,1.0,2.0,1.0
+RODRIGO ALBERNAZ,Turquia,away,1,2.0,2.0,2.0,0.0
+RODRIGO ALBERNAZ,Turquia,total,1,2.0,2.0,2.0,0.0
 RODRIGO ALBERNAZ,África do Sul,away,1,1.0,1.0,1.0,0.0
 RODRIGO ALBERNAZ,África do Sul,total,1,1.0,1.0,1.0,0.0
+Rafael Conte,Alemanha,home,1,2.0,2.0,5.0,3.0
+Rafael Conte,Alemanha,total,1,2.0,2.0,5.0,3.0
+Rafael Conte,Austrália,home,1,2.0,-2.0,0.0,2.0
+Rafael Conte,Austrália,total,1,2.0,-2.0,0.0,2.0
+Rafael Conte,Brasil,home,1,1.0,1.0,2.0,1.0
+Rafael Conte,Brasil,total,1,1.0,1.0,2.0,1.0
 Rafael Conte,Bósnia,away,1,0.0,0.0,1.0,1.0
 Rafael Conte,Bósnia,total,1,0.0,0.0,1.0,1.0
 Rafael Conte,Canadá,home,1,0.0,0.0,1.0,1.0
 Rafael Conte,Canadá,total,1,0.0,0.0,1.0,1.0
+Rafael Conte,Catar,home,1,1.0,-1.0,0.0,1.0
+Rafael Conte,Catar,total,1,1.0,-1.0,0.0,1.0
 Rafael Conte,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Rafael Conte,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Rafael Conte,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Rafael Conte,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Rafael Conte,Escócia,away,1,1.0,1.0,2.0,1.0
+Rafael Conte,Escócia,total,1,1.0,1.0,2.0,1.0
 Rafael Conte,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Rafael Conte,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Rafael Conte,Haiti,home,1,0.0,0.0,0.0,0.0
+Rafael Conte,Haiti,total,1,0.0,0.0,0.0,0.0
+Rafael Conte,Marrocos,away,1,1.0,-1.0,0.0,1.0
+Rafael Conte,Marrocos,total,1,1.0,-1.0,0.0,1.0
 Rafael Conte,México,home,1,0.0,0.0,2.0,2.0
 Rafael Conte,México,total,1,0.0,0.0,2.0,2.0
 Rafael Conte,Paraguai,away,1,0.0,0.0,1.0,1.0
 Rafael Conte,Paraguai,total,1,0.0,0.0,1.0,1.0
 Rafael Conte,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Rafael Conte,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Rafael Conte,Suíça,away,1,2.0,2.0,3.0,1.0
+Rafael Conte,Suíça,total,1,2.0,2.0,3.0,1.0
+Rafael Conte,Turquia,away,1,2.0,2.0,2.0,0.0
+Rafael Conte,Turquia,total,1,2.0,2.0,2.0,0.0
 Rafael Conte,África do Sul,away,1,0.0,0.0,0.0,0.0
 Rafael Conte,África do Sul,total,1,0.0,0.0,0.0,0.0
+Thales Oliveira,Alemanha,home,1,2.0,2.0,5.0,3.0
+Thales Oliveira,Alemanha,total,1,2.0,2.0,5.0,3.0
+Thales Oliveira,Austrália,home,1,1.0,-1.0,1.0,2.0
+Thales Oliveira,Austrália,total,1,1.0,-1.0,1.0,2.0
+Thales Oliveira,Brasil,home,1,1.0,1.0,2.0,1.0
+Thales Oliveira,Brasil,total,1,1.0,1.0,2.0,1.0
 Thales Oliveira,Bósnia,away,1,1.0,1.0,2.0,1.0
 Thales Oliveira,Bósnia,total,1,1.0,1.0,2.0,1.0
 Thales Oliveira,Canadá,home,1,0.0,0.0,1.0,1.0
 Thales Oliveira,Canadá,total,1,0.0,0.0,1.0,1.0
+Thales Oliveira,Catar,home,1,1.0,-1.0,0.0,1.0
+Thales Oliveira,Catar,total,1,1.0,-1.0,0.0,1.0
 Thales Oliveira,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Thales Oliveira,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Thales Oliveira,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Thales Oliveira,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Thales Oliveira,Escócia,away,1,4.0,4.0,5.0,1.0
+Thales Oliveira,Escócia,total,1,4.0,4.0,5.0,1.0
 Thales Oliveira,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Thales Oliveira,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Thales Oliveira,Haiti,home,1,0.0,0.0,0.0,0.0
+Thales Oliveira,Haiti,total,1,0.0,0.0,0.0,0.0
+Thales Oliveira,Marrocos,away,1,0.0,0.0,1.0,1.0
+Thales Oliveira,Marrocos,total,1,0.0,0.0,1.0,1.0
 Thales Oliveira,México,home,1,1.0,-1.0,1.0,2.0
 Thales Oliveira,México,total,1,1.0,-1.0,1.0,2.0
 Thales Oliveira,Paraguai,away,1,1.0,1.0,2.0,1.0
 Thales Oliveira,Paraguai,total,1,1.0,1.0,2.0,1.0
 Thales Oliveira,República Tcheca,away,1,1.0,1.0,2.0,1.0
 Thales Oliveira,República Tcheca,total,1,1.0,1.0,2.0,1.0
+Thales Oliveira,Suíça,away,1,2.0,2.0,3.0,1.0
+Thales Oliveira,Suíça,total,1,2.0,2.0,3.0,1.0
+Thales Oliveira,Turquia,away,1,3.0,3.0,3.0,0.0
+Thales Oliveira,Turquia,total,1,3.0,3.0,3.0,0.0
 Thales Oliveira,África do Sul,away,1,1.0,1.0,1.0,0.0
 Thales Oliveira,África do Sul,total,1,1.0,1.0,1.0,0.0
+Thiago Bahiense,Alemanha,home,1,2.0,2.0,5.0,3.0
+Thiago Bahiense,Alemanha,total,1,2.0,2.0,5.0,3.0
+Thiago Bahiense,Austrália,home,1,2.0,-2.0,0.0,2.0
+Thiago Bahiense,Austrália,total,1,2.0,-2.0,0.0,2.0
+Thiago Bahiense,Brasil,home,1,0.0,0.0,1.0,1.0
+Thiago Bahiense,Brasil,total,1,0.0,0.0,1.0,1.0
 Thiago Bahiense,Bósnia,away,1,0.0,0.0,1.0,1.0
 Thiago Bahiense,Bósnia,total,1,0.0,0.0,1.0,1.0
 Thiago Bahiense,Canadá,home,1,1.0,1.0,2.0,1.0
 Thiago Bahiense,Canadá,total,1,1.0,1.0,2.0,1.0
+Thiago Bahiense,Catar,home,1,1.0,-1.0,0.0,1.0
+Thiago Bahiense,Catar,total,1,1.0,-1.0,0.0,1.0
 Thiago Bahiense,Coréia do Sul,home,1,0.0,0.0,2.0,2.0
 Thiago Bahiense,Coréia do Sul,total,1,0.0,0.0,2.0,2.0
+Thiago Bahiense,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Thiago Bahiense,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Thiago Bahiense,Escócia,away,1,2.0,2.0,3.0,1.0
+Thiago Bahiense,Escócia,total,1,2.0,2.0,3.0,1.0
 Thiago Bahiense,Estados Unidos,home,1,3.0,-3.0,1.0,4.0
 Thiago Bahiense,Estados Unidos,total,1,3.0,-3.0,1.0,4.0
+Thiago Bahiense,Haiti,home,1,0.0,0.0,0.0,0.0
+Thiago Bahiense,Haiti,total,1,0.0,0.0,0.0,0.0
+Thiago Bahiense,Marrocos,away,1,0.0,0.0,1.0,1.0
+Thiago Bahiense,Marrocos,total,1,0.0,0.0,1.0,1.0
 Thiago Bahiense,México,home,1,0.0,0.0,2.0,2.0
 Thiago Bahiense,México,total,1,0.0,0.0,2.0,2.0
 Thiago Bahiense,Paraguai,away,1,1.0,-1.0,0.0,1.0
 Thiago Bahiense,Paraguai,total,1,1.0,-1.0,0.0,1.0
 Thiago Bahiense,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Thiago Bahiense,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Thiago Bahiense,Suíça,away,1,2.0,2.0,3.0,1.0
+Thiago Bahiense,Suíça,total,1,2.0,2.0,3.0,1.0
+Thiago Bahiense,Turquia,away,1,2.0,2.0,2.0,0.0
+Thiago Bahiense,Turquia,total,1,2.0,2.0,2.0,0.0
 Thiago Bahiense,África do Sul,away,1,0.0,0.0,0.0,0.0
 Thiago Bahiense,África do Sul,total,1,0.0,0.0,0.0,0.0
+Tiago,Alemanha,home,1,2.0,2.0,5.0,3.0
+Tiago,Alemanha,total,1,2.0,2.0,5.0,3.0
+Tiago,Austrália,home,1,1.0,-1.0,1.0,2.0
+Tiago,Austrália,total,1,1.0,-1.0,1.0,2.0
+Tiago,Brasil,home,1,1.0,1.0,2.0,1.0
+Tiago,Brasil,total,1,1.0,1.0,2.0,1.0
 Tiago,Bósnia,away,1,0.0,0.0,1.0,1.0
 Tiago,Bósnia,total,1,0.0,0.0,1.0,1.0
 Tiago,Canadá,home,1,0.0,0.0,1.0,1.0
 Tiago,Canadá,total,1,0.0,0.0,1.0,1.0
+Tiago,Catar,home,1,1.0,-1.0,0.0,1.0
+Tiago,Catar,total,1,1.0,-1.0,0.0,1.0
 Tiago,Coréia do Sul,home,1,1.0,-1.0,1.0,2.0
 Tiago,Coréia do Sul,total,1,1.0,-1.0,1.0,2.0
+Tiago,Curaçao,away,1,1.0,-1.0,0.0,1.0
+Tiago,Curaçao,total,1,1.0,-1.0,0.0,1.0
+Tiago,Escócia,away,1,1.0,1.0,2.0,1.0
+Tiago,Escócia,total,1,1.0,1.0,2.0,1.0
 Tiago,Estados Unidos,home,1,2.0,-2.0,2.0,4.0
 Tiago,Estados Unidos,total,1,2.0,-2.0,2.0,4.0
+Tiago,Haiti,home,1,0.0,0.0,0.0,0.0
+Tiago,Haiti,total,1,0.0,0.0,0.0,0.0
+Tiago,Marrocos,away,1,0.0,0.0,1.0,1.0
+Tiago,Marrocos,total,1,0.0,0.0,1.0,1.0
 Tiago,México,home,1,0.0,0.0,2.0,2.0
 Tiago,México,total,1,0.0,0.0,2.0,2.0
 Tiago,Paraguai,away,1,0.0,0.0,1.0,1.0
 Tiago,Paraguai,total,1,0.0,0.0,1.0,1.0
 Tiago,República Tcheca,away,1,0.0,0.0,1.0,1.0
 Tiago,República Tcheca,total,1,0.0,0.0,1.0,1.0
+Tiago,Suíça,away,1,1.0,1.0,2.0,1.0
+Tiago,Suíça,total,1,1.0,1.0,2.0,1.0
+Tiago,Turquia,away,1,2.0,2.0,2.0,0.0
+Tiago,Turquia,total,1,2.0,2.0,2.0,0.0
 Tiago,África do Sul,away,1,0.0,0.0,0.0,0.0
 Tiago,África do Sul,total,1,0.0,0.0,0.0,0.0

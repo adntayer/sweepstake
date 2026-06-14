@@ -554,15 +554,15 @@ body { padding-bottom: 70px; }
 <div class="card" style="margin:1rem 0.75rem;">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;">
         <div class="mini-stat">
-            <div class="val">4</div>
+            <div class="val">9</div>
             <div class="lbl">Partidas</div>
         </div>
         <div class="mini-stat">
-            <div class="val" style="color:var(--danger);">0</div>
+            <div class="val" style="color:var(--danger);">1</div>
             <div class="lbl">Zebras</div>
         </div>
         <div class="mini-stat">
-            <div class="val">0.0%</div>
+            <div class="val">11.1%</div>
             <div class="lbl">% de Zebras</div>
         </div>
     </div>
@@ -570,7 +570,20 @@ body { padding-bottom: 70px; }
 
 <div class="section">
     <div class="section-title">💥 Zebras do Torneio</div>
-    <div class="card" style="text-align:center;color:var(--text-muted);font-style:italic;padding:2rem 1rem;">😔 Nenhuma zebra ate agora — o bolao esta muito previsivel!</div>
+    
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">28/33 (85%) acreditavam no Turquia</span>
+    </div>
+    <div class="zebra-matchup">Austrália vs Turquia</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Turquia</strong> | Resultado: <strong>Austrália</strong><br>
+        Acertaram essa zebra: 1 jogadores
+    </div>
+    <div class="zebra-players"><span class="tag">Luiz Augusto</span></div>
+</div>
+
 </div>
 
 <div class="section">
@@ -578,7 +591,8 @@ body { padding-bottom: 70px; }
     <div class="card" style="overflow-x:auto;">
         <table class="rank-table">
             <thead><tr><th>#</th><th>Boleiro</th><th>Zebras acertadas</th></tr></thead>
-            <tbody><tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-style:italic;">Nenhum dado</td></tr></tbody>
+            <tbody><tr><td>🥇 1</td><td><a href='boleiros/Luiz Augusto.html'>Luiz Augusto</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+</tbody>
         </table>
     </div>
 </div>
@@ -591,11 +605,41 @@ body { padding-bottom: 70px; }
     <div class="card">
 <div style="margin-bottom:0.75rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-weight:700;font-size:0.9rem;">🥇 Coréia do Sul vs República Tcheca</span>
+        <span style="font-weight:700;font-size:0.9rem;">🥇 Austrália vs Turquia<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">87.2</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>1/33 acertaram</span>
+        <span>Favorito: Turquia</span>
+        <span>Resultado: Austrália</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;">🥈 Catar vs Suíça</span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">59.4</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:68%;height:5px;background:var(--warning);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>1/33 acertaram</span>
+        <span>Favorito: Suíça</span>
+        <span>Resultado: empate</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;">🥉 Coréia do Sul vs República Tcheca</span>
         <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">49.2</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">
-        <div class="bar-fill" style="width:100%;height:5px;background:var(--warning);border-radius:3px;"></div>
+        <div class="bar-fill" style="width:56%;height:5px;background:var(--warning);border-radius:3px;"></div>
     </div>
     <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
         <span>10/33 acertaram</span>
@@ -606,11 +650,26 @@ body { padding-bottom: 70px; }
 
 <div style="margin-bottom:0.75rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-weight:700;font-size:0.9rem;">🥈 Canadá vs Bósnia</span>
+        <span style="font-weight:700;font-size:0.9rem;"> Brasil vs Marrocos</span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">47.4</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:54%;height:5px;background:var(--warning);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>13/33 acertaram</span>
+        <span>Favorito: Brasil</span>
+        <span>Resultado: empate</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Canadá vs Bósnia</span>
         <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">45.6</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">
-        <div class="bar-fill" style="width:93%;height:5px;background:var(--warning);border-radius:3px;"></div>
+        <div class="bar-fill" style="width:52%;height:5px;background:var(--warning);border-radius:3px;"></div>
     </div>
     <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
         <span>16/33 acertaram</span>
@@ -621,11 +680,11 @@ body { padding-bottom: 70px; }
 
 <div style="margin-bottom:0.75rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-weight:700;font-size:0.9rem;">🥉 Estados Unidos vs Paraguai</span>
+        <span style="font-weight:700;font-size:0.9rem;"> Estados Unidos vs Paraguai</span>
         <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">27.0</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">
-        <div class="bar-fill" style="width:55%;height:5px;background:var(--warning);border-radius:3px;"></div>
+        <div class="bar-fill" style="width:31%;height:5px;background:var(--warning);border-radius:3px;"></div>
     </div>
     <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
         <span>18/33 acertaram</span>
@@ -640,12 +699,42 @@ body { padding-bottom: 70px; }
         <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">24.6</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">
-        <div class="bar-fill" style="width:50%;height:5px;background:var(--warning);border-radius:3px;"></div>
+        <div class="bar-fill" style="width:28%;height:5px;background:var(--warning);border-radius:3px;"></div>
     </div>
     <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
         <span>30/33 acertaram</span>
         <span>Favorito: México</span>
         <span>Resultado: México</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Haiti vs Escócia</span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">8.4</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:10%;height:5px;background:var(--warning);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>31/33 acertaram</span>
+        <span>Favorito: Escócia</span>
+        <span>Resultado: Escócia</span>
+    </div>
+</div>
+
+<div style="margin-bottom:0.75rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:0.9rem;"> Alemanha vs Curaçao</span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">1.2</span>
+    </div>
+    <div class="bar-track" style="height:5px;margin:0.25rem 0;">
+        <div class="bar-fill" style="width:1%;height:5px;background:var(--warning);border-radius:3px;"></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
+        <span>33/33 acertaram</span>
+        <span>Favorito: Alemanha</span>
+        <span>Resultado: Alemanha</span>
     </div>
 </div>
 </div>
@@ -657,10 +746,37 @@ body { padding-bottom: 70px; }
 <div class="zebra-card">
     <div class="zebra-header">
         <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">100% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Alemanha vs Curaçao</div>
+    <div class="zebra-detail">Favorito Alemanha confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">61% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Brasil vs Marrocos</div>
+    <div class="zebra-detail">Favorito Brasil confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
         <span style="font-size:0.75rem;color:var(--text-muted);">48% no favorito</span>
     </div>
     <div class="zebra-matchup">Canadá vs Bósnia</div>
     <div class="zebra-detail">Favorito empate confirmou</div>
+</div>
+
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">97% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Catar vs Suíça</div>
+    <div class="zebra-detail">Favorito Suíça confirmou</div>
 </div>
 
 <div class="zebra-card">
@@ -681,15 +797,6 @@ body { padding-bottom: 70px; }
     <div class="zebra-detail">Favorito Estados Unidos confirmou</div>
 </div>
 
-<div class="zebra-card">
-    <div class="zebra-header">
-        <span class="zebra-badge favorite">Favorito Venceu</span>
-        <span style="font-size:0.75rem;color:var(--text-muted);">91% no favorito</span>
-    </div>
-    <div class="zebra-matchup">México vs África do Sul</div>
-    <div class="zebra-detail">Favorito México confirmou</div>
-</div>
-
 </div>
 
 <div class="card" style="margin:0.75rem;font-size:0.8rem;color:var(--text-muted);">
@@ -697,7 +804,7 @@ body { padding-bottom: 70px; }
 </div>
 
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 13/06/2026 02:47:32
+    atualizado às 14/06/2026 15:08:24
 </div>
 <nav class="bottom-nav"><a href="index.html"><span class="nav-icon">🏠</span>Início</a>
 <a href="arena.html"><span class="nav-icon">⚔️</span>Arena</a>

@@ -3,11 +3,11 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-11,20h,coreia_do_sul-vs-republica_tcheca,Coréia do Sul,República Tcheca,2.0,1.0,2.0,1.0,,,,,2 x 1,Coréia do Sul,2 x 1,Coréia do Sul,Guilherne
 2026-06-12,15h,canada-vs-bosnia,Canadá,Bósnia,1.0,2.0,1.0,1.0,,,,,1 x 2,Bósnia,1 x 1,empate,Guilherne
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,1.0,2.0,4.0,1.0,,,,,1 x 2,Paraguai,4 x 1,Estados Unidos,Guilherne
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,,,,,,,0 x 1,Suíça,,,Guilherne
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,Guilherne
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,,,,,,,0 x 1,Escócia,,,Guilherne
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,,,,,,,0 x 1,Turquia,,,Guilherne
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,Guilherne
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,1.0,1.0,1.0,,,,,0 x 1,Suíça,1 x 1,empate,Guilherne
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,Guilherne
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,1.0,0.0,1.0,,,,,0 x 1,Escócia,0 x 1,Escócia,Guilherne
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,2.0,0.0,,,,,0 x 1,Turquia,2 x 0,Austrália,Guilherne
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,Guilherne
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,2.0,0.0,,,,,,,2 x 0,Holanda,,,Guilherne
 2026-06-14,19h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,1.0,2.0,,,,,,,1 x 2,Equador,,,Guilherne
 2026-06-14,20h,suecia-vs-tunisia,Suécia,Tunísia,2.0,1.0,,,,,,,2 x 1,Suécia,,,Guilherne

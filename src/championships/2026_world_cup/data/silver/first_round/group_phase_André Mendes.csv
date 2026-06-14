@@ -3,11 +3,11 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-11,20h,coreia_do_sul-vs-republica_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,2.0,1.0,,,,,1 x 1,empate,2 x 1,Coréia do Sul,André Mendes
 2026-06-12,15h,canada-vs-bosnia,Canadá,Bósnia,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,André Mendes
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,0.0,0.0,4.0,1.0,,,,,0 x 0,empate,4 x 1,Estados Unidos,André Mendes
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,André Mendes
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,,,,,,,2 x 1,Brasil,,,André Mendes
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,André Mendes
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,André Mendes
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,,,,,,,3 x 0,Alemanha,,,André Mendes
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,André Mendes
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,1.0,1.0,1.0,,,,,2 x 1,Brasil,1 x 1,empate,André Mendes
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,André Mendes
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,André Mendes
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,3.0,0.0,3.0,1.0,,,,,3 x 0,Alemanha,3 x 1,Alemanha,André Mendes
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,1.0,1.0,,,,,,,1 x 1,empate,,,André Mendes
 2026-06-14,19h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,2.0,3.0,,,,,,,2 x 3,Equador,,,André Mendes
 2026-06-14,20h,suecia-vs-tunisia,Suécia,Tunísia,2.0,1.0,,,,,,,2 x 1,Suécia,,,André Mendes

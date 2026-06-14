@@ -3,11 +3,11 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-11,20h,coreia_do_sul-vs-republica_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,2.0,1.0,,,,,1 x 1,empate,2 x 1,Coréia do Sul,Rafael Conte
 2026-06-12,15h,canada-vs-bosnia,Canadá,Bósnia,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Rafael Conte
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,1.0,4.0,1.0,,,,,2 x 1,Estados Unidos,4 x 1,Estados Unidos,Rafael Conte
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,,,,,,,0 x 3,Suíça,,,Rafael Conte
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,0.0,,,,,,,2 x 0,Brasil,,,Rafael Conte
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,,,,,,,0 x 2,Escócia,,,Rafael Conte
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,,,,,,,0 x 2,Turquia,,,Rafael Conte
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,Rafael Conte
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,3.0,1.0,1.0,,,,,0 x 3,Suíça,1 x 1,empate,Rafael Conte
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,2.0,0.0,1.0,1.0,,,,,2 x 0,Brasil,1 x 1,empate,Rafael Conte
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,2.0,0.0,1.0,,,,,0 x 2,Escócia,0 x 1,Escócia,Rafael Conte
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,2.0,2.0,0.0,,,,,0 x 2,Turquia,2 x 0,Austrália,Rafael Conte
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,Rafael Conte
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,2.0,1.0,,,,,,,2 x 1,Holanda,,,Rafael Conte
 2026-06-14,19h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,1.0,2.0,,,,,,,1 x 2,Equador,,,Rafael Conte
 2026-06-14,20h,suecia-vs-tunisia,Suécia,Tunísia,1.0,0.0,,,,,,,1 x 0,Suécia,,,Rafael Conte

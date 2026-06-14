@@ -3,11 +3,11 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-11,20h,coreia_do_sul-vs-republica_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,2.0,1.0,,,,,1 x 1,empate,2 x 1,Coréia do Sul,André Tayer,1,8-Gols de um time,1,False,False,False,False,False,False,False,True,False,False
 2026-06-12,15h,canada-vs-bosnia,Canadá,Bósnia,2.0,0.0,1.0,1.0,,,,,2 x 0,Canadá,1 x 1,empate,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,2.0,4.0,1.0,,,,,2 x 2,empate,4 x 1,Estados Unidos,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,2.0,,,,,,,3 x 2,Brasil,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,,,,,,,1 x 2,Escócia,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,,,,,,,1 x 2,Turquia,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,,,,,,,5 x 0,Alemanha,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,3.0,2.0,1.0,1.0,,,,,3 x 2,Brasil,1 x 1,empate,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,1.0,2.0,0.0,1.0,,,,,1 x 2,Escócia,0 x 1,Escócia,André Tayer,7,3-Vencedor + diferenca de gols (erro <= 2),1,False,False,True,False,False,False,False,False,False,False
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,1.0,2.0,2.0,0.0,,,,,1 x 2,Turquia,2 x 0,Austrália,André Tayer,0,9-Nenhum acerto,1,False,False,False,False,False,False,False,False,True,False
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,5.0,0.0,3.0,1.0,,,,,5 x 0,Alemanha,3 x 1,Alemanha,André Tayer,5,6-Vencedor correto,1,False,False,False,False,False,True,False,False,False,False
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,3.0,0.0,,,,,,,3 x 0,Holanda,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-14,19h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,0.0,2.0,,,,,,,0 x 2,Equador,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True
 2026-06-14,20h,suecia-vs-tunisia,Suécia,Tunísia,1.0,0.0,,,,,,,1 x 0,Suécia,,,André Tayer,0,99-Sem jogo,0,False,False,False,False,False,False,False,False,False,True

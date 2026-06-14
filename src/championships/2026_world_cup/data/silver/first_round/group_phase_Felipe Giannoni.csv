@@ -3,11 +3,11 @@ date,hour,match,home_team,away_team,home_goals_bol,away_goals_bol,home_goals_rea
 2026-06-11,20h,coreia_do_sul-vs-republica_tcheca,Coréia do Sul,República Tcheca,1.0,1.0,2.0,1.0,,,,,1 x 1,empate,2 x 1,Coréia do Sul,Felipe Giannoni
 2026-06-12,15h,canada-vs-bosnia,Canadá,Bósnia,2.0,2.0,1.0,1.0,,,,,2 x 2,empate,1 x 1,empate,Felipe Giannoni
 2026-06-12,18h,estados_unidos-vs-paraguai,Estados Unidos,Paraguai,2.0,2.0,4.0,1.0,,,,,2 x 2,empate,4 x 1,Estados Unidos,Felipe Giannoni
-2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,,,,,,,0 x 2,Suíça,,,Felipe Giannoni
-2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,,,,,,,1 x 1,empate,,,Felipe Giannoni
-2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,,,,,,,0 x 3,Escócia,,,Felipe Giannoni
-2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,,,,,,,0 x 1,Turquia,,,Felipe Giannoni
-2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,,,,,,,6 x 0,Alemanha,,,Felipe Giannoni
+2026-06-13,12h,catar-vs-suica,Catar,Suíça,0.0,2.0,1.0,1.0,,,,,0 x 2,Suíça,1 x 1,empate,Felipe Giannoni
+2026-06-13,18h,brasil-vs-marrocos,Brasil,Marrocos,1.0,1.0,1.0,1.0,,,,,1 x 1,empate,1 x 1,empate,Felipe Giannoni
+2026-06-13,21h,haiti-vs-escocia,Haiti,Escócia,0.0,3.0,0.0,1.0,,,,,0 x 3,Escócia,0 x 1,Escócia,Felipe Giannoni
+2026-06-13,21h,australia-vs-turquia,Austrália,Turquia,0.0,1.0,2.0,0.0,,,,,0 x 1,Turquia,2 x 0,Austrália,Felipe Giannoni
+2026-06-14,12h,alemanha-vs-curacao,Alemanha,Curaçao,6.0,0.0,3.0,1.0,,,,,6 x 0,Alemanha,3 x 1,Alemanha,Felipe Giannoni
 2026-06-14,15h,holanda-vs-japao,Holanda,Japão,2.0,1.0,,,,,,,2 x 1,Holanda,,,Felipe Giannoni
 2026-06-14,19h,costa_do_marfim-vs-equador,Costa do Marfim,Equador,1.0,3.0,,,,,,,1 x 3,Equador,,,Felipe Giannoni
 2026-06-14,20h,suecia-vs-tunisia,Suécia,Tunísia,2.0,0.0,,,,,,,2 x 0,Suécia,,,Felipe Giannoni

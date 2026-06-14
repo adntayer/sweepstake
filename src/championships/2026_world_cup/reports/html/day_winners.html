@@ -554,7 +554,7 @@ body { padding-bottom: 70px; }
 <div class="card" style="margin:1rem 0.75rem;">
     <label class="arena-label" for="day-select">Selecione o dia</label>
     <select id="day-select" class="arena-select" onchange="onDayChange()">
-        <option value="2026-06-11">11/06 (Thu)</option><option value="2026-06-12">12/06 (Fri)</option>
+        <option value="2026-06-11">11/06 (Thu)</option><option value="2026-06-12">12/06 (Fri)</option><option value="2026-06-13">13/06 (Sat)</option><option value="2026-06-14">14/06 (Sun)</option>
     </select>
 </div>
 
@@ -640,6 +640,87 @@ body { padding-bottom: 70px; }
     </div>
 </div>
 
+<div class="card" id="day-card-2026-06-13" style="display:none;">
+    <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="color:var(--voce);font-size:1.3rem;">38</div>
+            <div class="label">Melhor do dia</div>
+            <div style="font-size:0.8rem;"><a href="boleiros/Davi & Cesar.html" style="color:var(--accent);">Davi & Cesar</a></div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">15.8</div>
+            <div class="label">Media do dia</div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">1</div>
+            <div class="label">Zebras</div>
+        </div>
+    </div>
+<div style="font-size:0.85rem;margin-top:0.5rem;">🥈 Vice: Gabão (31 pts)</div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">Resultados do dia</div>
+        <div style='font-size:0.85rem;padding:0.2rem 0;'>Catar 1-1 Suíça</div>
+<div style='font-size:0.85rem;padding:0.2rem 0;'>Brasil 1-1 Marrocos</div>
+<div style='font-size:0.85rem;padding:0.2rem 0;'>Haiti 0-1 Escócia</div>
+<div style='font-size:0.85rem;padding:0.2rem 0;'>Austrália 2-0 Turquia</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">💥 Zebras</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">
+            Zebra = quando o time mais votado como vencedor PERDEU ou empatou. O favorito errou.
+        </div>
+        <div style="font-size:0.85rem;padding:0.2rem 0;color:var(--danger);">💥 Austrália vs Turquia: favorito Turquia perdeu</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.85rem;margin-top:0.5rem;"><span style="color:var(--accent);font-weight:600;">🎯 Palpite mais original:</span> Austrália 2 x 0 Turquia por Luiz Augusto (15 pts)</div>
+
+    </div>
+</div>
+
+<div class="card" id="day-card-2026-06-14" style="display:none;">
+    <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="color:var(--voce);font-size:1.3rem;">15</div>
+            <div class="label">Melhor do dia</div>
+            <div style="font-size:0.8rem;"><a href="boleiros/Frederico Soter.html" style="color:var(--accent);">Frederico Soter</a></div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">7.3</div>
+            <div class="label">Media do dia</div>
+        </div>
+        <div class="stat-card stat-card-sm">
+            <div class="value" style="font-size:1.1rem;">0</div>
+            <div class="label">Zebras</div>
+        </div>
+    </div>
+<div style="font-size:0.85rem;margin-top:0.5rem;">🥈 Vice: André Mendes (10 pts)</div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">Resultados do dia</div>
+        <div style='font-size:0.85rem;padding:0.2rem 0;'>Alemanha 3-1 Curaçao</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">💥 Zebras</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">
+            Zebra = quando o time mais votado como vencedor PERDEU ou empatou. O favorito errou.
+        </div>
+        <div style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">Nenhuma zebra neste dia</div>
+
+    </div>
+
+    <div style="margin-top:0.75rem;">
+        <div style="font-size:0.85rem;margin-top:0.5rem;"><span style="color:var(--accent);font-weight:600;">🎯 Palpite mais original:</span> Alemanha 3 x 1 Curaçao por Frederico Soter (15 pts)</div>
+
+    </div>
+</div>
+
 </div>
 
 <div class="card" style="margin:1rem 0.75rem 0.25rem;font-size:0.85rem;color:var(--text-muted);">
@@ -676,7 +757,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 13/06/2026 02:47:32
+    atualizado às 14/06/2026 15:08:24
 </div>
 <nav class="bottom-nav"><a href="index.html"><span class="nav-icon">🏠</span>Início</a>
 <a href="arena.html"><span class="nav-icon">⚔️</span>Arena</a>
