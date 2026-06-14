@@ -574,7 +574,9 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         rank_class = f"rank-{rank_num}" if rank_num <= 3 else ""
         trend = trend_map.get(row["who"], "&nbsp;")
         badges = " ".join(badge_map.get(row["who"], []))
-        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{row["who"]}.html">{row["who"]}</a> {trend} <span style="font-size:0.75rem;">{badges}</span></td>'
+        who_name = row["who"]
+        who_display = f"🤖 {who_name}" if who_name.startswith("LLM") else who_name
+        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{who_name}.html">{who_display}</a> {trend} <span style="font-size:0.75rem;">{badges}</span></td>'
         cells += f'<td style="font-weight:700;color:var(--accent)">{int(row["pontos"])}</td>'
         for sn in score_names:
             if sn in row.index:
