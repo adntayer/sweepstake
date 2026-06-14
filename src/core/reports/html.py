@@ -830,6 +830,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     upset_set: set[str] = set()
     upset_wwpct: dict[str, int] = {}
     player_zebra_cnt = 0
+    player_zebra_correct_set: set[str] = set()
     upset_path_br = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
     if os.path.exists(upset_path_br):
         df_upset_br = pd.read_csv(upset_path_br, sep=",")
@@ -840,6 +841,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 upset_wwpct[ms] = int(ur.get("winner_wrong_pct", 0))
                 if boleiro in [p.strip() for p in str(ur.get("players_correct", "")).split("|") if p.strip()]:
                     player_zebra_cnt += 1
+                    player_zebra_correct_set.add(ms)
 
     def _build_history_rows(rows_df: pd.DataFrame) -> str:
         rev_map = {v: k for k, v in config.team_name_mapping.items()}
@@ -883,11 +885,15 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 player_rank = match_ranks[match_slug].get(boleiro)
                 if player_rank is not None:
                     rank_str = f"{player_rank}\u00ba lugar | "
-            # Zebra badge for upset matches
+            # Zebra badge for upset matches — indicates if THIS player got it right
             zebra_tag = ""
             if match_slug in upset_set:
                 ww = upset_wwpct.get(match_slug, 0)
-                zebra_tag = f' <span style="font-size:0.7rem;{"color:var(--danger);" if ww >= 90 else "color:var(--warning);"}">{ZEBRA_MONSTRA_EMOJI if ww >= 90 else ZEBRA_GRANDE_EMOJI}</span>'
+                zebra_emoji = ZEBRA_MONSTRA_EMOJI if ww >= 90 else ZEBRA_GRANDE_EMOJI
+                if match_slug in player_zebra_correct_set:
+                    zebra_tag = f' <span style="font-size:0.7rem;color:var(--accent);font-weight:600;">{zebra_emoji} Acertou!</span>'
+                else:
+                    zebra_tag = f' <span style="font-size:0.7rem;color:var(--text-muted);">{zebra_emoji}</span>'
             out += (
                 f'<div class="pred-row">'
                 f'<div class="pred-info">'
@@ -901,19 +907,23 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
     tz = pytz.timezone(config.timezone)
     today = datetime.now(tz).date()
-    df_by_date_dt = df_hist["date"].apply(lambda d: pd.to_datetime(d).date())
-    df_hist_past = df_hist[df_by_date_dt < today]
-    df_hist_future = df_hist[df_by_date_dt >= today].sort_values(["date", "hour"], ascending=True)
 
-    # Include ALL future predictions (valido=0, date >= today) as "Jogos Futuros"
+    # Matches with results (valido == 1) go to past, even if today (finished/live).
+    # Unvalidated matches (valido == 0) with future date go to future.
+    df_by_date_dt = df_hist["date"].apply(lambda d: pd.to_datetime(d).date())
+    df_hist_past = df_hist[df_hist.get("valido", 0) == 1].copy()
+    df_hist_future = df_hist[
+        (df_hist.get("valido", 0) == 0) & (df_by_date_dt >= today)
+    ].sort_values(["date", "hour"], ascending=True)
+
+    # Include ALL future predictions (valido=0, date >= today) from gold_all as "Jogos Futuros"
     if os.path.exists(all_path):
         df_future_preds = df_player_all[
             (df_player_all.get("valido", 0) == 0)
             & (pd.to_datetime(df_player_all["date"], errors="coerce").dt.date >= today)
-        ].drop_duplicates(subset=["match"])
+        ].drop_duplicates(subset=["match"]).sort_values(["date", "hour"], ascending=True)
         if len(df_future_preds):
-            # Merge with existing future rows (e.g. live matches that already have results),
-            # keeping the df_hist_future version when there's overlap (it has pontos/criterio)
+            # Merge any matches not already in df_hist_future
             existing_slugs = set(df_hist_future["match"].unique()) if len(df_hist_future) else set()
             new_preds = df_future_preds[~df_future_preds["match"].isin(existing_slugs)]
             df_hist_future = pd.concat(
