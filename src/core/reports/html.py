@@ -26,6 +26,13 @@ from src.core.reports.new_views import (
 )
 
 
+# Zebra magnitude constants — used across all report pages
+ZEBRA_MONSTRA_EMOJI = "\U0001f993\U0001f4a5"   # 🦓💥
+ZEBRA_GRANDE_EMOJI  = "\U0001f993\u26a1"        # 🦓⚡
+ZEBRA_MONSTRA_LABEL = f"{ZEBRA_MONSTRA_EMOJI} ZEBRA MONSTRA"
+ZEBRA_GRANDE_LABEL  = f"{ZEBRA_GRANDE_EMOJI} Zebra Grande"
+
+
 def _norm(path: str) -> str:
     """Normalize a path to the current OS format."""
     return os.path.normpath(path)
@@ -819,6 +826,21 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         if os.path.exists(path):
             _add_match_ranks(pd.read_csv(path, sep=","))
 
+    # Load upset data for zebra indicators in match history
+    upset_set: set[str] = set()
+    upset_wwpct: dict[str, int] = {}
+    player_zebra_cnt = 0
+    upset_path_br = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
+    if os.path.exists(upset_path_br):
+        df_upset_br = pd.read_csv(upset_path_br, sep=",")
+        for _, ur in df_upset_br.iterrows():
+            if int(ur.get("is_upset", 0)) == 1:
+                ms = str(ur["match"])
+                upset_set.add(ms)
+                upset_wwpct[ms] = int(ur.get("winner_wrong_pct", 0))
+                if boleiro in [p.strip() for p in str(ur.get("players_correct", "")).split("|") if p.strip()]:
+                    player_zebra_cnt += 1
+
     def _build_history_rows(rows_df: pd.DataFrame) -> str:
         rev_map = {v: k for k, v in config.team_name_mapping.items()}
         out = ""
@@ -861,11 +883,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 player_rank = match_ranks[match_slug].get(boleiro)
                 if player_rank is not None:
                     rank_str = f"{player_rank}\u00ba lugar | "
+            # Zebra badge for upset matches
+            zebra_tag = ""
+            if match_slug in upset_set:
+                ww = upset_wwpct.get(match_slug, 0)
+                zebra_tag = f' <span style="font-size:0.7rem;{"color:var(--danger);" if ww >= 90 else "color:var(--warning);"}">{ZEBRA_MONSTRA_EMOJI if ww >= 90 else ZEBRA_GRANDE_EMOJI}</span>'
             out += (
                 f'<div class="pred-row">'
                 f'<div class="pred-info">'
                 f'<div class="pred-name"><a href="{game_href}" style="color:var(--text);text-decoration:none;">{_format_real_placar(row)}</a> <span class="pred-date">{phase_label}{date_str}</span></div>'
-            f'<div class="pred-detail">{home_logo} {row["resultado_bol_placar"]} {away_logo} | {criterio_emoji} {row["criterio"]} | {rank_str}<a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
+            f'<div class="pred-detail">{home_logo} {row["resultado_bol_placar"]} {away_logo} | {criterio_emoji} {row["criterio"]}{zebra_tag} | {rank_str}<a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
                 f'</div>'
                 f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
                 f'</div>\n'
@@ -964,6 +991,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             <td style="padding:0.3rem 0.5rem;text-align:right;font-weight:600;">{cnt}</td>
             <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{pct}%</td>
             <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{bar_w:.0f}%;background:{color};height:10px;"></div></div></td>
+        </tr>"""
+    # Zebra row in distribution
+    z_pct = round(player_zebra_cnt / n_preds * 100, 1) if n_preds else 0
+    z_bar_w = max(player_zebra_cnt / largest_cnt * 100, 1) if player_zebra_cnt else 0
+    dist_rows += f"""
+        <tr>
+            <td style="padding:0.3rem 0.5rem;"><span style="color:var(--danger);font-weight:700;">\U0001f993</span> Zebra acertada</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;font-weight:600;color:var(--danger);">{player_zebra_cnt}</td>
+            <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{z_pct}%</td>
+            <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{z_bar_w:.0f}%;background:var(--danger);height:10px;"></div></div></td>
         </tr>"""
     body += f"""
 <div class="section">
@@ -1616,6 +1653,15 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     df_match = df_match.copy()
     df_match = df_match.sort_values(["pontos", "who"], ascending=False)
 
+    # Lookup upset data for this match
+    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
+    upset_row = None
+    if os.path.exists(upset_path):
+        df_upset = pd.read_csv(upset_path, sep=",")
+        matches = df_upset[df_upset["match"] == match]
+        if not matches.empty:
+            upset_row = matches.iloc[0]
+
     home = str(df_match.iloc[0]["home_team"])
     away = str(df_match.iloc[0]["away_team"])
     date_str = str(df_match.iloc[0]["date"])
@@ -1865,9 +1911,20 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
             if pd.notna(hp) and pd.notna(ap):
                 hp = int(hp)
                 ap = int(ap)
-                pen_html = f'<div class="penalty-score">{hp} - {ap} nos pênaltis</div>'
+                pen_html = f'<div class="penalty-score">{hp} - {ap} nos p\u00eAnaltis</div>'
         except (ValueError, TypeError):
             pass
+
+        # Zebra badge
+        zebra_html = ""
+        if upset_row is not None and int(upset_row.get("is_upset", 0)) == 1:
+            wwpct = int(upset_row.get("winner_wrong_pct", 0))
+            fav = upset_row.get("favorite", "?")
+            if wwpct >= 90:
+                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_MONSTRA_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{wwpct}% erraram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
+            else:
+                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_GRANDE_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{wwpct}% erraram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
+
         score_html = f"""
 <div class="score-card">
     <div class="team">{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a></div>
@@ -1875,7 +1932,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     <div class="team">{away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></div>
 </div>
 {pen_html}
-<div style="text-align:center;"><span class="badge badge-success">Resultado Final</span></div>
+<div style="text-align:center;"><span class="badge badge-success">Resultado Final</span>{zebra_html}</div>
 """
     else:
         score_html = f"""
@@ -3256,7 +3313,7 @@ def _build_day_winners(config: ChampionshipConfig) -> str:
         upsets = day_upsets[day_upsets["is_upset"] == 1]
         upset_list = []
         for _, u in upsets.iterrows():
-            upset_list.append(f"{u['home_team']} vs {u['away_team']}: favorito {u['favorite']} perdeu")
+            upset_list.append(f"{u['home_team']} vs {u['away_team']}: favorito {u['favorite']} n\u00e3o venceu")
 
         # Most original correct pick
         day_all = df_all[df_all["match"].isin(matches_this_day)]
@@ -3349,7 +3406,7 @@ def _build_day_winners(config: ChampionshipConfig) -> str:
     <div style="margin-top:0.75rem;">
         <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.25rem;">\U0001f4a5 Zebras</div>
         <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">
-            Zebra = quando o time mais votado como vencedor PERDEU ou empatou. O favorito errou.
+            Zebra = quando o favorito n\u00e3o venceu e \u226570% erraram o resultado.
         </div>
         {upset_html}
     </div>
@@ -3461,23 +3518,20 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         players_correct = _parse_correct(row.get("players_correct", ""))
 
         fav_pct = round(fav_votes / total_votes * 100) if total_votes else 0
+        winner_wrong_pct = 100 - round(num_correct / total_votes * 100) if total_votes else 0
         players_html = " ".join(f'<span class="tag">{p}</span>' for p in players_correct) if players_correct else '<span style="color:var(--text-muted);font-style:italic;">ningu\u00e9m acertou</span>'
 
-        # Determine upset magnitude
-        if fav_pct >= 80:
-            magnitude = "\U0001f4a5 ZEBRA MONSTRA"
-        elif fav_pct >= 60:
-            magnitude = "\U0001f4a5 Zebra Grande"
-        elif fav_pct >= 40:
-            magnitude = "\U0001f4a5 Zebra Media"
+        # Determine upset magnitude based on % who got the winner wrong
+        if winner_wrong_pct >= 90:
+            magnitude = ZEBRA_MONSTRA_LABEL
         else:
-            magnitude = "\U0001f4a5 Zebra Leve"
+            magnitude = ZEBRA_GRANDE_LABEL
 
         zebra_cards += f"""
 <div class="zebra-card upset">
     <div class="zebra-header">
         <span class="zebra-badge upset">{magnitude}</span>
-        <span style="font-size:0.75rem;color:var(--text-muted);">{fav_votes}/{total_votes} ({fav_pct}%) acreditavam no {favorite}</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">{fav_votes}/{total_votes} ({fav_pct}%) acreditavam no {favorite} &mdash; {winner_wrong_pct}% erraram o resultado</span>
     </div>
     <div class="zebra-matchup">{home} vs {away}</div>
     <div class="zebra-detail">
@@ -3601,7 +3655,7 @@ def _build_zebras(config: ChampionshipConfig) -> str:
     body = f"""
 <div class="hero">
     <h1>\U0001f993 Zebras & Favoritos</h1>
-    <div class="subtitle">Partidas onde o bolaao inteiro errou — e quem acertou</div>
+    <div class="subtitle">Partidas que derrubaram o bol\u00e3o — e quem acertou</div>
 </div>
 
 <div class="card" style="margin:1rem 0.75rem;">
@@ -3620,6 +3674,49 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         </div>
     </div>
 </div>
+
+<details>
+    <summary>\U0001f4d6 Como funciona a regra da Zebra? (clique aqui)</summary>
+    <div class="content">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
+            Uma partida \u00e9 considerada <strong>Zebra</strong> quando o resultado mais votado pelo bol\u00e3o <strong>N\u00c3O aconteceu</strong>
+            <strong>E</strong> pelo menos <strong>70% dos participantes erraram o vencedor</strong>
+            (<strong>% que erraram \u2265 70%</strong>).
+        </p>
+        <table class="rank-table" style="font-size:0.75rem;">
+            <thead>
+                <tr>
+                    <th>% que erraram</th>
+                    <th>Classifica\u00e7\u00e3o</th>
+                    <th>O que significa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>\u2265 90%</td>
+                    <td style="color:var(--danger);font-weight:700;">{ZEBRA_MONSTRA_LABEL}</td>
+                    <td>Quase ningu\u00e9m acertou \u2014 o bol\u00e3o inteiro foi surpreendido</td>
+                </tr>
+                <tr>
+                    <td>70\u201389%</td>
+                    <td style="color:var(--warning);font-weight:700;">{ZEBRA_GRANDE_LABEL}</td>
+                    <td>A maioria errou \u2014 surpresa significativa</td>
+                </tr>
+                <tr>
+                    <td>&lt; 70%</td>
+                    <td style="color:var(--text-muted);">\u274c N\u00e3o \u00e9 zebra</td>
+                    <td>Minoria significativa acertou, n\u00e3o foi t\u00e3o surpreendente</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.75rem;line-height:1.7;">
+            <strong>% que erraram</strong> = percentual de participantes que <strong>erraram o vencedor</strong>
+            (n\u00e3o acertaram se o resultado seria vit\u00f3ria do time A, B ou empate).<br>
+            Ex: Catar vs Su\u00ed\u00e7a \u2014 97% erraram \u2192 \u2705 {ZEBRA_MONSTRA_LABEL}.<br>
+            Ex: Brasil vs Marrocos \u2014 61% erraram \u2192 \u274c n\u00e3o \u00e9 zebra (39% acertaram o empate).
+        </p>
+    </div>
+</details>
 
 <div class="section">
     <div class="section-title">\U0001f4a5 Zebras do Torneio</div>
@@ -3647,10 +3744,6 @@ def _build_zebras(config: ChampionshipConfig) -> str:
 <div class="section">
     <div class="section-title">\U00002705 Favoritos que Confirmaram</div>
     {fav_won_cards}
-</div>
-
-<div class="card" style="margin:0.75rem;font-size:0.8rem;color:var(--text-muted);">
-    <p><strong>\U0001f4a1 O que e uma Zebra?</strong> Quando o time mais votado como vencedor pelo bolaao PERDEU ou empatou. Quanto maior a porcentagem de votos no favorito, maior a zebra.</p>
 </div>
 """
     return _page_frame(config, f"Zebras - {config.report_title}", body, active_nav="zebras.html")

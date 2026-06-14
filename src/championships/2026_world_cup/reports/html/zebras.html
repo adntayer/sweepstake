@@ -548,7 +548,7 @@ body { padding-bottom: 70px; }
 
 <div class="hero">
     <h1>🦓 Zebras & Favoritos</h1>
-    <div class="subtitle">Partidas onde o bolaao inteiro errou — e quem acertou</div>
+    <div class="subtitle">Partidas que derrubaram o bolão — e quem acertou</div>
 </div>
 
 <div class="card" style="margin:1rem 0.75rem;">
@@ -558,23 +558,79 @@ body { padding-bottom: 70px; }
             <div class="lbl">Partidas</div>
         </div>
         <div class="mini-stat">
-            <div class="val" style="color:var(--danger);">1</div>
+            <div class="val" style="color:var(--danger);">3</div>
             <div class="lbl">Zebras</div>
         </div>
         <div class="mini-stat">
-            <div class="val">11.1%</div>
+            <div class="val">33.3%</div>
             <div class="lbl">% de Zebras</div>
         </div>
     </div>
 </div>
+
+<details>
+    <summary>📖 Como funciona a regra da Zebra? (clique aqui)</summary>
+    <div class="content">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
+            Uma partida é considerada <strong>Zebra</strong> quando o resultado mais votado pelo bolão <strong>NÃO aconteceu</strong>
+            <strong>E</strong> pelo menos <strong>70% dos participantes erraram o vencedor</strong>
+            (<strong>% que erraram ≥ 70%</strong>).
+        </p>
+        <table class="rank-table" style="font-size:0.75rem;">
+            <thead>
+                <tr>
+                    <th>% que erraram</th>
+                    <th>Classificação</th>
+                    <th>O que significa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>≥ 90%</td>
+                    <td style="color:var(--danger);font-weight:700;">🦓💥 ZEBRA MONSTRA</td>
+                    <td>Quase ninguém acertou — o bolão inteiro foi surpreendido</td>
+                </tr>
+                <tr>
+                    <td>70–89%</td>
+                    <td style="color:var(--warning);font-weight:700;">🦓⚡ Zebra Grande</td>
+                    <td>A maioria errou — surpresa significativa</td>
+                </tr>
+                <tr>
+                    <td>&lt; 70%</td>
+                    <td style="color:var(--text-muted);">❌ Não é zebra</td>
+                    <td>Minoria significativa acertou, não foi tão surpreendente</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.75rem;line-height:1.7;">
+            <strong>% que erraram</strong> = percentual de participantes que <strong>erraram o vencedor</strong>
+            (não acertaram se o resultado seria vitória do time A, B ou empate).<br>
+            Ex: Catar vs Suíça — 97% erraram → ✅ 🦓💥 ZEBRA MONSTRA.<br>
+            Ex: Brasil vs Marrocos — 61% erraram → ❌ não é zebra (39% acertaram o empate).
+        </p>
+    </div>
+</details>
 
 <div class="section">
     <div class="section-title">💥 Zebras do Torneio</div>
     
 <div class="zebra-card upset">
     <div class="zebra-header">
-        <span class="zebra-badge upset">💥 ZEBRA MONSTRA</span>
-        <span style="font-size:0.75rem;color:var(--text-muted);">28/33 (85%) acreditavam no Turquia</span>
+        <span class="zebra-badge upset">🦓💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">32/33 (97%) acreditavam no Suíça &mdash; 97% erraram o resultado</span>
+    </div>
+    <div class="zebra-matchup">Catar vs Suíça</div>
+    <div class="zebra-detail">
+        Favorito: <strong>Suíça</strong> | Resultado: <strong>empate</strong><br>
+        Acertaram essa zebra: 1 jogadores
+    </div>
+    <div class="zebra-players"><span class="tag">Davi & Cesar</span></div>
+</div>
+
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">🦓💥 ZEBRA MONSTRA</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">28/33 (85%) acreditavam no Turquia &mdash; 97% erraram o resultado</span>
     </div>
     <div class="zebra-matchup">Austrália vs Turquia</div>
     <div class="zebra-detail">
@@ -584,6 +640,19 @@ body { padding-bottom: 70px; }
     <div class="zebra-players"><span class="tag">Luiz Augusto</span></div>
 </div>
 
+<div class="zebra-card upset">
+    <div class="zebra-header">
+        <span class="zebra-badge upset">🦓⚡ Zebra Grande</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">18/33 (55%) acreditavam no empate &mdash; 70% erraram o resultado</span>
+    </div>
+    <div class="zebra-matchup">Coréia do Sul vs República Tcheca</div>
+    <div class="zebra-detail">
+        Favorito: <strong>empate</strong> | Resultado: <strong>Coréia do Sul</strong><br>
+        Acertaram essa zebra: 10 jogadores
+    </div>
+    <div class="zebra-players"><span class="tag">Davi & Cesar</span> <span class="tag">Francisco Camargo</span> <span class="tag">Frederico Soter</span> <span class="tag">Guilherne</span> <span class="tag">Haroldo</span> <span class="tag">João Henrique</span> <span class="tag">Lucas Ubertini</span> <span class="tag">Marcelo Boix</span> <span class="tag">Mauricio Saraiva</span> <span class="tag">Thiago Bahiense</span></div>
+</div>
+
 </div>
 
 <div class="section">
@@ -591,7 +660,17 @@ body { padding-bottom: 70px; }
     <div class="card" style="overflow-x:auto;">
         <table class="rank-table">
             <thead><tr><th>#</th><th>Boleiro</th><th>Zebras acertadas</th></tr></thead>
-            <tbody><tr><td>🥇 1</td><td><a href='boleiros/Luiz Augusto.html'>Luiz Augusto</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+            <tbody><tr><td>🥇 1</td><td><a href='boleiros/Davi & Cesar.html'>Davi & Cesar</a></td><td style='font-weight:700;color:var(--accent);'>2</td></tr>
+<tr><td>🥈 2</td><td><a href='boleiros/Luiz Augusto.html'>Luiz Augusto</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td>🥉 3</td><td><a href='boleiros/Francisco Camargo.html'>Francisco Camargo</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 4</td><td><a href='boleiros/Frederico Soter.html'>Frederico Soter</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 5</td><td><a href='boleiros/Guilherne.html'>Guilherne</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 6</td><td><a href='boleiros/Haroldo.html'>Haroldo</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 7</td><td><a href='boleiros/João Henrique.html'>João Henrique</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 8</td><td><a href='boleiros/Lucas Ubertini.html'>Lucas Ubertini</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 9</td><td><a href='boleiros/Marcelo Boix.html'>Marcelo Boix</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 10</td><td><a href='boleiros/Mauricio Saraiva.html'>Mauricio Saraiva</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
+<tr><td> 11</td><td><a href='boleiros/Thiago Bahiense.html'>Thiago Bahiense</a></td><td style='font-weight:700;color:var(--accent);'>1</td></tr>
 </tbody>
         </table>
     </div>
@@ -620,11 +699,11 @@ body { padding-bottom: 70px; }
 
 <div style="margin-bottom:0.75rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-weight:700;font-size:0.9rem;">🥈 Catar vs Suíça</span>
-        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">59.4</span>
+        <span style="font-weight:700;font-size:0.9rem;">🥈 Catar vs Suíça<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">87.2</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">
-        <div class="bar-fill" style="width:68%;height:5px;background:var(--warning);border-radius:3px;"></div>
+        <div class="bar-fill" style="width:100%;height:5px;background:var(--danger);border-radius:3px;"></div>
     </div>
     <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
         <span>1/33 acertaram</span>
@@ -635,11 +714,11 @@ body { padding-bottom: 70px; }
 
 <div style="margin-bottom:0.75rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-weight:700;font-size:0.9rem;">🥉 Coréia do Sul vs República Tcheca</span>
-        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">49.2</span>
+        <span style="font-weight:700;font-size:0.9rem;">🥉 Coréia do Sul vs República Tcheca<span style="display:inline-block;font-size:0.65rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;">🦓 ZEBRA</span></span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">74.0</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">
-        <div class="bar-fill" style="width:56%;height:5px;background:var(--warning);border-radius:3px;"></div>
+        <div class="bar-fill" style="width:85%;height:5px;background:var(--danger);border-radius:3px;"></div>
     </div>
     <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
         <span>10/33 acertaram</span>
@@ -726,10 +805,10 @@ body { padding-bottom: 70px; }
 <div style="margin-bottom:0.75rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
         <span style="font-weight:700;font-size:0.9rem;"> Alemanha vs Curaçao</span>
-        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">1.2</span>
+        <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">0.0</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">
-        <div class="bar-fill" style="width:1%;height:5px;background:var(--warning);border-radius:3px;"></div>
+        <div class="bar-fill" style="width:0%;height:5px;background:var(--warning);border-radius:3px;"></div>
     </div>
     <div style="display:flex;gap:0.5rem;font-size:0.7rem;color:var(--text-muted);flex-wrap:wrap;">
         <span>33/33 acertaram</span>
@@ -773,38 +852,34 @@ body { padding-bottom: 70px; }
 <div class="zebra-card">
     <div class="zebra-header">
         <span class="zebra-badge favorite">Favorito Venceu</span>
-        <span style="font-size:0.75rem;color:var(--text-muted);">97% no favorito</span>
-    </div>
-    <div class="zebra-matchup">Catar vs Suíça</div>
-    <div class="zebra-detail">Favorito Suíça confirmou</div>
-</div>
-
-<div class="zebra-card">
-    <div class="zebra-header">
-        <span class="zebra-badge favorite">Favorito Venceu</span>
-        <span style="font-size:0.75rem;color:var(--text-muted);">55% no favorito</span>
-    </div>
-    <div class="zebra-matchup">Coréia do Sul vs República Tcheca</div>
-    <div class="zebra-detail">Favorito empate confirmou</div>
-</div>
-
-<div class="zebra-card">
-    <div class="zebra-header">
-        <span class="zebra-badge favorite">Favorito Venceu</span>
         <span style="font-size:0.75rem;color:var(--text-muted);">55% no favorito</span>
     </div>
     <div class="zebra-matchup">Estados Unidos vs Paraguai</div>
     <div class="zebra-detail">Favorito Estados Unidos confirmou</div>
 </div>
 
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">94% no favorito</span>
+    </div>
+    <div class="zebra-matchup">Haiti vs Escócia</div>
+    <div class="zebra-detail">Favorito Escócia confirmou</div>
 </div>
 
-<div class="card" style="margin:0.75rem;font-size:0.8rem;color:var(--text-muted);">
-    <p><strong>💡 O que e uma Zebra?</strong> Quando o time mais votado como vencedor pelo bolaao PERDEU ou empatou. Quanto maior a porcentagem de votos no favorito, maior a zebra.</p>
+<div class="zebra-card">
+    <div class="zebra-header">
+        <span class="zebra-badge favorite">Favorito Venceu</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">91% no favorito</span>
+    </div>
+    <div class="zebra-matchup">México vs África do Sul</div>
+    <div class="zebra-detail">Favorito México confirmou</div>
+</div>
+
 </div>
 
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
-    atualizado às 14/06/2026 15:08:24
+    atualizado às 14/06/2026 15:52:58
 </div>
 <nav class="bottom-nav"><a href="index.html"><span class="nav-icon">🏠</span>Início</a>
 <a href="arena.html"><span class="nav-icon">⚔️</span>Arena</a>

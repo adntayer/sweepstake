@@ -637,16 +637,18 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         favorite_votes = int(vote_counts.iloc[0]) if not vote_counts.empty else 0
         total_votes = len(group)
 
-        is_upset = 0
-        if real_winner != "empate" and favorite and favorite != "empate":
-            if real_winner != favorite:
-                is_upset = 1
-
-        # Which players got the upset
+        # Which players got the result right
         players_correct = []
         for _, p_row in group.iterrows():
             if str(p_row.get("resultado_bol_time", "")) == real_winner:
                 players_correct.append(p_row["who"])
+
+        num_correct = len(players_correct)
+        winner_wrong_pct = 100 - round(num_correct / total_votes * 100) if total_votes else 0
+
+        is_upset = 0
+        if favorite != real_winner and winner_wrong_pct >= 70:
+            is_upset = 1
 
         rows.append({
             "match": match,
@@ -656,8 +658,9 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
             "favorite": favorite,
             "favorite_votes": favorite_votes,
             "total_votes": total_votes,
+            "winner_wrong_pct": winner_wrong_pct,
             "is_upset": is_upset,
-            "num_correct": len(players_correct),
+            "num_correct": num_correct,
             "players_correct": " | ".join(players_correct),
         })
 

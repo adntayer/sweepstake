@@ -242,7 +242,22 @@ def _all_teams(config: ChampionshipConfig) -> list[str]:
 
 def _build_team_page(config: ChampionshipConfig, team: str) -> str:
     """Per-team analytics page."""
+    from src.core.reports.html import ZEBRA_MONSTRA_EMOJI, ZEBRA_GRANDE_EMOJI
+
     df_games = pd.read_csv(config.games_file, sep=",")
+
+    # Load upset data for zebra indicators
+    upset_lookup: dict[str, tuple[int, int, str]] = {}
+    upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
+    if os.path.exists(upset_path):
+        df_upset = pd.read_csv(upset_path, sep=",")
+        for _, r in df_upset.iterrows():
+            if int(r.get("is_upset", 0)) == 1:
+                upset_lookup[str(r["match"])] = (
+                    int(r.get("winner_wrong_pct", 0)),
+                    int(r.get("num_correct", 0)),
+                    str(r.get("favorite", "")),
+                )
 
     # Find which group this team belongs to
     group_name = ""
@@ -427,7 +442,16 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
         phase_v = round_val if round_val not in ["1", "2", "3"] else config.group_phase_label
         game_href = f"../jogos/{phase_v}/{date_hour}_{match_slug}.html"
 
-        match_rows += f'<div style="padding:0.3rem 0;font-size:0.85rem;border-bottom:1px solid var(--card-border);">{home} <strong>{score}</strong> {away} <span style="color:var(--text-muted);font-size:0.7rem;">({row.get("round", "")})</span> <a href="{game_href}" style="color:var(--accent);font-size:0.7rem;margin-left:0.5rem;">ver jogo</a></div>'
+        # Zebra indicator
+        zebra_tag = ""
+        if match_slug in upset_lookup:
+            wwpct, _, fav = upset_lookup[match_slug]
+            if wwpct >= 90:
+                zebra_tag = f' <span style="display:inline-block;font-size:0.6rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.1rem 0.4rem;border-radius:999px;font-weight:700;">{ZEBRA_MONSTRA_EMOJI}</span>'
+            else:
+                zebra_tag = f' <span style="display:inline-block;font-size:0.6rem;background:rgba(239,68,68,0.15);color:var(--warning);padding:0.1rem 0.4rem;border-radius:999px;font-weight:700;">{ZEBRA_GRANDE_EMOJI}</span>'
+
+        match_rows += f'<div style="padding:0.3rem 0;font-size:0.85rem;border-bottom:1px solid var(--card-border);">{home} <strong>{score}</strong> {away}{zebra_tag} <span style="color:var(--text-muted);font-size:0.7rem;">({row.get("round", "")})</span> <a href="{game_href}" style="color:var(--accent);font-size:0.7rem;margin-left:0.5rem;">ver jogo</a></div>'
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
     group_label = f" - Grupo {group_name}" if group_name else ""

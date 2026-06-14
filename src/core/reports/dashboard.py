@@ -15,6 +15,7 @@ from src.core.config import ChampionshipConfig
 from src.core.logo_fetcher import _team_logo_tag
 from src.core.printing import print_colored
 from src.core.reports.utils import compute_pending_matches
+from src.core.reports.html import ZEBRA_MONSTRA_EMOJI, ZEBRA_GRANDE_EMOJI, ZEBRA_MONSTRA_LABEL, ZEBRA_GRANDE_LABEL
 
 
 def _norm(path: str) -> str:
@@ -524,11 +525,11 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
                 badge_map.setdefault(boleiro, []).append("\U0001f525")
 
     # Zebra hunter badge
+    zebra_counts: dict[str, int] = {}
     upset_path = _norm(os.path.join(gold_dir, "upset_tracker.csv"))
     if os.path.exists(upset_path):
         df_upset = pd.read_csv(upset_path, sep=",")
         upset_only = df_upset[df_upset.get("is_upset", 0) == 1]
-        zebra_counts: dict[str, int] = {}
         for _, r in upset_only.iterrows():
             for p in [x.strip() for x in str(r.get("players_correct", "")).split("|") if x.strip()]:
                 zebra_counts[p] = zebra_counts.get(p, 0) + 1
@@ -579,6 +580,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
             if sn in row.index:
                 val = int(row[sn]) if pd.notna(row[sn]) else 0
                 cells += f"<td>{val}</td>"
+        num_z = zebra_counts.get(row["who"], 0)
+        cells += f'<td style="font-weight:600;color:{"var(--danger)" if num_z > 0 else "var(--text-muted)"};">{num_z}</td>'
         rank_rows += f'<tr class="{rank_class}">{cells}</tr>\n'
     rank_header = ""
     for sn in score_names:
@@ -586,6 +589,7 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         h = f"{emoji} " if emoji else ""
         h += sn.split("-")[0].strip()
         rank_header += f"<th>{h}</th>"
+    rank_header += '<th style="color:var(--danger);">\U0001f993 Z</th>'
     return f"""
 <div style="overflow-x:auto;">
     <table class="rank-table">
@@ -829,6 +833,23 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
     away_logo = _team_logo_tag(rev_map.get(away, away), config, cls="team-logo-sm", start=config.reports_dir + "/html")
 
+    # Check if the last match was a zebra
+    zebra_badge = ""
+    try:
+        upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
+        if os.path.exists(upset_path):
+            df_upset = pd.read_csv(upset_path, sep=",")
+            match_slug = str(last.get("match", ""))
+            if match_slug:
+                upset_row = df_upset[df_upset["match"] == match_slug]
+                if not upset_row.empty and int(upset_row.iloc[0].get("is_upset", 0)) == 1:
+                    wwpct = int(upset_row.iloc[0].get("winner_wrong_pct", 0))
+                    fav = upset_row.iloc[0].get("favorite", "?")
+                    label = ZEBRA_MONSTRA_LABEL if wwpct >= 90 else ZEBRA_GRANDE_LABEL
+                    zebra_badge = f'<div style="text-align:center;margin-top:0.3rem;"><span class="badge badge-danger">{label}</span> <span style="font-size:0.7rem;color:var(--text-muted);">{wwpct}% erraram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
+    except Exception:
+        pass
+
     return f"""
 <div class="section">
     <div class="section-title">\U0001f4ca Ultimo Resultado</div>
@@ -839,6 +860,7 @@ def _build_last_result(config: ChampionshipConfig) -> str:
             <div class="team">{away_logo} {away}</div>
         </div>
         <div class="date">{date}</div>
+        {zebra_badge}
     </div>
 </div>
 """
@@ -882,6 +904,19 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
 
     rev_map_pt = {_strip_accents(v.lower()): k for k, v in config.team_name_mapping.items()}
 
+    # Load upset data for zebra indicators
+    upset_icons: dict[str, str] = {}
+    upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
+    if os.path.exists(upset_path):
+        try:
+            df_upset_slugs = pd.read_csv(upset_path, sep=",")
+            for _, r in df_upset_slugs.iterrows():
+                if int(r.get("is_upset", 0)) == 1:
+                    wwpct = int(r.get("winner_wrong_pct", 0))
+                    upset_icons[str(r["match"])] = ZEBRA_MONSTRA_EMOJI if wwpct >= 90 else ZEBRA_GRANDE_EMOJI
+        except Exception:
+            pass
+
     def _team_part(fp: str, side: str) -> tuple[str, str, str]:
         slug = _slug_from_filename(fp)
         parts = slug.split("-vs-")
@@ -913,9 +948,10 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
                 date_part = ""
             slug = _slug_from_filename(fp)
             badge = _status_badge(slug, slug_status)
+            zebra_icon = upset_icons.get(slug, "")
             home_name, home_logo, home_slug = _team_part(fp, "home")
             away_name, away_logo, away_slug = _team_part(fp, "away")
-            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug} vs {away_logo}{away_slug}</span> {badge}</a>\n'
+            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug} vs {away_logo}{away_slug}</span> <span style="display:flex;align-items:center;gap:0.2rem;">{zebra_icon}{badge}</span></a>\n'
         out += "</div>"
         return out if file_list else '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
@@ -1045,6 +1081,13 @@ def _build_emoji_accordion(config: ChampionshipConfig) -> str:
             f'<span class="pts">+{pts}</span>'
             f'</div>\n'
         )
+    rows += (
+        f'<div class="emoji-row">'
+        f'<span class="e">\U0001f993</span>'
+        f'<span class="desc">Zebra acertada (favorito n\u00e3o venceu e \u226570% erraram)</span>'
+        f'<span class="pts">contagem</span>'
+        f'</div>\n'
+    )
     return f"""<details class="accordion-emoji">
 <summary>\U0001f9e9 Legenda dos acertos</summary>
 <div class="content">{rows}</div>
