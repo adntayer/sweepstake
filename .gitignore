@@ -200,3 +200,6 @@ src/championships/*/reports/**
 src/championships/*/data/bronze/**
 src/championships/*/data/silver/**
 src/championships/*/data/gold/**
+
+*.json
+

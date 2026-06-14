@@ -24,6 +24,10 @@ from src.core.reports.new_views import (
     build_round_predictions_page,
     build_similarity_matrix_page,
 )
+from src.core.reports.arquetipos import (
+    classificar_jogadores,
+    build_arquetipos_page,
+)
 
 
 # Zebra magnitude constants — used across all report pages
@@ -1624,8 +1628,36 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     if not bias_html:
         bias_html = _ph("Vi\u00e9s de palpites dispon\u00edvel ap\u00f3s os primeiros jogos.")
 
+    # --- Archetype badge (reads source-of-truth CSV) ---
+    arq_html = ""
+    arq_csv = _norm(os.path.join(config._au_first_round(), "arquetipos_classification.csv"))
+    if os.path.exists(arq_csv):
+        df_arq = pd.read_csv(arq_csv, sep=",")
+        arq_row = df_arq[df_arq["boleiro"] == boleiro]
+        if not arq_row.empty:
+            r2 = arq_row.iloc[0]
+            arq_emoji = str(r2.get("arquetipo_emoji", "?"))
+            arq_nome = str(r2.get("arquetipo", "?"))
+            arq_tier = str(r2.get("tier_label", "?"))
+            arq_tier_emoji = str(r2.get("tier_emoji", ""))
+            arq_score = int(r2.get("score", 0))
+            arq_cor = str(r2.get("arquetipo_cor", "var(--text-muted)"))
+            tier_cor = str(r2.get("tier_cor", "var(--text-muted)"))
+            arq_html = (
+                f'<div style="margin-bottom:0.6rem;padding-bottom:0.5rem;border-bottom:1px solid var(--card-border);'
+                f'display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">'
+                f'<span style="font-size:1.5rem;">{arq_emoji}</span>'
+                f'<span style="font-weight:700;color:{arq_cor};font-size:1.1rem;">{arq_nome}</span>'
+                f'<span class="tier-badge" style="display:inline-block;font-size:0.7rem;font-weight:700;'
+                f'padding:0.15rem 0.5rem;border-radius:999px;background:{tier_cor}22;color:{tier_cor};'
+                f'border:1px solid {tier_cor};">{arq_tier_emoji} {arq_tier} \u00b7 {arq_score}%</span>'
+                f'<a href="../arquetipos.html" style="font-size:0.7rem;color:var(--text-muted);margin-left:auto;">'
+                f'\U0001f4d6 legenda</a>'
+                f'</div>\n'
+            )
+
     # --- Combine profile ---
-    profile_parts = badges_html + boldness_html + streak_html_inner + best_team_html + worst_team_html + bias_html
+    profile_parts = arq_html + badges_html + boldness_html + streak_html_inner + best_team_html + worst_team_html + bias_html
     profile_html = f'<div class="section"><div class="section-title">\U0001f9d0 Perfil do Jogador</div><div class="card">{profile_parts}</div></div>\n'
 
     body += profile_html
@@ -4103,6 +4135,12 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         return
     df_all = pd.read_csv(gold_all, sep=",")
 
+    # --- Archetype classification (must run before per-player pages) ---
+    try:
+        classificar_jogadores(config)
+    except Exception as e:
+        print_colored(f"arquetipo classification failed: {e}", "yellow")
+
     # --- Per-player ---
     # Use valid if available and non-empty, otherwise fall back to all predictions
     # so boleiro pages are generated even before the tournament starts
@@ -4181,3 +4219,4 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
     build_round_predictions_page(config, html_base)
     build_round_matrix_page(config, html_base)
     build_all_team_pages(config, html_base)
+    build_arquetipos_page(config, html_base)

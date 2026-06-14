@@ -1265,6 +1265,11 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
             \U0001f50d Raio-X
         </div>
     </a>
+    <a href="arquetipos.html">
+        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
+            \U0001f3ad Arqu\u00e9tipos
+        </div>
+    </a>
 </div>
 
 {emoji_accordion}
