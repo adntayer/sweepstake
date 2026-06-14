@@ -3549,6 +3549,7 @@ def _build_zebras(config: ChampionshipConfig) -> str:
     upset_sorted = upset_matches.sort_values("favorite_votes", ascending=False) if not upset_matches.empty else upset_matches
 
     for _, row in upset_sorted.iterrows():
+        match_slug = str(row.get("match", ""))
         home = str(row.get("home_team", ""))
         away = str(row.get("away_team", ""))
         favorite = str(row.get("favorite", "?"))
@@ -3556,11 +3557,16 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         fav_votes = int(row.get("favorite_votes", 0))
         total_votes = int(row.get("total_votes", 0))
         num_correct = int(row.get("num_correct", 0))
+        match_date = str(row.get("date", ""))
+        match_hour = str(row.get("hour", ""))
         players_correct = _parse_correct(row.get("players_correct", ""))
 
         fav_pct = round(fav_votes / total_votes * 100) if total_votes else 0
         winner_wrong_pct = 100 - round(num_correct / total_votes * 100) if total_votes else 0
         players_html = " ".join(f'<span class="tag">{p}</span>' for p in players_correct) if players_correct else '<span style="color:var(--text-muted);font-style:italic;">ningu\u00e9m acertou</span>'
+
+        # Build match page link (date/hour are present after pipeline regeneration)
+        match_href = f"jogos/{config.group_phase_label}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
 
         # Determine upset magnitude based on % who got the winner wrong
         if winner_wrong_pct >= 90:
@@ -3568,13 +3574,15 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         else:
             magnitude = ZEBRA_GRANDE_LABEL
 
+        matchup_display = f"<a href=\"{match_href}\">{home} vs {away}</a>" if match_href else f"{home} vs {away}"
+
         zebra_cards += f"""
 <div class="zebra-card upset">
     <div class="zebra-header">
         <span class="zebra-badge upset">{magnitude}</span>
         <span style="font-size:0.75rem;color:var(--text-muted);">{fav_votes}/{total_votes} ({fav_pct}%) acreditavam no {favorite} &mdash; {winner_wrong_pct}% erraram o resultado</span>
     </div>
-    <div class="zebra-matchup">{home} vs {away}</div>
+    <div class="zebra-matchup">{matchup_display}</div>
     <div class="zebra-detail">
         Favorito: <strong>{favorite}</strong> | Resultado: <strong>{real_winner}</strong><br>
         Acertaram essa zebra: {num_correct} jogadores
@@ -3612,13 +3620,18 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         fav_votes = int(row.get("favorite_votes", 0))
         total_votes = int(row.get("total_votes", 0))
         fav_pct = round(fav_votes / total_votes * 100) if total_votes else 0
+        match_slug = str(row.get("match", ""))
+        match_date = str(row.get("date", ""))
+        match_hour = str(row.get("hour", ""))
+        match_href = f"jogos/{config.group_phase_label}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
+        matchup_display = f"<a href=\"{match_href}\">{home} vs {away}</a>" if match_href else f"{home} vs {away}"
         fav_won_cards += f"""
 <div class="zebra-card">
     <div class="zebra-header">
         <span class="zebra-badge favorite">Favorito Venceu</span>
         <span style="font-size:0.75rem;color:var(--text-muted);">{fav_pct}% no favorito</span>
     </div>
-    <div class="zebra-matchup">{home} vs {away}</div>
+    <div class="zebra-matchup">{matchup_display}</div>
     <div class="zebra-detail">Favorito {favorite} confirmou</div>
 </div>
 """
@@ -3658,10 +3671,12 @@ def _build_zebras(config: ChampionshipConfig) -> str:
             difficulty = difficulty * 1.3 + 10
 
         diff_matches.append({
-            "home": home, "away": away, "favorite": favorite,
-            "real_winner": real_winner, "num_correct": num_correct,
-            "total_votes": total_votes, "is_upset": is_upset,
-            "difficulty": round(difficulty, 1),
+            "match": match, "home": home, "away": away,
+            "favorite": favorite, "real_winner": real_winner,
+            "num_correct": num_correct, "total_votes": total_votes,
+            "is_upset": is_upset, "difficulty": round(difficulty, 1),
+            "date": str(row.get("date", "")),
+            "hour": str(row.get("hour", "")),
         })
 
     diff_cards = ""
@@ -3674,10 +3689,12 @@ def _build_zebras(config: ChampionshipConfig) -> str:
             bar_pct = round(m["difficulty"] / max_diff * 100)
             bar_color = "var(--danger)" if m["is_upset"] else "var(--warning)"
 
+            match_href = f"jogos/{config.group_phase_label}/{m['date']}_{m['hour']}_{m['match']}.html" if m.get("date") and m.get("hour") else ""
+            match_display = f"<a href=\"{match_href}\">{m['home']} vs {m['away']}</a>" if match_href else f"{m['home']} vs {m['away']}"
             diff_cards += f"""
 <div style="margin-bottom:0.75rem;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-weight:700;font-size:0.9rem;">{medal} {m["home"]} vs {m["away"]}{upset_tag}</span>
+        <span style="font-weight:700;font-size:0.9rem;">{medal} {match_display}{upset_tag}</span>
         <span style="font-weight:700;color:var(--accent);font-size:0.85rem;">{m["difficulty"]}</span>
     </div>
     <div class="bar-track" style="height:5px;margin:0.25rem 0;">

@@ -658,6 +658,8 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
 
         rows.append({
             "match": match,
+            "date": first["date"],
+            "hour": first["hour"],
             "home_team": home,
             "away_team": away,
             "real_winner": real_winner,

@@ -1043,9 +1043,9 @@ document.addEventListener('DOMContentLoaded', function() { setDefault(); });
     # ── Game selector UI ──
     buttons_html = (
         '<div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem;">'
-        '<button onclick="setDefault()" style="padding:0.4rem 0.8rem;background:var(--accent);'
+        '<button onclick="setDefault()" style="padding:0.4rem 0.8rem;background:#1a3a5c;'
         'color:white;border:none;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer;">'
-        'Últimos 10 jogos</button>'
+        'padrão: últimos 10 jogos + próximo</button>'
         '</div>'
 
         '<div style="display:flex;gap:0.3rem;flex-wrap:wrap;align-items:flex-start;">'
