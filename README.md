@@ -1,6 +1,10 @@
 # sweepstake
 
-*/5 0,1,13,14,15,16,17,18,19,20,21,22,23 * * * 
+[repo wc2026](https://github.com/rezarahiminia/worldcup2026)
+
+[codeburn](https://github.com/getagentseal/codeburn)
+
+*/5 0,1,13,14,15,16,17,18,19,20,21,22,23 * * *
 
 
 ```terminal
