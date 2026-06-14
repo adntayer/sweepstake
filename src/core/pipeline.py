@@ -343,6 +343,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
                 "resultado_bol_time",
                 "resultado_real_placar",
                 "resultado_real_time",
+                "time_elapsed",
                 "who",
             ]
         )
@@ -394,6 +395,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
                 "resultado_bol_time",
                 "resultado_real_placar",
                 "resultado_real_time",
+                "time_elapsed",
                 "who",
             ]
         )
@@ -627,8 +629,12 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         # CSV round-trip converts empty strings to NaN; pd.isna catches both
         real_winner = "" if pd.isna(real_winner_raw) else str(real_winner_raw)
 
+        # Also check time_elapsed — live or notstarted matches do NOT count as finished
+        time_elapsed_raw = first.get("time_elapsed", "")
+        time_elapsed = "" if pd.isna(time_elapsed_raw) else str(time_elapsed_raw).strip().lower()
+
         # Skip unfinished matches — no real result yet
-        if not real_winner:
+        if not real_winner or time_elapsed in ("live", "notstarted"):
             continue
 
         # Determine favorite (most predicted winner)

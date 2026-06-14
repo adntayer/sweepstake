@@ -713,108 +713,386 @@ def _build_similarity_matrix(config: ChampionshipConfig) -> str:
 # ------------------------------------------------------------------
 
 def _build_round_predictions(config: ChampionshipConfig) -> str:
-    """Show each player's predictions grouped by round, with round selector."""
+    """Show predictions grid with multi-game selector.
+
+    Default view: last 10 completed games + next upcoming game.
+    Users can select multiple games via round filter buttons or individual
+    checkboxes.  A "Filtrar" button applies the selection to the table.
+    Columns are ordered chronologically (oldest -> newest -> future).
+    Completed games show real score, predicted score and points.
+    """
     gold_all = config.gold_all_path()
     if not os.path.exists(gold_all):
-        return _page_frame(config, "Palpites da Rodada",
-                          "<div class='hero'><h1>\U0001f4cb Palpites da Rodada</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados de palpites</div></div>")
+        return _page_frame(config, "Palpites",
+                          "<div class='hero'><h1>\U0001f4cb Palpites</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados de palpites</div></div>")
 
     df_pred = pd.read_csv(gold_all, sep=",")
     if df_pred.empty or "who" not in df_pred.columns:
-        return _page_frame(config, "Palpites da Rodada",
-                          "<div class='hero'><h1>\U0001f4cb Palpites da Rodada</h1><div class='subtitle'>Nenhum palpite encontrado</div></div>")
+        return _page_frame(config, "Palpites",
+                          "<div class='hero'><h1>\U0001f4cb Palpites</h1><div class='subtitle'>Nenhum palpite encontrado</div></div>")
 
+    df_pred["match"] = df_pred["match"].astype(str)
+
+    # ── Load games.csv for ALL games (all phases) ──
     df_games = pd.read_csv(config.games_file, sep=",")
-    game_map = df_games[["match", "round", "home_team", "away_team", "home_goals", "away_goals"]].copy()
-    game_map["round"] = game_map["round"].astype(str).str.strip()
+    df_games["match"] = df_games["match"].astype(str)
 
-    df = df_pred.merge(game_map, on="match", how="left", suffixes=("_pred", "_real"))
-    df = df[df["round"].notna() & (df["valido"] == 1)].copy()
-
-    boleiros = sorted(df["who"].unique())
-    rounds = sorted(df["round"].unique())
-
+    # Round labels for display
     round_labels = {
         "1": "1\u00aa Rodada", "2": "2\u00aa Rodada", "3": "3\u00aa Rodada",
-        "oitavas": "Oitavas de Final", "quartas": "Quartas de Final",
-        "semi": "Semifinal", "final": "Final",
+        "r32": "2\u00aa Fase", "r16": "Oitavas", "qf": "Quartas",
+        "sf": "Semi", "third": "3\u00ba Lugar", "final": "Final",
     }
+    group_phase_label = getattr(config, "group_phase_label", "1\u00aa Fase")
 
-    round_bodies = ""
-    select_options = ""
-    for idx_r, r in enumerate(rounds):
-        label = round_labels.get(r, f"Rodada {r}")
-        select_options += f'<option value="round-{r}">{label}</option>\n'
+    # Merge round info into predictions
+    game_round_map = df_games[["match", "round"]].copy()
+    game_round_map["round"] = game_round_map["round"].astype(str).str.strip()
+    df = df_pred.merge(game_round_map, on="match", how="left")
+    df["round_label"] = df["round"].map(round_labels).fillna(group_phase_label)
 
-        df_r = df[df["round"] == r]
-        matches_r = sorted(df_r["match"].unique())
+    # Separate completed and upcoming
+    df_valid = df[df["valido"] == 1].copy()
+    df_upcoming = df[df["valido"] == 0].copy()
 
-        match_abbrevs = []
-        for m in matches_r:
-            dm = df_r[df_r["match"] == m].iloc[0]
-            match_abbrevs.append((m, dm["home_team_real"][:3].upper(), dm["away_team_real"][:3].upper()))
+    if df_valid.empty and df_upcoming.empty:
+        return _page_frame(config, "Palpites",
+                          "<div class='hero'><h1>\U0001f4cb Palpites</h1><div class='subtitle'>Nenhum jogo encontrado</div></div>")
 
-        header_cells = '<th style="position:sticky;top:0;left:0;z-index:4;background:var(--card-bg);white-space:nowrap;">Jogador</th>'
-        for _, ha, aa in match_abbrevs:
-            header_cells += f'<th style="position:sticky;top:0;z-index:3;background:var(--card-bg);font-size:0.55rem;text-align:center;padding:0.2rem 0.1rem;min-width:34px;line-height:1.1;">{ha}<br>x<br>{aa}</th>'
-        header_cells += '<th style="position:sticky;top:0;z-index:3;background:var(--card-bg);color:var(--accent);white-space:nowrap;">Total</th>'
+    boleiros = sorted(df["who"].unique())
 
-        table_rows = ""
-        for b in boleiros:
-            df_b = df_r[df_r["who"] == b]
-            cells = f'<td style="position:sticky;left:0;z-index:2;background:var(--card-bg);border-bottom:1px solid var(--card-border);font-weight:600;font-size:0.7rem;"><a href="boleiros/{b}.html">{b}</a></td>'
-            row_total = 0
-            for m, _, _ in match_abbrevs:
-                row = df_b[df_b["match"] == m]
-                if not row.empty:
-                    rw = row.iloc[0]
+    # ── Build complete match list from games.csv (all phases) ──
+    # Fix placeholder match IDs (e.g. "-vs-") so every row has a unique key
+    df_games_src = df_games.copy()
+    bad_match = df_games_src["match"].isin(["-vs-", "", "nan", "null"]) | df_games_src["match"].isna()
+    for idx in df_games_src[bad_match].index:
+        r = str(df_games_src.at[idx, "round"]).strip()
+        df_games_src.at[idx, "match"] = f"x{idx}-{r}"
+
+    match_order = df_games_src[["match", "date", "home_team", "away_team", "round"]].drop_duplicates("match")
+    match_order = match_order.sort_values("date", ascending=True)
+    all_matches = match_order["match"].tolist()
+
+    # Round slug per match
+    match_round_map = dict(zip(match_order["match"], match_order["round"].astype(str).str.strip()))
+
+    # Match info lookup
+    match_info = {}
+    for _, r in match_order.iterrows():
+        m = str(r["match"])
+        ht = str(r["home_team"]).strip()
+        at = str(r["away_team"]).strip()
+        r_slug = str(r["round"]).strip()
+        rl = round_labels.get(r_slug, group_phase_label)
+        ha = ht[:3].upper() if ht and ht not in ("nan", "") else "???"
+        aa = at[:3].upper() if at and at not in ("nan", "") else "???"
+        match_info[m] = (ha, aa, ht, at, rl, r_slug)
+
+    # Default view: last 10 completed + next upcoming
+    completed_matches = [m for m in all_matches if m in set(df_valid["match"].unique())]
+    upcoming_matches = [m for m in all_matches if m not in set(completed_matches)]
+    last_10 = completed_matches[-10:] if len(completed_matches) >= 10 else completed_matches
+    next_upcoming = upcoming_matches[0] if upcoming_matches else None
+    default_matches = list(last_10)
+    if next_upcoming:
+        default_matches.append(next_upcoming)
+
+    # ── Master table with ALL games as columns ──
+    # Headers
+    header_cells = (
+        '<th style="position:sticky;top:0;left:0;z-index:4;background:var(--card-bg);'
+        'white-space:nowrap;">Jogador</th>\n'
+    )
+    for m in all_matches:
+        if m not in match_info:
+            continue
+        ha, aa, _, _, _, rs = match_info[m]
+        is_default = m in default_matches
+        cls = "game-col" + (" game-default" if is_default else "")
+        header_cells += (
+            f'<th class="{cls}" data-match="{m}" data-round="{rs}" '
+            'style="position:sticky;top:0;z-index:3;background:var(--card-bg);'
+            'font-size:0.55rem;text-align:center;padding:0.2rem 0.1rem;'
+            f'min-width:34px;line-height:1.1;">{ha}<br>x<br>{aa}</th>\n'
+        )
+    header_cells += (
+        '<th style="position:sticky;top:0;z-index:3;background:var(--card-bg);'
+        'color:var(--accent);white-space:nowrap;">Total</th>\n'
+    )
+
+    # Body rows
+    table_rows = ""
+    for b in boleiros:
+        df_b = df[df["who"] == b]
+        cells = (
+            '<td style="position:sticky;left:0;z-index:2;background:var(--card-bg);'
+            'border-bottom:1px solid var(--card-border);font-weight:600;font-size:0.7rem;">'
+            f'<a href="boleiros/{b}.html">{b}</a></td>\n'
+        )
+        row_total = 0
+        for m in all_matches:
+            if m not in match_info:
+                continue
+            row = df_b[df_b["match"] == m]
+            _, _, _, _, _, rs = match_info[m]
+            is_default = m in default_matches
+            cls = "game-col" + (" game-default" if is_default else "")
+            if not row.empty:
+                rw = row.iloc[0]
+                if rw["valido"] == 1:
                     pts = int(rw["pontos"])
                     row_total += pts
                     crit_color = config.scoring_color(rw["criterio"])
-                    cells += f'<td style="text-align:center;font-size:0.65rem;padding:0.22rem 0.1rem;white-space:nowrap;border-bottom:1px solid var(--card-border);"><span style="font-weight:600;">{int(rw["home_goals_bol"])}-{int(rw["away_goals_bol"])}</span> <span style="font-size:0.5rem;color:{crit_color};">+{pts}</span></td>'
+                    hgr = int(rw["home_goals_real"]) if pd.notna(rw["home_goals_real"]) else "?"
+                    agr = int(rw["away_goals_real"]) if pd.notna(rw["away_goals_real"]) else "?"
+                    cells += (
+                        f'<td class="{cls}" data-match="{m}" data-round="{rs}" data-pts="{pts}" '
+                        'style="text-align:center;font-size:0.6rem;padding:0.15rem 0.1rem;'
+                        'white-space:nowrap;border-bottom:1px solid var(--card-border);">'
+                        f'<span style="font-size:0.5rem;color:var(--text-muted);">{hgr}-{agr}</span><br>'
+                        f'<span style="font-weight:600;font-size:0.65rem;">'
+                        f'{int(rw["home_goals_bol"])}-{int(rw["away_goals_bol"])}</span> '
+                        f'<span style="font-size:0.5rem;color:{crit_color};">+{pts}</span></td>\n'
+                    )
                 else:
-                    cells += '<td style="text-align:center;color:var(--text-muted);font-size:0.55rem;border-bottom:1px solid var(--card-border);">\u2014</td>'
-            cells += f'<td style="font-weight:700;color:var(--accent);text-align:center;font-size:0.8rem;border-bottom:1px solid var(--card-border);">{row_total}</td>'
-            table_rows += f'<tr>{cells}</tr>\n'
+                    cells += (
+                        f'<td class="{cls}" data-match="{m}" data-round="{rs}" data-pts="0" '
+                        'style="text-align:center;font-size:0.65rem;padding:0.22rem 0.1rem;'
+                        'white-space:nowrap;border-bottom:1px solid var(--card-border);'
+                        'color:var(--text-muted);">'
+                        f'<span style="font-weight:600;">{int(rw["home_goals_bol"])}-'
+                        f'{int(rw["away_goals_bol"])}</span></td>\n'
+                    )
+            else:
+                cells += (
+                    f'<td class="{cls}" data-match="{m}" data-round="{rs}" data-pts="0" '
+                    'style="text-align:center;color:var(--text-muted);font-size:0.55rem;'
+                    'border-bottom:1px solid var(--card-border);">\u2014</td>\n'
+                )
+        cells += (
+            '<td data-total-cell style="font-weight:700;color:var(--accent);text-align:center;'
+            f'font-size:0.8rem;border-bottom:1px solid var(--card-border);">{row_total}</td>'
+        )
+        table_rows += f"<tr>{cells}</tr>\n"
 
-        display = "block" if idx_r == 0 else "none"
-        round_bodies += f'<div id="round-{r}" class="round-table" style="display:{display};overflow:auto;max-height:75vh;"><table style="border-collapse:separate;border-spacing:0;width:100%;font-size:0.7rem;"><thead><tr>{header_cells}</tr></thead><tbody>{table_rows}</tbody></table></div>\n'
+    # ── Build 5 dropdown filter menus (click to open, checkboxes inside) ──
+    phase_filter_label = {
+        "1": "1\u00aa Rodada",
+        "2": "2\u00aa Rodada",
+        "3": "3\u00aa Rodada",
+        "r32": "2\u00aa Fase",
+        "mata": "Mata-Mata",
+    }
+    # Count selected per phase on load
+    dd_btn_style = (
+        "padding:0.3rem 0.5rem;background:var(--card-bg);color:var(--text);"
+        "border:1px solid var(--card-border);border-radius:6px;font-size:0.65rem;"
+        "font-weight:600;cursor:pointer;white-space:nowrap;display:inline-flex;"
+        "align-items:center;gap:0.3rem;"
+    )
+    dd_panel_style = (
+        "display:none;position:absolute;top:100%;left:0;z-index:100;"
+        "background:var(--card-bg);border:1px solid var(--card-border);"
+        "border-radius:8px;padding:0.4rem;min-width:180px;max-width:260px;"
+        "box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-top:2px;"
+    )
+    phase_dropdowns_html = ""
+    for key in ["1", "2", "3", "r32", "mata"]:
+        slugs = ["r16", "qf", "sf", "third", "final"] if key == "mata" else [key]
+        matches_in_round = [m for m in all_matches if match_round_map.get(m) in slugs]
+        if not matches_in_round:
+            continue
+        label = phase_filter_label[key]
+        # Count default selected
+        default_count = sum(1 for m in matches_in_round if m in default_matches)
+        checkboxes_html = ""
+        for m in matches_in_round:
+            ha, aa, _, _, _, _ = match_info.get(m, ("?", "?", "", "", "", ""))
+            checked = "checked" if m in default_matches else ""
+            checkboxes_html += (
+                f'<label style="display:flex;align-items:center;gap:0.2rem;'
+                f'font-size:0.55rem;padding:0.15rem 0;cursor:pointer;white-space:nowrap;">'
+                f'<input type="checkbox" value="{m}" {checked} '
+                f'onchange="onCheckChange(this)" style="width:0.75rem;height:0.75rem;"> '
+                f'{ha} x {aa}</label>\n'
+            )
+        phase_dropdowns_html += (
+            f'<div class="dd-wrap" style="position:relative;display:inline-block;">'
+            f'<button id="dd-btn-{key}" onclick="toggleDD(\'{key}\')" style="{dd_btn_style}">'
+            f'{label} <span id="dd-badge-{key}" style="font-size:0.55rem;'
+            f'color:var(--accent);">({default_count})</span> \u25be</button>'
+            f'<div id="dd-panel-{key}" style="{dd_panel_style}">'
+            f'<div style="font-size:0.6rem;font-weight:600;color:var(--text-muted);'
+            f'margin-bottom:0.2rem;">{label}</div>'
+            f'<div style="max-height:160px;overflow-y:auto;">{checkboxes_html}</div>'
+            f'<div style="display:flex;gap:0.3rem;margin-top:0.3rem;padding-top:0.2rem;'
+            f'border-top:1px solid var(--card-border);">'
+            f'<button onclick="ddSelectAll(\'{key}\')" '
+            f'style="font-size:0.5rem;padding:0.15rem 0.4rem;">\u2713 Todos</button>'
+            f'<button onclick="ddSelectNone(\'{key}\')" '
+            f'style="font-size:0.5rem;padding:0.15rem 0.4rem;">\u2717 Nenhum</button>'
+            f'</div></div></div>\n'
+        )
 
-    js = """
+    # ── JavaScript for dropdown + multi-select filtering ──
+    js = r"""
 <script>
-function showRound(id) {
-    var els = document.querySelectorAll('.round-table');
-    for (var i = 0; i < els.length; i++) { els[i].style.display = 'none'; }
-    var el = document.getElementById(id);
-    if (el) el.style.display = 'block';
+var selectedGames = new Set();
+
+function toggleDD(key) {
+    var panel = document.getElementById('dd-panel-' + key);
+    if (!panel) return;
+    var isOpen = panel.style.display !== 'none';
+    // Close all panels
+    document.querySelectorAll('[id^="dd-panel-"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
+    if (!isOpen) panel.style.display = 'block';
 }
-document.addEventListener('DOMContentLoaded', function(){
-    var sel = document.getElementById('round-selector');
-    if (sel) showRound(sel.value);
+
+function closeAllDDs() {
+    document.querySelectorAll('[id^="dd-panel-"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
+}
+
+function refreshBadge(key) {
+    var panel = document.getElementById('dd-panel-' + key);
+    if (!panel) return;
+    var checked = panel.querySelectorAll('input[type="checkbox"]:checked').length;
+    var badge = document.getElementById('dd-badge-' + key);
+    if (badge) badge.textContent = '(' + checked + ')';
+}
+
+function ddSelectAll(key) {
+    var panel = document.getElementById('dd-panel-' + key);
+    if (!panel) return;
+    panel.querySelectorAll('input[type="checkbox"]').forEach(function(cb) { cb.checked = true; });
+    refreshBadge(key);
+    applyFilter();
+}
+
+function ddSelectNone(key) {
+    var panel = document.getElementById('dd-panel-' + key);
+    if (!panel) return;
+    panel.querySelectorAll('input[type="checkbox"]').forEach(function(cb) { cb.checked = false; });
+    refreshBadge(key);
+    applyFilter();
+}
+
+function onCheckChange(el) {
+    var panel = el.closest('[id^="dd-panel-"]');
+    if (!panel) return;
+    var key = panel.id.replace('dd-panel-', '');
+    refreshBadge(key);
+    applyFilter();
+}
+
+function setDefault() {
+    // Uncheck all checkboxes in all panels
+    document.querySelectorAll('[id^="dd-panel-"] input[type="checkbox"]').forEach(function(cb) {
+        cb.checked = false;
+    });
+    // Check .game-default matches
+    document.querySelectorAll('.game-default').forEach(function(el) {
+        var match = el.getAttribute('data-match');
+        if (match) {
+            document.querySelectorAll('[id^="dd-panel-"] input[type="checkbox"][value="' + match + '"]').forEach(function(cb) {
+                cb.checked = true;
+            });
+        }
+    });
+    // Refresh all badges
+    ['1','2','3','r32','mata'].forEach(function(k) { refreshBadge(k); });
+    applyFilter();
+}
+
+function applyFilter() {
+    selectedGames.clear();
+    document.querySelectorAll('[id^="dd-panel-"] input[type="checkbox"]:checked').forEach(function(cb) {
+        selectedGames.add(cb.value);
+    });
+    document.querySelectorAll('.game-col').forEach(function(el) {
+        var match = el.getAttribute('data-match');
+        el.style.display = selectedGames.has(match) ? 'table-cell' : 'none';
+    });
+    // Recalculate totals for visible columns
+    document.querySelectorAll('tbody tr').forEach(function(row) {
+        var total = 0;
+        row.querySelectorAll('.game-col').forEach(function(cell) {
+            if (selectedGames.has(cell.getAttribute('data-match'))) {
+                total += parseInt(cell.getAttribute('data-pts')) || 0;
+            }
+        });
+        var totalCell = row.querySelector('[data-total-cell]');
+        if (totalCell) totalCell.textContent = total;
+    });
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dd-wrap')) {
+        closeAllDDs();
+    }
 });
+
+document.addEventListener('DOMContentLoaded', function() { setDefault(); });
+</script>
+"""
+
+    # ── Game selector UI ──
+    buttons_html = (
+        '<div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem;">'
+        '<button onclick="setDefault()" style="padding:0.4rem 0.8rem;background:var(--accent);'
+        'color:white;border:none;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer;">'
+        'Últimos 10 jogos</button>'
+        '</div>'
+
+        '<div style="display:flex;gap:0.3rem;flex-wrap:wrap;align-items:flex-start;">'
+        f'{phase_dropdowns_html}'
+        '</div>'
+    )
+
+    js_table_scroll = r"""
+<script>
+function fixScrollerHeight() {
+    var hero = document.querySelector('.hero');
+    var card = document.querySelector('.card');
+    var scroller = document.querySelector('.table-scroller');
+    if (!hero || !card || !scroller) return;
+    var heroBot = Math.max(0, hero.getBoundingClientRect().bottom);
+    var cardH = card.offsetHeight || 0;
+    var used = heroBot + cardH + 16;
+    var avail = window.innerHeight - used;
+    scroller.style.maxHeight = Math.max(200, avail) + 'px';
+}
+window.addEventListener('load', fixScrollerHeight);
+window.addEventListener('resize', fixScrollerHeight);
+window.addEventListener('scroll', fixScrollerHeight);
 </script>
 """
 
     body = f"""<div class="hero">
-    <h1>\U0001f4cb Palpites da Rodada</h1>
+    <h1>\U0001f4cb Palpites</h1>
     <div class="subtitle">Aposta de cada jogador partida a partida</div>
 </div>
 
-<div class="section">
-    <div class="card" style="text-align:center;">
-        <label for="round-selector" style="font-weight:600;margin-right:0.5rem;">Rodada:</label>
-        <select id="round-selector" onchange="showRound(this.value)" style="padding:0.5rem 1rem;background:var(--card-bg);color:var(--text);border:1px solid var(--card-border);border-radius:8px;font-size:1rem;">
-        {select_options}
-        </select>
+<div class="section" style="overflow:clip;display:flex;flex-direction:column;">
+    <div class="card" style="text-align:center;position:sticky;top:0;z-index:20;flex-shrink:0;">
+        {buttons_html}
+    </div>
+
+    <div class="table-scroller" style="overflow:auto;margin-top:0.5rem;">
+        <table style="border-collapse:separate;border-spacing:0;width:100%;font-size:0.7rem;">
+            <thead><tr>{header_cells}</tr></thead>
+            <tbody>{table_rows}</tbody>
+        </table>
     </div>
 </div>
-
-<div class="section">
-    {round_bodies}
-</div>
+{js_table_scroll}
 {js}
 """
-    return _page_frame(config, "Palpites da Rodada", body, back_link="index.html", active_nav="index.html")
+    return _page_frame(config, "Palpites", body, back_link="index.html", active_nav="index.html")
 
 
 # ------------------------------------------------------------------

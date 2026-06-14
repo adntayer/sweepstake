@@ -8,6 +8,7 @@ André Bonito,2026-06-13,brasil-vs-marrocos,hit,1,0.4
 André Bonito,2026-06-13,haiti-vs-escocia,hit,2,2.4
 André Bonito,2026-06-13,australia-vs-turquia,miss,1,2.2
 André Bonito,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+André Bonito,2026-06-14,holanda-vs-japao,hit,2,4.6
 André Mendes,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 André Mendes,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 André Mendes,2026-06-12,canada-vs-bosnia,hit,3,8.7
@@ -17,6 +18,7 @@ André Mendes,2026-06-13,brasil-vs-marrocos,hit,1,3.4
 André Mendes,2026-06-13,haiti-vs-escocia,hit,2,5.2
 André Mendes,2026-06-13,australia-vs-turquia,miss,1,2.2
 André Mendes,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+André Mendes,2026-06-14,holanda-vs-japao,hit,2,4.6
 André Tayer,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 André Tayer,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 André Tayer,2026-06-12,canada-vs-bosnia,miss,1,5.3
@@ -26,6 +28,7 @@ André Tayer,2026-06-13,brasil-vs-marrocos,miss,4,0.2
 André Tayer,2026-06-13,haiti-vs-escocia,hit,1,1.4
 André Tayer,2026-06-13,australia-vs-turquia,miss,1,1.4
 André Tayer,2026-06-14,alemanha-vs-curacao,hit,1,2.4
+André Tayer,2026-06-14,holanda-vs-japao,hit,2,2.6
 Cipriano L.,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Cipriano L.,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 Cipriano L.,2026-06-12,canada-vs-bosnia,hit,3,4.0
@@ -35,6 +38,7 @@ Cipriano L.,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 Cipriano L.,2026-06-13,haiti-vs-escocia,hit,2,6.2
 Cipriano L.,2026-06-13,australia-vs-turquia,miss,1,6.0
 Cipriano L.,2026-06-14,alemanha-vs-curacao,hit,1,5.0
+Cipriano L.,2026-06-14,holanda-vs-japao,miss,1,5.0
 Davi & Cesar,2026-06-11,mexico-vs-africa_do_sul,miss,1,0.0
 Davi & Cesar,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,1,7.5
 Davi & Cesar,2026-06-12,canada-vs-bosnia,hit,2,5.3
@@ -44,6 +48,7 @@ Davi & Cesar,2026-06-13,brasil-vs-marrocos,hit,2,7.6
 Davi & Cesar,2026-06-13,haiti-vs-escocia,hit,3,7.6
 Davi & Cesar,2026-06-13,australia-vs-turquia,hit,4,7.6
 Davi & Cesar,2026-06-14,alemanha-vs-curacao,hit,5,8.6
+Davi & Cesar,2026-06-14,holanda-vs-japao,hit,6,5.8
 Ditchos,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Ditchos,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,7.5
 Ditchos,2026-06-12,canada-vs-bosnia,hit,1,5.3
@@ -53,6 +58,7 @@ Ditchos,2026-06-13,brasil-vs-marrocos,hit,1,4.2
 Ditchos,2026-06-13,haiti-vs-escocia,hit,2,7.2
 Ditchos,2026-06-13,australia-vs-turquia,miss,1,7.0
 Ditchos,2026-06-14,alemanha-vs-curacao,hit,1,7.0
+Ditchos,2026-06-14,holanda-vs-japao,hit,2,8.4
 Felipe Giannoni,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Felipe Giannoni,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 Felipe Giannoni,2026-06-12,canada-vs-bosnia,hit,3,6.0
@@ -62,6 +68,7 @@ Felipe Giannoni,2026-06-13,brasil-vs-marrocos,hit,1,4.6
 Felipe Giannoni,2026-06-13,haiti-vs-escocia,hit,2,6.4
 Felipe Giannoni,2026-06-13,australia-vs-turquia,miss,1,5.0
 Felipe Giannoni,2026-06-14,alemanha-vs-curacao,hit,1,6.4
+Felipe Giannoni,2026-06-14,holanda-vs-japao,miss,1,6.4
 Francisco Camargo,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Francisco Camargo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,12.5
 Francisco Camargo,2026-06-12,canada-vs-bosnia,miss,1,8.3
@@ -71,6 +78,7 @@ Francisco Camargo,2026-06-13,brasil-vs-marrocos,hit,1,6.0
 Francisco Camargo,2026-06-13,haiti-vs-escocia,hit,2,6.0
 Francisco Camargo,2026-06-13,australia-vs-turquia,miss,1,6.0
 Francisco Camargo,2026-06-14,alemanha-vs-curacao,hit,1,6.0
+Francisco Camargo,2026-06-14,holanda-vs-japao,miss,1,6.0
 Frederico Soter,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Frederico Soter,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,12.5
 Frederico Soter,2026-06-12,canada-vs-bosnia,hit,3,10.7
@@ -80,6 +88,7 @@ Frederico Soter,2026-06-13,brasil-vs-marrocos,hit,6,7.0
 Frederico Soter,2026-06-13,haiti-vs-escocia,hit,7,6.4
 Frederico Soter,2026-06-13,australia-vs-turquia,miss,1,5.0
 Frederico Soter,2026-06-14,alemanha-vs-curacao,hit,1,4.4
+Frederico Soter,2026-06-14,holanda-vs-japao,hit,2,5.2
 Gabão,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Gabão,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 Gabão,2026-06-12,canada-vs-bosnia,hit,3,4.0
@@ -89,6 +98,7 @@ Gabão,2026-06-13,brasil-vs-marrocos,hit,1,4.4
 Gabão,2026-06-13,haiti-vs-escocia,hit,2,7.2
 Gabão,2026-06-13,australia-vs-turquia,hit,3,7.2
 Gabão,2026-06-14,alemanha-vs-curacao,hit,4,7.2
+Gabão,2026-06-14,holanda-vs-japao,miss,1,7.2
 Giancarlo,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Giancarlo,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,5.0
 Giancarlo,2026-06-12,canada-vs-bosnia,hit,1,5.7
@@ -98,6 +108,7 @@ Giancarlo,2026-06-13,brasil-vs-marrocos,hit,4,2.0
 Giancarlo,2026-06-13,haiti-vs-escocia,hit,5,4.0
 Giancarlo,2026-06-13,australia-vs-turquia,miss,1,2.6
 Giancarlo,2026-06-14,alemanha-vs-curacao,hit,1,3.4
+Giancarlo,2026-06-14,holanda-vs-japao,miss,1,3.2
 Guilherne,2026-06-11,mexico-vs-africa_do_sul,miss,1,0.0
 Guilherne,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,1,7.5
 Guilherne,2026-06-12,canada-vs-bosnia,hit,2,5.3
@@ -107,6 +118,7 @@ Guilherne,2026-06-13,brasil-vs-marrocos,hit,2,3.6
 Guilherne,2026-06-13,haiti-vs-escocia,hit,3,3.6
 Guilherne,2026-06-13,australia-vs-turquia,miss,1,3.4
 Guilherne,2026-06-14,alemanha-vs-curacao,hit,1,4.4
+Guilherne,2026-06-14,holanda-vs-japao,hit,2,4.4
 Haroldo,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Haroldo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,12.5
 Haroldo,2026-06-12,canada-vs-bosnia,hit,3,8.7
@@ -116,6 +128,7 @@ Haroldo,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 Haroldo,2026-06-13,haiti-vs-escocia,hit,2,3.8
 Haroldo,2026-06-13,australia-vs-turquia,miss,1,3.6
 Haroldo,2026-06-14,alemanha-vs-curacao,hit,1,3.0
+Haroldo,2026-06-14,holanda-vs-japao,miss,1,3.0
 José Ricardo,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 José Ricardo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 José Ricardo,2026-06-12,canada-vs-bosnia,hit,3,8.7
@@ -125,6 +138,7 @@ José Ricardo,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 José Ricardo,2026-06-13,haiti-vs-escocia,hit,2,7.2
 José Ricardo,2026-06-13,australia-vs-turquia,miss,1,4.2
 José Ricardo,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+José Ricardo,2026-06-14,holanda-vs-japao,miss,1,3.2
 João Henrique,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 João Henrique,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,11.0
 João Henrique,2026-06-12,canada-vs-bosnia,hit,3,12.3
@@ -134,6 +148,7 @@ João Henrique,2026-06-13,brasil-vs-marrocos,hit,1,9.4
 João Henrique,2026-06-13,haiti-vs-escocia,hit,2,10.0
 João Henrique,2026-06-13,australia-vs-turquia,miss,1,7.0
 João Henrique,2026-06-14,alemanha-vs-curacao,hit,1,6.0
+João Henrique,2026-06-14,holanda-vs-japao,hit,2,7.4
 Kiko Toloza,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Kiko Toloza,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 Kiko Toloza,2026-06-12,canada-vs-bosnia,hit,3,4.0
@@ -143,6 +158,7 @@ Kiko Toloza,2026-06-13,brasil-vs-marrocos,hit,6,3.8
 Kiko Toloza,2026-06-13,haiti-vs-escocia,hit,7,3.8
 Kiko Toloza,2026-06-13,australia-vs-turquia,miss,1,3.6
 Kiko Toloza,2026-06-14,alemanha-vs-curacao,hit,1,4.4
+Kiko Toloza,2026-06-14,holanda-vs-japao,hit,2,5.2
 LLM GPT,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 LLM GPT,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 LLM GPT,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -152,6 +168,7 @@ LLM GPT,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 LLM GPT,2026-06-13,haiti-vs-escocia,hit,2,7.2
 LLM GPT,2026-06-13,australia-vs-turquia,miss,1,4.2
 LLM GPT,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+LLM GPT,2026-06-14,holanda-vs-japao,miss,1,3.2
 LLM Gemini,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 LLM Gemini,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 LLM Gemini,2026-06-12,canada-vs-bosnia,hit,3,8.7
@@ -161,6 +178,7 @@ LLM Gemini,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 LLM Gemini,2026-06-13,haiti-vs-escocia,hit,2,7.2
 LLM Gemini,2026-06-13,australia-vs-turquia,miss,1,4.2
 LLM Gemini,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+LLM Gemini,2026-06-14,holanda-vs-japao,miss,1,3.2
 Leo Fernandes,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Leo Fernandes,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 Leo Fernandes,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -170,6 +188,7 @@ Leo Fernandes,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 Leo Fernandes,2026-06-13,haiti-vs-escocia,hit,2,7.2
 Leo Fernandes,2026-06-13,australia-vs-turquia,miss,1,4.2
 Leo Fernandes,2026-06-14,alemanha-vs-curacao,hit,1,3.6
+Leo Fernandes,2026-06-14,holanda-vs-japao,hit,2,5.0
 Luca Caviglia Del Soldato,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Luca Caviglia Del Soldato,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,5.0
 Luca Caviglia Del Soldato,2026-06-12,canada-vs-bosnia,hit,1,8.3
@@ -179,6 +198,7 @@ Luca Caviglia Del Soldato,2026-06-13,brasil-vs-marrocos,hit,4,4.8
 Luca Caviglia Del Soldato,2026-06-13,haiti-vs-escocia,hit,5,6.2
 Luca Caviglia Del Soldato,2026-06-13,australia-vs-turquia,miss,1,3.2
 Luca Caviglia Del Soldato,2026-06-14,alemanha-vs-curacao,hit,1,4.0
+Luca Caviglia Del Soldato,2026-06-14,holanda-vs-japao,miss,1,3.8
 Lucas Ubertini,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Lucas Ubertini,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,15.0
 Lucas Ubertini,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -188,6 +208,7 @@ Lucas Ubertini,2026-06-13,brasil-vs-marrocos,hit,1,3.6
 Lucas Ubertini,2026-06-13,haiti-vs-escocia,hit,2,2.6
 Lucas Ubertini,2026-06-13,australia-vs-turquia,miss,1,2.4
 Lucas Ubertini,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+Lucas Ubertini,2026-06-14,holanda-vs-japao,miss,1,3.2
 Luiz Augusto,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 Luiz Augusto,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,1,5.0
 Luiz Augusto,2026-06-12,canada-vs-bosnia,hit,1,3.7
@@ -197,6 +218,7 @@ Luiz Augusto,2026-06-13,brasil-vs-marrocos,miss,1,2.4
 Luiz Augusto,2026-06-13,haiti-vs-escocia,hit,1,3.8
 Luiz Augusto,2026-06-13,australia-vs-turquia,hit,2,6.6
 Luiz Augusto,2026-06-14,alemanha-vs-curacao,hit,3,6.0
+Luiz Augusto,2026-06-14,holanda-vs-japao,miss,1,5.8
 Marcelo,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Marcelo,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 Marcelo,2026-06-12,canada-vs-bosnia,hit,3,5.7
@@ -206,6 +228,7 @@ Marcelo,2026-06-13,brasil-vs-marrocos,hit,1,2.6
 Marcelo,2026-06-13,haiti-vs-escocia,hit,2,3.8
 Marcelo,2026-06-13,australia-vs-turquia,miss,1,3.6
 Marcelo,2026-06-14,alemanha-vs-curacao,hit,1,2.6
+Marcelo,2026-06-14,holanda-vs-japao,hit,2,4.0
 Marcelo Boix,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Marcelo Boix,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,15.0
 Marcelo Boix,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -215,6 +238,7 @@ Marcelo Boix,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 Marcelo Boix,2026-06-13,haiti-vs-escocia,hit,2,4.4
 Marcelo Boix,2026-06-13,australia-vs-turquia,miss,1,4.2
 Marcelo Boix,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+Marcelo Boix,2026-06-14,holanda-vs-japao,miss,1,3.2
 Marco Lavander,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Marco Lavander,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 Marco Lavander,2026-06-12,canada-vs-bosnia,hit,3,7.7
@@ -224,6 +248,7 @@ Marco Lavander,2026-06-13,brasil-vs-marrocos,hit,6,2.2
 Marco Lavander,2026-06-13,haiti-vs-escocia,hit,7,4.0
 Marco Lavander,2026-06-13,australia-vs-turquia,miss,1,2.6
 Marco Lavander,2026-06-14,alemanha-vs-curacao,hit,1,3.4
+Marco Lavander,2026-06-14,holanda-vs-japao,miss,1,3.2
 Mateus Tone,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Mateus Tone,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 Mateus Tone,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -233,6 +258,7 @@ Mateus Tone,2026-06-13,brasil-vs-marrocos,hit,1,3.4
 Mateus Tone,2026-06-13,haiti-vs-escocia,hit,2,4.6
 Mateus Tone,2026-06-13,australia-vs-turquia,miss,1,1.6
 Mateus Tone,2026-06-14,alemanha-vs-curacao,hit,1,2.6
+Mateus Tone,2026-06-14,holanda-vs-japao,hit,2,3.6
 Mauricio Saraiva,2026-06-11,mexico-vs-africa_do_sul,hit,1,7.0
 Mauricio Saraiva,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.5
 Mauricio Saraiva,2026-06-12,canada-vs-bosnia,hit,3,10.7
@@ -242,6 +268,7 @@ Mauricio Saraiva,2026-06-13,brasil-vs-marrocos,hit,1,8.0
 Mauricio Saraiva,2026-06-13,haiti-vs-escocia,hit,2,8.0
 Mauricio Saraiva,2026-06-13,australia-vs-turquia,miss,1,5.0
 Mauricio Saraiva,2026-06-14,alemanha-vs-curacao,hit,1,7.0
+Mauricio Saraiva,2026-06-14,holanda-vs-japao,miss,1,7.0
 Pedro Tayer,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Pedro Tayer,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 Pedro Tayer,2026-06-12,canada-vs-bosnia,hit,3,5.7
@@ -251,6 +278,7 @@ Pedro Tayer,2026-06-13,brasil-vs-marrocos,hit,1,2.6
 Pedro Tayer,2026-06-13,haiti-vs-escocia,hit,2,4.4
 Pedro Tayer,2026-06-13,australia-vs-turquia,miss,1,4.2
 Pedro Tayer,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+Pedro Tayer,2026-06-14,holanda-vs-japao,miss,1,3.2
 RODRIGO ALBERNAZ,2026-06-11,mexico-vs-africa_do_sul,hit,1,10.0
 RODRIGO ALBERNAZ,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,5.5
 RODRIGO ALBERNAZ,2026-06-12,canada-vs-bosnia,hit,3,8.7
@@ -260,6 +288,7 @@ RODRIGO ALBERNAZ,2026-06-13,brasil-vs-marrocos,hit,2,4.8
 RODRIGO ALBERNAZ,2026-06-13,haiti-vs-escocia,miss,1,4.6
 RODRIGO ALBERNAZ,2026-06-13,australia-vs-turquia,miss,2,1.6
 RODRIGO ALBERNAZ,2026-06-14,alemanha-vs-curacao,hit,1,2.6
+RODRIGO ALBERNAZ,2026-06-14,holanda-vs-japao,miss,1,2.4
 Rafael Conte,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Rafael Conte,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 Rafael Conte,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -269,6 +298,7 @@ Rafael Conte,2026-06-13,brasil-vs-marrocos,miss,2,5.2
 Rafael Conte,2026-06-13,haiti-vs-escocia,hit,1,7.0
 Rafael Conte,2026-06-13,australia-vs-turquia,miss,1,4.0
 Rafael Conte,2026-06-14,alemanha-vs-curacao,hit,1,3.0
+Rafael Conte,2026-06-14,holanda-vs-japao,miss,1,3.0
 Thales Oliveira,2026-06-11,mexico-vs-africa_do_sul,miss,1,0.0
 Thales Oliveira,2026-06-11,coreia_do_sul-vs-republica_tcheca,miss,2,0.0
 Thales Oliveira,2026-06-12,canada-vs-bosnia,hit,1,0.3
@@ -278,6 +308,7 @@ Thales Oliveira,2026-06-13,brasil-vs-marrocos,hit,1,0.4
 Thales Oliveira,2026-06-13,haiti-vs-escocia,hit,2,1.8
 Thales Oliveira,2026-06-13,australia-vs-turquia,miss,1,1.6
 Thales Oliveira,2026-06-14,alemanha-vs-curacao,hit,1,2.6
+Thales Oliveira,2026-06-14,holanda-vs-japao,miss,1,2.6
 Thiago Bahiense,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Thiago Bahiense,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,15.0
 Thiago Bahiense,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -287,6 +318,7 @@ Thiago Bahiense,2026-06-13,brasil-vs-marrocos,hit,1,7.2
 Thiago Bahiense,2026-06-13,haiti-vs-escocia,hit,2,6.2
 Thiago Bahiense,2026-06-13,australia-vs-turquia,miss,1,6.0
 Thiago Bahiense,2026-06-14,alemanha-vs-curacao,hit,1,6.0
+Thiago Bahiense,2026-06-14,holanda-vs-japao,miss,1,6.0
 Tiago,2026-06-11,mexico-vs-africa_do_sul,hit,1,15.0
 Tiago,2026-06-11,coreia_do_sul-vs-republica_tcheca,hit,2,8.0
 Tiago,2026-06-12,canada-vs-bosnia,hit,3,10.3
@@ -296,3 +328,4 @@ Tiago,2026-06-13,brasil-vs-marrocos,hit,1,5.4
 Tiago,2026-06-13,haiti-vs-escocia,hit,2,7.2
 Tiago,2026-06-13,australia-vs-turquia,miss,1,4.2
 Tiago,2026-06-14,alemanha-vs-curacao,hit,1,3.2
+Tiago,2026-06-14,holanda-vs-japao,miss,1,3.2

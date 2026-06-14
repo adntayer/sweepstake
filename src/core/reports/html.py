@@ -1690,11 +1690,25 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     home_logo = _team_logo_tag(home_en, config, cls="team-logo-sm", start=match_dir)
     away_logo = _team_logo_tag(away_en, config, cls="team-logo-sm", start=match_dir)
 
-    # Check if result exists
-    has_result = df_match["resultado_real_placar"].notna().any() and df_match["resultado_real_placar"].iloc[0] != "nan"
+    # Determine if match is live (time_elapsed column may not exist for all championships)
+    is_live = False
+    if "time_elapsed" in df_match.columns:
+        raw_time = df_match["time_elapsed"].iloc[0]
+        is_live = pd.notna(raw_time) and str(raw_time).strip().lower() == "live"
+
+    # Check if there is a score to display (partial or final).
+    # A live match with a partial score (e.g. 0 x 0) still has a score.
+    has_score = (
+        df_match["resultado_real_placar"].notna().any()
+        and df_match["resultado_real_placar"].iloc[0] != "nan"
+    )
+
+    # Check if result is final — only for finished (non-live) matches.
+    # A live match with a partial score is NOT a final result.
+    has_result = not is_live and has_score
 
     real_placar = ""
-    if has_result:
+    if has_score:
         real_placar = str(df_match.iloc[0]["resultado_real_placar"])
 
     # Pre-game: team vote distribution
@@ -1918,7 +1932,18 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         )
 
     # Score display
-    if has_result:
+    if is_live:
+        # Live match: show partial score with "AO VIVO" badge
+        parts = real_placar.split(" x ") if has_score and " x " in real_placar else ["?", "?"]
+        score_html = f"""
+<div class="score-card">
+    <div class="team">{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a></div>
+    <div class="score">{parts[0]} - {parts[1]}</div>
+    <div class="team">{away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></div>
+</div>
+<div style="text-align:center;"><span class="badge badge-danger">\U0001f534 AO VIVO</span></div>
+"""
+    elif has_result:
         parts = real_placar.split(" x ")
         pen_html = ""
         try:
