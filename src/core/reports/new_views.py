@@ -445,8 +445,8 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
         # Zebra indicator
         zebra_tag = ""
         if match_slug in upset_lookup:
-            wwpct, _, fav = upset_lookup[match_slug]
-            if wwpct >= 90:
+            _, nc, _ = upset_lookup[match_slug]
+            if nc <= 2:
                 zebra_tag = f' <span style="display:inline-block;font-size:0.6rem;background:rgba(239,68,68,0.2);color:var(--danger);padding:0.1rem 0.4rem;border-radius:999px;font-weight:700;">{ZEBRA_MONSTRA_EMOJI}</span>'
             else:
                 zebra_tag = f' <span style="display:inline-block;font-size:0.6rem;background:rgba(239,68,68,0.15);color:var(--warning);padding:0.1rem 0.4rem;border-radius:999px;font-weight:700;">{ZEBRA_GRANDE_EMOJI}</span>'

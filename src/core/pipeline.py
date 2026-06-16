@@ -653,7 +653,7 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         winner_wrong_pct = 100 - round(num_correct / total_votes * 100) if total_votes else 0
 
         is_upset = 0
-        if favorite != real_winner and winner_wrong_pct >= 70:
+        if favorite != real_winner and num_correct <= 5:
             is_upset = 1
 
         rows.append({

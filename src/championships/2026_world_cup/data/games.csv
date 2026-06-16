@@ -9,13 +9,13 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-13 21h,1,Haiti,,0,x,1,,Escócia,haiti-vs-escocia,finished
 2026-06-14 12h,1,Alemanha,,7,x,1,,Curaçao,alemanha-vs-curacao,finished
 2026-06-14 15h,1,Holanda,,2,x,2,,Japão,holanda-vs-japao,finished
-2026-06-14 19h,1,Costa do Marfim,,0,x,0,,Equador,costa_do_marfim-vs-equador,live
-2026-06-14 20h,1,Suécia,,,x,,,Tunísia,suecia-vs-tunisia,notstarted
-2026-06-15 12h,1,Espanha,,,x,,,Cabo Verde,espanha-vs-cabo_verde,notstarted
-2026-06-15 12h,1,Bélgica,,,x,,,Egito,belgica-vs-egito,notstarted
-2026-06-15 18h,1,Arábia Saudita,,,x,,,Uruguai,arabia_saudita-vs-uruguai,notstarted
-2026-06-15 18h,1,Irã,,,x,,,Nova Zelândia,ira-vs-nova_zelandia,notstarted
-2026-06-16 15h,1,França,,,x,,,Senegal,franca-vs-senegal,notstarted
+2026-06-14 19h,1,Costa do Marfim,,1,x,0,,Equador,costa_do_marfim-vs-equador,finished
+2026-06-14 20h,1,Suécia,,5,x,1,,Tunísia,suecia-vs-tunisia,finished
+2026-06-15 12h,1,Espanha,,0,x,0,,Cabo Verde,espanha-vs-cabo_verde,finished
+2026-06-15 12h,1,Bélgica,,1,x,1,,Egito,belgica-vs-egito,finished
+2026-06-15 18h,1,Arábia Saudita,,1,x,1,,Uruguai,arabia_saudita-vs-uruguai,finished
+2026-06-15 18h,1,Irã,,2,x,2,,Nova Zelândia,ira-vs-nova_zelandia,finished
+2026-06-16 15h,1,França,,0,x,0,,Senegal,franca-vs-senegal,live
 2026-06-16 18h,1,Iraque,,,x,,,Noruega,iraque-vs-noruega,notstarted
 2026-06-16 20h,1,Argentina,,,x,,,Argélia,argentina-vs-argelia,notstarted
 2026-06-16 21h,1,Áustria,,,x,,,Jordânia,austria-vs-jordania,notstarted

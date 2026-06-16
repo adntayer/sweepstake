@@ -864,10 +864,12 @@ def _build_last_result(config: ChampionshipConfig) -> str:
             if match_slug:
                 upset_row = df_upset[df_upset["match"] == match_slug]
                 if not upset_row.empty and int(upset_row.iloc[0].get("is_upset", 0)) == 1:
-                    wwpct = int(upset_row.iloc[0].get("winner_wrong_pct", 0))
+                    nc = int(upset_row.iloc[0].get("num_correct", 999))
                     fav = upset_row.iloc[0].get("favorite", "?")
-                    label = ZEBRA_MONSTRA_LABEL if wwpct >= 90 else ZEBRA_GRANDE_LABEL
-                    zebra_badge = f'<div style="text-align:center;margin-top:0.3rem;"><span class="badge badge-danger">{label}</span> <span style="font-size:0.7rem;color:var(--text-muted);">{wwpct}% erraram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
+                    nc = int(upset_row.iloc[0].get("num_correct", 999))
+                    fav = upset_row.iloc[0].get("favorite", "?")
+                    label = ZEBRA_MONSTRA_LABEL if nc <= 2 else ZEBRA_GRANDE_LABEL
+                    zebra_badge = f'<div style="text-align:center;margin-top:0.3rem;"><span class="badge badge-danger">{label}</span> <span style="font-size:0.7rem;color:var(--text-muted);">{nc} acertaram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
     except Exception:
         pass
 
@@ -933,8 +935,8 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
             df_upset_slugs = pd.read_csv(upset_path, sep=",")
             for _, r in df_upset_slugs.iterrows():
                 if int(r.get("is_upset", 0)) == 1:
-                    wwpct = int(r.get("winner_wrong_pct", 0))
-                    upset_icons[str(r["match"])] = ZEBRA_MONSTRA_EMOJI if wwpct >= 90 else ZEBRA_GRANDE_EMOJI
+                    nc = int(r.get("num_correct", 999))
+                    upset_icons[str(r["match"])] = ZEBRA_MONSTRA_EMOJI if nc <= 2 else ZEBRA_GRANDE_EMOJI
         except Exception:
             pass
 

@@ -833,6 +833,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     # Load upset data for zebra indicators in match history
     upset_set: set[str] = set()
     upset_wwpct: dict[str, int] = {}
+    upset_num_correct: dict[str, int] = {}
     player_zebra_cnt = 0
     player_zebra_correct_set: set[str] = set()
     upset_path_br = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
@@ -843,6 +844,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 ms = str(ur["match"])
                 upset_set.add(ms)
                 upset_wwpct[ms] = int(ur.get("winner_wrong_pct", 0))
+                upset_num_correct[ms] = int(ur.get("num_correct", 0))
                 if boleiro in [p.strip() for p in str(ur.get("players_correct", "")).split("|") if p.strip()]:
                     player_zebra_cnt += 1
                     player_zebra_correct_set.add(ms)
@@ -892,8 +894,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             # Zebra badge for upset matches — indicates if THIS player got it right
             zebra_tag = ""
             if match_slug in upset_set:
-                ww = upset_wwpct.get(match_slug, 0)
-                zebra_emoji = ZEBRA_MONSTRA_EMOJI if ww >= 90 else ZEBRA_GRANDE_EMOJI
+                nc = upset_num_correct.get(match_slug, 999)
+                zebra_emoji = ZEBRA_MONSTRA_EMOJI if nc <= 2 else ZEBRA_GRANDE_EMOJI
                 if match_slug in player_zebra_correct_set:
                     zebra_tag = f' <span style="font-size:0.7rem;color:var(--accent);font-weight:600;">{zebra_emoji} Acertou!</span>'
                 else:
@@ -1991,12 +1993,12 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         # Zebra badge
         zebra_html = ""
         if upset_row is not None and int(upset_row.get("is_upset", 0)) == 1:
-            wwpct = int(upset_row.get("winner_wrong_pct", 0))
+            nc = int(upset_row.get("num_correct", 999))
             fav = upset_row.get("favorite", "?")
-            if wwpct >= 90:
-                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_MONSTRA_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{wwpct}% erraram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
+            if nc <= 2:
+                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_MONSTRA_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{nc} acertaram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
             else:
-                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_GRANDE_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{wwpct}% erraram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
+                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_GRANDE_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{nc} acertaram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
 
         score_html = f"""
 <div class="score-card">
@@ -3600,18 +3602,18 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         # Build match page link (date/hour are present after pipeline regeneration)
         match_href = f"jogos/{config.group_phase_label}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
 
-        # Determine upset magnitude based on % who got the winner wrong
-        if winner_wrong_pct >= 90:
-            magnitude = ZEBRA_MONSTRA_LABEL
-        else:
-            magnitude = ZEBRA_GRANDE_LABEL
-
+        # Determine upset magnitude based on how many got the winner right
         matchup_display = f"<a href=\"{match_href}\">{home} vs {away}</a>" if match_href else f"{home} vs {away}"
+
+        if num_correct <= 2:
+            badge_html = f'<span class="zebra-badge upset">{ZEBRA_MONSTRA_LABEL}</span>'
+        else:
+            badge_html = f'<span class="zebra-badge upset">{ZEBRA_GRANDE_LABEL}</span>'
 
         zebra_cards += f"""
 <div class="zebra-card upset">
     <div class="zebra-header">
-        <span class="zebra-badge upset">{magnitude}</span>
+        {badge_html}
         <span style="font-size:0.75rem;color:var(--text-muted);">{fav_votes}/{total_votes} ({fav_pct}%) acreditavam no {favorite} &mdash; {winner_wrong_pct}% erraram o resultado</span>
     </div>
     <div class="zebra-matchup">{matchup_display}</div>
@@ -3770,40 +3772,40 @@ def _build_zebras(config: ChampionshipConfig) -> str:
     <div class="content">
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">
             Uma partida \u00e9 considerada <strong>Zebra</strong> quando o resultado mais votado pelo bol\u00e3o <strong>N\u00c3O aconteceu</strong>
-            <strong>E</strong> pelo menos <strong>70% dos participantes erraram o vencedor</strong>
-            (<strong>% que erraram \u2265 70%</strong>).
+            e <strong>no m\u00e1ximo 5 participantes acertaram o vencedor</strong>.
         </p>
         <table class="rank-table" style="font-size:0.75rem;">
             <thead>
                 <tr>
-                    <th>% que erraram</th>
+                    <th>Acertaram</th>
                     <th>Classifica\u00e7\u00e3o</th>
                     <th>O que significa</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>\u2265 90%</td>
+                    <td>\u2264 2</td>
                     <td style="color:var(--danger);font-weight:700;">{ZEBRA_MONSTRA_LABEL}</td>
                     <td>Quase ningu\u00e9m acertou \u2014 o bol\u00e3o inteiro foi surpreendido</td>
                 </tr>
                 <tr>
-                    <td>70\u201389%</td>
+                    <td>3 a 5</td>
                     <td style="color:var(--warning);font-weight:700;">{ZEBRA_GRANDE_LABEL}</td>
-                    <td>A maioria errou \u2014 surpresa significativa</td>
+                    <td>Poucos acertaram \u2014 surpresa significativa</td>
                 </tr>
                 <tr>
-                    <td>&lt; 70%</td>
+                    <td>&gt; 5</td>
                     <td style="color:var(--text-muted);">\u274c N\u00e3o \u00e9 zebra</td>
-                    <td>Minoria significativa acertou, n\u00e3o foi t\u00e3o surpreendente</td>
+                    <td>Muita gente acertou, n\u00e3o foi t\u00e3o surpreendente</td>
                 </tr>
             </tbody>
         </table>
         <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.75rem;line-height:1.7;">
-            <strong>% que erraram</strong> = percentual de participantes que <strong>erraram o vencedor</strong>
-            (n\u00e3o acertaram se o resultado seria vit\u00f3ria do time A, B ou empate).<br>
-            Ex: Catar vs Su\u00ed\u00e7a \u2014 97% erraram \u2192 \u2705 {ZEBRA_MONSTRA_LABEL}.<br>
-            Ex: Brasil vs Marrocos \u2014 61% erraram \u2192 \u274c n\u00e3o \u00e9 zebra (39% acertaram o empate).
+            <strong>Acertaram</strong> = quantidade de participantes que acertaram o <strong>vencedor</strong>
+            (ou empate).<br>
+            Ex: 1 pessoa acertou \u2192 \u2705 {ZEBRA_MONSTRA_LABEL}.<br>
+            Ex: 4 pessoas acertaram \u2192 \u2705 {ZEBRA_GRANDE_LABEL}.<br>
+            Ex: 8 pessoas acertaram \u2192 \u274c n\u00e3o \u00e9 zebra.
         </p>
     </div>
 </details>
