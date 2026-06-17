@@ -1645,6 +1645,28 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             arq_score = int(r2.get("score", 0))
             arq_cor = str(r2.get("arquetipo_cor", "var(--text-muted)"))
             tier_cor = str(r2.get("tier_cor", "var(--text-muted)"))
+            # GEO badge
+            perfil_global = str(r2.get("perfil_global", ""))
+            geo_badge = ""
+            if perfil_global:
+                geo_emojis = {
+                    "europeu": "\U0001f30d", "latino": "\U0001f30e",
+                    "asiatico": "\U0001f30f", "africano": "\U0001f30c",
+                    "anfitriao": "\U0001f3c6", "oceanico": "\U0001f30a",
+                }
+                geo_names = {
+                    "europeu": "europeu", "latino": "latino",
+                    "asiatico": "asiatico", "africano": "africano",
+                    "anfitriao": "anfitriao", "oceanico": "oceanico",
+                }
+                ge = geo_emojis.get(perfil_global, "")
+                gn = geo_names.get(perfil_global, perfil_global)
+                gc = int(r2.get("global_correct", 0))
+                gt = int(r2.get("global_teams", 0))
+                media = gc / gt if gt else 0
+                geo_tip = f"{gc} pts em {gt} sel. (m\u00e9dia {media:.1f})" if gt else f"{gc} pts"
+                geo_tip = geo_tip.replace(".", ",")
+                geo_badge = f'<span style="font-size:0.7rem;padding:0.1rem 0.4rem;border-radius:4px;background:var(--card-border);color:var(--text-muted);" title="{geo_tip}">{ge} {gn} {geo_tip}</span>'
             arq_html = (
                 f'<div style="margin-bottom:0.6rem;padding-bottom:0.5rem;border-bottom:1px solid var(--card-border);'
                 f'display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">'
@@ -1653,6 +1675,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 f'<span class="tier-badge" style="display:inline-block;font-size:0.7rem;font-weight:700;'
                 f'padding:0.15rem 0.5rem;border-radius:999px;background:{tier_cor}22;color:{tier_cor};'
                 f'border:1px solid {tier_cor};">{arq_tier_emoji} {arq_tier} \u00b7 {arq_score}%</span>'
+                f'{geo_badge}'
                 f'<a href="../arquetipos.html" style="font-size:0.7rem;color:var(--text-muted);margin-left:auto;">'
                 f'\U0001f4d6 legenda</a>'
                 f'</div>\n'

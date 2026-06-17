@@ -25,198 +25,54 @@ results_endpoint: "https://fixturedownload.com/download/fifa-world-cup-2026-UTC.
 
 # English → Portuguese team name mapping (Excel uses Portuguese names)
 team_name_mapping:
-  - en: "South Africa"
-    pt: "África do Sul"
-    slug: "RSA"
-    logo: "https://flagcdn.com/w80/za.png"
-  - en: "South Korea"
-    pt: "Coréia do Sul"
-    slug: "KOR"
-    logo: "https://flagcdn.com/w80/kr.png"
-  - en: "Czech Republic"
-    pt: "República Tcheca"
-    slug: "CZE"
-    logo: "https://flagcdn.com/w80/cz.png"
-  - en: "Mexico"
-    pt: "México"
-    slug: "MEX"
-    logo: "https://flagcdn.com/w80/mx.png"
-  - en: "Canada"
-    pt: "Canadá"
-    slug: "CAN"
-    logo: "https://flagcdn.com/w80/ca.png"
-  - en: "Bosnia and Herzegovina"
-    pt: "Bósnia"
-    slug: "BIH"
-    logo: "https://flagcdn.com/w80/ba.png"
-  - en: "Qatar"
-    pt: "Catar"
-    slug: "QAT"
-    logo: "https://flagcdn.com/w80/qa.png"
-  - en: "Switzerland"
-    pt: "Suíça"
-    slug: "SUI"
-    logo: "https://flagcdn.com/w80/ch.png"
-  - en: "Brazil"
-    pt: "Brasil"
-    slug: "BRA"
-    logo: "https://flagcdn.com/w80/br.png"
-  - en: "Morocco"
-    pt: "Marrocos"
-    slug: "MAR"
-    logo: "https://flagcdn.com/w80/ma.png"
-  - en: "Haiti"
-    pt: "Haiti"
-    slug: "HAI"
-    logo: "https://flagcdn.com/w80/ht.png"
-  - en: "Scotland"
-    pt: "Escócia"
-    slug: "SCO"
-    logo: "https://flagcdn.com/w80/gb-sct.png"
-  - en: "United States"
-    pt: "Estados Unidos"
-    slug: "USA"
-    logo: "https://flagcdn.com/w80/us.png"
-  - en: "Paraguay"
-    pt: "Paraguai"
-    slug: "PAR"
-    logo: "https://flagcdn.com/w80/py.png"
-  - en: "Australia"
-    pt: "Austrália"
-    slug: "AUS"
-    logo: "https://flagcdn.com/w80/au.png"
-  - en: "Turkey"
-    pt: "Turquia"
-    slug: "TUR"
-    logo: "https://flagcdn.com/w80/tr.png"
-  - en: "Germany"
-    pt: "Alemanha"
-    slug: "GER"
-    logo: "https://flagcdn.com/w80/de.png"
-  - en: "Curaçao"
-    pt: "Curaçao"
-    slug: "CUW"
-    logo: "https://flagcdn.com/w80/cw.png"
-  - en: "Ivory Coast"
-    pt: "Costa do Marfim"
-    slug: "CIV"
-    logo: "https://flagcdn.com/w80/ci.png"
-  - en: "Ecuador"
-    pt: "Equador"
-    slug: "ECU"
-    logo: "https://flagcdn.com/w80/ec.png"
-  - en: "Netherlands"
-    pt: "Holanda"
-    slug: "NED"
-    logo: "https://flagcdn.com/w80/nl.png"
-  - en: "Japan"
-    pt: "Japão"
-    slug: "JPN"
-    logo: "https://flagcdn.com/w80/jp.png"
-  - en: "Sweden"
-    pt: "Suécia"
-    slug: "SWE"
-    logo: "https://flagcdn.com/w80/se.png"
-  - en: "Tunisia"
-    pt: "Tunísia"
-    slug: "TUN"
-    logo: "https://flagcdn.com/w80/tn.png"
-  - en: "Belgium"
-    pt: "Bélgica"
-    slug: "BEL"
-    logo: "https://flagcdn.com/w80/be.png"
-  - en: "Egypt"
-    pt: "Egito"
-    slug: "EGY"
-    logo: "https://flagcdn.com/w80/eg.png"
-  - en: "Iran"
-    pt: "Irã"
-    slug: "IRN"
-    logo: "https://flagcdn.com/w80/ir.png"
-  - en: "New Zealand"
-    pt: "Nova Zelândia"
-    slug: "NZL"
-    logo: "https://flagcdn.com/w80/nz.png"
-  - en: "Spain"
-    pt: "Espanha"
-    slug: "ESP"
-    logo: "https://flagcdn.com/w80/es.png"
-  - en: "Cape Verde"
-    pt: "Cabo Verde"
-    slug: "CPV"
-    logo: "https://flagcdn.com/w80/cv.png"
-  - en: "Saudi Arabia"
-    pt: "Arábia Saudita"
-    slug: "KSA"
-    logo: "https://flagcdn.com/w80/sa.png"
-  - en: "Uruguay"
-    pt: "Uruguai"
-    slug: "URU"
-    logo: "https://flagcdn.com/w80/uy.png"
-  - en: "France"
-    pt: "França"
-    slug: "FRA"
-    logo: "https://flagcdn.com/w80/fr.png"
-  - en: "Senegal"
-    pt: "Senegal"
-    slug: "SEN"
-    logo: "https://flagcdn.com/w80/sn.png"
-  - en: "Iraq"
-    pt: "Iraque"
-    slug: "IRQ"
-    logo: "https://flagcdn.com/w80/iq.png"
-  - en: "Norway"
-    pt: "Noruega"
-    slug: "NOR"
-    logo: "https://flagcdn.com/w80/no.png"
-  - en: "Argentina"
-    pt: "Argentina"
-    slug: "ARG"
-    logo: "https://flagcdn.com/w80/ar.png"
-  - en: "Algeria"
-    pt: "Argélia"
-    slug: "ALG"
-    logo: "https://flagcdn.com/w80/dz.png"
-  - en: "Austria"
-    pt: "Áustria"
-    slug: "AUT"
-    logo: "https://flagcdn.com/w80/at.png"
-  - en: "Jordan"
-    pt: "Jordânia"
-    slug: "JOR"
-    logo: "https://flagcdn.com/w80/jo.png"
-  - en: "Portugal"
-    pt: "Portugal"
-    slug: "POR"
-    logo: "https://flagcdn.com/w80/pt.png"
-  - en: "Democratic Republic of the Congo"
-    pt: "RD Congo"
-    slug: "COD"
-    logo: "https://flagcdn.com/w80/cd.png"
-  - en: "Uzbekistan"
-    pt: "Uzbequistão"
-    slug: "UZB"
-    logo: "https://flagcdn.com/w80/uz.png"
-  - en: "Colombia"
-    pt: "Colômbia"
-    slug: "COL"
-    logo: "https://flagcdn.com/w80/co.png"
-  - en: "England"
-    pt: "Inglaterra"
-    slug: "ENG"
-    logo: "https://flagcdn.com/w80/gb-eng.png"
-  - en: "Croatia"
-    pt: "Croácia"
-    slug: "CRO"
-    logo: "https://flagcdn.com/w80/hr.png"
-  - en: "Ghana"
-    pt: "Gana"
-    slug: "GHA"
-    logo: "https://flagcdn.com/w80/gh.png"
-  - en: "Panama"
-    pt: "Panamá"
-    slug: "PAN"
-    logo: "https://flagcdn.com/w80/pa.png"
+  - {en: "South Africa", pt: "África do Sul", slug: "RSA", logo: "https://flagcdn.com/w80/za.png", geo: africano}
+  - {en: "South Korea", pt: "Coréia do Sul", slug: "KOR", logo: "https://flagcdn.com/w80/kr.png", geo: asiatico}
+  - {en: "Czech Republic", pt: "República Tcheca", slug: "CZE", logo: "https://flagcdn.com/w80/cz.png", geo: europeu}
+  - {en: "Mexico", pt: "México", slug: "MEX", logo: "https://flagcdn.com/w80/mx.png", geo: anfitriao}
+  - {en: "Canada", pt: "Canadá", slug: "CAN", logo: "https://flagcdn.com/w80/ca.png", geo: anfitriao}
+  - {en: "Bosnia and Herzegovina", pt: "Bósnia", slug: "BIH", logo: "https://flagcdn.com/w80/ba.png", geo: europeu}
+  - {en: "Qatar", pt: "Catar", slug: "QAT", logo: "https://flagcdn.com/w80/qa.png", geo: asiatico}
+  - {en: "Switzerland", pt: "Suíça", slug: "SUI", logo: "https://flagcdn.com/w80/ch.png", geo: europeu}
+  - {en: "Brazil", pt: "Brasil", slug: "BRA", logo: "https://flagcdn.com/w80/br.png", geo: latino}
+  - {en: "Morocco", pt: "Marrocos", slug: "MAR", logo: "https://flagcdn.com/w80/ma.png", geo: africano}
+  - {en: "Haiti", pt: "Haiti", slug: "HAI", logo: "https://flagcdn.com/w80/ht.png", geo: latino}
+  - {en: "Scotland", pt: "Escócia", slug: "SCO", logo: "https://flagcdn.com/w80/gb-sct.png", geo: europeu}
+  - {en: "United States", pt: "Estados Unidos", slug: "USA", logo: "https://flagcdn.com/w80/us.png", geo: anfitriao}
+  - {en: "Paraguay", pt: "Paraguai", slug: "PAR", logo: "https://flagcdn.com/w80/py.png", geo: latino}
+  - {en: "Australia", pt: "Austrália", slug: "AUS", logo: "https://flagcdn.com/w80/au.png", geo: oceanico}
+  - {en: "Turkey", pt: "Turquia", slug: "TUR", logo: "https://flagcdn.com/w80/tr.png", geo: europeu}
+  - {en: "Germany", pt: "Alemanha", slug: "GER", logo: "https://flagcdn.com/w80/de.png", geo: europeu}
+  - {en: "Curaçao", pt: "Curaçao", slug: "CUW", logo: "https://flagcdn.com/w80/cw.png", geo: latino}
+  - {en: "Ivory Coast", pt: "Costa do Marfim", slug: "CIV", logo: "https://flagcdn.com/w80/ci.png", geo: africano}
+  - {en: "Ecuador", pt: "Equador", slug: "ECU", logo: "https://flagcdn.com/w80/ec.png", geo: latino}
+  - {en: "Netherlands", pt: "Holanda", slug: "NED", logo: "https://flagcdn.com/w80/nl.png", geo: europeu}
+  - {en: "Japan", pt: "Japão", slug: "JPN", logo: "https://flagcdn.com/w80/jp.png", geo: asiatico}
+  - {en: "Sweden", pt: "Suécia", slug: "SWE", logo: "https://flagcdn.com/w80/se.png", geo: europeu}
+  - {en: "Tunisia", pt: "Tunísia", slug: "TUN", logo: "https://flagcdn.com/w80/tn.png", geo: africano}
+  - {en: "Belgium", pt: "Bélgica", slug: "BEL", logo: "https://flagcdn.com/w80/be.png", geo: europeu}
+  - {en: "Egypt", pt: "Egito", slug: "EGY", logo: "https://flagcdn.com/w80/eg.png", geo: africano}
+  - {en: "Iran", pt: "Irã", slug: "IRN", logo: "https://flagcdn.com/w80/ir.png", geo: asiatico}
+  - {en: "New Zealand", pt: "Nova Zelândia", slug: "NZL", logo: "https://flagcdn.com/w80/nz.png", geo: oceanico}
+  - {en: "Spain", pt: "Espanha", slug: "ESP", logo: "https://flagcdn.com/w80/es.png", geo: europeu}
+  - {en: "Cape Verde", pt: "Cabo Verde", slug: "CPV", logo: "https://flagcdn.com/w80/cv.png", geo: africano}
+  - {en: "Saudi Arabia", pt: "Arábia Saudita", slug: "KSA", logo: "https://flagcdn.com/w80/sa.png", geo: asiatico}
+  - {en: "Uruguay", pt: "Uruguai", slug: "URU", logo: "https://flagcdn.com/w80/uy.png", geo: latino}
+  - {en: "France", pt: "França", slug: "FRA", logo: "https://flagcdn.com/w80/fr.png", geo: europeu}
+  - {en: "Senegal", pt: "Senegal", slug: "SEN", logo: "https://flagcdn.com/w80/sn.png", geo: africano}
+  - {en: "Iraq", pt: "Iraque", slug: "IRQ", logo: "https://flagcdn.com/w80/iq.png", geo: asiatico}
+  - {en: "Norway", pt: "Noruega", slug: "NOR", logo: "https://flagcdn.com/w80/no.png", geo: europeu}
+  - {en: "Argentina", pt: "Argentina", slug: "ARG", logo: "https://flagcdn.com/w80/ar.png", geo: latino}
+  - {en: "Algeria", pt: "Argélia", slug: "ALG", logo: "https://flagcdn.com/w80/dz.png", geo: africano}
+  - {en: "Austria", pt: "Áustria", slug: "AUT", logo: "https://flagcdn.com/w80/at.png", geo: europeu}
+  - {en: "Jordan", pt: "Jordânia", slug: "JOR", logo: "https://flagcdn.com/w80/jo.png", geo: asiatico}
+  - {en: "Portugal", pt: "Portugal", slug: "POR", logo: "https://flagcdn.com/w80/pt.png", geo: europeu}
+  - {en: "Democratic Republic of the Congo", pt: "RD Congo", slug: "COD", logo: "https://flagcdn.com/w80/cd.png", geo: africano}
+  - {en: "Uzbekistan", pt: "Uzbequistão", slug: "UZB", logo: "https://flagcdn.com/w80/uz.png", geo: asiatico}
+  - {en: "Colombia", pt: "Colômbia", slug: "COL", logo: "https://flagcdn.com/w80/co.png", geo: latino}
+  - {en: "England", pt: "Inglaterra", slug: "ENG", logo: "https://flagcdn.com/w80/gb-eng.png", geo: europeu}
+  - {en: "Croatia", pt: "Croácia", slug: "CRO", logo: "https://flagcdn.com/w80/hr.png", geo: europeu}
+  - {en: "Ghana", pt: "Gana", slug: "GHA", logo: "https://flagcdn.com/w80/gh.png", geo: africano}
+  - {en: "Panama", pt: "Panamá", slug: "PAN", logo: "https://flagcdn.com/w80/pa.png", geo: latino}
 
 # Playoff bonus scoring (per correct pick per phase)
 playoff_scoring:

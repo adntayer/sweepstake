@@ -21,101 +21,38 @@ results_endpoint: "https://fixturedownload.com/download/fifa-club-world-cup-2025
 
 # English → Portuguese team name mapping (supports typos, alternates, etc.)
 team_name_mapping:
-  - en: "Al Ahly FC"
-    pt: "Al Ahly"
-
-  - en: "Inter Miami CF"
-    pt: "Inter Miami"
-
-  - en: "FC Bayern München"
-    pt: "Bayern de Munique"
-
-  - en: "Auckland City FC"
-    pt: "Auckland City"
-
-  - en: "Paris Saint-Germain"
-    pt: "Paris Saint-Germain"
-
-  - en: "Atlético de Madrid"
-    pt: "Atlético de Madrid"
-
-  - en: "Palmeiras"
-    pt: "Palmeiras"
-
-  - en: "FC Porto"
-    pt: "Porto"
-
-  - en: "Botafogo"
-    pt: "Botafogo"
-
-  - en: "Seattle Sounders FC"
-    pt: "Seattle Sounders"
-
-  - en: "Chelsea FC"
-    pt: "Chelsea"
-
-  - en: "LAFC"
-    pt: "Los Angeles FC"
-
-  - en: "CA Boca Juniors"
-    pt: "Boca Juniors"
-
-  - en: "SL Benfica"
-    pt: "Benfica"
-
-  - en: "CR Flamengo"
-    pt: "Flamengo"
-
-  - en: "Espérance de Tunisie"
-    pt: "Espérance"
-
-  - en: "Fluminense FC"
-    pt: "Fluminense"
-
-  - en: "Borussia Dortmund"
-    pt: "Borussia Dortmund"
-
-  - en: "CA River Plate"
-    pt: "River Plate"
-
-  - en: "Urawa Red Diamonds"
-    pt: "Urawa Reds"
-
-  - en: "Ulsan HD"
-    pt: "Ulsan HD"
-
-  - en: "Mamelodi Sundowns FC"
-    pt: "Mamelodi Sundowns"
-
-  - en: "CF Monterrey"
-    pt: "Monterrey"
-
-  - en: "FC Internazionale Milano"
-    pt: "Internazionale"
-
-  - en: "Manchester City"
-    pt: "Manchester City"
-
-  - en: "Wydad AC"
-    pt: "Wydad Casablanca"
-
-  - en: "Real Madrid C.F."
-    pt: "Real Madrid"
-
-  - en: "Al Hilal"
-    pt: "Al-Hilal"
-
-  - en: "CF Pachuca"
-    pt: "Pachuca"
-
-  - en: "FC Salzburg"
-    pt: "RB Salzburg"
-
-  - en: "Al Ain FC"
-    pt: "Al-Ain"
-
-  - en: "Juventus FC"
-    pt: "Juventus"
+  - {en: "Al Ahly FC", pt: "Al Ahly", geo: africano}
+  - {en: "Inter Miami CF", pt: "Inter Miami", geo: anfitriao}
+  - {en: "FC Bayern München", pt: "Bayern de Munique", geo: europeu}
+  - {en: "Auckland City FC", pt: "Auckland City", geo: oceanico}
+  - {en: "Paris Saint-Germain", pt: "Paris Saint-Germain", geo: europeu}
+  - {en: "Atlético de Madrid", pt: "Atlético de Madrid", geo: europeu}
+  - {en: "Palmeiras", pt: "Palmeiras", geo: latino}
+  - {en: "FC Porto", pt: "Porto", geo: europeu}
+  - {en: "Botafogo", pt: "Botafogo", geo: latino}
+  - {en: "Seattle Sounders FC", pt: "Seattle Sounders", geo: anfitriao}
+  - {en: "Chelsea FC", pt: "Chelsea", geo: europeu}
+  - {en: "LAFC", pt: "Los Angeles FC", geo: anfitriao}
+  - {en: "CA Boca Juniors", pt: "Boca Juniors", geo: latino}
+  - {en: "SL Benfica", pt: "Benfica", geo: europeu}
+  - {en: "CR Flamengo", pt: "Flamengo", geo: latino}
+  - {en: "Espérance de Tunisie", pt: "Espérance", geo: africano}
+  - {en: "Fluminense FC", pt: "Fluminense", geo: latino}
+  - {en: "Borussia Dortmund", pt: "Borussia Dortmund", geo: europeu}
+  - {en: "CA River Plate", pt: "River Plate", geo: latino}
+  - {en: "Urawa Red Diamonds", pt: "Urawa Reds", geo: asiatico}
+  - {en: "Ulsan HD", pt: "Ulsan HD", geo: asiatico}
+  - {en: "Mamelodi Sundowns FC", pt: "Mamelodi Sundowns", geo: africano}
+  - {en: "CF Monterrey", pt: "Monterrey", geo: anfitriao}
+  - {en: "FC Internazionale Milano", pt: "Internazionale", geo: europeu}
+  - {en: "Manchester City", pt: "Manchester City", geo: europeu}
+  - {en: "Wydad AC", pt: "Wydad Casablanca", geo: africano}
+  - {en: "Real Madrid C.F.", pt: "Real Madrid", geo: europeu}
+  - {en: "Al Hilal", pt: "Al-Hilal", geo: asiatico}
+  - {en: "CF Pachuca", pt: "Pachuca", geo: anfitriao}
+  - {en: "FC Salzburg", pt: "RB Salzburg", geo: europeu}
+  - {en: "Al Ain FC", pt: "Al-Ain", geo: asiatico}
+  - {en: "Juventus FC", pt: "Juventus", geo: europeu}
 
 # Group stage configuration for real group standings
 groups:
@@ -151,7 +88,7 @@ striker_scoring:
   points: 30
 
 # Scoring rules (checked in rule order)
-# Colors reference theme section above
+# Colors reference theme section below
 scoring:
   - name: "1-Placar exato"
     rule: "exact_score"

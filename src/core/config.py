@@ -221,6 +221,7 @@ class ChampionshipConfig:
     team_name_mapping: dict = field(default_factory=dict)
     team_logos: dict = field(default_factory=dict)  # {english_name: logo_url}
     team_slugs: dict = field(default_factory=dict)  # {english_name: slug}
+    team_geo: dict[str, str] = field(default_factory=dict)  # {portuguese_name: geo_continent}
 
     # Report settings
     report_title: str = ""
@@ -496,11 +497,12 @@ def _parse_theme(raw: dict) -> ThemeConfig:
     return ThemeConfig(mode=raw.get("mode", "dark"), colors=colors)
 
 
-def _parse_team_mapping(raw: list) -> tuple[dict[str, str], dict[str, str], dict[str, str]]:
-    """Parse team_name_mapping from YAML into ({en: pt}, {en: logo_url}, {en: slug})."""
+def _parse_team_mapping(raw: list) -> tuple[dict[str, str], dict[str, str], dict[str, str], dict[str, str]]:
+    """Parse team_name_mapping from YAML into ({en: pt}, {en: logo_url}, {en: slug}, {pt: geo})."""
     mapping: dict[str, str] = {}
     logos: dict[str, str] = {}
     slugs: dict[str, str] = {}
+    geo: dict[str, str] = {}
     for entry in raw:
         en = entry.get("en", "").strip()
         pt = entry.get("pt", "").strip()
@@ -512,7 +514,10 @@ def _parse_team_mapping(raw: list) -> tuple[dict[str, str], dict[str, str], dict
             slug = entry.get("slug", "").strip()
             if slug:
                 slugs[en] = slug
-    return mapping, logos, slugs
+            g = entry.get("geo", "").strip()
+            if g:
+                geo[pt] = g
+    return mapping, logos, slugs, geo
 
 
 def _find_championship_dir(championship_id: str) -> Path:
@@ -626,6 +631,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         team_name_mapping=_tm[0],
         team_logos=_tm[1],
         team_slugs=_tm[2],
+        team_geo=_tm[3],
         playoff_scoring=playoff_scoring,
         actual_top_scorer=raw.get("actual_top_scorer", ""),
         striker_points=striker_points,

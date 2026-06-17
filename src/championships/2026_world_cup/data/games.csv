@@ -15,9 +15,9 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-15 12h,1,Bélgica,,1,x,1,,Egito,belgica-vs-egito,finished
 2026-06-15 18h,1,Arábia Saudita,,1,x,1,,Uruguai,arabia_saudita-vs-uruguai,finished
 2026-06-15 18h,1,Irã,,2,x,2,,Nova Zelândia,ira-vs-nova_zelandia,finished
-2026-06-16 15h,1,França,,0,x,0,,Senegal,franca-vs-senegal,live
-2026-06-16 18h,1,Iraque,,,x,,,Noruega,iraque-vs-noruega,notstarted
-2026-06-16 20h,1,Argentina,,,x,,,Argélia,argentina-vs-argelia,notstarted
+2026-06-16 15h,1,França,,3,x,1,,Senegal,franca-vs-senegal,finished
+2026-06-16 18h,1,Iraque,,1,x,4,,Noruega,iraque-vs-noruega,finished
+2026-06-16 20h,1,Argentina,,3,x,0,,Argélia,argentina-vs-argelia,live
 2026-06-16 21h,1,Áustria,,,x,,,Jordânia,austria-vs-jordania,notstarted
 2026-06-17 12h,1,Portugal,,,x,,,RD Congo,portugal-vs-rd_congo,notstarted
 2026-06-17 15h,1,Inglaterra,,,x,,,Croácia,inglaterra-vs-croacia,notstarted
