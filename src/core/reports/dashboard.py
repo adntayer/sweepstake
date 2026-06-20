@@ -14,8 +14,13 @@ import pytz
 from src.core.config import ChampionshipConfig
 from src.core.logo_fetcher import _team_logo_tag
 from src.core.printing import print_colored
+from src.core.reports.html import (
+    ZEBRA_GRANDE_EMOJI,
+    ZEBRA_GRANDE_LABEL,
+    ZEBRA_MONSTRA_EMOJI,
+    ZEBRA_MONSTRA_LABEL,
+)
 from src.core.reports.utils import compute_pending_matches
-from src.core.reports.html import ZEBRA_MONSTRA_EMOJI, ZEBRA_GRANDE_EMOJI, ZEBRA_MONSTRA_LABEL, ZEBRA_GRANDE_LABEL
 
 
 def _norm(path: str) -> str:
@@ -303,6 +308,8 @@ details.accordion-emoji .emoji-row {
 details.accordion-emoji .emoji-row:last-child { border-bottom: none; }
 details.accordion-emoji .emoji-row .e { font-size: 0.9rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
 details.accordion-emoji .emoji-row .pts { color: var(--accent); font-weight: 600; width: 1.8rem; text-align: right; flex-shrink: 0; }
+
+
 
 /* Footer */
 .footer {
@@ -997,7 +1004,7 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
                 hg, ag = results_map.get(slug, ("", ""))
                 if hg and ag:
                     score_str = f' <span style="font-weight:700;color:var(--accent);">{hg}</span> vs <span style="font-weight:700;color:var(--accent);">{ag}</span> '
-            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug}{score_str or f" vs "}{away_logo}{away_slug}</span> <span style="display:flex;align-items:center;gap:0.2rem;">{zebra_icon}{badge}</span></a>\n'
+            out += f'<a href="{href}" style="display:flex;align-items:center;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--card-border)\'"><span style="display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.65rem;color:var(--text-muted);">{date_part}</span>{home_logo}{home_slug}{score_str or " vs "}{away_logo}{away_slug}</span> <span style="display:flex;align-items:center;gap:0.2rem;">{zebra_icon}{badge}</span></a>\n'
         out += "</div>"
         return out if file_list else '<div class="empty-state">Nenhum jogo disponivel ainda</div>'
 
@@ -1131,6 +1138,31 @@ def _build_bonus_times_card(config: ChampionshipConfig) -> str:
     return html
 
 
+def _build_badge_accordion(config: ChampionshipConfig) -> str:
+    """Build a single accordion explaining each badge (like 'Legenda dos acertos')."""
+    badges = [
+        ("\U0001f525", "Embrazado", "streak \u2265 3 acertos consecutivos"),
+        ("\U0001f993", "Caçador de Zebras", "top 3 que mais acertaram zebras"),
+        ("\U0001f40d", "Líder", "1\u00ba lugar geral no ranking"),
+        ("\U0001f4a5", "Ousado", "aposta acima da média do bolão"),
+        ("\U0001F9CA", "Conservador", "aposta abaixo da média do bolão"),
+        ("\U0001f3af", "Especialista", "maior precisão em time (\u2265 3 palpites, >50%)"),
+    ]
+    rows = "".join(
+        f'<div class="emoji-row">'
+        f'<span class="e">{emoji}</span>'
+        f'<span class="desc">{label}</span>'
+        f'<span class="pts" style="font-weight:400;color:var(--text-muted);font-size:0.6rem;width:auto;text-align:left;">{desc}</span>'
+        f'</div>\n'
+        for emoji, label, desc in badges
+    )
+    return f"""<details class="accordion-emoji">
+<summary>\U0001f3c6 Legenda das classificações</summary>
+<div class="content">{rows}</div>
+</details>
+"""
+
+
 def _build_emoji_accordion(config: ChampionshipConfig) -> str:
     """Build a compact accordion explaining each scoring emoji."""
     rows = ""
@@ -1146,11 +1178,11 @@ def _build_emoji_accordion(config: ChampionshipConfig) -> str:
             f'</div>\n'
         )
     rows += (
-        f'<div class="emoji-row">'
-        f'<span class="e">\U0001f993</span>'
-        f'<span class="desc">Zebra acertada (favorito n\u00e3o venceu e \u226570% erraram)</span>'
-        f'<span class="pts">contagem</span>'
-        f'</div>\n'
+        '<div class="emoji-row">'
+        '<span class="e">\U0001f993</span>'
+        '<span class="desc">Zebra acertada (favorito n\u00e3o venceu e \u226570% erraram)</span>'
+        '<span class="pts">contagem</span>'
+        '</div>\n'
     )
     return f"""<details class="accordion-emoji">
 <summary>\U0001f9e9 Legenda dos acertos</summary>
@@ -1182,15 +1214,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     upcoming = _build_upcoming_games(config)
     phase_buttons = _build_phase_buttons(config, slug_status)
     zebra_counter = _build_zebra_counter(config)
-    badge_legend = """<div class="card" style="margin:0.75rem;font-size:0.7rem;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:0.25rem 1rem;padding:0.5rem 0.75rem;">
-    <span>\U0001f525 Embrazado (streak \u2265 3 acertos)</span>
-    <span>\U0001f993 Ca\u00e7ador de Zebras (top 3 em zebras)</span>
-    <span>\U0001f40d L\u00edder (1\u00ba lugar geral)</span>
-    <span>\U0001f4a5 Ousado (aposta acima da m\u00e9dia)</span>
-    <span>\U0001F9CA Conservador (aposta abaixo da m\u00e9dia)</span>
-    <span>\U0001f3af Especialista (maior precis\u00e3o em time)</span>
-</div>
-"""
+    badge_accordion = _build_badge_accordion(config)
     emoji_accordion = _build_emoji_accordion(config)
     bonus_card = _build_bonus_times_card(config)
     html_content = f"""<!DOCTYPE html>
@@ -1215,11 +1239,11 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     atualizado \u00e0s {now_str}
 </div>
 
-{badge_legend}
-
 {live_games}
 
 {last_result}
+
+{upcoming}
 
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
     <a href="tabela_real.html">
@@ -1274,6 +1298,8 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     </a>
 </div>
 
+{badge_accordion}
+
 {emoji_accordion}
 
 <div class="section">
@@ -1282,8 +1308,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 </div>
 
 {bonus_card}
-
-{upcoming}
 
 <div class="section">
     <div class="section-title">\U0001f4c2 Jogos por Fase</div>

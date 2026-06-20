@@ -1,11 +1,16 @@
-from datetime import datetime
+# uv run src\core\matches\wc2026.py
 import os
 import re
+import time
 import unicodedata
+from datetime import datetime
 
-import yaml
-import requests
 import pandas as pd
+import requests
+import urllib3
+import yaml
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 
 def normalizar_slug(texto):
@@ -88,6 +93,31 @@ def _assign_group_rounds(df):
         df.at[idx, "round"] = rnd
 
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+def _fetch_games_json(headers: dict) -> dict:
+    """Fetch games JSON with retry (5 attempts), exponential backoff, and SSL fallback."""
+    session = requests.Session()
+    retries = Retry(total=3, backoff_factor=0.5, status_forcelist=[500, 502, 503, 504])
+    session.mount("https://", HTTPAdapter(max_retries=retries))
+
+    for attempt in range(5):
+        try:
+            kwargs = dict(headers=headers, timeout=(10, 30))
+            if attempt >= 1:
+                kwargs["verify"] = False
+            res = session.get("https://worldcup26.ir/get/games", **kwargs)
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.RequestException:
+            if attempt < 4:
+                wait = 2 ** attempt
+                print(f"  ⚠️  tentativa {attempt + 1}/5 falhou, tentando novamente em {wait}s...")
+                time.sleep(wait)
+    raise
+
+
 def build_world_cup_csv(games_file: str | None = None):
     """Fetch games from the API, normalise, and return a DataFrame.
 
@@ -109,10 +139,8 @@ def build_world_cup_csv(games_file: str | None = None):
         # ---- team name translation map (API en → Portuguese) ----
         api_en_to_pt = _load_config_mapping()
 
-        # ---- fetch games ----
-        res_games = requests.get("https://worldcup26.ir/get/games", headers=headers)
-        res_games.raise_for_status()
-        games_json = res_games.json()
+        # ---- fetch games with retry + SSL fallback ----
+        games_json = _fetch_games_json(headers)
         games_list = games_json.get("games") or games_json.get("matches")
         df = pd.DataFrame(games_list)
 
@@ -191,8 +219,14 @@ def build_world_cup_csv(games_file: str | None = None):
 
 
 if __name__ == "__main__":
-    df_resultado = build_world_cup_csv()
-    if df_resultado is not None:
-        print(f"✅ {len(df_resultado)} jogos salvos")
+    for attempt in range(5):
+        df_resultado = build_world_cup_csv()
+        if df_resultado is not None:
+            print(f"✅ {len(df_resultado)} jogos salvos")
+            break
+        if attempt < 4:
+            wait = 2 ** attempt
+            print(f"  ⚠️  tentativa {attempt + 1}/5 falhou, tentando novamente em {wait}s...")
+            time.sleep(wait)
     else:
         print("❌ Erro ao processar parser")
