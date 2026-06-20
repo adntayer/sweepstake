@@ -4,7 +4,20 @@
 
 [codeburn](https://github.com/getagentseal/codeburn)
 
-*/5 0,1,13,14,15,16,17,18,19,20,21,22,23 * * *
+
+# Get all World Cup 2026 matches (no auth needed for demo)
+curl https://worldcup26.ir/get/games
+
+# Get group standings
+curl https://worldcup26.ir/get/groups
+
+# Get all 48 teams
+curl https://worldcup26.ir/get/teams
+
+# Get all 16 stadiums
+curl https://worldcup26.ir/get/stadiums
+
+
 
 
 ```terminal

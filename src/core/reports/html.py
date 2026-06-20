@@ -709,8 +709,10 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 )
 
     # Player pts/day vs bolão avg/day (raw, not moving average)
-    df_all_by_date = df_valid.groupby("date", as_index=False).agg({"pontos": ["sum", "count"]})
-    df_all_by_date.columns = ["date", "total_pts", "num_players"]
+    df_all_by_date = df_valid.groupby("date", as_index=False).agg(
+        total_pts=("pontos", "sum"),
+        num_players=("who", "nunique")
+    )
     df_all_by_date["bolao_avg"] = (df_all_by_date["total_pts"] / df_all_by_date["num_players"]).round(1)
     df_all_by_date["date_str"] = pd.to_datetime(df_all_by_date["date"]).dt.strftime("%d/%m")
 
