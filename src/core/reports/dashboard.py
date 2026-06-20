@@ -856,6 +856,23 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     hg = int(last["home_goals"])
     ag = int(last["away_goals"])
     date = str(last["date"])
+    match_slug = str(last.get("match", ""))
+    round_val = last.get("round", "")
+
+    # Determine phase directory for the match HTML link
+    try:
+        int(round_val)
+        phase_dir = config.group_phase_label
+    except (ValueError, TypeError):
+        phase_dir = str(round_val) if round_val else config.group_phase_label
+
+    # Parse date_part and hour_part from "YYYY-MM-DD HHh" format
+    date_parts = date.split(" ")
+    date_part = date_parts[0] if date_parts else date
+    hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
+
+    # Link to the per-match page
+    game_href = f"jogos/{phase_dir}/{date_part}_{hour_part}_{match_slug}.html" if match_slug else ""
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
     home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
@@ -867,7 +884,6 @@ def _build_last_result(config: ChampionshipConfig) -> str:
         upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
         if os.path.exists(upset_path):
             df_upset = pd.read_csv(upset_path, sep=",")
-            match_slug = str(last.get("match", ""))
             if match_slug:
                 upset_row = df_upset[df_upset["match"] == match_slug]
                 if not upset_row.empty and int(upset_row.iloc[0].get("is_upset", 0)) == 1:
@@ -880,6 +896,8 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     except Exception:
         pass
 
+    ver_jogo_link = f'<div style="text-align:center;margin-top:0.4rem;"><a href="{game_href}" style="font-size:0.75rem;font-weight:600;color:var(--accent);text-decoration:none;">\U0001f4fa ver jogo</a></div>' if game_href else ""
+
     return f"""
 <div class="section">
     <div class="section-title">\U0001f4ca Ultimo Resultado</div>
@@ -891,6 +909,7 @@ def _build_last_result(config: ChampionshipConfig) -> str:
         </div>
         <div class="date">{date}</div>
         {zebra_badge}
+        {ver_jogo_link}
     </div>
 </div>
 """
