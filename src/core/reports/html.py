@@ -653,7 +653,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         df_playoff = pd.concat(playoff_parts, ignore_index=True)
         df_bol = pd.concat([df_bol, df_playoff], ignore_index=True)
 
-    df_bol = df_bol.sort_values(["date", "hour"], ascending=True)
+    sort_col_bol = ["id"] if "id" in df_bol.columns else ["date", "hour"]
+    df_bol = df_bol.sort_values(sort_col_bol, ascending=True)
     df_bol["pontos_acumulados"] = df_bol["pontos"].cumsum()
 
     # Load bonus points (playoff team picks) — not included in df_bol/pontos
@@ -776,7 +777,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             n_pending = len(df_pending)
             if n_pending:
                 rev_map = {v: k for k, v in config.team_name_mapping.items()}
-                for _, row in df_pending.sort_values(["date", "hour"], ascending=False).iterrows():
+                sort_col_pending = ["id"] if "id" in df_pending.columns else ["date", "hour"]
+                for _, row in df_pending.sort_values(sort_col_pending, ascending=False).iterrows():
                     date_str = pd.to_datetime(row["date"]).strftime("%d/%m") + (f" {row['hour']}" if pd.notna(row.get("hour")) and str(row.get("hour", "")).strip() else "")
                     home_en = rev_map.get(row["home_team"], row["home_team"])
                     away_en = rev_map.get(row["away_team"], row["away_team"])
@@ -798,7 +800,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
     # Match history rows (newest first)
     playoff_emoji_map = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
-    df_hist = df_bol.sort_values(["date", "hour"], ascending=False)
+    sort_col_hist = ["id"] if "id" in df_bol.columns else ["date", "hour"]
+    df_hist = df_bol.sort_values(sort_col_hist, ascending=False)
 
     def _format_real_placar(row: pd.Series) -> str:
         """Format the real scoreline, handling NaN gracefully."""
@@ -916,27 +919,31 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     tz = pytz.timezone(config.timezone)
     today = datetime.now(tz).date()
 
+    # Sort key: prefer 'id' column if available, fall back to date+hour
+    sort_col_future = ["id"] if "id" in df_hist.columns else ["date", "hour"]
+    sort_col_all    = ["id"] if "id" in df_player_all.columns else ["date", "hour"]
+
     # Matches with results (valido == 1) go to past, even if today (finished/live).
     # Unvalidated matches (valido == 0) with future date go to future.
     df_by_date_dt = df_hist["date"].apply(lambda d: pd.to_datetime(d).date())
     df_hist_past = df_hist[df_hist.get("valido", 0) == 1].copy()
     df_hist_future = df_hist[
         (df_hist.get("valido", 0) == 0) & (df_by_date_dt >= today)
-    ].sort_values(["date", "hour"], ascending=True)
+    ].sort_values(sort_col_future, ascending=True)
 
     # Include ALL future predictions (valido=0, date >= today) from gold_all as "Jogos Futuros"
     if os.path.exists(all_path):
         df_future_preds = df_player_all[
             (df_player_all.get("valido", 0) == 0)
             & (pd.to_datetime(df_player_all["date"], errors="coerce").dt.date >= today)
-        ].drop_duplicates(subset=["match"]).sort_values(["date", "hour"], ascending=True)
+        ].drop_duplicates(subset=["match"]).sort_values(sort_col_all, ascending=True)
         if len(df_future_preds):
             # Merge any matches not already in df_hist_future
             existing_slugs = set(df_hist_future["match"].unique()) if len(df_hist_future) else set()
             new_preds = df_future_preds[~df_future_preds["match"].isin(existing_slugs)]
             df_hist_future = pd.concat(
                 [df_hist_future, new_preds], ignore_index=True
-            ).sort_values(["date", "hour"], ascending=True)
+            ).sort_values(sort_col_future, ascending=True)
 
     # Exclude pending matches from past (they'll be shown in pending section)
     pending_slug_set = set()
@@ -1688,6 +1695,41 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     profile_html = f'<div class="section"><div class="section-title">\U0001f9d0 Perfil do Jogador</div><div class="card">{profile_parts}</div></div>\n'
 
     body += profile_html
+
+    # --- Last 5 games card (between profile and jogos encerrados) ---
+    df_last5 = df_bol[df_bol.get("valido", 0) == 1].tail(5).iloc[::-1]
+    if not df_last5.empty:
+        rev_map_5 = {v: k for k, v in config.team_name_mapping.items()}
+        last5_rows = ""
+        for _, r5 in df_last5.iterrows():
+            hg5 = r5.get("home_goals_real")
+            ag5 = r5.get("away_goals_real")
+            score_5 = f'<span style="font-weight:700;color:var(--accent);">{int(hg5)}</span> - <span style="font-weight:700;color:var(--accent);">{int(ag5)}</span>' if pd.notna(hg5) and pd.notna(ag5) else " vs "
+            home_en_5 = rev_map_5.get(r5["home_team"], r5["home_team"])
+            away_en_5 = rev_map_5.get(r5["away_team"], r5["away_team"])
+            home_logo_5 = _team_logo_tag(home_en_5, config, cls="team-logo-sm", start=boleiro_dir)
+            away_logo_5 = _team_logo_tag(away_en_5, config, cls="team-logo-sm", start=boleiro_dir)
+            ms_5 = str(r5.get("match", ""))
+            phase_5 = config.group_phase_label
+            hr_5 = str(r5.get("hour", ""))
+            game_href_5 = f"../jogos/{phase_5}/{r5['date']}_{hr_5}_{ms_5}.html"
+            date_part_5 = pd.to_datetime(r5["date"]).strftime("%d/%m") + (f" {hr_5}" if hr_5 else "")
+            last5_rows += (
+                f'<a href="{game_href_5}" style="display:flex;align-items:center;justify-content:space-between;'
+                f'background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;'
+                f'padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);'
+                f'text-decoration:none;transition:border-color 0.15s;" '
+                f'onmouseover="this.style.borderColor=\'var(--accent)\'" '
+                f'onmouseout="this.style.borderColor=\'var(--card-border)\'">'
+                f'<span style="display:flex;align-items:center;gap:0.3rem;">'
+                f'<span style="font-size:0.65rem;color:var(--text-muted);">{date_part_5}</span>'
+                f'{home_logo_5}{r5["home_team"]}'
+                f' {score_5} '
+                f'{away_logo_5}{r5["away_team"]}'
+                f'</span>'
+                f'</a>\n'
+            )
+        body += f'<div class="section"><div class="section-title">\U0001f4c5 Ultimos 5 Jogos</div><div class="card" style="display:flex;flex-direction:column;gap:0.25rem;padding:0.6rem 0.75rem;">{last5_rows}</div></div>\n'
 
     encerrados_total = n_past + n_pending
     body += f"""
