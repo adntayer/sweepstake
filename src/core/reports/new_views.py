@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import unicodedata
 from datetime import datetime
 
 import pandas as pd
@@ -733,25 +734,72 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
 
     df_pred["match"] = df_pred["match"].astype(str)
 
-    # ── Load games.csv for ALL games (all phases) ──
+    # ── Load games.csv and normalize match keys for join ──
+    def _strip_acc(text: str) -> str:
+        return "".join(
+            c for c in unicodedata.normalize("NFD", text)
+            if not unicodedata.combining(c)
+        )
+
     df_games = pd.read_csv(config.games_file, sep=",")
     df_games["match"] = df_games["match"].astype(str)
+    df_games["match_raw"] = df_games["match"].copy()
+    df_games["round"] = df_games["round"].astype(str).str.strip()
+
+    # Accent-normalise both sides for reliable merge
+    df_pred["match_key"] = df_pred["match"].apply(_strip_acc)
+    df_games["match_key"] = df_games["match"].apply(_strip_acc)
+
+    # ── Build ordered match list from games.csv (ALL phases) ──
+    match_order = df_games[["match_key", "date", "home_team", "away_team", "round"]].copy()
+
+    # Disambiguate duplicate match_keys (e.g. multiple "-vs-" for unknown playoff teams)
+    dup_mask = match_order["match_key"].duplicated(keep=False)
+    match_order.loc[dup_mask, "match_key"] = (
+        match_order.loc[dup_mask, "match_key"] + "|" +
+        match_order.loc[dup_mask, "round"].astype(str) + "." +
+        match_order.loc[dup_mask].groupby(["match_key", "round"]).cumcount().astype(str)
+    )
+
+    match_order = match_order.drop_duplicates("match_key")
+    match_order = match_order.sort_values("date", ascending=True)
+    all_matches = match_order["match_key"].tolist()
+
+    # Round-slug per match (from games.csv — source of truth)
+    match_round_map = dict(zip(match_order["match_key"], match_order["round"]))
 
     # Round labels for display
-    round_labels = {
+    round_labels: dict[str, str] = {
         "1": "1\u00aa Rodada", "2": "2\u00aa Rodada", "3": "3\u00aa Rodada",
         "r32": "2\u00aa Fase", "r16": "Oitavas", "qf": "Quartas",
         "sf": "Semi", "third": "3\u00ba Lugar", "final": "Final",
     }
     group_phase_label = getattr(config, "group_phase_label", "1\u00aa Fase")
 
-    # Merge round info into predictions
-    game_round_map = df_games[["match", "round"]].copy()
-    game_round_map["round"] = game_round_map["round"].astype(str).str.strip()
-    df = df_pred.merge(game_round_map, on="match", how="left")
+    # Build accent-insensitive Portuguese-name → slug lookup from config
+    _pt_to_slug: dict[str, str] = {}
+    for en, pt in config.team_name_mapping.items():
+        key = _strip_acc(pt.lower())
+        slug = config.team_slugs.get(en, "")
+        if slug:
+            _pt_to_slug[key] = slug
+
+    match_info: dict[str, tuple] = {}
+    for _, r in match_order.iterrows():
+        mk = r["match_key"]
+        ht = str(r["home_team"]).strip()
+        at = str(r["away_team"]).strip()
+        rs = r["round"]
+        rl = round_labels.get(rs, rs.capitalize() if rs else group_phase_label)
+        ha = _pt_to_slug.get(_strip_acc(ht.lower()), ht[:3].upper() if ht and ht not in ("nan", "") else "???")
+        aa = _pt_to_slug.get(_strip_acc(at.lower()), at[:3].upper() if at and at not in ("nan", "") else "???")
+        match_info[mk] = (ha, aa, ht, at, rl, rs)
+
+    # ── Merge predictions with round info ──
+    game_round_map = df_games[["match_key", "round"]].copy()
+    df = df_pred.merge(game_round_map, on="match_key", how="left")
     df["round_label"] = df["round"].map(round_labels).fillna(group_phase_label)
 
-    # Separate completed and upcoming
     df_valid = df[df["valido"] == 1].copy()
     df_upcoming = df[df["valido"] == 0].copy()
 
@@ -761,35 +809,8 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
 
     boleiros = sorted(df["who"].unique())
 
-    # ── Build complete match list from games.csv (all phases) ──
-    # Fix placeholder match IDs (e.g. "-vs-") so every row has a unique key
-    df_games_src = df_games.copy()
-    bad_match = df_games_src["match"].isin(["-vs-", "", "nan", "null"]) | df_games_src["match"].isna()
-    for idx in df_games_src[bad_match].index:
-        r = str(df_games_src.at[idx, "round"]).strip()
-        df_games_src.at[idx, "match"] = f"x{idx}-{r}"
-
-    match_order = df_games_src[["match", "date", "home_team", "away_team", "round"]].drop_duplicates("match")
-    match_order = match_order.sort_values("date", ascending=True)
-    all_matches = match_order["match"].tolist()
-
-    # Round slug per match
-    match_round_map = dict(zip(match_order["match"], match_order["round"].astype(str).str.strip()))
-
-    # Match info lookup
-    match_info = {}
-    for _, r in match_order.iterrows():
-        m = str(r["match"])
-        ht = str(r["home_team"]).strip()
-        at = str(r["away_team"]).strip()
-        r_slug = str(r["round"]).strip()
-        rl = round_labels.get(r_slug, group_phase_label)
-        ha = ht[:3].upper() if ht and ht not in ("nan", "") else "???"
-        aa = at[:3].upper() if at and at not in ("nan", "") else "???"
-        match_info[m] = (ha, aa, ht, at, rl, r_slug)
-
     # Default view: last 10 completed + next upcoming
-    completed_matches = [m for m in all_matches if m in set(df_valid["match"].unique())]
+    completed_matches = [m for m in all_matches if m in set(df_valid["match_key"].unique())]
     upcoming_matches = [m for m in all_matches if m not in set(completed_matches)]
     last_10 = completed_matches[-10:] if len(completed_matches) >= 10 else completed_matches
     next_upcoming = upcoming_matches[0] if upcoming_matches else None
@@ -797,8 +818,7 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
     if next_upcoming:
         default_matches.append(next_upcoming)
 
-    # ── Master table with ALL games as columns ──
-    # Headers
+    # ── Master table ──
     header_cells = (
         '<th style="position:sticky;top:0;left:0;z-index:4;background:var(--card-bg);'
         'white-space:nowrap;">Jogador</th>\n'
@@ -806,11 +826,12 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
     for m in all_matches:
         if m not in match_info:
             continue
-        ha, aa, _, _, _, rs = match_info[m]
+        ha, aa, _, _, rl, rs = match_info[m]
         is_default = m in default_matches
         cls = "game-col" + (" game-default" if is_default else "")
         header_cells += (
             f'<th class="{cls}" data-match="{m}" data-round="{rs}" '
+            f'title="rodada {rs}" '
             'style="position:sticky;top:0;z-index:3;background:var(--card-bg);'
             'font-size:0.55rem;text-align:center;padding:0.2rem 0.1rem;'
             f'min-width:34px;line-height:1.1;">{ha}<br>x<br>{aa}</th>\n'
@@ -820,7 +841,6 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         'color:var(--accent);white-space:nowrap;">Total</th>\n'
     )
 
-    # Body rows
     table_rows = ""
     for b in boleiros:
         df_b = df[df["who"] == b]
@@ -833,7 +853,7 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         for m in all_matches:
             if m not in match_info:
                 continue
-            row = df_b[df_b["match"] == m]
+            row = df_b[df_b["match_key"] == m]
             _, _, _, _, _, rs = match_info[m]
             is_default = m in default_matches
             cls = "game-col" + (" game-default" if is_default else "")
@@ -875,15 +895,20 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         )
         table_rows += f"<tr>{cells}</tr>\n"
 
-    # ── Build 5 dropdown filter menus (click to open, checkboxes inside) ──
-    phase_filter_label = {
-        "1": "1\u00aa Rodada",
-        "2": "2\u00aa Rodada",
-        "3": "3\u00aa Rodada",
-        "r32": "2\u00aa Fase",
-        "mata": "Mata-Mata",
-    }
-    # Count selected per phase on load
+    # ── Dynamic phase filters: one dropdown per distinct round ──
+    mata_slugs = {"r16", "qf", "sf", "third", "final"}
+    group_keys = [r for r in ("1", "2", "3") if any(match_round_map.get(m) == r for m in all_matches)]
+    knockout_present = [r for r in sorted(set(match_round_map.values())) if r in mata_slugs]
+    r32_present = "r32" in set(match_round_map.values())
+
+    phase_defs: list[tuple[str, str, list[str]]] = []
+    for k in group_keys:
+        phase_defs.append((k, k, [k]))
+    if r32_present:
+        phase_defs.append(("r32", "r32", ["r32"]))
+    if knockout_present:
+        phase_defs.append(("mata", "mata", knockout_present))
+
     dd_btn_style = (
         "padding:0.3rem 0.5rem;background:var(--card-bg);color:var(--text);"
         "border:1px solid var(--card-border);border-radius:6px;font-size:0.65rem;"
@@ -897,24 +922,24 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         "box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-top:2px;"
     )
     phase_dropdowns_html = ""
-    for key in ["1", "2", "3", "r32", "mata"]:
-        slugs = ["r16", "qf", "sf", "third", "final"] if key == "mata" else [key]
+    _html_base_logo = _norm(config.reports_dir + "/html")
+    for key, label, slugs in phase_defs:
         matches_in_round = [m for m in all_matches if match_round_map.get(m) in slugs]
         if not matches_in_round:
             continue
-        label = phase_filter_label[key]
-        # Count default selected
         default_count = sum(1 for m in matches_in_round if m in default_matches)
         checkboxes_html = ""
         for m in matches_in_round:
-            ha, aa, _, _, _, _ = match_info.get(m, ("?", "?", "", "", "", ""))
+            ha, aa, ht, at, _, _ = match_info.get(m, ("?", "?", "", "", "", ""))
             checked = "checked" if m in default_matches else ""
+            home_logo = _team_logo_tag(ht, config, cls="team-logo-sm", start=_html_base_logo) if ht and ht not in ("nan", "") else ""
+            away_logo = _team_logo_tag(at, config, cls="team-logo-sm", start=_html_base_logo) if at and at not in ("nan", "") else ""
             checkboxes_html += (
                 f'<label style="display:flex;align-items:center;gap:0.2rem;'
                 f'font-size:0.55rem;padding:0.15rem 0;cursor:pointer;white-space:nowrap;">'
                 f'<input type="checkbox" value="{m}" {checked} '
                 f'onchange="onCheckChange(this)" style="width:0.75rem;height:0.75rem;"> '
-                f'{ha} x {aa}</label>\n'
+                f'{home_logo}{ha} x {aa}{away_logo}</label>\n'
             )
         phase_dropdowns_html += (
             f'<div class="dd-wrap" style="position:relative;display:inline-block;">'
@@ -1002,8 +1027,9 @@ function setDefault() {
             });
         }
     });
-    // Refresh all badges
-    ['1','2','3','r32','mata'].forEach(function(k) { refreshBadge(k); });
+    // Refresh all badges (keys injected by Python)
+    var allKeys = __PHASE_KEYS__;
+    allKeys.forEach(function(k) { refreshBadge(k); });
     applyFilter();
 }
 
@@ -1029,6 +1055,43 @@ function applyFilter() {
     });
 }
 
+// ── Sort controls ──
+function sortByName() {
+    var tbody = document.querySelector('tbody');
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort(function(a, b) {
+        var aName = a.querySelector('td a').textContent.trim();
+        var bName = b.querySelector('td a').textContent.trim();
+        return aName.localeCompare(bName);
+    });
+    rows.forEach(function(row) { tbody.appendChild(row); });
+    // Update button styles
+    document.getElementById('sort-name-btn').style.background = '#1a3a5c';
+    document.getElementById('sort-name-btn').style.color = 'white';
+    document.getElementById('sort-name-btn').style.border = 'none';
+    document.getElementById('sort-total-btn').style.background = 'var(--card-bg)';
+    document.getElementById('sort-total-btn').style.color = 'var(--text)';
+    document.getElementById('sort-total-btn').style.border = '1px solid var(--card-border)';
+}
+
+function sortByTotal() {
+    var tbody = document.querySelector('tbody');
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort(function(a, b) {
+        var aTotal = parseInt(a.querySelector('[data-total-cell]').textContent) || 0;
+        var bTotal = parseInt(b.querySelector('[data-total-cell]').textContent) || 0;
+        return bTotal - aTotal; // descending
+    });
+    rows.forEach(function(row) { tbody.appendChild(row); });
+    // Update button styles
+    document.getElementById('sort-total-btn').style.background = '#1a3a5c';
+    document.getElementById('sort-total-btn').style.color = 'white';
+    document.getElementById('sort-total-btn').style.border = 'none';
+    document.getElementById('sort-name-btn').style.background = 'var(--card-bg)';
+    document.getElementById('sort-name-btn').style.color = 'var(--text)';
+    document.getElementById('sort-name-btn').style.border = '1px solid var(--card-border)';
+}
+
 // Close dropdowns when clicking outside
 document.addEventListener('click', function(e) {
     if (!e.target.closest('.dd-wrap')) {
@@ -1045,7 +1108,15 @@ document.addEventListener('DOMContentLoaded', function() { setDefault(); });
         '<div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem;">'
         '<button onclick="setDefault()" style="padding:0.4rem 0.8rem;background:#1a3a5c;'
         'color:white;border:none;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer;">'
-        'padrão: últimos 10 jogos + próximo</button>'
+        'padr\u00e3o: \u00faltimos 10 jogos + pr\u00f3ximo</button>'
+        '<span style="font-size:0.65rem;color:var(--text-muted);">Ordenar:</span>'
+        '<button id="sort-name-btn" onclick="sortByName()" '
+        'style="padding:0.25rem 0.5rem;background:#1a3a5c;color:white;border:none;'
+        'border-radius:4px;font-size:0.65rem;font-weight:600;cursor:pointer;">Nome</button>'
+        '<button id="sort-total-btn" onclick="sortByTotal()" '
+        'style="padding:0.25rem 0.5rem;background:var(--card-bg);color:var(--text);'
+        'border:1px solid var(--card-border);border-radius:4px;font-size:0.65rem;'
+        'font-weight:600;cursor:pointer;">Total</button>'
         '</div>'
 
         '<div style="display:flex;gap:0.3rem;flex-wrap:wrap;align-items:flex-start;">'
@@ -1071,6 +1142,10 @@ window.addEventListener('resize', fixScrollerHeight);
 window.addEventListener('scroll', fixScrollerHeight);
 </script>
 """
+
+    # Inject phase key list into JS for setDefault badge refresh
+    phase_keys_json = json.dumps([k for k, _, _ in phase_defs])
+    js = js.replace("__PHASE_KEYS__", phase_keys_json)
 
     body = f"""<div class="hero">
     <h1>\U0001f4cb Palpites</h1>
