@@ -634,7 +634,11 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             df_valid = pd.read_csv(config.gold_all_path(), sep=",")
     else:
         df_valid = pd.read_csv(config.gold_all_path(), sep=",")
-    df_striker = pd.read_csv(config.playoff_strikers_path(), sep=",")
+    striker_path = config.playoff_strikers_path()
+    if os.path.exists(striker_path):
+        df_striker = pd.read_csv(striker_path, sep=",")
+    else:
+        df_striker = pd.DataFrame(columns=["boleiro", "striker"])
     max_pts = _max_points_per_game(config)
 
     df_bol = df_valid.loc[df_valid["who"] == boleiro].copy()
@@ -762,6 +766,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     # --- Detect pending matches (past but no result) for this player ---
     n_pending = 0
     pending_rows = ""
+    df_player_all = pd.DataFrame()
     all_path = config.gold_all_path()
     if os.path.exists(all_path):
         df_all = pd.read_csv(all_path, sep=",")
@@ -843,7 +848,10 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     player_zebra_correct_set: set[str] = set()
     upset_path_br = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
     if os.path.exists(upset_path_br):
-        df_upset_br = pd.read_csv(upset_path_br, sep=",")
+        try:
+            df_upset_br = pd.read_csv(upset_path_br, sep=",")
+        except pd.errors.EmptyDataError:
+            df_upset_br = pd.DataFrame()
         for _, ur in df_upset_br.iterrows():
             if int(ur.get("is_upset", 0)) == 1:
                 ms = str(ur["match"])
@@ -1048,6 +1056,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     # Bonus teams for knockout phases — at top, colored by result, scored
     # ------------------------------------------------------------------
     bonus_html = ""
+    champion_team = ""  # Must be defined here — used later (line ~1224) outside if blocks
     bonus_path = config.bronze_bonus_path(boleiro)
     if os.path.exists(bonus_path):
         df_bonus = pd.read_csv(bonus_path, sep=",")
@@ -1063,11 +1072,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             # For each phase: find latest match date and compute winners
             phase_latest_date = {}  # phase -> latest date
             advancing = {}           # phase -> list of teams that advanced
+            phase_consumed = {}      # phase -> all matches are finished
             for pk in playoff_keys:
                 phase_matches = df_games[df_games["round"] == pk]
                 winners = []
                 dates = []
+                all_finished = True
                 for _, row in phase_matches.iterrows():
+                    te = str(row.get("time_elapsed", "")).strip().lower()
+                    if te != "finished":
+                        all_finished = False
                     raw_date = str(row.get("date", ""))
                     date_part = raw_date[:10] if " " in raw_date else raw_date
                     try:
@@ -1101,6 +1115,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                                 winners.append(str(row["away_team"]))
                 advancing[pk] = winners
                 phase_latest_date[pk] = max(dates) if dates else None
+                phase_consumed[pk] = all_finished
 
             phase_order = [pr.key for pr in (config.playoff_rounds or [])]
             phase_label_map = {pr.key: pr.name for pr in (config.playoff_rounds or [])}
@@ -1129,9 +1144,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 pts_per_correct = playoff_scoring.get(phase_key, 0)
                 advancing_teams = advancing.get(phase_key, [])
 
-                # Determine if this phase is checkable (all matches already played)
+                # Determine if this phase is checkable (all matches already finished)
                 latest = phase_latest_date.get(phase_key)
-                checkable = latest is not None and today >= latest
+                checkable = (latest is not None and today >= latest) or phase_consumed.get(phase_key, False)
 
                 phase_pts = 0
                 teams_list = ""
@@ -1173,13 +1188,31 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             # Champion block is separate and should be shown if available, regardless of other phases
             champion_row = df_bonus[df_bonus["phase"] == "campeao"]
             champion_team = champion_row.iloc[0]["team"] if not champion_row.empty else ""
-            champion_block = (
-                f'<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">'
-                f'<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:0.3rem;">'
-                f'\U0001f3c6 Campe\u00e3o</div>'
-                f'<div>{champion_team}</div>'
-                f'</div>\n'
-            ) if champion_team else ""
+            if champion_team:
+                final_winners = advancing.get("final", [])
+                champ_passed = champion_team in final_winners
+                champ_checkable = phase_consumed.get("final", False) or (
+                    phase_latest_date.get("final") is not None and today >= phase_latest_date["final"]
+                )
+                if champ_checkable:
+                    champ_bg = "rgba(34,197,94,0.15)" if champ_passed else "rgba(239,68,68,0.15)"
+                    champ_border = "var(--success)" if champ_passed else "var(--danger)"
+                    champ_color = "var(--success)" if champ_passed else "var(--danger)"
+                else:
+                    champ_bg = "rgba(234,179,8,0.15)"
+                    champ_border = "var(--warning)"
+                    champ_color = "var(--warning)"
+                champion_block = (
+                    f'<div style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">'
+                    f'<div style="font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:0.3rem;">'
+                    f'\U0001f3c6 Campe\u00e3o</div>'
+                    f'<span style="display:inline-block;padding:0.2rem 0.6rem;margin:0.15rem;'
+                    f'background:{champ_bg};border:1px solid {champ_border};border-radius:999px;'
+                    f'font-size:0.75rem;color:{champ_color};">{champion_team}</span>'
+                    f'</div>\n'
+                )
+            else:
+                champion_block = ""
 
             legend = ""
             total_label = ""
@@ -1232,25 +1265,13 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         "final": "\U0001f3c6",
     }
 
-    # Group stage: use round_by_round.csv which has per-round breakdown
-    group_match_pts = 0
-    rr_path = _norm(os.path.join(config._au_first_round(), "round_by_round.csv"))
-    if os.path.exists(rr_path):
-        df_rr = pd.read_csv(rr_path, sep=",")
-        df_rr_player = df_rr[df_rr["boleiro"] == boleiro]
-        if not df_rr_player.empty:
-            group_match_pts = int(df_rr_player["points"].sum())
-    else:
-        # No round_by_round — check if this player has any gold group data
-        group_path = config.gold_group_boleiro_path(boleiro)
-        if os.path.exists(group_path):
-            df_grp = pd.read_csv(group_path, sep=",")
-            df_grp_player = df_grp[df_grp["who"] == boleiro] if "who" in df_grp.columns else df_grp
-            if not df_grp_player.empty and "pontos" in df_grp_player.columns:
-                group_match_pts = int(df_grp_player["pontos"].sum())
+    # Group stage: use df_valid (gold group CSV) directly for accurate group-only points
+    # This avoids the round_by_round.csv catch-all bucket (round_number=0) which
+    # can inadvertently include playoff r32 / terceiro_lugar matches.
+    group_match_pts = int(df_valid.loc[df_valid["who"] == boleiro, "pontos"].sum())
 
     phase_rows = ""
-    phase_total_pts = 0
+    match_total = 0
     # 1st phase (group stage)
     if group_match_pts > 0 or (total_pts > 0 and group_match_pts >= 0):
         phase_rows += (
@@ -1259,7 +1280,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             f'<td style="text-align:right;">-</td>'
             f'<td style="text-align:right;font-weight:600;color:var(--accent);">+{group_match_pts}</td></tr>\n'
         )
-        phase_total_pts += group_match_pts
+        match_total += group_match_pts
 
     # Playoff phases
     for pr in config.playoff_rounds or []:
@@ -1268,16 +1289,18 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
         phase_valid_path = config.gold_playoff_valid_path(phase_key)
         phase_pts = 0
+        has_match_data = False
         if os.path.exists(phase_valid_path):
             df_pp = pd.read_csv(phase_valid_path, sep=",")
             df_pp_player = df_pp[df_pp["who"] == boleiro]
             if not df_pp_player.empty:
                 phase_pts = int(df_pp_player["pontos"].sum())
+                has_match_data = True
 
         bns = bonus_by_phase.get(phase_key, 0)
         tot = phase_pts + bns
-        if tot > 0 or phase_pts > 0 or bns > 0:
-            phase_total_pts += tot
+        if tot > 0 or phase_pts > 0 or bns > 0 or has_match_data:
+            match_total += phase_pts
             emoji = phase_emoji_map.get(phase_key, "\u26bd")
             bonus_str = f'+{bns}' if bns else '-'
             phase_rows += (
@@ -1288,6 +1311,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             )
 
     if phase_rows:
+        # Recompute total_pts from the phase breakdown (robust against concat issues)
+        total_pts = match_total
+        grand_total = total_pts + bonus_total
         body += (
             f'<div class="section">'
             f'<div class="section-title">\U0001f4ca Pontos por Fase</div>'
@@ -1338,7 +1364,10 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     upset_path = _norm(os.path.join(gold_dir, "upset_tracker.csv"))
     zebra_pct = 0
     if os.path.exists(upset_path):
-        df_upset = pd.read_csv(upset_path, sep=",")
+        try:
+            df_upset = pd.read_csv(upset_path, sep=",")
+        except pd.errors.EmptyDataError:
+            df_upset = pd.DataFrame()
         upset_matches = df_upset[df_upset.get("is_upset", 0) == 1]
         total_upsets = len(upset_matches)
         player_upsets = 0
@@ -1774,7 +1803,10 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
     upset_row = None
     if os.path.exists(upset_path):
-        df_upset = pd.read_csv(upset_path, sep=",")
+        try:
+            df_upset = pd.read_csv(upset_path, sep=",")
+        except pd.errors.EmptyDataError:
+            df_upset = pd.DataFrame()
         matches = df_upset[df_upset["match"] == match]
         if not matches.empty:
             upset_row = matches.iloc[0]
@@ -2017,7 +2049,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         bonus_text = ""
         bdata = bonus_by_player.get(row["who"])
         if bdata:
-            if bdata["total"] > 0 and bdata["correct"] == bdata["total"] and bdata["points"] > 0 or bdata["points"] > 0:
+            if bdata["total"] > 0 and bdata["correct"] == bdata["total"]:
                 bonus_text = f' &middot; \U0001f3c6 Bônus: {bdata["correct"]}/{bdata["total"]} \u2705 +{bdata["points"]}pts'
             else:
                 bonus_text = f' &middot; \U0001f3c6 Bônus: {bdata["total"]} picks \U0001f550'
@@ -2048,12 +2080,14 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         parts = real_placar.split(" x ")
         pen_html = ""
         try:
-            hp = df_match.iloc[0].get("home_pen")
-            ap = df_match.iloc[0].get("away_pen")
-            if pd.notna(hp) and pd.notna(ap):
-                hp = int(hp)
-                ap = int(ap)
-                pen_html = f'<div class="penalty-score">{hp} - {ap} nos p\u00eAnaltis</div>'
+            hp = df_match.iloc[0].get("home_pen_real")
+            ap = df_match.iloc[0].get("away_pen_real")
+            hp_str = str(hp).strip()
+            ap_str = str(ap).strip()
+            if hp_str and ap_str and hp_str != "nan":
+                hp_val = int(float(hp_str))
+                ap_val = int(float(ap_str))
+                pen_html = f'<div class="penalty-score">{hp_val} - {ap_val} nos p\u00eAnaltis</div>'
         except (ValueError, TypeError):
             pass
 
@@ -3420,7 +3454,13 @@ def _build_day_winners(config: ChampionshipConfig) -> str:
     df_all = pd.read_csv(config.gold_all_path(), sep=",")
     df_results = pd.read_csv(config.results_file, sep=",")
     upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
-    df_upset = pd.read_csv(upset_path, sep=",") if os.path.exists(upset_path) else pd.DataFrame()
+    if os.path.exists(upset_path):
+        try:
+            df_upset = pd.read_csv(upset_path, sep=",")
+        except pd.errors.EmptyDataError:
+            df_upset = pd.DataFrame()
+    else:
+        df_upset = pd.DataFrame()
     max_pts = _max_points_per_game(config)
 
     # Get unique days from games.csv (extract date part since it includes hour)
@@ -3625,7 +3665,10 @@ def _build_zebras(config: ChampionshipConfig) -> str:
     if not os.path.exists(upset_path):
         return _page_frame(config, "Zebras", "<div class='hero'><h1>\U0001f993 Zebras & Favoritos</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", active_nav="zebras.html")
 
-    df_upset = pd.read_csv(upset_path, sep=",")
+    try:
+        df_upset = pd.read_csv(upset_path, sep=",")
+    except pd.errors.EmptyDataError:
+        return _page_frame(config, "Zebras", "<div class='hero'><h1>\U0001f993 Zebras & Favoritos</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", active_nav="zebras.html")
 
     if "is_upset" not in df_upset.columns:
         df_upset["is_upset"] = 0
@@ -4261,7 +4304,7 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         phase_matches = df_phase[df_phase["match"].notna()].groupby("match")
         for match, df_match in phase_matches:
             print_colored(f"generating match html: {phase} {match}", "blue")
-            html = _build_match(config, match, pr.name, df_match)
+            html = _build_match(config, match, pr.key, df_match)
             first = df_match.iloc[0]
             hour = first.get('hour', '')
             hour_str = str(int(hour)) if pd.notna(hour) and isinstance(hour, (int, float)) else str(hour)

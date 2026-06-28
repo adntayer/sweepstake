@@ -381,6 +381,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
                 "date",
                 "hour",
                 "match",
+                "phase",
                 "home_team",
                 "away_team",
                 "home_goals_bol",
@@ -446,14 +447,18 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
         df_valid_parts.append(df_gold.query("valido == 1"))
 
     # Aggregate first round
+    agg_parts_all: list[pd.DataFrame] = []
+    agg_parts_valid: list[pd.DataFrame] = []
     if df_all_parts:
-        df_all = pd.concat(df_all_parts, ignore_index=True)
-        df_all.sort_values(by=["date", "hour", "who"], inplace=True)
-        _save_csv(df_all, config.gold_all_path("group"))
+        df_all_group = pd.concat(df_all_parts, ignore_index=True)
+        df_all_group.sort_values(by=["date", "hour", "who"], inplace=True)
+        _save_csv(df_all_group, config.gold_all_path("group"))
+        agg_parts_all.append(df_all_group)
 
-        df_valid = pd.concat(df_valid_parts, ignore_index=True)
-        df_valid.sort_values(by=["date", "hour", "who"], inplace=True)
-        _save_csv(df_valid, config.gold_valid_path("group"))
+        df_valid_group = pd.concat(df_valid_parts, ignore_index=True)
+        df_valid_group.sort_values(by=["date", "hour", "who"], inplace=True)
+        _save_csv(df_valid_group, config.gold_valid_path("group"))
+        agg_parts_valid.append(df_valid_group)
 
     # --- Copy strikers to gold ---
     striker_pattern = _norm(os.path.join(config._br_first_round(), "striker_*"))
@@ -505,13 +510,19 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
 
         # Aggregate per phase
         if all_phase_parts:
-            df_all = pd.concat(all_phase_parts, ignore_index=True)
-            df_all.sort_values(by=["date", "hour", "who"], inplace=True)
-            _save_csv(df_all, config.gold_playoff_all_path(phase))
+            df_all_phase = pd.concat(all_phase_parts, ignore_index=True)
+            df_all_phase.sort_values(by=["date", "hour", "who"], inplace=True)
+            _save_csv(df_all_phase, config.gold_playoff_all_path(phase))
+            agg_parts_all.append(df_all_phase)
 
-            df_valid = pd.concat(valid_phase_parts, ignore_index=True)
-            df_valid.sort_values(by=["date", "hour", "who"], inplace=True)
-            _save_csv(df_valid, config.gold_playoff_valid_path(phase))
+            df_valid_phase = pd.concat(valid_phase_parts, ignore_index=True)
+            df_valid_phase.sort_values(by=["date", "hour", "who"], inplace=True)
+            _save_csv(df_valid_phase, config.gold_playoff_valid_path(phase))
+            agg_parts_valid.append(df_valid_phase)
+
+    # Combine all aggregated data (group + playoffs) for analytics
+    df_all = pd.concat(agg_parts_all, ignore_index=True).sort_values(by=["date", "hour", "who"]) if agg_parts_all else pd.DataFrame()
+    df_valid = pd.concat(agg_parts_valid, ignore_index=True).sort_values(by=["date", "hour", "who"]) if agg_parts_valid else pd.DataFrame()
 
     # --- Analytics (skip when no real results yet) ---
     if not _has_real_results(config):
@@ -673,6 +684,9 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         })
 
     df_out = pd.DataFrame(rows)
+    if df_out.empty:
+        print_colored("\tupset_tracker.csv: 0 rows (no upsets found), skipping", "yellow")
+        return
     _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "upset_tracker.csv")))
     print_colored(f"\tupset_tracker.csv: {len(df_out)} rows", "green")
 

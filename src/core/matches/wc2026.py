@@ -59,6 +59,12 @@ _TYPE_TO_ROUND = {
     "semi_final": "semi",
     "third_place": "terceiro_lugar",
     "final": "final",
+    # API uses short type names
+    "r32": "segunda_fase",
+    "r16": "oitavas",
+    "qf": "quartas",
+    "sf": "semi",
+    "third": "terceiro_lugar",
 }
 
 

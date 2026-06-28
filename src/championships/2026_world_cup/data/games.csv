@@ -51,55 +51,55 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-24 12h,3,Suíça,,2,x,1,,Canadá,suica-vs-canada,finished
 2026-06-24 18h,3,Marrocos,,4,x,2,,Haiti,marrocos-vs-haiti,finished
 2026-06-24 18h,3,Escócia,,0,x,3,,Brasil,escocia-vs-brasil,finished
-2026-06-24 19h,3,África do Sul,,0,x,0,,Coréia do Sul,africa_do_sul-vs-coreia_do_sul,live
-2026-06-24 19h,3,República Tcheca,,0,x,0,,México,republica_tcheca-vs-mexico,live
-2026-06-25 16h,3,Curaçao,,,x,,,Costa do Marfim,curacao-vs-costa_do_marfim,notstarted
-2026-06-25 16h,3,Equador,,,x,,,Alemanha,equador-vs-alemanha,notstarted
-2026-06-25 18h,3,Japão,,,x,,,Suécia,japao-vs-suecia,notstarted
-2026-06-25 18h,3,Tunísia,,,x,,,Holanda,tunisia-vs-holanda,notstarted
-2026-06-25 19h,3,Paraguai,,,x,,,Austrália,paraguai-vs-australia,notstarted
-2026-06-25 19h,3,Turquia,,,x,,,Estados Unidos,turquia-vs-estados_unidos,notstarted
-2026-06-26 15h,3,Senegal,,,x,,,Iraque,senegal-vs-iraque,notstarted
-2026-06-26 15h,3,Noruega,,,x,,,França,noruega-vs-franca,notstarted
-2026-06-26 18h,3,Uruguai,,,x,,,Espanha,uruguai-vs-espanha,notstarted
-2026-06-26 19h,3,Cabo Verde,,,x,,,Arábia Saudita,cabo_verde-vs-arabia_saudita,notstarted
-2026-06-26 20h,3,Egito,,,x,,,Irã,egito-vs-ira,notstarted
-2026-06-26 20h,3,Nova Zelândia,,,x,,,Bélgica,nova_zelandia-vs-belgica,notstarted
-2026-06-27 17h,3,Croácia,,,x,,,Gana,croacia-vs-gana,notstarted
-2026-06-27 17h,3,Panamá,,,x,,,Inglaterra,panama-vs-inglaterra,notstarted
-2026-06-27 19h,3,RD Congo,,,x,,,Uzbequistão,rd_congo-vs-uzbequistao,notstarted
-2026-06-27 19h,3,Colômbia,,,x,,,Portugal,colombia-vs-portugal,notstarted
-2026-06-27 21h,3,Argélia,,,x,,,Áustria,argelia-vs-austria,notstarted
-2026-06-27 21h,3,Jordânia,,,x,,,Argentina,jordania-vs-argentina,notstarted
-2026-06-28 12h,r32,,,,x,,,Canadá,-vs-canada,notstarted
-2026-06-29 12h,r32,,,,x,,,,-vs-,notstarted
-2026-06-29 16h,r32,Alemanha,,,x,,,,alemanha-vs-,notstarted
-2026-06-29 19h,r32,,,,x,,,,-vs-,notstarted
-2026-06-30 12h,r32,,,,x,,,,-vs-,notstarted
-2026-06-30 17h,r32,,,,x,,,,-vs-,notstarted
-2026-06-30 19h,r32,México,,,x,,,,mexico-vs-,notstarted
-2026-07-01 12h,r32,,,,x,,,,-vs-,notstarted
-2026-07-01 13h,r32,,,,x,,,,-vs-,notstarted
-2026-07-01 17h,r32,Estados Unidos,,,x,,,,estados_unidos-vs-,notstarted
-2026-07-02 12h,r32,,,,x,,,,-vs-,notstarted
-2026-07-02 19h,r32,,,,x,,,,-vs-,notstarted
-2026-07-02 20h,r32,Suíça,,,x,,,,suica-vs-,notstarted
-2026-07-03 13h,r32,,,,x,,,,-vs-,notstarted
-2026-07-03 18h,r32,Argentina,,,x,,,,argentina-vs-,notstarted
-2026-07-03 20h,r32,,,,x,,,,-vs-,notstarted
-2026-07-04 12h,r16,,,,x,,,,-vs-,notstarted
-2026-07-04 17h,r16,,,,x,,,,-vs-,notstarted
-2026-07-05 16h,r16,,,,x,,,,-vs-,notstarted
-2026-07-05 18h,r16,,,,x,,,,-vs-,notstarted
-2026-07-06 14h,r16,,,,x,,,,-vs-,notstarted
-2026-07-06 17h,r16,,,,x,,,,-vs-,notstarted
-2026-07-07 12h,r16,,,,x,,,,-vs-,notstarted
-2026-07-07 13h,r16,,,,x,,,,-vs-,notstarted
-2026-07-09 16h,qf,,,,x,,,,-vs-,notstarted
-2026-07-10 12h,qf,,,,x,,,,-vs-,notstarted
-2026-07-11 17h,qf,,,,x,,,,-vs-,notstarted
-2026-07-11 20h,qf,,,,x,,,,-vs-,notstarted
-2026-07-14 14h,sf,,,,x,,,,-vs-,notstarted
-2026-07-15 15h,sf,,,,x,,,,-vs-,notstarted
-2026-07-18 17h,third,,,,x,,,,-vs-,notstarted
+2026-06-24 19h,3,África do Sul,,1,x,0,,Coréia do Sul,africa_do_sul-vs-coreia_do_sul,finished
+2026-06-24 19h,3,República Tcheca,,0,x,3,,México,republica_tcheca-vs-mexico,finished
+2026-06-25 16h,3,Curaçao,,0,x,2,,Costa do Marfim,curacao-vs-costa_do_marfim,finished
+2026-06-25 16h,3,Equador,,2,x,1,,Alemanha,equador-vs-alemanha,finished
+2026-06-25 18h,3,Japão,,1,x,1,,Suécia,japao-vs-suecia,finished
+2026-06-25 18h,3,Tunísia,,1,x,3,,Holanda,tunisia-vs-holanda,finished
+2026-06-25 19h,3,Paraguai,,0,x,0,,Austrália,paraguai-vs-australia,finished
+2026-06-25 19h,3,Turquia,,3,x,2,,Estados Unidos,turquia-vs-estados_unidos,finished
+2026-06-26 15h,3,Senegal,,5,x,0,,Iraque,senegal-vs-iraque,finished
+2026-06-26 15h,3,Noruega,,1,x,4,,França,noruega-vs-franca,finished
+2026-06-26 18h,3,Uruguai,,0,x,1,,Espanha,uruguai-vs-espanha,finished
+2026-06-26 19h,3,Cabo Verde,,0,x,0,,Arábia Saudita,cabo_verde-vs-arabia_saudita,finished
+2026-06-26 20h,3,Egito,,1,x,1,,Irã,egito-vs-ira,finished
+2026-06-26 20h,3,Nova Zelândia,,1,x,5,,Bélgica,nova_zelandia-vs-belgica,finished
+2026-06-27 17h,3,Croácia,,2,x,1,,Gana,croacia-vs-gana,finished
+2026-06-27 17h,3,Panamá,,0,x,2,,Inglaterra,panama-vs-inglaterra,finished
+2026-06-27 19h,3,RD Congo,,3,x,1,,Uzbequistão,rd_congo-vs-uzbequistao,finished
+2026-06-27 19h,3,Colômbia,,0,x,0,,Portugal,colombia-vs-portugal,finished
+2026-06-27 21h,3,Argélia,,3,x,3,,Áustria,argelia-vs-austria,finished
+2026-06-27 21h,3,Jordânia,,1,x,3,,Argentina,jordania-vs-argentina,finished
+2026-06-28 12h,segunda_fase,África do Sul,,,x,,,Canadá,africa_do_sul-vs-canada,notstarted
+2026-06-29 12h,segunda_fase,Brasil,,,x,,,Japão,brasil-vs-japao,notstarted
+2026-06-29 16h,segunda_fase,Alemanha,,,x,,,Paraguai,alemanha-vs-paraguai,notstarted
+2026-06-29 19h,segunda_fase,Holanda,,,x,,,Marrocos,holanda-vs-marrocos,notstarted
+2026-06-30 12h,segunda_fase,Costa do Marfim,,,x,,,Noruega,costa_do_marfim-vs-noruega,notstarted
+2026-06-30 17h,segunda_fase,França,,,x,,,Suécia,franca-vs-suecia,notstarted
+2026-06-30 19h,segunda_fase,México,,,x,,,Equador,mexico-vs-equador,notstarted
+2026-07-01 12h,segunda_fase,Inglaterra,,,x,,,RD Congo,inglaterra-vs-rd_congo,notstarted
+2026-07-01 13h,segunda_fase,Bélgica,,,x,,,Senegal,belgica-vs-senegal,notstarted
+2026-07-01 17h,segunda_fase,Estados Unidos,,,x,,,Bósnia,estados_unidos-vs-bosnia,notstarted
+2026-07-02 12h,segunda_fase,Espanha,,,x,,,Áustria,espanha-vs-austria,notstarted
+2026-07-02 19h,segunda_fase,Portugal,,,x,,,Croácia,portugal-vs-croacia,notstarted
+2026-07-02 20h,segunda_fase,Suíça,,,x,,,Argélia,suica-vs-argelia,notstarted
+2026-07-03 13h,segunda_fase,Austrália,,,x,,,Egito,australia-vs-egito,notstarted
+2026-07-03 18h,segunda_fase,Argentina,,,x,,,Cabo Verde,argentina-vs-cabo_verde,notstarted
+2026-07-03 20h,segunda_fase,Colômbia,,,x,,,Gana,colombia-vs-gana,notstarted
+2026-07-04 12h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-04 17h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-05 16h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-05 18h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-06 14h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-06 17h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-07 12h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-07 13h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-09 16h,quartas,,,,x,,,,-vs-,notstarted
+2026-07-10 12h,quartas,,,,x,,,,-vs-,notstarted
+2026-07-11 17h,quartas,,,,x,,,,-vs-,notstarted
+2026-07-11 20h,quartas,,,,x,,,,-vs-,notstarted
+2026-07-14 14h,semi,,,,x,,,,-vs-,notstarted
+2026-07-15 15h,semi,,,,x,,,,-vs-,notstarted
+2026-07-18 17h,terceiro_lugar,,,,x,,,,-vs-,notstarted
 2026-07-19 15h,final,,,,x,,,,-vs-,notstarted
