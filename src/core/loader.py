@@ -70,6 +70,8 @@ def _make_match_key(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
     def _slug(name: str) -> str:
+        if not isinstance(name, str):
+            return ""
         s = name.lower().strip()
         s = s.replace(" ", "_").replace("-", "_")
         return s
@@ -88,7 +90,9 @@ def parse_group_stage(path: str, config: ChampionshipConfig) -> pd.DataFrame:
     layout = config.excel_layout
     who = _extract_who(path, config)
 
-    df = pd.read_excel(path, skiprows=layout.first_round.skiprows)
+    df = pd.read_excel(path, skiprows=layout.first_round.skiprows, engine="calamine")
+    for i in range(9 - df.shape[1]):
+        df[f"_pad_{i}"] = None
     df = df[df.columns[:9]]
     df.columns = _EXCEL_COLUMNS
 
@@ -103,27 +107,47 @@ def parse_group_stage(path: str, config: ChampionshipConfig) -> pd.DataFrame:
 def _extract_playoff_phase_and_who(path: str, config: ChampionshipConfig) -> tuple[str, str]:
     """Extract (phase_key, boleiro_name) from a playoff Excel filename.
 
-    Expects format: ``{phase}_{boleiro}.xlsx`` where phase is one of
-    the configured playoff round keys (oitavas, quartas, semi, final).
+    Supports two naming formats:
+      - ``{phase_key}_{boleiro}.xlsx``  (e.g. ``oitavas_André Bonito.xlsx``)
+      - ``{boleiro} - {round_label}.xlsx``  (e.g. ``André Tayer - 16 Avos de Final.xlsx``)
     """
     fname = os.path.basename(path)
     name_no_ext = fname.replace(".xlsx", "").replace(".xls", "").strip()
 
-    # Try to match a known phase key at the start of the filename
+    # 1) Try to match a known phase key at the start of the filename
+    #    e.g. "oitavas_André Bonito" → ("oitavas", "André Bonito")
     for pr in config.playoff_rounds:
         prefix = pr.key + "_"
         if name_no_ext.startswith(prefix):
             boleiro = name_no_ext[len(prefix):].strip()
             return pr.key, boleiro
 
-    # Fallback: use first part before first '_' as phase, rest as name
+    # 2) Try the "{name} - {round_label}" format
+    #    Build a lookup from round label strings (e.g. "16 Avos de Final") to phase keys
+    label_to_key: dict[str, str] = {}
+    for pr in config.playoff_rounds:
+        # Use the round's display name and a cleaned version as possible labels
+        label_to_key[pr.name.lower()] = pr.key
+    # Also add common alternative labels for the Round of 32 (segunda_fase)
+    label_to_key["16 avos de final"] = "segunda_fase"
+    label_to_key["16 avos"] = "segunda_fase"
+
+    if " - " in name_no_ext:
+        parts = name_no_ext.rsplit(" - ", 1)
+        candidate_name = parts[0].strip()
+        candidate_label = parts[1].strip().lower()
+        if candidate_label in label_to_key:
+            return label_to_key[candidate_label], candidate_name
+
+    # 3) Fallback: use first part before first '_' as phase, rest as name
     if "_" in name_no_ext:
         parts = name_no_ext.split("_", 1)
         return parts[0].strip(), parts[1].strip()
 
     raise ValueError(
         f"Cannot extract phase and boleiro from filename: {fname}. "
-        f"Expected format: {{phase}}_{{boleiro}}.xlsx"
+        f"Expected format: {{phase}}_{{boleiro}}.xlsx "
+        f"or {{boleiro}} - 16 Avos de Final.xlsx"
     )
 
 
@@ -139,7 +163,9 @@ def parse_playoff_stage(path: str, config: ChampionshipConfig) -> pd.DataFrame:
     """
     phase, who = _extract_playoff_phase_and_who(path, config)
 
-    df = pd.read_excel(path)
+    df = pd.read_excel(path, engine="calamine", header=None)
+    for i in range(9 - df.shape[1]):
+        df[f"_pad_{i}"] = None
     df = df[df.columns[:9]]
     df.columns = _EXCEL_COLUMNS
 
@@ -164,7 +190,7 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     Returns (df_predictions, df_bonus, df_striker).
     """
     who = _extract_who(path, config)
-    df_raw = pd.read_excel(path, skiprows=config.standings_skiprows, header=None)
+    df_raw = pd.read_excel(path, skiprows=config.standings_skiprows, header=None, engine="calamine")
 
     # --- Parse group standings ---
     teams_data = _parse_standings_rows(df_raw)
@@ -197,7 +223,7 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     df_po = None
     if po_layout.playoffs_sheet_name:
         try:
-            df_po = pd.read_excel(path, sheet_name=po_layout.playoffs_sheet_name, header=None)
+            df_po = pd.read_excel(path, sheet_name=po_layout.playoffs_sheet_name, header=None, engine="calamine")
         except Exception:
             pass
 
@@ -315,7 +341,7 @@ def _parse_playoffs_and_striker(
     # Use dedicated playoffs sheet if configured (e.g. "Tabela Jogos")
     if po_layout.playoffs_sheet_name:
         try:
-            df_po = pd.read_excel(path, sheet_name=po_layout.playoffs_sheet_name, header=None)
+            df_po = pd.read_excel(path, sheet_name=po_layout.playoffs_sheet_name, header=None, engine="calamine")
         except Exception:
             df_po = df_raw
     else:
@@ -340,7 +366,7 @@ def _parse_playoffs_and_striker(
             champ_team = None
             for sheet in sheets_to_try:
                 try:
-                    df_champ = pd.read_excel(path, sheet_name=sheet, header=None)
+                    df_champ = pd.read_excel(path, sheet_name=sheet, header=None, engine="calamine")
                     import re
                     match = re.match(r"([A-Z]+)([0-9]+)", po_layout.champion_cell.upper())
                     if match:
@@ -481,7 +507,9 @@ def parse_bonus_playoffs(path: str, config: ChampionshipConfig) -> tuple[pd.Data
     layout = config.excel_layout
     who = _extract_who(path, config)
 
-    df = pd.read_excel(path, skiprows=layout.first_round.skiprows)
+    df = pd.read_excel(path, skiprows=layout.first_round.skiprows, engine="calamine")
+    for i in range(9 - df.shape[1]):
+        df[f"_pad_{i}"] = None
     df = df[df.columns[:9]]
     df.columns = _EXCEL_COLUMNS
 

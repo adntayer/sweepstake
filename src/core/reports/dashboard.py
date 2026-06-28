@@ -481,7 +481,34 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     if df_valid.empty:
         return "<div class='empty-state'>Nenhum participante encontrado</div>"
 
-    # Compute trend: compare last 3 days vs previous 3 days
+    # --- Load playoff match points ---
+    playoff_pts: dict[str, int] = {}
+    for pr in (config.playoff_rounds or []):
+        phase_path = config.gold_playoff_valid_path(pr.key)
+        if os.path.exists(phase_path):
+            df_phase = pd.read_csv(phase_path, sep=",")
+            for who, grp in df_phase.groupby("who"):
+                playoff_pts[who] = playoff_pts.get(who, 0) + int(grp["pontos"].sum())
+
+    # --- Load bonus points from playoffs_scored.csv ---
+    bonus_pts: dict[str, int] = {}
+    bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
+    if os.path.exists(bonus_path):
+        df_bonus = pd.read_csv(bonus_path, sep=",")
+        for boleiro, grp in df_bonus.groupby("boleiro"):
+            bonus_pts[boleiro] = int(grp["points"].sum())
+
+    # Build a total score per player: group + playoff matches + bonus
+    group_scores = df_valid.groupby("who")["pontos"].sum().to_dict()
+    all_players = set(group_scores.keys()) | set(playoff_pts.keys()) | set(bonus_pts.keys())
+    total_scores: dict[str, int] = {}
+    for p in all_players:
+        g = group_scores.get(p, 0)
+        m = playoff_pts.get(p, 0)
+        b = bonus_pts.get(p, 0)
+        total_scores[p] = g + m + b
+
+    # Compute trend: compare last 3 days vs previous 3 days (using group + playoff match points)
     df_valid["date_dt"] = pd.to_datetime(df_valid["date"])
     all_dates = sorted(df_valid["date_dt"].unique())
     trend_map: dict[str, str] = {}
@@ -535,7 +562,10 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     zebra_counts: dict[str, int] = {}
     upset_path = _norm(os.path.join(gold_dir, "upset_tracker.csv"))
     if os.path.exists(upset_path):
-        df_upset = pd.read_csv(upset_path, sep=",")
+        try:
+            df_upset = pd.read_csv(upset_path, sep=",")
+        except pd.errors.EmptyDataError:
+            df_upset = pd.DataFrame()
         upset_only = df_upset[df_upset.get("is_upset", 0) == 1]
         for _, r in upset_only.iterrows():
             for p in [x.strip() for x in str(r.get("players_correct", "")).split("|") if x.strip()]:
@@ -571,7 +601,12 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     score_names = config.scoring_rule_names()
     agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
     df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
-    df_rank.sort_values(["pontos", "who"], ascending=[False, True], inplace=True)
+    # Add playoff match points and bonus team points per player
+    df_rank["playoff_pts"] = df_rank["who"].map(playoff_pts).fillna(0).astype(int)
+    df_rank["bonus_pts"] = df_rank["who"].map(bonus_pts).fillna(0).astype(int)
+    # Sort by total (group + playoff matches + bonus teams)
+    df_rank["total_pts"] = df_rank["pontos"] + df_rank["playoff_pts"] + df_rank["bonus_pts"]
+    df_rank.sort_values(["total_pts", "who"], ascending=[False, True], inplace=True)
     df_rank.reset_index(drop=True, inplace=True)
     df_rank["#"] = range(1, len(df_rank) + 1)
     rank_rows = ""
@@ -583,8 +618,11 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         badges = " ".join(badge_map.get(row["who"], []))
         who_name = row["who"]
         who_display = f"🤖 {who_name}" if who_name.startswith("LLM") else who_name
+        bonus_display = int(row["bonus_pts"])
+        total_display = int(row["total_pts"])
         cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{who_name}.html">{who_display}</a> {trend} <span style="font-size:0.75rem;">{badges}</span></td>'
-        cells += f'<td style="font-weight:700;color:var(--accent)">{int(row["pontos"])}</td>'
+        cells += f'<td style="font-weight:700;color:var(--accent)">{total_display}</td>'
+        cells += f'<td style="font-weight:600;">{bonus_display}</td>'
         for sn in score_names:
             if sn in row.index:
                 val = int(row[sn]) if pd.notna(row[sn]) else 0
@@ -602,11 +640,11 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     return f"""
 <div style="overflow-x:auto;">
     <table class="rank-table">
-        <thead><tr><th>#</th><th>Boleiro</th><th>Jogos</th>{rank_header}</tr></thead>
+        <thead><tr><th>#</th><th>Boleiro</th><th>Total</th><th>B\u00f4nus</th>{rank_header}</tr></thead>
         <tbody>{rank_rows}</tbody>
     </table>
     <div style="font-size:0.65rem;color:var(--text-muted);padding:0.3rem 0.75rem;text-align:right;">
-        Jogos = pontos dos palpites (n\u00e3o inclui b\u00f4nus de times)
+        Total = palpites grupos + playoffs + b\u00f4nus de times
     </div>
 </div>"""
 

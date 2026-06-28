@@ -197,19 +197,21 @@ def _load_gold(config: ChampionshipConfig) -> dict:
     gd = config._au_first_round()
     out: dict = {}
 
-    valid_path = config.gold_valid_path()
-    if os.path.exists(valid_path):
-        out["valid"] = pd.read_csv(valid_path, sep=",")
-    else:
-        out["valid"] = pd.DataFrame()
+    def _try_load_csv(path: str) -> pd.DataFrame:
+        """Read CSV if non-empty; return empty DataFrame on missing/empty file."""
+        if not os.path.exists(path):
+            return pd.DataFrame()
+        try:
+            return pd.read_csv(path, sep=",")
+        except pd.errors.EmptyDataError:
+            return pd.DataFrame()
+
+    out["valid"] = _try_load_csv(config.gold_valid_path())
 
     for name in ("boldness_index", "upset_tracker", "consistency",
                  "team_accuracy", "goal_error_by_team", "round_by_round"):
         fp = _norm(os.path.join(gd, f"{name}.csv"))
-        if os.path.exists(fp):
-            out[name] = pd.read_csv(fp, sep=",")
-        else:
-            out[name] = pd.DataFrame()
+        out[name] = _try_load_csv(fp)
 
     return out
 

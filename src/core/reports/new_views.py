@@ -251,7 +251,10 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
     upset_lookup: dict[str, tuple[int, int, str]] = {}
     upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
     if os.path.exists(upset_path):
-        df_upset = pd.read_csv(upset_path, sep=",")
+        try:
+            df_upset = pd.read_csv(upset_path, sep=",")
+        except pd.errors.EmptyDataError:
+            df_upset = pd.DataFrame()
         for _, r in df_upset.iterrows():
             if int(r.get("is_upset", 0)) == 1:
                 upset_lookup[str(r["match"])] = (
@@ -771,8 +774,8 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
     # Round labels for display
     round_labels: dict[str, str] = {
         "1": "1\u00aa Rodada", "2": "2\u00aa Rodada", "3": "3\u00aa Rodada",
-        "r32": "2\u00aa Fase", "r16": "Oitavas", "qf": "Quartas",
-        "sf": "Semi", "third": "3\u00ba Lugar", "final": "Final",
+        "segunda_fase": "2\u00aa Fase", "oitavas": "Oitavas", "quartas": "Quartas",
+        "semi": "Semi", "terceiro_lugar": "3\u00ba Lugar", "final": "Final",
     }
     group_phase_label = getattr(config, "group_phase_label", "1\u00aa Fase")
 
@@ -896,16 +899,16 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         table_rows += f"<tr>{cells}</tr>\n"
 
     # ── Dynamic phase filters: one dropdown per distinct round ──
-    mata_slugs = {"r16", "qf", "sf", "third", "final"}
+    mata_slugs = {"oitavas", "quartas", "semi", "terceiro_lugar", "final"}
     group_keys = [r for r in ("1", "2", "3") if any(match_round_map.get(m) == r for m in all_matches)]
     knockout_present = [r for r in sorted(set(match_round_map.values())) if r in mata_slugs]
-    r32_present = "r32" in set(match_round_map.values())
+    r32_present = "segunda_fase" in set(match_round_map.values())
 
     phase_defs: list[tuple[str, str, list[str]]] = []
     for k in group_keys:
         phase_defs.append((k, k, [k]))
     if r32_present:
-        phase_defs.append(("r32", "r32", ["r32"]))
+        phase_defs.append(("segunda_fase", "segunda_fase", ["segunda_fase"]))
     if knockout_present:
         phase_defs.append(("mata", "mata", knockout_present))
 

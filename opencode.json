@@ -18,6 +18,10 @@
                 "gemma-4-E4B-it-UD-Q6_K_XL.gguf": {
                     "name": "gemma-4-E4B-it-UD-Q6_K_XL.gguf",
                     "supportsToolCalls": true
+                },
+                "ai_Ornith-1.0-9B-Q4_K_M.gguf": {
+                    "name": "ai_Ornith-1.0-9B-Q4_K_M.gguf",
+                    "supportsToolCalls": true
                 }
             }
         }

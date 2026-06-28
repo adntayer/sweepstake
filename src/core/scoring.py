@@ -259,7 +259,7 @@ def score_playoff_bonus(config: ChampionshipConfig) -> pd.DataFrame:
     advancing = get_playoff_advancing_teams(config.games_file, playoff_keys)
 
     # Load all bonus picks
-    pattern = config.bronze_group_path("*").replace("group_phase_*", "bonus_teams_*.csv")
+    pattern = config.bronze_group_path("*").replace("group_phase_*.csv", "bonus_teams_*.csv")
     bonus_paths = sorted(glob(pattern))
 
     rows = []

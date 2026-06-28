@@ -121,3 +121,11 @@ llama-server -hf unsloth/gemma-4-E4B-it-GGUF:UD-Q6_K_XL -ngl 99 -c 32768 -fa on 
 
 
 llama-server -hf unsloth/gemma-4-E4B-it-GGUF:UD-Q6_K_XL -ngl 99 -c 65536 -fa on --cache-type-k q4_0 --cache-type-v q4_0 -b 1024 -ub 512 --prio 3 --no-warmup --no-mmproj-offload
+
+
+
+----------------------------
+----------------------------
+----------------------------
+
+llama-server -hf bartowski/deepreinforce-ai_Ornith-1.0-9B-GGUF:Q4_K_M -ngl 24 -c 16384 -fa on --cache-type-k q4_0 --cache-type-v q4_0 -b 512 -ub 256 --prio 3 --no-warmup
