@@ -764,44 +764,52 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     boleiro_dir = _norm(os.path.join(config.reports_dir, "html", "boleiros"))
 
     # --- Detect pending matches (past but no result) for this player ---
+    # Covers group phase AND all playoff phases.
     n_pending = 0
     pending_rows = ""
     df_player_all = pd.DataFrame()
+    _player_parts: list[pd.DataFrame] = []
     all_path = config.gold_all_path()
     if os.path.exists(all_path):
         df_all = pd.read_csv(all_path, sep=",")
-        df_player_all = df_all[df_all["who"] == boleiro].copy()
-        if not df_player_all.empty:
-            tz = pytz.timezone(config.timezone)
-            today_dt = datetime.now(tz).date()
-            df_player_all["date_dt"] = pd.to_datetime(df_player_all["date"], errors="coerce")
-            df_pending = df_player_all[
-                (df_player_all.get("valido", 0) == 0)
-                & (df_player_all["date_dt"].dt.date < today_dt)
-            ].drop_duplicates(subset=["match"])
-            n_pending = len(df_pending)
-            if n_pending:
-                rev_map = {v: k for k, v in config.team_name_mapping.items()}
-                sort_col_pending = ["id"] if "id" in df_pending.columns else ["date", "hour"]
-                for _, row in df_pending.sort_values(sort_col_pending, ascending=False).iterrows():
-                    date_str = pd.to_datetime(row["date"]).strftime("%d/%m") + (f" {row['hour']}" if pd.notna(row.get("hour")) and str(row.get("hour", "")).strip() else "")
-                    home_en = rev_map.get(row["home_team"], row["home_team"])
-                    away_en = rev_map.get(row["away_team"], row["away_team"])
-                    home_logo = _team_logo_tag(home_en, config, cls="team-logo-sm", start=boleiro_dir)
-                    away_logo = _team_logo_tag(away_en, config, cls="team-logo-sm", start=boleiro_dir)
-                    match_slug = str(row.get("match", ""))
-                    hour_p = str(row.get("hour", ""))
-                    phase_v = str(row.get("phase", "")) if row.get("phase") else config.group_phase_label
-                    game_href = f"../jogos/{phase_v}/{row['date'].strip()}_{hour_p}_{match_slug}.html"
-                    pending_rows += (
-                        f'<div class="pred-row">'
-                        f'<div class="pred-info">'
-                        f'<div class="pred-name"><a href="{game_href}" style="color:var(--text);text-decoration:none;">{home_logo}{row["home_team"]} vs {away_logo}{row["away_team"]}</a> <span class="pred-date">{date_str}</span></div>'
-                        f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | \u23f3 Aguardando resultado | <a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
-                        f'</div>'
-                        f'<div class="score-pill" style="color:var(--warning);background:rgba(245,158,11,0.1);border:1px solid var(--warning)">+0 \u23f3</div>'
-                        f'</div>\n'
-                    )
+        _player_parts.append(df_all[df_all["who"] == boleiro].copy())
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            _player_parts.append(df_pp[df_pp["who"] == boleiro].copy())
+    if _player_parts:
+        df_player_all = pd.concat(_player_parts, ignore_index=True)
+        tz = pytz.timezone(config.timezone)
+        today_dt = datetime.now(tz).date()
+        df_player_all["date_dt"] = pd.to_datetime(df_player_all["date"], errors="coerce")
+        df_pending = df_player_all[
+            (df_player_all.get("valido", 0) == 0)
+            & (df_player_all["date_dt"].dt.date < today_dt)
+        ].drop_duplicates(subset=["match"])
+        n_pending = len(df_pending)
+        if n_pending:
+            rev_map = {v: k for k, v in config.team_name_mapping.items()}
+            sort_col_pending = ["id"] if "id" in df_pending.columns else ["date", "hour"]
+            for _, row in df_pending.sort_values(sort_col_pending, ascending=False).iterrows():
+                date_str = pd.to_datetime(row["date"]).strftime("%d/%m") + (f" {row['hour']}" if pd.notna(row.get("hour")) and str(row.get("hour", "")).strip() else "")
+                home_en = rev_map.get(row["home_team"], row["home_team"])
+                away_en = rev_map.get(row["away_team"], row["away_team"])
+                home_logo = _team_logo_tag(home_en, config, cls="team-logo-sm", start=boleiro_dir)
+                away_logo = _team_logo_tag(away_en, config, cls="team-logo-sm", start=boleiro_dir)
+                match_slug = str(row.get("match", ""))
+                hour_p = str(row.get("hour", ""))
+                phase_v = str(row.get("phase", "")) if row.get("phase") else config.group_phase_label
+                game_href = f"../jogos/{phase_v}/{row['date'].strip()}_{hour_p}_{match_slug}.html"
+                pending_rows += (
+                    f'<div class="pred-row">'
+                    f'<div class="pred-info">'
+                    f'<div class="pred-name"><a href="{game_href}" style="color:var(--text);text-decoration:none;">{home_logo}{row["home_team"]} vs {away_logo}{row["away_team"]}</a> <span class="pred-date">{date_str}</span></div>'
+                    f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | \u23f3 Aguardando resultado | <a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
+                    f'</div>'
+                    f'<div class="score-pill" style="color:var(--warning);background:rgba(245,158,11,0.1);border:1px solid var(--warning)">+0 \u23f3</div>'
+                    f'</div>\n'
+                )
 
     # Match history rows (newest first)
     playoff_emoji_map = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
@@ -939,8 +947,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         (df_hist.get("valido", 0) == 0) & (df_by_date_dt >= today)
     ].sort_values(sort_col_future, ascending=True)
 
-    # Include ALL future predictions (valido=0, date >= today) from gold_all as "Jogos Futuros"
-    if os.path.exists(all_path):
+    # Include ALL future predictions (valido=0, date >= today) from gold_all + playoffs as "Jogos Futuros"
+    if not df_player_all.empty:
         df_future_preds = df_player_all[
             (df_player_all.get("valido", 0) == 0)
             & (pd.to_datetime(df_player_all["date"], errors="coerce").dt.date >= today)
@@ -955,15 +963,11 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
     # Exclude pending matches from past (they'll be shown in pending section)
     pending_slug_set = set()
-    if n_pending:
-        all_path_p = config.gold_all_path()
-        if os.path.exists(all_path_p):
-            df_all_p = pd.read_csv(all_path_p, sep=",")
-            df_pending_p = df_all_p[
-                (df_all_p["who"] == boleiro)
-                & (df_all_p.get("valido", 0) == 0)
-            ]
-            pending_slug_set = set(df_pending_p["match"].unique())
+    if n_pending and not df_player_all.empty:
+        df_pending_p = df_player_all[
+            (df_player_all.get("valido", 0) == 0)
+        ]
+        pending_slug_set = set(df_pending_p["match"].unique())
         if pending_slug_set:
             df_hist_past = df_hist_past[~df_hist_past["match"].isin(pending_slug_set)]
 
@@ -1069,16 +1073,23 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             tz = pytz.timezone(config.timezone)
             today = datetime.now(tz).date()
 
-            # For each phase: find latest match date and compute winners
-            phase_latest_date = {}  # phase -> latest date
-            advancing = {}           # phase -> list of teams that advanced
-            phase_consumed = {}      # phase -> all matches are finished
+            # For each phase: find participants (teams that have a match),
+            # latest match date, winners, and whether all matches finished.
+            phase_participants: dict[str, set[str]] = {}
+            phase_latest_date: dict[str, datetime | None] = {}
+            advancing: dict[str, list[str]] = {}
+            phase_consumed: dict[str, bool] = {}
             for pk in playoff_keys:
                 phase_matches = df_games[df_games["round"] == pk]
-                winners = []
-                dates = []
+                winners: list[str] = []
+                dates: list[datetime] = []
                 all_finished = True
+                participants: set[str] = set()
                 for _, row in phase_matches.iterrows():
+                    ht = str(row["home_team"])
+                    at = str(row["away_team"])
+                    participants.add(ht)
+                    participants.add(at)
                     te = str(row.get("time_elapsed", "")).strip().lower()
                     if te != "finished":
                         all_finished = False
@@ -1093,9 +1104,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     ag = float(row["away_goals"]) if pd.notna(row.get("away_goals")) else None
                     if hg is not None and ag is not None:
                         if hg > ag:
-                            winners.append(str(row["home_team"]))
+                            winners.append(ht)
                         elif ag > hg:
-                            winners.append(str(row["away_team"]))
+                            winners.append(at)
                         else:
                             hp = row.get("home_pen", "")
                             ap = row.get("away_pen", "")
@@ -1106,13 +1117,14 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                                 hp_v = ap_v = None
                             if hp_v is not None and ap_v is not None:
                                 if hp_v > ap_v:
-                                    winners.append(str(row["home_team"]))
+                                    winners.append(ht)
                                 elif ap_v > hp_v:
-                                    winners.append(str(row["away_team"]))
+                                    winners.append(at)
                             elif hp_v is not None:
-                                winners.append(str(row["home_team"]))
+                                winners.append(ht)
                             elif ap_v is not None:
-                                winners.append(str(row["away_team"]))
+                                winners.append(at)
+                phase_participants[pk] = participants
                 advancing[pk] = winners
                 phase_latest_date[pk] = max(dates) if dates else None
                 phase_consumed[pk] = all_finished
@@ -1144,28 +1156,43 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 pts_per_correct = playoff_scoring.get(phase_key, 0)
                 advancing_teams = advancing.get(phase_key, [])
 
-                # Determine if this phase is checkable (all matches already finished)
-                latest = phase_latest_date.get(phase_key)
-                checkable = (latest is not None and today >= latest) or phase_consumed.get(phase_key, False)
+                is_first_knockout = (phase_key == config.playoff_rounds[0].key) if config.playoff_rounds else False
+                participants = phase_participants.get(phase_key, set())
+
+                # For the first knockout round, checkable is always True
+                # (group stage is done, we know which teams qualified).
+                # "Display passed" = team is a participant (qualified for this round).
+                # Points still use advancing (winners of this round's matches).
+                if is_first_knockout:
+                    checkable = True
+                else:
+                    checkable = phase_consumed.get(phase_key, False)
 
                 phase_pts = 0
                 teams_list = ""
                 for _, row in group.iterrows():
                     team = row["team"]
-                    # Always compute points from games.csv regardless of checkable
-                    passed = team in advancing_teams
+                    # First knockout round: points based on participation (qualified)
+                    # Later rounds: points based on advancing (winners)
+                    if is_first_knockout:
+                        passed = team in participants
+                    else:
+                        passed = team in advancing_teams
                     if passed:
                         phase_pts += pts_per_correct
 
                     if not checkable:
-                        # Not yet time — yellow
                         bg = "rgba(234,179,8,0.15)"
                         border = "var(--warning)"
                         color = "var(--warning)"
                     else:
-                        bg = "rgba(34,197,94,0.15)" if passed else "rgba(239,68,68,0.15)"
-                        border = "var(--success)" if passed else "var(--danger)"
-                        color = "var(--success)" if passed else "var(--danger)"
+                        if is_first_knockout:
+                            display_passed = team in participants
+                        else:
+                            display_passed = passed
+                        bg = "rgba(34,197,94,0.15)" if display_passed else "rgba(239,68,68,0.15)"
+                        border = "var(--success)" if display_passed else "var(--danger)"
+                        color = "var(--success)" if display_passed else "var(--danger)"
                     teams_list += (
                         f'<span style="display:inline-block;padding:0.2rem 0.6rem;margin:0.15rem;'
                         f'background:{bg};border:1px solid {border};border-radius:999px;'
@@ -1173,7 +1200,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     )
 
                 total_bonus_pts += phase_pts
-                if checkable:
+                if checkable and not is_first_knockout:
                     pts_label = f'<span style="color:var(--accent);font-weight:700;">+{phase_pts}</span>'
                 else:
                     pts_label = f'<span style="color:var(--warning);font-weight:700;">\u23f3 +{phase_pts}</span>'
@@ -1191,9 +1218,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             if champion_team:
                 final_winners = advancing.get("final", [])
                 champ_passed = champion_team in final_winners
-                champ_checkable = phase_consumed.get("final", False) or (
-                    phase_latest_date.get("final") is not None and today >= phase_latest_date["final"]
-                )
+                champ_checkable = phase_consumed.get("final", False)
                 if champ_checkable:
                     champ_bg = "rgba(34,197,94,0.15)" if champ_passed else "rgba(239,68,68,0.15)"
                     champ_border = "var(--success)" if champ_passed else "var(--danger)"
@@ -1844,13 +1869,22 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     if has_score:
         real_placar = str(df_match.iloc[0]["resultado_real_placar"])
 
+    # ── Subset with valid prediction data (handle pending/notstarted matches) ──
+    # For matches where valido=0 for all rows, home_goals_bol may be NaN.
+    df_pred = df_match[
+        df_match["home_goals_bol"].notna() & df_match["away_goals_bol"].notna()
+    ].copy()
+    has_predictions = not df_pred.empty
+    df_placar = df_match[df_match["resultado_bol_placar"].notna()].copy()
+    has_placar = not df_placar.empty
+
     # Pre-game: team vote distribution
     df_pre_time = df_match["resultado_bol_time"].value_counts().reset_index()
     df_pre_time.columns = ["vencedor", "#"]
-    total_t = int(df_pre_time["#"].sum())
+    total_t = int(df_pre_time["#"].sum()) if not df_pre_time.empty else 0
     team_bars = ""
     for _, row in df_pre_time.iterrows():
-        pct = round(row["#"] / total_t * 100)
+        pct = round(row["#"] / total_t * 100) if total_t else 0
         count = int(row["#"])
         team_bars += (
             f'<div class="bar-row">'
@@ -1861,18 +1895,23 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         )
 
     # Pre-game: score heatmap
-    max_h = int(df_match["home_goals_bol"].max())
-    max_a = int(df_match["away_goals_bol"].max())
+    if has_predictions:
+        max_h = int(df_pred["home_goals_bol"].max())
+        max_a = int(df_pred["away_goals_bol"].max())
+    else:
+        max_h = 4
+        max_a = 4
     max_h = max(max_h, 4)
     max_a = max(max_a, 4)
-    total_s = len(df_match)
+    total_s = len(df_pred) if has_predictions else 0
 
     # Build player-per-score mapping for heatmap
     heat_players: dict[tuple[int, int], list[str]] = {}
-    for _, row in df_match.iterrows():
-        hg = int(row["home_goals_bol"])
-        ag = int(row["away_goals_bol"])
-        heat_players.setdefault((hg, ag), []).append(str(row["who"]))
+    if has_predictions:
+        for _, row in df_pred.iterrows():
+            hg = int(row["home_goals_bol"])
+            ag = int(row["away_goals_bol"])
+            heat_players.setdefault((hg, ag), []).append(str(row["who"]))
 
     # Header row (away goals)
     header_row = '<div class="heat-row">'
@@ -1887,7 +1926,10 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         data_rows += '<div class="heat-row">'
         data_rows += f'<div class="heat-label">{h}</div>'
         for a in range(max_a + 1):
-            cnt = len(df_match[(df_match["home_goals_bol"] == h) & (df_match["away_goals_bol"] == a)])
+            if has_predictions:
+                cnt = len(df_pred[(df_pred["home_goals_bol"] == h) & (df_pred["away_goals_bol"] == a)])
+            else:
+                cnt = 0
             pct = round(cnt / total_s * 100) if total_s else 0
             if cnt:
                 if h > a:
@@ -1949,32 +1991,34 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     # Build player-per-placar mapping
     placar_players: dict[str, list[str]] = {}
-    for _, row in df_match.iterrows():
-        placar = str(row["resultado_bol_placar"])
-        placar_players.setdefault(placar, []).append(str(row["who"]))
+    if has_placar:
+        for _, row in df_placar.iterrows():
+            placar = str(row["resultado_bol_placar"])
+            placar_players.setdefault(placar, []).append(str(row["who"]))
 
     # Pre-game: placar distribution bars
-    placar_counts = df_match["resultado_bol_placar"].value_counts().reset_index()
-    placar_counts.columns = ["placar", "#"]
-    placar_rows_resolved = []
-    for _, pr in placar_counts.iterrows():
-        parts = str(pr["placar"]).split(" x ")
-        if len(parts) == 2:
-            try:
-                hg = int(parts[0])
-                ag = int(parts[1])
-            except ValueError:
+    if has_placar:
+        placar_counts = df_placar["resultado_bol_placar"].value_counts().reset_index()
+        placar_counts.columns = ["placar", "#"]
+        placar_rows_resolved = []
+        for _, pr in placar_counts.iterrows():
+            parts = str(pr["placar"]).split(" x ")
+            if len(parts) == 2:
+                try:
+                    hg = int(parts[0])
+                    ag = int(parts[1])
+                except ValueError:
+                    continue
+            else:
                 continue
-        else:
-            continue
-        if hg > ag:
-            rtype = 0  # home win
-        elif hg == ag:
-            rtype = 1  # draw
-        else:
-            rtype = 2  # away win
-        placar_rows_resolved.append({"placar": pr["placar"], "#": pr["#"], "rtype": rtype, "hg": hg, "ag": ag, "total": hg + ag})
-    placar_rows_resolved.sort(key=lambda x: (x["rtype"], -x["total"], -x["ag"] if x["rtype"] == 0 else (-x["hg"] if x["rtype"] == 2 else x["hg"])))
+            if hg > ag:
+                rtype = 0  # home win
+            elif hg == ag:
+                rtype = 1  # draw
+            else:
+                rtype = 2  # away win
+            placar_rows_resolved.append({"placar": pr["placar"], "#": pr["#"], "rtype": rtype, "hg": hg, "ag": ag, "total": hg + ag})
+        placar_rows_resolved.sort(key=lambda x: (x["rtype"], -x["total"], -x["ag"] if x["rtype"] == 0 else (-x["hg"] if x["rtype"] == 2 else x["hg"])))
     total_p = sum(r["#"] for r in placar_rows_resolved)
     score_bars = ""
     bar_colors = {"home": "var(--success)", "draw": "var(--warning)", "away": "var(--danger)"}
@@ -2029,15 +2073,18 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     pred_rows = ""
     for _, row in df_match.iterrows():
-        pts = int(row["pontos"])
-        criterio_emoji = config.scoring_emoji(row.get("criterio", ""))
-        css_var, css_bg, css_border = config.scoring_css_var(row.get("criterio", ""))
+        pts = int(row["pontos"]) if pd.notna(row.get("pontos")) else 0
+        criterio_str = row.get("criterio", "")
+        if pd.isna(criterio_str):
+            criterio_str = ""
+        criterio_emoji = config.scoring_emoji(criterio_str)
+        css_var, css_bg, css_border = config.scoring_css_var(criterio_str)
         if css_var:
             pts_color = css_var
             pts_bg = css_bg
             pts_border = css_border
         else:
-            hex_color = config.scoring_color(row.get("criterio", ""))
+            hex_color = config.scoring_color(criterio_str)
             if hex_color:
                 pts_color = hex_color
                 pts_bg = hex_color + "1a"
@@ -2046,19 +2093,15 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
                 pts_color = "var(--text-muted)"
                 pts_bg = "transparent"
                 pts_border = "var(--card-border)"
-        bonus_text = ""
-        bdata = bonus_by_player.get(row["who"])
-        if bdata:
-            if bdata["total"] > 0 and bdata["correct"] == bdata["total"]:
-                bonus_text = f' &middot; \U0001f3c6 Bônus: {bdata["correct"]}/{bdata["total"]} \u2705 +{bdata["points"]}pts'
-            else:
-                bonus_text = f' &middot; \U0001f3c6 Bônus: {bdata["total"]} picks \U0001f550'
+        placar_str = row.get("resultado_bol_placar", "")
+        if pd.isna(placar_str):
+            placar_str = "? x ?"
         pred_rows += (
             f'<div class="pred-row">'
             f'{_avatar_html(row["who"])}'
             f'<div class="pred-info">'
-            f'<div class="pred-name">{row["who"]}{bonus_text}</div>'
-            f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | {criterio_emoji} {row["criterio"]}</div>'
+            f'<div class="pred-name">{row["who"]}</div>'
+            f'<div class="pred-detail">Previsto: {placar_str} | {criterio_emoji} {criterio_str}</div>'
             f'</div>'
             f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
             f'</div>\n'
@@ -4295,10 +4338,13 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
     # --- Per-match (playoff rounds) ---
     for pr in (config.playoff_rounds or []):
         phase = pr.key
-        playoff_valid_path = config.gold_playoff_valid_path(phase)
-        if not os.path.exists(playoff_valid_path):
+        # Use all data (including pending/notstarted) so every match gets a
+        # placeholder page even before the real result is known.  The
+        # _build_match function handles valido=0 rows gracefully.
+        playoff_path = config.gold_playoff_all_path(phase)
+        if not os.path.exists(playoff_path):
             continue
-        df_phase = pd.read_csv(playoff_valid_path, sep=",")
+        df_phase = pd.read_csv(playoff_path, sep=",")
         if df_phase.empty:
             continue
         phase_matches = df_phase[df_phase["match"].notna()].groupby("match")

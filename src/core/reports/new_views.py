@@ -272,6 +272,34 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
     # Team's matches
     team_matches = df_games[(df_games["home_team"] == team) | (df_games["away_team"] == team)]
+
+    # Build match → (date, hour) lookup from gold prediction data so game links
+    # use the correct hour (from the Excel/prediction data), not the games.csv hour
+    # which may differ for some matches (e.g., Holanda vs Marrocos: 22h vs 19h).
+    _match_info_lookup: dict[str, tuple[str, str]] = {}
+    gold_all = config.gold_all_path()
+    if os.path.exists(gold_all):
+        df_gold = pd.read_csv(gold_all, sep=",")
+        if not df_gold.empty and "match" in df_gold.columns:
+            for _, g_row in df_gold.drop_duplicates("match").iterrows():
+                m = str(g_row.get("match", ""))
+                d = str(g_row.get("date", ""))
+                h = str(g_row.get("hour", ""))
+                if m and d:
+                    _match_info_lookup[m] = (d, h)
+    # Also check playoff gold all files
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "match" in df_pp.columns:
+                for _, g_row in df_pp.drop_duplicates("match").iterrows():
+                    m = str(g_row.get("match", ""))
+                    d = str(g_row.get("date", ""))
+                    h = str(g_row.get("hour", ""))
+                    if m and d and m not in _match_info_lookup:
+                        _match_info_lookup[m] = (d, h)
+
     total_played = 0
     wins = draws = losses = 0
     gf = ga = 0
@@ -433,9 +461,16 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
         else:
             score = "? x ?"
         
-        # Game link
+        # Game link — use hour from gold prediction data (not games.csv) so the
+        # href matches the actual filename on disk (which uses the Excel hour).
         match_slug = str(row.get("match", ""))
-        date_hour = str(row.get("date", "")).replace(' ', '_')
+        gold_info = _match_info_lookup.get(match_slug)
+        if gold_info:
+            game_date, game_hour = gold_info
+            date_hour = f"{game_date}_{game_hour}" if game_hour else game_date
+        else:
+            # Fallback: use games.csv date (may embed hour, e.g. "2026-06-29 19h")
+            date_hour = str(row.get("date", "")).replace(' ', '_')
         
         round_raw = row.get("round", "")
         if pd.notna(round_raw) and isinstance(round_raw, (int, float)):

@@ -253,10 +253,26 @@ def score_playoff_bonus(config: ChampionshipConfig) -> pd.DataFrame:
 
     Reads bronze bonus_teams_*.csv and games.csv, then returns
     a DataFrame: boleiro, phase, team_picked, team_actual, correct, points.
+
+    For the first knockout round (e.g. segunda_fase), 'correct' means the
+    team qualified for that round (appears in a match).  For later rounds
+    it means the team advanced (won its match in the previous round).
     """
-    # Get actual advancing teams — use config playoff round keys
     playoff_keys = [pr.key for pr in config.playoff_rounds]
     advancing = get_playoff_advancing_teams(config.games_file, playoff_keys)
+    first_round_key = playoff_keys[0] if playoff_keys else None
+
+    # Build phase participants (every team that plays in a phase)
+    df_games = pd.read_csv(config.games_file, sep=",")
+    df_games["round"] = df_games["round"].astype(str).str.strip().str.lower()
+    participants: dict[str, list[str]] = {}
+    for pk in playoff_keys:
+        phase_matches = df_games[df_games["round"] == pk.lower()]
+        pset: set[str] = set()
+        for _, r in phase_matches.iterrows():
+            pset.add(str(r["home_team"]))
+            pset.add(str(r["away_team"]))
+        participants[pk] = sorted(pset)
 
     # Load all bonus picks
     pattern = config.bronze_group_path("*").replace("group_phase_*.csv", "bonus_teams_*.csv")
@@ -273,6 +289,9 @@ def score_playoff_bonus(config: ChampionshipConfig) -> pd.DataFrame:
             # Resolve actual teams for this phase
             if phase == "campeao":
                 actual_teams = advancing.get("final", [])
+            elif phase == first_round_key:
+                # First knockout round: correct if team qualified (participant)
+                actual_teams = participants.get(phase, [])
             else:
                 actual_teams = advancing.get(phase, [])
                 

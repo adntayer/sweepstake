@@ -71,10 +71,10 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-06-27 19h,3,Colômbia,,0,x,0,,Portugal,colombia-vs-portugal,finished
 2026-06-27 21h,3,Argélia,,3,x,3,,Áustria,argelia-vs-austria,finished
 2026-06-27 21h,3,Jordânia,,1,x,3,,Argentina,jordania-vs-argentina,finished
-2026-06-28 12h,segunda_fase,África do Sul,,,x,,,Canadá,africa_do_sul-vs-canada,notstarted
-2026-06-29 12h,segunda_fase,Brasil,,,x,,,Japão,brasil-vs-japao,notstarted
-2026-06-29 16h,segunda_fase,Alemanha,,,x,,,Paraguai,alemanha-vs-paraguai,notstarted
-2026-06-29 19h,segunda_fase,Holanda,,,x,,,Marrocos,holanda-vs-marrocos,notstarted
+2026-06-28 12h,segunda_fase,África do Sul,,0,x,1,,Canadá,africa_do_sul-vs-canada,finished
+2026-06-29 12h,segunda_fase,Brasil,,2,x,1,,Japão,brasil-vs-japao,finished
+2026-06-29 16h,segunda_fase,Alemanha,,1,x,1,,Paraguai,alemanha-vs-paraguai,finished
+2026-06-29 19h,segunda_fase,Holanda,,1,x,1,,Marrocos,holanda-vs-marrocos,finished
 2026-06-30 12h,segunda_fase,Costa do Marfim,,,x,,,Noruega,costa_do_marfim-vs-noruega,notstarted
 2026-06-30 17h,segunda_fase,França,,,x,,,Suécia,franca-vs-suecia,notstarted
 2026-06-30 19h,segunda_fase,México,,,x,,,Equador,mexico-vs-equador,notstarted
@@ -87,9 +87,9 @@ date,round,home_team,home_pen,home_goals,x,away_goals,away_pen,away_team,match,t
 2026-07-03 13h,segunda_fase,Austrália,,,x,,,Egito,australia-vs-egito,notstarted
 2026-07-03 18h,segunda_fase,Argentina,,,x,,,Cabo Verde,argentina-vs-cabo_verde,notstarted
 2026-07-03 20h,segunda_fase,Colômbia,,,x,,,Gana,colombia-vs-gana,notstarted
-2026-07-04 12h,oitavas,,,,x,,,,-vs-,notstarted
-2026-07-04 17h,oitavas,,,,x,,,,-vs-,notstarted
-2026-07-05 16h,oitavas,,,,x,,,,-vs-,notstarted
+2026-07-04 12h,oitavas,Canadá,,,x,,,Marrocos,canada-vs-marrocos,notstarted
+2026-07-04 17h,oitavas,Paraguai,,,x,,,,paraguai-vs-,notstarted
+2026-07-05 16h,oitavas,Brasil,,,x,,,,brasil-vs-,notstarted
 2026-07-05 18h,oitavas,,,,x,,,,-vs-,notstarted
 2026-07-06 14h,oitavas,,,,x,,,,-vs-,notstarted
 2026-07-06 17h,oitavas,,,,x,,,,-vs-,notstarted

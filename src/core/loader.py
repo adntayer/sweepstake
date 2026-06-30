@@ -122,22 +122,23 @@ def _extract_playoff_phase_and_who(path: str, config: ChampionshipConfig) -> tup
             boleiro = name_no_ext[len(prefix):].strip()
             return pr.key, boleiro
 
-    # 2) Try the "{name} - {round_label}" format
-    #    Build a lookup from round label strings (e.g. "16 Avos de Final") to phase keys
+    # 2) Try the "{name} [{separator}] {round_label} [{suffix}]" format
+    #    Search for any known round label inside the filename (case-insensitive).
+    #    Everything before the label is the boleiro name; the label gives the phase key.
     label_to_key: dict[str, str] = {}
     for pr in config.playoff_rounds:
-        # Use the round's display name and a cleaned version as possible labels
         label_to_key[pr.name.lower()] = pr.key
     # Also add common alternative labels for the Round of 32 (segunda_fase)
     label_to_key["16 avos de final"] = "segunda_fase"
     label_to_key["16 avos"] = "segunda_fase"
 
-    if " - " in name_no_ext:
-        parts = name_no_ext.rsplit(" - ", 1)
-        candidate_name = parts[0].strip()
-        candidate_label = parts[1].strip().lower()
-        if candidate_label in label_to_key:
-            return label_to_key[candidate_label], candidate_name
+    name_lower = name_no_ext.lower()
+    # Try labels longest-first to match the most specific label
+    for label in sorted(label_to_key, key=len, reverse=True):
+        idx = name_lower.find(label)
+        if idx != -1:
+            boleiro = name_no_ext[:idx].strip().rstrip("- ")
+            return label_to_key[label], boleiro
 
     # 3) Fallback: use first part before first '_' as phase, rest as name
     if "_" in name_no_ext:
@@ -157,13 +158,28 @@ def parse_playoff_stage(path: str, config: ChampionshipConfig) -> pd.DataFrame:
     Each file contains only the matches for a single knockout round
     (e.g. 8 oitavas matches, 4 quartas matches, etc.).
 
+    For standings-format championships (e.g. 2026 World Cup) the actual
+    match predictions live in a separate sheet (``playoffs_sheet_name``),
+    not the default first sheet.  The header row is skipped via the
+    configured ``skiprows``.
+
     Returns a DataFrame with columns:
         date, hour, home_team, home_pen, home_goals, x, away_goals, away_pen,
         away_team, who, match, phase
     """
     phase, who = _extract_playoff_phase_and_who(path, config)
 
-    df = pd.read_excel(path, engine="calamine", header=None)
+    po_layout = config.excel_layout.playoffs
+    sheet_kwargs: dict = {}
+    if po_layout.playoffs_sheet_name:
+        sheet_kwargs["sheet_name"] = po_layout.playoffs_sheet_name
+
+    df = pd.read_excel(
+        path, engine="calamine",
+        header=None,
+        skiprows=po_layout.skiprows,
+        **sheet_kwargs,
+    )
     for i in range(9 - df.shape[1]):
         df[f"_pad_{i}"] = None
     df = df[df.columns[:9]]
