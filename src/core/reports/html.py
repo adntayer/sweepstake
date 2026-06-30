@@ -3099,10 +3099,18 @@ canvas.onmouseleave = function() { tooltip.style.display = 'none'; };
 
 def _build_bolao_xray(config: ChampionshipConfig) -> str:
     """Bolão X-ray: meta-analysis of the entire sweepstake — no per-player focus."""
-    df_all = pd.read_csv(config.gold_all_path(), sep=",")
-    df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
-    if df_valid.empty:
+    _parts: list[pd.DataFrame] = []
+    gp = config.gold_all_path()
+    if os.path.exists(gp):
+        _parts.append(pd.read_csv(gp, sep=","))
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            _parts.append(pd.read_csv(pp, sep=","))
+    if not _parts:
         return _page_frame(config, f"Raio-X do Bol\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f50d Raio-X do Bol\u00e3o</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados. ainda</div></div>", active_nav="bolao_xray.html")
+    df_all = pd.concat(_parts, ignore_index=True)
+    df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
     df_results = pd.read_csv(config.results_file, sep=",").dropna(subset=["home_goals"])
 
     # Build resultado_real_placar from raw columns
