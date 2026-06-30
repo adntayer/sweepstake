@@ -169,6 +169,7 @@ class PlayoffsLayout:
     # Sheet name for playoffs/striker data (standings-format only).
     # When empty, the loader falls back to the main sheet read for standings.
     playoffs_sheet_name: str = ""
+    skiprows: int = 0
 
 
 @dataclass

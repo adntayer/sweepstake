@@ -24,10 +24,21 @@ def compute_pending_matches(config: ChampionshipConfig) -> dict:
     today = datetime.now(tz).date()
 
     all_path = config.gold_all_path()
-    if not os.path.exists(all_path):
+    _parts: list[pd.DataFrame] = []
+    if os.path.exists(all_path):
+        df_g = pd.read_csv(all_path, sep=",")
+        if not df_g.empty:
+            _parts.append(df_g)
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_p = pd.read_csv(pp, sep=",")
+            if not df_p.empty:
+                _parts.append(df_p)
+    if not _parts:
         return _empty_result()
 
-    df = pd.read_csv(all_path, sep=",")
+    df = pd.concat(_parts, ignore_index=True)
     if df.empty or "match" not in df.columns:
         return _empty_result()
 

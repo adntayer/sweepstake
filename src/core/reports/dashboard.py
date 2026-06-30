@@ -508,16 +508,24 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         b = bonus_pts.get(p, 0)
         total_scores[p] = g + m + b
 
-    # Compute trend: compare last 3 days vs previous 3 days (using group + playoff match points)
-    df_valid["date_dt"] = pd.to_datetime(df_valid["date"])
-    all_dates = sorted(df_valid["date_dt"].unique())
+    # Combine group + playoff match data for trend (which needs dates)
+    _trend_parts = [df_valid]
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_tp = pd.read_csv(pp, sep=",")
+            if not df_tp.empty and "date" in df_tp.columns and "who" in df_tp.columns:
+                _trend_parts.append(df_tp)
+    df_trend = pd.concat(_trend_parts, ignore_index=True) if len(_trend_parts) > 1 else _trend_parts[0]
+    df_trend["date_dt"] = pd.to_datetime(df_trend["date"])
+    all_dates = sorted(df_trend["date_dt"].unique())
     trend_map: dict[str, str] = {}
     if len(all_dates) >= 6:
         recent_dates = all_dates[-3:]
         prev_dates = all_dates[-6:-3]
-        df_recent = df_valid[df_valid["date_dt"].isin(recent_dates)].groupby("who")["pontos"].sum()
-        df_prev = df_valid[df_valid["date_dt"].isin(prev_dates)].groupby("who")["pontos"].sum()
-        for who in df_valid["who"].unique():
+        df_recent = df_trend[df_trend["date_dt"].isin(recent_dates)].groupby("who")["pontos"].sum()
+        df_prev = df_trend[df_trend["date_dt"].isin(prev_dates)].groupby("who")["pontos"].sum()
+        for who in df_trend["who"].unique():
             r = df_recent.get(who, 0)
             p = df_prev.get(who, 0)
             if r > p:
@@ -526,7 +534,6 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
                 trend_map[who] = '<span class="trend-down">\u25bc</span>'
             else:
                 trend_map[who] = '<span class="trend-flat">\u25b6</span>'
-
     # Compute badges for all players
     gold_dir = config._au_first_round()
     badge_map: dict[str, list[str]] = {}
@@ -684,9 +691,19 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
 
 def _build_player_grid(config: ChampionshipConfig) -> str:
     """Build the player avatar grid with points and hot streak indicators."""
-    df_valid = _load_gold_data(config)
-    if df_valid.empty:
+    _parts: list[pd.DataFrame] = []
+    _gp = _load_gold_data(config)
+    if not _gp.empty:
+        _parts.append(_gp)
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns:
+                _parts.append(df_pp)
+    if not _parts:
         return ""
+    df_valid = pd.concat(_parts, ignore_index=True) if len(_parts) > 1 else _parts[0]
     df_pts = df_valid.groupby("who", as_index=False)["pontos"].sum()
     df_pts.sort_values(["pontos", "who"], ascending=[False, True], inplace=True)
 
@@ -732,9 +749,19 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
 
 def _build_distribution_bars(config: ChampionshipConfig) -> str:
     """Build a distribution bar showing how many players are in each score bracket."""
-    df_valid = _load_gold_data(config)
-    if df_valid.empty:
+    _parts: list[pd.DataFrame] = []
+    _gp = _load_gold_data(config)
+    if not _gp.empty:
+        _parts.append(_gp)
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns:
+                _parts.append(df_pp)
+    if not _parts:
         return ""
+    df_valid = pd.concat(_parts, ignore_index=True) if len(_parts) > 1 else _parts[0]
 
     df_pts = df_valid.groupby("who")["pontos"].sum()
     if df_pts.empty:
@@ -817,12 +844,51 @@ def _build_bottom_nav_dashboard(prefix: str = "") -> str:
     return f'<nav class="bottom-nav">{links}</nav>'
 
 
+def _build_match_hour_lookup(config: ChampionshipConfig) -> dict[str, tuple[str, str]]:
+    """Build match_slug -> (date, hour) lookup from gold prediction data.
+    
+    The hour from predictions (Excel) is the source of truth for match page
+    filenames; games.csv may have a different hour for the same match.
+    """
+    lookup: dict[str, tuple[str, str]] = {}
+    gold_all = config.gold_all_path()
+    if os.path.exists(gold_all):
+        try:
+            df_gold = pd.read_csv(gold_all, sep=",")
+            if not df_gold.empty and "match" in df_gold.columns:
+                for _, g_row in df_gold.drop_duplicates("match").iterrows():
+                    m = str(g_row.get("match", ""))
+                    d = str(g_row.get("date", ""))
+                    h = str(g_row.get("hour", ""))
+                    if m and d:
+                        lookup[m] = (d, h)
+        except Exception:
+            pass
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            try:
+                df_pp = pd.read_csv(pp, sep=",")
+                if not df_pp.empty and "match" in df_pp.columns:
+                    for _, g_row in df_pp.drop_duplicates("match").iterrows():
+                        m = str(g_row.get("match", ""))
+                        d = str(g_row.get("date", ""))
+                        h = str(g_row.get("hour", ""))
+                        if m and d and m not in lookup:
+                            lookup[m] = (d, h)
+            except Exception:
+                pass
+    return lookup
+
+
 def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
     """Build a card for each match currently marked as 'live' in games.csv."""
     df = pd.read_csv(config.results_file, sep=",")
     live = df[df["time_elapsed"] == "live"].copy()
     if live.empty:
         return ""
+
+    _match_hour = _build_match_hour_lookup(config)
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
     cards = ""
@@ -831,7 +897,6 @@ def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
         away = str(row["away_team"])
         hg = int(row["home_goals"]) if pd.notna(row.get("home_goals")) else 0
         ag = int(row["away_goals"]) if pd.notna(row.get("away_goals")) else 0
-        date = str(row["date"])
         match_slug = str(row.get("match", ""))
         round_val = row.get("round", "")
 
@@ -842,11 +907,16 @@ def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
         except (ValueError, TypeError):
             phase_dir = str(round_val) if round_val else config.group_phase_label
 
-        # Parse date_part and hour_part from "YYYY-MM-DD HHh" format
-        # hour keeps the "h" suffix to match the gold data hour format (e.g. "13h")
-        date_parts = date.split(" ")
-        date_part = date_parts[0] if date_parts else date
-        hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
+        # Use hour from gold prediction data (not games.csv) so the href matches
+        # the actual filename on disk (which uses the Excel/prediction hour).
+        gold_info = _match_hour.get(match_slug)
+        if gold_info:
+            date_part, hour_part = gold_info
+        else:
+            # Fallback: parse from games.csv "YYYY-MM-DD HHh" format
+            date_parts = str(row["date"]).split(" ")
+            date_part = date_parts[0] if date_parts else str(row["date"])
+            hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
 
         # Link to the per-match page
         game_href = f"jogos/{phase_dir}/{date_part}_{hour_part}_{match_slug}.html"
@@ -862,7 +932,7 @@ def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
             <div class="score">{hg} - {ag}</div>
             <div class="team">{away_logo} {away}</div>
         </div>
-        <div class="date">{date}</div>
+        <div class="date">{date_part}</div>
         <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);padding-bottom:0.3rem;">atualizado \u00e0s {now_str}</div>
         <div style="text-align:center;"><a href="{game_href}" style="font-size:0.75rem;font-weight:600;color:var(--accent);text-decoration:none;">\U0001f4fa ver jogo</a></div>
     </div>
@@ -893,7 +963,6 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     away = str(last["away_team"])
     hg = int(last["home_goals"])
     ag = int(last["away_goals"])
-    date = str(last["date"])
     match_slug = str(last.get("match", ""))
     round_val = last.get("round", "")
 
@@ -904,13 +973,24 @@ def _build_last_result(config: ChampionshipConfig) -> str:
     except (ValueError, TypeError):
         phase_dir = str(round_val) if round_val else config.group_phase_label
 
-    # Parse date_part and hour_part from "YYYY-MM-DD HHh" format
-    date_parts = date.split(" ")
-    date_part = date_parts[0] if date_parts else date
-    hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
+    # Use hour from gold prediction data (not games.csv) so the href matches
+    # the actual filename on disk (which uses the Excel/prediction hour).
+    _match_hour = _build_match_hour_lookup(config)
+    gold_info = _match_hour.get(match_slug)
+    if gold_info:
+        date_part, hour_part = gold_info
+    else:
+        # Fallback: parse from games.csv "YYYY-MM-DD HHh" format
+        date = str(last["date"])
+        date_parts = date.split(" ")
+        date_part = date_parts[0] if date_parts else date
+        hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
 
     # Link to the per-match page
     game_href = f"jogos/{phase_dir}/{date_part}_{hour_part}_{match_slug}.html" if match_slug else ""
+
+    # Reconstruct full date display from parts
+    date = f"{date_part} {hour_part}" if hour_part else date_part
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
     home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
@@ -959,7 +1039,7 @@ def _slug_from_filename(filename: str) -> str:
     Pattern: YYYY-MM-DD_HHh_<slug>.html -> <slug>
     """
     base = os.path.basename(filename).replace(".html", "")
-    m = re.match(r"\d{4}-\d{2}-\d{2}_\d{1,2}h_(.+)", base)
+    m = re.match(r"\d{4}-\d{2}-\d{2}_\d{1,2}h(?:\d{2})?_(.+)", base)
     if m:
         return m.group(1)
     return base
@@ -1081,8 +1161,10 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
         end = start + round_size if i < 2 else group_size
         chunks.append(group_files[start:end])
 
-    # Find the round index that contains the next upcoming game
-    open_round = 0
+    # Find the round index that contains the next upcoming game.
+    # Default to -1 (all closed) so the Segunda Fase section below is visible
+    # when all group-phase matches are finished.
+    open_round = -1
     for idx, chk in enumerate(chunks):
         for fp in chk:
             slug = _slug_from_filename(fp)

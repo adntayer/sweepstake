@@ -272,6 +272,34 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
     # Team's matches
     team_matches = df_games[(df_games["home_team"] == team) | (df_games["away_team"] == team)]
+
+    # Build match → (date, hour) lookup from gold prediction data so game links
+    # use the correct hour (from the Excel/prediction data), not the games.csv hour
+    # which may differ for some matches (e.g., Holanda vs Marrocos: 22h vs 19h).
+    _match_info_lookup: dict[str, tuple[str, str]] = {}
+    gold_all = config.gold_all_path()
+    if os.path.exists(gold_all):
+        df_gold = pd.read_csv(gold_all, sep=",")
+        if not df_gold.empty and "match" in df_gold.columns:
+            for _, g_row in df_gold.drop_duplicates("match").iterrows():
+                m = str(g_row.get("match", ""))
+                d = str(g_row.get("date", ""))
+                h = str(g_row.get("hour", ""))
+                if m and d:
+                    _match_info_lookup[m] = (d, h)
+    # Also check playoff gold all files
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "match" in df_pp.columns:
+                for _, g_row in df_pp.drop_duplicates("match").iterrows():
+                    m = str(g_row.get("match", ""))
+                    d = str(g_row.get("date", ""))
+                    h = str(g_row.get("hour", ""))
+                    if m and d and m not in _match_info_lookup:
+                        _match_info_lookup[m] = (d, h)
+
     total_played = 0
     wins = draws = losses = 0
     gf = ga = 0
@@ -433,9 +461,16 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
         else:
             score = "? x ?"
         
-        # Game link
+        # Game link — use hour from gold prediction data (not games.csv) so the
+        # href matches the actual filename on disk (which uses the Excel hour).
         match_slug = str(row.get("match", ""))
-        date_hour = str(row.get("date", "")).replace(' ', '_')
+        gold_info = _match_info_lookup.get(match_slug)
+        if gold_info:
+            game_date, game_hour = gold_info
+            date_hour = f"{game_date}_{game_hour}" if game_hour else game_date
+        else:
+            # Fallback: use games.csv date (may embed hour, e.g. "2026-06-29 19h")
+            date_hour = str(row.get("date", "")).replace(' ', '_')
         
         round_raw = row.get("round", "")
         if pd.notna(round_raw) and isinstance(round_raw, (int, float)):
@@ -725,12 +760,19 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
     Columns are ordered chronologically (oldest -> newest -> future).
     Completed games show real score, predicted score and points.
     """
+    _parts: list[pd.DataFrame] = []
     gold_all = config.gold_all_path()
-    if not os.path.exists(gold_all):
+    if os.path.exists(gold_all):
+        _parts.append(pd.read_csv(gold_all, sep=","))
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            _parts.append(pd.read_csv(pp, sep=","))
+    if not _parts:
         return _page_frame(config, "Palpites",
                           "<div class='hero'><h1>\U0001f4cb Palpites</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados de palpites</div></div>")
 
-    df_pred = pd.read_csv(gold_all, sep=",")
+    df_pred = pd.concat(_parts, ignore_index=True)
     if df_pred.empty or "who" not in df_pred.columns:
         return _page_frame(config, "Palpites",
                           "<div class='hero'><h1>\U0001f4cb Palpites</h1><div class='subtitle'>Nenhum palpite encontrado</div></div>")
@@ -874,17 +916,18 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
                         'white-space:nowrap;border-bottom:1px solid var(--card-border);">'
                         f'<span style="font-size:0.5rem;color:var(--text-muted);">{hgr}-{agr}</span><br>'
                         f'<span style="font-weight:600;font-size:0.65rem;">'
-                        f'{int(rw["home_goals_bol"])}-{int(rw["away_goals_bol"])}</span> '
+                        f'{int(rw["home_goals_bol"]) if pd.notna(rw["home_goals_bol"]) else "?"}-{int(rw["away_goals_bol"]) if pd.notna(rw["away_goals_bol"]) else "?"}</span> '
                         f'<span style="font-size:0.5rem;color:{crit_color};">+{pts}</span></td>\n'
                     )
                 else:
+                    hb = int(rw["home_goals_bol"]) if pd.notna(rw["home_goals_bol"]) else "?"
+                    ab = int(rw["away_goals_bol"]) if pd.notna(rw["away_goals_bol"]) else "?"
                     cells += (
                         f'<td class="{cls}" data-match="{m}" data-round="{rs}" data-pts="0" '
                         'style="text-align:center;font-size:0.65rem;padding:0.22rem 0.1rem;'
                         'white-space:nowrap;border-bottom:1px solid var(--card-border);'
                         'color:var(--text-muted);">'
-                        f'<span style="font-weight:600;">{int(rw["home_goals_bol"])}-'
-                        f'{int(rw["away_goals_bol"])}</span></td>\n'
+                        f'<span style="font-weight:600;">{hb}-{ab}</span></td>\n'
                     )
             else:
                 cells += (
