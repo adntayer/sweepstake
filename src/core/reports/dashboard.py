@@ -905,7 +905,7 @@ def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
             <div class="score">{hg} - {ag}</div>
             <div class="team">{away_logo} {away}</div>
         </div>
-        <div class="date">{date}</div>
+        <div class="date">{date_part}</div>
         <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);padding-bottom:0.3rem;">atualizado \u00e0s {now_str}</div>
         <div style="text-align:center;"><a href="{game_href}" style="font-size:0.75rem;font-weight:600;color:var(--accent);text-decoration:none;">\U0001f4fa ver jogo</a></div>
     </div>
