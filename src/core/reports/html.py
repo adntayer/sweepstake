@@ -1169,9 +1169,12 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     checkable = phase_consumed.get(phase_key, False)
 
                 phase_pts = 0
+                correct_count = 0
+                total_count = 0
                 teams_list = ""
                 for _, row in group.iterrows():
                     team = row["team"]
+                    total_count += 1
                     # First knockout round: points based on participation (qualified)
                     # Later rounds: points based on advancing (winners)
                     if is_first_knockout:
@@ -1180,6 +1183,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                         passed = team in advancing_teams
                     if passed:
                         phase_pts += pts_per_correct
+                        correct_count += 1
 
                     if not checkable:
                         bg = "rgba(234,179,8,0.15)"
@@ -1200,6 +1204,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     )
 
                 total_bonus_pts += phase_pts
+                acc_str = f'{correct_count}/{total_count}' if total_count else ''
                 if checkable and not is_first_knockout:
                     pts_label = f'<span style="color:var(--accent);font-weight:700;">+{phase_pts}</span>'
                 else:
@@ -1207,7 +1212,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 phase_blocks += (
                     f'<div style="margin-bottom:0.5rem;">'
                     f'<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">'
-                    f'{emoji} {label} {pts_label}</div>'
+                    f'{emoji} {label} {pts_label}'
+                    f'<span style="margin-left:0.5rem;font-size:0.75rem;">{acc_str}</span></div>'
                     f'<div>{teams_list}</div>'
                     f'</div>\n'
                 )
@@ -1298,11 +1304,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     phase_rows = ""
     match_total = 0
     # 1st phase (group stage)
+    df_group_player = df_valid[df_valid["who"] == boleiro]
+    group_total_matches = len(df_group_player)
+    group_correct_teams = (df_group_player["resultado_bol_time"] == df_group_player["resultado_real_time"]).sum()
+    group_team_str = f'{group_correct_teams}/{group_total_matches}' if group_total_matches else '-'
     if group_match_pts > 0 or (total_pts > 0 and group_match_pts >= 0):
         phase_rows += (
             f'<tr><td>\U0001f4ca 1\u00aa Fase</td>'
             f'<td style="text-align:right;">+{group_match_pts}</td>'
             f'<td style="text-align:right;">-</td>'
+            f'<td style="text-align:right;">{group_team_str}</td>'
             f'<td style="text-align:right;font-weight:600;color:var(--accent);">+{group_match_pts}</td></tr>\n'
         )
         match_total += group_match_pts
@@ -1315,12 +1326,18 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         phase_valid_path = config.gold_playoff_valid_path(phase_key)
         phase_pts = 0
         has_match_data = False
+        phase_team_str = '-'
         if os.path.exists(phase_valid_path):
             df_pp = pd.read_csv(phase_valid_path, sep=",")
             df_pp_player = df_pp[df_pp["who"] == boleiro]
             if not df_pp_player.empty:
                 phase_pts = int(df_pp_player["pontos"].sum())
                 has_match_data = True
+                pp_valido = df_pp_player[df_pp_player.get("valido", 1) == 1]
+                pp_total = len(pp_valido)
+                if pp_total:
+                    pp_correct = (pp_valido["resultado_bol_time"] == pp_valido["resultado_real_time"]).sum()
+                    phase_team_str = f'{pp_correct}/{pp_total}'
 
         bns = bonus_by_phase.get(phase_key, 0)
         tot = phase_pts + bns
@@ -1332,6 +1349,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 f'<tr><td>{emoji} {phase_name}</td>'
                 f'<td style="text-align:right;">+{phase_pts}</td>'
                 f'<td style="text-align:right;">{bonus_str}</td>'
+                f'<td style="text-align:right;">{phase_team_str}</td>'
                 f'<td style="text-align:right;font-weight:600;color:var(--accent);">+{tot}</td></tr>\n'
             )
 
@@ -1348,6 +1366,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             f'<th style="text-align:left;padding:0.4rem;">Fase</th>'
             f'<th style="text-align:right;padding:0.4rem;">Jogos</th>'
             f'<th style="text-align:right;padding:0.4rem;">B\u00f4nus</th>'
+            f'<th style="text-align:right;padding:0.4rem;">Times</th>'
             f'<th style="text-align:right;padding:0.4rem;">Total</th>'
             f'</tr></thead><tbody>'
             f'{phase_rows}'
@@ -1355,10 +1374,11 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             f'<td style="padding:0.4rem;">Total</td>'
             f'<td style="text-align:right;">+{total_pts}</td>'
             f'<td style="text-align:right;">+{bonus_total}</td>'
+            f'<td style="text-align:right;">-</td>'
             f'<td style="text-align:right;color:var(--accent);">+{grand_total}</td></tr>'
             f'</tbody></table>'
             f'<div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;">'
-            f'Jogos = pontos dos palpites \u00b7 B\u00f4nus = pontos dos times escolhidos por fase'
+            f'Jogos = pontos dos palpites \u00b7 B\u00f4nus = pontos dos times escolhidos por fase \u00b7 Times = acertos do vencedor / total de jogos'
             f'</div></div></div>\n'
         )
 

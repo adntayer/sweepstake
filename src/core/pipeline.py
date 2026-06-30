@@ -707,7 +707,7 @@ def _generate_round_by_round(df_valid: pd.DataFrame, config: ChampionshipConfig)
 
     # Map round labels to numeric ordering
     round_order = {}
-    for i, r in enumerate(["1", "2", "3", "oitavas", "quartas", "semi", "final"]):
+    for i, r in enumerate(["1", "2", "3", "segunda_fase", "oitavas", "quartas", "semi", "terceiro_lugar", "final"]):
         round_order[r] = i + 1
     df["round_number"] = df["round"].map(round_order).fillna(0).astype(int)
 

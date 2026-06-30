@@ -508,16 +508,24 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         b = bonus_pts.get(p, 0)
         total_scores[p] = g + m + b
 
-    # Compute trend: compare last 3 days vs previous 3 days (using group + playoff match points)
-    df_valid["date_dt"] = pd.to_datetime(df_valid["date"])
-    all_dates = sorted(df_valid["date_dt"].unique())
+    # Combine group + playoff match data for trend (which needs dates)
+    _trend_parts = [df_valid]
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_tp = pd.read_csv(pp, sep=",")
+            if not df_tp.empty and "date" in df_tp.columns and "who" in df_tp.columns:
+                _trend_parts.append(df_tp)
+    df_trend = pd.concat(_trend_parts, ignore_index=True) if len(_trend_parts) > 1 else _trend_parts[0]
+    df_trend["date_dt"] = pd.to_datetime(df_trend["date"])
+    all_dates = sorted(df_trend["date_dt"].unique())
     trend_map: dict[str, str] = {}
     if len(all_dates) >= 6:
         recent_dates = all_dates[-3:]
         prev_dates = all_dates[-6:-3]
-        df_recent = df_valid[df_valid["date_dt"].isin(recent_dates)].groupby("who")["pontos"].sum()
-        df_prev = df_valid[df_valid["date_dt"].isin(prev_dates)].groupby("who")["pontos"].sum()
-        for who in df_valid["who"].unique():
+        df_recent = df_trend[df_trend["date_dt"].isin(recent_dates)].groupby("who")["pontos"].sum()
+        df_prev = df_trend[df_trend["date_dt"].isin(prev_dates)].groupby("who")["pontos"].sum()
+        for who in df_trend["who"].unique():
             r = df_recent.get(who, 0)
             p = df_prev.get(who, 0)
             if r > p:
@@ -526,7 +534,6 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
                 trend_map[who] = '<span class="trend-down">\u25bc</span>'
             else:
                 trend_map[who] = '<span class="trend-flat">\u25b6</span>'
-
     # Compute badges for all players
     gold_dir = config._au_first_round()
     badge_map: dict[str, list[str]] = {}
@@ -684,9 +691,19 @@ def _build_upcoming_games(config: ChampionshipConfig) -> str:
 
 def _build_player_grid(config: ChampionshipConfig) -> str:
     """Build the player avatar grid with points and hot streak indicators."""
-    df_valid = _load_gold_data(config)
-    if df_valid.empty:
+    _parts: list[pd.DataFrame] = []
+    _gp = _load_gold_data(config)
+    if not _gp.empty:
+        _parts.append(_gp)
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns:
+                _parts.append(df_pp)
+    if not _parts:
         return ""
+    df_valid = pd.concat(_parts, ignore_index=True) if len(_parts) > 1 else _parts[0]
     df_pts = df_valid.groupby("who", as_index=False)["pontos"].sum()
     df_pts.sort_values(["pontos", "who"], ascending=[False, True], inplace=True)
 
@@ -732,9 +749,19 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
 
 def _build_distribution_bars(config: ChampionshipConfig) -> str:
     """Build a distribution bar showing how many players are in each score bracket."""
-    df_valid = _load_gold_data(config)
-    if df_valid.empty:
+    _parts: list[pd.DataFrame] = []
+    _gp = _load_gold_data(config)
+    if not _gp.empty:
+        _parts.append(_gp)
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns:
+                _parts.append(df_pp)
+    if not _parts:
         return ""
+    df_valid = pd.concat(_parts, ignore_index=True) if len(_parts) > 1 else _parts[0]
 
     df_pts = df_valid.groupby("who")["pontos"].sum()
     if df_pts.empty:
