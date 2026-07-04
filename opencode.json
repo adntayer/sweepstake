@@ -1,6 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "model": "llama.cpp/gemma-4-E4B-it-UD-Q6_K_XL.gguf",
+    "model": "DeepSeek V4 Flash Free",
     "autoupdate": false,
     "snapshot": false,
     "share": "disabled",
@@ -27,30 +27,32 @@
         }
     },
     "permission": {
-        "write": "allow",
+        "read": "allow",
         "edit": "allow",
         "grep": "allow",
         "glob": "allow",
-        "patch": "allow",
         "skill": "allow",
-        "todowrite": "allow",
         "websearch": "allow",
         "question": "allow",
+        "webfetch": "allow",
         "bash": {
             "ss run 2026_world_cup": "allow",
-            "ss*": "allow",
-            "Get-ChildItem*": "allow",
-            "Get-Content*": "allow",
-            "Select-Object*": "allow",
-            "ForEach-Object*": "allow",
-            "Group-Object*": "allow",
-            "Sort-Object*": "allow",
-            "Import-Csv*": "allow",
-            "Test-Path*": "allow",
-            "python3*": "allow",
-            "python*": "allow",
+            "ss": "allow",
+            "Get-ChildItem": "allow",
+            "Get-Content": "allow",
+            "Get-Command": "allow",
+            "Select-Object": "allow",
+            "ForEach-Object": "allow",
+            "Group-Object": "allow",
+            "Sort-Object": "allow",
+            "Import-Csv": "allow",
+            "Test-Path": "allow",
+            "python3": "allow",
+            "python": "allow",
+            "py": "allow",
+            "Write-Output": "allow",
+            ".venv\Scripts\python.exe": "allow",
             "*": "ask"
-        },
-        "webfetch": "allow"
+        }
     }
 }
