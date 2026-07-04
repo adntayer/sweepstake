@@ -5,6 +5,10 @@
 [codeburn](https://github.com/getagentseal/codeburn)
 
 
+[site](https://adntayer.github.io/sweepstake/index.html)
+
+
+
 # Get all World Cup 2026 matches (no auth needed for demo)
 curl https://worldcup26.ir/get/games
 

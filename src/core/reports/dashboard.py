@@ -55,6 +55,25 @@ def _initials(name: str) -> str:
     return name[:2].upper()
 
 
+def _short_name(name: str) -> str:
+    """Shorten phase names for table headers."""
+    n = name.strip()
+    nl = n.lower()
+    if "segunda" in nl:
+        return "2\u00aa Fase"
+    if "oitavas" in nl:
+        return "8as"
+    if "quartas" in nl:
+        return "4as"
+    if "semi" in nl:
+        return "Semi"
+    if "terceiro" in nl or nl == "3\u00ba lugar":
+        return "3\u00ba"
+    if "final" in nl:
+        return "Final"
+    return n
+
+
 # ------------------------------------------------------------------
 # Shared CSS
 # ------------------------------------------------------------------
@@ -174,6 +193,32 @@ a:hover { text-decoration: underline; }
     flex-shrink: 0;
 }
 
+/* Stat row / stat card */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.75rem;
+}
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-align: center;
+}
+.stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+.stat-card .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
 /* Rank table (copied from html.py for the full ranking) */
 .rank-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
 .rank-table th { text-align: left; padding: 0.4rem 0.5rem; font-size: 0.7rem; color: var(--text-muted); border-bottom: 1px solid var(--card-border); white-space: nowrap; }
@@ -182,6 +227,10 @@ a:hover { text-decoration: underline; }
 .rank-table .rank-1 td { background: var(--accent-highlight); }
 .rank-table .rank-2 td { background: var(--silver-highlight); }
 .rank-table .rank-3 td { background: var(--bronze-highlight); }
+.rank-table th.sort-asc::after,
+table[data-sortable] th.sort-asc::after { content:" \u25b2"; font-size:0.65rem; }
+.rank-table th.sort-desc::after,
+table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.65rem; }
 
 /* Horizontal scroll for upcoming games */
 .scroll-row {
@@ -413,6 +462,8 @@ body { padding-bottom: 70px; }
     .player-grid { grid-template-columns: repeat(4, 1fr); }
     .game-card { flex: 0 0 30%; }
 }
+.rank-table th.sort-asc::after { content:" \u25b2"; font-size:0.65rem; }
+.rank-table th.sort-desc::after { content:" \u25bc"; font-size:0.65rem; }
 """
 
 
@@ -476,7 +527,7 @@ def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
 
 
 def _build_full_ranking(config: ChampionshipConfig) -> str:
-    """Build the full ranking table with trend indicators and badges."""
+    """Build the full ranking table with trend indicators, badges, and per-phase bonus."""
     df_valid = _load_gold_data(config)
     if df_valid.empty:
         return "<div class='empty-state'>Nenhum participante encontrado</div>"
@@ -490,13 +541,35 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
             for who, grp in df_phase.groupby("who"):
                 playoff_pts[who] = playoff_pts.get(who, 0) + int(grp["pontos"].sum())
 
-    # --- Load bonus points from playoffs_scored.csv ---
+    # --- Load bonus points from playoffs_scored.csv (per phase) ---
     bonus_pts: dict[str, int] = {}
+    bonus_by_phase: dict[str, dict[str, int]] = {}  # {phase: {boleiro: points}}
+    play_phase_order: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
+    play_phase_emoji: dict[str, str] = {
+        "segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1",
+        "quartas": "\U0001f525", "semi": "\U0001f3af",
+        "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6",
+    }
+    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name) for pr in (config.playoff_rounds or [])}
+    for pk in play_phase_order:
+        bonus_by_phase[pk] = {}
     bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
     if os.path.exists(bonus_path):
         df_bonus = pd.read_csv(bonus_path, sep=",")
-        for boleiro, grp in df_bonus.groupby("boleiro"):
-            bonus_pts[boleiro] = int(grp["points"].sum())
+        for _, row in df_bonus.iterrows():
+            b = row["boleiro"]
+            ph = str(row["phase"])
+            pts = int(row["points"])
+            if ph in bonus_by_phase:
+                bonus_by_phase[ph][b] = bonus_by_phase[ph].get(b, 0) + pts
+            bonus_pts[b] = bonus_pts.get(b, 0) + pts
+
+    # ── Check which playoff phases have games in games.csv ──
+    phases_in_games: set[str] = set()
+    if os.path.exists(config.games_file):
+        df_g = pd.read_csv(config.games_file, sep=",")
+        if "round" in df_g.columns:
+            phases_in_games = set(df_g["round"].astype(str).str.strip().unique())
 
     # Build a total score per player: group + playoff matches + bonus
     group_scores = df_valid.groupby("who")["pontos"].sum().to_dict()
@@ -573,6 +646,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
             df_upset = pd.read_csv(upset_path, sep=",")
         except pd.errors.EmptyDataError:
             df_upset = pd.DataFrame()
+        # Only count matches with real results (same filter as zebra page / _build_zebra_counter)
+        df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy() if "real_winner" in df_upset.columns else df_upset
         upset_only = df_upset[df_upset.get("is_upset", 0) == 1]
         for _, r in upset_only.iterrows():
             for p in [x.strip() for x in str(r.get("players_correct", "")).split("|") if x.strip()]:
@@ -605,54 +680,70 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
             if top is not None:
                 badge_map.setdefault(top["boleiro"], []).append("\U0001f40d")
 
+    # ── Combined gold data (group + playoff) for type counts ──
+    _gold_parts = [df_valid]
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns:
+                _gold_parts.append(df_pp)
+    df_all_gold = pd.concat(_gold_parts, ignore_index=True) if len(_gold_parts) > 1 else _gold_parts[0]
+
     score_names = config.scoring_rule_names()
-    agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
-    df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
+    agg_cols = ["pontos"] + [c for c in score_names if c in df_all_gold.columns]
+    df_rank = df_all_gold.groupby("who", as_index=False)[agg_cols].sum()
     # Add playoff match points and bonus team points per player
     df_rank["playoff_pts"] = df_rank["who"].map(playoff_pts).fillna(0).astype(int)
     df_rank["bonus_pts"] = df_rank["who"].map(bonus_pts).fillna(0).astype(int)
+    df_rank["zebra_pts"] = df_rank["who"].map(zebra_counts).fillna(0).astype(int)
     # Sort by total (group + playoff matches + bonus teams)
     df_rank["total_pts"] = df_rank["pontos"] + df_rank["playoff_pts"] + df_rank["bonus_pts"]
     df_rank.sort_values(["total_pts", "who"], ascending=[False, True], inplace=True)
     df_rank.reset_index(drop=True, inplace=True)
     df_rank["#"] = range(1, len(df_rank) + 1)
-    rank_rows = ""
+
+    # ── Header: # | Boleiro | Total | Bônus | 🎯1 | 🥅2 | 📊3 | 🤝4 | 🔶5 | ✔6 | ⚖7 | 👊8 | ❌9 | ❓99 | 🦓Z ──
+    rank_header_combined = '<th>#</th><th>Boleiro</th>'
+    rank_header_combined += '<th style="text-align:right;font-size:0.65rem;">Total</th>'
+    rank_header_combined += '<th style="text-align:right;font-size:0.65rem;">B\u00f4nus</th>'
+    for rn in score_names:
+        em = config.scoring_emoji(rn)
+        m = re.match(r"^(\d+)", rn)
+        num = m.group(1) if m else ""
+        lbl = f"{em} {num}" if em else num
+        rank_header_combined += f'<th style="text-align:right;font-size:0.6rem;">{lbl}</th>'
+    rank_header_combined += '<th style="text-align:right;font-size:0.6rem;">\U0001f993 Z</th>'
+
+    # Build rows with badges and trend
+    rank_rows_updated = ""
     for _, row in df_rank.iterrows():
         rank_num = int(row["#"])
-        medal = "\U0001f947" if rank_num == 1 else "\U0001f948" if rank_num == 2 else "\U0001f949" if rank_num == 3 else ""
+        medal_symbol = "\U0001f947" if rank_num == 1 else "\U0001f948" if rank_num == 2 else "\U0001f949" if rank_num == 3 else ""
         rank_class = f"rank-{rank_num}" if rank_num <= 3 else ""
         trend = trend_map.get(row["who"], "&nbsp;")
-        badges = " ".join(badge_map.get(row["who"], []))
+        badges_str = " ".join(badge_map.get(row["who"], []))
         who_name = row["who"]
-        who_display = f"🤖 {who_name}" if who_name.startswith("LLM") else who_name
-        bonus_display = int(row["bonus_pts"])
+        who_display = f"\U0001f916 {who_name}" if who_name.startswith("LLM") else who_name
         total_display = int(row["total_pts"])
-        cells = f'<td>{medal} {rank_num}</td><td><a href="boleiros/{who_name}.html">{who_display}</a> {trend} <span style="font-size:0.75rem;">{badges}</span></td>'
-        cells += f'<td style="font-weight:700;color:var(--accent)">{total_display}</td>'
-        cells += f'<td style="font-weight:600;">{bonus_display}</td>'
-        for sn in score_names:
-            if sn in row.index:
-                val = int(row[sn]) if pd.notna(row[sn]) else 0
-                cells += f"<td>{val}</td>"
-        num_z = zebra_counts.get(row["who"], 0)
-        cells += f'<td style="font-weight:600;color:{"var(--danger)" if num_z > 0 else "var(--text-muted)"};">{num_z}</td>'
-        rank_rows += f'<tr class="{rank_class}">{cells}</tr>\n'
-    rank_header = ""
-    for sn in score_names:
-        emoji = config.scoring_emoji(sn)
-        h = f"{emoji} " if emoji else ""
-        h += sn.split("-")[0].strip()
-        rank_header += f"<th>{h}</th>"
-    rank_header += '<th style="color:var(--danger);">\U0001f993 Z</th>'
+        bonus_display = int(row["bonus_pts"])
+        zebra_display = int(row["zebra_pts"])
+        cells = f'<td>{medal_symbol} {rank_num}</td><td><a href="boleiros/{who_name}.html">{who_display}</a> {trend} <span style="font-size:0.75rem;">{badges_str}</span></td>'
+        cells += f'<td style="font-weight:700;color:var(--accent);text-align:right;">{total_display}</td>'
+        cells += f'<td style="text-align:right;color:var(--warning);">{bonus_display}</td>'
+        for rn in score_names:
+            val = int(row.get(rn, 0))
+            clr = "var(--success)" if val > 0 else "var(--text-muted)"
+            cells += f'<td style="text-align:right;color:{clr};">{val}</td>'
+        cells += f'<td style="text-align:right;color:var(--danger);">{"\U0001f993 " if zebra_display > 0 else ""}{zebra_display if zebra_display > 0 else "-"}</td>'
+        rank_rows_updated += f'<tr class="{rank_class}">{cells}</tr>\n'
+
     return f"""
 <div style="overflow-x:auto;">
     <table class="rank-table">
-        <thead><tr><th>#</th><th>Boleiro</th><th>Total</th><th>B\u00f4nus</th>{rank_header}</tr></thead>
-        <tbody>{rank_rows}</tbody>
+        <thead><tr>{rank_header_combined}</tr></thead>
+        <tbody>{rank_rows_updated}</tbody>
     </table>
-    <div style="font-size:0.65rem;color:var(--text-muted);padding:0.3rem 0.75rem;text-align:right;">
-        Total = palpites grupos + playoffs + b\u00f4nus de times
-    </div>
 </div>"""
 
 
@@ -832,10 +923,11 @@ def _build_bottom_nav_dashboard(prefix: str = "") -> str:
     """Build the bottom navigation for the dashboard."""
     items = [
         ("index.html", "\U0001f3e0", "In\u00edcio"),
-        ("arena.html", "\u2694\ufe0f", "Arena"),
+        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+        ("times.html", "\U0001f3c6", "Times"),
         ("zebras.html", "\U0001f993", "Zebras"),
         ("palpites.html", "\U0001f4cb", "Palpites"),
-        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+        ("boleiros.html", "\U0001f465", "Boleiros"),
     ]
     links = ""
     for href, icon, label in items:
@@ -1367,6 +1459,17 @@ def _build_emoji_accordion(config: ChampionshipConfig) -> str:
 """
 
 
+def _copy_sorttable_js(html_base: str) -> None:
+    _src = _norm(os.path.join(os.path.dirname(__file__), "sorttable.js"))
+    _dst = _norm(os.path.join(html_base, "sorttable.js"))
+    try:
+        with open(_src, "rb") as f:
+            _c = f.read()
+        with open(_dst, "wb") as f:
+            f.write(_c)
+    except Exception as e:
+        print_colored(f"  [ERROR] Failed to copy sorttable.js: {e}", "red")
+
 def generate_dashboard(config: ChampionshipConfig) -> None:
     """Create the index.html dashboard."""
     if not os.path.exists(config.gold_valid_path()) and not os.path.exists(config.gold_all_path()):
@@ -1427,49 +1530,24 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
             \U0001f3c6 Grupos
         </div>
     </a>
-    <a href="rodadas.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f4ca Rodadas
-        </div>
-    </a>
     <a href="times.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
             \U0001f3c6 Times
         </div>
     </a>
-    <a href="similaridade.html">
+    <a href="arena.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f9ee S\u00f3sia
+            \u2694\ufe0f Arena
         </div>
     </a>
-    <a href="palpites.html">
+    <a href="rodadas.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f4cb Palpites
+            \U0001f4ca Rodadas
         </div>
     </a>
     <a href="ranking_evolution.html">
         <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
             \U0001f4c8 Evolucao
-        </div>
-    </a>
-    <a href="boldometer.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f4ca Boldometro
-        </div>
-    </a>
-    <a href="zebras.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f993 Zebras
-        </div>
-    </a>
-    <a href="bolao_xray.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f50d Raio-X
-        </div>
-    </a>
-    <a href="arquetipos.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f3ad Arqu\u00e9tipos
         </div>
     </a>
 </div>
@@ -1492,6 +1570,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 
 {_build_bottom_nav_dashboard()}
 
+<script src="sorttable.js"></script>
 </body>
 </html>"""
 
@@ -1501,3 +1580,431 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
         f.write(html_content)
 
     print_colored("index.html created", "green")
+
+
+def _build_insights(
+    config: ChampionshipConfig,
+    boldness_map: dict[str, float],
+    streak_data: dict[str, tuple[str, int]],
+    timing_map: dict[str, float],
+    arq_map: dict[str, dict[str, str]],
+    total_pts: dict[str, int],
+    player_games: dict[str, int],
+    player_scored: dict[str, int],
+    zebra_counts_b: dict[str, int],
+) -> str:
+    """Build the insights/records section for boleiros.html."""
+    _player_link = lambda n: f'<a href="boleiros/{n}.html" style="font-weight:600;">{n}</a>'
+    _v = lambda n, v: f"<tr><td>{n}</td><td style='text-align:right;font-weight:700;color:var(--accent);'>{v}</td></tr>"
+
+    rows_left = ""
+    rows_right = ""
+
+    # 1. Highest total score
+    if total_pts:
+        top = max(total_pts, key=total_pts.get)
+        rows_left += _v(f"\U0001f3c6 Maior Pontua\u00e7\u00e3o", f"{_player_link(top)} {total_pts[top]}")
+
+    # 2. Best average
+    best_mn, best_mv = "", 0
+    for p in total_pts:
+        ng = player_games.get(p, 0)
+        if ng >= 5 and total_pts[p]/ng > best_mv: best_mv, best_mn = total_pts[p]/ng, p
+    if best_mn:
+        rows_right += _v(f"\U0001f4c8 Melhor M\u00e9dia", f"{_player_link(best_mn)} {best_mv:.2f}")
+
+    # 3. Most exact scores
+    score_names = config.scoring_rule_names()
+    exact_col = next((c for c in score_names if c.startswith("1-")), "")
+    gold_dir = config._au_first_round()
+    _gp = _load_gold_data(config)
+    _full_parts = [_gp]
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns: _full_parts.append(df_pp)
+    _full = pd.concat(_full_parts, ignore_index=True) if len(_full_parts) > 1 else _full_parts[0]
+
+    if exact_col and exact_col in _full.columns:
+        df_v = _full[_full.get("valido", 0) == 1] if "valido" in _full.columns else _full
+        exact_counts = df_v.groupby("who")[exact_col].sum().to_dict()
+        if exact_counts:
+            top_exact = max(exact_counts, key=exact_counts.get)
+            rows_left += _v(f"\U0001f3af Mais Placar Exato", f"{_player_link(top_exact)} {int(exact_counts[top_exact])}")
+
+    # 4. Highest boldness
+    if boldness_map:
+        top_bold = max(boldness_map, key=lambda p: abs(boldness_map[p]))
+        bv = boldness_map[top_bold]
+        lbl = "\U0001f4a5 Ousado" if bv > 0 else "\U0001F9CA Conservador"
+        rows_right += _v(f"{lbl}", f"{_player_link(top_bold)} {bv:+.2f}")
+
+    # 5. Longest hit streak
+    if streak_data:
+        top_streak = max(((p, l) for p, (t, l) in streak_data.items() if t == "hit"), key=lambda x: x[1], default=("", 0))
+        if top_streak[0]:
+            rows_left += _v(f"\U0001f525 Maior Streak Acertos", f"{_player_link(top_streak[0])} {top_streak[1]}")
+
+    # 6. Longest miss streak
+    miss_data = [(p, l) for p, (t, l) in streak_data.items() if t == "miss"]
+    if miss_data:
+        top_miss = max(miss_data, key=lambda x: x[1])
+        rows_right += _v(f"\U0001f4a9 Maior Streak Erros", f"{_player_link(top_miss[0])} {top_miss[1]}")
+
+    # 7. Earliest predictor
+    if timing_map:
+        top_early = max(timing_map, key=timing_map.get)
+        rows_left += _v(f"\U0001f4c5 Mais Cedo (lead)", f"{_player_link(top_early)} {timing_map[top_early]:.0f}d")
+
+    # 8. Most zebras
+    if zebra_counts_b:
+        top_zebra = max(zebra_counts_b, key=zebra_counts_b.get)
+        rows_right += _v(f"\U0001f993 Mais Zebras", f"{_player_link(top_zebra)} {zebra_counts_b[top_zebra]}")
+
+    # 9. Best aproveitamento
+    best_ap_name, best_ap_val = "", 0
+    for p in total_pts:
+        ng, ns = player_games.get(p, 0), player_scored.get(p, 0)
+        if ng >= 5:
+            a = ns / ng * 100
+            if a > best_ap_val: best_ap_val, best_ap_name = a, p
+    if best_ap_name:
+        rows_left += _v(f"\u2705 Melhor Aproveitamento", f"{_player_link(best_ap_name)} {best_ap_val:.1f}%")
+
+    # 10. Most games played
+    if player_games:
+        top_games = max(player_games, key=player_games.get)
+        rows_right += _v(f"\U0001f3b2 Mais Palpites", f"{_player_link(top_games)} {player_games[top_games]}")
+
+    return f"""<div class="section">
+    <div class="section-title">\U0001f4ca Recordes &amp; Insights</div>
+    <div class="card">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <tr>
+                <td style="width:50%;vertical-align:top;padding-right:0.5rem;">
+                    <table style="width:100%;border-collapse:collapse;">{rows_left}</table>
+                </td>
+                <td style="width:50%;vertical-align:top;padding-left:0.5rem;border-left:1px solid var(--card-border);">
+                    <table style="width:100%;border-collapse:collapse;">{rows_right}</table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>"""
+
+
+def generate_boleiros_index(config: ChampionshipConfig) -> None:
+    """Create boleiros.html — central directory listing all players with links to their pages."""
+    print_colored("creating boleiros.html", "sand")
+    html_base = _norm(os.path.join(config.reports_dir, "html"))
+
+    _all_parts: list[pd.DataFrame] = []
+    _gp = _load_gold_data(config)
+    if not _gp.empty:
+        _all_parts.append(_gp)
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns:
+                _all_parts.append(df_pp)
+    df_all_pts = pd.concat(_all_parts, ignore_index=True).groupby("who", as_index=False)["pontos"].sum() if _all_parts else pd.DataFrame()
+
+    # ── Full gold data (not grouped) for per-player stats ──
+    _full_gold: pd.DataFrame = pd.concat(_all_parts, ignore_index=True) if _all_parts else pd.DataFrame()
+
+    # ── Separate group-only match points ──
+    grupos_pts: dict[str, int] = {}
+    if not _gp.empty:
+        df_grupos = _gp.groupby("who", as_index=False)["pontos"].sum()
+        for _, r in df_grupos.iterrows():
+            grupos_pts[r["who"]] = int(r["pontos"])
+
+    # ── Phase labels ──
+    play_phase_order: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
+    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name) for pr in (config.playoff_rounds or [])}
+    play_phase_emoji: dict[str, str] = {
+        "segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1",
+        "quartas": "\U0001f525", "semi": "\U0001f3af",
+        "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6",
+    }
+
+    # ── Load bonus points from playoffs_scored.csv ──
+    bonus_pts: dict[str, int] = {}
+    bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
+    if os.path.exists(bonus_path):
+        df_bonus = pd.read_csv(bonus_path, sep=",")
+        for _, r in df_bonus.iterrows():
+            b = r["boleiro"]
+            pts = int(r["points"])
+            bonus_pts[b] = bonus_pts.get(b, 0) + pts
+
+    # ── Bonus by phase (per-phase "Bônus" columns) ──
+    all_bonus_phases: list[str] = play_phase_order + (["campeao"] if "campeao" not in play_phase_order else [])
+    bonus_phase_name: dict[str, str] = {**play_phase_name, "campeao": "Campe\u00e3o"}
+    bonus_phase_emoji: dict[str, str] = {**play_phase_emoji, "campeao": "\U0001f3c6"}
+    bonus_by_phase: dict[str, dict[str, int]] = {pk: {} for pk in all_bonus_phases}
+    if os.path.exists(bonus_path):
+        df_bonus2 = pd.read_csv(bonus_path, sep=",")
+        for _, r in df_bonus2.iterrows():
+            b = r["boleiro"]
+            ph = str(r["phase"])
+            pts = int(r["points"])
+            if ph in bonus_by_phase:
+                bonus_by_phase[ph][b] = bonus_by_phase[ph].get(b, 0) + pts
+
+    # ── Match points per phase (for per-phase "Só Jogos" columns) ──
+    # grupo_pts = group match points (already loaded via _gp)
+    match_pts_by_phase: dict[str, dict[str, int]] = {pk: {} for pk in play_phase_order}
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_pp = pd.read_csv(pp, sep=",")
+            if not df_pp.empty and "who" in df_pp.columns and "pontos" in df_pp.columns:
+                for who, grp in df_pp.groupby("who"):
+                    match_pts_by_phase[pr.key][who] = int(grp["pontos"].sum())
+
+    # ── Zebra count per player (same filter as ranking table) ──
+    zebra_counts_b: dict[str, int] = {}
+    upset_path_b = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
+    if os.path.exists(upset_path_b):
+        try:
+            df_upset_b = pd.read_csv(upset_path_b, sep=",")
+        except pd.errors.EmptyDataError:
+            df_upset_b = pd.DataFrame()
+        df_upset_b = df_upset_b[df_upset_b["real_winner"].notna() & (df_upset_b["real_winner"] != "")].copy() if "real_winner" in df_upset_b.columns else df_upset_b
+        upset_only_b = df_upset_b[df_upset_b.get("is_upset", 0) == 1]
+        for _, r in upset_only_b.iterrows():
+            for p in [x.strip() for x in str(r.get("players_correct", "")).split("|") if x.strip()]:
+                zebra_counts_b[p] = zebra_counts_b.get(p, 0) + 1
+
+    # ── Per-player extra stats from full gold data ──
+    player_games: dict[str, int] = {}       # total valid predictions
+    player_scored: dict[str, int] = {}      # count of predictions with pontos > 0
+    if not _full_gold.empty and "who" in _full_gold.columns:
+        df_valid = _full_gold[_full_gold.get("valido", 0) == 1]
+        if not df_valid.empty:
+            _g = df_valid.groupby("who")
+            player_games = _g.size().to_dict()
+            player_scored = _g.apply(lambda x: (x["pontos"] > 0).sum()).to_dict()
+
+    # ── Build scores per player ──
+    jogos_pts: dict[str, int] = {}  # total match points (group + playoff)
+    if not df_all_pts.empty:
+        for _, r in df_all_pts.iterrows():
+            jogos_pts[r["who"]] = int(r["pontos"])
+    all_players = set(jogos_pts.keys()) | set(bonus_pts.keys())
+    total_pts: dict[str, int] = {}
+    for p in all_players:
+        total_pts[p] = jogos_pts.get(p, 0) + bonus_pts.get(p, 0)
+
+    # Headers: match-points-per-phase + bonus-per-phase columns
+    header_cols = '<th style="text-align:center;">#</th><th>Jogador</th>'
+    header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--warning);">Total</th>'
+    header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--text-muted);">S\u00f3 Jogos Grupos</th>'
+    for pk in play_phase_order:
+        em = play_phase_emoji.get(pk, "")
+        nm = play_phase_name.get(pk, pk)
+        header_cols += f'<th style="text-align:right;font-size:0.6rem;color:var(--warning);">{em} S\u00f3 Jogos {nm}</th>'
+    for pk in all_bonus_phases:
+        em = bonus_phase_emoji.get(pk, "")
+        nm = bonus_phase_name.get(pk, pk)
+        header_cols += f'<th style="text-align:right;font-size:0.6rem;color:var(--success);">{em} B\u00f4nus {nm}</th>'
+
+    player_rows = ""
+    if total_pts:
+        sorted_players = sorted(total_pts.items(), key=lambda x: (-x[1], x[0]))
+        rank = 1
+        for name, total in sorted_players:
+            medal = "\U0001f947" if rank == 1 else "\U0001f948" if rank == 2 else "\U0001f949" if rank == 3 else f"<span style='color:var(--text-muted);'>{rank}</span>"
+            cells = f'<td style="padding:0.4rem 0.5rem;text-align:center;">{medal}</td>'
+            cells += f'<td style="padding:0.4rem 0.5rem;"><a href="boleiros/{name}.html" style="font-weight:600;">{name}</a></td>'
+            cells += f'<td style="padding:0.4rem 0.5rem;font-weight:700;color:var(--accent);text-align:right;">{total}</td>'
+            cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:var(--text-muted);">{grupos_pts.get(name, 0)}</td>'
+            for pk in play_phase_order:
+                ph_pts = match_pts_by_phase.get(pk, {}).get(name, 0)
+                ph_color = "var(--warning)" if ph_pts > 0 else "var(--text-muted)"
+                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{ph_color};">{ph_pts}</td>'
+            for pk in all_bonus_phases:
+                bn = bonus_by_phase.get(pk, {}).get(name, 0)
+                bn_color = "var(--success)" if bn > 0 else "var(--text-muted)"
+                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{bn_color};">{bn}</td>'
+            player_rows += f"<tr>{cells}</tr>\n"
+            rank += 1
+
+    # ── Load extra data sources ──
+    gold_dir = config._au_first_round()
+    # Boldness
+    boldness_map: dict[str, float] = {}
+    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
+    if os.path.exists(bold_path):
+        for _, r in pd.read_csv(bold_path, sep=",").iterrows():
+            boldness_map[r["boleiro"]] = float(r["boldness_score"])
+    # Prediction timing
+    timing_map: dict[str, float] = {}
+    timing_path = _norm(os.path.join(gold_dir, "prediction_timing.csv"))
+    if os.path.exists(timing_path):
+        for _, r in pd.read_csv(timing_path, sep=",").iterrows():
+            timing_map[r["boleiro"]] = float(r["lead_days"])
+    # Consistency
+    streak_data: dict[str, tuple[str, int]] = {}
+    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
+    if os.path.exists(cons_path):
+        for boleiro, grp in pd.read_csv(cons_path, sep=",").groupby("boleiro"):
+            grp = grp.sort_values("date")
+            _sl, _st = 0, ""
+            for _, r in reversed(list(grp.iterrows())):
+                st = r.get("streak_type", "")
+                if st == "hit" and (_st == "" or _st == "hit"): _st, _sl = "hit", _sl + 1
+                elif st == "miss" and (_st == "" or _st == "miss"): _st, _sl = "miss", _sl + 1
+                else: break
+            if _st: streak_data[boleiro] = (_st, _sl)
+    # Archetypes
+    arq_map: dict[str, dict[str, str]] = {}
+    arq_path = _norm(os.path.join(gold_dir, "arquetipos_classification.csv"))
+    if os.path.exists(arq_path):
+        for _, r in pd.read_csv(arq_path, sep=",").iterrows():
+            arq_map[r["boleiro"]] = {"emoji": str(r.get("arquetipo_emoji", "")), "nome": str(r.get("arquetipo", ""))}
+
+    # ── Aggregate stats ──
+    n_players = len(total_pts)
+    total_preds = sum(player_games.values())
+    total_zebras = sum(zebra_counts_b.values())
+
+    # Best Média (avg pts per game, >=3 games)
+    best_media_name, best_media_val = "", 0
+    for p in total_pts:
+        ng = player_games.get(p, 0)
+        if ng >= 3:
+            m = total_pts[p] / ng
+            if m > best_media_val: best_media_val, best_media_name = m, p
+    # Best Aprov% (>=3 games)
+    best_aprov_name, best_aprov_val = "", 0
+    for p in total_pts:
+        ng, ns = player_games.get(p, 0), player_scored.get(p, 0)
+        if ng >= 3:
+            a = ns / ng * 100
+            if a > best_aprov_val: best_aprov_val, best_aprov_name = a, p
+    # Most zebras
+    best_zebra_name, best_zebra_val = "", 0
+    for p, z in zebra_counts_b.items():
+        if not p or p.strip().lower() in ("nan", "none", ""): continue
+        if z > best_zebra_val: best_zebra_val, best_zebra_name = z, p
+    # Highest boldness (>=10 games)
+    best_bold_name, best_bold_val = "", 0.0
+    for p, b in boldness_map.items():
+        ng = player_games.get(p, 0)
+        if ng >= 10 and abs(b) > abs(best_bold_val): best_bold_val, best_bold_name = b, p
+    # Longest hit streak
+    best_streak_name, best_streak_len = "", 0
+    for p, (t, l) in streak_data.items():
+        if t == "hit" and l > best_streak_len: best_streak_len, best_streak_name = l, p
+    # Average metrics across all players
+    all_media = [total_pts[p] / max(player_games.get(p, 1), 1) for p in total_pts if player_games.get(p, 0) >= 3]
+    avg_media = sum(all_media) / len(all_media) if all_media else 0
+    all_lead = [v for v in timing_map.values() if v > 0]
+    avg_lead = sum(all_lead) / len(all_lead) if all_lead else 0
+    all_bold = [abs(boldness_map[p]) for p in total_pts if p in boldness_map and player_games.get(p, 0) >= 10]
+    avg_bold = sum(all_bold) / len(all_bold) if all_bold else 0
+    # Total exact scores
+    score_names = config.scoring_rule_names()
+    exact_col = next((c for c in score_names if c.startswith("1-")), "")
+    total_exact = 0
+    if exact_col and exact_col in _full_gold.columns:
+        total_exact = int(_full_gold[_full_gold["valido"] == 1][exact_col].sum()) if "valido" in _full_gold.columns else int(_full_gold[exact_col].sum())
+    # Most exact scores
+    best_exact_name, best_exact_val = "", 0
+    if exact_col and exact_col in _full_gold.columns and "who" in _full_gold.columns:
+        df_v = _full_gold[_full_gold.get("valido", 0) == 1] if "valido" in _full_gold.columns else _full_gold
+        for who, grp in df_v.groupby("who"):
+            ec = int(grp[exact_col].sum())
+            if ec > best_exact_val: best_exact_val, best_exact_name = ec, who
+
+    stats_cards = ""
+    if n_players:
+        stats_cards = f"""<div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+    <div class="stat-card">
+        <div class="value" style="font-size:1.3rem;">{n_players}</div>
+        <div class="label">Participantes</div>
+    </div>
+    <div class="stat-card">
+        <div class="value" style="font-size:1.3rem;">{total_preds}</div>
+        <div class="label">Palpites V\u00e1lidos</div>
+    </div>
+    <div class="stat-card">
+        <div class="value" style="font-size:1.3rem;">\U0001f993 {total_zebras}</div>
+        <div class="label">Zebras Acertadas</div>
+    </div>
+</div>
+<div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin-top:0;">
+    <div class="stat-card">
+        <div class="value" style="font-size:1rem;color:var(--success);">{best_media_name}</div>
+        <div class="label">Melhor M\u00e9dia ({best_media_val:.2f})</div>
+    </div>
+    <div class="stat-card">
+        <div class="value" style="font-size:1rem;color:var(--voce);">{best_aprov_name}</div>
+        <div class="label">Melhor Aprov% ({best_aprov_val:.1f}%)</div>
+    </div>
+    <div class="stat-card">
+        <div class="value" style="font-size:1rem;color:var(--danger);">{best_zebra_name or "---"}</div>
+        <div class="label">Mais Zebras ({best_zebra_val})</div>
+    </div>
+</div>
+<div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin-top:0;">
+    <div class="stat-card">
+        <div class="value" style="font-size:1rem;color:var(--warning);">{best_bold_name}</div>
+        <div class="label">\U0001f4a5 Maior Ousadia ({best_bold_val:+.2f})</div>
+    </div>
+    <div class="stat-card">
+        <div class="value" style="font-size:1rem;color:var(--success);">{best_streak_name or "---"}</div>
+        <div class="label">\U0001f525 Maior Streak ({best_streak_len})</div>
+    </div>
+    <div class="stat-card">
+        <div class="value" style="font-size:1rem;color:var(--accent);">{best_exact_name}</div>
+        <div class="label">\U0001f3af Mais Placar Exato ({best_exact_val})</div>
+    </div>
+</div>"""
+
+    body = f"""<div class="hero">
+    <h1>\U0001f465 Boleiros</h1>
+    <div class="subtitle">Todos os participantes do bol\u00e3o</div>
+</div>
+{stats_cards}
+<div class="section">
+    <div class="card" style="padding:0;">
+        <div style="overflow-x:auto;">
+            <table class="rank-table">
+                <thead><tr>
+                    {header_cols}
+                </tr></thead>
+                <tbody>{player_rows}</tbody>
+            </table>
+        </div>
+    </div>
+</div>"""
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boleiros - {config.report_title}</title>
+    <style>
+    {config.theme.to_css_vars()}
+    {_CSS_DASHBOARD}
+    </style>
+</head>
+<body>
+{body}
+<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
+    atualizado \u00e0s {datetime.now(pytz.timezone(config.timezone)).strftime("%d/%m/%Y %H:%M:%S")}
+</div>
+""" + _build_bottom_nav_dashboard() + """
+<script src="sorttable.js"></script>
+</body>
+</html>"""
+    path = _norm(os.path.join(html_base, "boleiros.html"))
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(html)
+    print_colored("boleiros.html created", "green")

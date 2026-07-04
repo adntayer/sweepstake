@@ -847,11 +847,11 @@ def _build_arquetipos(config: ChampionshipConfig) -> str:
 </div>
 """
 
-    # --- Legend + How to Read (accordion, closed by default) ---
+    # --- Legend + How to Read (accordion, closed by default, simplified) ---
     legend_intro = (
-        "Cada jogador recebe <strong>exatamente 1 (um) arqu\u00e9tipo exclusivo</strong>. "
-        "A classifica\u00e7\u00e3o compara 8 m\u00e9tricas diferentes, converte cada uma em percentil (0\u2013100) "
-        "e atribui o arqu\u00e9tipo com maior percentil. Se o maior percentil for menor que 50%, o jogador "
+        "Cada jogador recebe <strong>1 \u00fanico arqu\u00e9tipo</strong>. "
+        "A classifica\u00e7\u00e3o compara 8 m\u00e9tricas, converte cada uma em percentil (0\u2013100) "
+        "e atribui o arqu\u00e9tipo com maior percentil. Se nenhum passar de 50%, o jogador "
         "\u00e9 classificado como <em>Indefinido</em>."
     )
     legend_rows = ""
@@ -859,7 +859,7 @@ def _build_arquetipos(config: ChampionshipConfig) -> str:
         cat_name = cat["nome"]
         cat_emoji = cat["emoji"]
         cat_desc = cat["descricao"]
-        legend_rows += f'<tr class="cat-header"><td colspan="4" style="color:var(--text);">\n    {cat_emoji} <strong>{cat_name}</strong> <span style="font-weight:400;font-size:0.75rem;color:var(--text-muted);">— {cat_desc}</span>\n</td></tr>\n'
+        legend_rows += f'<tr class="cat-header"><td colspan="3" style="color:var(--text);">\n    {cat_emoji} <strong>{cat_name}</strong> <span style="font-weight:400;font-size:0.75rem;color:var(--text-muted);">— {cat_desc}</span>\n</td></tr>\n'
         for a in ARQUETIPOS:
             if a.get("categoria") != cat_name:
                 continue
@@ -867,31 +867,11 @@ def _build_arquetipos(config: ChampionshipConfig) -> str:
             nome = a["nome"]
             desc = a["descricao"]
             cor = a["cor"]
-            tier_tags = ""
-            for t in TIERS:
-                tt_color = t["cor"]
-                tier_tags += f'<span class="tier-tag" style="background:{tt_color}22;color:{tt_color};border:1px solid {tt_color};">{t["emoji"]} {t["label"]} (\u2265{t["min"]}%)</span> '
             legend_rows += f"""<tr>
     <td class="arq-emoji">{emoji}</td>
     <td class="arq-name" style="color:{cor};">{nome}</td>
     <td class="arq-desc">{desc}</td>
-    <td>{tier_tags}</td>
 </tr>"""
-    how_to_read = """
-    <div style="margin-top:0.5rem;padding:0.5rem;background:var(--card-border);border-radius:8px;">
-        <strong>Exemplo:</strong>
-        <div style="display:flex;align-items:center;gap:0.4rem;margin-top:0.3rem;flex-wrap:wrap;">
-            <span style="background:#6366f122;color:#6366f1;border:1px solid #6366f1;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.7rem;">\U0001f48e S</span>
-            <span style="font-weight:600;">Jo\u00e3o Henrique</span>
-            <span style="font-size:0.75rem;color:var(--text-muted);">98%</span>
-            <span style="font-size:0.65rem;padding:0.1rem 0.4rem;border-radius:4px;background:var(--card-border);color:var(--text-muted);">\U0001f30d europeu</span>
-        </div>
-        <div style="margin-top:0.3rem;color:var(--text-muted);font-size:0.7rem;">
-            \u2192 Jogador tem <strong>98%</strong> de percentil na m\u00e9trica <em>Cientista</em> (m\u00e9dia de pontos por jogo),
-            o que lhe d\u00e1 tier <strong>\U0001f48e S</strong> (\u226590%). O Geo mostra que ele se destaca mais em sele\u00e7\u00f5es <strong>europeias</strong>.
-            Ao lado, o <strong>2\u00ba lugar</strong> mostra qual seria o segundo arqu\u00e9tipo mais forte do jogador.
-        </div>
-    </div>"""
     body += f"""
 <details class="accordion-section">
     <summary class="accordion-summary">\U0001f4d6 Legenda dos Arqu\u00e9tipos <span class="accordion-hint">(clique para expandir)</span></summary>
@@ -905,14 +885,12 @@ def _build_arquetipos(config: ChampionshipConfig) -> str:
                     <th></th>
                     <th>Arqu\u00e9tipo</th>
                     <th>Descri\u00e7\u00e3o</th>
-                    <th>Tiers</th>
                 </tr></thead>
                 <tbody>
                 {legend_rows}
                 </tbody>
             </table>
         </div>
-        {how_to_read}
     </div>
 </details>
 """
@@ -948,11 +926,6 @@ def _build_arquetipos(config: ChampionshipConfig) -> str:
     <div class="card">{dist_rows}</div>
 </div>
 """
-
-    # --- Perfil Global (GEO) ---
-    geo_section = _build_geo_section(df)
-    if geo_section:
-        body += geo_section
 
     return _page_frame(config, f"Arqu\u00e9tipos - {config.report_title}", body, active_nav="arquetipos.html")
 
@@ -1062,40 +1035,30 @@ def _build_gallery(df: pd.DataFrame) -> str:
 
 
 def _build_archetype_card(arq_name: str, players: list[dict], a_def: dict) -> str:
-    """Build one archetype card with player rows sorted by tier then score."""
+    """Build one archetype card with player rows sorted by score descending."""
     arq_emoji = a_def.get("emoji", "?")
     arq_cor = a_def.get("cor", "var(--text-muted)")
     arq_desc = a_def.get("descricao", "")
     count = len(players)
 
-    # Sort players: tier (S>A>B>C>D) then score desc
-    tier_order = {"S": 0, "A": 1, "B": 2, "C": 3, "D": 4}
+    # Sort players by score desc
     players_sorted = sorted(
         players,
-        key=lambda r: (tier_order.get(str(r.get("tier_label", "D")), 99), -int(r.get("score_int", 0)))
+        key=lambda r: -int(r.get("score_int", 0))
     )
 
     rows_html = ""
     for r in players_sorted:
         nome = str(r["boleiro"])
-        tier_label = str(r.get("tier_label", "D"))
-        tier_emoji = str(r.get("tier_emoji", ""))
-        tier_cor = str(r.get("tier_cor", "var(--text-muted)"))
         score = int(r.get("score_int", 0))
-        geo = str(r.get("perfil_global", ""))
-        geo_emoji = GEO_EMOJI.get(geo, "") if geo else ""
-        geo_nome = GEO_NOME.get(geo, "") if geo else ""
-        geo_badge = f'<span class="geo-badge">{geo_emoji} {geo_nome}</span>' if geo else ""
         ru_arq = str(r.get("runner_up_arq", ""))
         ru_score = int(r.get("runner_up_score", 0))
         ru_html = f'<span class="runner-up">2\u00ba: {ru_arq} {ru_score}%</span>' if ru_arq else ""
 
         rows_html += f"""
 <div class="player-row">
-    <span class="tier-badge" style="background:{tier_cor}22;color:{tier_cor};border:1px solid {tier_cor};">{tier_emoji} {tier_label}</span>
     <span class="player-name"><a href="boleiros/{nome}.html">{nome}</a></span>
     <span class="player-score">{score}%</span>
-    {geo_badge}
     {ru_html}
 </div>"""
 
@@ -1127,6 +1090,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
         idx = back_link.rfind("index.html")
         if idx >= 0:
             nav_prefix = back_link[:idx]
+    script_src = nav_prefix + "sorttable.js" if back_link else "sorttable.js"
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1146,6 +1110,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
     atualizado \u00e0s {now_str}
 </div>
 {_bottom_nav_html(active_nav, nav_prefix)}
+<script src="{script_src}"></script>
 </body>
 </html>"""
 

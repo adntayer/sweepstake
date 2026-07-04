@@ -51,7 +51,7 @@
             "python": "allow",
             "py": "allow",
             "Write-Output": "allow",
-            ".venv\Scripts\python.exe": "allow",
+            "Select-String": "allow",
             "*": "ask"
         }
     }

@@ -42,6 +42,25 @@ def _norm(path: str) -> str:
     return os.path.normpath(path)
 
 
+def _short_name(name: str) -> str:
+    """Shorten phase names for table headers."""
+    n = name.strip()
+    nl = n.lower()
+    if "segunda" in nl:
+        return "2\u00aa Fase"
+    if "oitavas" in nl:
+        return "8as"
+    if "quartas" in nl:
+        return "4as"
+    if "semi" in nl:
+        return "Semi"
+    if "terceiro" in nl or nl == "3\u00ba lugar":
+        return "3\u00ba"
+    if "final" in nl:
+        return "Final"
+    return n
+
+
 # ------------------------------------------------------------------
 # Shared CSS block (theme-driven) — now loaded from external styles/base.css
 # ------------------------------------------------------------------
@@ -258,6 +277,10 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
 .rank-table .rank-1 td { background: var(--accent-highlight); }
 .rank-table .rank-2 td { background: var(--silver-highlight); }
 .rank-table .rank-3 td { background: var(--bronze-highlight); }
+.rank-table th.sort-asc::after,
+table[data-sortable] th.sort-asc::after { content:" \u25b2"; font-size:0.65rem; }
+.rank-table th.sort-desc::after,
+table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.65rem; }
 
 /* Section spacing */
 .section { margin: 1rem 0; }
@@ -362,6 +385,7 @@ details .content { padding: 0.75rem 1rem; }
 .heat-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .heat-row { display: flex; gap: 0; margin-bottom: 2px; }
 .heat-label { width: 80px; min-width: 80px; font-size: 0.7rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 4px; line-height: 28px; text-align: right; }
+.heat-label-right { width: 80px; min-width: 80px; font-size: 0.7rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 4px; line-height: 28px; text-align: left; }
 .heat-cells { display: flex; gap: 2px; }
 .heat-cell { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--text); border-radius: 3px; flex-shrink: 0; }
 .heat-cell-header { width: 28px; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; color: var(--text-muted); flex-shrink: 0; border-radius: 3px; }
@@ -545,10 +569,11 @@ def _bottom_nav_html(active: str = "", prefix: str = "") -> str:
     """Build the fixed bottom navigation bar. 'active' should match a href."""
     items = [
         ("index.html", "\U0001f3e0", "In\u00edcio"),
-        ("arena.html", "\u2694\ufe0f", "Arena"),
+        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+        ("times.html", "\U0001f3c6", "Times"),
         ("zebras.html", "\U0001f993", "Zebras"),
         ("palpites.html", "\U0001f4cb", "Palpites"),
-        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+        ("boleiros.html", "\U0001f465", "Boleiros"),
     ]
     links = ""
     for href, icon, label in items:
@@ -570,6 +595,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
     tz = pytz.timezone(config.timezone)
     now_str = datetime.now(tz).strftime("%d/%m/%Y %H:%M:%S")
 
+    script_src = nav_prefix + "sorttable.js" if back_link else "sorttable.js"
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -588,6 +614,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
     atualizado às {now_str}
 </div>
 {_bottom_nav_html(active_nav, nav_prefix)}
+<script src="{script_src}"></script>
 </body>
 </html>"""
 
@@ -642,6 +669,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     else:
         df_striker = pd.DataFrame(columns=["boleiro", "striker"])
     max_pts = _max_points_per_game(config)
+    gold_dir = config._au_first_round()
 
     df_bol = df_valid.loc[df_valid["who"] == boleiro].copy()
 
@@ -979,38 +1007,144 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     history_rows_past = _build_history_rows(df_hist_past) if n_past else ""
     history_rows_future = _build_history_rows(df_hist_future) if n_future else '<div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">Nenhum jogo futuro.</div>'
 
-    # Build stat rows: add pending stat if any
+    # ── Compute extra player metrics ──
+    scored_games = int((df_bol["pontos"] > 0).sum()) if len(df_bol) else 0
+    bonus_pts_only = bonus_total  # already separate bonus total
+
     pending_stat_html = ""
     if n_pending > 0:
-        pending_stat_html = f'<div class="stat-card"><div class="value" style="color:var(--warning);font-size:1.2rem;">\u23f3 {n_pending}</div><div class="label">Aguardando</div></div>'
+        pending_stat_html = f'<div class="stat-card"><div class="value" style="color:var(--warning);font-size:1.3rem;">\u23f3 {n_pending}</div><div class="label">Aguardando</div></div>'
 
     grand_total = total_pts + bonus_total
+    pending_row = f'<div class="stat-row" style="grid-template-columns:repeat(1,1fr);margin-top:0;">{pending_stat_html}</div>' if n_pending else ""
+
     body = f"""
 <div class="hero">
     <h1>\U0001f464 {boleiro}</h1>
     <div class="subtitle">{config.report_title}</div>
 </div>
 
-<div class="stat-row" style="grid-template-columns:repeat(2,1fr);">
+<div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
     <div class="stat-card">
         <div class="value" style="color:var(--voce)">{total_pts}</div>
-        <div class="label">Total Jogos</div>
+        <div class="label">Jogos</div>
+    </div>
+    <div class="stat-card">
+        <div class="value" style="color:var(--warning);font-size:1.2rem;">{bonus_pts_only}</div>
+        <div class="label">B\u00f4nus</div>
     </div>
     <div class="stat-card">
         <div class="value" style="color:var(--accent)">{grand_total}</div>
-        <div class="label">Total c/ B\u00f4nus</div>
+        <div class="label">Total</div>
     </div>
 </div>
-<div class="stat-row" style="grid-template-columns:repeat(2,1fr);margin-top:0;">
+<div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin-top:0;">
     <div class="stat-card">
-        <div class="value" style="color:var(--voce)">{avg_per_game}</div>
-        <div class="label">Media/Jogo ({num_games})</div>
+        <div class="value" style="color:var(--voce);font-size:1.2rem;">{avg_per_game}</div>
+        <div class="label">M\u00e9dia ({num_games}j)</div>
     </div>
     <div class="stat-card">
-        <div class="value" style="color:var(--voce)">{round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0}%</div>
-        <div class="label">Aproveitamento</div>
+        <div class="value" style="color:var(--success);font-size:1.2rem;">{round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0}%</div>
+        <div class="label">Aprov%</div>
     </div>
-    {pending_stat_html}
+    <div class="stat-card">
+        <div class="value" style="color:var(--danger);font-size:1.2rem;">\U0001f993 {player_zebra_cnt}</div>
+        <div class="label">Zebras</div>
+    </div>
+</div>
+{pending_row}"""
+
+    # ── Advanced metrics card ──
+    _streak_label = ""
+    _streak_color = "var(--text-muted)"
+    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
+    if os.path.exists(cons_path):
+        df_cons_tmp = pd.read_csv(cons_path, sep=",")
+        df_cp = df_cons_tmp[df_cons_tmp["boleiro"] == boleiro].sort_values("date")
+        if not df_cp.empty:
+            _sl = 0
+            _st = ""
+            for _, r in reversed(list(df_cp.iterrows())):
+                st = r.get("streak_type", "")
+                if st == "hit" and (_st == "" or _st == "hit"):
+                    _st = "hit"
+                    _sl += 1
+                elif st == "miss" and (_st == "" or _st == "miss"):
+                    _st = "miss"
+                    _sl += 1
+                else:
+                    break
+            if _st == "hit":
+                _streak_label = f"\U0001f525 {_sl} acertos"
+                _streak_color = "var(--success)"
+            elif _st == "miss":
+                _streak_label = f"\U0001f4a9 {_sl} erros"
+                _streak_color = "var(--danger)"
+            else:
+                _streak_label = "\u2014"
+    if not _streak_label:
+        _streak_label = "\u2014"
+
+    # Dados por fase (aproveitamento por fase)
+    _phase_stats = ""
+    if not df_bol.empty and "phase" in df_bol.columns:
+        _ph_groups = df_bol.groupby("phase")
+        _ph_rows = []
+        for _ph, _grp in _ph_groups:
+            _ph_n = len(_grp)
+            _ph_sum = int(_grp["pontos"].sum())
+            _ph_avg = round(_ph_sum / _ph_n, 1) if _ph_n else 0
+            _ph_label = _short_name(_ph) if _ph else "1\u00aa Fase"
+            _ph_rows.append(f'<span style="font-size:0.85rem;padding:0.2rem 0.5rem;background:var(--card-border);border-radius:6px;"><strong>{_ph_label}</strong> {_ph_sum}p ({_ph_avg}/j)</span>')
+        if _ph_rows:
+            _phase_stats = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;">' + " ".join(_ph_rows) + "</div>"
+
+    _aprov_pct = round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0
+
+    # -- Load extra per-player metrics --
+    _boldness_player = ""
+    _boldness_score_val = 0.0
+    bold_path2 = _norm(os.path.join(gold_dir, "boldness_index.csv"))
+    if os.path.exists(bold_path2):
+        df_b = pd.read_csv(bold_path2, sep=",")
+        df_bp = df_b[df_b["boleiro"] == boleiro]
+        if not df_bp.empty:
+            _boldness_score_val = float(df_bp.iloc[0]["boldness_score"])
+            if _boldness_score_val > 0.3: _boldness_player = "\U0001f4a5 Ousado"
+            elif _boldness_score_val < -0.3: _boldness_player = "\U0001F9CA Conservador"
+            else: _boldness_player = "\u2696\ufe0f Equilibrado"
+
+    _lead_days = 0
+    timing_path2 = _norm(os.path.join(gold_dir, "prediction_timing.csv"))
+    if os.path.exists(timing_path2):
+        df_t = pd.read_csv(timing_path2, sep=",")
+        df_tp = df_t[df_t["boleiro"] == boleiro]
+        if not df_tp.empty:
+            _lead_days = int(float(df_tp.iloc[0]["lead_days"]))
+
+    # Count exact scores for this player
+    _exact_count = 0
+    score_names_p = config.scoring_rule_names()
+    exact_col_p = next((c for c in score_names_p if c.startswith("1-")), "")
+    if exact_col_p and exact_col_p in df_bol.columns:
+        _exact_count = int(df_bol[exact_col_p].sum())
+
+    _insight_cards = f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:{_streak_color};">{_streak_label}</div><div class="label">Sequ\u00eancia</div></div>'
+    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--voce);">{avg_per_day}</div><div class="label">M\u00e9dia/Dia ({num_days}d)</div></div>'
+    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--voce);">{num_games}</div><div class="label">Jogos</div></div>'
+    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1rem;color:var(--warning);">{_boldness_player}</div><div class="label">Ousadia ({_boldness_score_val:+.2f})</div></div>'
+    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--accent);">{_lead_days}d</div><div class="label">\U0001f4c5 Lead m\u00e9dio</div></div>'
+    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--success);">{_exact_count}</div><div class="label">\U0001f3af Placar Exato</div></div>'
+
+    body += f"""
+<div class="section">
+    <div class="section-title">\U0001f4ca M\u00e9tricas Avan\u00e7adas</div>
+    <div class="card">
+        <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+            {_insight_cards}
+        </div>
+        {_phase_stats}
+    </div>
 </div>
 """
 
@@ -1051,7 +1185,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 <div class="section">
     <div class="section-title">\U0001f3af Distribui\u00e7\u00e3o de Acertos ({n_preds})</div>
     <div class="card">
-        <table style="width:100%;border-collapse:collapse;">
+        <table data-sortable style="width:100%;border-collapse:collapse;">
             {dist_rows}
         </table>
     </div>
@@ -1170,6 +1304,10 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 else:
                     checkable = phase_consumed.get(phase_key, False)
 
+                # Visual coloring: use participants to determine green/red even before phase finishes
+                # If we know which teams are in this phase, show green/red; otherwise yellow.
+                has_phase_teams = bool(participants)
+
                 phase_pts = 0
                 correct_count = 0
                 total_count = 0
@@ -1187,22 +1325,27 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                         phase_pts += pts_per_correct
                         correct_count += 1
 
-                    if not checkable:
-                        bg = "rgba(234,179,8,0.15)"
-                        border = "var(--warning)"
-                        color = "var(--warning)"
+                    # Visual coloring:
+                    #   has_phase_teams=False → orange (no info / phase not set up)
+                    #   display_passed=True   → green  (advanced / in phase)
+                    #   checkable=True        → red    (eliminated)
+                    #   checkable=False       → orange (phase in progress, unknown)
+                    if not has_phase_teams:
+                        _bg, _border, _color = "rgba(234,179,8,0.15)", "var(--warning)", "var(--warning)"
+                    elif is_first_knockout:
+                        display_passed = team in participants
+                        _bg, _border, _color = ("rgba(34,197,94,0.15)", "var(--success)", "var(--success)") if display_passed else ("rgba(239,68,68,0.15)", "var(--danger)", "var(--danger)")
                     else:
-                        if is_first_knockout:
-                            display_passed = team in participants
+                        if passed:
+                            _bg, _border, _color = "rgba(34,197,94,0.15)", "var(--success)", "var(--success)"
+                        elif not checkable:
+                            _bg, _border, _color = "rgba(234,179,8,0.15)", "var(--warning)", "var(--warning)"
                         else:
-                            display_passed = passed
-                        bg = "rgba(34,197,94,0.15)" if display_passed else "rgba(239,68,68,0.15)"
-                        border = "var(--success)" if display_passed else "var(--danger)"
-                        color = "var(--success)" if display_passed else "var(--danger)"
+                            _bg, _border, _color = "rgba(239,68,68,0.15)", "var(--danger)", "var(--danger)"
                     teams_list += (
                         f'<span style="display:inline-block;padding:0.2rem 0.6rem;margin:0.15rem;'
-                        f'background:{bg};border:1px solid {border};border-radius:999px;'
-                        f'font-size:0.75rem;color:{color};">{team}</span>'
+                        f'background:{_bg};border:1px solid {_border};border-radius:999px;'
+                        f'font-size:0.75rem;color:{_color};">{team}</span>'
                     )
 
                 total_bonus_pts += phase_pts
@@ -1254,8 +1397,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 legend = (
                     '<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem;'
                     'display:flex;gap:0.75rem;flex-wrap:wrap;">'
-                    '<span>\U0001f7e1 fase n\u00e3o iniciada</span>'
-                    '<span style="color:var(--success);">\u25cf time avan\u00e7ou</span>'
+                    '<span>\U0001f7e1 sem informa\u00e7\u00f5es / fase n\u00e3o iniciada</span>'
+                    '<span style="color:var(--success);">\u25cf time avan\u00e7ou / na fase</span>'
                     '<span style="color:var(--danger);">\u25cf time eliminado</span>'
                     '</div>'
                 )
@@ -1363,13 +1506,13 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             f'<div class="section">'
             f'<div class="section-title">\U0001f4ca Pontos por Fase</div>'
             f'<div class="card" style="overflow-x:auto;">'
-            f'<table style="width:100%;border-collapse:collapse;font-size:0.85rem;">'
-            f'<thead><tr style="color:var(--text-muted);border-bottom:1px solid var(--card-border);">'
-            f'<th style="text-align:left;padding:0.4rem;">Fase</th>'
-            f'<th style="text-align:right;padding:0.4rem;">Jogos</th>'
-            f'<th style="text-align:right;padding:0.4rem;">B\u00f4nus</th>'
-            f'<th style="text-align:right;padding:0.4rem;">Times</th>'
-            f'<th style="text-align:right;padding:0.4rem;">Total</th>'
+f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85rem;">'
+             f'<thead><tr style="color:var(--text-muted);border-bottom:1px solid var(--card-border);">'
+             f'<th style="text-align:left;padding:0.4rem;">Fase</th>'
+             f'<th style="text-align:right;padding:0.4rem;">Jogos</th>'
+             f'<th style="text-align:right;padding:0.4rem;">B\u00f4nus</th>'
+             f'<th style="text-align:right;padding:0.4rem;">Times</th>'
+             f'<th style="text-align:right;padding:0.4rem;">Total</th>'
             f'</tr></thead><tbody>'
             f'{phase_rows}'
             f'<tr style="border-top:2px solid var(--accent);font-weight:700;">'
@@ -1391,9 +1534,93 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         body += f'<div class="card"><div class="card-title">Pontos por Dia — Voce vs Bolao</div><div style="padding:0.5rem 0;">{compare_bars}</div></div>\n'
 
     # ------------------------------------------------------------------
+    # Round-by-round performance table
+    # ------------------------------------------------------------------
+    rbr_html = ""
+    rbr_path = _norm(os.path.join(gold_dir, "round_by_round.csv"))
+    if os.path.exists(rbr_path):
+        df_rbr = pd.read_csv(rbr_path, sep=",")
+        df_rbr_p = df_rbr[df_rbr["boleiro"] == boleiro].sort_values("round_number")
+        if not df_rbr_p.empty:
+            rbr_rows = ""
+            for _, rr in df_rbr_p.iterrows():
+                rl = str(rr["round_label"])
+                rp = int(rr["points"])
+                rc = int(rr["cumulative_points"])
+                rk = int(rr["rank"]) if pd.notna(rr.get("rank")) else 0
+                rank_color = "var(--success)" if rk <= 3 else "var(--text-muted)"
+                rbr_rows += f"<tr><td>{rl}</td><td style='text-align:right;'>{rp}</td><td style='text-align:right;color:var(--accent);'>{rc}</td><td style='text-align:right;color:{rank_color};'>{rk}\u00ba</td></tr>\n"
+            rbr_html = f"""<div class="section">
+    <div class="section-title">\U0001f4ca Rodada a Rodada</div>
+    <div class="card" style="overflow-x:auto;">
+        <table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <thead><tr style="color:var(--text-muted);border-bottom:1px solid var(--card-border);">
+                <th style="text-align:left;padding:0.4rem;">Rodada</th>
+                <th style="text-align:right;padding:0.4rem;">Pontos</th>
+                <th style="text-align:right;padding:0.4rem;">Acumulado</th>
+                <th style="text-align:right;padding:0.4rem;">Rank*</th>
+            </tr></thead>
+            <tbody>{rbr_rows}</tbody>
+        </table>
+        <div style="font-size:0.65rem;color:var(--text-muted);margin-top:0.4rem;">*Rank baseado apenas em pontos dos palpites (b\u00f4nus n\u00e3o incluso)</div>
+    </div>
+</div>"""
+    body += rbr_html
+
+    # --- Best and worst teams (goal_error_by_team) → before ta_parts ---
+    error_path = _norm(os.path.join(gold_dir, "goal_error_by_team.csv"))
+    best_team_html = ""
+    worst_team_html = ""
+    bias_html = ""
+    if os.path.exists(error_path):
+        df_err = pd.read_csv(error_path, sep=",")
+        df_err_p_all = df_err[df_err["boleiro"] == boleiro].copy()
+        if not df_err_p_all.empty:
+            df_err_p = df_err_p_all[df_err_p_all["role"] == "total"].copy()
+            if df_err_p.empty:
+                df_err_p = df_err_p_all.copy()
+            df_err_p_sorted = df_err_p.sort_values("mae")
+            best_teams = df_err_p_sorted.head(3)
+            worst_teams = df_err_p_sorted.tail(3)
+
+            max_mae = max(df_err_p["mae"].max(), 1)
+            best_team_html = "<div style='margin-top:0.5rem;'>"
+            best_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--success);margin-bottom:0.3rem;">\U0001f7e2 Menor erro — voc\u00ea quase acertou o placar</div>'
+            for _, r in best_teams.iterrows():
+                bw = max(r["mae"] / max_mae * 100, 2)
+                best_team_html += f'<div style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;padding:0.2rem 0;"><span style="min-width:90px;font-weight:600;">{r["team"]}</span><div style="flex:1;height:14px;background:var(--card-border);border-radius:6px;overflow:hidden;"><div style="width:{bw:.0f}%;height:100%;background:var(--success);border-radius:6px;"></div></div><span style="min-width:50px;text-align:right;color:var(--text-muted);">m\u00e9dia de {r["mae"]:.1f} gol(s) de erro</span></div>\n'
+            best_team_html += "</div>"
+
+            worst_team_html = "<div style='margin-top:0.5rem;'>"
+            worst_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--danger);margin-bottom:0.3rem;">\U0001f534 Maior erro — seus palpites para esses times foram longe do real</div>'
+            for _, r in worst_teams.iterrows():
+                bw = max(r["mae"] / max_mae * 100, 2)
+                worst_team_html += f'<div style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;padding:0.2rem 0;"><span style="min-width:90px;font-weight:600;">{r["team"]}</span><div style="flex:1;height:14px;background:var(--card-border);border-radius:6px;overflow:hidden;"><div style="width:{bw:.0f}%;height:100%;background:var(--danger);border-radius:6px;"></div></div><span style="min-width:50px;text-align:right;color:var(--text-muted);">m\u00e9dia de {r["mae"]:.1f} gol(s) de erro</span></div>\n'
+            worst_team_html += "</div>"
+
+            # bias section removed — too confusing for most users
+
+    # ------------------------------------------------------------------
+    # Team goal error (MAE) + bias — simplified
+    # ------------------------------------------------------------------
+    ta_html = ""
+    ta_parts = best_team_html + worst_team_html + bias_html
+    if ta_parts.strip():
+        ta_html = f"""<div class="section">
+    <div class="section-title">\U0001f3e0 Times — Precis\u00e3o dos Seus Placar</div>
+    <div class="card" style="overflow-x:auto;padding:0.6rem 0.75rem;">
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem;line-height:1.4;">
+            Abaixo, a m\u00e9dia de erro dos seus palpites de <strong>placar</strong> para cada time.
+            Quanto menor o erro, mais perto voc\u00ea chegou do resultado real.
+        </div>
+        {ta_parts}
+    </div>
+</div>"""
+    body += ta_html
+
+    # ------------------------------------------------------------------
     # Radar chart data (5 axes: Points, Precision, Boldness, Zebras, Regularity)
     # ------------------------------------------------------------------
-    gold_dir = config._au_first_round()
     max_possible_total = len(df_bol) * max_pts
     pts_pct = min(100, round(total_pts / max_possible_total * 100)) if max_possible_total else 0
     prec_pct = min(100, round(avg_per_game / max_pts * 100)) if max_pts else 0
@@ -1672,49 +1899,6 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     if not boldness_html:
         boldness_html = _ph("Perfil de ousadia dispon\u00edvel ap\u00f3s os primeiros jogos.")
 
-    # --- Best and worst teams (goal_error_by_team) ---
-    error_path = _norm(os.path.join(gold_dir, "goal_error_by_team.csv"))
-    best_team_html = ""
-    worst_team_html = ""
-    bias_html = ""
-    if os.path.exists(error_path):
-        df_err = pd.read_csv(error_path, sep=",")
-        df_err_p_all = df_err[df_err["boleiro"] == boleiro].copy()
-        if not df_err_p_all.empty:
-            df_err_p = df_err_p_all[df_err_p_all["role"] == "total"].copy()
-            if df_err_p.empty:
-                df_err_p = df_err_p_all.copy()
-            df_err_p_sorted = df_err_p.sort_values("mae")
-            best_teams = df_err_p_sorted.head(3)
-            worst_teams = df_err_p_sorted.tail(3)
-
-            best_team_html = "<div style='margin-top:0.5rem;'>"
-            best_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f3c6 Times que voce mais acerta</div>'
-            for _, r in best_teams.iterrows():
-                best_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) \u2014 erro medio de {r["mae"]:.1f} gols</div>\n'
-            best_team_html += "</div>"
-
-            worst_team_html = "<div style='margin-top:0.5rem;'>"
-            worst_team_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f4a9 Times que voce mais erra</div>'
-            for _, r in worst_teams.iterrows():
-                worst_team_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;"><strong>{r["team"]}</strong> ({r["role"]}) \u2014 erro medio de {r["mae"]:.1f} gols</div>\n'
-            worst_team_html += "</div>"
-
-            bias_teams = df_err_p[df_err_p["goal_bias"].abs() >= 0.5].sort_values("goal_bias")
-            if not bias_teams.empty:
-                bias_html = "<div style='margin-top:0.5rem;'>"
-                bias_html += '<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\U0001f4ca Vies de palpites</div>'
-                for _, r in bias_teams.head(4).iterrows():
-                    direction = "superestima" if r["goal_bias"] > 0 else "subestima"
-                    bias_html += f'<div style="font-size:0.85rem;padding:0.15rem 0;">Voce <strong>{direction}</strong> o {r["team"]} em {abs(r["goal_bias"]):.1f} gols</div>\n'
-                bias_html += "</div>"
-    if not best_team_html:
-        best_team_html = _ph("Times que voc\u00ea mais acerta dispon\u00edvel ap\u00f3s os primeiros jogos.")
-    if not worst_team_html:
-        worst_team_html = _ph("Times que voc\u00ea mais erra dispon\u00edvel ap\u00f3s os primeiros jogos.")
-    if not bias_html:
-        bias_html = _ph("Vi\u00e9s de palpites dispon\u00edvel ap\u00f3s os primeiros jogos.")
-
     # --- Archetype badge (reads source-of-truth CSV) ---
     arq_html = ""
     arq_csv = _norm(os.path.join(config._au_first_round(), "arquetipos_classification.csv"))
@@ -1767,7 +1951,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             )
 
     # --- Combine profile ---
-    profile_parts = arq_html + badges_html + boldness_html + streak_html_inner + best_team_html + worst_team_html + bias_html
+    profile_parts = arq_html + badges_html + boldness_html + streak_html_inner
     profile_html = f'<div class="section"><div class="section-title">\U0001f9d0 Perfil do Jogador</div><div class="card">{profile_parts}</div></div>\n'
 
     body += profile_html
@@ -1786,7 +1970,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             home_logo_5 = _team_logo_tag(home_en_5, config, cls="team-logo-sm", start=boleiro_dir)
             away_logo_5 = _team_logo_tag(away_en_5, config, cls="team-logo-sm", start=boleiro_dir)
             ms_5 = str(r5.get("match", ""))
-            phase_5 = config.group_phase_label
+            phase_val_5 = str(r5.get("phase", ""))
+            phase_5 = phase_val_5 if phase_val_5 else config.group_phase_label
             hr_5 = str(r5.get("hour", ""))
             game_href_5 = f"../jogos/{phase_5}/{r5['date']}_{hr_5}_{ms_5}.html"
             date_part_5 = pd.to_datetime(r5["date"]).strftime("%d/%m") + (f" {hr_5}" if hr_5 else "")
@@ -2841,7 +3026,7 @@ document.addEventListener('DOMContentLoaded', drawChart);
 
 <div class="card">
     <div class="card-title">Classificacao Atual</div>
-    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <thead>
             <tr style="border-bottom:1px solid var(--card-border);">
                 <th style="text-align:left;padding:0.3rem 0.5rem;">Jogador</th>
@@ -2885,240 +3070,104 @@ document.addEventListener('DOMContentLoaded', drawChart);
 
 
 def _build_boldometer(config: ChampionshipConfig) -> str:
-    """Scatter plot: boldness vs average points per game."""
+    """Simple tendency table: who predicts more/less goals than reality."""
     bold_path = _norm(os.path.join(config._au_first_round(), "boldness_index.csv"))
     if not os.path.exists(bold_path):
-        return _page_frame(config, f"Boldômetro - {config.report_title}", "<div class='hero'><h1>\U0001f4ca Boldômetro</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>")
+        return _page_frame(config, f"Bold\u00f4metro - {config.report_title}",
+                           "<div class='hero'><h1>\U0001f4ca Bold\u00f4metro</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados.</div></div>")
     df_bold = pd.read_csv(bold_path, sep=",")
     df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
     df_avg = df_valid.groupby("who")["pontos"].mean().reset_index()
     df_avg.columns = ["boleiro", "avg_pts_per_game"]
     df = df_bold.merge(df_avg, on="boleiro", how="left")
 
+    # Real avg goals per game from results
+    df_results = pd.read_csv(config.results_file, sep=",").dropna(subset=["home_goals"])
+    real_avg = (df_results["home_goals"].astype(float) + df_results["away_goals"].astype(float)).mean()
+
     players = []
     for _, r in df.iterrows():
         players.append({
             "name": r["boleiro"],
-            "boldness": float(r["boldness_score"]),
-            "avg_pts": float(r["avg_pts_per_game"]),
             "avg_goals": float(r["avg_total_goals_bol"]),
+            "avg_pts": float(r["avg_pts_per_game"]),
+            "boldness": float(r["boldness_score"]),
             "games": int(r["games"]),
         })
 
-    import json
-    json_str = json.dumps(players, ensure_ascii=False)
+    # Sort by boldness descending (most optimistic first)
+    players.sort(key=lambda p: -p["boldness"])
 
-    # Example rows for table
-    example_rows = ""
-    sorted_by_bold = sorted(players, key=lambda p: p["boldness"], reverse=True)
-    for p in sorted_by_bold[:3]:
-        example_rows += f"<tr><td>{p['name']}</td><td>{p['boldness']:+.2f}</td><td>{p['avg_pts']:.1f}</td><td style='font-size:0.8rem;color:var(--text-muted);'>{p['avg_goals']:.1f} gols/jogo</td></tr>\n"
-    example_rows += "<tr style='border-top:1px solid var(--card-border);'><td colspan='4' style='text-align:center;font-style:italic;'>... e mais " + str(len(players) - 3) + " jogadores</td></tr>\n"
-
-    js_code = r"""
-const players = DATA_PLACEHOLDER;
-const canvas = document.getElementById('scatter');
-const tooltip = document.getElementById('scatter-tooltip');
-const ctx = canvas.getContext('2d');
-const dpr = window.devicePixelRatio || 1;
-const rect = canvas.getBoundingClientRect();
-canvas.width = rect.width * dpr;
-canvas.height = 380 * dpr;
-ctx.scale(dpr, dpr);
-const W = rect.width;
-const H = 380;
-const padL = 55, padR = 20, padT = 30, padB = 50;
-const plotW = W - padL - padR;
-const plotH = H - padT - padB;
-
-const xs = players.map(p => p.boldness);
-const ys = players.map(p => p.avg_pts);
-const minX = Math.min(...xs, -0.3) - 0.3;
-const maxX = Math.max(...xs, 0.3) + 0.3;
-const minY = Math.max(0, Math.min(...ys) - 0.3);
-const maxY = Math.max(...ys) + 0.3;
-
-function getX(v) { return padL + ((v - minX) / (maxX - minX)) * plotW; }
-function getY(v) { return padT + plotH - ((v - minY) / (maxY - minY)) * plotH; }
-
-ctx.clearRect(0, 0, W, H);
-
-// Draw quadrant backgrounds (stronger opacity)
-const zeroX = getX(0);
-const avgY = ys.reduce((a,b) => a+b, 0) / ys.length;
-const avgYPx = getY(avgY);
-
-// Top-left: Green (efficient - low boldness, high pts)
-ctx.fillStyle = 'rgba(34,197,94,0.12)';
-ctx.fillRect(padL, padT, zeroX - padL, avgYPx - padT);
-// Top-right: Yellow (risky - high boldness, high pts)
-ctx.fillStyle = 'rgba(234,179,8,0.12)';
-ctx.fillRect(zeroX, padT, padL + plotW - zeroX, avgYPx - padT);
-// Bottom-left: Blue-gray (conservative - low boldness, low pts)
-ctx.fillStyle = 'rgba(100,116,139,0.12)';
-ctx.fillRect(padL, avgYPx, zeroX - padL, padT + plotH - avgYPx);
-// Bottom-right: Red (bad - high boldness, low pts)
-ctx.fillStyle = 'rgba(239,68,68,0.12)';
-ctx.fillRect(zeroX, avgYPx, padL + plotW - zeroX, padT + plotH - avgYPx);
-
-// Grid
-ctx.strokeStyle = '#30363d';
-ctx.lineWidth = 0.5;
-for (let i = 0; i <= 4; i++) {
-    const x = padL + (plotW / 4) * i;
-    const y = padT + (plotH / 4) * i;
-    ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, padT + plotH); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + plotW, y); ctx.stroke();
-}
-
-// Quadrant labels
-ctx.font = 'bold 10px sans-serif';
-ctx.textAlign = 'center';
-ctx.fillStyle = 'rgba(34,197,94,0.7)';
-ctx.fillText('EFICIENTE', padL + (zeroX - padL) / 2, padT + 14);
-ctx.fillStyle = 'rgba(234,179,8,0.7)';
-ctx.fillText('OUSADO', zeroX + (padL + plotW - zeroX) / 2, padT + 14);
-ctx.fillStyle = 'rgba(100,116,139,0.7)';
-ctx.fillText('CONSERVADOR', padL + (zeroX - padL) / 2, padT + plotH - 10);
-ctx.fillStyle = 'rgba(239,68,68,0.7)';
-ctx.fillText('ARRISCADO', zeroX + (padL + plotW - zeroX) / 2, padT + plotH - 10);
-
-// Axis labels
-ctx.fillStyle = '#8899aa';
-ctx.font = '10px sans-serif';
-ctx.textAlign = 'center';
-ctx.fillText('\u2190 Mais conservador (aposta menos gols)', padL + plotW/4, H - 10);
-ctx.fillText('Mais ousado (aposta mais gols) \u2192', padL + plotW*3/4, H - 10);
-ctx.save();
-ctx.translate(12, padT + plotH/2);
-ctx.rotate(-Math.PI/2);
-ctx.fillText('Media de pontos por jogo \u2191', 0, 0);
-ctx.restore();
-
-// Zero line (boldness = bolao avg)
-ctx.strokeStyle = 'rgba(245,197,24,0.4)';
-ctx.lineWidth = 1;
-ctx.setLineDash([4, 4]);
-ctx.beginPath(); ctx.moveTo(zeroX, padT); ctx.lineTo(zeroX, padT + plotH); ctx.stroke();
-ctx.setLineDash([]);
-
-// Average pts line
-ctx.strokeStyle = 'rgba(34,197,94,0.4)';
-ctx.lineWidth = 1;
-ctx.setLineDash([4, 4]);
-ctx.beginPath(); ctx.moveTo(padL, avgYPx); ctx.lineTo(padL + plotW, avgYPx); ctx.stroke();
-ctx.setLineDash([]);
-
-// Points
-players.forEach(function(p) {
-    const x = getX(p.boldness);
-    const y = getY(p.avg_pts);
-    const radius = 8;
-    ctx.fillStyle = '#f5c518';
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#000';
-    ctx.font = 'bold 8px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    const initial = p.name.charAt(0).toUpperCase();
-    ctx.fillText(initial, x, y);
-});
-
-// Hover tooltip
-canvas.onmousemove = function(e) {
-    const r = canvas.getBoundingClientRect();
-    const mx = e.clientX - r.left;
-    const my = e.clientY - r.top;
-    let found = null;
-    players.forEach(function(p) {
-        const x = getX(p.boldness);
-        const y = getY(p.avg_pts);
-        const d = Math.sqrt((mx-x)**2 + (my-y)**2);
-        if (d < 15) found = p;
-    });
-    if (found) {
-        let quadrant = found.boldness <= 0 && found.avg_pts >= avgY ? 'Eficiente' :
-                       found.boldness > 0 && found.avg_pts >= avgY ? 'Ousado' :
-                       found.boldness <= 0 && found.avg_pts < avgY ? 'Conservador' : 'Arriscado';
-        tooltip.style.display = 'block';
-        tooltip.innerHTML = '<strong>' + found.name + '</strong><br>' +
-            'Ousadia: ' + found.boldness.toFixed(2) + ' (media ' + found.avg_goals.toFixed(1) + ' gols/jogo)<br>' +
-            'Media pts/jogo: ' + found.avg_pts.toFixed(2) + '<br>' +
-            'Jogos: ' + found.games + '<br>' +
-            'Perfil: ' + quadrant;
-        const tx = Math.min(mx + 12, W - 160);
-        tooltip.style.left = tx + 'px';
-        tooltip.style.top = Math.max(my - 35, 5) + 'px';
-    } else {
-        tooltip.style.display = 'none';
-    }
-};
-canvas.onmouseleave = function() { tooltip.style.display = 'none'; };
-"""
+    table_rows = ""
+    for p in players:
+        diff = p["avg_goals"] - real_avg
+        if diff > 0.3:
+            icon = "\U0001f446"
+            label = "Otimista"
+            color = "var(--warning)"
+        elif diff < -0.3:
+            icon = "\U0001f447"
+            label = "Pessimista"
+            color = "var(--bolao)"
+        else:
+            icon = "\u27a1\ufe0f"
+            label = "Realista"
+            color = "var(--text-muted)"
+        bar_w = min(100, max(2, (p["avg_goals"] / (real_avg * 2) * 100)))
+        table_rows += f"""<tr>
+            <td style="padding:0.4rem 0.5rem;"><a href="boleiros/{p['name']}.html">{p['name']}</a></td>
+            <td style="padding:0.4rem 0.5rem;text-align:center;"><span style="font-size:1.2rem;">{icon}</span></td>
+            <td style="padding:0.4rem 0.5rem;font-weight:600;color:{color};">{label}</td>
+            <td style="padding:0.4rem 0.5rem;">
+                <div style="display:flex;align-items:center;gap:0.4rem;">
+                    <span style="font-size:0.7rem;color:var(--text-muted);min-width:24px;">{real_avg:.1f}</span>
+                    <div class="bar-track" style="flex:1;height:12px;">
+                        <div class="bar-fill" style="width:{bar_w:.0f}%;height:12px;background:{color};border-radius:4px;"></div>
+                    </div>
+                    <span style="font-weight:700;font-size:0.85rem;min-width:30px;text-align:right;">{p['avg_goals']:.1f}</span>
+                </div>
+            </td>
+            <td style="padding:0.4rem 0.5rem;text-align:right;color:var(--text-muted);font-size:0.8rem;">{p['games']}</td>
+        </tr>"""
 
     body = f"""
 <div class="hero">
-    <h1>\U0001f4ca Boldometro</h1>
-    <div class="subtitle">Ousadia vs Aproveitamento — Quem aposta alto e acerta?</div>
+    <h1>\U0001f4ca Bold\u00f4metro</h1>
+    <div class="subtitle">Quem aposta mais gols? Quem aposta menos?</div>
 </div>
 
-<div class="card" style="margin:1rem 0.75rem;">
-    <div class="card-title">O que e o Boldometro?</div>
-    <div style="font-size:0.85rem;">
+<div class="card" style="margin:0.75rem;">
+    <div style="font-size:0.85rem;margin-bottom:0.75rem;">
         <p style="margin-bottom:0.5rem;">
-            <strong>Ousadia</strong> (eixo X): diferenca entre a <strong>media de gols totais</strong> que voce apostou por jogo
-            e a media do bolaao. Se voce aposta sempre 3x0 e a media do bolaao e 2.5 gols, sua ousadia e <strong>+0.5</strong>.
-        </p>
-        <p style="margin-bottom:0.5rem;">
-            <strong>Aproveitamento</strong> (eixo Y): sua <strong>media de pontos por jogo</strong>. Quanto maior, melhor.
+            A m\u00e9dia de <strong>gols reais</strong> por jogo \u00e9 <strong>{real_avg:.1f}</strong>.
+            A barra mostra quantos gols cada jogador aposta em m\u00e9dia.
         </p>
         <p>
-            <strong>Exemplo:</strong> Se voce aposta 1x0 toda partida, sua ousadia e baixa (negativa). Se aposta 5x3, e alta (positiva).
+            <span style="color:var(--warning);font-weight:700;">\U0001f446 Otimista</span> = aposta mais gols que a m\u00e9dia real &middot;
+            <span style="color:var(--bolao);font-weight:700;">\U0001f447 Pessimista</span> = aposta menos &middot;
+            <span style="color:var(--text-muted);font-weight:700;">\u27a1\ufe0f Realista</span> = perto da m\u00e9dia
         </p>
     </div>
-</div>
-
-<div class="card">
-    <div style="position:relative;">
-        <canvas id="scatter" width="600" height="380" style="width:100%;height:380px;cursor:crosshair;"></canvas>
-        <div id="scatter-tooltip" style="display:none;position:absolute;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;pointer-events:none;z-index:100;box-shadow:0 4px 12px var(--shadow-color);"></div>
+    <div style="overflow-x:auto;">
+        <table class="rank-table">
+            <thead><tr>
+                <th>Jogador</th>
+                <th style="text-align:center;">Tend\u00eancia</th>
+                <th>Perfil</th>
+                <th style="min-width:140px;">M\u00e9dia gols aposta vs real ({real_avg:.1f})</th>
+                <th style="text-align:right;">Jogos</th>
+            </tr></thead>
+            <tbody>
+                {table_rows}
+            </tbody>
+        </table>
+    </div>
+    <div style="margin-top:0.5rem;font-size:0.7rem;color:var(--text-muted);text-align:center;">
+        Ordenado do mais otimista (aposta mais gols) ao mais pessimista (aposta menos)
     </div>
 </div>
-
-<div class="card">
-    <div class="card-title">Quadrantes</div>
-    <table style="width:100%;font-size:0.85rem;border-collapse:collapse;">
-        <tr style="border-bottom:1px solid var(--card-border);"><td style="padding:0.4rem;"><span style="color:#22c55e;font-weight:700;">\u25a0</span> EFICIENTE</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia baixa (aposta poucos gols), pontuacao alta = voce e conservador e acerta muito</td></tr>
-        <tr style="border-bottom:1px solid var(--card-border);"><td style="padding:0.4rem;"><span style="color:#eab308;font-weight:700;">\u25a0</span> OUSADO</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia alta (aposta muitos gols), pontuacao alta = voce arrisca e acerta</td></tr>
-        <tr style="border-bottom:1px solid var(--card-border);"><td style="padding:0.4rem;"><span style="color:#64748b;font-weight:700;">\u25a0</span> CONSERVADOR</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia baixa (aposta poucos gols), pontuacao baixa = joga seguro mas nao acerta</td></tr>
-        <tr><td style="padding:0.4rem;"><span style="color:#ef4444;font-weight:700;">\u25a0</span> ARRISCADO</td><td style="padding:0.4rem;color:var(--text-muted);">Ousadia alta (aposta muitos gols), pontuacao baixa = aposta muitos gols mas erra</td></tr>
-    </table>
-</div>
-
-<div class="card">
-    <div class="card-title">Exemplos — Os mais ousados</div>
-    <table style="width:100%;font-size:0.85rem;border-collapse:collapse;">
-        <thead>
-            <tr style="border-bottom:1px solid var(--card-border);">
-                <th style="text-align:left;padding:0.4rem;">Jogador</th>
-                <th style="text-align:left;padding:0.4rem;">Ousadia</th>
-                <th style="text-align:left;padding:0.4rem;">Media pts</th>
-                <th style="text-align:left;padding:0.4rem;">Detalhe</th>
-            </tr>
-        </thead>
-        <tbody>
-            {example_rows}
-        </tbody>
-    </table>
-</div>
-
-<script>
-{js_code.replace('DATA_PLACEHOLDER', json_str)}
-</script>
 """
-    return _page_frame(config, f"Boldometro - {config.report_title}", body, back_link="index.html")
+    return _page_frame(config, f"Bold\u00f4metro - {config.report_title}", body, back_link="index.html")
 
 
 # ------------------------------------------------------------------
@@ -3234,6 +3283,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
             f'<div class="heat-row">'
             f'<div class="heat-label">{player}</div>'
             f'<div class="heat-cells">{cells}</div>'
+            f'<div class="heat-label-right">{player}</div>'
             f'</div>\n'
         )
 
@@ -3242,7 +3292,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
     for day in date_order:
         d = pd.to_datetime(day).strftime("%d/%m")
         header_cells += f'<div class="heat-cell-header">{d}</div>'
-    heat_header = f'<div class="heat-row"><div class="heat-label">Jogador</div><div class="heat-cells">{header_cells}</div></div>\n'
+    heat_header = f'<div class="heat-row"><div class="heat-label">Jogador</div><div class="heat-cells">{header_cells}</div><div class="heat-label-right">Jogador</div></div>\n'
 
     # Average row: mean points per player per day
     avg_cells = ""
@@ -3250,7 +3300,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
         day_vals = heat_pivot[day].values
         avg = round(sum(day_vals) / len(day_vals), 1)
         avg_cells += f'<div class="heat-cell-header" style="font-weight:600;">{avg}</div>'
-    heat_avg = f'<div class="heat-row"><div class="heat-total-label">Media pts/dia</div><div class="heat-cells">{avg_cells}</div></div>\n'
+    heat_avg = f'<div class="heat-row"><div class="heat-total-label">Media pts/dia</div><div class="heat-cells">{avg_cells}</div><div class="heat-label-right" style="font-size:0.65rem;color:var(--text-muted);border-top:1px solid var(--card-border);">M\u00e9dia</div></div>\n'
 
     # Aproveitamento: average of INDIVIDUAL player pcts (each player's pts / theoretical max)
     pct_cells = ""
@@ -3262,14 +3312,14 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
         avg_pct = round(sum(individual_pcts) / len(individual_pcts) * 100) if individual_pcts else 0
         bg = _heat_color(avg_pct / 100)
         pct_cells += f'<div class="heat-cell" style="background:{bg};">{avg_pct}%</div>'
-    heat_pct_row = f'<div class="heat-row"><div class="heat-total-label">Aproveitamento</div><div class="heat-cells">{pct_cells}</div></div>\n'
+    heat_pct_row = f'<div class="heat-row"><div class="heat-total-label">Aproveitamento</div><div class="heat-cells">{pct_cells}</div><div class="heat-label-right" style="font-size:0.65rem;color:var(--text-muted);">Aprov.</div></div>\n'
 
     # Total row: max possivel per day
     total_cells = ""
     for day in date_order:
         day_max = int(matches_per_day.get(day, 1) * max_pts_per_game)
         total_cells += f'<div class="heat-cell-header" style="font-weight:700;">{day_max}</div>'
-    heat_total = f'<div class="heat-row"><div class="heat-total-label">Max possivel</div><div class="heat-cells">{total_cells}</div></div>\n'
+    heat_total = f'<div class="heat-row"><div class="heat-total-label">Max possivel</div><div class="heat-cells">{total_cells}</div><div class="heat-label-right" style="font-size:0.65rem;color:var(--text-muted);">M\u00e1x</div></div>\n'
 
     # ----- Hit type distribution (using actual scoring rules from config) -----
     rule_map = {r.name: r.points for r in config.scoring_rules}
@@ -3435,7 +3485,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 <div class="card">
     <div class="card-title">Distribui\u00e7\u00e3o dos acertos</div>
     <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Quantos palpites em cada categoria (conforme regras do campeonato)</div>
-    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
             <th style="text-align:left;padding:0.3rem 0.5rem;">Tipo</th>
             <th style="text-align:right;padding:0.3rem 0.5rem;">Qtde</th>
@@ -3450,7 +3500,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 <div class="card">
     <div class="card-title">Histograma: Pontos por partida</div>
     <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Quantas partidas renderam X pontos totais (somando todos os jogadores)</div>
-    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
             <th style="text-align:left;padding:0.3rem 0.5rem;">Faixa de pontos</th>
             <th style="text-align:right;padding:0.3rem 0.5rem;">Partidas</th>
@@ -3464,7 +3514,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 <div class="card">
     <div class="card-title">Partidas mais previs\u00edveis</div>
     <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">As 10 partidas com mais acertos de <strong>placar exato (+{exact_points}p)</strong> — a coluna "Acertaram" mostra quantos jogadores cravaram o placar certo.</div>
-    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
             <th style="text-align:left;padding:0.3rem 0.5rem;">Partida</th>
             <th style="text-align:center;padding:0.3rem 0.5rem;">Resultado</th>
@@ -3479,7 +3529,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 <div class="card">
     <div class="card-title">Partidas menos previs\u00edveis</div>
     <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">As 10 partidas com menos acertos de <strong>placar exato (+{exact_points}p)</strong> — quase ningu\u00e9m cravou o placar certo.</div>
-    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
             <th style="text-align:left;padding:0.3rem 0.5rem;">Partida</th>
             <th style="text-align:center;padding:0.3rem 0.5rem;">Resultado</th>
@@ -3494,7 +3544,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 <div class="card">
     <div class="card-title">Placares mais apostados</div>
     <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Os 10 placares que o bol\u00e3o mais apostou (previstos)</div>
-    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
             <th style="text-align:left;padding:0.3rem 0.5rem;">Placar</th>
             <th style="text-align:right;padding:0.3rem 0.5rem;">Apostas</th>
@@ -3509,7 +3559,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 <div class="card">
     <div class="card-title">Placares reais mais comuns</div>
     <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">Os 10 placares que mais aconteceram de verdade</div>
-    <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
         <tr style="border-bottom:1px solid var(--card-border);color:var(--text-muted);font-size:0.7rem;">
             <th style="text-align:left;padding:0.3rem 0.5rem;">Placar</th>
             <th style="text-align:right;padding:0.3rem 0.5rem;">Ocorr\u00eancias</th>
@@ -3756,6 +3806,22 @@ def _build_zebras(config: ChampionshipConfig) -> str:
     # Only finished matches with a real result should be counted
     df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy()
 
+    # Build match → phase lookup from games.csv
+    match_phase_map: dict[str, str] = {}
+    if os.path.exists(config.games_file):
+        df_games_lu = pd.read_csv(config.games_file, sep=",")
+        if "match" in df_games_lu.columns and "round" in df_games_lu.columns:
+            for _, gr in df_games_lu.iterrows():
+                ms = str(gr["match"]).strip()
+                rv = str(gr["round"]).strip()
+                # numeric round = group phase, else it's the phase name
+                try:
+                    int(rv)
+                    phase_dir = config.group_phase_label
+                except ValueError:
+                    phase_dir = rv
+                match_phase_map[ms] = phase_dir
+
     total_matches = len(df_upset)
     upset_matches = df_upset[df_upset["is_upset"] == 1]
     num_upsets = len(upset_matches)
@@ -3789,8 +3855,9 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         winner_wrong_pct = 100 - round(num_correct / total_votes * 100) if total_votes else 0
         players_html = " ".join(f'<span class="tag">{p}</span>' for p in players_correct) if players_correct else '<span style="color:var(--text-muted);font-style:italic;">ningu\u00e9m acertou</span>'
 
-        # Build match page link (date/hour are present after pipeline regeneration)
-        match_href = f"jogos/{config.group_phase_label}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
+        # Build match page link (read phase from games.csv lookup)
+        _ph_dir = match_phase_map.get(match_slug, config.group_phase_label)
+        match_href = f"jogos/{_ph_dir}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
 
         # Determine upset magnitude based on how many got the winner right
         matchup_display = f"<a href=\"{match_href}\">{home} vs {away}</a>" if match_href else f"{home} vs {away}"
@@ -3847,7 +3914,8 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         match_slug = str(row.get("match", ""))
         match_date = str(row.get("date", ""))
         match_hour = str(row.get("hour", ""))
-        match_href = f"jogos/{config.group_phase_label}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
+        _ph_dir2 = match_phase_map.get(match_slug, config.group_phase_label)
+        match_href = f"jogos/{_ph_dir2}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
         matchup_display = f"<a href=\"{match_href}\">{home} vs {away}</a>" if match_href else f"{home} vs {away}"
         fav_won_cards += f"""
 <div class="zebra-card">
@@ -3913,7 +3981,8 @@ def _build_zebras(config: ChampionshipConfig) -> str:
             bar_pct = round(m["difficulty"] / max_diff * 100)
             bar_color = "var(--danger)" if m["is_upset"] else "var(--warning)"
 
-            match_href = f"jogos/{config.group_phase_label}/{m['date']}_{m['hour']}_{m['match']}.html" if m.get("date") and m.get("hour") else ""
+            _ph_dir3 = match_phase_map.get(m["match"], config.group_phase_label)
+            match_href = f"jogos/{_ph_dir3}/{m['date']}_{m['hour']}_{m['match']}.html" if m.get("date") and m.get("hour") else ""
             match_display = f"<a href=\"{match_href}\">{m['home']} vs {m['away']}</a>" if match_href else f"{m['home']} vs {m['away']}"
             diff_cards += f"""
 <div style="margin-bottom:0.75rem;">
@@ -4311,6 +4380,17 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
     ]
     for d in dirs:
         os.makedirs(d, exist_ok=True)
+
+    # Copy sorttable.js to html output directory
+    _js_src = _norm(os.path.join(os.path.dirname(__file__), "sorttable.js"))
+    _js_dst = _norm(os.path.join(html_base, "sorttable.js"))
+    try:
+        with open(_js_src, "rb") as f_in:
+            _js_content = f_in.read()
+        with open(_js_dst, "wb") as f_out:
+            f_out.write(_js_content)
+    except Exception as e:
+        print_colored(f"  [ERROR] Failed to copy sorttable.js: {e}", "red")
 
     # Clean jogos dirs to avoid stale HTML files from old runs
     jogos_base = _norm(os.path.join(html_base, "jogos"))

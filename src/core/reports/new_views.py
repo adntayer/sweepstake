@@ -36,6 +36,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
         idx = back_link.rfind("index.html")
         if idx >= 0:
             nav_prefix = back_link[:idx]
+    script_src = nav_prefix + "sorttable.js" if back_link else "sorttable.js"
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -54,6 +55,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
     atualizado \u00e0s {now_str}
 </div>
 {_bottom_nav_html(active_nav, nav_prefix)}
+<script src="{script_src}"></script>
 </body>
 </html>"""
 
@@ -333,6 +335,43 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
     bp = "../boleiros"
 
+    # ── Extra stats ──
+    clean_sheets = 0
+    biggest_win_goals = 0
+    biggest_loss_goals = 0
+    biggest_win_str = ""
+    biggest_loss_str = ""
+    form_list: list[str] = []
+    for _, row in team_matches.iterrows():
+        try:
+            hg = int(row["home_goals"]) if pd.notna(row.get("home_goals")) else None
+            ag = int(row["away_goals"]) if pd.notna(row.get("away_goals")) else None
+        except (ValueError, TypeError):
+            continue
+        if hg is None or ag is None:
+            continue
+        is_home = str(row["home_team"]) == team
+        scored = hg if is_home else ag
+        conceded = ag if is_home else hg
+        if scored > conceded:
+            form_list.append("V")
+            diff = scored - conceded
+            if diff > biggest_win_goals:
+                biggest_win_goals = diff
+                biggest_win_str = f"{hg}-{ag}" if is_home else f"{ag}-{hg}"
+        elif conceded > scored:
+            form_list.append("D")
+            diff = conceded - scored
+            if diff > biggest_loss_goals:
+                biggest_loss_goals = diff
+                biggest_loss_str = f"{hg}-{ag}" if is_home else f"{ag}-{hg}"
+        else:
+            form_list.append("E")
+        if conceded == 0:
+            clean_sheets += 1
+    # Take last 5 for form string
+    form_str = " ".join(form_list[-5:]) if form_list else "-"
+
     # Per-player accuracy for this team
     team_acc_path = _norm(os.path.join(config._au_first_round(), "team_accuracy.csv"))
     player_rows = ""
@@ -360,11 +399,11 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
     # Goal error per player for this team with visual bars
     error_legend = """<div class="card" style="margin-bottom:0.75rem;font-size:0.75rem;color:var(--text-muted);line-height:1.6;padding:0.75rem 1rem;">
-    <strong>\u2139\ufe0f Como ler:</strong> A barra mostra o <strong>MAE</strong> (Erro Absoluto M\u00e9dio) de cada jogador para esse time.
-    Quanto menor o MAE, mais preciso o jogador. A cor da barra varia de <span style="color:var(--success);">verde (baixo erro)</span> a <span style="color:var(--danger);">vermelho (alto erro)</span>.
-    O \u00edcone de <strong>Vi\u00e9s</strong> indica se o jogador tende a <span style="color:var(--warning);">\U0001f446 superestimar</span> (prev\u00ea mais gols que o real)
-    ou <span style="color:var(--bolao);">\U0001f447 subestimar</span> (prev\u00ea menos). \u27a1\ufe0f = vi\u00e9s neutro.
-    <strong>Previsto</strong> e <strong>Real</strong> s\u00e3o as m\u00e9dias de gols previstos vs reais por jogo.
+    <strong>\u2139\ufe0f Entendendo o MAE:</strong> O <strong>MAE</strong> (Erro Absoluto M\u00e9dio) \u00e9 a m\u00e9dia da diferen\u00e7a entre gols previstos e reais.
+    <span style="color:var(--success);">\u25cf Menor \u2192 mais preciso</span> &nbsp;|&nbsp;
+    <span style="color:var(--danger);">\u25cf Maior \u2192 menos preciso</span> &nbsp;|&nbsp;
+    A nota (A\u2013F) ajuda a comparar rapidamente.
+    <span style="display:inline-block;margin-left:0.5rem;font-size:0.65rem;color:var(--text-muted);">Ex: MAE 0.50 = erra por meio gol em m\u00e9dia</span>
 </div>
 """
     error_path = _norm(os.path.join(config._au_first_round(), "goal_error_by_team.csv"))
@@ -380,6 +419,16 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
             best = df_err_team.iloc[0]
             worst = df_err_team.iloc[-1]
+            avg_mae = df_err_team['mae'].mean()
+
+            # Grade thresholds based on data distribution
+            def _grade(v: float) -> tuple[str, str]:
+                if v <= max_mae * 0.2:  return "A+", "var(--success)"
+                if v <= max_mae * 0.4:  return "A",  "var(--success)"
+                if v <= max_mae * 0.6:  return "B",  "var(--accent)"
+                if v <= max_mae * 0.8:  return "C",  "var(--warning)"
+                if v <= max_mae * 0.95: return "D",  "var(--danger)"
+                return "F", "var(--danger)"
 
             error_summary = f"""
 <div class="stat-row" style="margin-bottom:0.75rem;">
@@ -388,7 +437,7 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
         <div class="label">Menor MAE<br><span style="font-size:0.65rem;color:var(--text-muted);">{best['boleiro']}</span></div>
     </div>
     <div class="stat-card">
-        <div class="value" style="color:var(--accent);">{df_err_team['mae'].mean():.2f}</div>
+        <div class="value" style="color:var(--accent);">{avg_mae:.2f}</div>
         <div class="label">M\u00e9dia do Bol\u00e3o</div>
     </div>
     <div class="stat-card">
@@ -401,44 +450,48 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
             for _, r in df_err_team.iterrows():
                 mae = r["mae"]
                 pct = round(mae / max_mae * 100) if max_mae > 0 else 0
+                grade, g_color = _grade(mae)
+
+                # Bias: simpler icon
                 bias_val = r["goal_bias"]
                 if bias_val > 0.3:
-                    bias_icon = "\U0001f446"
-                    bias_color = "var(--warning)"
+                    bias_tag = f'<span style="color:var(--warning);font-size:0.7rem;" title="Superestima (prev\u00ea +{bias_val:.2f} gols/jogo)">\U0001f446</span>'
                 elif bias_val < -0.3:
-                    bias_icon = "\U0001f447"
-                    bias_color = "var(--bolao)"
+                    bias_tag = f'<span style="color:var(--bolao);font-size:0.7rem;" title="Subestima (prev\u00ea {bias_val:.2f} gols/jogo)">\U0001f447</span>'
                 else:
-                    bias_icon = "\u27a1\ufe0f"
-                    bias_color = "var(--text-muted)"
-                bias_str = f"+{bias_val:.2f}" if bias_val > 0 else f"{bias_val:.2f}"
+                    bias_tag = f'<span style="color:var(--text-muted);font-size:0.7rem;" title="Vi\u00e9s neutro">\u27a1\ufe0f</span>'
 
-                mae_ratio = mae / max_mae if max_mae > 0 else 0
-                r_bar = int(255 * mae_ratio)
-                g_bar = int(200 * (1 - mae_ratio) + 55)
-                bar_color = f"rgba({r_bar},{g_bar},50,0.7)"
+                # Bar: accent color, fill from left
+                bar_color = f"rgba(245,197,24,0.7)"  # solid accent
+
+                # Compare vs average
+                vs_avg = f'<span style="font-size:0.6rem;color:{"var(--success)" if mae < avg_mae else "var(--danger)"};">{"\u25bc" if mae < avg_mae else "\u25b2"} {abs(mae - avg_mae):.2f}</span>' if len(df_err_team) > 1 else ""
 
                 err_rows += f"""<tr>
-                    <td><a href="{bp}/{r['boleiro']}.html">{r['boleiro']}</a></td>
+                    <td><a href="{bp}/{r['boleiro']}.html" style="font-weight:600;">{r['boleiro']}</a></td>
                     <td style="text-align:center;">{int(r['games'])}</td>
-                    <td style="min-width:140px;">
-                        <div style="display:flex;align-items:center;gap:0.5rem;">
-                            <div class="bar-track" style="flex:1;height:14px;">
-                                <div class="bar-fill" style="width:{pct}%;height:14px;background:{bar_color};border-radius:4px;"></div>
+                    <td style="min-width:150px;">
+                        <div style="display:flex;align-items:center;gap:0.4rem;">
+                            <div class="bar-track" style="flex:1;height:10px;">
+                                <div class="bar-fill" style="width:{pct}%;height:10px;background:{bar_color};border-radius:4px;"></div>
                             </div>
-                            <span style="font-weight:700;font-size:0.85rem;color:var(--text);min-width:35px;">{mae}</span>
+                            <span style="font-weight:700;font-size:0.85rem;color:var(--text);min-width:32px;text-align:right;">{mae}</span>
+                            <span style="font-weight:700;font-size:0.65rem;color:{g_color};min-width:22px;text-align:center;">{grade}</span>
+                        </div>
+                        <div style="display:flex;gap:0.75rem;margin-top:0.15rem;font-size:0.6rem;color:var(--text-muted);padding-left:0;">
+                            <span>Prev: {r['avg_predicted']}</span>
+                            <span>Real: {r['avg_real']}</span>
+                            <span>{bias_tag}</span>
+                            {vs_avg}
                         </div>
                     </td>
-                    <td style="text-align:center;"><span style="font-size:0.85rem;">{bias_icon}</span> <span style="color:{bias_color};font-weight:600;">{bias_str}</span></td>
-                    <td style="text-align:center;">{r['avg_predicted']}</td>
-                    <td style="text-align:center;">{r['avg_real']}</td>
                 </tr>
 """
 
             error_html += f"""{error_summary}
 <div style="overflow-x:auto;">
     <table class="rank-table">
-        <thead><tr><th>Jogador</th><th>Jogos</th><th style="min-width:160px;">MAE (Erro m\u00e9dio)</th><th>Vi\u00e9s</th><th>Previsto</th><th>Real</th></tr></thead>
+        <thead><tr><th>Jogador</th><th>Jogos</th><th style="min-width:170px;">MAE (erro m\u00e9dio) &nbsp;<span style="font-weight:400;font-size:0.6rem;color:var(--text-muted);">barra \u2192 nota</span></th></tr></thead>
         <tbody>
         {err_rows}
         </tbody>
@@ -490,16 +543,55 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
             else:
                 zebra_tag = f' <span style="display:inline-block;font-size:0.6rem;background:rgba(239,68,68,0.15);color:var(--warning);padding:0.1rem 0.4rem;border-radius:999px;font-weight:700;">{ZEBRA_GRANDE_EMOJI}</span>'
 
-        match_rows += f'<div style="padding:0.3rem 0;font-size:0.85rem;border-bottom:1px solid var(--card-border);">{home} <strong>{score}</strong> {away}{zebra_tag} <span style="color:var(--text-muted);font-size:0.7rem;">({row.get("round", "")})</span> <a href="{game_href}" style="color:var(--accent);font-size:0.7rem;margin-left:0.5rem;">ver jogo</a></div>'
+        match_rows += f"""<tr>
+            <td style="padding:0.25rem 0.5rem;font-size:0.7rem;color:var(--text-muted);">{row.get("round", "")}</td>
+            <td style="padding:0.25rem 0.5rem;font-size:0.8rem;{'font-weight:700;' if home == team else ''}">{home}</td>
+            <td style="padding:0.25rem 0.5rem;font-size:0.85rem;font-weight:700;text-align:center;white-space:nowrap;">{score}</td>
+            <td style="padding:0.25rem 0.5rem;font-size:0.8rem;{'font-weight:700;' if away == team else ''}">{away}</td>
+            <td style="padding:0.25rem 0.5rem;text-align:center;">{zebra_tag}</td>
+            <td style="padding:0.25rem 0.5rem;text-align:right;"><a href="{game_href}" style="color:var(--accent);font-size:0.65rem;">ver</a></td>
+        </tr>
+"""
 
     rev_map = {v: k for k, v in config.team_name_mapping.items()}
     group_label = f" - Grupo {group_name}" if group_name else ""
     en = rev_map.get(team, team)
     logo_tag = _team_logo_tag(en, config, cls="team-logo", start=config.reports_dir + "/html/times")
 
+    # ── Stats summary card ──
+    avg_gf = round(gf / total_played, 2) if total_played > 0 else 0
+    avg_ga = round(ga / total_played, 2) if total_played > 0 else 0
+    gd = gf - ga
+    stats_cells = f"""
+    <div class="stat-row" style="margin-bottom:0.5rem;">
+        <div class="stat-card"><div class="value" style="color:var(--accent);">{total_played}</div><div class="label">Jogos</div></div>
+        <div class="stat-card"><div class="value" style="color:var(--success);">{wins}</div><div class="label">Vit\u00f3rias</div></div>
+        <div class="stat-card"><div class="value" style="color:var(--text);">{draws}</div><div class="label">Empates</div></div>
+        <div class="stat-card"><div class="value" style="color:var(--danger);">{losses}</div><div class="label">Derrotas</div></div>
+    </div>
+    <div class="stat-row">
+        <div class="stat-card"><div class="value" style="color:var(--accent);">{gf}</div><div class="label">Gols Pr\u00f3</div></div>
+        <div class="stat-card"><div class="value" style="color:var(--danger);">{ga}</div><div class="label">Gols Contra</div></div>
+        <div class="stat-card"><div class="value" style="color:var(--{'success' if gd >= 0 else 'danger'});">{'+' if gd > 0 else ''}{gd}</div><div class="label">Saldo</div></div>
+        <div class="stat-card"><div class="value" style="color:var(--text-muted);">{clean_sheets}</div><div class="label">Clean Sheets</div></div>
+    </div>
+    <div class="stat-row">
+        <div class="stat-card"><div class="value" style="font-size:0.8rem;color:var(--text-muted);">{avg_gf:.2f}</div><div class="label">M\u00e9dia GPJ</div></div>
+        <div class="stat-card"><div class="value" style="font-size:0.8rem;color:var(--text-muted);">{avg_ga:.2f}</div><div class="label">M\u00e9dia GCJ</div></div>
+        <div class="stat-card"><div class="value" style="font-size:0.7rem;">{form_str}</div><div class="label">\u00daltimos 5</div></div>
+        <div class="stat-card" style="grid-column:span 1;"><div class="value" style="font-size:0.7rem;color:var(--text-muted);">{biggest_win_str if biggest_win_str else '-'} / {biggest_loss_str if biggest_loss_str else '-'}</div><div class="label">Maior V / D</div></div>
+    </div>
+"""
+
     body = f"""<div class="hero">
     <h1>{logo_tag} {team}</h1>
     <div class="subtitle">Guia do Time{group_label} • {total_played} jogos • {wins}V {draws}E {losses}D ({gf}-{ga})</div>
+</div>
+
+<div class="section">
+    <div class="card">
+        {stats_cells}
+    </div>
 </div>
 
 <div class="section">
@@ -525,8 +617,15 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
 <div class="section">
     <div class="section-title">\U0001f4c5 Jogos do {team}</div>
-    <div class="card">
-        {match_rows if match_rows else '<div class="empty-state">Nenhum jogo encontrado</div>'}
+    <div class="card" style="padding:0;">
+        <div style="overflow-x:auto;">
+            <table class="rank-table">
+                <thead><tr><th>Fase</th><th>Mandante</th><th style="text-align:center;">Placar</th><th>Visitante</th><th style="text-align:center;">Zebra</th><th style="text-align:right;"></th></tr></thead>
+                <tbody>
+                {match_rows if match_rows else '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:1rem;">Nenhum jogo encontrado</td></tr>'}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 """
@@ -534,11 +633,11 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
 
 def _build_times_index(config: ChampionshipConfig, html_base: str) -> str:
-    """Build an index page listing all teams in a grouped table."""
+    """Build an index page listing all teams with elimination status and group stats."""
     teams = _all_teams(config)
     if not teams:
         body = '<div class="hero"><h1>\U0001f3c6 Guia de Times</h1><div class="subtitle">Nenhum time encontrado</div></div>'
-        return _page_frame(config, "Guia de Times", body, back_link="index.html", active_nav="index.html")
+        return _page_frame(config, "Guia de Times", body, back_link="index.html", active_nav="times.html")
 
     # Build a group lookup
     group_of_team = {}
@@ -546,39 +645,219 @@ def _build_times_index(config: ChampionshipConfig, html_base: str) -> str:
         for t in grp.get("teams", []):
             group_of_team[t] = grp.get("name", "?")
 
-    # Sort teams: by group then alphabetically
+    # ── Phase ordering for knockout progression ──
+    _PHASE_ORDER = ["1", "2", "3", "segunda_fase", "oitavas", "quartas", "semi", "terceiro_lugar", "final"]
+    _PHASE_LABEL = {
+        "1": "1\u00aa Fase", "2": "2\u00aa Fase", "3": "3\u00aa Fase",
+        "segunda_fase": "2\u00aa Fase", "oitavas": "8\u00aa",
+        "quartas": "4\u00aa", "semi": "Semi",
+        "terceiro_lugar": "3\u00ba Lugar", "final": "Final",
+        "group": "1\u00aa Fase",
+    }
+
+    # ── Compute league-style table + elimination status from games.csv ──
+    team_stats: dict[str, dict] = {}
+    for t in teams:
+        team_stats[t] = {"pts": 0, "w": 0, "d": 0, "l": 0, "gf": 0, "ga": 0, "gd": 0, "gp": 0}
+
+    team_status: dict[str, tuple[str, str]] = {}  # team -> ("alive"|"eliminated", phase_key)
+
+    if os.path.exists(config.games_file):
+        df_games = pd.read_csv(config.games_file, sep=",")
+
+        # ── Points table ──
+        for _, r in df_games.iterrows():
+            try:
+                hg = int(r["home_goals"]) if pd.notna(r.get("home_goals")) else None
+                ag = int(r["away_goals"]) if pd.notna(r.get("away_goals")) else None
+            except (ValueError, TypeError):
+                continue
+            if hg is None or ag is None:
+                continue
+            ht = str(r["home_team"])
+            at = str(r["away_team"])
+            if ht not in team_stats or at not in team_stats:
+                continue
+            team_stats[ht]["gp"] += 1
+            team_stats[at]["gp"] += 1
+            team_stats[ht]["gf"] += hg
+            team_stats[ht]["ga"] += ag
+            team_stats[at]["gf"] += ag
+            team_stats[at]["ga"] += hg
+            if hg > ag:
+                team_stats[ht]["pts"] += 3
+                team_stats[ht]["w"] += 1
+                team_stats[at]["l"] += 1
+            elif ag > hg:
+                team_stats[at]["pts"] += 3
+                team_stats[at]["w"] += 1
+                team_stats[ht]["l"] += 1
+            else:
+                team_stats[ht]["pts"] += 1
+                team_stats[ht]["d"] += 1
+                team_stats[at]["pts"] += 1
+                team_stats[at]["d"] += 1
+
+        # ── Elimination status (win/loss in last match) ──
+        for team in teams:
+            tm = df_games[(df_games["home_team"] == team) | (df_games["away_team"] == team)].copy()
+            if tm.empty:
+                team_status[team] = ("alive", "")
+                continue
+
+            # Sort by phase order descending to get the most recent phase
+            tm["_phase_ord"] = tm["round"].astype(str).str.strip().map(
+                lambda r: _PHASE_ORDER.index(r) if r in _PHASE_ORDER else -1
+            )
+            tm = tm.sort_values("_phase_ord")
+            last = tm.iloc[-1]
+            last_phase = str(last["round"]).strip()
+
+            # Check if team appears in any playoff phase
+            playoff_phases = [p for p in _PHASE_ORDER if p not in ("1", "2", "3")]
+            appears_in_playoff = tm["round"].astype(str).str.strip().isin(playoff_phases).any()
+
+            if not appears_in_playoff:
+                team_status[team] = ("eliminated", "group")
+                continue
+
+            # Has playoff — check result of last match
+            try:
+                hg = int(last["home_goals"]) if pd.notna(last.get("home_goals")) else None
+                ag = int(last["away_goals"]) if pd.notna(last.get("away_goals")) else None
+            except (ValueError, TypeError):
+                hg = ag = None
+
+            if hg is None or ag is None:
+                team_status[team] = ("alive", last_phase)
+                continue
+
+            is_home = last["home_team"] == team
+            team_goals = hg if is_home else ag
+            opp_goals = ag if is_home else hg
+
+            if team_goals > opp_goals:
+                # Won — check if they appear in the next phase
+                last_idx = _PHASE_ORDER.index(last_phase) if last_phase in _PHASE_ORDER else -1
+                if last_idx >= 0 and last_idx + 1 < len(_PHASE_ORDER):
+                    next_ph = _PHASE_ORDER[last_idx + 1]
+                    next_appear = tm[tm["round"].astype(str).str.strip() == next_ph]
+                    if not next_appear.empty:
+                        team_status[team] = ("alive", next_ph)
+                    else:
+                        df_next = df_games[df_games["round"].astype(str).str.strip() == next_ph]
+                        has_teams = (
+                            df_next["home_team"].notna().any()
+                            and (df_next["home_team"].astype(str).str.strip() != "").any()
+                        )
+                        if has_teams:
+                            # Next phase exists but this team isn't there
+                            # This shouldn't happen for a win, but could on walkover
+                            team_status[team] = ("alive", last_phase)
+                        else:
+                            # Next phase not set up yet — still alive
+                            team_status[team] = ("alive", last_phase)
+                else:
+                    team_status[team] = ("alive", last_phase)
+            elif team_goals < opp_goals:
+                team_status[team] = ("eliminated", last_phase)
+            else:
+                # Draw in knockout — check penalties, then next phase
+                try:
+                    hp = int(last["home_pen"]) if (pd.notna(last.get("home_pen")) and str(last.get("home_pen", "")).strip()) else None
+                    ap = int(last["away_pen"]) if (pd.notna(last.get("away_pen")) and str(last.get("away_pen", "")).strip()) else None
+                except (ValueError, TypeError):
+                    hp = ap = None
+
+                if hp is not None and ap is not None:
+                    if (is_home and hp > ap) or (not is_home and ap > hp):
+                        team_status[team] = ("alive", last_phase)
+                    else:
+                        team_status[team] = ("eliminated", last_phase)
+                else:
+                    # No penalty data — check next phase
+                    last_idx = _PHASE_ORDER.index(last_phase) if last_phase in _PHASE_ORDER else -1
+                    if last_idx >= 0 and last_idx + 1 < len(_PHASE_ORDER):
+                        next_ph = _PHASE_ORDER[last_idx + 1]
+                        next_appear = tm[tm["round"].astype(str).str.strip() == next_ph]
+                        if not next_appear.empty:
+                            team_status[team] = ("alive", next_ph)
+                        else:
+                            df_next = df_games[df_games["round"].astype(str).str.strip() == next_ph]
+                            has_teams = (
+                                df_next["home_team"].notna().any()
+                                and (df_next["home_team"].astype(str).str.strip() != "").any()
+                            )
+                            if has_teams:
+                                team_status[team] = ("eliminated", last_phase)
+                            else:
+                                team_status[team] = ("alive", last_phase)
+                    else:
+                        team_status[team] = ("alive", last_phase)
+
+    else:
+        # No games.csv — everything alive
+        for t in teams:
+            team_status[t] = ("alive", "")
+
+    for t in teams:
+        team_stats[t]["gd"] = team_stats[t]["gf"] - team_stats[t]["ga"]
+
+    # Sort teams: alive first, then by pts, GD, GF, name
     def _sort_key(t: str) -> tuple:
-        g = group_of_team.get(t, "ZZ")
-        return (g, t)
+        status, phase = team_status.get(t, ("alive", ""))
+        s = team_stats[t]
+        return (0 if status == "alive" else 1, -s["pts"], -s["gd"], -s["gf"], t)
 
     teams_sorted = sorted(teams, key=_sort_key)
 
     rows = ""
     for i, team in enumerate(teams_sorted, 1):
-        grp = group_of_team.get(team, "-")
         en = {v: k for k, v in config.team_name_mapping.items()}.get(team, team)
-        # times.html is at root level (html_base), not inside times/ subdir
         logo_html = _team_logo_tag(en, config, cls="team-logo-sm", start=html_base)
         if not logo_html:
             initials = "".join(p[0] for p in team.split()[:2]).upper()
             logo_html = f'<div class="player-avatar" style="width:32px;height:32px;font-size:0.7rem;">{initials}</div>'
+
+        # Status badge with phase info
+        status, phase_key = team_status.get(team, ("alive", ""))
+        if status == "alive":
+            phase_display = _PHASE_LABEL.get(phase_key, phase_key)
+            status_badge = f'<span style="font-size:0.6rem;background:rgba(34,197,94,0.15);color:var(--success);padding:0.15rem 0.4rem;border-radius:999px;font-weight:600;">\u25cf Vivo</span>'
+            if phase_display:
+                status_badge += f' <span style="font-size:0.55rem;color:var(--text-muted);">({phase_display})</span>'
+        else:
+            phase_display = _PHASE_LABEL.get(phase_key, phase_key) if phase_key else ""
+            status_badge = f'<span style="font-size:0.6rem;background:rgba(239,68,68,0.15);color:var(--danger);padding:0.15rem 0.4rem;border-radius:999px;font-weight:600;">\u2620 Eliminado</span>'
+            if phase_display:
+                status_badge += f' <span style="font-size:0.55rem;color:var(--text-muted);">{phase_display}</span>'
+
+        s = team_stats[team]
         rows += f"""<tr>
             <td style="width:30px;">{i}</td>
             <td style="width:36px;">{logo_html}</td>
             <td><a href="times/{team}.html" style="font-weight:600;font-size:0.9rem;">{team}</a></td>
-            <td style="color:var(--text-muted);font-size:0.8rem;">{grp}</td>
+            <td style="text-align:center;font-weight:700;color:var(--accent);">{s["pts"]}</td>
+            <td style="text-align:center;">{s["gp"]}</td>
+            <td style="text-align:center;color:var(--success);">{s["w"]}</td>
+            <td style="text-align:center;">{s["d"]}</td>
+            <td style="text-align:center;color:var(--danger);">{s["l"]}</td>
+            <td style="text-align:center;font-weight:600;">{s["gf"]}</td>
+            <td style="text-align:center;">{s["ga"]}</td>
+            <td style="text-align:center;font-weight:600;color:var(--{'success' if s['gd'] > 0 else 'danger' if s['gd'] < 0 else 'text'});">{'+' if s['gd'] > 0 else ''}{s['gd']}</td>
+            <td>{status_badge}</td>
         </tr>
 """
 
     body = f"""<div class="hero">
     <h1>\U0001f3c6 Guia de Times</h1>
-    <div class="subtitle">An\u00e1lise de palpites por time \u2022 {len(teams)} times</div>
+    <div class="subtitle">Classifica\u00e7\u00e3o por pontos (3V\u20221E\u20220D) \u2022 {len(teams)} times</div>
 </div>
 <div class="section">
     <div class="card" style="padding:0;">
         <div style="overflow-x:auto;">
-            <table class="rank-table">
-                <thead><tr><th>#</th><th></th><th>Time</th><th>Grupo</th></tr></thead>
+            <table class="rank-table" style="min-width:520px;">
+                <thead><tr><th>#</th><th></th><th>Time</th><th style="text-align:center;">P</th><th style="text-align:center;">J</th><th style="text-align:center;color:var(--success);">V</th><th style="text-align:center;">E</th><th style="text-align:center;color:var(--danger);">D</th><th style="text-align:center;">GP</th><th style="text-align:center;">GC</th><th style="text-align:center;">SG</th><th>Status</th></tr></thead>
                 <tbody>
                 {rows}
                 </tbody>
@@ -854,12 +1133,24 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
 
     boleiros = sorted(df["who"].unique())
 
-    # Default view: last 10 completed + next upcoming
+    # ── Build country slug → match mapping for country filter ──
+    # config.team_slugs: {english_name: slug}  e.g. {"Brazil": "BRA"}
+    # Invert to get slug → list of english names
+    slug_to_en: dict[str, list[str]] = {}
+    for en, slug in config.team_slugs.items():
+        slug_to_en.setdefault(slug, []).append(en)
+    # Build match_key → {home_slug, away_slug}
+    match_slugs: dict[str, tuple[str, str]] = {}
+    for mk, (ha, aa, ht, at, rl, rs) in match_info.items():
+        # ha and aa are already slugs from _pt_to_slug or uppercase fallback
+        match_slugs[mk] = (ha, aa)
+
+    # Default view: last 4 completed + next upcoming
     completed_matches = [m for m in all_matches if m in set(df_valid["match_key"].unique())]
     upcoming_matches = [m for m in all_matches if m not in set(completed_matches)]
-    last_10 = completed_matches[-10:] if len(completed_matches) >= 10 else completed_matches
+    last_4 = completed_matches[-4:] if len(completed_matches) >= 4 else completed_matches
     next_upcoming = upcoming_matches[0] if upcoming_matches else None
-    default_matches = list(last_10)
+    default_matches = list(last_4)
     if next_upcoming:
         default_matches.append(next_upcoming)
 
@@ -874,8 +1165,11 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         ha, aa, _, _, rl, rs = match_info[m]
         is_default = m in default_matches
         cls = "game-col" + (" game-default" if is_default else "")
+        # data-teams for country filter
+        team_slugs_attr = f"{ha},{aa}"
         header_cells += (
             f'<th class="{cls}" data-match="{m}" data-round="{rs}" '
+            f'data-teams="{team_slugs_attr}" '
             f'title="rodada {rs}" '
             'style="position:sticky;top:0;z-index:3;background:var(--card-bg);'
             'font-size:0.55rem;text-align:center;padding:0.2rem 0.1rem;'
@@ -1005,6 +1299,35 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
             f'</div></div></div>\n'
         )
 
+    # ── Country dropdown filter ──
+    unique_slugs = sorted(set(
+        slug for mk in all_matches if mk in match_info
+        for slug in match_slugs.get(mk, ())
+    ))
+    country_dropdown_html = ""
+    if unique_slugs:
+        country_checkboxes = ""
+        for slug in unique_slugs:
+            en_names = slug_to_en.get(slug, [slug])
+            display = en_names[0]  # First English name as label
+            country_checkboxes += (
+                f'<label style="display:flex;align-items:center;gap:0.2rem;'
+                f'font-size:0.55rem;padding:0.15rem 0;cursor:pointer;white-space:nowrap;">'
+                f'<input type="checkbox" value="{slug}" '
+                f'onchange="onCountryChange(this)" style="width:0.75rem;height:0.75rem;"> '
+                f'{display}</label>\n'
+            )
+        country_dropdown_html = (
+            f'<div class="dd-wrap" style="position:relative;display:inline-block;">'
+            f'<button id="btn-pais" onclick="toggleCountryDD()" style="{dd_btn_style}">'
+            f'\U0001f30d País \u25be</button>'
+            f'<div id="panel-pais" class="country-panel" style="{dd_panel_style}">'
+            f'<div style="font-size:0.6rem;font-weight:600;color:var(--text-muted);'
+            f'margin-bottom:0.2rem;">País</div>'
+            f'<div style="max-height:160px;overflow-y:auto;">{country_checkboxes}</div>'
+            f'</div></div>\n'
+        )
+
     # ── JavaScript for dropdown + multi-select filtering ──
     js = r"""
 <script>
@@ -1021,10 +1344,20 @@ function toggleDD(key) {
     if (!isOpen) panel.style.display = 'block';
 }
 
+function toggleCountryDD() {
+    var panel = document.getElementById('panel-pais');
+    if (!panel) return;
+    var isOpen = panel.style.display !== 'none';
+    closeAllDDs();
+    if (!isOpen) panel.style.display = 'block';
+}
+
 function closeAllDDs() {
     document.querySelectorAll('[id^="dd-panel-"]').forEach(function(el) {
         el.style.display = 'none';
     });
+    var countryPanel = document.getElementById('panel-pais');
+    if (countryPanel) countryPanel.style.display = 'none';
 }
 
 function refreshBadge(key) {
@@ -1059,9 +1392,50 @@ function onCheckChange(el) {
     applyFilter();
 }
 
+function onCountryChange(el) {
+    var slug = el.value;
+    var isChecked = el.checked;
+    // Get all selected country slugs
+    var selectedSlugs = [];
+    document.querySelectorAll('#panel-pais input[type="checkbox"]:checked').forEach(function(cb) {
+        selectedSlugs.push(cb.value);
+    });
+    if (selectedSlugs.length === 0) {
+        // No countries selected — go back to default
+        setDefault();
+        return;
+    }
+    // Uncheck ALL phase checkboxes first
+    document.querySelectorAll('[id^="dd-panel-"] input[type="checkbox"]').forEach(function(cb) {
+        cb.checked = false;
+    });
+    // Then check only matches belonging to ANY selected country
+    document.querySelectorAll('[id^="dd-panel-"] input[type="checkbox"]').forEach(function(cb) {
+        var match = cb.value;
+        var th = document.querySelector('.game-col[data-match="' + match + '"]');
+        if (th) {
+            var teams = th.getAttribute('data-teams') || '';
+            var matchToShow = false;
+            selectedSlugs.forEach(function(s) {
+                if (teams.split(',').indexOf(s) !== -1) {
+                    matchToShow = true;
+                }
+            });
+            if (matchToShow) {
+                cb.checked = true;
+            }
+        }
+    });
+    applyFilter();
+}
+
 function setDefault() {
     // Uncheck all checkboxes in all panels
     document.querySelectorAll('[id^="dd-panel-"] input[type="checkbox"]').forEach(function(cb) {
+        cb.checked = false;
+    });
+    // Also uncheck country checkboxes
+    document.querySelectorAll('#panel-pais input[type="checkbox"]').forEach(function(cb) {
         cb.checked = false;
     });
     // Check .game-default matches
@@ -1154,7 +1528,7 @@ document.addEventListener('DOMContentLoaded', function() { setDefault(); });
         '<div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem;">'
         '<button onclick="setDefault()" style="padding:0.4rem 0.8rem;background:#1a3a5c;'
         'color:white;border:none;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer;">'
-        'padr\u00e3o: \u00faltimos 10 jogos + pr\u00f3ximo</button>'
+        'padr\u00e3o: \u00faltimos 4 jogos + pr\u00f3ximo</button>'
         '<span style="font-size:0.65rem;color:var(--text-muted);">Ordenar:</span>'
         '<button id="sort-name-btn" onclick="sortByName()" '
         'style="padding:0.25rem 0.5rem;background:#1a3a5c;color:white;border:none;'
@@ -1166,7 +1540,7 @@ document.addEventListener('DOMContentLoaded', function() { setDefault(); });
         '</div>'
 
         '<div style="display:flex;gap:0.3rem;flex-wrap:wrap;align-items:flex-start;">'
-        f'{phase_dropdowns_html}'
+        f'{phase_dropdowns_html}{country_dropdown_html}'
         '</div>'
     )
 
@@ -1204,7 +1578,7 @@ window.addEventListener('scroll', fixScrollerHeight);
     </div>
 
     <div class="table-scroller" style="overflow:auto;margin-top:0.5rem;">
-        <table style="border-collapse:separate;border-spacing:0;width:100%;font-size:0.7rem;">
+        <table data-sortable style="border-collapse:separate;border-spacing:0;width:100%;font-size:0.7rem;">
             <thead><tr>{header_cells}</tr></thead>
             <tbody>{table_rows}</tbody>
         </table>

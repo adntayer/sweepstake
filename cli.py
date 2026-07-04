@@ -19,7 +19,7 @@ import webbrowser
 
 from src.championships import list_championships, load_config
 from src.core.pipeline import run_raw_to_bronze, run_silver_to_gold, run_pipeline, run_bronze_to_silver
-from src.core.reports.dashboard import generate_dashboard
+from src.core.reports.dashboard import generate_dashboard, generate_boleiros_index
 from src.core.reports.html import generate_html_reports
 from src.core.logo_fetcher import fetch_all_logos
 from src.core.printing import print_colored
@@ -85,6 +85,7 @@ def cmd_run(args: argparse.Namespace) -> None:
     if run_rep:
         generate_html_reports(config)
         generate_dashboard(config)
+        generate_boleiros_index(config)
 
         # Open dashboard in browser
         index_path = os.path.abspath(config.index_html_path())
