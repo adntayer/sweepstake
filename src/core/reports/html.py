@@ -601,6 +601,8 @@ def _save(filepath: str, content: str) -> None:
 
 def _initials(name: str) -> str:
     """Get initials from a name (max 2 chars)."""
+    if not name or not name.strip():
+        return ""
     parts = name.strip().split()
     if len(parts) >= 2:
         return (parts[0][0] + parts[-1][0]).upper()
@@ -1876,9 +1878,11 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     # Check if there is a score to display (partial or final).
     # A live match with a partial score (e.g. 0 x 0) still has a score.
+    _rrp_raw = df_match["resultado_real_placar"].iloc[0] if "resultado_real_placar" in df_match.columns else ""
     has_score = (
-        df_match["resultado_real_placar"].notna().any()
-        and df_match["resultado_real_placar"].iloc[0] != "nan"
+        pd.notna(_rrp_raw)
+        and str(_rrp_raw) not in ("nan", "", "none")
+        and " x " in str(_rrp_raw)
     )
 
     # Check if result is final — only for finished (non-live) matches.
@@ -2017,10 +2021,10 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
             placar_players.setdefault(placar, []).append(str(row["who"]))
 
     # Pre-game: placar distribution bars
+    placar_rows_resolved: list[dict] = []
     if has_placar:
         placar_counts = df_placar["resultado_bol_placar"].value_counts().reset_index()
         placar_counts.columns = ["placar", "#"]
-        placar_rows_resolved = []
         for _, pr in placar_counts.iterrows():
             parts = str(pr["placar"]).split(" x ")
             if len(parts) == 2:
@@ -2039,7 +2043,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
                 rtype = 2  # away win
             placar_rows_resolved.append({"placar": pr["placar"], "#": pr["#"], "rtype": rtype, "hg": hg, "ag": ag, "total": hg + ag})
         placar_rows_resolved.sort(key=lambda x: (x["rtype"], -x["total"], -x["ag"] if x["rtype"] == 0 else (-x["hg"] if x["rtype"] == 2 else x["hg"])))
-    total_p = sum(r["#"] for r in placar_rows_resolved)
+    total_p = sum(r["#"] for r in placar_rows_resolved) if placar_rows_resolved else 0
     score_bars = ""
     bar_colors = {"home": "var(--success)", "draw": "var(--warning)", "away": "var(--danger)"}
     bar_bgs = {"home": "rgba(34,197,94,0.15)", "draw": "rgba(245,158,11,0.15)", "away": "rgba(239,68,68,0.15)"}
@@ -2062,6 +2066,8 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     # Post-game: criteria distribution
     df_post = df_match["criterio"].value_counts().reset_index()
     df_post.columns = ["criterio", "#"]
+    # Exclude empty criteria (e.g. placeholder rows with no predictions)
+    df_post = df_post[df_post["criterio"].astype(str).str.strip() != ""]
     df_post.sort_values("criterio", inplace=True)
     criteria_bars = ""
     total_c = int(df_post["#"].sum())
@@ -2093,6 +2099,9 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     pred_rows = ""
     for _, row in df_match.iterrows():
+        who_val = str(row.get("who", "")).strip()
+        if not who_val:
+            continue  # skip placeholder synthetic rows
         pts = int(row["pontos"]) if pd.notna(row.get("pontos")) else 0
         criterio_str = row.get("criterio", "")
         if pd.isna(criterio_str):
@@ -2118,9 +2127,9 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
             placar_str = "? x ?"
         pred_rows += (
             f'<div class="pred-row">'
-            f'{_avatar_html(row["who"])}'
+            f'{_avatar_html(who_val)}'
             f'<div class="pred-info">'
-            f'<div class="pred-name">{row["who"]}</div>'
+            f'<div class="pred-name">{who_val}</div>'
             f'<div class="pred-detail">Previsto: {placar_str} | {criterio_emoji} {criterio_str}</div>'
             f'</div>'
             f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
@@ -2214,7 +2223,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     body += f"""
 <div class="section">
-    <div class="section-title">\U0001f4cb Previsoes dos Jogadores ({len(df_match)})</div>
+    <div class="section-title">\U0001f4cb Previsoes dos Jogadores ({int(df_match['who'].astype(str).str.strip().ne('').sum())})</div>
     <div class="card">{pred_rows}</div>
 </div>
 """
@@ -4364,18 +4373,84 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         _save(path, html)
 
     # --- Per-match (playoff rounds) ---
+    # Load games.csv once for fallback placeholder generation
+    _df_games = None
+    if os.path.exists(config.games_file):
+        _df_games = pd.read_csv(config.games_file, sep=",")
     for pr in (config.playoff_rounds or []):
         phase = pr.key
         # Use all data (including pending/notstarted) so every match gets a
         # placeholder page even before the real result is known.  The
         # _build_match function handles valido=0 rows gracefully.
         playoff_path = config.gold_playoff_all_path(phase)
-        if not os.path.exists(playoff_path):
+        has_gold = os.path.exists(playoff_path)
+        if has_gold:
+            df_phase = pd.read_csv(playoff_path, sep=",")
+            if df_phase.empty:
+                has_gold = False
+
+        if has_gold:
+            phase_matches = df_phase[df_phase["match"].notna()].groupby("match")
+        elif _df_games is not None:
+            # No predictions yet — generate placeholder pages from games.csv
+            # so the dashboard shows upcoming fixtures even before player
+            # picks are collected.
+            phase_games = _df_games[_df_games["round"].astype(str).str.strip() == phase].copy()
+            if phase_games.empty:
+                continue
+            # Build a synthetic gold-like DataFrame row per match so that
+            # _build_match can render fixture info + "no predictions" state.
+            rows = []
+            for _, g_row in phase_games.iterrows():
+                date_raw = str(g_row.get("date", ""))
+                # games.csv date format: "2026-07-04 12h" — split into date + hour
+                if " " in date_raw:
+                    d, h = date_raw.split(" ", 1)
+                else:
+                    d, h = date_raw, ""
+                home_goals_real = g_row.get("home_goals")
+                away_goals_real = g_row.get("away_goals")
+                # Build resultado_real_placar
+                try:
+                    hg_f = float(home_goals_real) if pd.notna(home_goals_real) else None
+                    ag_f = float(away_goals_real) if pd.notna(away_goals_real) else None
+                except (ValueError, TypeError):
+                    hg_f = ag_f = None
+                if hg_f is not None and ag_f is not None:
+                    rrp = f"{int(hg_f)} x {int(ag_f)}"
+                else:
+                    rrp = ""
+                rows.append({
+                    "date": d,
+                    "hour": h,
+                    "match": str(g_row.get("match", "")),
+                    "home_team": str(g_row.get("home_team", "")),
+                    "away_team": str(g_row.get("away_team", "")),
+                    "home_goals_bol": pd.NA,
+                    "away_goals_bol": pd.NA,
+                    "home_goals_real": hg_f,
+                    "away_goals_real": ag_f,
+                    "home_pen_bol": pd.NA,
+                    "away_pen_bol": pd.NA,
+                    "home_pen_real": g_row.get("home_pen", pd.NA),
+                    "away_pen_real": g_row.get("away_pen", pd.NA),
+                    "resultado_bol_placar": pd.NA,
+                    "resultado_bol_time": pd.NA,
+                    "resultado_real_placar": rrp,
+                    "resultado_real_time": pd.NA,
+                    "time_elapsed": str(g_row.get("time_elapsed", "")),
+                    "who": "",
+                    "pontos": 0,
+                    "criterio": "",
+                    "valido": 0,
+                })
+            df_phase = pd.DataFrame(rows)
+            if df_phase.empty:
+                continue
+            phase_matches = df_phase.groupby("match")
+        else:
             continue
-        df_phase = pd.read_csv(playoff_path, sep=",")
-        if df_phase.empty:
-            continue
-        phase_matches = df_phase[df_phase["match"].notna()].groupby("match")
+
         for match, df_match in phase_matches:
             print_colored(f"generating match html: {phase} {match}", "blue")
             html = _build_match(config, match, pr.key, df_match)

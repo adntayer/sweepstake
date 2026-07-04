@@ -1192,8 +1192,39 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
 </div>
 """
 
-    # Playoff rounds
+    # Playoff rounds (all wrapped in accordions)
     playoff_emojis = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
+
+    # Determine which playoff phase has today's or the next upcoming match.
+    # Extract dates from filenames (YYYY-MM-DD_HHh_…).
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    open_playoff_phase: str | None = None
+    best_phase_date: str | None = None
+    for pr in config.playoff_rounds:
+        po_dir = _norm(os.path.join(html_base, "jogos", pr.key))
+        po_files = sorted(glob(_norm(os.path.join(po_dir, "*.html"))))
+        po_files = [f for f in po_files if "index" not in f]
+        if not po_files:
+            continue
+        # Check if this phase has a match today
+        for fp in po_files:
+            base = os.path.basename(fp)
+            date_candidate = base[:10]  # YYYY-MM-DD from filename start
+            if date_candidate == today_str:
+                open_playoff_phase = pr.key
+                break
+        if open_playoff_phase:
+            break
+        # Track earliest future date as fallback
+        for fp in po_files:
+            base = os.path.basename(fp)
+            date_candidate = base[:10]
+            if date_candidate > today_str:
+                if best_phase_date is None or date_candidate < best_phase_date:
+                    best_phase_date = date_candidate
+                    open_playoff_phase = pr.key
+                break  # files are sorted, first is earliest
+
     for pr in config.playoff_rounds:
         po_dir = _norm(os.path.join(html_base, "jogos", pr.key))
         po_files = sorted(glob(_norm(os.path.join(po_dir, "*.html"))))
@@ -1202,10 +1233,16 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
 
         po_links = _build_compact_grid(po_files, results_map)
 
+        is_open = pr.key == open_playoff_phase
         sections += f"""
 <div class="section">
     <div class="section-title">{emoji} {pr.name} ({len(po_files)})</div>
-    <div style="margin:0 0.75rem;">{po_links}</div>
+    <div style="margin:0 0.75rem;">
+        <details {"open" if is_open else ""}>
+            <summary style="padding:0.6rem 0.75rem;font-size:0.8rem;">{pr.name} ({len(po_files)})</summary>
+            <div class="content" style="padding:0.5rem 0.75rem 0.75rem;">{po_links}</div>
+        </details>
+    </div>
 </div>
 """
 
