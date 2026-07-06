@@ -329,12 +329,9 @@ boleiros:
         phase: ''
   André Tayer:
     penalties:
-      - value: 30
-        reason: 'aaaaa'
-        phase: 'bbb'
-      - value: 70
-        reason: 'hoje'
-        phase: 'amanha'
+      - value: 0
+        reason: ''
+        phase: ''
   Cipriano L.:
     penalties:
       - value: 0
