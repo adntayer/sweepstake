@@ -153,10 +153,10 @@ logo_slug_overrides:
 playoff_scoring:
   segunda_fase: 4
   oitavas: 8
-  quartas: 12
-  semi: 20
-  final: 30
-  campeao: 45
+  quartas: 15
+  semi: 24
+  final: 35
+  campeao: 50
 
 # Striker scoring (points if player's pick matches actual_top_scorer)
 striker_scoring:
