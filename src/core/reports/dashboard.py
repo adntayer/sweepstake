@@ -1352,63 +1352,6 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
 # Main
 # ------------------------------------------------------------------
 
-def _build_bonus_times_card(config: ChampionshipConfig) -> str:
-    """Build bonus times leaderboard card for the dashboard."""
-    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
-    if not os.path.exists(bonus_path):
-        return ""
-    df = pd.read_csv(bonus_path)
-    if df.empty:
-        return ""
-
-    top_pts = (
-        df.groupby("boleiro")["points"]
-        .sum()
-        .sort_values(ascending=False)
-        .head(3)
-        .reset_index()
-    )
-    top_pts_html = ""
-    for i, (_, r) in enumerate(top_pts.iterrows(), 1):
-        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
-        top_pts_html += (
-            f'<div class="bar-row">'
-            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
-            f'<span class="bar-pct">+{int(r["points"])}pts</span>'
-            f'</div>\n'
-        )
-
-    acc = df.groupby("boleiro").agg(
-        correct=("correct", "sum"), total=("correct", "count")
-    )
-    acc = acc[acc["total"] >= 5].copy()
-    if not acc.empty:
-        acc["rate"] = (acc["correct"] / acc["total"] * 100).round(0)
-        top_acc = acc.sort_values("rate", ascending=False).head(3).reset_index()
-    else:
-        top_acc = pd.DataFrame()
-
-    top_acc_html = ""
-    for i, (_, r) in enumerate(top_acc.iterrows(), 1):
-        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
-        top_acc_html += (
-            f'<div class="bar-row">'
-            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
-            f'<span class="bar-pct">{int(r["correct"])}/{int(r["total"])} - {int(r["rate"])}%</span>'
-            f'</div>\n'
-        )
-
-    html = '<div class="section"><div class="section-title">\U0001f3c6 Bônus Times (extra)</div><div class="card">'
-    if top_pts_html:
-        html += '<div style="margin-bottom:0.75rem;"><strong>Maiores Pontuadores</strong></div>'
-        html += f'<div class="bar-chart">{top_pts_html}</div>'
-    if top_acc_html:
-        html += '<div style="margin-top:0.75rem;margin-bottom:0.75rem;"><strong>Maiores Acertadores</strong></div>'
-        html += f'<div class="bar-chart">{top_acc_html}</div>'
-    html += "</div></div>\n"
-    return html
-
-
 def _build_badge_accordion(config: ChampionshipConfig) -> str:
     """Build a single accordion explaining each badge (like 'Legenda dos acertos')."""
     badges = [
@@ -1498,7 +1441,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     zebra_counter = _build_zebra_counter(config)
     badge_accordion = _build_badge_accordion(config)
     emoji_accordion = _build_emoji_accordion(config)
-    bonus_card = _build_bonus_times_card(config)
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1563,8 +1505,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <div class="section-title">\U0001f3c6 Ranking</div>
     <div class="card">{full_ranking}</div>
 </div>
-
-{bonus_card}
 
 <div class="section">
     <div class="section-title">\U0001f4c2 Jogos por Fase</div>
