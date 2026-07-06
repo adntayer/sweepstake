@@ -42,9 +42,16 @@ def _norm(path: str) -> str:
     return os.path.normpath(path)
 
 
-def _short_name(name: str) -> str:
-    """Shorten phase names for table headers."""
+def _short_name(name: str, config: ChampionshipConfig | None = None) -> str:
+    """Shorten phase names for table headers.
+
+    If ``config`` is provided, its ``phase_abbreviations`` mapping is
+    checked first (exact match).  Falls back to Portuguese substring matching
+    for legacy compatibility.
+    """
     n = name.strip()
+    if config and n in config.phase_abbreviations:
+        return config.phase_abbreviations[n]
     nl = n.lower()
     if "segunda" in nl:
         return "2\u00aa Fase"
@@ -565,16 +572,23 @@ body { padding-bottom: 70px; }
 """
 
 
-def _bottom_nav_html(active: str = "", prefix: str = "") -> str:
-    """Build the fixed bottom navigation bar. 'active' should match a href."""
-    items = [
-        ("index.html", "\U0001f3e0", "In\u00edcio"),
-        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
-        ("times.html", "\U0001f3c6", "Times"),
-        ("zebras.html", "\U0001f993", "Zebras"),
-        ("palpites.html", "\U0001f4cb", "Palpites"),
-        ("boleiros.html", "\U0001f465", "Boleiros"),
-    ]
+def _bottom_nav_html(active: str = "", prefix: str = "", nav_items: list[dict] | None = None) -> str:
+    """Build the fixed bottom navigation bar. 'active' should match a href.
+
+    If ``nav_items`` is provided, it should be a list of dicts with keys
+    ``href`` and ``label``.  Falls back to a hardcoded default list.
+    """
+    if nav_items:
+        items = [(ni["href"], ni.get("icon", ""), ni["label"]) for ni in nav_items]
+    else:
+        items = [
+            ("index.html", "\U0001f3e0", "In\u00edcio"),
+            ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+            ("times.html", "\U0001f3c6", "Times"),
+            ("zebras.html", "\U0001f993", "Zebras"),
+            ("palpites.html", "\U0001f4cb", "Palpites"),
+            ("boleiros.html", "\U0001f465", "Boleiros"),
+        ]
     links = ""
     for href, icon, label in items:
         cls = ' class="active"' if active == href else ""
@@ -613,7 +627,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
     atualizado às {now_str}
 </div>
-{_bottom_nav_html(active_nav, nav_prefix)}
+{_bottom_nav_html(active_nav, nav_prefix, config.nav_items)}
 <script src="{script_src}"></script>
 </body>
 </html>"""
@@ -842,7 +856,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 )
 
     # Match history rows (newest first)
-    playoff_emoji_map = {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
+    playoff_emoji_map = dict(config.phase_emojis) if config.phase_emojis else {"segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1", "quartas": "\U0001f525", "semi": "\U0001f3af", "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6"}
     sort_col_hist = ["id"] if "id" in df_bol.columns else ["date", "hour"]
     df_hist = df_bol.sort_values(sort_col_hist, ascending=False)
 
@@ -1094,7 +1108,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             _ph_n = len(_grp)
             _ph_sum = int(_grp["pontos"].sum())
             _ph_avg = round(_ph_sum / _ph_n, 1) if _ph_n else 0
-            _ph_label = _short_name(_ph) if _ph else "1\u00aa Fase"
+            _ph_label = _short_name(_ph, config) if _ph else "1\u00aa Fase"
             _ph_rows.append(f'<span style="font-size:0.85rem;padding:0.2rem 0.5rem;background:var(--card-border);border-radius:6px;"><strong>{_ph_label}</strong> {_ph_sum}p ({_ph_avg}/j)</span>')
         if _ph_rows:
             _phase_stats = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;">' + " ".join(_ph_rows) + "</div>"
@@ -1267,7 +1281,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
             phase_order = [pr.key for pr in (config.playoff_rounds or [])]
             phase_label_map = {pr.key: pr.name for pr in (config.playoff_rounds or [])}
-            phase_emoji_map = {
+            phase_emoji_map = dict(config.phase_emojis) if config.phase_emojis else {
                 "segunda_fase": "\U0001f3c6",
                 "oitavas": "\U0001f3c1",
                 "quartas": "\U0001f525",
@@ -1285,8 +1299,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             total_bonus_pts = 0
             phase_blocks = ""
             champion_team = ""
-            # Exclude 'campeao' from the general phase blocks loop to handle it separately
-            for phase_key, group in df_bonus[df_bonus["phase"] != "campeao"].groupby("phase", sort=False):
+            # Exclude champion phase from the general phase blocks loop to handle it separately
+            for phase_key, group in df_bonus[df_bonus["phase"] != config.champion_phase_key].groupby("phase", sort=False):
                 label = phase_label_map.get(phase_key, phase_key)
                 emoji = phase_emoji_map.get(phase_key, "\u26bd")
                 pts_per_correct = playoff_scoring.get(phase_key, 0)
@@ -1364,7 +1378,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 )
 
             # Champion block is separate and should be shown if available, regardless of other phases
-            champion_row = df_bonus[df_bonus["phase"] == "campeao"]
+            champion_row = df_bonus[df_bonus["phase"] == config.champion_phase_key]
             champion_team = champion_row.iloc[0]["team"] if not champion_row.empty else ""
             if champion_team:
                 final_winners = advancing.get("final", [])
@@ -1431,7 +1445,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     # ------------------------------------------------------------------
     # Phase points table
     # ------------------------------------------------------------------
-    phase_emoji_map = {
+    phase_emoji_map = dict(config.phase_emojis) if config.phase_emojis else {
         "1afase": "\U0001f4ca",
         "segunda_fase": "\U0001f3c6",
         "oitavas": "\U0001f3c1",
@@ -1919,11 +1933,15 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
             geo_badge = ""
             if perfil_global:
                 geo_emojis = {
+                    k: v.get("emoji", "") for k, v in (config.continent_display or {}).items()
+                } if config.continent_display else {
                     "europeu": "\U0001f30d", "latino": "\U0001f30e",
                     "asiatico": "\U0001f30f", "africano": "\U0001f30c",
                     "anfitriao": "\U0001f3c6", "oceanico": "\U0001f30a",
                 }
                 geo_names = {
+                    k: v.get("name", k) for k, v in (config.continent_display or {}).items()
+                } if config.continent_display else {
                     "europeu": "europeu", "latino": "latino",
                     "asiatico": "asiatico", "africano": "africano",
                     "anfitriao": "anfitriao", "oceanico": "oceanico",

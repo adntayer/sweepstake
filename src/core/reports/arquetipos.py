@@ -423,7 +423,7 @@ def classificar_jogadores(config: ChampionshipConfig) -> pd.DataFrame:
         best_pct, best_name, _ = scored[0]
         runner_pct, runner_name, _ = scored[1] if len(scored) > 1 else (0.0, "", 0.0)
 
-        if best_pct < MIN_SCORE:
+        if best_pct < config.archetype_min_percentile:
             best_name = "Indefinido"
             best_pct = 0.0
 
@@ -1109,7 +1109,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
     atualizado \u00e0s {now_str}
 </div>
-{_bottom_nav_html(active_nav, nav_prefix)}
+{_bottom_nav_html(active_nav, nav_prefix, config.nav_items)}
 <script src="{script_src}"></script>
 </body>
 </html>"""

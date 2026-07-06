@@ -232,6 +232,35 @@ class ChampionshipConfig:
     # Playoff bonus scoring (phase_key -> points_per_correct)
     playoff_scoring: dict[str, int] = field(default_factory=dict)
 
+    # Analytics thresholds
+    upset_threshold_correct_count: int = 5
+    upset_threshold_percentage: int = 70
+    archetype_min_percentile: int = 50
+    champion_phase_key: str = "campeao"
+
+    # Phase display configuration
+    phase_emojis: dict[str, str] = field(default_factory=dict)
+    phase_abbreviations: dict[str, str] = field(default_factory=dict)
+
+    # Continent display mapping (for archetype GEO labels)
+    continent_display: dict[str, dict] = field(default_factory=dict)
+    continent_order: list[str] = field(default_factory=list)
+
+    # Navigation items for report pages
+    nav_items: list[dict] = field(default_factory=list)
+
+    # External data source configuration
+    csv_columns: dict[str, str] = field(default_factory=dict)
+    csv_date_format: str = "%d/%m/%Y %H:%M"
+    external_round_mapping: dict[str, str] = field(default_factory=dict)
+
+    # Filename parsing aliases (e.g. "16 avos de final" → "segunda_fase")
+    filename_round_aliases: dict[str, str] = field(default_factory=dict)
+
+    # Logo fetcher configuration
+    logo_scrape_url: str = ""
+    logo_slug_overrides: dict[str, str] = field(default_factory=dict)
+
     # Striker scoring
     actual_top_scorer: str = ""
     striker_points: int = 0
@@ -239,9 +268,15 @@ class ChampionshipConfig:
     # Group stage definition (list of {name, teams})
     groups: list = field(default_factory=list)
 
+    # Group stage structure
+    group_round_labels: list[str] = field(default_factory=lambda: ["1", "2", "3"])
+    teams_advance_per_group: int = 2
+
     # Group standings format (e.g. 2026 World Cup)
     standings_format: bool = False
     standings_skiprows: int = 1
+    standings_group_header: str = "Grupo"
+    standings_skip_text: str = "Seleção"
     # Fallback bonus/striker for standings format (when not parseable from Excel)
     bonus_team_picks: dict[str, str] = field(default_factory=dict)
     striker_pick: str = ""
@@ -638,8 +673,27 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         striker_points=striker_points,
         standings_format=raw.get("standings_format", False),
         standings_skiprows=raw.get("standings_skiprows", 1),
+        standings_group_header=raw.get("standings_group_header", "Grupo"),
+        standings_skip_text=raw.get("standings_skip_text", "Seleção"),
         bonus_team_picks=raw.get("bonus_team_picks", {}),
         striker_pick=raw.get("striker_pick", ""),
+        upset_threshold_correct_count=raw.get("upset_threshold_correct_count", 5),
+        upset_threshold_percentage=raw.get("upset_threshold_percentage", 70),
+        archetype_min_percentile=raw.get("archetype_min_percentile", 50),
+        group_round_labels=raw.get("group_round_labels", ["1", "2", "3"]),
+        teams_advance_per_group=raw.get("teams_advance_per_group", 2),
+        champion_phase_key=raw.get("champion_phase_key", "campeao"),
+        phase_emojis=raw.get("phase_emojis", {}),
+        phase_abbreviations=raw.get("phase_abbreviations", {}),
+        continent_display=raw.get("continent_display", {}),
+        continent_order=raw.get("continent_order", []),
+        nav_items=raw.get("nav_items", []),
+        csv_columns=raw.get("csv_columns", {}),
+        csv_date_format=raw.get("csv_date_format", "%d/%m/%Y %H:%M"),
+        external_round_mapping=raw.get("external_round_mapping", {}),
+        filename_round_aliases=raw.get("filename_round_aliases", {}),
+        logo_scrape_url=raw.get("logo_scrape_url", ""),
+        logo_slug_overrides=raw.get("logo_slug_overrides", {}),
     )
 
 

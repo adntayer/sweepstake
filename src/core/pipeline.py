@@ -664,7 +664,7 @@ def _generate_upset_tracker(df_all: pd.DataFrame, config: ChampionshipConfig) ->
         winner_wrong_pct = 100 - round(num_correct / total_votes * 100) if total_votes else 0
 
         is_upset = 0
-        if favorite != real_winner and num_correct <= 5:
+        if favorite != real_winner and num_correct <= config.upset_threshold_correct_count:
             is_upset = 1
 
         rows.append({
@@ -706,8 +706,11 @@ def _generate_round_by_round(df_valid: pd.DataFrame, config: ChampionshipConfig)
     df["round"] = df["round"].fillna("0")
 
     # Map round labels to numeric ordering
+    round_keys = list(config.group_round_labels)
+    for pr in config.playoff_rounds:
+        round_keys.append(pr.key)
     round_order = {}
-    for i, r in enumerate(["1", "2", "3", "segunda_fase", "oitavas", "quartas", "semi", "terceiro_lugar", "final"]):
+    for i, r in enumerate(round_keys):
         round_order[r] = i + 1
     df["round_number"] = df["round"].map(round_order).fillna(0).astype(int)
 
@@ -925,8 +928,7 @@ def _generate_group_standings(config: ChampionshipConfig) -> None:
         return
     print_colored("\tgenerating group standings", "ice")
     df_games = pd.read_csv(config.games_file, sep=",")
-    group_rounds = ["1", "2", "3"]
-    df_group = df_games[df_games["round"].astype(str).str.strip().isin(group_rounds)]
+    df_group = df_games[df_games["round"].astype(str).str.strip().isin(config.group_round_labels)]
 
     rows = []
     for grp in config.groups:

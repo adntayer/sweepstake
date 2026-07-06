@@ -55,9 +55,16 @@ def _initials(name: str) -> str:
     return name[:2].upper()
 
 
-def _short_name(name: str) -> str:
-    """Shorten phase names for table headers."""
+def _short_name(name: str, config: ChampionshipConfig | None = None) -> str:
+    """Shorten phase names for table headers.
+
+    If ``config`` is provided, its ``phase_abbreviations`` mapping is
+    checked first (exact match).  Falls back to Portuguese substring matching
+    for legacy compatibility.
+    """
     n = name.strip()
+    if config and n in config.phase_abbreviations:
+        return config.phase_abbreviations[n]
     nl = n.lower()
     if "segunda" in nl:
         return "2\u00aa Fase"
@@ -545,12 +552,12 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     bonus_pts: dict[str, int] = {}
     bonus_by_phase: dict[str, dict[str, int]] = {}  # {phase: {boleiro: points}}
     play_phase_order: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
-    play_phase_emoji: dict[str, str] = {
+    play_phase_emoji: dict[str, str] = dict(config.phase_emojis) if config.phase_emojis else {
         "segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1",
         "quartas": "\U0001f525", "semi": "\U0001f3af",
         "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6",
     }
-    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name) for pr in (config.playoff_rounds or [])}
+    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name, config) for pr in (config.playoff_rounds or [])}
     for pk in play_phase_order:
         bonus_by_phase[pk] = {}
     bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
@@ -919,16 +926,19 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
         return ""
 
 
-def _build_bottom_nav_dashboard(prefix: str = "") -> str:
+def _build_bottom_nav_dashboard(prefix: str = "", config: ChampionshipConfig | None = None) -> str:
     """Build the bottom navigation for the dashboard."""
-    items = [
-        ("index.html", "\U0001f3e0", "In\u00edcio"),
-        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
-        ("times.html", "\U0001f3c6", "Times"),
-        ("zebras.html", "\U0001f993", "Zebras"),
-        ("palpites.html", "\U0001f4cb", "Palpites"),
-        ("boleiros.html", "\U0001f465", "Boleiros"),
-    ]
+    if config and config.nav_items:
+        items = [(ni["href"], ni.get("icon", ""), ni["label"]) for ni in config.nav_items]
+    else:
+        items = [
+            ("index.html", "\U0001f3e0", "In\u00edcio"),
+            ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+            ("times.html", "\U0001f3c6", "Times"),
+            ("zebras.html", "\U0001f993", "Zebras"),
+            ("palpites.html", "\U0001f4cb", "Palpites"),
+            ("boleiros.html", "\U0001f465", "Boleiros"),
+        ]
     links = ""
     for href, icon, label in items:
         cls = ' class="active"' if href == "index.html" else ""
@@ -1568,7 +1578,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     {phase_buttons}
 </div>
 
-{_build_bottom_nav_dashboard()}
+{_build_bottom_nav_dashboard(config=config)}
 
 <script src="sorttable.js"></script>
 </body>
@@ -1723,8 +1733,8 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
 
     # ── Phase labels ──
     play_phase_order: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
-    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name) for pr in (config.playoff_rounds or [])}
-    play_phase_emoji: dict[str, str] = {
+    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name, config) for pr in (config.playoff_rounds or [])}
+    play_phase_emoji: dict[str, str] = dict(config.phase_emojis) if config.phase_emojis else {
         "segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1",
         "quartas": "\U0001f525", "semi": "\U0001f3af",
         "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6",
@@ -1741,9 +1751,10 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
             bonus_pts[b] = bonus_pts.get(b, 0) + pts
 
     # ── Bonus by phase (per-phase "Bônus" columns) ──
-    all_bonus_phases: list[str] = play_phase_order + (["campeao"] if "campeao" not in play_phase_order else [])
-    bonus_phase_name: dict[str, str] = {**play_phase_name, "campeao": "Campe\u00e3o"}
-    bonus_phase_emoji: dict[str, str] = {**play_phase_emoji, "campeao": "\U0001f3c6"}
+    ck = config.champion_phase_key
+    all_bonus_phases: list[str] = play_phase_order + ([ck] if ck not in play_phase_order else [])
+    bonus_phase_name: dict[str, str] = {**play_phase_name, ck: "Campe\u00e3o"}
+    bonus_phase_emoji: dict[str, str] = {**play_phase_emoji, ck: "\U0001f3c6"}
     bonus_by_phase: dict[str, dict[str, int]] = {pk: {} for pk in all_bonus_phases}
     if os.path.exists(bonus_path):
         df_bonus2 = pd.read_csv(bonus_path, sep=",")
@@ -2000,7 +2011,7 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
     atualizado \u00e0s {datetime.now(pytz.timezone(config.timezone)).strftime("%d/%m/%Y %H:%M:%S")}
 </div>
-""" + _build_bottom_nav_dashboard() + """
+""" + _build_bottom_nav_dashboard(config=config) + """
 <script src="sorttable.js"></script>
 </body>
 </html>"""

@@ -149,7 +149,7 @@ def fetch_all_logos(config: ChampionshipConfig, force: bool = False) -> None:
         return
 
     # --- Phase 2: scrape football-logos.cc for remaining teams ---
-    tournament_url = "https://football-logos.cc/tournaments/fifa-world-cup-2026/"
+    tournament_url = config.logo_scrape_url or "https://football-logos.cc/tournaments/fifa-world-cup-2026/"
     print_colored(f"Fetching team list from {tournament_url}", "blue")
 
     try:
@@ -166,7 +166,7 @@ def fetch_all_logos(config: ChampionshipConfig, force: bool = False) -> None:
 
     print_colored(f"Found {len(team_pages)} team links on the page", "green")
 
-    override_slug: dict[str, str] = {
+    override_slug = dict(config.logo_slug_overrides) if config.logo_slug_overrides else {
         "korea-republic": "south-korea",
         "czechia": "czech-republic",
         "turkiye": "turkey",
