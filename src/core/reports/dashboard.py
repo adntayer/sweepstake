@@ -1749,20 +1749,17 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
         total_pts[p] = jog + bon - pen
     has_penalty = any(v > 0 for v in penalty_pts.values())
 
-    # Headers: match-points-per-phase + bonus-per-phase columns
+    # Headers: per-phase breakdown (placares, bonus, final, ant+final)
     header_cols = '<th style="text-align:center;">#</th><th>Jogador</th>'
     header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--warning);">Total</th>'
-    header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--text-muted);">S\u00f3 Jogos Grupos</th>'
-    if has_penalty:
-        header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--danger);">Pen.</th>'
-    for pk in play_phase_order:
-        em = play_phase_emoji.get(pk, "")
-        nm = play_phase_name.get(pk, pk)
-        header_cols += f'<th style="text-align:right;font-size:0.6rem;color:var(--warning);">{em} S\u00f3 Jogos {nm}</th>'
+    header_cols += '<th style="text-align:right;font-size:0.55rem;color:var(--text-muted);">1\u00aa Fase<br><span style="font-weight:400;">Placares</span></th>'
     for pk in all_bonus_phases:
         em = bonus_phase_emoji.get(pk, "")
         nm = bonus_phase_name.get(pk, pk)
-        header_cols += f'<th style="text-align:right;font-size:0.6rem;color:var(--success);">{em} B\u00f4nus {nm}</th>'
+        header_cols += f'<th style="text-align:right;font-size:0.55rem;color:var(--success);">{em} {nm}<br><span style="font-weight:400;">Bonus</span></th>'
+        header_cols += f'<th style="text-align:right;font-size:0.55rem;color:var(--warning);">{em} {nm}<br><span style="font-weight:400;">Placar</span></th>'
+        header_cols += f'<th style="text-align:right;font-size:0.55rem;color:var(--accent);">{em} {nm}<br><span style="font-weight:400;">Final</span></th>'
+        header_cols += f'<th style="text-align:right;font-size:0.55rem;color:var(--text-muted);">{em} {nm}<br><span style="font-weight:400;">Ant+Final</span></th>'
 
     player_rows = ""
     if total_pts:
@@ -1773,20 +1770,21 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
             cells = f'<td style="padding:0.4rem 0.5rem;text-align:center;">{medal}</td>'
             cells += f'<td style="padding:0.4rem 0.5rem;"><a href="boleiros/{name}.html" style="font-weight:600;">{name}</a></td>'
             cells += f'<td style="padding:0.4rem 0.5rem;font-weight:700;color:var(--accent);text-align:right;">{total}</td>'
-            cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:var(--text-muted);">{grupos_pts.get(name, 0)}</td>'
-            if has_penalty:
-                pv = penalty_pts.get(name, 0)
-                pc = "var(--danger)" if pv > 0 else "var(--text-muted)"
-                pv_disp = f"-{pv}" if pv > 0 else "-"
-                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{pc};">{pv_disp}</td>'
-            for pk in play_phase_order:
-                ph_pts = match_pts_by_phase.get(pk, {}).get(name, 0)
-                ph_color = "var(--warning)" if ph_pts > 0 else "var(--text-muted)"
-                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{ph_color};">{ph_pts}</td>'
+            gp = grupos_pts.get(name, 0)
+            cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:var(--text-muted);">{gp}</td>'
+            cumulative = gp
             for pk in all_bonus_phases:
-                bn = bonus_by_phase.get(pk, {}).get(name, 0)
-                bn_color = "var(--success)" if bn > 0 else "var(--text-muted)"
-                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{bn_color};">{bn}</td>'
+                placar = match_pts_by_phase.get(pk, {}).get(name, 0)
+                bonus = bonus_by_phase.get(pk, {}).get(name, 0)
+                final = placar + bonus
+                cumulative += final
+                bc = "var(--success)" if bonus > 0 else "var(--text-muted)"
+                pc = "var(--warning)" if placar > 0 else "var(--text-muted)"
+                fc = "var(--accent)" if final > 0 else "var(--text-muted)"
+                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{bc};">{bonus}</td>'
+                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{pc};">{placar}</td>'
+                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{fc};">{final}</td>'
+                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:var(--text-muted);">{cumulative}</td>'
             player_rows += f"<tr>{cells}</tr>\n"
             rank += 1
 
