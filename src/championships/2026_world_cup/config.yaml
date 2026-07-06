@@ -332,6 +332,9 @@ boleiros:
       - value: 30
         reason: 'aaaaa'
         phase: 'bbb'
+      - value: 70
+        reason: 'hoje'
+        phase: 'amanha'
   Cipriano L.:
     penalties:
       - value: 0

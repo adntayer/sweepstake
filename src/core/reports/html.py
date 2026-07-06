@@ -1026,20 +1026,13 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     scored_games = int((df_bol["pontos"] > 0).sum()) if len(df_bol) else 0
     bonus_pts_only = bonus_total  # already separate bonus total
 
-    pending_stat_html = ""
-    if n_pending > 0:
-        pending_stat_html = f'<div class="stat-card"><div class="value" style="color:var(--warning);font-size:1.3rem;">\u23f3 {n_pending}</div><div class="label">Aguardando</div></div>'
-
     grand_total = total_pts + bonus_total - penalty_pts
-    pending_row = f'<div class="stat-row" style="grid-template-columns:repeat(1,1fr);margin-top:0;">{pending_stat_html}</div>' if n_pending else ""
 
-    penalty_stat = ""
-    penalty_details = ""
+    penalty_section = ""
     if penalty_pts > 0:
-        penalty_stat = f'<div class="stat-card"><div class="value" style="color:var(--danger);font-size:1.2rem;">-{penalty_pts}</div><div class="label">Penalidade</div></div>'
         boleiro_cfg = config.boleiros.get(boleiro)
+        detail_rows = ""
         if boleiro_cfg and boleiro_cfg.penalties:
-            detail_rows = ""
             for p in boleiro_cfg.penalties:
                 if p.value <= 0:
                     continue
@@ -1060,13 +1053,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'border-radius:999px;white-space:nowrap;">-{p.value}</span>'
                     f'{reason_html}{phase_tag}</div>\n'
                 )
-            penalty_details = (
-                f'<div class="card" style="margin-top:0.5rem;">'
-                f'<div style="font-size:0.7rem;font-weight:600;color:var(--text-muted);'
-                f'text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;'
-                f'padding-bottom:0.35rem;border-bottom:1px solid var(--card-border);">'
-                f'Detalhamento</div>{detail_rows}</div>'
-            )
+            if detail_rows:
+                detail_rows = f'<div style="border-top:1px solid var(--card-border);margin-top:0.35rem;padding-top:0.15rem;">{detail_rows}</div>'
+        penalty_section = (
+            f'<div class="card" style="margin-top:0.5rem;border-color:var(--danger);">'
+            f'<div style="display:flex;align-items:center;justify-content:space-between;">'
+            f'<span style="font-size:0.85rem;font-weight:600;color:var(--danger);">'
+            f'\u26a0 Penalidade</span>'
+            f'<span style="font-size:1.1rem;font-weight:700;color:var(--danger);">-{penalty_pts}</span>'
+            f'</div>{detail_rows}</div>'
+        )
 
     body = f"""
 <div class="hero">
@@ -1088,8 +1084,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         <div class="label">Total</div>
     </div>
 </div>
-{penalty_stat}
-{penalty_details}
+{penalty_section}
 <div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin-top:0;">
     <div class="stat-card">
         <div class="value" style="color:var(--voce);font-size:1.2rem;">{avg_per_game}</div>
@@ -1104,7 +1099,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         <div class="label">Zebras</div>
     </div>
 </div>
-{pending_row}"""
+"""
 
 
     # ── Advanced metrics card ──
@@ -1167,14 +1162,6 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             elif _boldness_score_val < -0.3: _boldness_player = "\U0001F9CA Conservador"
             else: _boldness_player = "\u2696\ufe0f Equilibrado"
 
-    _lead_days = 0
-    timing_path2 = _norm(os.path.join(gold_dir, "prediction_timing.csv"))
-    if os.path.exists(timing_path2):
-        df_t = pd.read_csv(timing_path2, sep=",")
-        df_tp = df_t[df_t["boleiro"] == boleiro]
-        if not df_tp.empty:
-            _lead_days = int(float(df_tp.iloc[0]["lead_days"]))
-
     # Count exact scores for this player
     _exact_count = 0
     score_names_p = config.scoring_rule_names()
@@ -1186,7 +1173,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--voce);">{avg_per_day}</div><div class="label">M\u00e9dia/Dia ({num_days}d)</div></div>'
     _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--voce);">{num_games}</div><div class="label">Jogos</div></div>'
     _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1rem;color:var(--warning);">{_boldness_player}</div><div class="label">Ousadia ({_boldness_score_val:+.2f})</div></div>'
-    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--accent);">{_lead_days}d</div><div class="label">\U0001f4c5 Lead m\u00e9dio</div></div>'
+
     _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--success);">{_exact_count}</div><div class="label">\U0001f3af Placar Exato</div></div>'
 
     body += f"""
