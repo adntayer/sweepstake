@@ -293,7 +293,7 @@ def score_playoff_bonus(config: ChampionshipConfig) -> pd.DataFrame:
                 # First knockout round: correct if team qualified (participant)
                 actual_teams = participants.get(phase, [])
             else:
-                actual_teams = advancing.get(phase, [])
+                actual_teams = participants.get(phase, [])
                 
             correct = 1 if team_picked in actual_teams else 0
             pts = config.playoff_scoring.get(phase, 0) if correct else 0
