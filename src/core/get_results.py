@@ -40,16 +40,16 @@ def _slug(name: str) -> str:
     return s
 
 
-def _parse_date(raw: str) -> str:
-    """Convert 'DD/MM/YYYY HH:MM' → 'YYYY-MM-DD HHh'.
+def _parse_date(raw: str, date_format: str = "%d/%m/%Y %H:%M") -> str:
+    """Convert date string → 'YYYY-MM-DD HHh'.
 
-    Matches the internal date format used by jogos_1afase.csv.
+    Uses ``date_format`` for parsing (default ``%%d/%%m/%%Y %%H:%%M``).
     Returns empty string for missing or unparseable dates.
     """
     if not raw or not str(raw).strip():
         return ""
     try:
-        dt = pd.to_datetime(raw, format="%d/%m/%Y %H:%M")
+        dt = pd.to_datetime(raw, format=date_format)
         return dt.strftime("%Y-%m-%d %Hh")
     except (ValueError, TypeError):
         return ""
@@ -71,26 +71,16 @@ def _parse_result(result: str) -> tuple[int | None, int | None]:
         return None, None
 
 
-_ROUND_MAP = {
-    "Round of 32": "segunda_fase",
-    "Round of 16": "oitavas",
-    "Quarter Finals": "quartas",
-    "Semi Finals": "semi",
-    "Third Place": "terceiro_lugar",
-    "Final": "final",
-    "Finals": "final",
-}
-
-
-def _parse_round(raw) -> str:
+def _parse_round(raw, round_map: dict[str, str] | None = None) -> str:
     """Map Round Number to internal phase key.
 
     Group rounds (1, 2, 3) stay as integers.
-    Knockout rounds are translated to Portuguese keys.
+    Knockout rounds are translated via ``round_map`` (from config.external_round_mapping).
+    If ``round_map`` is None or the key is not found, returns the original value.
     """
     val = str(raw).strip()
-    if val in _ROUND_MAP:
-        return _ROUND_MAP[val]
+    if round_map and val in round_map:
+        return round_map[val]
     return val
 
 
@@ -128,8 +118,17 @@ def get_results(config: ChampionshipConfig) -> None:
         print_colored(f"Error: could not download results and no existing file: {e}", "red")
         raise
 
-    # Parse the fixturedownload CSV
-    # Columns: Match Number, Round Number, Date, Location, Home Team, Away Team, Group, Result
+    # Determine CSV column names (from config or fixturedownload defaults)
+    cc = config.csv_columns or {}
+    col_match = cc.get("match_number", "Match Number")
+    col_round = cc.get("round_number", "Round Number")
+    col_date = cc.get("date", "Date")
+    col_location = cc.get("location", "Location")
+    col_home = cc.get("home_team", "Home Team")
+    col_away = cc.get("away_team", "Away Team")
+    col_group = cc.get("group", "Group")
+    col_result = cc.get("result", "Result")
+
     df = pd.read_csv(
         StringIO(response.text),
         skipinitialspace=True,
@@ -137,12 +136,12 @@ def get_results(config: ChampionshipConfig) -> None:
 
     # Translate team names
     mapping = config.team_name_mapping
-    df["home_team"] = df["Home Team"].apply(lambda n: _translate(str(n), mapping))
-    df["away_team"] = df["Away Team"].apply(lambda n: _translate(str(n), mapping))
+    df["home_team"] = df[col_home].apply(lambda n: _translate(str(n), mapping))
+    df["away_team"] = df[col_away].apply(lambda n: _translate(str(n), mapping))
 
     # Parse date and result
-    df["date"] = df["Date"].apply(_parse_date)
-    df[["home_goals", "away_goals"]] = df["Result"].apply(
+    df["date"] = df[col_date].apply(lambda d: _parse_date(str(d), config.csv_date_format))
+    df[["home_goals", "away_goals"]] = df[col_result].apply(
         lambda r: pd.Series(_parse_result(str(r)))
     )
 
@@ -150,7 +149,8 @@ def get_results(config: ChampionshipConfig) -> None:
     df["match"] = df["home_team"].apply(_slug) + "-vs-" + df["away_team"].apply(_slug)
 
     # Map round numbers/names to internal phase keys
-    df["round"] = df["Round Number"].apply(_parse_round)
+    round_map = config.external_round_mapping or None
+    df["round"] = df[col_round].apply(lambda r: _parse_round(r, round_map))
 
     # Build output DataFrame in internal format
     df_out = pd.DataFrame({

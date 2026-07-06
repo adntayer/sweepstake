@@ -18,6 +18,24 @@ reports_dir: "src/championships/2025_club_world_cup/reports"
 
 # External results source
 results_endpoint: "https://fixturedownload.com/download/fifa-club-world-cup-2025-UTC.csv"
+csv_columns:
+  match_number: "Match Number"
+  round_number: "Round Number"
+  date: "Date"
+  location: "Location"
+  home_team: "Home Team"
+  away_team: "Away Team"
+  group: "Group"
+  result: "Result"
+csv_date_format: "%d/%m/%Y %H:%M"
+external_round_mapping:
+  "Round of 32": "segunda_fase"
+  "Round of 16": "oitavas"
+  "Quarter Finals": "quartas"
+  "Semi Finals": "semi"
+  "Third Place": "terceiro_lugar"
+  "Final": "final"
+  "Finals": "final"
 
 # English → Portuguese team name mapping (supports typos, alternates, etc.)
 team_name_mapping:
@@ -55,6 +73,8 @@ team_name_mapping:
   - {en: "Juventus FC", pt: "Juventus", geo: europeu}
 
 # Group stage configuration for real group standings
+group_round_labels: ["1", "2", "3"]
+teams_advance_per_group: 2
 groups:
   - name: "A"
     teams: ["Palmeiras", "Porto", "Al Ahly", "Inter Miami"]
@@ -72,6 +92,52 @@ groups:
     teams: ["Manchester City", "Wydad Casablanca", "Al-Ain", "Juventus"]
   - name: "H"
     teams: ["Real Madrid", "Al-Hilal", "Pachuca", "RB Salzburg"]
+
+# Analytics thresholds
+upset_threshold_correct_count: 5
+champion_phase_key: "campeao"
+
+# Phase display
+phase_emojis:
+  "1afase": "📊"
+  "segunda_fase": "🏆"
+  "oitavas": "🥁"
+  "quartas": "🔥"
+  "semi": "🎯"
+  "terceiro_lugar": "🥉"
+  "final": "🏆"
+  "campeao": "👑"
+phase_abbreviations:
+  "Segunda Fase": "2ª Fase"
+  "Oitavas de Final": "8as"
+  "Quartas de Final": "4as"
+  "Semifinal": "Semi"
+  "Disputa 3º Lugar": "3º"
+  "Final": "Final"
+
+# Continent display (for archetypes)
+continent_display:
+  europeu: {emoji: "🌍", name: "Europeu"}
+  latino: {emoji: "🌎", name: "Latino"}
+  asiatico: {emoji: "🌏", name: "Asiático"}
+  africano: {emoji: "🌌", name: "Africano"}
+  anfitriao: {emoji: "🏆", name: "Anfitrião"}
+  oceanico: {emoji: "🌊", name: "Oceânico"}
+continent_order: ["europeu", "latino", "asiatico", "africano", "anfitriao", "oceanico"]
+
+# Filename parsing aliases
+filename_round_aliases:
+  "16 avos de final": "segunda_fase"
+  "16 avos": "segunda_fase"
+
+# Navigation items for report pages
+nav_items:
+  - {href: "index.html", icon: "🏠", label: "Início"}
+  - {href: "bolao_xray.html", icon: "🔍", label: "Raio-X"}
+  - {href: "times.html", icon: "🏆", label: "Times"}
+  - {href: "zebras.html", icon: "🦓", label: "Zebras"}
+  - {href: "palpites.html", icon: "📋", label: "Palpites"}
+  - {href: "boleiros.html", icon: "👥", label: "Boleiros"}
 
 # Actual top scorer of the championship
 actual_top_scorer: "Haaland"

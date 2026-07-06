@@ -55,9 +55,16 @@ def _initials(name: str) -> str:
     return name[:2].upper()
 
 
-def _short_name(name: str) -> str:
-    """Shorten phase names for table headers."""
+def _short_name(name: str, config: ChampionshipConfig | None = None) -> str:
+    """Shorten phase names for table headers.
+
+    If ``config`` is provided, its ``phase_abbreviations`` mapping is
+    checked first (exact match).  Falls back to Portuguese substring matching
+    for legacy compatibility.
+    """
     n = name.strip()
+    if config and n in config.phase_abbreviations:
+        return config.phase_abbreviations[n]
     nl = n.lower()
     if "segunda" in nl:
         return "2\u00aa Fase"
@@ -545,12 +552,12 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     bonus_pts: dict[str, int] = {}
     bonus_by_phase: dict[str, dict[str, int]] = {}  # {phase: {boleiro: points}}
     play_phase_order: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
-    play_phase_emoji: dict[str, str] = {
+    play_phase_emoji: dict[str, str] = dict(config.phase_emojis) if config.phase_emojis else {
         "segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1",
         "quartas": "\U0001f525", "semi": "\U0001f3af",
         "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6",
     }
-    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name) for pr in (config.playoff_rounds or [])}
+    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name, config) for pr in (config.playoff_rounds or [])}
     for pk in play_phase_order:
         bonus_by_phase[pk] = {}
     bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
@@ -570,16 +577,6 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         df_g = pd.read_csv(config.games_file, sep=",")
         if "round" in df_g.columns:
             phases_in_games = set(df_g["round"].astype(str).str.strip().unique())
-
-    # Build a total score per player: group + playoff matches + bonus
-    group_scores = df_valid.groupby("who")["pontos"].sum().to_dict()
-    all_players = set(group_scores.keys()) | set(playoff_pts.keys()) | set(bonus_pts.keys())
-    total_scores: dict[str, int] = {}
-    for p in all_players:
-        g = group_scores.get(p, 0)
-        m = playoff_pts.get(p, 0)
-        b = bonus_pts.get(p, 0)
-        total_scores[p] = g + m + b
 
     # Combine group + playoff match data for trend (which needs dates)
     _trend_parts = [df_valid]
@@ -680,33 +677,31 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
             if top is not None:
                 badge_map.setdefault(top["boleiro"], []).append("\U0001f40d")
 
-    # ── Combined gold data (group + playoff) for type counts ──
-    _gold_parts = [df_valid]
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            if not df_pp.empty and "who" in df_pp.columns:
-                _gold_parts.append(df_pp)
-    df_all_gold = pd.concat(_gold_parts, ignore_index=True) if len(_gold_parts) > 1 else _gold_parts[0]
-
+    # ── Group data only (pontos used as base; playoff match points added separately) ──
     score_names = config.scoring_rule_names()
-    agg_cols = ["pontos"] + [c for c in score_names if c in df_all_gold.columns]
-    df_rank = df_all_gold.groupby("who", as_index=False)[agg_cols].sum()
+    agg_cols = ["pontos"] + [c for c in score_names if c in df_valid.columns]
+    df_rank = df_valid.groupby("who", as_index=False)[agg_cols].sum()
     # Add playoff match points and bonus team points per player
     df_rank["playoff_pts"] = df_rank["who"].map(playoff_pts).fillna(0).astype(int)
     df_rank["bonus_pts"] = df_rank["who"].map(bonus_pts).fillna(0).astype(int)
     df_rank["zebra_pts"] = df_rank["who"].map(zebra_counts).fillna(0).astype(int)
-    # Sort by total (group + playoff matches + bonus teams)
-    df_rank["total_pts"] = df_rank["pontos"] + df_rank["playoff_pts"] + df_rank["bonus_pts"]
+    # Penalty points (from config.yaml)
+    df_rank["penalty_pts"] = df_rank["who"].map(lambda w: config.total_penalty(w)).fillna(0).astype(int)
+    # Total = jogos + bonus - penalty
+    df_rank["total_pts"] = df_rank["pontos"] + df_rank["playoff_pts"] + df_rank["bonus_pts"] - df_rank["penalty_pts"]
     df_rank.sort_values(["total_pts", "who"], ascending=[False, True], inplace=True)
     df_rank.reset_index(drop=True, inplace=True)
     df_rank["#"] = range(1, len(df_rank) + 1)
+
+    # Only show penalty column if any player has a penalty > 0
+    has_penalty = df_rank["penalty_pts"].sum() > 0
 
     # ── Header: # | Boleiro | Total | Bônus | 🎯1 | 🥅2 | 📊3 | 🤝4 | 🔶5 | ✔6 | ⚖7 | 👊8 | ❌9 | ❓99 | 🦓Z ──
     rank_header_combined = '<th>#</th><th>Boleiro</th>'
     rank_header_combined += '<th style="text-align:right;font-size:0.65rem;">Total</th>'
     rank_header_combined += '<th style="text-align:right;font-size:0.65rem;">B\u00f4nus</th>'
+    if has_penalty:
+        rank_header_combined += '<th style="text-align:right;font-size:0.65rem;color:var(--danger);">Pen.</th>'
     for rn in score_names:
         em = config.scoring_emoji(rn)
         m = re.match(r"^(\d+)", rn)
@@ -728,9 +723,14 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         total_display = int(row["total_pts"])
         bonus_display = int(row["bonus_pts"])
         zebra_display = int(row["zebra_pts"])
+        penalty_display = int(row["penalty_pts"])
         cells = f'<td>{medal_symbol} {rank_num}</td><td><a href="boleiros/{who_name}.html">{who_display}</a> {trend} <span style="font-size:0.75rem;">{badges_str}</span></td>'
         cells += f'<td style="font-weight:700;color:var(--accent);text-align:right;">{total_display}</td>'
         cells += f'<td style="text-align:right;color:var(--warning);">{bonus_display}</td>'
+        if has_penalty:
+            pen_color = "var(--danger)" if penalty_display > 0 else "var(--text-muted)"
+            pen_val = f"-{penalty_display}" if penalty_display > 0 else "-"
+            cells += f'<td style="text-align:right;color:{pen_color};">{pen_val}</td>'
         for rn in score_names:
             val = int(row.get(rn, 0))
             clr = "var(--success)" if val > 0 else "var(--text-muted)"
@@ -919,16 +919,19 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
         return ""
 
 
-def _build_bottom_nav_dashboard(prefix: str = "") -> str:
+def _build_bottom_nav_dashboard(prefix: str = "", config: ChampionshipConfig | None = None) -> str:
     """Build the bottom navigation for the dashboard."""
-    items = [
-        ("index.html", "\U0001f3e0", "In\u00edcio"),
-        ("bolao_xray.html", "\U0001f50d", "Raio-X"),
-        ("times.html", "\U0001f3c6", "Times"),
-        ("zebras.html", "\U0001f993", "Zebras"),
-        ("palpites.html", "\U0001f4cb", "Palpites"),
-        ("boleiros.html", "\U0001f465", "Boleiros"),
-    ]
+    if config and config.nav_items:
+        items = [(ni["href"], ni.get("icon", ""), ni["label"]) for ni in config.nav_items]
+    else:
+        items = [
+            ("index.html", "\U0001f3e0", "In\u00edcio"),
+            ("bolao_xray.html", "\U0001f50d", "Raio-X"),
+            ("times.html", "\U0001f3c6", "Times"),
+            ("zebras.html", "\U0001f993", "Zebras"),
+            ("palpites.html", "\U0001f4cb", "Palpites"),
+            ("boleiros.html", "\U0001f465", "Boleiros"),
+        ]
     links = ""
     for href, icon, label in items:
         cls = ' class="active"' if href == "index.html" else ""
@@ -1349,63 +1352,6 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
 # Main
 # ------------------------------------------------------------------
 
-def _build_bonus_times_card(config: ChampionshipConfig) -> str:
-    """Build bonus times leaderboard card for the dashboard."""
-    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
-    if not os.path.exists(bonus_path):
-        return ""
-    df = pd.read_csv(bonus_path)
-    if df.empty:
-        return ""
-
-    top_pts = (
-        df.groupby("boleiro")["points"]
-        .sum()
-        .sort_values(ascending=False)
-        .head(3)
-        .reset_index()
-    )
-    top_pts_html = ""
-    for i, (_, r) in enumerate(top_pts.iterrows(), 1):
-        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
-        top_pts_html += (
-            f'<div class="bar-row">'
-            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
-            f'<span class="bar-pct">+{int(r["points"])}pts</span>'
-            f'</div>\n'
-        )
-
-    acc = df.groupby("boleiro").agg(
-        correct=("correct", "sum"), total=("correct", "count")
-    )
-    acc = acc[acc["total"] >= 5].copy()
-    if not acc.empty:
-        acc["rate"] = (acc["correct"] / acc["total"] * 100).round(0)
-        top_acc = acc.sort_values("rate", ascending=False).head(3).reset_index()
-    else:
-        top_acc = pd.DataFrame()
-
-    top_acc_html = ""
-    for i, (_, r) in enumerate(top_acc.iterrows(), 1):
-        medal = "\U0001f947" if i == 1 else "\U0001f948" if i == 2 else "\U0001f949"
-        top_acc_html += (
-            f'<div class="bar-row">'
-            f'<span class="bar-label">{medal} {r["boleiro"]}</span>'
-            f'<span class="bar-pct">{int(r["correct"])}/{int(r["total"])} - {int(r["rate"])}%</span>'
-            f'</div>\n'
-        )
-
-    html = '<div class="section"><div class="section-title">\U0001f3c6 Bônus Times (extra)</div><div class="card">'
-    if top_pts_html:
-        html += '<div style="margin-bottom:0.75rem;"><strong>Maiores Pontuadores</strong></div>'
-        html += f'<div class="bar-chart">{top_pts_html}</div>'
-    if top_acc_html:
-        html += '<div style="margin-top:0.75rem;margin-bottom:0.75rem;"><strong>Maiores Acertadores</strong></div>'
-        html += f'<div class="bar-chart">{top_acc_html}</div>'
-    html += "</div></div>\n"
-    return html
-
-
 def _build_badge_accordion(config: ChampionshipConfig) -> str:
     """Build a single accordion explaining each badge (like 'Legenda dos acertos')."""
     badges = [
@@ -1495,7 +1441,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     zebra_counter = _build_zebra_counter(config)
     badge_accordion = _build_badge_accordion(config)
     emoji_accordion = _build_emoji_accordion(config)
-    bonus_card = _build_bonus_times_card(config)
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1561,14 +1506,12 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <div class="card">{full_ranking}</div>
 </div>
 
-{bonus_card}
-
 <div class="section">
     <div class="section-title">\U0001f4c2 Jogos por Fase</div>
     {phase_buttons}
 </div>
 
-{_build_bottom_nav_dashboard()}
+{_build_bottom_nav_dashboard(config=config)}
 
 <script src="sorttable.js"></script>
 </body>
@@ -1704,7 +1647,7 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
     if not _gp.empty:
         _all_parts.append(_gp)
     for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
+        pp = config.gold_playoff_valid_path(pr.key)
         if os.path.exists(pp):
             df_pp = pd.read_csv(pp, sep=",")
             if not df_pp.empty and "who" in df_pp.columns:
@@ -1723,8 +1666,8 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
 
     # ── Phase labels ──
     play_phase_order: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
-    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name) for pr in (config.playoff_rounds or [])}
-    play_phase_emoji: dict[str, str] = {
+    play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name, config) for pr in (config.playoff_rounds or [])}
+    play_phase_emoji: dict[str, str] = dict(config.phase_emojis) if config.phase_emojis else {
         "segunda_fase": "\U0001f3c6", "oitavas": "\U0001f3c1",
         "quartas": "\U0001f525", "semi": "\U0001f3af",
         "terceiro_lugar": "\U0001f949", "final": "\U0001f3c6",
@@ -1741,9 +1684,10 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
             bonus_pts[b] = bonus_pts.get(b, 0) + pts
 
     # ── Bonus by phase (per-phase "Bônus" columns) ──
-    all_bonus_phases: list[str] = play_phase_order + (["campeao"] if "campeao" not in play_phase_order else [])
-    bonus_phase_name: dict[str, str] = {**play_phase_name, "campeao": "Campe\u00e3o"}
-    bonus_phase_emoji: dict[str, str] = {**play_phase_emoji, "campeao": "\U0001f3c6"}
+    ck = config.champion_phase_key
+    all_bonus_phases: list[str] = play_phase_order + ([ck] if ck not in play_phase_order else [])
+    bonus_phase_name: dict[str, str] = {**play_phase_name, ck: "Campe\u00e3o"}
+    bonus_phase_emoji: dict[str, str] = {**play_phase_emoji, ck: "\U0001f3c6"}
     bonus_by_phase: dict[str, dict[str, int]] = {pk: {} for pk in all_bonus_phases}
     if os.path.exists(bonus_path):
         df_bonus2 = pd.read_csv(bonus_path, sep=",")
@@ -1758,7 +1702,7 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
     # grupo_pts = group match points (already loaded via _gp)
     match_pts_by_phase: dict[str, dict[str, int]] = {pk: {} for pk in play_phase_order}
     for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
+        pp = config.gold_playoff_valid_path(pr.key)
         if os.path.exists(pp):
             df_pp = pd.read_csv(pp, sep=",")
             if not df_pp.empty and "who" in df_pp.columns and "pontos" in df_pp.columns:
@@ -1796,13 +1740,21 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
             jogos_pts[r["who"]] = int(r["pontos"])
     all_players = set(jogos_pts.keys()) | set(bonus_pts.keys())
     total_pts: dict[str, int] = {}
+    penalty_pts: dict[str, int] = {}
     for p in all_players:
-        total_pts[p] = jogos_pts.get(p, 0) + bonus_pts.get(p, 0)
+        pen = config.total_penalty(p)
+        jog = jogos_pts.get(p, 0)
+        bon = bonus_pts.get(p, 0)
+        penalty_pts[p] = pen
+        total_pts[p] = jog + bon - pen
+    has_penalty = any(v > 0 for v in penalty_pts.values())
 
     # Headers: match-points-per-phase + bonus-per-phase columns
     header_cols = '<th style="text-align:center;">#</th><th>Jogador</th>'
     header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--warning);">Total</th>'
     header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--text-muted);">S\u00f3 Jogos Grupos</th>'
+    if has_penalty:
+        header_cols += '<th style="text-align:right;font-size:0.6rem;color:var(--danger);">Pen.</th>'
     for pk in play_phase_order:
         em = play_phase_emoji.get(pk, "")
         nm = play_phase_name.get(pk, pk)
@@ -1822,6 +1774,11 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
             cells += f'<td style="padding:0.4rem 0.5rem;"><a href="boleiros/{name}.html" style="font-weight:600;">{name}</a></td>'
             cells += f'<td style="padding:0.4rem 0.5rem;font-weight:700;color:var(--accent);text-align:right;">{total}</td>'
             cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:var(--text-muted);">{grupos_pts.get(name, 0)}</td>'
+            if has_penalty:
+                pv = penalty_pts.get(name, 0)
+                pc = "var(--danger)" if pv > 0 else "var(--text-muted)"
+                pv_disp = f"-{pv}" if pv > 0 else "-"
+                cells += f'<td style="padding:0.4rem 0.5rem;text-align:right;color:{pc};">{pv_disp}</td>'
             for pk in play_phase_order:
                 ph_pts = match_pts_by_phase.get(pk, {}).get(name, 0)
                 ph_color = "var(--warning)" if ph_pts > 0 else "var(--text-muted)"
@@ -2000,7 +1957,7 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
     atualizado \u00e0s {datetime.now(pytz.timezone(config.timezone)).strftime("%d/%m/%Y %H:%M:%S")}
 </div>
-""" + _build_bottom_nav_dashboard() + """
+""" + _build_bottom_nav_dashboard(config=config) + """
 <script src="sorttable.js"></script>
 </body>
 </html>"""

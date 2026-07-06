@@ -196,7 +196,7 @@ def get_playoff_advancing_teams(
     """
     df = pd.read_csv(games_csv, sep=",")
     if playoff_round_keys is None:
-        playoff_round_keys = ["oitavas", "quartas", "semi", "final"]
+        playoff_round_keys = []
     advancing: dict[str, list[str]] = {}
 
     # Normalize round column
@@ -287,7 +287,7 @@ def score_playoff_bonus(config: ChampionshipConfig) -> pd.DataFrame:
             team_picked = str(row["team"])
             
             # Resolve actual teams for this phase
-            if phase == "campeao":
+            if phase == config.champion_phase_key:
                 actual_teams = advancing.get("final", [])
             elif phase == first_round_key:
                 # First knockout round: correct if team qualified (participant)

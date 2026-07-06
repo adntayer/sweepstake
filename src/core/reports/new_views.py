@@ -54,7 +54,7 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
 <div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
     atualizado \u00e0s {now_str}
 </div>
-{_bottom_nav_html(active_nav, nav_prefix)}
+{_bottom_nav_html(active_nav, nav_prefix, config.nav_items)}
 <script src="{script_src}"></script>
 </body>
 </html>"""
@@ -113,11 +113,13 @@ def _build_group_standings(config: ChampionshipConfig) -> str:
 
         table_rows += "</tbody>"
 
-        # Which teams advanced (top 2 from each group in this format)
-        advancing = [r["team"] for i, r in enumerate(standings) if i < 2]
+        # Which teams advanced (top N from each group in this format)
+        adv_count = config.teams_advance_per_group
+        advancing = [r["team"] for i, r in enumerate(standings) if i < adv_count]
         advance_badge = ""
-        if len(advancing) >= 2:
-            advance_badge = f'<div style="margin-top:0.5rem;font-size:0.75rem;color:var(--success);">\u2705 Classificados: {advancing[0]}, {advancing[1]}</div>'
+        if len(advancing) >= adv_count:
+            classified = ", ".join(advancing[:adv_count])
+            advance_badge = f'<div style="margin-top:0.5rem;font-size:0.75rem;color:var(--success);">\u2705 Classificados: {classified}</div>'
 
         html += f"""<div class="section">
     <div class="section-title">\U0001f3c6 Grupo {group_name}</div>
@@ -190,14 +192,13 @@ def _build_knockout_bracket(config: ChampionshipConfig, df_games: pd.DataFrame) 
     # Determine advancing teams from group stage
     advancing = []
     if config.groups:
-        group_rounds = ["1", "2", "3"]
-        df_group = df_games[df_games["round"].astype(str).str.strip().isin(group_rounds)]
+        df_group = df_games[df_games["round"].astype(str).str.strip().isin(config.group_round_labels)]
         for grp in config.groups:
             teams = grp.get("teams", [])
             standings = _compute_group_standings(teams, df_group)
             standings.sort(key=lambda r: (-r["pts"], -(r["gf"] - r["ga"]), -r["gf"]))
             for i, r in enumerate(standings):
-                if i < 2:
+                if i < config.teams_advance_per_group:
                     advancing.append(r["team"])
 
     html = '<div class="section"><div class="section-title">\U0001f3c6 Chaveamento Mata-Mata</div><div class="card">'
@@ -646,14 +647,14 @@ def _build_times_index(config: ChampionshipConfig, html_base: str) -> str:
             group_of_team[t] = grp.get("name", "?")
 
     # ── Phase ordering for knockout progression ──
-    _PHASE_ORDER = ["1", "2", "3", "segunda_fase", "oitavas", "quartas", "semi", "terceiro_lugar", "final"]
-    _PHASE_LABEL = {
-        "1": "1\u00aa Fase", "2": "2\u00aa Fase", "3": "3\u00aa Fase",
-        "segunda_fase": "2\u00aa Fase", "oitavas": "8\u00aa",
-        "quartas": "4\u00aa", "semi": "Semi",
-        "terceiro_lugar": "3\u00ba Lugar", "final": "Final",
-        "group": "1\u00aa Fase",
-    }
+    _PHASE_ORDER = list(config.group_round_labels)
+    _PHASE_LABEL: dict[str, str] = {}
+    for i, rl in enumerate(config.group_round_labels):
+        _PHASE_LABEL[rl] = f"{i+1}\u00aa Fase"
+    for pr in config.playoff_rounds:
+        _PHASE_ORDER.append(pr.key)
+        _PHASE_LABEL[pr.key] = pr.name
+    _PHASE_LABEL["group"] = _PHASE_LABEL.get(config.group_round_labels[0], "1\u00aa Fase") if config.group_round_labels else "1\u00aa Fase"
 
     # ── Compute league-style table + elimination status from games.csv ──
     team_stats: dict[str, dict] = {}
@@ -1093,11 +1094,11 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
     match_round_map = dict(zip(match_order["match_key"], match_order["round"]))
 
     # Round labels for display
-    round_labels: dict[str, str] = {
-        "1": "1\u00aa Rodada", "2": "2\u00aa Rodada", "3": "3\u00aa Rodada",
-        "segunda_fase": "2\u00aa Fase", "oitavas": "Oitavas", "quartas": "Quartas",
-        "semi": "Semi", "terceiro_lugar": "3\u00ba Lugar", "final": "Final",
-    }
+    round_labels: dict[str, str] = {}
+    for i, rl in enumerate(config.group_round_labels):
+        round_labels[rl] = f"{i+1}\u00aa Rodada"
+    for pr in config.playoff_rounds:
+        round_labels[pr.key] = pr.name
     group_phase_label = getattr(config, "group_phase_label", "1\u00aa Fase")
 
     # Build accent-insensitive Portuguese-name → slug lookup from config
@@ -1236,10 +1237,11 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         table_rows += f"<tr>{cells}</tr>\n"
 
     # ── Dynamic phase filters: one dropdown per distinct round ──
-    mata_slugs = {"oitavas", "quartas", "semi", "terceiro_lugar", "final"}
-    group_keys = [r for r in ("1", "2", "3") if any(match_round_map.get(m) == r for m in all_matches)]
+    mata_slugs = {pr.key for pr in (config.playoff_rounds or []) if pr.key != "segunda_fase"}
+    group_keys = [r for r in config.group_round_labels if any(match_round_map.get(m) == r for m in all_matches)]
     knockout_present = [r for r in sorted(set(match_round_map.values())) if r in mata_slugs]
-    r32_present = "segunda_fase" in set(match_round_map.values())
+    r32_key = config.playoff_rounds[0].key if config.playoff_rounds else "segunda_fase"
+    r32_present = r32_key in set(match_round_map.values())
 
     phase_defs: list[tuple[str, str, list[str]]] = []
     for k in group_keys:

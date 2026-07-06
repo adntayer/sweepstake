@@ -22,6 +22,24 @@ reports_dir: "src/championships/2026_world_cup/reports"
 
 # External results source
 results_endpoint: "https://fixturedownload.com/download/fifa-world-cup-2026-UTC.csv"
+csv_columns:
+  match_number: "Match Number"
+  round_number: "Round Number"
+  date: "Date"
+  location: "Location"
+  home_team: "Home Team"
+  away_team: "Away Team"
+  group: "Group"
+  result: "Result"
+csv_date_format: "%d/%m/%Y %H:%M"
+external_round_mapping:
+  "Round of 32": "segunda_fase"
+  "Round of 16": "oitavas"
+  "Quarter Finals": "quartas"
+  "Semi Finals": "semi"
+  "Third Place": "terceiro_lugar"
+  "Final": "final"
+  "Finals": "final"
 
 # English → Portuguese team name mapping (Excel uses Portuguese names)
 team_name_mapping:
@@ -73,6 +91,63 @@ team_name_mapping:
   - {en: "Croatia", pt: "Croácia", slug: "CRO", logo: "https://flagcdn.com/w80/hr.png", geo: europeu}
   - {en: "Ghana", pt: "Gana", slug: "GHA", logo: "https://flagcdn.com/w80/gh.png", geo: africano}
   - {en: "Panama", pt: "Panamá", slug: "PAN", logo: "https://flagcdn.com/w80/pa.png", geo: latino}
+
+# Analytics thresholds
+upset_threshold_correct_count: 5
+archetype_min_percentile: 50
+champion_phase_key: "campeao"
+
+# Phase display
+phase_emojis:
+  "1afase": "📊"
+  "segunda_fase": "🏆"
+  "oitavas": "🥁"
+  "quartas": "🔥"
+  "semi": "🎯"
+  "terceiro_lugar": "🥉"
+  "final": "🏆"
+  "campeao": "👑"
+phase_abbreviations:
+  "Segunda Fase": "2ª Fase"
+  "Oitavas de Final": "8as"
+  "Quartas de Final": "4as"
+  "Semifinal": "Semi"
+  "Disputa 3º Lugar": "3º"
+  "Final": "Final"
+
+# Continent display (for archetypes)
+continent_display:
+  europeu: {emoji: "🌍", name: "Europeu"}
+  latino: {emoji: "🌎", name: "Latino"}
+  asiatico: {emoji: "🌏", name: "Asiático"}
+  africano: {emoji: "🌌", name: "Africano"}
+  anfitriao: {emoji: "🏆", name: "Anfitrião"}
+  oceanico: {emoji: "🌊", name: "Oceânico"}
+continent_order: ["europeu", "latino", "asiatico", "africano", "anfitriao", "oceanico"]
+
+# Navigation items for report pages
+nav_items:
+  - {href: "index.html", icon: "🏠", label: "Início"}
+  - {href: "bolao_xray.html", icon: "🔍", label: "Raio-X"}
+  - {href: "times.html", icon: "🏆", label: "Times"}
+  - {href: "zebras.html", icon: "🦓", label: "Zebras"}
+  - {href: "palpites.html", icon: "📋", label: "Palpites"}
+  - {href: "boleiros.html", icon: "👥", label: "Boleiros"}
+
+# Filename parsing aliases
+filename_round_aliases:
+  "16 avos de final": "segunda_fase"
+  "16 avos": "segunda_fase"
+
+# Logo fetcher
+logo_scrape_url: "https://football-logos.cc/tournaments/fifa-world-cup-2026/"
+logo_slug_overrides:
+  "korea-republic": "south-korea"
+  "czechia": "czech-republic"
+  "turkiye": "turkey"
+  "ir-iran": "iran"
+  "curaçao": "curacao"
+  "côte-d-ivoire": "cote-d-ivoire"
 
 # Playoff bonus scoring (per correct pick per phase)
 playoff_scoring:
@@ -209,6 +284,10 @@ excel_layout:
         matches: 1
         tail_offset: 2
 
+# Group stage structure
+group_round_labels: ["1", "2", "3"]
+teams_advance_per_group: 2
+
 # Groups (48 teams, 12 groups of 4)
 groups:
   - name: "A"
@@ -235,6 +314,179 @@ groups:
     teams: ["Portugal", "RD Congo", "Uzbequistão", "Colômbia"]
   - name: "L"
     teams: ["Inglaterra", "Croácia", "Gana", "Panamá"]
+
+# Participants (boleiros) configuration
+boleiros:
+  André Bonito:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  André Mendes:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  André Tayer:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Cipriano L.:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Davi & Cesar:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Ditchos:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Felipe Giannoni:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Francisco Camargo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Frederico Soter:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Gabão:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Giancarlo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Gui:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Guilherne:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Haroldo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  João Henrique:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  José Ricardo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Kiko Toloza:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Leo Fernandes:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  LLM Gemini:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  LLM GPT:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Luca Caviglia Del Soldato:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Lucas Ubertini:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Luiz Augusto:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Marcelo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Marcelo Boix:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Marco Lavander:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Mateus Tone:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Mauricio Saraiva:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Pedro Tayer:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Rafael Conte:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Rodrigo Albernaz:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Thales Oliveira:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Thiago Bahiense:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Tiago:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
 
 # HTML report theme
 theme:

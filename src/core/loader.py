@@ -128,9 +128,9 @@ def _extract_playoff_phase_and_who(path: str, config: ChampionshipConfig) -> tup
     label_to_key: dict[str, str] = {}
     for pr in config.playoff_rounds:
         label_to_key[pr.name.lower()] = pr.key
-    # Also add common alternative labels for the Round of 32 (segunda_fase)
-    label_to_key["16 avos de final"] = "segunda_fase"
-    label_to_key["16 avos"] = "segunda_fase"
+    # Add filename parsing aliases
+    for alias, key in config.filename_round_aliases.items():
+        label_to_key[alias.lower()] = key
 
     name_lower = name_no_ext.lower()
     # Try labels longest-first to match the most specific label
@@ -209,7 +209,7 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     df_raw = pd.read_excel(path, skiprows=config.standings_skiprows, header=None, engine="calamine")
 
     # --- Parse group standings ---
-    teams_data = _parse_standings_rows(df_raw)
+    teams_data = _parse_standings_rows(df_raw, config)
 
     if not teams_data:
         raise ValueError(
@@ -221,18 +221,11 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     df_games = pd.read_csv(config.games_file, sep=",")
 
     # --- Normalize round names ---
-    _round_map = {
-        "round of 32": "segunda_fase",
-        "round of 16": "oitavas",
-        "quarter finals": "quartas",
-        "semi finals": "semi",
-        "third place": "terceiro_lugar",
-        "final": "final",
-        "finals": "final",
-    }
+    # Build mapping from config (lowercase keys for case-insensitive matching)
+    _round_map = {k.lower(): v for k, v in config.external_round_mapping.items()}
     df_games["round"] = df_games["round"].astype(str).str.strip().str.lower()
     df_games["round"] = df_games["round"].map(lambda r: _round_map.get(r, r))
-    group_games = df_games[df_games["round"].isin(["1", "2", "3"])].copy()
+    group_games = df_games[df_games["round"].isin(config.group_round_labels)].copy()
 
     # --- Read actual predictions from the Tabela Jogos sheet ---
     po_layout = config.excel_layout.playoffs
@@ -297,7 +290,7 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     return df_pred, df_bonus, df_striker
 
 
-def _parse_standings_rows(df_raw: pd.DataFrame) -> list[dict]:
+def _parse_standings_rows(df_raw: pd.DataFrame, config: ChampionshipConfig) -> list[dict]:
     """Extract (group, team, pts, j, v, e, d, gp, gc, sg) from raw standings."""
     teams_data = []
     current_group = None
@@ -305,12 +298,13 @@ def _parse_standings_rows(df_raw: pd.DataFrame) -> list[dict]:
         col0 = str(row.iloc[0]).strip() if pd.notna(row.iloc[0]) else ""
         col1_str = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else ""
 
-        if col1_str.startswith("Grupo"):
+        if col1_str.startswith(config.standings_group_header):
             current_group = col1_str
             continue
         if not current_group:
             continue
-        if not col0 or col0 in ("Seleção", "nan", "NaN", ""):
+        skip_texts = [config.standings_skip_text, "nan", "NaN", ""]
+        if not col0 or col0 in skip_texts:
             continue
 
         try:
@@ -401,7 +395,7 @@ def _parse_playoffs_and_striker(
                     continue
 
             if champ_team:
-                bonus_rows.append({"boleiro": who, "phase": "campeao", "team": champ_team})
+                bonus_rows.append({"boleiro": who, "phase": config.champion_phase_key, "team": champ_team})
         except Exception:
             pass
 
