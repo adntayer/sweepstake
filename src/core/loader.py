@@ -209,7 +209,7 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     df_raw = pd.read_excel(path, skiprows=config.standings_skiprows, header=None, engine="calamine")
 
     # --- Parse group standings ---
-    teams_data = _parse_standings_rows(df_raw)
+    teams_data = _parse_standings_rows(df_raw, config)
 
     if not teams_data:
         raise ValueError(
@@ -222,18 +222,7 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
 
     # --- Normalize round names ---
     # Build mapping from config (lowercase keys for case-insensitive matching)
-    _round_map = {k.lower(): v for k, v in config.external_round_mapping.items()} if config.external_round_mapping else {}
-    # Fallback defaults if mapping is empty (legacy compatibility)
-    if not _round_map:
-        _round_map = {
-            "round of 32": "segunda_fase",
-            "round of 16": "oitavas",
-            "quarter finals": "quartas",
-            "semi finals": "semi",
-            "third place": "terceiro_lugar",
-            "final": "final",
-            "finals": "final",
-        }
+    _round_map = {k.lower(): v for k, v in config.external_round_mapping.items()}
     df_games["round"] = df_games["round"].astype(str).str.strip().str.lower()
     df_games["round"] = df_games["round"].map(lambda r: _round_map.get(r, r))
     group_games = df_games[df_games["round"].isin(config.group_round_labels)].copy()
@@ -301,7 +290,7 @@ def parse_group_standings(path: str, config: ChampionshipConfig) -> tuple[pd.Dat
     return df_pred, df_bonus, df_striker
 
 
-def _parse_standings_rows(df_raw: pd.DataFrame) -> list[dict]:
+def _parse_standings_rows(df_raw: pd.DataFrame, config: ChampionshipConfig) -> list[dict]:
     """Extract (group, team, pts, j, v, e, d, gp, gc, sg) from raw standings."""
     teams_data = []
     current_group = None

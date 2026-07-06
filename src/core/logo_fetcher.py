@@ -149,7 +149,9 @@ def fetch_all_logos(config: ChampionshipConfig, force: bool = False) -> None:
         return
 
     # --- Phase 2: scrape football-logos.cc for remaining teams ---
-    tournament_url = config.logo_scrape_url or "https://football-logos.cc/tournaments/fifa-world-cup-2026/"
+    if not config.logo_scrape_url:
+        raise ValueError("logo_scrape_url is not configured")
+    tournament_url = config.logo_scrape_url
     print_colored(f"Fetching team list from {tournament_url}", "blue")
 
     try:

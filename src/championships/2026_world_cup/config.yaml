@@ -315,6 +315,179 @@ groups:
   - name: "L"
     teams: ["Inglaterra", "Croácia", "Gana", "Panamá"]
 
+# Participants (boleiros) configuration
+boleiros:
+  André Bonito:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  André Mendes:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  André Tayer:
+    penalties:
+      - value: 30
+        reason: 'aaaaa'
+        phase: 'bbb'
+  Cipriano L.:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Davi & Cesar:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Ditchos:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Felipe Giannoni:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Francisco Camargo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Frederico Soter:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Gabão:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Giancarlo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Gui:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Guilherne:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Haroldo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  João Henrique:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  José Ricardo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Kiko Toloza:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Leo Fernandes:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  LLM Gemini:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  LLM GPT:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Luca Caviglia Del Soldato:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Lucas Ubertini:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Luiz Augusto:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Marcelo:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Marcelo Boix:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Marco Lavander:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Mateus Tone:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Mauricio Saraiva:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Pedro Tayer:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Rafael Conte:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Rodrigo Albernaz:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Thales Oliveira:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Thiago Bahiense:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+  Tiago:
+    penalties:
+      - value: 0
+        reason: ''
+        phase: ''
+
 # HTML report theme
 theme:
   mode: "dark"

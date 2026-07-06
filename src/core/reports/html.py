@@ -719,6 +719,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 bonus_by_phase[ph] = bonus_by_phase.get(ph, 0) + int(row["points"])
 
     total_pts = int(df_bol["pontos"].sum())
+    penalty_pts = config.total_penalty(boleiro)
     avg_per_game = round(df_bol["pontos"].mean(), 1) if len(df_bol) > 0 else 0
     num_games = len(df_bol)
     num_days = df_bol["date"].nunique()
@@ -1029,8 +1030,43 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     if n_pending > 0:
         pending_stat_html = f'<div class="stat-card"><div class="value" style="color:var(--warning);font-size:1.3rem;">\u23f3 {n_pending}</div><div class="label">Aguardando</div></div>'
 
-    grand_total = total_pts + bonus_total
+    grand_total = total_pts + bonus_total - penalty_pts
     pending_row = f'<div class="stat-row" style="grid-template-columns:repeat(1,1fr);margin-top:0;">{pending_stat_html}</div>' if n_pending else ""
+
+    penalty_stat = ""
+    penalty_details = ""
+    if penalty_pts > 0:
+        penalty_stat = f'<div class="stat-card"><div class="value" style="color:var(--danger);font-size:1.2rem;">-{penalty_pts}</div><div class="label">Penalidade</div></div>'
+        boleiro_cfg = config.boleiros.get(boleiro)
+        if boleiro_cfg and boleiro_cfg.penalties:
+            detail_rows = ""
+            for p in boleiro_cfg.penalties:
+                if p.value <= 0:
+                    continue
+                phase_tag = (
+                    f'<span style="font-size:0.65rem;color:var(--text-muted);'
+                    f'background:var(--card-bg);border:1px solid var(--card-border);'
+                    f'padding:0.1rem 0.45rem;border-radius:999px;white-space:nowrap;">'
+                    f'{p.phase}</span>'
+                ) if p.phase else ""
+                reason_html = (
+                    f'<span style="flex:1;font-size:0.8rem;">{p.reason}</span>'
+                ) if p.reason else '<span style="flex:1;"></span>'
+                detail_rows += (
+                    f'<div style="display:flex;align-items:center;gap:0.5rem;'
+                    f'padding:0.45rem 0;">'
+                    f'<span style="background:var(--danger);color:white;'
+                    f'font-size:0.7rem;font-weight:700;padding:0.15rem 0.45rem;'
+                    f'border-radius:999px;white-space:nowrap;">-{p.value}</span>'
+                    f'{reason_html}{phase_tag}</div>\n'
+                )
+            penalty_details = (
+                f'<div class="card" style="margin-top:0.5rem;">'
+                f'<div style="font-size:0.7rem;font-weight:600;color:var(--text-muted);'
+                f'text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;'
+                f'padding-bottom:0.35rem;border-bottom:1px solid var(--card-border);">'
+                f'Detalhamento</div>{detail_rows}</div>'
+            )
 
     body = f"""
 <div class="hero">
@@ -1052,6 +1088,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         <div class="label">Total</div>
     </div>
 </div>
+{penalty_stat}
+{penalty_details}
 <div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin-top:0;">
     <div class="stat-card">
         <div class="value" style="color:var(--voce);font-size:1.2rem;">{avg_per_game}</div>
@@ -1067,6 +1105,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     </div>
 </div>
 {pending_row}"""
+
 
     # ── Advanced metrics card ──
     _streak_label = ""
@@ -1515,7 +1554,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     if phase_rows:
         # Recompute total_pts from the phase breakdown (robust against concat issues)
         total_pts = match_total
-        grand_total = total_pts + bonus_total
+        grand_total = total_pts + bonus_total - penalty_pts
         body += (
             f'<div class="section">'
             f'<div class="section-title">\U0001f4ca Pontos por Fase</div>'
@@ -1534,7 +1573,12 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
             f'<td style="text-align:right;">+{total_pts}</td>'
             f'<td style="text-align:right;">+{bonus_total}</td>'
             f'<td style="text-align:right;">-</td>'
-            f'<td style="text-align:right;color:var(--accent);">+{grand_total}</td></tr>'
+            f'<td style="text-align:right;color:var(--accent);">+{total_pts + bonus_total}</td></tr>'
+            f'{"<tr style=\"color:var(--danger);\"><td style=\"padding:0.4rem;\">❌ Penalidade</td><td></td><td></td><td></td><td style=\"text-align:right;\">-" + str(penalty_pts) + "</td></tr>" if penalty_pts > 0 else ""}'
+            f'<tr style="border-top:2px solid var(--card-border);font-weight:700;">'
+            f'<td style="padding:0.4rem;">\U0001f3c6 Geral</td>'
+            f'<td></td><td></td><td></td>'
+            f'<td style="text-align:right;color:var(--accent);font-size:1.1rem;">+{grand_total}</td></tr>'
             f'</tbody></table>'
             f'<div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;">'
             f'Jogos = pontos dos palpites \u00b7 B\u00f4nus = pontos dos times escolhidos por fase \u00b7 Times = acertos do vencedor / total de jogos'

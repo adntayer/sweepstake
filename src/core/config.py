@@ -194,6 +194,25 @@ class ExcelLayout:
 
 
 @dataclass
+class BoleiroPenalty:
+    """A single penalty applied to a boleiro."""
+    value: int = 0
+    reason: str = ""
+    phase: str = ""
+
+
+@dataclass
+class BoleiroConfig:
+    """Configuration for a single boleiro (participant)."""
+    penalties: list[BoleiroPenalty] = field(default_factory=list)
+
+    @property
+    def total_penalty(self) -> int:
+        """Sum of all penalty values for this boleiro."""
+        return sum(p.value for p in self.penalties)
+
+
+@dataclass
 class ChampionshipConfig:
     """Full configuration for a single championship."""
 
@@ -267,6 +286,9 @@ class ChampionshipConfig:
 
     # Group stage definition (list of {name, teams})
     groups: list = field(default_factory=list)
+
+    # Boleiros (participants) configuration
+    boleiros: dict[str, BoleiroConfig] = field(default_factory=dict)
 
     # Group stage structure
     group_round_labels: list[str] = field(default_factory=lambda: ["1", "2", "3"])
@@ -478,6 +500,11 @@ class ChampionshipConfig:
                 return type_map[r.rule]
         return ("", "", "")
 
+    def total_penalty(self, boleiro: str) -> int:
+        """Return sum of all penalties for a given boleiro (0 if not found)."""
+        bcfg = self.boleiros.get(boleiro)
+        return bcfg.total_penalty if bcfg else 0
+
 
 # ------------------------------------------------------------------
 # Loader
@@ -643,6 +670,18 @@ def load_config(championship_id: str) -> ChampionshipConfig:
 
     _tm = _parse_team_mapping(raw.get("team_name_mapping", []))
 
+    # Parse boleiros
+    boleiros: dict[str, BoleiroConfig] = {}
+    for boleiro_name, b_raw in raw.get("boleiros", {}).items():
+        penalties = []
+        for p_raw in b_raw.get("penalties", []):
+            penalties.append(BoleiroPenalty(
+                value=p_raw.get("value", 0),
+                reason=p_raw.get("reason", ""),
+                phase=p_raw.get("phase", ""),
+            ))
+        boleiros[boleiro_name.strip()] = BoleiroConfig(penalties=penalties)
+
     return ChampionshipConfig(
         id=raw["id"],
         name=raw["name"],
@@ -694,6 +733,7 @@ def load_config(championship_id: str) -> ChampionshipConfig:
         filename_round_aliases=raw.get("filename_round_aliases", {}),
         logo_scrape_url=raw.get("logo_scrape_url", ""),
         logo_slug_overrides=raw.get("logo_slug_overrides", {}),
+        boleiros=boleiros,
     )
 
 

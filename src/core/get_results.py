@@ -71,28 +71,16 @@ def _parse_result(result: str) -> tuple[int | None, int | None]:
         return None, None
 
 
-_DEFAULT_ROUND_MAP = {
-    "Round of 32": "segunda_fase",
-    "Round of 16": "oitavas",
-    "Quarter Finals": "quartas",
-    "Semi Finals": "semi",
-    "Third Place": "terceiro_lugar",
-    "Final": "final",
-    "Finals": "final",
-}
-
-
 def _parse_round(raw, round_map: dict[str, str] | None = None) -> str:
     """Map Round Number to internal phase key.
 
     Group rounds (1, 2, 3) stay as integers.
-    Knockout rounds are translated via ``round_map``.
-    Falls back to ``_DEFAULT_ROUND_MAP`` if not provided.
+    Knockout rounds are translated via ``round_map`` (from config.external_round_mapping).
+    If ``round_map`` is None or the key is not found, returns the original value.
     """
     val = str(raw).strip()
-    mapping = round_map or _DEFAULT_ROUND_MAP
-    if val in mapping:
-        return mapping[val]
+    if round_map and val in round_map:
+        return round_map[val]
     return val
 
 

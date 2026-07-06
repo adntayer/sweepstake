@@ -794,12 +794,17 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
     df = df_valid.copy()
     df = df.sort_values(["who", "date"])
 
+    # Pre-compute total penalty per boleiro (applied to cumulative)
+    penalty_map = {name: config.total_penalty(name) for name in df["who"].unique()}
+
     rows = []
     for date, day_group in df.groupby("date"):
         # Cumulative points up to this date for each player
         daily_pts = day_group.groupby("who")["pontos"].sum()
         # Get all players' cumulative up to this date
         all_cum = df[df["date"] <= date].groupby("who")["pontos"].sum()
+        # Subtract penalties from cumulative points
+        all_cum = all_cum - all_cum.index.map(lambda w: penalty_map.get(w, 0))
         leader_pts = int(all_cum.max()) if not all_cum.empty else 0
         leader_name = str(all_cum.idxmax()) if not all_cum.empty else ""
 
