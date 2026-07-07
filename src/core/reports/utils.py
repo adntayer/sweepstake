@@ -1,3 +1,4 @@
+"""Utility functions for reports — OBT parquet loading only (no CSV)."""
 from __future__ import annotations
 
 import os
@@ -9,36 +10,45 @@ import pytz
 from src.core.config import ChampionshipConfig
 
 
-def compute_pending_matches(config: ChampionshipConfig) -> dict:
-    """Compute match result status summary.
+def load_obt(config: ChampionshipConfig, obt_name: str) -> pd.DataFrame:
+    """Load a Gold OBT parquet.
 
-    Returns a dict with:
-      - total_matches: total unique matches in the gold_all file
-      - with_result: matches that have a real result loaded (valido == 1)
-      - pending: matches whose date has passed but have no result yet
-      - future: matches whose date is still in the future
-      - pending_slugs: list of match slugs pending results
-      - pending_info: list of dicts (slug, home_team, away_team, date, hour)
+    Tries ``gold/obt/{obt_name}.parquet``.
+    Returns empty DataFrame if not found.
     """
+    obt_path = config.gold_obt_path(obt_name)
+    if os.path.exists(obt_path):
+        try:
+            return pd.read_parquet(obt_path)
+        except Exception:
+            pass
+    # Also try with obt_ prefix
+    if not obt_name.startswith("obt_"):
+        obt_path2 = config.gold_obt_path(f"obt_{obt_name}")
+        if os.path.exists(obt_path2):
+            try:
+                return pd.read_parquet(obt_path2)
+            except Exception:
+                pass
+    return pd.DataFrame()
+
+
+def load_obt_palpites(config: ChampionshipConfig) -> pd.DataFrame:
+    """Load obt_palpites with valido filter preference."""
+    df = load_obt(config, "obt_palpites")
+    if df.empty:
+        return df
+    if "valido" in df.columns and (df["valido"] == 1).any():
+        return df[df["valido"] == 1].copy()
+    return df
+
+
+def compute_pending_matches(config: ChampionshipConfig) -> dict:
+    """Compute match result status summary from OBT palpites."""
     tz = pytz.timezone(config.timezone)
     today = datetime.now(tz).date()
 
-    all_path = config.gold_all_path()
-    _parts: list[pd.DataFrame] = []
-    if os.path.exists(all_path):
-        df_g = pd.read_csv(all_path, sep=",")
-        if not df_g.empty:
-            _parts.append(df_g)
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_p = pd.read_csv(pp, sep=",")
-            if not df_p.empty:
-                _parts.append(df_p)
-    if not _parts:
-        return _empty_result()
-
-    df = pd.concat(_parts, ignore_index=True)
+    df = load_obt(config, "obt_palpites")
     if df.empty or "match" not in df.columns:
         return _empty_result()
 
@@ -50,7 +60,11 @@ def compute_pending_matches(config: ChampionshipConfig) -> dict:
 
     with_result = int(df_matches["valido"].sum())
 
-    df_matches["date_dt"] = pd.to_datetime(df_matches["date"], dayfirst=False, errors="coerce")
+    # Use date_pred as match date
+    df_matches["date_dt"] = pd.to_datetime(
+        df_matches.get("date_pred", df_matches.get("date")),
+        dayfirst=False, errors="coerce",
+    )
     df_matches["date_only"] = df_matches["date_dt"].dt.date
 
     mask_no_result = df_matches["valido"] == 0
@@ -65,10 +79,10 @@ def compute_pending_matches(config: ChampionshipConfig) -> dict:
     for _, row in pending_df.iterrows():
         pending_info.append({
             "slug": str(row["match"]),
-            "home_team": str(row["home_team"]),
-            "away_team": str(row["away_team"]),
-            "date": str(row["date"]),
-            "hour": str(row.get("hour", "")),
+            "home_team": str(row.get("home_team", "")),
+            "away_team": str(row.get("away_team", "")),
+            "date": str(row.get("date_pred", row.get("date", ""))),
+            "hour": str(row.get("hour_pred", row.get("hour", ""))),
         })
 
     future_df = df_matches[mask_no_result & (df_matches["date_only"] > today)]

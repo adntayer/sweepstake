@@ -252,12 +252,8 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
 
     # Load upset data for zebra indicators
     upset_lookup: dict[str, tuple[int, int, str]] = {}
-    upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
-    if os.path.exists(upset_path):
-        try:
-            df_upset = pd.read_csv(upset_path, sep=",")
-        except pd.errors.EmptyDataError:
-            df_upset = pd.DataFrame()
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if not df_upset.empty:
         for _, r in df_upset.iterrows():
             if int(r.get("is_upset", 0)) == 1:
                 upset_lookup[str(r["match"])] = (
@@ -280,28 +276,14 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
     # use the correct hour (from the Excel/prediction data), not the games.csv hour
     # which may differ for some matches (e.g., Holanda vs Marrocos: 22h vs 19h).
     _match_info_lookup: dict[str, tuple[str, str]] = {}
-    gold_all = config.gold_all_path()
-    if os.path.exists(gold_all):
-        df_gold = pd.read_csv(gold_all, sep=",")
-        if not df_gold.empty and "match" in df_gold.columns:
-            for _, g_row in df_gold.drop_duplicates("match").iterrows():
-                m = str(g_row.get("match", ""))
-                d = str(g_row.get("date", ""))
-                h = str(g_row.get("hour", ""))
-                if m and d:
-                    _match_info_lookup[m] = (d, h)
-    # Also check playoff gold all files
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            if not df_pp.empty and "match" in df_pp.columns:
-                for _, g_row in df_pp.drop_duplicates("match").iterrows():
-                    m = str(g_row.get("match", ""))
-                    d = str(g_row.get("date", ""))
-                    h = str(g_row.get("hour", ""))
-                    if m and d and m not in _match_info_lookup:
-                        _match_info_lookup[m] = (d, h)
+    df_gold = config.load_gold_dataframe("obt_palpites")
+    if not df_gold.empty and "match" in df_gold.columns:
+        for _, g_row in df_gold.drop_duplicates("match").iterrows():
+            m = str(g_row.get("match", ""))
+            d = str(g_row.get("date_pred", str(g_row.get("date", ""))))
+            h = str(g_row.get("hour_pred", str(g_row.get("hour", ""))))
+            if m and d:
+                _match_info_lookup[m] = (d, h)
 
     total_played = 0
     wins = draws = losses = 0
@@ -374,10 +356,10 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
     form_str = " ".join(form_list[-5:]) if form_list else "-"
 
     # Per-player accuracy for this team
-    team_acc_path = _norm(os.path.join(config._au_first_round(), "team_accuracy.csv"))
+    # Per-player accuracy for this team
     player_rows = ""
-    if os.path.exists(team_acc_path):
-        df_acc = pd.read_csv(team_acc_path, sep=",")
+    df_acc = config.load_gold_dataframe("obt_team_accuracy")
+    if not df_acc.empty:
         df_acc["team"] = df_acc["team"].str.strip()
         df_acc_team = df_acc[df_acc["team"] == team]
         if not df_acc_team.empty:
@@ -407,10 +389,9 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
     <span style="display:inline-block;margin-left:0.5rem;font-size:0.65rem;color:var(--text-muted);">Ex: MAE 0.50 = erra por meio gol em m\u00e9dia</span>
 </div>
 """
-    error_path = _norm(os.path.join(config._au_first_round(), "goal_error_by_team.csv"))
     error_html = ""
-    if os.path.exists(error_path):
-        df_err = pd.read_csv(error_path, sep=",")
+    df_err = config.load_gold_dataframe("obt_goal_error")
+    if not df_err.empty:
         df_err["team"] = df_err["team"].str.strip()
         df_err_team = df_err[(df_err["team"] == team) & (df_err["role"] == "total")].copy()
         if not df_err_team.empty:
@@ -892,15 +873,14 @@ def _build_all_team_pages(config: ChampionshipConfig, html_base: str) -> None:
 
 def _build_similarity_matrix(config: ChampionshipConfig) -> str:
     """Show a matrix of how similar each pair of players' predictions are."""
-    gold_all = config.gold_all_path()
-    if not os.path.exists(gold_all):
+    df = config.load_gold_dataframe("obt_palpites")
+    if df.empty or "who" not in df.columns and "boleiro_name" not in df.columns:
         return _page_frame(config, "Matriz de Similaridade",
                           "<div class='hero'><h1>\U0001f9ee Similaridade</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados de palpites</div></div>")
 
-    df = pd.read_csv(gold_all, sep=",")
-    if df.empty or "who" not in df.columns:
-        return _page_frame(config, "Matriz de Similaridade",
-                          "<div class='hero'><h1>\U0001f9ee Similaridade</h1><div class='subtitle'>Nenhum palpite encontrado</div></div>")
+    # Normalize player column
+    who_col = "who" if "who" in df.columns else "boleiro_name"
+    df = df.rename(columns={who_col: "who"})
 
     boleiros = sorted(df["who"].unique())
     n = len(boleiros)
@@ -1040,20 +1020,8 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
     Columns are ordered chronologically (oldest -> newest -> future).
     Completed games show real score, predicted score and points.
     """
-    _parts: list[pd.DataFrame] = []
-    gold_all = config.gold_all_path()
-    if os.path.exists(gold_all):
-        _parts.append(pd.read_csv(gold_all, sep=","))
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            _parts.append(pd.read_csv(pp, sep=","))
-    if not _parts:
-        return _page_frame(config, "Palpites",
-                          "<div class='hero'><h1>\U0001f4cb Palpites</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados de palpites</div></div>")
-
-    df_pred = pd.concat(_parts, ignore_index=True)
-    if df_pred.empty or "who" not in df_pred.columns:
+    df_pred = config.load_gold_dataframe("obt_palpites")
+    if df_pred.empty or "who" not in df_pred.columns and "boleiro_name" not in df_pred.columns:
         return _page_frame(config, "Palpites",
                           "<div class='hero'><h1>\U0001f4cb Palpites</h1><div class='subtitle'>Nenhum palpite encontrado</div></div>")
 
@@ -1121,8 +1089,8 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
         match_info[mk] = (ha, aa, ht, at, rl, rs)
 
     # ── Merge predictions with round info ──
-    game_round_map = df_games[["match_key", "round"]].copy()
-    df = df_pred.merge(game_round_map, on="match_key", how="left")
+    # OBT already has 'round' from sat_partida; avoid merge conflict
+    df = df_pred.copy()
     df["round_label"] = df["round"].map(round_labels).fillna(group_phase_label)
 
     df_valid = df[df["valido"] == 1].copy()
@@ -1598,12 +1566,7 @@ window.addEventListener('scroll', fixScrollerHeight);
 
 def _build_round_matrix(config: ChampionshipConfig) -> str:
     """Round-by-round comparison matrix."""
-    rr_path = _norm(os.path.join(config._au_first_round(), "round_by_round.csv"))
-    if not os.path.exists(rr_path):
-        return _page_frame(config, "Tabela de Rodadas",
-                          "<div class='hero'><h1>\U0001f4ca Rodadas</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados de rodadas</div></div>")
-
-    df = pd.read_csv(rr_path, sep=",")
+    df = config.load_gold_dataframe("obt_round_by_round")
     if df.empty:
         return _page_frame(config, "Tabela de Rodadas",
                           "<div class='hero'><h1>\U0001f4ca Rodadas</h1><div class='subtitle'>Nenhum dado de rodada dispon\u00edvel</div></div>")

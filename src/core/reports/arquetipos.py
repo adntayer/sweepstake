@@ -193,25 +193,20 @@ def _percentile_rank(values: list[float]) -> list[float]:
 # ------------------------------------------------------------------
 
 def _load_gold(config: ChampionshipConfig) -> dict:
-    """Load all gold CSVs needed for classification."""
-    gd = config._au_first_round()
+    """Load all gold OBT parquets needed for classification."""
     out: dict = {}
 
-    def _try_load_csv(path: str) -> pd.DataFrame:
-        """Read CSV if non-empty; return empty DataFrame on missing/empty file."""
-        if not os.path.exists(path):
-            return pd.DataFrame()
-        try:
-            return pd.read_csv(path, sep=",")
-        except pd.errors.EmptyDataError:
-            return pd.DataFrame()
+    def _try_load_obt(name: str) -> pd.DataFrame:
+        """Load OBT parquet; return empty DataFrame on missing/error."""
+        return config.load_gold_dataframe(name)
 
-    out["valid"] = _try_load_csv(config.gold_valid_path())
+    out["valid"] = _try_load_obt("obt_palpites")
+    if not out["valid"].empty and "valido" in out["valid"].columns:
+        out["valid"] = out["valid"][out["valid"]["valido"] == 1].copy()
 
-    for name in ("boldness_index", "upset_tracker", "consistency",
-                 "team_accuracy", "goal_error_by_team", "round_by_round"):
-        fp = _norm(os.path.join(gd, f"{name}.csv"))
-        out[name] = _try_load_csv(fp)
+    for name in ("obt_boldness", "obt_upsets", "obt_consistency",
+                 "obt_team_accuracy", "obt_goal_error", "obt_round_by_round"):
+        out[name.replace("obt_", "")] = _try_load_obt(name)
 
     return out
 

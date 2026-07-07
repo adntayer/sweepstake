@@ -51,6 +51,10 @@ from src.core.printing import print_colored
 from src.core.scoring import score_prediction, score_playoff_bonus, score_strikers
 from src.core.matches.wc2026 import build_world_cup_csv
 from src.core.logo_fetcher import fetch_all_logos
+from src.core.datavault import (
+    run_bronze_to_silver_dv,
+    run_silver_to_gold_dv,
+)
 
 # ------------------------------------------------------------------
 # Helpers
@@ -1048,13 +1052,34 @@ def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipCon
 
 
 # ------------------------------------------------------------------
-# Orchestrator
+# Orchestrators
 # ------------------------------------------------------------------
 
-def run_pipeline(config: ChampionshipConfig) -> None:
-    """Run the full medallion pipeline."""
+def run_pipeline(config: ChampionshipConfig, dv: bool = True) -> None:
+    """Run the full medallion pipeline.
+
+    Args:
+        config: Championship configuration.
+        dv: If True (default), uses Data Vault architecture for silver
+            and OBTs for gold. If False, uses the legacy flat-CSV pipeline.
+    """
     fetch_all_logos(config)
     build_world_cup_csv(config.games_file)
     run_raw_to_bronze(config)
-    run_bronze_to_silver(config)
-    run_silver_to_gold(config)
+
+    if dv:
+        # Data Vault pipeline
+        silver = run_bronze_to_silver_dv(config)
+        run_silver_to_gold_dv(config, silver)
+    else:
+        # Legacy flat-CSV pipeline
+        run_bronze_to_silver(config)
+        run_silver_to_gold(config)
+
+
+def run_pipeline_legacy(config: ChampionshipConfig) -> None:
+    """Run the legacy flat-CSV pipeline (no Data Vault).
+
+    Kept for backward compatibility.
+    """
+    run_pipeline(config, dv=False)

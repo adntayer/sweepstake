@@ -448,6 +448,82 @@ class ChampionshipConfig:
         Use :meth:`playoff_strikers_path` or :meth:`gold_playoff_all_path`."""
         return self.playoff_strikers_path(layer)
 
+    # --- Data Vault paths (silver) ---
+
+    def silver_hubs_dir(self) -> str:
+        """Path to silver/hubs/ for Data Vault hub parquets."""
+        return _norm(os.path.join(self.silver_dir, "hubs"))
+
+    def silver_links_dir(self) -> str:
+        """Path to silver/links/ for Data Vault link parquets."""
+        return _norm(os.path.join(self.silver_dir, "links"))
+
+    def silver_satellites_dir(self) -> str:
+        """Path to silver/satellites/ for Data Vault satellite parquets."""
+        return _norm(os.path.join(self.silver_dir, "satellites"))
+
+    def silver_hub_path(self, hub_name: str) -> str:
+        """Path to a specific hub parquet, e.g. hub_jogador.parquet."""
+        return _norm(os.path.join(self.silver_hubs_dir(), f"hub_{hub_name}.parquet"))
+
+    def silver_link_path(self, link_name: str) -> str:
+        """Path to a specific link parquet, e.g. link_palpite.parquet."""
+        return _norm(os.path.join(self.silver_links_dir(), f"link_{link_name}.parquet"))
+
+    def silver_satellite_path(self, sat_name: str) -> str:
+        """Path to a specific satellite parquet, e.g. sat_palpite.parquet."""
+        return _norm(os.path.join(self.silver_satellites_dir(), f"sat_{sat_name}.parquet"))
+
+    # --- OBT paths (gold) ---
+
+    def gold_obt_dir(self) -> str:
+        """Path to gold/obt/ for One Big Table parquets."""
+        return _norm(os.path.join(self.gold_dir, "obt"))
+
+    def gold_obt_path(self, obt_name: str) -> str:
+        """Path to a specific OBT parquet, e.g. obt_palpites.parquet."""
+        return _norm(os.path.join(self.gold_obt_dir(), f"{obt_name}.parquet"))
+
+    def load_gold_dataframe(self, obt_name: str) -> pd.DataFrame:
+        """Load a gold OBT parquet.
+
+        Args:
+            obt_name: OBT name (e.g. ``obt_palpites``, ``obt_bonus``).
+
+        Returns:
+            DataFrame (empty if parquet not found).
+        """
+        import os
+        import pandas as pd
+
+        # Try exact OBT name first
+        p = self.gold_obt_path(obt_name)
+        if os.path.exists(p):
+            try:
+                return pd.read_parquet(p)
+            except Exception:
+                pass
+
+        # Try with "obt_" prefix stripped if the name already has it
+        if obt_name.startswith("obt_"):
+            p2 = self.gold_obt_path(obt_name[4:])
+            if os.path.exists(p2):
+                try:
+                    return pd.read_parquet(p2)
+                except Exception:
+                    pass
+
+        # Try with "obt_" prefix added if the name doesn't have it
+        if not obt_name.startswith("obt_"):
+            p3 = self.gold_obt_path(f"obt_{obt_name}")
+            if os.path.exists(p3):
+                try:
+                    return pd.read_parquet(p3)
+                except Exception:
+                    pass
+
+        return pd.DataFrame()
+
     def overview_md_path(self) -> str:
         return _norm(os.path.join(self.reports_dir, "md", "overview.md"))
 

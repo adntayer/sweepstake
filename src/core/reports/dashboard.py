@@ -20,7 +20,7 @@ from src.core.reports.html import (
     ZEBRA_MONSTRA_EMOJI,
     ZEBRA_MONSTRA_LABEL,
 )
-from src.core.reports.utils import compute_pending_matches
+from src.core.reports.utils import compute_pending_matches, load_obt_palpites
 
 
 def _norm(path: str) -> str:
@@ -29,22 +29,13 @@ def _norm(path: str) -> str:
 
 
 def _load_gold_data(config: ChampionshipConfig) -> pd.DataFrame:
-    """Load gold data — prefers valid, falls back to all predictions.
+    """Load gold data — OBT parquet first, then legacy CSV fallback.
 
-    This ensures the dashboard shows participants even when no real
-    results exist yet (all predictions have ``valido=0``).
+    Uses ``load_obt_palpites`` which prefers valid rows but falls back
+    to all predictions so the dashboard shows participants even when no
+    real results exist yet.
     """
-    valid_path = config.gold_valid_path()
-    all_path = config.gold_all_path()
-    if os.path.exists(valid_path):
-        df = pd.read_csv(valid_path, sep=",")
-        if not df.empty:
-            return df
-    if os.path.exists(all_path):
-        df = pd.read_csv(all_path, sep=",")
-        if not df.empty and "who" in df.columns:
-            return df
-    return pd.DataFrame()
+    return load_obt_palpites(config)
 
 
 def _initials(name: str) -> str:
@@ -542,9 +533,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     # --- Load playoff match points ---
     playoff_pts: dict[str, int] = {}
     for pr in (config.playoff_rounds or []):
-        phase_path = config.gold_playoff_valid_path(pr.key)
-        if os.path.exists(phase_path):
-            df_phase = pd.read_csv(phase_path, sep=",")
+        df_phase = config.load_gold_dataframe("obt_palpites")
+        if not df_phase.empty and "who" in df_phase.columns:
             for who, grp in df_phase.groupby("who"):
                 playoff_pts[who] = playoff_pts.get(who, 0) + int(grp["pontos"].sum())
 
@@ -560,9 +550,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     play_phase_name: dict[str, str] = {pr.key: _short_name(pr.name, config) for pr in (config.playoff_rounds or [])}
     for pk in play_phase_order:
         bonus_by_phase[pk] = {}
-    bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
-    if os.path.exists(bonus_path):
-        df_bonus = pd.read_csv(bonus_path, sep=",")
+    df_bonus = config.load_gold_dataframe("obt_bonus")
+    if not df_bonus.empty:
         for _, row in df_bonus.iterrows():
             b = row["boleiro"]
             ph = str(row["phase"])
@@ -581,9 +570,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     # Trend based on rank change (more reliable than raw points across phases)
     trend_map: dict[str, str] = {}
     gold_dir = config._au_first_round()
-    rank_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
-    if os.path.exists(rank_path):
-        df_rank_trend = pd.read_csv(rank_path, sep=",")
+    df_rank_trend = config.load_gold_dataframe("obt_ranking_history")
+    if not df_rank_trend.empty:
         df_rank_trend = df_rank_trend.sort_values(["boleiro", "date"])
         for who in df_rank_trend["boleiro"].unique():
             df_w = df_rank_trend[df_rank_trend["boleiro"] == who]
@@ -600,9 +588,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
     badge_map: dict[str, list[str]] = {}
 
     # Hot streak badge (consistency.csv)
-    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
-    if os.path.exists(cons_path):
-        df_cons = pd.read_csv(cons_path, sep=",")
+    df_cons = config.load_gold_dataframe("obt_consistency")
+    if not df_cons.empty:
         for boleiro in df_cons["boleiro"].unique():
             df_b = df_cons[df_cons["boleiro"] == boleiro].sort_values("date")
             streak_len = 0
@@ -628,12 +615,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
 
     # Zebra hunter badge
     zebra_counts: dict[str, int] = {}
-    upset_path = _norm(os.path.join(gold_dir, "upset_tracker.csv"))
-    if os.path.exists(upset_path):
-        try:
-            df_upset = pd.read_csv(upset_path, sep=",")
-        except pd.errors.EmptyDataError:
-            df_upset = pd.DataFrame()
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if not df_upset.empty:
         # Only count matches with real results (same filter as zebra page / _build_zebra_counter)
         df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy() if "real_winner" in df_upset.columns else df_upset
         upset_only = df_upset[df_upset.get("is_upset", 0) == 1]
@@ -646,9 +629,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
                 badge_map.setdefault(name, []).append("\U0001f993")
 
     # Boldness badge
-    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
-    if os.path.exists(bold_path):
-        df_bold = pd.read_csv(bold_path, sep=",")
+    df_bold = config.load_gold_dataframe("obt_boldness")
+    if not df_bold.empty:
         for _, r in df_bold.iterrows():
             bs = float(r["boldness_score"])
             if bs > 0.3:
@@ -657,9 +639,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
                 badge_map.setdefault(r["boleiro"], []).append("\U0001F9CA")
 
     # Leader badge
-    rank_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
-    if os.path.exists(rank_path):
-        df_rank_hist = pd.read_csv(rank_path, sep=",")
+    df_rank_hist = config.load_gold_dataframe("obt_ranking_history")
+    if not df_rank_hist.empty:
         df_rank_hist = df_rank_hist.sort_values("date")
         latest_date = df_rank_hist["date"].iloc[-1] if not df_rank_hist.empty else None
         if latest_date:
@@ -781,11 +762,9 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
     if not _gp.empty:
         _parts.append(_gp)
     for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            if not df_pp.empty and "who" in df_pp.columns:
-                _parts.append(df_pp)
+        df_pp = config.load_gold_dataframe("obt_palpites")
+        if not df_pp.empty and "who" in df_pp.columns:
+            _parts.append(df_pp)
     if not _parts:
         return ""
     df_valid = pd.concat(_parts, ignore_index=True) if len(_parts) > 1 else _parts[0]
@@ -794,9 +773,8 @@ def _build_player_grid(config: ChampionshipConfig) -> str:
 
     # Check for hot streaks from consistency.csv
     hot_players: set[str] = set()
-    cons_path = _norm(os.path.join(config._au_first_round(), "consistency.csv"))
-    if os.path.exists(cons_path):
-        df_cons = pd.read_csv(cons_path, sep=",")
+    df_cons = config.load_gold_dataframe("obt_consistency")
+    if not df_cons.empty:
         for boleiro in df_cons["boleiro"].unique():
             df_b = df_cons[df_cons["boleiro"] == boleiro].sort_values("date")
             streak_len = 0
@@ -839,11 +817,9 @@ def _build_distribution_bars(config: ChampionshipConfig) -> str:
     if not _gp.empty:
         _parts.append(_gp)
     for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            if not df_pp.empty and "who" in df_pp.columns:
-                _parts.append(df_pp)
+        df_pp = config.load_gold_dataframe("obt_palpites")
+        if not df_pp.empty and "who" in df_pp.columns:
+            _parts.append(df_pp)
     if not _parts:
         return ""
     df_valid = pd.concat(_parts, ignore_index=True) if len(_parts) > 1 else _parts[0]
@@ -898,19 +874,15 @@ def _build_distribution_bars(config: ChampionshipConfig) -> str:
 
 def _build_zebra_counter(config: ChampionshipConfig) -> str:
     """Show a zebra counter card for the dashboard hero."""
-    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
-    if not os.path.exists(upset_path):
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if df_upset.empty:
         return ""
-    try:
-        df_upset = pd.read_csv(upset_path, sep=",")
-        df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy()
-        total = len(df_upset)
-        upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else pd.DataFrame()
-        num_upsets = len(upsets)
-        pct = round(num_upsets / total * 100, 1) if total else 0
-        return f'<div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:rgba(239,68,68,0.2);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.8rem;"><span>\U0001f993</span> <strong>{num_upsets}</strong> zebras em {total} jogos ({pct}%)</div>\n'
-    except (FileNotFoundError, pd.errors.EmptyDataError):
-        return ""
+    df_upset = df_upset[df_upset["real_winner"].notna() & (df_upset["real_winner"] != "")].copy()
+    total = len(df_upset)
+    upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else pd.DataFrame()
+    num_upsets = len(upsets)
+    pct = round(num_upsets / total * 100, 1) if total else 0
+    return f'<div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:rgba(239,68,68,0.2);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.8rem;"><span>\U0001f993</span> <strong>{num_upsets}</strong> zebras em {total} jogos ({pct}%)</div>\n'
 
 
 def _build_bottom_nav_dashboard(prefix: str = "", config: ChampionshipConfig | None = None) -> str:
@@ -940,33 +912,14 @@ def _build_match_hour_lookup(config: ChampionshipConfig) -> dict[str, tuple[str,
     filenames; games.csv may have a different hour for the same match.
     """
     lookup: dict[str, tuple[str, str]] = {}
-    gold_all = config.gold_all_path()
-    if os.path.exists(gold_all):
-        try:
-            df_gold = pd.read_csv(gold_all, sep=",")
-            if not df_gold.empty and "match" in df_gold.columns:
-                for _, g_row in df_gold.drop_duplicates("match").iterrows():
-                    m = str(g_row.get("match", ""))
-                    d = str(g_row.get("date", ""))
-                    h = str(g_row.get("hour", ""))
-                    if m and d:
-                        lookup[m] = (d, h)
-        except Exception:
-            pass
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            try:
-                df_pp = pd.read_csv(pp, sep=",")
-                if not df_pp.empty and "match" in df_pp.columns:
-                    for _, g_row in df_pp.drop_duplicates("match").iterrows():
-                        m = str(g_row.get("match", ""))
-                        d = str(g_row.get("date", ""))
-                        h = str(g_row.get("hour", ""))
-                        if m and d and m not in lookup:
-                            lookup[m] = (d, h)
-            except Exception:
-                pass
+    df_gold = config.load_gold_dataframe("obt_palpites")
+    if not df_gold.empty and "match" in df_gold.columns:
+        for _, g_row in df_gold.drop_duplicates("match").iterrows():
+            m = str(g_row.get("match", ""))
+            d = str(g_row.get("date", ""))
+            h = str(g_row.get("hour", ""))
+            if m and d:
+                lookup[m] = (d, h)
     return lookup
 
 
@@ -1087,21 +1040,14 @@ def _build_last_result(config: ChampionshipConfig) -> str:
 
     # Check if the last match was a zebra
     zebra_badge = ""
-    try:
-        upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
-        if os.path.exists(upset_path):
-            df_upset = pd.read_csv(upset_path, sep=",")
-            if match_slug:
-                upset_row = df_upset[df_upset["match"] == match_slug]
-                if not upset_row.empty and int(upset_row.iloc[0].get("is_upset", 0)) == 1:
-                    nc = int(upset_row.iloc[0].get("num_correct", 999))
-                    fav = upset_row.iloc[0].get("favorite", "?")
-                    nc = int(upset_row.iloc[0].get("num_correct", 999))
-                    fav = upset_row.iloc[0].get("favorite", "?")
-                    label = ZEBRA_MONSTRA_LABEL if nc <= 2 else ZEBRA_GRANDE_LABEL
-                    zebra_badge = f'<div style="text-align:center;margin-top:0.3rem;"><span class="badge badge-danger">{label}</span> <span style="font-size:0.7rem;color:var(--text-muted);">{nc} acertaram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
-    except Exception:
-        pass
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if not df_upset.empty and match_slug:
+        upset_row = df_upset[df_upset["match"] == match_slug]
+        if not upset_row.empty and int(upset_row.iloc[0].get("is_upset", 0)) == 1:
+            nc = int(upset_row.iloc[0].get("num_correct", 999))
+            fav = upset_row.iloc[0].get("favorite", "?")
+            label = ZEBRA_MONSTRA_LABEL if nc <= 2 else ZEBRA_GRANDE_LABEL
+            zebra_badge = f'<div style="text-align:center;margin-top:0.3rem;"><span class="badge badge-danger">{label}</span> <span style="font-size:0.7rem;color:var(--text-muted);">{nc} acertaram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
 
     ver_jogo_link = f'<div style="text-align:center;margin-top:0.4rem;"><a href="{game_href}" style="font-size:0.75rem;font-weight:600;color:var(--accent);text-decoration:none;">\U0001f4fa ver jogo</a></div>' if game_href else ""
 
@@ -1162,16 +1108,12 @@ def _build_phase_buttons(config: ChampionshipConfig, slug_status: dict[str, str]
 
     # Load upset data for zebra indicators
     upset_icons: dict[str, str] = {}
-    upset_path = os.path.join(config._au_first_round(), "upset_tracker.csv")
-    if os.path.exists(upset_path):
-        try:
-            df_upset_slugs = pd.read_csv(upset_path, sep=",")
-            for _, r in df_upset_slugs.iterrows():
-                if int(r.get("is_upset", 0)) == 1:
-                    nc = int(r.get("num_correct", 999))
-                    upset_icons[str(r["match"])] = ZEBRA_MONSTRA_EMOJI if nc <= 2 else ZEBRA_GRANDE_EMOJI
-        except Exception:
-            pass
+    df_upset_slugs = config.load_gold_dataframe("obt_upsets")
+    if not df_upset_slugs.empty:
+        for _, r in df_upset_slugs.iterrows():
+            if int(r.get("is_upset", 0)) == 1:
+                nc = int(r.get("num_correct", 999))
+                upset_icons[str(r["match"])] = ZEBRA_MONSTRA_EMOJI if nc <= 2 else ZEBRA_GRANDE_EMOJI
 
     # Load results for score display
     results_map: dict[str, tuple[str, str]] = {}
@@ -1557,10 +1499,8 @@ def _build_insights(
     _gp = _load_gold_data(config)
     _full_parts = [_gp]
     for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            if not df_pp.empty and "who" in df_pp.columns: _full_parts.append(df_pp)
+        df_pp = config.load_gold_dataframe("obt_palpites")
+        if not df_pp.empty and "who" in df_pp.columns: _full_parts.append(df_pp)
     _full = pd.concat(_full_parts, ignore_index=True) if len(_full_parts) > 1 else _full_parts[0]
 
     if exact_col and exact_col in _full.columns:
@@ -1641,11 +1581,9 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
     if not _gp.empty:
         _all_parts.append(_gp)
     for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_valid_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            if not df_pp.empty and "who" in df_pp.columns:
-                _all_parts.append(df_pp)
+        df_pp = config.load_gold_dataframe("obt_palpites")
+        if not df_pp.empty and "who" in df_pp.columns:
+            _all_parts.append(df_pp)
     df_all_pts = pd.concat(_all_parts, ignore_index=True).groupby("who", as_index=False)["pontos"].sum() if _all_parts else pd.DataFrame()
 
     # ── Full gold data (not grouped) for per-player stats ──
@@ -1669,26 +1607,18 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
 
     # ── Load bonus points from playoffs_scored.csv ──
     bonus_pts: dict[str, int] = {}
-    bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
-    if os.path.exists(bonus_path):
-        df_bonus = pd.read_csv(bonus_path, sep=",")
-        for _, r in df_bonus.iterrows():
-            b = r["boleiro"]
-            pts = int(r["points"])
-            bonus_pts[b] = bonus_pts.get(b, 0) + pts
-
-    # ── Bonus by phase (per-phase "Bônus" columns) ──
     ck = config.champion_phase_key
     all_bonus_phases: list[str] = play_phase_order + ([ck] if ck not in play_phase_order else [])
     bonus_phase_name: dict[str, str] = {**play_phase_name, ck: "Campe\u00e3o"}
     bonus_phase_emoji: dict[str, str] = {**play_phase_emoji, ck: "\U0001f3c6"}
     bonus_by_phase: dict[str, dict[str, int]] = {pk: {} for pk in all_bonus_phases}
-    if os.path.exists(bonus_path):
-        df_bonus2 = pd.read_csv(bonus_path, sep=",")
-        for _, r in df_bonus2.iterrows():
+    df_bonus = config.load_gold_dataframe("obt_bonus")
+    if not df_bonus.empty:
+        for _, r in df_bonus.iterrows():
             b = r["boleiro"]
-            ph = str(r["phase"])
             pts = int(r["points"])
+            bonus_pts[b] = bonus_pts.get(b, 0) + pts
+            ph = str(r.get("phase", ""))
             if ph in bonus_by_phase:
                 bonus_by_phase[ph][b] = bonus_by_phase[ph].get(b, 0) + pts
 
@@ -1696,21 +1626,15 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
     # grupo_pts = group match points (already loaded via _gp)
     match_pts_by_phase: dict[str, dict[str, int]] = {pk: {} for pk in play_phase_order}
     for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_valid_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            if not df_pp.empty and "who" in df_pp.columns and "pontos" in df_pp.columns:
-                for who, grp in df_pp.groupby("who"):
-                    match_pts_by_phase[pr.key][who] = int(grp["pontos"].sum())
+        df_pp = config.load_gold_dataframe("obt_palpites")
+        if not df_pp.empty and "who" in df_pp.columns and "pontos" in df_pp.columns:
+            for who, grp in df_pp.groupby("who"):
+                match_pts_by_phase[pr.key][who] = int(grp["pontos"].sum())
 
     # ── Zebra count per player (same filter as ranking table) ──
     zebra_counts_b: dict[str, int] = {}
-    upset_path_b = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
-    if os.path.exists(upset_path_b):
-        try:
-            df_upset_b = pd.read_csv(upset_path_b, sep=",")
-        except pd.errors.EmptyDataError:
-            df_upset_b = pd.DataFrame()
+    df_upset_b = config.load_gold_dataframe("obt_upsets")
+    if not df_upset_b.empty:
         df_upset_b = df_upset_b[df_upset_b["real_winner"].notna() & (df_upset_b["real_winner"] != "")].copy() if "real_winner" in df_upset_b.columns else df_upset_b
         upset_only_b = df_upset_b[df_upset_b.get("is_upset", 0) == 1]
         for _, r in upset_only_b.iterrows():
@@ -1786,21 +1710,21 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
     gold_dir = config._au_first_round()
     # Boldness
     boldness_map: dict[str, float] = {}
-    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
-    if os.path.exists(bold_path):
-        for _, r in pd.read_csv(bold_path, sep=",").iterrows():
+    df_boldness = config.load_gold_dataframe("obt_boldness")
+    if not df_boldness.empty:
+        for _, r in df_boldness.iterrows():
             boldness_map[r["boleiro"]] = float(r["boldness_score"])
     # Prediction timing
     timing_map: dict[str, float] = {}
-    timing_path = _norm(os.path.join(gold_dir, "prediction_timing.csv"))
-    if os.path.exists(timing_path):
-        for _, r in pd.read_csv(timing_path, sep=",").iterrows():
+    df_timing = config.load_gold_dataframe("obt_prediction_timing")
+    if not df_timing.empty:
+        for _, r in df_timing.iterrows():
             timing_map[r["boleiro"]] = float(r["lead_days"])
     # Consistency
     streak_data: dict[str, tuple[str, int]] = {}
-    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
-    if os.path.exists(cons_path):
-        for boleiro, grp in pd.read_csv(cons_path, sep=",").groupby("boleiro"):
+    df_consistency = config.load_gold_dataframe("obt_consistency")
+    if not df_consistency.empty:
+        for boleiro, grp in df_consistency.groupby("boleiro"):
             grp = grp.sort_values("date")
             _sl, _st = 0, ""
             for _, r in reversed(list(grp.iterrows())):

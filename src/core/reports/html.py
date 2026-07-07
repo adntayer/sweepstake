@@ -735,18 +735,16 @@ def _build_gold_dashboard(
 
     # ── Key KPIs (3×3 grid) ──
     rank_val = "-"
-    rank_history_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
-    if os.path.exists(rank_history_path):
-        df_rh = pd.read_csv(rank_history_path, sep=",")
+    df_rh = config.load_gold_dataframe("obt_ranking_history")
+    if not df_rh.empty:
         df_rh_p = df_rh[df_rh["boleiro"] == boleiro].sort_values("date")
         if not df_rh_p.empty:
             rank_val = f"{int(df_rh_p.iloc[-1]['rank'])}\u00ba"
 
     # Ousadia (boldness)
     boldness_label = "\u2014"
-    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
-    if os.path.exists(bold_path):
-        df_b = pd.read_csv(bold_path, sep=",")
+    df_b = config.load_gold_dataframe("obt_boldness")
+    if not df_b.empty:
         df_bp = df_b[df_b["boleiro"] == boleiro]
         if not df_bp.empty:
             bv = float(df_bp.iloc[0]["boldness_score"])
@@ -802,16 +800,11 @@ from src.core.logo_fetcher import _team_logo_tag
 
 def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     """Build a per-player HTML report."""
-    if os.path.exists(config.gold_valid_path()):
-        df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
-        if df_valid.empty:
-            df_valid = pd.read_csv(config.gold_all_path(), sep=",")
-    else:
-        df_valid = pd.read_csv(config.gold_all_path(), sep=",")
-    striker_path = config.playoff_strikers_path()
-    if os.path.exists(striker_path):
-        df_striker = pd.read_csv(striker_path, sep=",")
-    else:
+    df_valid = config.load_gold_dataframe("obt_palpites")
+    if not df_valid.empty and "valido" in df_valid.columns:
+        df_valid = df_valid[df_valid["valido"] == 1]
+    df_striker = config.load_gold_dataframe("obt_artilheiros")
+    if df_striker.empty:
         df_striker = pd.DataFrame(columns=["boleiro", "striker"])
     max_pts = _max_points_per_game(config)
     gold_dir = config._au_first_round()
@@ -820,13 +813,12 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
     # --- Load playoff predictions for this player ---
     playoff_parts = []
+    df_palpites_all = config.load_gold_dataframe("obt_palpites")
     for pr in (config.playoff_rounds or []):
-        phase_valid_path = config.gold_playoff_valid_path(pr.key)
-        if os.path.exists(phase_valid_path):
-            df_phase = pd.read_csv(phase_valid_path, sep=",")
-            df_phase_player = df_phase[df_phase["who"] == boleiro]
-            if not df_phase_player.empty:
-                playoff_parts.append(df_phase_player)
+        df_phase = df_palpites_all[df_palpites_all["phase"] == pr.key] if not df_palpites_all.empty else pd.DataFrame()
+        df_phase_player = df_phase[df_phase["who"] == boleiro]
+        if not df_phase_player.empty:
+            playoff_parts.append(df_phase_player)
 
     if playoff_parts:
         df_playoff = pd.concat(playoff_parts, ignore_index=True)
@@ -839,9 +831,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     # Load bonus points (playoff team picks) — not included in df_bol/pontos
     bonus_total = 0
     bonus_by_phase: dict[str, int] = {}
-    bonus_csv = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
-    if os.path.exists(bonus_csv):
-        df_bonus_all = pd.read_csv(bonus_csv, sep=",")
+    df_bonus_all = config.load_gold_dataframe("obt_bonus")
+    if not df_bonus_all.empty:
         df_bonus_player = df_bonus_all[df_bonus_all["boleiro"] == boleiro]
         if not df_bonus_player.empty:
             bonus_total = int(df_bonus_player["points"].sum())
@@ -944,16 +935,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     n_pending = 0
     pending_rows = ""
     df_player_all = pd.DataFrame()
-    _player_parts: list[pd.DataFrame] = []
-    all_path = config.gold_all_path()
-    if os.path.exists(all_path):
-        df_all = pd.read_csv(all_path, sep=",")
-        _player_parts.append(df_all[df_all["who"] == boleiro].copy())
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_pp = pd.read_csv(pp, sep=",")
-            _player_parts.append(df_pp[df_pp["who"] == boleiro].copy())
+    _df_all_palpites = config.load_gold_dataframe("obt_palpites")
+    if not _df_all_palpites.empty:
+        _player_parts: list[pd.DataFrame] = [_df_all_palpites[_df_all_palpites["who"] == boleiro].copy()]
     if _player_parts:
         df_player_all = pd.concat(_player_parts, ignore_index=True)
         tz = pytz.timezone(config.timezone)
@@ -1020,9 +1004,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             match_ranks[str(match_slug)] = rank_map
     _add_match_ranks(df_valid)
     for pr in (config.playoff_rounds or []):
-        path = config.gold_playoff_valid_path(pr.key)
-        if os.path.exists(path):
-            _add_match_ranks(pd.read_csv(path, sep=","))
+        df_phase_valid = df_palpites_all[(df_palpites_all["phase"] == pr.key) & (df_palpites_all["valido"] == 1)] if not df_palpites_all.empty else pd.DataFrame()
+        if not df_phase_valid.empty:
+            _add_match_ranks(df_phase_valid)
 
     # Load upset data for zebra indicators in match history
     upset_set: set[str] = set()
@@ -1030,12 +1014,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     upset_num_correct: dict[str, int] = {}
     player_zebra_cnt = 0
     player_zebra_correct_set: set[str] = set()
-    upset_path_br = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
-    if os.path.exists(upset_path_br):
-        try:
-            df_upset_br = pd.read_csv(upset_path_br, sep=",")
-        except pd.errors.EmptyDataError:
-            df_upset_br = pd.DataFrame()
+    df_upset_br = config.load_gold_dataframe("obt_upsets")
+    if not df_upset_br.empty:
         for _, ur in df_upset_br.iterrows():
             if int(ur.get("is_upset", 0)) == 1:
                 ms = str(ur["match"])
@@ -1549,12 +1529,11 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         phase_key = pr.key
         phase_name = pr.name
 
-        phase_valid_path = config.gold_playoff_valid_path(phase_key)
         phase_pts = 0
         has_match_data = False
         phase_team_str = '-'
-        if os.path.exists(phase_valid_path):
-            df_pp = pd.read_csv(phase_valid_path, sep=",")
+        df_pp = df_palpites_all[df_palpites_all["phase"] == phase_key] if not df_palpites_all.empty else pd.DataFrame()
+        if not df_pp.empty:
             df_pp_player = df_pp[df_pp["who"] == boleiro]
             if not df_pp_player.empty:
                 phase_pts = int(df_pp_player["pontos"].sum())
@@ -1626,9 +1605,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
     # Round-by-round performance table
     # ------------------------------------------------------------------
     rbr_html = ""
-    rbr_path = _norm(os.path.join(gold_dir, "round_by_round.csv"))
-    if os.path.exists(rbr_path):
-        df_rbr = pd.read_csv(rbr_path, sep=",")
+    df_rbr = config.load_gold_dataframe("obt_round_by_round")
+    if not df_rbr.empty:
         df_rbr_p = df_rbr[df_rbr["boleiro"] == boleiro].sort_values("round_number")
         if not df_rbr_p.empty:
             rbr_rows = ""
@@ -1657,12 +1635,11 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
     body += rbr_html
 
     # --- Best and worst teams (goal_error_by_team) → before ta_parts ---
-    error_path = _norm(os.path.join(gold_dir, "goal_error_by_team.csv"))
     best_team_html = ""
     worst_team_html = ""
     bias_html = ""
-    if os.path.exists(error_path):
-        df_err = pd.read_csv(error_path, sep=",")
+    df_err = config.load_gold_dataframe("obt_goal_error")
+    if not df_err.empty:
         df_err_p_all = df_err[df_err["boleiro"] == boleiro].copy()
         if not df_err_p_all.empty:
             df_err_p = df_err_p_all[df_err_p_all["role"] == "total"].copy()
@@ -1714,23 +1691,18 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
     pts_pct = min(100, round(total_pts / max_possible_total * 100)) if max_possible_total else 0
     prec_pct = min(100, round(avg_per_game / max_pts * 100)) if max_pts else 0
 
-    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
     boldness_norm = 50
     boldness_score_val = 0.0
-    if os.path.exists(bold_path):
-        df_bold_tmp = pd.read_csv(bold_path, sep=",")
+    df_bold_tmp = config.load_gold_dataframe("obt_boldness")
+    if not df_bold_tmp.empty:
         df_bp = df_bold_tmp[df_bold_tmp["boleiro"] == boleiro]
         if not df_bp.empty:
             boldness_score_val = float(df_bp.iloc[0]["boldness_score"])
             boldness_norm = max(0, min(100, round(50 + boldness_score_val * 25)))
 
-    upset_path = _norm(os.path.join(gold_dir, "upset_tracker.csv"))
     zebra_pct = 0
-    if os.path.exists(upset_path):
-        try:
-            df_upset = pd.read_csv(upset_path, sep=",")
-        except pd.errors.EmptyDataError:
-            df_upset = pd.DataFrame()
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if not df_upset.empty:
         upset_matches = df_upset[df_upset.get("is_upset", 0) == 1]
         total_upsets = len(upset_matches)
         player_upsets = 0
@@ -1740,10 +1712,9 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
                 player_upsets += 1
         zebra_pct = round(player_upsets / total_upsets * 100) if total_upsets else 0
 
-    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
     reg_pct = 50
-    if os.path.exists(cons_path):
-        df_cons_tmp = pd.read_csv(cons_path, sep=",")
+    df_cons_tmp = config.load_gold_dataframe("obt_consistency")
+    if not df_cons_tmp.empty:
         df_cp = df_cons_tmp[df_cons_tmp["boleiro"] == boleiro]
         if not df_cp.empty and "running_avg_5" in df_cp.columns:
             avg_run = df_cp["running_avg_5"].mean()
@@ -1876,8 +1847,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
 
     # 1. Current streak badge (already have streak_len, streak_type from above)
     streak_html_inner = ""
-    if os.path.exists(cons_path):
-        df_cons2 = pd.read_csv(cons_path, sep=",")
+    df_cons2 = config.load_gold_dataframe("obt_consistency")
+    if not df_cons2.empty:
         df_cp2 = df_cons2[df_cons2["boleiro"] == boleiro].sort_values("date")
         streak_len2 = 0
         streak_type2 = ""
@@ -1907,8 +1878,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
         streak_html_inner = _ph("Sequ\u00eancia atual dispon\u00edvel ap\u00f3s os primeiros jogos.")
 
     # 2. Zebra hunter badge
-    if os.path.exists(upset_path):
-        df_upset2 = pd.read_csv(upset_path, sep=",")
+    df_upset2 = config.load_gold_dataframe("obt_upsets")
+    if not df_upset2.empty:
         upset_only = df_upset2[df_upset2.get("is_upset", 0) == 1]
         zebra_counts: dict[str, int] = {}
         for _, r in upset_only.iterrows():
@@ -1920,8 +1891,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
             badges.append(f'<span class="profile-badge" style="border-color:var(--danger);background:rgba(239,68,68,0.15);">\U0001f993 Ca\u00e7ador de Zebras</span>')
 
     # 3. Boldness badge
-    if os.path.exists(bold_path):
-        df_bold2 = pd.read_csv(bold_path, sep=",")
+    df_bold2 = config.load_gold_dataframe("obt_boldness")
+    if not df_bold2.empty:
         df_bp2 = df_bold2[df_bold2["boleiro"] == boleiro]
         if not df_bp2.empty:
             bs = float(df_bp2.iloc[0]["boldness_score"])
@@ -1931,9 +1902,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
                 badges.append(f'<span class="profile-badge" style="border-color:var(--bolao);background:rgba(59,130,246,0.15);">\U0001F9CA Conservador</span>')
 
     # 4. Leader badge
-    rank_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
-    if os.path.exists(rank_path):
-        df_rank = pd.read_csv(rank_path, sep=",")
+    df_rank = config.load_gold_dataframe("obt_ranking_history")
+    if not df_rank.empty:
         df_rank = df_rank.sort_values("date")
         latest_date = df_rank["date"].iloc[-1] if not df_rank.empty else None
         if latest_date:
@@ -1943,9 +1913,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
                 badges.append(f'<span class="profile-badge" style="border-color:var(--accent);background:rgba(255,215,0,0.15);">\U0001f40d L\u00edder</span>')
 
     # 5. Team expert badge
-    ta_path = _norm(os.path.join(gold_dir, "team_accuracy.csv"))
-    if os.path.exists(ta_path):
-        df_ta = pd.read_csv(ta_path, sep=",")
+    df_ta = config.load_gold_dataframe("obt_team_accuracy")
+    if not df_ta.empty:
         df_ta["team"] = df_ta["team"].str.strip()
         best_team = ""
         best_pct = 0
@@ -1970,8 +1939,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
 
     # --- Profile type from boldness_index ---
     boldness_html = ""
-    if os.path.exists(bold_path):
-        df_bold3 = pd.read_csv(bold_path, sep=",")
+    df_bold3 = config.load_gold_dataframe("obt_boldness")
+    if not df_bold3.empty:
         df_bp3 = df_bold3[df_bold3["boleiro"] == boleiro]
         if not df_bp3.empty:
             bs2 = float(df_bp3.iloc[0]["boldness_score"])
@@ -2125,13 +2094,9 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
     df_match = df_match.sort_values(["pontos", "who"], ascending=False)
 
     # Lookup upset data for this match
-    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
     upset_row = None
-    if os.path.exists(upset_path):
-        try:
-            df_upset = pd.read_csv(upset_path, sep=",")
-        except pd.errors.EmptyDataError:
-            df_upset = pd.DataFrame()
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if not df_upset.empty:
         matches = df_upset[df_upset["match"] == match]
         if not matches.empty:
             upset_row = matches.iloc[0]
@@ -2362,9 +2327,8 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 
     # Player predictions
     bonus_by_player = {}
-    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
-    if os.path.exists(bonus_path):
-        df_bonus = pd.read_csv(bonus_path)
+    df_bonus = config.load_gold_dataframe("obt_bonus")
+    if not df_bonus.empty:
         df_bonus_phase = df_bonus[df_bonus["phase"] == phase]
         if not df_bonus_phase.empty:
             for _, br in df_bonus_phase.iterrows():
@@ -2519,10 +2483,8 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
 
     # Load bonus data for badge
     bonus_by_player = {}
-    bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
-    if os.path.exists(bonus_path):
-        df_bonus_arena = pd.read_csv(bonus_path)
-        if not df_bonus_arena.empty:
+    df_bonus_arena = config.load_gold_dataframe("obt_bonus")
+    if not df_bonus_arena.empty:
             for _, br in df_bonus_arena.iterrows():
                 who = str(br["boleiro"])
                 if who not in bonus_by_player:
@@ -2918,10 +2880,9 @@ function updateArena() {
 
 def _build_ranking_evolution(config: ChampionshipConfig) -> str:
     """Show rank position over time (toggleable per player, inverted Y-axis)."""
-    csv_path = _norm(os.path.join(config._au_first_round(), "ranking_history.csv"))
-    if not os.path.exists(csv_path):
+    df = config.load_gold_dataframe("obt_ranking_history")
+    if df.empty:
         return _page_frame(config, f"Evolu\u00e7\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f4ca Evolu\u00e7\u00e3o do Ranking</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>")
-    df = pd.read_csv(csv_path, sep=",")
     players = sorted(df["boleiro"].unique())
     all_dates = sorted(df["date"].unique())
 
@@ -3164,12 +3125,13 @@ document.addEventListener('DOMContentLoaded', drawChart);
 
 def _build_boldometer(config: ChampionshipConfig) -> str:
     """Simple tendency table: who predicts more/less goals than reality."""
-    bold_path = _norm(os.path.join(config._au_first_round(), "boldness_index.csv"))
-    if not os.path.exists(bold_path):
+    df_bold = config.load_gold_dataframe("obt_boldness")
+    if df_bold.empty:
         return _page_frame(config, f"Bold\u00f4metro - {config.report_title}",
                            "<div class='hero'><h1>\U0001f4ca Bold\u00f4metro</h1><div class='subtitle'>Ainda n\u00e3o h\u00e1 dados.</div></div>")
-    df_bold = pd.read_csv(bold_path, sep=",")
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_valid = config.load_gold_dataframe("obt_palpites")
+    if not df_valid.empty and "valido" in df_valid.columns:
+        df_valid = df_valid[df_valid["valido"] == 1]
     df_avg = df_valid.groupby("who")["pontos"].mean().reset_index()
     df_avg.columns = ["boleiro", "avg_pts_per_game"]
     df = df_bold.merge(df_avg, on="boleiro", how="left")
@@ -3270,17 +3232,9 @@ def _build_boldometer(config: ChampionshipConfig) -> str:
 
 def _build_bolao_xray(config: ChampionshipConfig) -> str:
     """Bolão X-ray: meta-analysis of the entire sweepstake — no per-player focus."""
-    _parts: list[pd.DataFrame] = []
-    gp = config.gold_all_path()
-    if os.path.exists(gp):
-        _parts.append(pd.read_csv(gp, sep=","))
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            _parts.append(pd.read_csv(pp, sep=","))
-    if not _parts:
+    df_all = config.load_gold_dataframe("obt_palpites")
+    if df_all.empty:
         return _page_frame(config, f"Raio-X do Bol\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f50d Raio-X do Bol\u00e3o</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados. ainda</div></div>", active_nav="bolao_xray.html")
-    df_all = pd.concat(_parts, ignore_index=True)
     df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
     df_results = pd.read_csv(config.results_file, sep=",").dropna(subset=["home_goals"])
 
@@ -3671,18 +3625,13 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
 
 def _build_day_winners(config: ChampionshipConfig) -> str:
     """Show day-by-day winners, zebras, and highlights with day selector."""
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
-    if df_valid.empty:
+    df_all = config.load_gold_dataframe("obt_palpites")
+    if df_all.empty:
         return _page_frame(config, "Vencedores do Dia - sem dados", "<div class='hero'><h1>\U0001f3c6 Vencedores do Dia</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", back_link="index.html")
-    df_all = pd.read_csv(config.gold_all_path(), sep=",")
+    df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
     df_results = pd.read_csv(config.results_file, sep=",")
-    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
-    if os.path.exists(upset_path):
-        try:
-            df_upset = pd.read_csv(upset_path, sep=",")
-        except pd.errors.EmptyDataError:
-            df_upset = pd.DataFrame()
-    else:
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if df_upset.empty:
         df_upset = pd.DataFrame()
     max_pts = _max_points_per_game(config)
 
@@ -3884,13 +3833,8 @@ document.addEventListener('DOMContentLoaded', function() {{
 
 def _build_zebras(config: ChampionshipConfig) -> str:
     """Show all upset matches, ranking of zebra predictors, and impact analysis."""
-    upset_path = _norm(os.path.join(config._au_first_round(), "upset_tracker.csv"))
-    if not os.path.exists(upset_path):
-        return _page_frame(config, "Zebras", "<div class='hero'><h1>\U0001f993 Zebras & Favoritos</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", active_nav="zebras.html")
-
-    try:
-        df_upset = pd.read_csv(upset_path, sep=",")
-    except pd.errors.EmptyDataError:
+    df_upset = config.load_gold_dataframe("obt_upsets")
+    if df_upset.empty:
         return _page_frame(config, "Zebras", "<div class='hero'><h1>\U0001f993 Zebras & Favoritos</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", active_nav="zebras.html")
 
     if "is_upset" not in df_upset.columns:
@@ -4022,8 +3966,7 @@ def _build_zebras(config: ChampionshipConfig) -> str:
 """
 
     # --- Partidas Mais Dificies (difficulty ranking) ---
-    gold_all = config.gold_all_path()
-    df_pred = pd.read_csv(gold_all, sep=",") if os.path.exists(gold_all) else pd.DataFrame()
+    df_pred = config.load_gold_dataframe("obt_palpites")
 
     diff_matches = []
     for _, row in df_upset.iterrows():
@@ -4199,14 +4142,9 @@ def _build_zebras(config: ChampionshipConfig) -> str:
 
 def _build_momentum(config: ChampionshipConfig) -> str:
     """Show current streaks, longest streaks, hot/cold players."""
-    gold_dir = config._au_first_round()
-    consistency_path = _norm(os.path.join(gold_dir, "consistency.csv"))
-    ranking_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
-
-    if not os.path.exists(consistency_path):
+    df_cons = config.load_gold_dataframe("obt_consistency")
+    if df_cons.empty:
         return _page_frame(config, "Momento", "<div class='hero'><h1>\U0001f525 Momento</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>", active_nav="momentum.html")
-
-    df_cons = pd.read_csv(consistency_path, sep=",")
 
     # Current streak for each player
     df_cons_sorted = df_cons.sort_values(["boleiro", "date"])
@@ -4260,7 +4198,9 @@ def _build_momentum(config: ChampionshipConfig) -> str:
         longest_cold[boleiro] = cold_max
 
     # Load avg points for ranking
-    df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
+    df_valid = config.load_gold_dataframe("obt_palpites")
+    if not df_valid.empty and "valido" in df_valid.columns:
+        df_valid = df_valid[df_valid["valido"] == 1]
     df_avg = df_valid.groupby("who")["pontos"].mean().reset_index()
     df_avg.columns = ["boleiro", "avg_pts"]
 
@@ -4451,10 +4391,7 @@ def _build_momentum_page(config: ChampionshipConfig, html_base: str) -> None:
 
 def _has_any_valid(config: ChampionshipConfig) -> bool:
     """Check if gold_valid file has at least one row with valido=1."""
-    path = config.gold_valid_path()
-    if not os.path.exists(path):
-        return False
-    df = pd.read_csv(path, sep=",")
+    df = config.load_gold_dataframe("obt_palpites")
     if df.empty:
         return False
     if "valido" in df.columns:
@@ -4494,11 +4431,26 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         os.makedirs(_norm(os.path.join(jogos_base, pr.key)), exist_ok=True)
 
     # Load gold data
-    gold_all = config.gold_all_path()
-    if not os.path.exists(gold_all):
-        print_colored(f"no gold data found at {gold_all}, skipping HTML reports", "yellow")
+    df_all = config.load_gold_dataframe("obt_palpites")
+    if df_all.empty:
+        print_colored(f"no gold data found, skipping HTML reports", "yellow")
         return
-    df_all = pd.read_csv(gold_all, sep=",")
+
+    # Ensure legacy alias columns exist (backward compat with report templates)
+    _col_aliases = {
+        "home_goals_bol": "home_goals_pred",
+        "away_goals_bol": "away_goals_pred",
+        "home_pen_bol": "home_pen_pred",
+        "away_pen_bol": "away_pen_pred",
+    }
+    for alias, src in _col_aliases.items():
+        if alias not in df_all.columns and src in df_all.columns:
+            df_all[alias] = df_all[src]
+    for alias, src in {"date": "date_pred", "hour": "hour_pred"}.items():
+        if alias not in df_all.columns and src in df_all.columns:
+            df_all[alias] = df_all[src]
+    if "who" not in df_all.columns and "boleiro_name" in df_all.columns:
+        df_all["who"] = df_all["boleiro_name"]
 
     # --- Archetype classification (must run before per-player pages) ---
     try:
@@ -4510,17 +4462,8 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
     # Use valid if available and non-empty, otherwise fall back to all predictions
     # so boleiro pages are generated even before the tournament starts
     # (all predictions have valido=0 and gold_valid has 0 data rows).
-    gold_all = config.gold_all_path()
-    if not os.path.exists(gold_all):
-        print_colored(f"no gold data found at {gold_all}, skipping HTML reports", "yellow")
-        return
-    df_all = pd.read_csv(gold_all, sep=",")
-    gold_valid = config.gold_valid_path()
-    if os.path.exists(gold_valid):
-        df_valid = pd.read_csv(gold_valid, sep=",")
-        if df_valid.empty:
-            df_valid = df_all.copy()
-    else:
+    df_valid = df_all[df_all["valido"] == 1].copy() if "valido" in df_all.columns else df_all.copy()
+    if df_valid.empty:
         df_valid = df_all.copy()
     for boleiro in sorted(df_valid["who"].unique()):
         print_colored(f"generating boleiro html: {boleiro}", "blue")
@@ -4555,12 +4498,8 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         # Use all data (including pending/notstarted) so every match gets a
         # placeholder page even before the real result is known.  The
         # _build_match function handles valido=0 rows gracefully.
-        playoff_path = config.gold_playoff_all_path(phase)
-        has_gold = os.path.exists(playoff_path)
-        if has_gold:
-            df_phase = pd.read_csv(playoff_path, sep=",")
-            if df_phase.empty:
-                has_gold = False
+        df_phase = df_all[df_all["phase"] == phase] if not df_all.empty else pd.DataFrame()
+        has_gold = not df_phase.empty
 
         if has_gold:
             phase_matches = df_phase[df_phase["match"].notna()].groupby("match")
