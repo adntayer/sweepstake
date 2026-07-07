@@ -683,6 +683,7 @@ def _build_gold_dashboard(
     gold_dir: str,
     exact_count: int = 0,
     avg_per_day: float = 0,
+    rank: int = 0,
 ) -> str:
     """Build a compact KPI dashboard — phase breakdown + 3×3 KPI grid."""
     # ── Phase breakdown (subtle bars) ──
@@ -734,13 +735,9 @@ def _build_gold_dashboard(
     )
 
     # ── Key KPIs (3×3 grid) ──
-    rank_val = "-"
-    rank_history_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
-    if os.path.exists(rank_history_path):
-        df_rh = pd.read_csv(rank_history_path, sep=",")
-        df_rh_p = df_rh[df_rh["boleiro"] == boleiro].sort_values("date")
-        if not df_rh_p.empty:
-            rank_val = f"{int(df_rh_p.iloc[-1]['rank'])}\u00ba"
+    # Use the full ranking (match + playoff + bonus - penalty) computed upstream
+    # so the boleiro page shows the same rank as the index page.
+    rank_val = f"{rank}\u00ba" if rank > 0 else "-"
 
     # Ousadia (boldness)
     boldness_label = "\u2014"
@@ -800,7 +797,7 @@ from src.core.logo_fetcher import _team_logo_tag
 # Per-player page
 # ------------------------------------------------------------------
 
-def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
+def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> str:
     """Build a per-player HTML report."""
     if os.path.exists(config.gold_valid_path()):
         df_valid = pd.read_csv(config.gold_valid_path(), sep=",")
@@ -820,6 +817,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
 
     # --- Load playoff predictions for this player ---
     playoff_parts = []
+    playoff_all_parts: list[pd.DataFrame] = []  # all players' valid data for bolão avg
     for pr in (config.playoff_rounds or []):
         phase_valid_path = config.gold_playoff_valid_path(pr.key)
         if os.path.exists(phase_valid_path):
@@ -827,6 +825,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             df_phase_player = df_phase[df_phase["who"] == boleiro]
             if not df_phase_player.empty:
                 playoff_parts.append(df_phase_player)
+            playoff_all_parts.append(df_phase)
 
     if playoff_parts:
         df_playoff = pd.concat(playoff_parts, ignore_index=True)
@@ -889,8 +888,14 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     f'</div>\n'
                 )
 
+    # Build combined valid dataset for bolão average (group + playoffs)
+    if playoff_all_parts:
+        df_all_valid = pd.concat([df_valid] + playoff_all_parts, ignore_index=True)
+    else:
+        df_all_valid = df_valid
+
     # Player pts/day vs bolão avg/day (raw, not moving average)
-    df_all_by_date = df_valid.groupby("date", as_index=False).agg(
+    df_all_by_date = df_all_valid.groupby("date", as_index=False).agg(
         total_pts=("pontos", "sum"),
         num_players=("who", "nunique")
     )
@@ -1272,20 +1277,30 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             phase_latest_date: dict[str, datetime | None] = {}
             advancing: dict[str, list[str]] = {}
             phase_consumed: dict[str, bool] = {}
+            phase_team_known: dict[str, dict[str, bool]] = {}  # per-team result-known map
+            participants_complete: dict[str, bool] = {}
             for pk in playoff_keys:
                 phase_matches = df_games[df_games["round"] == pk]
                 winners: list[str] = []
                 dates: list[datetime] = []
                 all_finished = True
                 participants: set[str] = set()
+                team_result_known: dict[str, bool] = {}
                 for _, row in phase_matches.iterrows():
                     ht = str(row["home_team"])
                     at = str(row["away_team"])
                     participants.add(ht)
                     participants.add(at)
-                    te = str(row.get("time_elapsed", "")).strip().lower()
-                    if te != "finished":
+
+                    # Use goals data as primary source of truth for match completion
+                    hg = float(row["home_goals"]) if pd.notna(row.get("home_goals")) else None
+                    ag = float(row["away_goals"]) if pd.notna(row.get("away_goals")) else None
+                    has_goals = hg is not None and ag is not None
+                    team_result_known[ht] = has_goals
+                    team_result_known[at] = has_goals
+                    if not has_goals:
                         all_finished = False
+
                     raw_date = str(row.get("date", ""))
                     date_part = raw_date[:10] if " " in raw_date else raw_date
                     try:
@@ -1293,9 +1308,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                         dates.append(d)
                     except (ValueError, TypeError):
                         pass
-                    hg = float(row["home_goals"]) if pd.notna(row.get("home_goals")) else None
-                    ag = float(row["away_goals"]) if pd.notna(row.get("away_goals")) else None
-                    if hg is not None and ag is not None:
+                    if has_goals:
                         if hg > ag:
                             winners.append(ht)
                         elif ag > hg:
@@ -1321,8 +1334,20 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 advancing[pk] = winners
                 phase_latest_date[pk] = max(dates) if dates else None
                 phase_consumed[pk] = all_finished
+                phase_team_known[pk] = team_result_known
+                # Check if all match slots have defined team names (no -vs- placeholder)
+                participants_complete[pk] = all(
+                    str(row.get("home_team", "")).strip() not in ("-vs-", "", "nan")
+                    and str(row.get("away_team", "")).strip() not in ("-vs-", "", "nan")
+                    for _, row in phase_matches.iterrows()
+                )
 
             phase_order = [pr.key for pr in (config.playoff_rounds or [])]
+            # Map each phase to its immediate predecessor in playoff order
+            prev_phase_map = {}
+            for i, pk in enumerate(phase_order):
+                if i > 0:
+                    prev_phase_map[pk] = phase_order[i - 1]
             phase_label_map = {pr.key: pr.name for pr in (config.playoff_rounds or [])}
             phase_emoji_map = dict(config.phase_emojis) if config.phase_emojis else {
                 "segunda_fase": "\U0001f3c6",
@@ -1355,7 +1380,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 # For the first knockout round, checkable is always True
                 # (group stage is done, we know which teams qualified).
                 # "Display passed" = team is a participant (qualified for this round).
-                # Points still use advancing (winners of this round's matches).
+                # Scoring uses participants for all non-champion phases (matches scoring.py).
                 if is_first_knockout:
                     checkable = True
                 else:
@@ -1372,21 +1397,23 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                 for _, row in group.iterrows():
                     team = row["team"]
                     total_count += 1
-                    # First knockout round: points based on participation (qualified)
-                    # Later rounds: points based on advancing (winners)
+                    # All non-champion phases: points based on participation (team reached this phase)
+                    # This matches score_playoff_bonus() in scoring.py which uses participants for
+                    # all phases except champion (which uses advancing winners).
                     if is_first_knockout:
                         passed = team in participants
                     else:
-                        passed = team in advancing_teams
+                        passed = team in participants
                     if passed:
                         phase_pts += pts_per_correct
                         correct_count += 1
 
                     # Visual coloring:
                     #   has_phase_teams=False → orange (no info / phase not set up)
-                    #   display_passed=True   → green  (advanced / in phase)
-                    #   checkable=True        → red    (eliminated)
-                    #   checkable=False       → orange (phase in progress, unknown)
+                    #   passed=True           → green  (team reached this phase)
+                    #   participants_complete → red   (all slots filled, team not one of them)
+                    #   previous-phase elimination known → red (team lost earlier round)
+                    #   otherwise             → orange (fate still undecided)
                     if not has_phase_teams:
                         _bg, _border, _color = "rgba(234,179,8,0.15)", "var(--warning)", "var(--warning)"
                     elif is_first_knockout:
@@ -1395,10 +1422,30 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
                     else:
                         if passed:
                             _bg, _border, _color = "rgba(34,197,94,0.15)", "var(--success)", "var(--success)"
-                        elif not checkable:
-                            _bg, _border, _color = "rgba(234,179,8,0.15)", "var(--warning)", "var(--warning)"
-                        else:
+                        elif participants_complete.get(phase_key, False):
+                            # All slots filled → non-participants are definitely out
                             _bg, _border, _color = "rgba(239,68,68,0.15)", "var(--danger)", "var(--danger)"
+                        else:
+                            # Check if team is known to be eliminated from any prior phase
+                            _eliminated = False
+                            _phase_idx = phase_order.index(phase_key) if phase_key in phase_order else -1
+                            if _phase_idx > 0:
+                                for _j in range(_phase_idx):
+                                    _prev = phase_order[_j]
+                                    _prev_part = phase_participants.get(_prev, set())
+                                    _prev_adv = set(advancing.get(_prev, []))
+                                    _prev_known = phase_team_known.get(_prev, {})
+                                    _prev_complete = participants_complete.get(_prev, False)
+                                    if _prev_complete and team not in _prev_part:
+                                        _eliminated = True
+                                        break
+                                    if team in _prev_part and team not in _prev_adv and _prev_known.get(team, False):
+                                        _eliminated = True
+                                        break
+                            if _eliminated:
+                                _bg, _border, _color = "rgba(239,68,68,0.15)", "var(--danger)", "var(--danger)"
+                            else:
+                                _bg, _border, _color = "rgba(234,179,8,0.15)", "var(--warning)", "var(--warning)"
                     teams_list += (
                         f'<span style="display:inline-block;padding:0.2rem 0.6rem;margin:0.15rem;'
                         f'background:{_bg};border:1px solid {_border};border-radius:999px;'
@@ -1495,6 +1542,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
         gold_dir=gold_dir,
         exact_count=_exact_count,
         avg_per_day=avg_per_day,
+        rank=rank,
     )
     body += gold_dashboard_html
 
@@ -4462,6 +4510,67 @@ def _has_any_valid(config: ChampionshipConfig) -> bool:
     return False
 
 
+def _compute_full_player_ranking(config: ChampionshipConfig) -> dict[str, int]:
+    """Compute full ranking for all players: match + playoff match + bonus - penalty.
+
+    Returns dict mapping player name → rank position (1-indexed), using the same
+    methodology as _build_full_ranking() in dashboard.py.
+    """
+    gold_dir = config._au_first_round()
+    valid_path = config.gold_valid_path()
+    if not os.path.exists(valid_path):
+        return {}
+    df_val = pd.read_csv(valid_path, sep=",")
+    if df_val.empty or "who" not in df_val.columns:
+        return {}
+
+    # Group match points
+    score_names = config.scoring_rule_names()
+    agg_cols = ["pontos"] + [c for c in score_names if c in df_val.columns]
+    wh_mask = df_val["who"].notna() & (df_val["who"] != "")
+    df_rank = df_val[wh_mask].groupby("who", as_index=False)[agg_cols].sum()
+
+    # Playoff match points (per phase)
+    playoff_pts: dict[str, int] = {}
+    for pr in (config.playoff_rounds or []):
+        phase_path = config.gold_playoff_valid_path(pr.key)
+        if os.path.exists(phase_path):
+            df_phase = pd.read_csv(phase_path, sep=",")
+            if not df_phase.empty and "who" in df_phase.columns:
+                for who, grp in df_phase.groupby("who"):
+                    playoff_pts[str(who)] = playoff_pts.get(str(who), 0) + int(grp["pontos"].sum())
+    df_rank["playoff_pts"] = df_rank["who"].map(playoff_pts).fillna(0).astype(int)
+
+    # Bonus points (from playoffs_scored.csv)
+    bonus_pts: dict[str, int] = {}
+    bonus_path = _norm(os.path.join(gold_dir, "playoffs_scored.csv"))
+    if os.path.exists(bonus_path):
+        df_bonus = pd.read_csv(bonus_path, sep=",")
+        if not df_bonus.empty:
+            for _, row in df_bonus.iterrows():
+                b = str(row["boleiro"])
+                pts = int(row["points"])
+                bonus_pts[b] = bonus_pts.get(b, 0) + pts
+    df_rank["bonus_pts"] = df_rank["who"].map(bonus_pts).fillna(0).astype(int)
+
+    # Penalty points
+    df_rank["penalty_pts"] = df_rank["who"].map(
+        lambda w: config.total_penalty(w)
+    ).fillna(0).astype(int)
+
+    # Total = match + playoff + bonus - penalty
+    df_rank["total_pts"] = df_rank["pontos"] + df_rank["playoff_pts"] + df_rank["bonus_pts"] - df_rank["penalty_pts"]
+
+    # Sort and assign ranks (same as dashboard.py)
+    df_rank.sort_values(["total_pts", "who"], ascending=[False, True], inplace=True)
+    df_rank.reset_index(drop=True, inplace=True)
+
+    result: dict[str, int] = {}
+    for i, (_, row) in enumerate(df_rank.iterrows()):
+        result[str(row["who"])] = i + 1
+    return result
+
+
 def generate_html_reports(config: ChampionshipConfig) -> None:
     """Generate all HTML reports from gold-layer data."""
     html_base = _norm(os.path.join(config.reports_dir, "html"))
@@ -4522,9 +4631,13 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
             df_valid = df_all.copy()
     else:
         df_valid = df_all.copy()
+    # Compute full ranking once (match + playoff + bonus - penalty) so every
+    # boleiro page shows the same rank as the index page.
+    full_ranking = _compute_full_player_ranking(config)
     for boleiro in sorted(df_valid["who"].unique()):
+        rank = full_ranking.get(boleiro, 0)
         print_colored(f"generating boleiro html: {boleiro}", "blue")
-        html = _build_boleiro(config, boleiro)
+        html = _build_boleiro(config, boleiro, rank=rank)
         path = _norm(os.path.join(html_base, "boleiros", f"{boleiro}.html"))
         _save(path, html)
 
