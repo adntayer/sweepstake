@@ -578,34 +578,25 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         if "round" in df_g.columns:
             phases_in_games = set(df_g["round"].astype(str).str.strip().unique())
 
-    # Combine group + playoff match data for trend (which needs dates)
-    _trend_parts = [df_valid]
-    for pr in (config.playoff_rounds or []):
-        pp = config.gold_playoff_all_path(pr.key)
-        if os.path.exists(pp):
-            df_tp = pd.read_csv(pp, sep=",")
-            if not df_tp.empty and "date" in df_tp.columns and "who" in df_tp.columns:
-                _trend_parts.append(df_tp)
-    df_trend = pd.concat(_trend_parts, ignore_index=True) if len(_trend_parts) > 1 else _trend_parts[0]
-    df_trend["date_dt"] = pd.to_datetime(df_trend["date"])
-    all_dates = sorted(df_trend["date_dt"].unique())
+    # Trend based on rank change (more reliable than raw points across phases)
     trend_map: dict[str, str] = {}
-    if len(all_dates) >= 6:
-        recent_dates = all_dates[-3:]
-        prev_dates = all_dates[-6:-3]
-        df_recent = df_trend[df_trend["date_dt"].isin(recent_dates)].groupby("who")["pontos"].sum()
-        df_prev = df_trend[df_trend["date_dt"].isin(prev_dates)].groupby("who")["pontos"].sum()
-        for who in df_trend["who"].unique():
-            r = df_recent.get(who, 0)
-            p = df_prev.get(who, 0)
-            if r > p:
-                trend_map[who] = '<span class="trend-up">\u25b2</span>'
-            elif r < p:
-                trend_map[who] = '<span class="trend-down">\u25bc</span>'
-            else:
-                trend_map[who] = '<span class="trend-flat">\u25b6</span>'
-    # Compute badges for all players
     gold_dir = config._au_first_round()
+    rank_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
+    if os.path.exists(rank_path):
+        df_rank_trend = pd.read_csv(rank_path, sep=",")
+        df_rank_trend = df_rank_trend.sort_values(["boleiro", "date"])
+        for who in df_rank_trend["boleiro"].unique():
+            df_w = df_rank_trend[df_rank_trend["boleiro"] == who]
+            if len(df_w) >= 2:
+                prev_r = int(df_w.iloc[-2]["rank"])
+                curr_r = int(df_w.iloc[-1]["rank"])
+                if curr_r < prev_r:
+                    trend_map[who] = '<span class="trend-up">\u25b2</span>'
+                elif curr_r > prev_r:
+                    trend_map[who] = '<span class="trend-down">\u25bc</span>'
+                else:
+                    trend_map[who] = '<span class="trend-flat">\u25b6</span>'
+    # Compute badges for all players
     badge_map: dict[str, list[str]] = {}
 
     # Hot streak badge (consistency.csv)
@@ -710,7 +701,8 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         rank_header_combined += f'<th style="text-align:right;font-size:0.6rem;">{lbl}</th>'
     rank_header_combined += '<th style="text-align:right;font-size:0.6rem;">\U0001f993 Z</th>'
 
-    # Build rows with badges and trend
+    # Build rows with badges, trend, and delta-do-líder
+    leader_total = int(df_rank.iloc[0]["total_pts"]) if len(df_rank) > 0 else 0
     rank_rows_updated = ""
     for _, row in df_rank.iterrows():
         rank_num = int(row["#"])
@@ -724,7 +716,9 @@ def _build_full_ranking(config: ChampionshipConfig) -> str:
         bonus_display = int(row["bonus_pts"])
         zebra_display = int(row["zebra_pts"])
         penalty_display = int(row["penalty_pts"])
-        cells = f'<td>{medal_symbol} {rank_num}</td><td><a href="boleiros/{who_name}.html">{who_display}</a> {trend} <span style="font-size:0.75rem;">{badges_str}</span></td>'
+        delta = leader_total - total_display
+        delta_str = f'<span style="color:var(--text-muted);font-weight:600;font-size:0.7rem;">({-delta})</span>' if delta > 0 else '<span style="color:var(--accent);font-size:0.7rem;">(0)</span>'
+        cells = f'<td>{medal_symbol} {rank_num}</td><td><a href="boleiros/{who_name}.html">{who_display}</a> {delta_str} {trend} <span style="font-size:0.75rem;">{badges_str}</span></td>'
         cells += f'<td style="font-weight:700;color:var(--accent);text-align:right;">{total_display}</td>'
         cells += f'<td style="text-align:right;color:var(--warning);">{bonus_display}</td>'
         if has_penalty:

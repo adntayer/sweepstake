@@ -662,6 +662,137 @@ def _max_points_per_game(config: ChampionshipConfig) -> int:
     return max(r.points for r in config.scoring_rules)
 
 
+# ------------------------------------------------------------------
+# Gold Dashboard — visual summary of gold-layer data per player
+# ------------------------------------------------------------------
+
+
+def _build_gold_dashboard(
+    config: ChampionshipConfig,
+    boleiro: str,
+    df_bol: pd.DataFrame,
+    total_pts: int,
+    bonus_total: int,
+    bonus_by_phase: dict[str, int],
+    grand_total: int,
+    avg_per_game: float,
+    num_games: int,
+    max_pts: int,
+    player_zebra_cnt: int,
+    phase_emoji_map: dict[str, str],
+    gold_dir: str,
+    exact_count: int = 0,
+    avg_per_day: float = 0,
+) -> str:
+    """Build a compact KPI dashboard — phase breakdown + 3×3 KPI grid."""
+    # ── Phase breakdown (subtle bars) ──
+    phase_points: dict[str, int] = {}
+    if not df_bol.empty and "phase" in df_bol.columns:
+        for ph, grp in df_bol.groupby("phase", dropna=False):
+            key = "1\u00aa Fase" if pd.isna(ph) else _short_name(ph, config)
+            phase_points[key] = int(grp["pontos"].sum())
+    else:
+        phase_points["1\u00aa Fase"] = total_pts
+
+    phase_bonus_display: dict[str, int] = {}
+    for raw_key, bpts in bonus_by_phase.items():
+        label = _short_name(raw_key, config) if raw_key else raw_key
+        phase_bonus_display[label] = phase_bonus_display.get(label, 0) + bpts
+
+    phase_order = ["1\u00aa Fase"] + [_short_name(pr.name, config) for pr in (config.playoff_rounds or [])]
+    phase_order = [p for p in phase_order if p in phase_points or p in phase_bonus_display]
+    if not phase_order:
+        phase_order = list(phase_points.keys())
+    max_phase_pts = max((phase_points.get(p, 0) + phase_bonus_display.get(p, 0) for p in phase_order), default=1)
+
+    phase_cards = ""
+    for p in phase_order:
+        pts = phase_points.get(p, 0)
+        bns = phase_bonus_display.get(p, 0)
+        total_pb = pts + bns
+        if total_pb == 0:
+            continue
+        bar_pct = max(total_pb / max_phase_pts * 100, 5)
+        phase_cards += (
+            f'<div style="flex:1;min-width:75px;border:1px solid var(--card-border);'
+            f'border-radius:8px;padding:0.4rem 0.3rem;text-align:center;">'
+            f'<div style="font-size:0.55rem;color:var(--text-muted);text-transform:uppercase;'
+            f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{p}</div>'
+            f'<div style="font-size:1rem;font-weight:600;color:var(--text);margin:0.1rem 0;">{total_pb}</div>'
+            f'<div style="font-size:0.5rem;color:var(--text-muted);">'
+            f'j{pts}{f" b{bns}" if bns else ""}</div>'
+            f'<div style="margin-top:0.2rem;height:3px;background:var(--card-border);'
+            f'border-radius:2px;overflow:hidden;">'
+            f'<div style="height:100%;width:{bar_pct:.0f}%;background:var(--accent);'
+            f'border-radius:2px;"></div></div>'
+            f'</div>\n'
+        )
+
+    phase_row_html = (
+        f'<div style="display:flex;gap:0.35rem;overflow-x:auto;padding-bottom:0.2rem;">'
+        f'{phase_cards}</div>'
+    )
+
+    # ── Key KPIs (3×3 grid) ──
+    rank_val = "-"
+    rank_history_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
+    if os.path.exists(rank_history_path):
+        df_rh = pd.read_csv(rank_history_path, sep=",")
+        df_rh_p = df_rh[df_rh["boleiro"] == boleiro].sort_values("date")
+        if not df_rh_p.empty:
+            rank_val = f"{int(df_rh_p.iloc[-1]['rank'])}\u00ba"
+
+    # Ousadia (boldness)
+    boldness_label = "\u2014"
+    bold_path = _norm(os.path.join(gold_dir, "boldness_index.csv"))
+    if os.path.exists(bold_path):
+        df_b = pd.read_csv(bold_path, sep=",")
+        df_bp = df_b[df_b["boleiro"] == boleiro]
+        if not df_bp.empty:
+            bv = float(df_bp.iloc[0]["boldness_score"])
+            if bv > 0.3:
+                boldness_label = f"+{bv:.2f}"
+            elif bv < -0.3:
+                boldness_label = f"{bv:.2f}"
+            else:
+                boldness_label = f"{bv:+.2f}"
+
+    approval_pct = round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0
+
+    kpis = [
+        ("\U0001f3c6", "Total", str(grand_total)),
+        ("\U0001f4ca", "M\u00e9dia", f"{avg_per_game}"),
+        ("\U0001f3af", "Rank", rank_val),
+        ("\U0001f4c8", "Aprov%", f"{approval_pct}%"),
+        ("\U0001f993", "Zebras", str(player_zebra_cnt)),
+        ("\U0001f3af", "Placar Exato", str(exact_count)),
+        ("\U0001f4a5", "Ousadia", boldness_label),
+        ("\U0001f3c6", "B\u00f4nus", f"+{bonus_total}"),
+        ("\u26bd", "Jogos", str(num_games)),
+    ]
+
+    kpi_html = ""
+    for icon, label, value in kpis:
+        kpi_html += (
+            f'<div class="stat-card">'
+            f'<div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:0.05rem;">{icon} {label}</div>'
+            f'<div class="value" style="font-size:0.95rem;">{value}</div>'
+            f'</div>\n'
+        )
+
+    return f"""
+<div class="section">
+    <div class="section-title">\U0001f4ca Resumo</div>
+    <div class="card" style="padding:0.5rem;">
+        {phase_row_html}
+        <div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin-top:0.35rem;padding:0;">
+            {kpi_html}
+        </div>
+    </div>
+</div>
+"""
+
+
 from src.core.logo_fetcher import _team_logo_tag
 
 
@@ -1070,122 +1201,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
     <div class="subtitle">{config.report_title}</div>
 </div>
 
-<div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
-    <div class="stat-card">
-        <div class="value" style="color:var(--voce)">{total_pts}</div>
-        <div class="label">Jogos</div>
-    </div>
-    <div class="stat-card">
-        <div class="value" style="color:var(--warning);font-size:1.2rem;">{bonus_pts_only}</div>
-        <div class="label">B\u00f4nus</div>
-    </div>
-    <div class="stat-card">
-        <div class="value" style="color:var(--accent)">{grand_total}</div>
-        <div class="label">Total</div>
-    </div>
-</div>
 {penalty_section}
-<div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin-top:0;">
-    <div class="stat-card">
-        <div class="value" style="color:var(--voce);font-size:1.2rem;">{avg_per_game}</div>
-        <div class="label">M\u00e9dia ({num_games}j)</div>
-    </div>
-    <div class="stat-card">
-        <div class="value" style="color:var(--success);font-size:1.2rem;">{round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0}%</div>
-        <div class="label">Aprov%</div>
-    </div>
-    <div class="stat-card">
-        <div class="value" style="color:var(--danger);font-size:1.2rem;">\U0001f993 {player_zebra_cnt}</div>
-        <div class="label">Zebras</div>
-    </div>
-</div>
-"""
-
-
-    # ── Advanced metrics card ──
-    _streak_label = ""
-    _streak_color = "var(--text-muted)"
-    cons_path = _norm(os.path.join(gold_dir, "consistency.csv"))
-    if os.path.exists(cons_path):
-        df_cons_tmp = pd.read_csv(cons_path, sep=",")
-        df_cp = df_cons_tmp[df_cons_tmp["boleiro"] == boleiro].sort_values("date")
-        if not df_cp.empty:
-            _sl = 0
-            _st = ""
-            for _, r in reversed(list(df_cp.iterrows())):
-                st = r.get("streak_type", "")
-                if st == "hit" and (_st == "" or _st == "hit"):
-                    _st = "hit"
-                    _sl += 1
-                elif st == "miss" and (_st == "" or _st == "miss"):
-                    _st = "miss"
-                    _sl += 1
-                else:
-                    break
-            if _st == "hit":
-                _streak_label = f"\U0001f525 {_sl} acertos"
-                _streak_color = "var(--success)"
-            elif _st == "miss":
-                _streak_label = f"\U0001f4a9 {_sl} erros"
-                _streak_color = "var(--danger)"
-            else:
-                _streak_label = "\u2014"
-    if not _streak_label:
-        _streak_label = "\u2014"
-
-    # Dados por fase (aproveitamento por fase)
-    _phase_stats = ""
-    if not df_bol.empty and "phase" in df_bol.columns:
-        _ph_groups = df_bol.groupby("phase")
-        _ph_rows = []
-        for _ph, _grp in _ph_groups:
-            _ph_n = len(_grp)
-            _ph_sum = int(_grp["pontos"].sum())
-            _ph_avg = round(_ph_sum / _ph_n, 1) if _ph_n else 0
-            _ph_label = _short_name(_ph, config) if _ph else "1\u00aa Fase"
-            _ph_rows.append(f'<span style="font-size:0.85rem;padding:0.2rem 0.5rem;background:var(--card-border);border-radius:6px;"><strong>{_ph_label}</strong> {_ph_sum}p ({_ph_avg}/j)</span>')
-        if _ph_rows:
-            _phase_stats = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;">' + " ".join(_ph_rows) + "</div>"
-
-    _aprov_pct = round(total_pts / (num_games * max_pts) * 100, 1) if num_games > 0 else 0
-
-    # -- Load extra per-player metrics --
-    _boldness_player = ""
-    _boldness_score_val = 0.0
-    bold_path2 = _norm(os.path.join(gold_dir, "boldness_index.csv"))
-    if os.path.exists(bold_path2):
-        df_b = pd.read_csv(bold_path2, sep=",")
-        df_bp = df_b[df_b["boleiro"] == boleiro]
-        if not df_bp.empty:
-            _boldness_score_val = float(df_bp.iloc[0]["boldness_score"])
-            if _boldness_score_val > 0.3: _boldness_player = "\U0001f4a5 Ousado"
-            elif _boldness_score_val < -0.3: _boldness_player = "\U0001F9CA Conservador"
-            else: _boldness_player = "\u2696\ufe0f Equilibrado"
-
-    # Count exact scores for this player
-    _exact_count = 0
-    score_names_p = config.scoring_rule_names()
-    exact_col_p = next((c for c in score_names_p if c.startswith("1-")), "")
-    if exact_col_p and exact_col_p in df_bol.columns:
-        _exact_count = int(df_bol[exact_col_p].sum())
-
-    _insight_cards = f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:{_streak_color};">{_streak_label}</div><div class="label">Sequ\u00eancia</div></div>'
-    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--voce);">{avg_per_day}</div><div class="label">M\u00e9dia/Dia ({num_days}d)</div></div>'
-    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--voce);">{num_games}</div><div class="label">Jogos</div></div>'
-    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1rem;color:var(--warning);">{_boldness_player}</div><div class="label">Ousadia ({_boldness_score_val:+.2f})</div></div>'
-
-    _insight_cards += f'<div class="stat-card"><div class="value" style="font-size:1.1rem;color:var(--success);">{_exact_count}</div><div class="label">\U0001f3af Placar Exato</div></div>'
-
-    body += f"""
-<div class="section">
-    <div class="section-title">\U0001f4ca M\u00e9tricas Avan\u00e7adas</div>
-    <div class="card">
-        <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
-            {_insight_cards}
-        </div>
-        {_phase_stats}
-    </div>
-</div>
 """
 
     # --- Scoring distribution per criteria (bar chart) ---
@@ -1221,7 +1237,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{z_pct}%</td>
             <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{z_bar_w:.0f}%;background:var(--danger);height:10px;"></div></div></td>
         </tr>"""
-    body += f"""
+    # Store scoring distribution HTML for later (show after phase table)
+    _dist_html = f"""
 <div class="section">
     <div class="section-title">\U0001f3af Distribui\u00e7\u00e3o de Acertos ({n_preds})</div>
     <div class="card">
@@ -1457,6 +1474,30 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str) -> str:
             # Since champion_team is defined in this loop, we need to make sure it's accessible
             # The variable champion_team is already in the current scope.
 
+    # ── Gold Dashboard (1st block after hero) ──
+    phase_emoji_map_local = dict(config.phase_emojis) if config.phase_emojis else {}
+    _score_names = config.scoring_rule_names()
+    _exact_col = next((c for c in _score_names if c.startswith("1-")), "")
+    _exact_count = int(df_bol[_exact_col].sum()) if _exact_col and _exact_col in df_bol.columns else 0
+    gold_dashboard_html = _build_gold_dashboard(
+        config=config,
+        boleiro=boleiro,
+        df_bol=df_bol,
+        total_pts=total_pts,
+        bonus_total=bonus_total,
+        bonus_by_phase=bonus_by_phase,
+        grand_total=grand_total,
+        avg_per_game=avg_per_game,
+        num_games=num_games,
+        max_pts=max_pts,
+        player_zebra_cnt=player_zebra_cnt,
+        phase_emoji_map=phase_emoji_map_local,
+        gold_dir=gold_dir,
+        exact_count=_exact_count,
+        avg_per_day=avg_per_day,
+    )
+    body += gold_dashboard_html
+
     # --- Build top-of-page: striker + champion + bonus + timeline + compare ---
     top_badges = ""
     if striker_name:
@@ -1571,6 +1612,9 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
             f'Jogos = pontos dos palpites \u00b7 B\u00f4nus = pontos dos times escolhidos por fase \u00b7 Times = acertos do vencedor / total de jogos'
             f'</div></div></div>\n'
         )
+
+    # ── Scoring distribution ──
+    body += _dist_html
 
     if timeline_bars:
         body += f'<div class="card"><div class="card-title">Pontos por dia</div><div class="bar-chart">{timeline_bars}</div></div>\n'
