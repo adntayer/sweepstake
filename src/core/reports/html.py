@@ -889,10 +889,14 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
                 )
 
     # Build combined valid dataset for bolão average (group + playoffs)
-    if playoff_all_parts:
-        df_all_valid = pd.concat([df_valid] + playoff_all_parts, ignore_index=True)
+    parts_to_concat = [df_valid] + [p for p in playoff_all_parts if not p.empty]
+    if parts_to_concat:
+        df_all_valid = pd.concat(parts_to_concat, ignore_index=True)
     else:
         df_all_valid = df_valid
+
+    # Ensure numeric dtype for pontos (empty playoff CSVs cause object dtype)
+    df_all_valid["pontos"] = pd.to_numeric(df_all_valid["pontos"], errors="coerce").fillna(0).astype(int)
 
     # Player pts/day vs bolão avg/day (raw, not moving average)
     df_all_by_date = df_all_valid.groupby("date", as_index=False).agg(
