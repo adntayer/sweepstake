@@ -88,65 +88,97 @@ def _short_name(name: str, config: ChampionshipConfig | None = None) -> str:
 _CSS_DASHBOARD = """
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Typography ── */
+:root {
+    --font-display: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    font-family: var(--font-body);
     background: var(--bg);
     color: var(--text);
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
     -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
 
-/* Hero */
+/* ── Hero ── */
 .hero {
     background: var(--bg);
-    padding: 2rem 1rem;
+    padding: 1.75rem 1rem 1.25rem;
     text-align: center;
     color: var(--text);
     border-bottom: 1px solid var(--card-border);
+    position: relative;
 }
-.hero h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
-.hero .subtitle { font-size: 1rem; opacity: 0.85; }
+.hero h1 {
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.2rem;
+}
+.hero .subtitle {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
 
-/* Section */
+/* ── Section ── */
 .section { margin: 1rem 0; }
 .section-title {
-    font-size: 1rem;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
     padding: 0 0.75rem;
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    letter-spacing: -0.01em;
 }
 
-/* Card */
+/* ── Card ── */
 .card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
+    border-radius: 6px;
     padding: 1rem;
     margin: 0 0.75rem;
 }
 
-/* Live badge */
+/* ── Live badge ── */
 .live-badge {
     position: absolute;
     top: -0.25rem;
     right: 0.75rem;
     background: var(--danger);
     color: var(--text);
-    font-size: 0.6rem;
-    font-weight: 700;
+    font-size: 0.55rem;
+    font-weight: 600;
     padding: 0.15rem 0.5rem;
     border-radius: 999px;
     z-index: 1;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
 }
 
-/* Score card (last result) */
+/* ── Score card ── */
 .result-card {
     display: flex;
     justify-content: center;
@@ -154,25 +186,28 @@ a:hover { text-decoration: underline; }
     gap: 1rem;
     padding: 1.25rem 1rem;
 }
-.result-card .team { flex: 1; text-align: center; font-size: 1rem; font-weight: 600; }
+.result-card .team { flex: 1; text-align: center; font-size: 1rem; font-weight: 500; }
 .result-card .score {
+    font-family: var(--font-mono);
     color: var(--accent);
     font-size: 1.75rem;
     font-weight: 700;
     white-space: nowrap;
+    letter-spacing: 0.02em;
 }
 .result-card .date {
     text-align: center;
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     color: var(--text-muted);
     margin-top: 0.25rem;
 }
 
-/* Leaderboard */
+/* ── Leaderboard ── */
 .lb-row {
     display: flex;
     align-items: center;
-    padding: 0.6rem 0;
+    padding: 0.5rem 0;
     border-bottom: 1px solid var(--card-border);
     gap: 0.75rem;
 }
@@ -184,23 +219,25 @@ a:hover { text-decoration: underline; }
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 0.8rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.75rem;
     flex-shrink: 0;
 }
 .lb-rank-1 { background: var(--accent); color: var(--text-inverse); }
 .lb-rank-2 { background: var(--silver); color: var(--text-inverse); }
 .lb-rank-3 { background: var(--bronze); color: var(--text); }
 .lb-rank-n { background: var(--card-border); color: var(--text-muted); }
-.lb-name { flex: 1; font-weight: 600; font-size: 0.9rem; }
+.lb-name { flex: 1; font-weight: 500; font-size: 0.85rem; font-family: var(--font-body); }
 .lb-pts {
+    font-family: var(--font-mono);
     font-weight: 700;
     color: var(--accent);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     flex-shrink: 0;
 }
 
-/* Stat row / stat card */
+/* ── Stat row / stat card ── */
 .stat-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -210,36 +247,55 @@ a:hover { text-decoration: underline; }
 .stat-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 0.75rem;
     text-align: center;
 }
 .stat-card .value {
+    font-family: var(--font-display);
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent);
+    letter-spacing: -0.02em;
 }
 .stat-card .label {
-    font-size: 0.7rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
     color: var(--text-muted);
     text-transform: uppercase;
+    letter-spacing: 0.05em;
     margin-top: 0.25rem;
 }
 
-/* Rank table (copied from html.py for the full ranking) */
-.rank-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-.rank-table th { text-align: left; padding: 0.4rem 0.5rem; font-size: 0.7rem; color: var(--text-muted); border-bottom: 1px solid var(--card-border); white-space: nowrap; }
-.rank-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--card-border); white-space: nowrap; }
+/* ── Rank table ── */
+.rank-table { width: 100%; border-collapse: collapse; }
+.rank-table th {
+    font-family: var(--font-mono);
+    text-align: left; padding: 0.4rem 0.5rem;
+    font-size: 0.6rem; font-weight: 400;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--card-border);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.rank-table td {
+    font-family: var(--font-body);
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid var(--card-border);
+    white-space: nowrap;
+    font-size: 0.8rem;
+}
 .rank-table tr:nth-child(even) { background: var(--zebra-stripe); }
 .rank-table .rank-1 td { background: var(--accent-highlight); }
 .rank-table .rank-2 td { background: var(--silver-highlight); }
 .rank-table .rank-3 td { background: var(--bronze-highlight); }
 .rank-table th.sort-asc::after,
-table[data-sortable] th.sort-asc::after { content:" \u25b2"; font-size:0.65rem; }
+table[data-sortable] th.sort-asc::after { content:" \u25b2"; font-size:0.6rem; }
 .rank-table th.sort-desc::after,
-table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.65rem; }
+table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.6rem; }
 
-/* Horizontal scroll for upcoming games */
+/* ── Horizontal scroll for upcoming games ── */
 .scroll-row {
     display: flex;
     overflow-x: auto;
@@ -255,28 +311,30 @@ table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.65rem;
     flex: 0 0 auto;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 0.5rem 0.75rem;
     text-align: center;
-    min-width: 140px;
+    min-width: 130px;
     display: block;
     text-decoration: none;
     color: inherit;
 }
-.game-card .matchup { font-weight: 600; font-size: 0.85rem; margin: 0.25rem 0; }
-.game-card .datetime { font-size: 0.7rem; color: var(--text-muted); }
+.game-card .matchup { font-family: var(--font-display); font-weight: 600; font-size: 0.8rem; margin: 0.25rem 0; letter-spacing: -0.01em; }
+.game-card .datetime { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); }
 .game-card .badge-live {
     display: inline-block;
     background: var(--danger);
     color: var(--text);
-    font-size: 0.6rem;
-    font-weight: 700;
+    font-size: 0.55rem;
+    font-weight: 600;
     padding: 0.1rem 0.4rem;
     border-radius: 999px;
     margin-bottom: 0.25rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
 }
 
-/* Player grid */
+/* ── Player grid ── */
 .player-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -286,12 +344,12 @@ table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.65rem;
 .player-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    transition: border-color 0.2s;
+    transition: border-color 0.15s;
 }
 .player-card:hover { border-color: var(--accent); }
 .player-card:active { border-color: var(--accent); background: var(--player-card-active); }
@@ -304,11 +362,13 @@ table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.65rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-weight: 600;
     font-size: 0.9rem;
     flex-shrink: 0;
 }
 .player-name {
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.85rem;
     white-space: nowrap;
@@ -316,22 +376,25 @@ table[data-sortable] th.sort-desc::after { content:" \u25bc"; font-size:0.65rem;
     text-overflow: ellipsis;
 }
 .player-pts {
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     color: var(--text-muted);
 }
 
-/* Accordion */
+/* ── Accordion ── */
 details {
     margin: 0.5rem 0.75rem;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
 }
 summary {
-    padding: 1rem;
+    padding: 0.85rem 1rem;
     cursor: pointer;
+    font-family: var(--font-display);
     font-weight: 600;
+    font-size: 0.85rem;
     min-height: 44px;
     display: flex;
     align-items: center;
@@ -343,48 +406,46 @@ details[open] summary { border-bottom: 1px solid var(--card-border); }
 details .content { padding: 0.5rem 1rem; }
 details .content a {
     display: block;
-    padding: 0.4rem 0;
-    font-size: 0.85rem;
+    padding: 0.35rem 0;
+    font-size: 0.8rem;
     border-bottom: 1px solid var(--card-border);
 }
 details .content a:last-child { border-bottom: none; }
 
-/* Compact accordion (emoji legend) */
+/* ── Compact accordion (emoji legend) ── */
 details.accordion-emoji { margin: 0.75rem 0.75rem 0.5rem; }
-details.accordion-emoji summary { padding: 0.4rem 0.6rem; font-size: 0.75rem; min-height: 32px; }
+details.accordion-emoji summary { padding: 0.35rem 0.6rem; font-size: 0.7rem; min-height: 32px; }
 details.accordion-emoji .content { padding: 0.25rem 0.6rem 0.4rem; }
 details.accordion-emoji .emoji-row {
     display: flex;
     align-items: center;
     gap: 0.4rem;
     padding: 0.2rem 0;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     border-bottom: 1px solid var(--card-border);
 }
 details.accordion-emoji .emoji-row:last-child { border-bottom: none; }
-details.accordion-emoji .emoji-row .e { font-size: 0.9rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
-details.accordion-emoji .emoji-row .pts { color: var(--accent); font-weight: 600; width: 1.8rem; text-align: right; flex-shrink: 0; }
+details.accordion-emoji .emoji-row .e { font-size: 0.85rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
+details.accordion-emoji .emoji-row .pts { color: var(--accent); font-weight: 600; width: 1.8rem; text-align: right; flex-shrink: 0; font-family: var(--font-mono); }
 
-
-
-/* Footer */
+/* ── Footer ── */
 .footer {
     text-align: center;
     padding: 2rem 1rem;
     color: var(--text-muted);
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
 }
 
-/* Empty state */
+/* ── Empty state ── */
 .empty-state {
     text-align: center;
     padding: 1.5rem 1rem;
     color: var(--text-muted);
     font-size: 0.85rem;
-    font-style: italic;
 }
 
-/* Bottom navigation bar */
+/* ── Bottom navigation bar ── */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -396,69 +457,73 @@ details.accordion-emoji .emoji-row .pts { color: var(--accent); font-weight: 600
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 0.25rem 0;
-    padding-bottom: max(0.25rem, env(safe-area-inset-bottom));
+    padding: 0.15rem 0;
+    padding-bottom: max(0.15rem, env(safe-area-inset-bottom));
     box-shadow: 0 -2px 10px var(--shadow-color);
 }
 .bottom-nav a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.1rem;
-    padding: 0.3rem 0.5rem;
-    font-size: 0.65rem;
+    gap: 0.05rem;
+    padding: 0.25rem 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    font-weight: 500;
     color: var(--text-muted);
     text-decoration: none;
     min-height: 44px;
     justify-content: center;
-    border-radius: 8px;
-    transition: background 0.2s;
+    border-radius: 6px;
+    transition: color 0.15s;
     -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 .bottom-nav a:active { background: var(--hover-overlay); }
-.bottom-nav a .nav-icon { font-size: 1.2rem; line-height: 1; }
+.bottom-nav a .nav-icon { font-size: 1rem; line-height: 1; }
 .bottom-nav a.active { color: var(--accent); }
-body { padding-bottom: 70px; }
+body { padding-bottom: 65px; }
 
-/* Trend indicators */
+/* ── Trend indicators ── */
 .trend-up { color: var(--success); }
 .trend-down { color: var(--danger); }
 .trend-flat { color: var(--text-muted); }
 
-/* Hot streak indicator */
+/* ── Hot streak indicator ── */
 .hot-streak {
     display: inline-block;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     animation: pulse-fire 1.5s ease-in-out infinite;
 }
 @keyframes pulse-fire {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+    50% { transform: scale(1.15); }
 }
 
-/* Status badges for match results */
-.badge-result { display:inline-block; padding:0.1rem 0.4rem; border-radius:999px; font-size:0.65rem; font-weight:600; margin-left:0.3rem; }
+/* ── Status badges for match results ── */
+.badge-result { display:inline-block; padding:0.1rem 0.35rem; border-radius:999px; font-size:0.6rem; font-weight:600; margin-left:0.3rem; font-family:var(--font-mono); }
 .badge-result.green { background:var(--success); color:#fff; }
 .badge-result.yellow { background:var(--warning); color:var(--text-inverse); }
 .badge-result.blue { background:var(--primary); color:#fff; }
 
-/* Pending summary badge in hero */
-.hero-badge { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.4rem; padding:0.3rem 0.8rem; border-radius:999px; font-size:0.8rem; }
-.hero-badge.green { background:rgba(34,197,94,0.2); }
-.hero-badge.yellow { background:rgba(245,158,11,0.2); }
-.hero-badge.gray { background:rgba(136,153,170,0.2); color:var(--text-muted); }
+/* ── Pending summary badge in hero ── */
+.hero-badge { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.4rem; padding:0.25rem 0.7rem; border-radius:999px; font-size:0.75rem; font-family:var(--font-mono); letter-spacing:0.02em; }
+.hero-badge.green { background:rgba(45,157,106,0.2); }
+.hero-badge.yellow { background:rgba(212,165,69,0.2); }
+.hero-badge.gray { background:rgba(123,142,166,0.15); color:var(--text-muted); }
 
-/* Responsive */
-/* Team logos */
-.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
-.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
-.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 6px; }
+/* ── Team logos ── */
+.team-logo { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; border-radius: 3px; }
+.team-logo-sm { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; border-radius: 2px; }
+.team-logo-lg { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; border-radius: 4px; }
 
+/* ── Responsive ── */
 @media (max-width: 359px) {
-    .hero h1 { font-size: 1.4rem; }
-    .hero .subtitle { font-size: 0.85rem; }
-    .bottom-nav a { font-size: 0.55rem; }
-    .bottom-nav a .nav-icon { font-size: 1rem; }
+    .hero h1 { font-size: 1.3rem; }
+    .hero .subtitle { font-size: 0.8rem; }
+    .bottom-nav a { font-size: 0.5rem; }
+    .bottom-nav a .nav-icon { font-size: 0.9rem; }
 }
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
@@ -469,8 +534,8 @@ body { padding-bottom: 70px; }
     .player-grid { grid-template-columns: repeat(4, 1fr); }
     .game-card { flex: 0 0 30%; }
 }
-.rank-table th.sort-asc::after { content:" \u25b2"; font-size:0.65rem; }
-.rank-table th.sort-desc::after { content:" \u25bc"; font-size:0.65rem; }
+.rank-table th.sort-asc::after { content:" \u25b2"; font-size:0.6rem; }
+.rank-table th.sort-desc::after { content:" \u25bc"; font-size:0.6rem; }
 """
 
 
@@ -908,7 +973,8 @@ def _build_zebra_counter(config: ChampionshipConfig) -> str:
         upsets = df_upset[df_upset.get("is_upset", 0) == 1] if "is_upset" in df_upset.columns else pd.DataFrame()
         num_upsets = len(upsets)
         pct = round(num_upsets / total * 100, 1) if total else 0
-        return f'<div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:rgba(239,68,68,0.2);padding:0.3rem 0.8rem;border-radius:999px;font-size:0.8rem;"><span>\U0001f993</span> <strong>{num_upsets}</strong> zebras em {total} jogos ({pct}%)</div>\n'
+        bg_color = "rgba(220,60,60,0.15)" if pct > 20 else "rgba(45,157,106,0.15)" if pct < 10 else "rgba(212,165,69,0.15)"
+        return f'<span style="display:inline-flex;align-items:center;gap:0.4rem;background:{bg_color};padding:0.25rem 0.7rem;border-radius:999px;font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.01em;"><span>\U0001f993</span> <strong>{num_upsets}</strong> zebras em {total} ({pct}%)</span>\n'
     except (FileNotFoundError, pd.errors.EmptyDataError):
         return ""
 
@@ -1435,12 +1501,33 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     zebra_counter = _build_zebra_counter(config)
     badge_accordion = _build_badge_accordion(config)
     emoji_accordion = _build_emoji_accordion(config)
+    # Temperature bar color: derived from zebra percentage (if available)
+    # Higher zebra % -> warmer (reddish-gold), lower -> cooler (blue)
+    temp_color = "var(--primary)"
+    if zebra_counter:
+        import re as _re
+        _zp = _re.search(r'<strong>(\d+)</strong> zebras em (\d+)', zebra_counter)
+        if _zp:
+            _num_z = int(_zp.group(1))
+            _total_z = int(_zp.group(2))
+            if _total_z > 0:
+                _pct = _num_z / _total_z
+                if _pct > 0.25:
+                    temp_color = "#dc3c3c"
+                elif _pct > 0.15:
+                    temp_color = "#d4a545"
+                else:
+                    temp_color = "#2d9d6a"
+
     html_content = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{config.report_title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
     {config.theme.to_css_vars()}
     {_CSS_DASHBOARD}
@@ -1448,13 +1535,14 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 </head>
 <body>
 
-<div class="hero">
-    <h1>\U0001f3c6 {config.report_title}</h1>
-    <div class="subtitle">Painel do Bolao</div>
-    {zebra_counter}
-</div>
-<div style="text-align:center;font-size:0.75rem;color:var(--text-muted);padding:0 0.75rem 0.5rem;">
-    atualizado \u00e0s {now_str}
+<div class="hero" style="--temp-color:{temp_color};">
+    <div class="temp-bar"></div>
+    <h1>{config.report_title}</h1>
+    <div class="subtitle">Bol\u00e3o da Copa</div>
+    <div style="margin-top:0.4rem;display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;">
+        {zebra_counter}
+        <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);letter-spacing:0.02em;">{now_str}</span>
+    </div>
 </div>
 
 {live_games}
@@ -1465,28 +1553,28 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
 
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin:0 0.75rem;">
     <a href="tabela_real.html">
-        <div class="card" style="text-align:center;font-weight:600;border-color:var(--accent);padding:0.75rem 0.5rem;">
-            \U0001f3c6 Grupos
+        <div class="card" style="text-align:center;padding:0.75rem 0.5rem;">
+            <div style="font-family:var(--font-display);font-weight:600;font-size:0.85rem;">\U0001f3c6 Grupos</div>
         </div>
     </a>
     <a href="times.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f3c6 Times
+        <div class="card" style="text-align:center;padding:0.75rem 0.5rem;">
+            <div style="font-family:var(--font-display);font-weight:600;font-size:0.85rem;">\U0001f3c6 Times</div>
         </div>
     </a>
     <a href="arena.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \u2694\ufe0f Arena
+        <div class="card" style="text-align:center;padding:0.75rem 0.5rem;">
+            <div style="font-family:var(--font-display);font-weight:600;font-size:0.85rem;">\u2694\ufe0f Arena</div>
         </div>
     </a>
     <a href="rodadas.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f4ca Rodadas
+        <div class="card" style="text-align:center;padding:0.75rem 0.5rem;">
+            <div style="font-family:var(--font-display);font-weight:600;font-size:0.85rem;">\U0001f4ca Rodadas</div>
         </div>
     </a>
     <a href="ranking_evolution.html">
-        <div class="card" style="text-align:center;font-weight:600;padding:0.75rem 0.5rem;">
-            \U0001f4c8 Evolucao
+        <div class="card" style="text-align:center;padding:0.75rem 0.5rem;">
+            <div style="font-family:var(--font-display);font-weight:600;font-size:0.85rem;">\U0001f4c8 Evolu\u00e7\u00e3o</div>
         </div>
     </a>
 </div>
@@ -1939,6 +2027,9 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boleiros - {config.report_title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
     {config.theme.to_css_vars()}
     {_CSS_DASHBOARD}
@@ -1946,7 +2037,7 @@ def generate_boleiros_index(config: ChampionshipConfig) -> None:
 </head>
 <body>
 {body}
-<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
+<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.02em;">
     atualizado \u00e0s {datetime.now(pytz.timezone(config.timezone)).strftime("%d/%m/%Y %H:%M:%S")}
 </div>
 """ + _build_bottom_nav_dashboard(config=config) + """

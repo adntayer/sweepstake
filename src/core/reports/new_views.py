@@ -25,33 +25,37 @@ def _save(filepath: str, content: str) -> None:
         f.write(content)
 
 
-def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: str = "", active_nav: str = "") -> str:
+def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: str = "", active_nav: str = "", temperature: str = "") -> str:
     from src.core.reports.html import _CSS_BASE, _bottom_nav_html
     tz = pytz.timezone(config.timezone)
     now_str = datetime.now(tz).strftime("%d/%m/%Y %H:%M:%S")
     back_html = ""
     nav_prefix = ""
     if back_link:
-        back_html = f'<div class="back-nav"><a href="{back_link}">\u2190 Voltar</a></div>'
+        back_html = f'<div class="back-nav"><span style="color:var(--text-muted);">\u2192</span> <a href="{back_link}">Voltar</a></div>'
         idx = back_link.rfind("index.html")
         if idx >= 0:
             nav_prefix = back_link[:idx]
     script_src = nav_prefix + "sorttable.js" if back_link else "sorttable.js"
+    temp_style = f' style="--temp-color:{temperature};"' if temperature else ""
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
     {config.theme.to_css_vars()}
     {_CSS_BASE}
     </style>
 </head>
-<body>
+<body{temp_style}>
 {back_html}
 {body}
-<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
+<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.02em;">
     atualizado \u00e0s {now_str}
 </div>
 {_bottom_nav_html(active_nav, nav_prefix, config.nav_items)}

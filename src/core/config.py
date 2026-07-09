@@ -47,46 +47,47 @@ class PlayoffRound:
 class ThemeColors:
     """Color palette for HTML reports."""
 
-    primary: str = "#1a5e1f"
-    primary_light: str = "#2d8a33"
-    accent: str = "#f5c518"
-    accent_dark: str = "#d4a817"
-    bg: str = "#0d1117"
-    card_bg: str = "#161b22"
-    card_border: str = "#30363d"
-    text: str = "#e6edf3"
-    text_muted: str = "#8b949e"
-    success: str = "#2ea043"
-    warning: str = "#d29922"
-    danger: str = "#f85149"
-    voce: str = "#2ea043"
-    bolao: str = "#f5c518"
-    text_inverse: str = "#000000"
-    silver: str = "#c0c0c0"
-    bronze: str = "#cd7f32"
-    leader: str = "#8899aa"
-    accent_highlight: str = "rgba(245,197,24,0.1)"
-    silver_highlight: str = "rgba(192,192,192,0.08)"
-    bronze_highlight: str = "rgba(205,127,50,0.08)"
-    zebra_stripe: str = "rgba(255,255,255,0.02)"
-    hover_overlay: str = "rgba(255,255,255,0.03)"
-    shadow_color: str = "rgba(0,0,0,0.4)"
-    score_exact: str = "#00cc00"
-    score_winner_goals: str = "#66ff66"
-    score_winner: str = "#ffcc00"
-    score_one_team: str = "#ff9900"
-    score_none: str = "#ff3333"
-    player_card_active: str = "rgba(245,197,24,0.05)"
-    score_exact_bg: str = "rgba(0,204,0,0.1)"
-    score_exact_border: str = "rgba(0,204,0,0.4)"
-    score_winner_goals_bg: str = "rgba(102,255,102,0.1)"
-    score_winner_goals_border: str = "rgba(102,255,102,0.4)"
-    score_winner_bg: str = "rgba(255,204,0,0.1)"
-    score_winner_border: str = "rgba(255,204,0,0.4)"
-    score_one_team_bg: str = "rgba(255,153,0,0.1)"
-    score_one_team_border: str = "rgba(255,153,0,0.4)"
-    score_none_bg: str = "rgba(255,51,51,0.1)"
-    score_none_border: str = "rgba(255,51,51,0.4)"
+    # Deep navy / oil-blue palette — professional, calm, distinct from generic dark-mode
+    primary: str = "#1a3a5c"        # deep oil-blue
+    primary_light: str = "#2a5a8a"  # lighter oil-blue
+    accent: str = "#f0c940"         # warmer gold (less neon than #f5c518)
+    accent_dark: str = "#c9a230"  # darker gold
+    bg: str = "#080c14"            # very dark navy, not pure black
+    card_bg: str = "#111827"        # dark blue-gray
+    card_border: str = "#1e2d45"  # subtle border
+    text: str = "#e2e8f0"          # off-white with a hint of blue
+    text_muted: str = "#7b8ea6"    # muted slate
+    success: str = "#2d9d6a"       # emerald green
+    warning: str = "#d4a545"       # amber
+    danger: str = "#dc3c3c"        # cardinal red
+    voce: str = "#2d9d6a"           # sync with success
+    bolao: str = "#f7c940"          # sync with accent
+    text_inverse: str = "#080c14"   # dark navy readable on gold
+    silver: str = "#a0b0c0"       # cool silver
+    bronze: str = "#b88a5a"       # warmer bronze
+    leader: str = "#7a8ea6"        # muted slate (leader number color)
+    accent_highlight: str = "rgba(247,201,64,0.08)"
+    silver_highlight: str = "rgba(160,176,192,0.06)"
+    bronze_highlight: str = "rgba(184,138,90,0.07)"
+    zebra_stripe: str = "rgba(255,255,255,0.015)"
+    hover_overlay: str = "rgba(255,255,255,0.025)"
+    shadow_color: str = "rgba(0,0,0,0.5)"
+    score_exact: str = "#2d9d6a"       # emerald
+    score_winner_goals: str = "#5bb88a"  # lighter emerald
+    score_winner: str = "#f7c940"     # gold
+    score_one_team: str = "#d98c2a"      # orange
+    score_none: str = "#dc3b3c"         # cardinal
+    player_card_active: str = "rgba(247,201,64,0.04)"
+    score_exact_bg: str = "rgba(45,157,106,0.1)"
+    score_exact_border: str = "rgba(45,157,106,0.35)"
+    score_winner_goals_bg: str = "rgba(91,184,138,0.1)"
+    score_winner_goals_border: str = "rgba(91,184,138,0.35)"
+    score_winner_bg: str = "rgba(247,201,64,0.1)"
+    score_winner_border: str = "rgba(247,201,64,0.35)"
+    score_one_team_bg: str = "rgba(217,140,42,0.1)"
+    score_one_team_border: str = "rgba(217,140,42,0.35)"
+    score_none_bg: str = "rgba(220,59,60,0.1)"
+    score_none_border: str = "rgba(220,59,60,0.35)"
 
 
 @dataclass

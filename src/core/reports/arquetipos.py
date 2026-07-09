@@ -554,51 +554,20 @@ def classificar_jogadores(config: ChampionshipConfig) -> pd.DataFrame:
 # ------------------------------------------------------------------
 
 _CSS_ARQUETIPOS = """
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* Archetype-specific styles only — base styles come from _CSS_BASE */
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 16px;
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-}
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-.hero {
-    background: var(--bg);
-    padding: 1.5rem 1rem;
-    text-align: center;
-    border-bottom: 1px solid var(--card-border);
-}
-.hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
-.hero .subtitle { font-size: 0.9rem; opacity: 0.85; }
 .hero-stats {
     display: flex; justify-content: center; gap: 1.5rem;
     margin-top: 0.75rem; flex-wrap: wrap;
 }
 .hero-stat { text-align: center; }
 .hero-stat .hero-stat-num {
-    display: block; font-size: 1.3rem; font-weight: 800;
+    display: block; font-size: 1.3rem; font-weight: 600;
+    font-family: var(--font-display);
     color: var(--accent);
+    letter-spacing: -0.02em;
 }
 .hero-stat { font-size: 0.7rem; color: var(--text-muted); }
-
-.section { margin: 0.75rem; }
-.section-title {
-    font-size: 1rem; font-weight: 700;
-    margin-bottom: 0.5rem; padding: 0 0.25rem;
-    display: flex; align-items: center; gap: 0.4rem;
-}
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 0.75rem;
-    margin-bottom: 0.75rem;
-}
 
 /* Legend table */
 .legend-table {
@@ -833,17 +802,16 @@ def _build_arquetipos(config: ChampionshipConfig) -> str:
     n_arqs = df["arquetipo"].nunique()
     n_geos = df["perfil_global"].nunique() if "perfil_global" in df.columns else 0
     body += f"""
-<div class="hero">
-    <h1>\U0001f3ad Arqu\u00e9tipos do Bol\u00e3o</h1>
+<div class="hero" style="--temp-color:#2d9d6a;">
+    <div class="temp-bar"></div>
+    <h1>Arqu\u00e9tipos do Bol\u00e3o</h1>
     <div class="subtitle">Cada jogador tem <strong>1 \u00fanico arqu\u00e9tipo</strong> baseado no seu estilo de palpitar</div>
     <div class="hero-stats">
         <div class="hero-stat"><span class="hero-stat-num">{n_players}</span> jogadores</div>
         <div class="hero-stat"><span class="hero-stat-num">{n_arqs}</span> arqu\u00e9tipos</div>
         <div class="hero-stat"><span class="hero-stat-num">{n_geos}</span> perfis globais</div>
     </div>
-</div>
-<div style="text-align:center;font-size:0.75rem;color:var(--text-muted);padding:0 0.75rem 0.5rem;">
-    atualizado \u00e0s {now_str}
+    <div style="margin-top:0.5rem;font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);letter-spacing:0.02em;">{now_str}</div>
 </div>
 """
 
@@ -1078,7 +1046,7 @@ def _build_archetype_card(arq_name: str, players: list[dict], a_def: dict) -> st
 # Page frame
 # ------------------------------------------------------------------
 
-def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: str = "", active_nav: str = "") -> str:
+def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: str = "", active_nav: str = "", temperature: str = "") -> str:
     """Replica of _page_frame to avoid circular imports."""
     from src.core.reports.html import _CSS_BASE, _bottom_nav_html
     tz = pytz.timezone(config.timezone)
@@ -1086,27 +1054,31 @@ def _page_frame(config: ChampionshipConfig, title: str, body: str, back_link: st
     back_html = ""
     nav_prefix = ""
     if back_link:
-        back_html = f'<div class="back-nav"><a href="{back_link}">\u2190 Voltar</a></div>'
+        back_html = f'<div class="back-nav"><span style="color:var(--text-muted);">\u2192</span> <a href="{back_link}">Voltar</a></div>'
         idx = back_link.rfind("index.html")
         if idx >= 0:
             nav_prefix = back_link[:idx]
     script_src = nav_prefix + "sorttable.js" if back_link else "sorttable.js"
+    temp_style = f' style="--temp-color:{temperature};"' if temperature else ""
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
     {config.theme.to_css_vars()}
     {_CSS_BASE}
     {_CSS_ARQUETIPOS}
     </style>
 </head>
-<body>
+<body{temp_style}>
 {back_html}
 {body}
-<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-size:0.75rem;">
+<div style="text-align:center;padding:2rem 1rem 5rem;color:var(--text-muted);font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.02em;">
     atualizado \u00e0s {now_str}
 </div>
 {_bottom_nav_html(active_nav, nav_prefix, config.nav_items)}
