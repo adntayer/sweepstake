@@ -1,27 +1,27 @@
 # sweepstake
 
-[repo wc2026](https://github.com/rezarahiminia/worldcup2026)
+[site do bolao](https://adntayer.github.io/sweepstake/index.html)
+
+
+# referências
 
 [codeburn](https://github.com/getagentseal/codeburn)
 
+## api de consulta wc2026
 
-[site](https://adntayer.github.io/sweepstake/index.html)
+[repo wc2026](https://github.com/rezarahiminia/worldcup2026)
 
-
-
-# Get all World Cup 2026 matches (no auth needed for demo)
+### Get all World Cup 2026 matches (no auth needed for demo)
 curl https://worldcup26.ir/get/games
 
-# Get group standings
+### Get group standings
 curl https://worldcup26.ir/get/groups
 
-# Get all 48 teams
+### Get all 48 teams
 curl https://worldcup26.ir/get/teams
 
-# Get all 16 stadiums
+### Get all 16 stadiums
 curl https://worldcup26.ir/get/stadiums
-
-
 
 
 ```terminal

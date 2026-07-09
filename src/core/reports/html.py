@@ -251,6 +251,8 @@ select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); 
 .pred-name { font-weight: 600; font-size: 0.9rem; }
 .pred-date { font-weight: 400; font-size: 0.75rem; color: var(--text-muted); display: inline-block; }
 .pred-detail { font-size: 0.8rem; color: var(--text-muted); }
+.boleiro-link { color: var(--text); text-decoration: none; font-weight: 600; }
+.boleiro-link:hover { color: var(--accent); text-decoration: underline; }
 .pred-points {
     font-weight: 700;
     font-size: 1rem;
@@ -568,6 +570,126 @@ body { padding-bottom: 70px; }
 @media (min-width: 768px) {
     body { max-width: 800px; margin: 0 auto; }
     .stat-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Match hero — fused hero + scorecard */
+.match-hero {
+    background: var(--bg);
+    padding: 1.25rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--card-border);
+}
+.match-hero-teams {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+.match-hero-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    min-width: 80px;
+}
+.match-hero-link {
+    color: var(--text);
+    text-decoration: none;
+}
+.match-hero-link:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+.score-hero {
+    color: var(--accent);
+    font-size: 2rem;
+    font-weight: 800;
+    min-width: 3rem;
+}
+.score-hero--pending {
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+.match-hero-meta {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+.hero-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.penalty-score {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: -0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Section divider */
+.section-divider {
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin: 0.75rem 0;
+    opacity: 0.5;
+}
+.section-divider--wide {
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin: 0.5rem 0.75rem;
+    opacity: 0.35;
+}
+
+/* Section count badge */
+.section-count {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: var(--card-border);
+    border-radius: 999px;
+    padding: 0.1rem 0.5rem;
+    font-weight: 600;
+    margin-left: 0.35rem;
+}
+.section-subtitle {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding: 0 0.75rem;
+    margin-top: -0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Compact card (player list) */
+.card-compact .pred-row {
+    padding: 0.5rem 0.75rem;
+}
+
+/* Group separator between score tiers in player list */
+.score-group-sep {
+    height: 1px;
+    margin: 0.25rem 0.75rem;
+    background: var(--card-border);
+    opacity: 0.4;
+}
+
+/* Score pill small variant */
+.score-pill--sm {
+    font-size: 0.85rem;
+    padding: 0.15rem 0.5rem;
+    gap: 0.2rem;
+}
+
+/* Score card team img shared with match-hero */
+.score-card .team img,
+.match-hero-team img {
+    width:28px; height:28px;
+    object-fit:contain; vertical-align:middle; border-radius:4px;
 }
 """
 
@@ -2428,133 +2550,146 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
                 bonus_by_player[who]["points"] += int(br["points"])
 
     pred_rows = ""
+    prev_pts = None
     for _, row in df_match.iterrows():
         who_val = str(row.get("who", "")).strip()
         if not who_val:
             continue  # skip placeholder synthetic rows
         pts = int(row["pontos"]) if pd.notna(row.get("pontos")) else 0
+        # Insert score-group separator when points tier changes
+        if prev_pts is not None and pts != prev_pts:
+            pred_rows += f'<div class="score-group-sep"></div>\n'
+        prev_pts = pts
+        is_pending = row.get("valido", 1) == 0
         criterio_str = row.get("criterio", "")
         if pd.isna(criterio_str):
             criterio_str = ""
-        criterio_emoji = config.scoring_emoji(criterio_str)
-        css_var, css_bg, css_border = config.scoring_css_var(criterio_str)
-        if css_var:
-            pts_color = css_var
-            pts_bg = css_bg
-            pts_border = css_border
+        if is_pending:
+            # Show pending state instead of raw "99-Sem jogo"
+            display_criterio = "\u23f3 Aguardando resultado"
+            criterio_emoji = "\u23f3"
+            pts_color = "var(--warning)"
+            pts_bg = "rgba(245,158,11,0.1)"
+            pts_border = "var(--warning)"
         else:
-            hex_color = config.scoring_color(criterio_str)
-            if hex_color:
-                pts_color = hex_color
-                pts_bg = hex_color + "1a"
-                pts_border = hex_color + "40"
+            display_criterio = criterio_str
+            criterio_emoji = config.scoring_emoji(criterio_str)
+            css_var, css_bg, css_border = config.scoring_css_var(criterio_str)
+            if css_var:
+                pts_color = css_var
+                pts_bg = css_bg
+                pts_border = css_border
             else:
-                pts_color = "var(--text-muted)"
-                pts_bg = "transparent"
-                pts_border = "var(--card-border)"
+                hex_color = config.scoring_color(criterio_str)
+                if hex_color:
+                    pts_color = hex_color
+                    pts_bg = hex_color + "1a"
+                    pts_border = hex_color + "40"
+                else:
+                    pts_color = "var(--text-muted)"
+                    pts_bg = "transparent"
+                    pts_border = "var(--card-border)"
         placar_str = row.get("resultado_bol_placar", "")
         if pd.isna(placar_str):
             placar_str = "? x ?"
+        real_str = row.get("resultado_real_placar", "")
+        if pd.isna(real_str) or str(real_str).strip().lower() in ("nan", "", "none"):
+            real_str = ""
+        else:
+            real_str = f"Real: {real_str}"
+        boleiro_href = f"../../boleiros/{who_val}.html"
+        pill_display = f"+{pts}" if pts > 0 else ""
         pred_rows += (
             f'<div class="pred-row">'
-            f'{_avatar_html(who_val)}'
             f'<div class="pred-info">'
-            f'<div class="pred-name">{who_val}</div>'
-            f'<div class="pred-detail">Previsto: {placar_str} | {criterio_emoji} {criterio_str}</div>'
+            f'<div class="pred-name"><a href="{boleiro_href}" class="boleiro-link">{who_val}</a></div>'
+            f'<div class="pred-detail">Previsto: {placar_str}{" | " + real_str if real_str else ""}</div>'
             f'</div>'
-            f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
+            f'<div class="score-pill score-pill--sm" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">{criterio_emoji}{pill_display}</div>'
             f'</div>\n'
         )
 
-    # Score display
+    # Score display — only returns status badge and optional details,
+    # the actual scorecard is now part of the hero block below.
     if is_live:
-        # Live match: show partial score with "AO VIVO" badge
         parts = real_placar.split(" x ") if has_score and " x " in real_placar else ["?", "?"]
-        score_html = f"""
-<div class="score-card">
-    <div class="team">{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a></div>
-    <div class="score">{parts[0]} - {parts[1]}</div>
-    <div class="team">{away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></div>
-</div>
-<div style="text-align:center;"><span class="badge badge-danger">\U0001f534 AO VIVO</span></div>
-"""
+        score_hero_parts = f"<span class=\"score-hero\">{parts[0]} - {parts[1]}</span>"
+        status_badge = '<span class="badge badge-danger">\U0001f534 AO VIVO</span>'
     elif has_result:
         parts = real_placar.split(" x ")
+        score_hero_parts = f"<span class=\"score-hero\">{parts[0]} - {parts[1]}</span>"
         pen_html = ""
         try:
             hp = df_match.iloc[0].get("home_pen_real")
             ap = df_match.iloc[0].get("away_pen_real")
-            hp_str = str(hp).strip()
-            ap_str = str(ap).strip()
-            if hp_str and ap_str and hp_str != "nan":
+            hp_str = str(hp).strip() if pd.notna(hp) else ""
+            ap_str = str(ap).strip() if pd.notna(ap) else ""
+            if hp_str and hp_str != "nan" and ap_str and ap_str != "nan":
                 hp_val = int(float(hp_str))
                 ap_val = int(float(ap_str))
                 pen_html = f'<div class="penalty-score">{hp_val} - {ap_val} nos p\u00eAnaltis</div>'
         except (ValueError, TypeError):
             pass
-
-        # Zebra badge
         zebra_html = ""
         if upset_row is not None and int(upset_row.get("is_upset", 0)) == 1:
             nc = int(upset_row.get("num_correct", 999))
             fav = upset_row.get("favorite", "?")
             if nc <= 2:
-                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_MONSTRA_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{nc} acertaram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
+                zebra_html = f'<span class="badge badge-danger" style="margin-left:0.5rem;">{ZEBRA_MONSTRA_LABEL}</span>'
             else:
-                zebra_html = f'<div style="text-align:center;margin-top:0.4rem;"><span class="badge badge-danger">{ZEBRA_GRANDE_LABEL}</span> <span style="font-size:0.8rem;color:var(--text-muted);">{nc} acertaram \u2014 favorito {fav} n\u00e3o venceu</span></div>'
-
-        score_html = f"""
-<div class="score-card">
-    <div class="team">{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a></div>
-    <div class="score">{parts[0]} - {parts[1]}</div>
-    <div class="team">{away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></div>
-</div>
-{pen_html}
-<div style="text-align:center;"><span class="badge badge-success">Resultado Final</span>{zebra_html}</div>
-"""
+                zebra_html = f'<span class="badge badge-danger" style="margin-left:0.5rem;">{ZEBRA_GRANDE_LABEL}</span>'
+        status_badge = f'<span class="badge badge-success">Resultado Final</span>{zebra_html}'
     else:
-        score_html = f"""
-<div class="score-card">
-    <div class="team">{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a></div>
-    <div class="score">vs</div>
-    <div class="team">{away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></div>
-</div>
-<div style="text-align:center;"><span class="badge badge-warning">Aguardando resultado</span></div>
-"""
+        score_hero_parts = '<span class="score-hero score-hero--pending">vs</span>'
+        status_badge = '<span class="badge badge-warning">Aguardando</span>'
 
     team_link = '../../times/{}.html'
+    # Count players with predictions
+    num_players = int(df_match['who'].astype(str).str.strip().ne('').sum())
     body = f"""
-<div class="hero">
-    <h1>{home_logo} <a href="../../times/{home}.html" style="color:var(--text);text-decoration:none;">{home}</a> x {away_logo} <a href="../../times/{away}.html" style="color:var(--text);text-decoration:none;">{away}</a></h1>
-    <div class="subtitle">{date_str} {hour_str} | {phase}</div>
+<div class="hero match-hero">
+    <div class="match-hero-teams">
+        <div class="match-hero-team">{home_logo}<a href="../../times/{home}.html" class="match-hero-link">{home}</a></div>
+        {score_hero_parts}
+        <div class="match-hero-team">{away_logo}<a href="../../times/{away}.html" class="match-hero-link">{away}</a></div>
+    </div>
+    <div class="match-hero-meta">
+        {status_badge}
+        <span class="hero-date">{date_str} {hour_str} &middot; {phase}</span>
+    </div>
 </div>
 
-{score_html}
+{pen_html if has_result else ""}
 
 <div class="section">
-    <div class="section-title">\U0001f52e Pre-Jogo - Votos por Time</div>
-    <div class="card"><div class="bar-chart">{team_bars}</div></div>
-</div>
-
-<div class="section">
-    <div class="section-title">\U0001f52e Pre-Jogo - Distribuicao de Placar</div>
-    <div class="card">{score_heatmap}</div>
-    <div class="card" style="margin-top:0.5rem;"><div class="bar-chart">{score_bars}</div><div class="heat-legend">👆 clique na linha para ver quem apostou</div></div>
+    <div class="section-title">\U0001f52e Palpites</div>
+    <div class="card">
+        <div class="bar-chart">{team_bars}</div>
+        <hr class="section-divider">
+        {score_heatmap}
+        <hr class="section-divider">
+        <div class="bar-chart" style="margin-top:0;">{score_bars}</div>
+        <div class="heat-legend">\U0001f446 clique na linha para ver quem apostou</div>
+    </div>
 </div>
 """
 
     if has_result:
         body += f"""
 <div class="section">
-    <div class="section-title">\U0001f4ca Pos-Jogo - Criterios</div>
+    <div class="section-title">\U0001f4ca Pos-Jogo</div>
     <div class="card"><div class="bar-chart">{criteria_bars}</div></div>
 </div>
 """
 
+    has_any_pts = any(int(r.get("pontos", 0)) > 0 for _, r in df_match.iterrows())
     body += f"""
+<div class="section-divider--wide"></div>
+
 <div class="section">
-    <div class="section-title">\U0001f4cb Previsoes dos Jogadores ({int(df_match['who'].astype(str).str.strip().ne('').sum())})</div>
-    <div class="card">{pred_rows}</div>
+    <div class="section-title">\U0001f4cb Palpites <span class="section-count">{num_players}</span></div>
+    {"<div class=\"section-subtitle\">ordenados por pontua\u00e7\u00e3o</div>" if has_result else ""}
+    <div class="card card-compact">{pred_rows}</div>
 </div>
 """
     return _page_frame(config, f"{home} x {away} - {config.report_title}", body, back_link="../../index.html")

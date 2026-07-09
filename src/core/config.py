@@ -485,8 +485,8 @@ class ChampionshipConfig:
         Resolves via the rule's ``rule`` (type key) so it works for any
         championship regardless of localized rule names.
         """
-        # Map rule type keys → CSS variable triplets
-        type_map = {
+        # Map rule type keys → CSS variable triplets (raw names, wrapped in var() below)
+        raw_map = {
             "exact_score": ("--score-exact", "--score-exact-bg", "--score-exact-border"),
             "correct_winner_and_goals": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
             "correct_winner_and_goals_or_diff": ("--score-winner-goals", "--score-winner-goals-bg", "--score-winner-goals-border"),
@@ -494,10 +494,20 @@ class ChampionshipConfig:
             "one_team_goals": ("--score-one-team", "--score-one-team-bg", "--score-one-team-border"),
             "no_score": ("--score-none", "--score-none-bg", "--score-none-border"),
         }
+        # Add 2026 WC rules that map to the same CSS vars as their base types
+        extra_map = {
+            "correct_winner_and_one_goal": raw_map["correct_winner_and_goals"],
+            "correct_winner_and_goal_diff": raw_map["correct_winner_and_goals_or_diff"],
+            "correct_draw_and_low_error": raw_map["correct_winner"],  # draw = winner-ish, reuses winner var
+            "correct_draw": raw_map["correct_winner"],
+        }
+        raw_map.update(extra_map)
         # Look up the rule by name to get its type key
         for r in self.scoring_rules:
-            if r.name == rule_name and r.rule in type_map:
-                return type_map[r.rule]
+            if r.name == rule_name and r.rule in raw_map:
+                raw = raw_map[r.rule]
+                # Wrap each in var() so callers can use directly in inline styles
+                return (f"var({raw[0]})", f"var({raw[1]})", f"var({raw[2]})")
         return ("", "", "")
 
     def total_penalty(self, boleiro: str) -> int:
