@@ -2942,18 +2942,26 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
             else:
                 match_pts.append(None)
                 match_picks.append(None)
-        # per-match cumulative + rank (from ranking_history — includes bonus)
+        # per-match cumulative (running sum of match pts, NO bonus)
+        # match_pts is newest-first; reverse to compute running total chronologically
+        _chrono = list(reversed(match_pts))
+        _running = 0
+        _cum_chrono = []
+        for pts in _chrono:
+            if pts is not None:
+                _running += pts
+                _cum_chrono.append(_running)
+            else:
+                _cum_chrono.append(None if _running == 0 else _running)
+        match_cums = list(reversed(_cum_chrono))
+        # per-match rank (from ranking_history, includes bonus — real standing)
         rhp = rh_data["players"].get(p, {})
         rank_by_date = {}
-        cum_by_date = {}
-        if rhp and "ranks" in rhp and "cums" in rhp:
+        if rhp and "ranks" in rhp:
             for di, d in enumerate(rh_data["dates"]):
                 if di < len(rhp["ranks"]):
                     rank_by_date[d] = rhp["ranks"][di]
-                if di < len(rhp["cums"]):
-                    cum_by_date[d] = rhp["cums"][di]
         match_ranks = [rank_by_date.get(mr["date"]) for _, mr in matches_df.iterrows()]
-        match_cums = [cum_by_date.get(mr["date"]) for _, mr in matches_df.iterrows()]
         # ── Per-phase match points ──
         phase_pts = {}
         if "phase" in df_all.columns:
@@ -3198,11 +3206,11 @@ function drawTable() {
     const activeArr = Array.from(activePlayers);
     let html = '<div style="font-size:0.6rem;color:var(--text-muted);padding:0.2rem 0;display:flex;align-items:flex-start;gap:0.5rem;">' +
         '<div style="background:var(--card-border);border-radius:4px;padding:0.2rem 0.5rem;text-align:right;font-size:0.5rem;line-height:1.6;min-width:55px;font-family:var(--font-mono);">' +
-        '2x1<br>\u26bd 5<br>313 3\u00ba<br>-15</div>' +
+        '2x1<br>\u26bd 5<br>313 / 3\u00ba<br>-15</div>' +
         '<div style="line-height:1.6;padding-top:0.05rem;">' +
         '<span style="display:block;font-size:0.55rem;">palpite</span>' +
         '<span style="display:block;font-size:0.55rem;">pts (\u26bd melhor do jogo)</span>' +
-        '<span style="display:block;font-size:0.55rem;">acumulado (c/ b\u00f4nus) | ranking</span>' +
+        '<span style="display:block;font-size:0.55rem;">acumulado (s\u00f3 palpites) / ranking</span>' +
         '<span style="display:block;font-size:0.55rem;">dif. do l\u00edder dos selecionados</span>' +
         '</div></div>';
     html += '<div style="overflow-x:auto;"><table style="width:100%;font-size:0.7rem;border-collapse:collapse;">';
@@ -3245,14 +3253,14 @@ function drawTable() {
                 html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:' + color + ';font-weight:600;font-size:0.55rem;">' +
                     (pick ? '<span style="font-size:0.45rem;font-weight:400;color:var(--text-muted);display:block;">' + pick + '</span>' : '') +
                     prefix + pts +
-                    (cum ? '<span style="font-size:0.4rem;font-weight:400;color:var(--text-muted);display:block;">' + cum + (rank ? ' ' + rank + '\u00ba' : '') + '</span>' : '') +
+                    (cum ? '<span style="font-size:0.4rem;font-weight:400;color:var(--text-muted);display:block;">' + cum + (rank ? ' / ' + rank + '\u00ba' : '') + '</span>' : '') +
                     diffStr +
                     '</td>';
             } else {
                 html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:var(--text-muted);font-size:0.55rem;">' +
                     (pick ? '<span style="font-size:0.45rem;display:block;">' + pick + '</span>' : '') +
                     '\u2014' +
-                    (cum ? '<span style="font-size:0.4rem;display:block;">' + cum + (rank ? ' ' + rank + '\u00ba' : '') + '</span>' : '') +
+                    (cum ? '<span style="font-size:0.4rem;display:block;">' + cum + (rank ? ' / ' + rank + '\u00ba' : '') + '</span>' : '') +
                     '</td>';
             }
         });
