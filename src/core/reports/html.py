@@ -3014,9 +3014,12 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
     toggle_btns = ""
     for p in players:
         safe = _re.sub(r"\s+", "_", p)
+        total = player_json[p]["total"]
         toggle_btns += (
             f'<button id="tb-{safe}" class="toggle-btn" '
-            f'onclick="togglePlayer(\'{p}\')">{p}</button>\n'
+            f'onclick="togglePlayer(\'{p}\')">'
+            f'<span class="tb-name">{p}</span>'
+            f'<span class="tb-score">{total}</span></button>\n'
         )
 
     js_code = r"""
@@ -3059,12 +3062,10 @@ function drawStats() {
     const container = document.getElementById('arena-stats');
     if (activePlayers.size === 0) { container.innerHTML = '<div class="subtitle" style="padding:0.5rem;">Selecione jogadores acima</div>'; return; }
     let html = '<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">';
-    let idx = 0;
     activePlayers.forEach(function(name) {
         const d = P[name];
-        const color = COLORS[idx % COLORS.length]; idx++;
         html += '<div class="stat-card" style="flex:1;min-width:200px;">' +
-            '<div class="label" style="font-weight:600;font-size:0.8rem;color:' + color + ';">' + name + '</div>' +
+            '<div class="label" style="font-weight:600;font-size:0.8rem;color:var(--text);">' + name + '</div>' +
             '<div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.2rem;">' + d.total + ' pts | M\u00e9dia: ' + d.avg + ' | ' + d.games + ' jogos | B\u00f4nus times: +' + d.bonus + ' (' + d.bonus_correct + '/' + d.bonus_total + ')</div>' +
             '<div style="display:flex;flex-wrap:wrap;gap:0.2rem;">';
         PHASE_ORDER.forEach(function(ph) {
@@ -3199,6 +3200,13 @@ function drawChart() {
     }
 }
 
+function hexToRgba(hex, a) {
+    const r = parseInt(hex.slice(1,3), 16);
+    const g = parseInt(hex.slice(3,5), 16);
+    const b = parseInt(hex.slice(5,7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+}
+
 // ── MATCH TABLE ──
 function drawTable() {
     const container = document.getElementById('arena-table-wrap');
@@ -3206,21 +3214,19 @@ function drawTable() {
     const activeArr = Array.from(activePlayers);
     let html = '<div style="font-size:0.6rem;color:var(--text-muted);padding:0.2rem 0;display:flex;align-items:flex-start;gap:0.5rem;">' +
         '<div style="background:var(--card-border);border-radius:4px;padding:0.2rem 0.5rem;text-align:right;font-size:0.5rem;line-height:1.6;min-width:55px;font-family:var(--font-mono);">' +
-        '2x1<br>\u26bd 5<br>313 / 3\u00ba<br>-15</div>' +
+        '2x1<br>\u26bd 5<br>313 / 3\u00ba</div>' +
         '<div style="line-height:1.6;padding-top:0.05rem;">' +
         '<span style="display:block;font-size:0.55rem;">palpite</span>' +
         '<span style="display:block;font-size:0.55rem;">pts (\u26bd melhor do jogo)</span>' +
         '<span style="display:block;font-size:0.55rem;">acumulado (s\u00f3 palpites) / ranking</span>' +
-        '<span style="display:block;font-size:0.55rem;">dif. do l\u00edder dos selecionados</span>' +
         '</div></div>';
     html += '<div style="overflow-x:auto;"><table style="width:100%;font-size:0.7rem;border-collapse:collapse;">';
     // Header
     html += '<thead><tr style="border-bottom:1px solid var(--card-border);">';
     html += '<th style="text-align:left;padding:0.25rem 0.3rem;white-space:nowrap;font-size:0.65rem;">Data / Fase</th>';
     html += '<th style="text-align:left;padding:0.25rem 0.3rem;font-size:0.65rem;">Jogo</th>';
-    activeArr.forEach(function(name, i) {
-        const color = COLORS[i % COLORS.length];
-        html += '<th style="text-align:center;padding:0.25rem 0.15rem;color:' + color + ';white-space:nowrap;font-size:0.6rem;">\u25cf</th>';
+    activeArr.forEach(function(name) {
+        html += '<th style="text-align:center;padding:0.25rem 0.15rem;color:var(--text-muted);white-space:nowrap;font-size:0.6rem;">\u25cf</th>';
     });
     html += '</tr></thead><tbody>';
     // Rows - subtle highlight for highest score per match
@@ -3230,17 +3236,11 @@ function drawTable() {
             const pts = P[name].match_pts[mi];
             if (pts !== null && pts !== undefined && pts > rowMax) rowMax = pts;
         });
-        // pre-compute max cum among selected at this match for diff
-        let maxCum = -Infinity;
-        activeArr.forEach(function(name) {
-            const c = P[name].match_cums[mi];
-            if (c !== null && c !== undefined && c > maxCum) maxCum = c;
-        });
         html += '<tr style="border-bottom:1px solid var(--card-border);">';
         html += '<td style="padding:0.15rem 0.3rem;white-space:nowrap;color:var(--text-muted);font-size:0.55rem;">' + match.date_phase + '</td>';
         html += '<td style="padding:0.15rem 0.3rem;font-size:0.5rem;">' + match.match_label + '</td>';
         activeArr.forEach(function(name, i) {
-            const color = COLORS[i % COLORS.length];
+            const bg = hexToRgba(COLORS[i % COLORS.length], 0.06);
             const pts = P[name].match_pts[mi];
             const pick = P[name].match_picks[mi];
             const cum = P[name].match_cums[mi];
@@ -3248,16 +3248,13 @@ function drawTable() {
             if (pts !== null && pts !== undefined) {
                 const isBest = pts === rowMax && rowMax > 0;
                 const prefix = isBest ? '\u26bd ' : '';
-                const diff = cum - maxCum;
-                const diffStr = '<span style="font-size:0.4rem;color:var(--text-muted);display:block;">' + diff + '</span>';
-                html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:' + color + ';font-weight:600;font-size:0.55rem;">' +
+                html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:var(--text);font-weight:600;font-size:0.55rem;background:' + bg + ';">' +
                     (pick ? '<span style="font-size:0.45rem;font-weight:400;color:var(--text-muted);display:block;">' + pick + '</span>' : '') +
                     prefix + pts +
                     (cum ? '<span style="font-size:0.4rem;font-weight:400;color:var(--text-muted);display:block;">' + cum + (rank ? ' / ' + rank + '\u00ba' : '') + '</span>' : '') +
-                    diffStr +
                     '</td>';
             } else {
-                html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:var(--text-muted);font-size:0.55rem;">' +
+                html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:var(--text-muted);font-size:0.55rem;background:' + bg + ';">' +
                     (pick ? '<span style="font-size:0.45rem;display:block;">' + pick + '</span>' : '') +
                     '\u2014' +
                     (cum ? '<span style="font-size:0.4rem;display:block;">' + cum + (rank ? ' / ' + rank + '\u00ba' : '') + '</span>' : '') +
@@ -3270,17 +3267,15 @@ function drawTable() {
     html += '<tr style="border-top:2px solid var(--accent);font-weight:700;">';
     html += '<td style="padding:0.25rem 0.3rem;font-size:0.65rem;"></td><td style="padding:0.25rem 0.3rem;font-size:0.65rem;">Total</td>';
     activeArr.forEach(function(name, i) {
-        const color = COLORS[i % COLORS.length];
-        html += '<td style="text-align:center;padding:0.3rem 0.4rem;color:' + color + ';font-size:0.75rem;">' + P[name].total + '</td>';
+        html += '<td style="text-align:center;padding:0.3rem 0.4rem;color:var(--text);font-size:0.75rem;">' + P[name].total + '</td>';
     });
     html += '</tr></tbody></table></div>';
     // Add bonus row
     html += '<div style="display:flex;flex-wrap:wrap;gap:1rem;padding:0.5rem 0;font-size:0.75rem;color:var(--text-muted);">';
-    activeArr.forEach(function(name, i) {
+    activeArr.forEach(function(name) {
         const d = P[name];
         if (d.bonus_total > 0) {
-            const color = COLORS[i % COLORS.length];
-            html += '<div style="color:' + color + ';">\u25cf ' + name + ' b\u00f4nus times: +' + d.bonus + 'pts (' + d.bonus_correct + '/' + d.bonus_total + ')</div>';
+            html += '<div>\u25cf ' + name + ' b\u00f4nus times: +' + d.bonus + 'pts (' + d.bonus_correct + '/' + d.bonus_total + ')</div>';
         }
     });
     html += '</div>';
@@ -3323,19 +3318,43 @@ function drawTable() {
 
 <style>
 .toggle-btn {{
-    padding: 0.35rem 0.7rem;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05rem;
+    padding: 0.2rem 0.6rem;
     border: 1px solid var(--card-border);
     border-radius: 6px;
     background: var(--card-bg);
-    color: var(--text-muted);
-    font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.2s;
+    min-width: 64px;
+}}
+.tb-name {{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.01em;
+}}
+.tb-score {{
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    opacity: 0.55;
+    color: var(--text-muted);
+    line-height: 1.1;
 }}
 .toggle-btn.active {{
     background: var(--accent);
-    color: var(--text-inverse);
     border-color: var(--accent);
+}}
+.toggle-btn.active .tb-name {{
+    color: var(--text-inverse);
+}}
+.toggle-btn.active .tb-score {{
+    opacity: 0.85;
+    color: var(--text-inverse);
 }}
 .team-flag {{
     width: 18px;
