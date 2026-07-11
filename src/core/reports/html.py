@@ -839,7 +839,7 @@ def _bottom_nav_html(active: str = "", prefix: str = "", nav_items: list[dict] |
         items = [
             ("index.html", "\U0001f3e0", "In\u00edcio"),
             ("bolao_xray.html", "\U0001f50d", "Raio-X"),
-            ("times.html", "\U0001f3c6", "Times"),
+            ("arena.html", "\u2694\ufe0f", "Arena"),
             ("zebras.html", "\U0001f993", "Zebras"),
             ("palpites.html", "\U0001f4cb", "Palpites"),
             ("boleiros.html", "\U0001f465", "Boleiros"),
@@ -971,33 +971,20 @@ def _build_gold_dashboard(
     phase_order = [p for p in phase_order if p in phase_points or p in phase_bonus_display]
     if not phase_order:
         phase_order = list(phase_points.keys())
-    max_phase_pts = max((phase_points.get(p, 0) + phase_bonus_display.get(p, 0) for p in phase_order), default=1)
-
     phase_cards = ""
     for p in phase_order:
         pts = phase_points.get(p, 0)
         bns = phase_bonus_display.get(p, 0)
-        total_pb = pts + bns
-        if total_pb == 0:
+        if pts + bns == 0:
             continue
-        bar_pct = max(total_pb / max_phase_pts * 100, 5)
         phase_cards += (
-            f'<div style="flex:1;min-width:75px;border:1px solid var(--card-border);'
-            f'border-radius:8px;padding:0.4rem 0.3rem;text-align:center;">'
-            f'<div style="font-size:0.55rem;color:var(--text-muted);text-transform:uppercase;'
-            f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{p}</div>'
-            f'<div style="font-size:1rem;font-weight:600;color:var(--text);margin:0.1rem 0;">{total_pb}</div>'
-            f'<div style="font-size:0.5rem;color:var(--text-muted);">'
-            f'j{pts}{f" b{bns}" if bns else ""}</div>'
-            f'<div style="margin-top:0.2rem;height:3px;background:var(--card-border);'
-            f'border-radius:2px;overflow:hidden;">'
-            f'<div style="height:100%;width:{bar_pct:.0f}%;background:var(--accent);'
-            f'border-radius:2px;"></div></div>'
-            f'</div>\n'
+            f'<span style="font-size:0.65rem;background:var(--card-border);'
+            f'border-radius:4px;padding:0.15rem 0.4rem;white-space:nowrap;">'
+            f'{p} j{pts}{f" b{bns}" if bns else ""}</span>\n'
         )
 
     phase_row_html = (
-        f'<div style="display:flex;gap:0.35rem;overflow-x:auto;padding-bottom:0.2rem;">'
+        f'<div style="display:flex;flex-wrap:wrap;gap:0.25rem;padding-bottom:0.2rem;">'
         f'{phase_cards}</div>'
     )
 
@@ -2845,438 +2832,179 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
 # ------------------------------------------------------------------
 
 def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
-    """Build the arena.html player comparison page."""
+    """Arena: toggle players to see stats, evolution chart, and match table."""
     players = sorted(df_valid["who"].unique())
-    options = "".join(f'<option value="{p}">{p}</option>' for p in players)
 
-    # Load bonus data for badge
+    # ── Load bonus data (per phase) ──
     bonus_by_player = {}
     bonus_path = os.path.join(config._au_first_round(), "playoffs_scored.csv")
     if os.path.exists(bonus_path):
-        df_bonus_arena = pd.read_csv(bonus_path)
-        if not df_bonus_arena.empty:
-            for _, br in df_bonus_arena.iterrows():
+        df_bonus = pd.read_csv(bonus_path)
+        if not df_bonus.empty:
+            for _, br in df_bonus.iterrows():
                 who = str(br["boleiro"])
                 if who not in bonus_by_player:
-                    bonus_by_player[who] = {"correct": 0, "total": 0, "points": 0}
+                    bonus_by_player[who] = {"correct": 0, "total": 0, "points": 0, "by_phase": {}}
                 bonus_by_player[who]["correct"] += int(br["correct"])
                 bonus_by_player[who]["total"] += 1
                 bonus_by_player[who]["points"] += int(br["points"])
+                ph_raw = str(br.get("phase", ""))
+                if ph_raw:
+                    ph_key = _short_name(ph_raw, config) if ph_raw else ph_raw
+                    bonus_by_player[who]["by_phase"][ph_key] = bonus_by_player[who]["by_phase"].get(ph_key, 0) + int(br["points"])
 
-    # Embed player data as JSON
+    # ── Load ranking history for evolution chart ──
+    rh_data = {"dates": [], "players": {}, "max_rank": len(players)}
+    rh_path = os.path.join(config._au_first_round(), "ranking_history.csv")
+    if os.path.exists(rh_path):
+        df_rh = pd.read_csv(rh_path)
+        rh_data["dates"] = sorted(df_rh["date"].unique())
+        for p in players:
+            dp = df_rh[df_rh["boleiro"] == p].sort_values("date")
+            if not dp.empty:
+                rh_data["players"][p] = {
+                    "ranks": [int(r) for r in dp["rank"]],
+                    "cums": [int(c) for c in dp["cumulative_points"]],
+                }
+
+    # ── Build flag img map + slug map from config ──
+    flag_map = {}
+    slug_map = {}
+    for en_name, pt_name in config.team_name_mapping.items():
+        logo_url = config.team_logos.get(en_name, "")
+        if logo_url:
+            flag_map[pt_name] = f'<img src="{logo_url}" class="team-flag" alt="">'
+        else:
+            flag_map[pt_name] = ""
+        sl = config.team_slugs.get(en_name, "")
+        slug_map[pt_name] = sl if sl else pt_name
+
+    def _flag(s: str) -> str:
+        return flag_map.get(s.strip(), "")
+
+    def _slug(s: str) -> str:
+        return slug_map.get(s.strip(), s)
+
+    # ── Phase display labels ──
+    phase_emoji_map = dict(config.phase_emojis) if config.phase_emojis else {}
+
+    def _phase_label(ph):
+        if pd.isna(ph) or str(ph).strip() in ("", "1afase"):
+            return phase_emoji_map.get("1afase", "\U0001f4ca") + " 1\u00aa Fase"
+        s = str(ph).strip()
+        emoji = phase_emoji_map.get(s, "")
+        name = _short_name(s, config)
+        return f"{emoji} {name}".strip()
+
+    # ── Build all matches (sorted once) ──
+    df_all = df_valid.copy()
+    if "phase" in df_all.columns:
+        df_all["phase_display"] = df_all["phase"].apply(_phase_label)
+    else:
+        df_all["phase_display"] = phase_emoji_map.get("1afase", "\U0001f4ca") + " 1\u00aa Fase"
+    df_all["away_team"] = df_all["away_team"].astype(str)
+    df_all["home_team"] = df_all["home_team"].astype(str)
+    df_all["resultado_real_placar"] = df_all["resultado_real_placar"].fillna("")
+    df_all["match_label"] = df_all.apply(lambda r: _flag(r["home_team"]) + " " + _slug(r["home_team"]) + " " + str(r["resultado_real_placar"]) + " " + _flag(r["away_team"]) + " " + _slug(r["away_team"]), axis=1)
+    df_all["match_label"] = df_all["match_label"].str.replace(r"\s+", " ", regex=True).str.strip()
+    df_all["date_phase"] = df_all["date"].str[5:] + " " + df_all["phase_display"]
+    matches_df = df_all[["date", "match_label", "phase_display", "date_phase"]].drop_duplicates().sort_values("date", ascending=False)
+    matches_list = matches_df.to_dict("records")
+
+    # ── Per-phase display names ──
+    if "phase" in df_all.columns:
+        unique_phases = df_all["phase"].dropna().unique()
+        phase_display = {str(ph): _short_name(str(ph), config) for ph in unique_phases}
+    else:
+        phase_display = {}
+    phase_order = ["1\u00aa Fase"] + [_short_name(pr.name, config) for pr in (config.playoff_rounds or [])]
+
+    # ── Per-player data ──
     player_json = {}
     for p in players:
-        df_p = df_valid[df_valid["who"] == p].copy()
-        df_p["date"] = pd.to_datetime(df_p["date"])
-        daily = df_p.groupby("date")["pontos"].sum().reset_index()
-        daily["date_str"] = daily["date"].dt.strftime("%d/%m")
-        daily["cum"] = daily["pontos"].cumsum()
-        recent = df_p.sort_values("date", ascending=False)
+        df_p = df_all[df_all["who"] == p]
         bdata = bonus_by_player.get(p, {})
+        bonus_pts = bdata.get("points", 0)
+        match_pts_total = int(df_p["pontos"].sum())
+        games = len(df_p)
+        total = match_pts_total + bonus_pts
+        avg = round(total / games, 1) if games > 0 else 0
+        match_pts = []
+        match_picks = []
+        for _, mr in matches_df.iterrows():
+            row = df_p[(df_p["date"] == mr["date"]) & (df_p["match_label"] == mr["match_label"])]
+            if len(row) > 0:
+                match_pts.append(int(row["pontos"].sum()))
+                r = row.iloc[0]
+                hg = int(r["home_goals_bol"]) if pd.notna(r.get("home_goals_bol")) else "?"
+                ag = int(r["away_goals_bol"]) if pd.notna(r.get("away_goals_bol")) else "?"
+                match_picks.append(f"{hg}x{ag}")
+            else:
+                match_pts.append(None)
+                match_picks.append(None)
+        # per-match cumulative + rank (from ranking_history — includes bonus)
+        rhp = rh_data["players"].get(p, {})
+        rank_by_date = {}
+        cum_by_date = {}
+        if rhp and "ranks" in rhp and "cums" in rhp:
+            for di, d in enumerate(rh_data["dates"]):
+                if di < len(rhp["ranks"]):
+                    rank_by_date[d] = rhp["ranks"][di]
+                if di < len(rhp["cums"]):
+                    cum_by_date[d] = rhp["cums"][di]
+        match_ranks = [rank_by_date.get(mr["date"]) for _, mr in matches_df.iterrows()]
+        match_cums = [cum_by_date.get(mr["date"]) for _, mr in matches_df.iterrows()]
+        # ── Per-phase match points ──
+        phase_pts = {}
+        if "phase" in df_all.columns:
+            grp_mask = df_p["phase"].isna()
+            if grp_mask.any():
+                phase_pts["1\u00aa Fase"] = int(df_p.loc[grp_mask, "pontos"].sum())
+            for ph, grp in df_p.groupby("phase"):
+                if pd.isna(ph):
+                    continue
+                display = phase_display.get(str(ph), str(ph))
+                phase_pts[display] = int(grp["pontos"].sum())
+        else:
+            phase_pts = {"1\u00aa Fase": int(df_p["pontos"].sum())}
+        sorted_phase_pts = {ph: phase_pts.get(ph, 0) for ph in phase_order if ph in phase_pts}
         player_json[p] = {
-            "total": int(df_p["pontos"].sum()),
-            "avg": round(df_p["pontos"].mean(), 1),
-            "games": len(df_p),
-            "bonus": bdata.get("points", 0),
+            "total": total,
+            "match_total": match_pts_total,
+            "avg": avg,
+            "games": games,
+            "bonus": bonus_pts,
             "bonus_correct": bdata.get("correct", 0),
             "bonus_total": bdata.get("total", 0),
-            "daily": [{"date": r["date_str"], "pts": int(r["pontos"])} for _, r in daily.iterrows()],
-            "cumulative": [{"date": r["date_str"], "cum": int(r["cum"])} for _, r in daily.iterrows()],
-            "recent": [{"match": f"{r['home_team']} {r['resultado_real_placar']} {r['away_team']}", "pts": int(r["pontos"]), "date": pd.to_datetime(r["date"]).strftime("%d/%m")} for _, r in recent.iterrows()]
+            "match_pts": match_pts,
+            "match_picks": match_picks,
+            "match_cums": match_cums,
+            "match_ranks": match_ranks,
+            "phase_pts": sorted_phase_pts,
+            "phase_bonus": bdata.get("by_phase", {}),
         }
 
-    # Compute championship leader
-    df_totals = df_valid.groupby("who", as_index=False)["pontos"].sum()
-    df_totals.sort_values("pontos", ascending=False, inplace=True)
-    leader_name = str(df_totals.iloc[0]["who"]) if not df_totals.empty else ""
+    # ── short phase name → emoji ──
+    short_emoji_map = {"1\u00aa Fase": (config.phase_emojis or {}).get("1afase", "\U0001f4ca")}
+    for pr in (config.playoff_rounds or []):
+        short = _short_name(pr.name, config)
+        emoji = (config.phase_emojis or {}).get(pr.key, "")
+        if emoji:
+            short_emoji_map[short] = emoji
 
     import json
     json_str = json.dumps({
         "players": player_json,
-        "leader": leader_name,
+        "matches": matches_list,
+        "rh": rh_data,
+        "phase_order": phase_order,
+        "short_emoji_map": short_emoji_map,
     }, ensure_ascii=False)
 
-    js_code = r"""
-const arenaData = DATA_PLACEHOLDER;
-const playerData = arenaData.players;
-const leaderName = arenaData.leader;
-
-function getCSSVar(name) {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-}
-
-function updateArena() {
-    const p1 = document.getElementById('player1').value;
-    const p2 = document.getElementById('player2').value;
-    const content = document.getElementById('arena-content');
-
-    if (!p1 || !p2) {
-        content.style.display = 'none';
-        return;
-    }
-
-    content.style.display = 'block';
-    const d1 = playerData[p1];
-    const d2 = playerData[p2];
-
-    document.getElementById('p1-total').querySelector('.value').textContent = d1.total;
-    document.getElementById('p2-total').querySelector('.value').textContent = d2.total;
-    document.getElementById('p1-avg').querySelector('.value').textContent = d1.avg;
-    document.getElementById('p2-avg').querySelector('.value').textContent = d2.avg;
-    document.getElementById('p1-games').querySelector('.value').textContent = d1.games;
-    document.getElementById('p2-games').querySelector('.value').textContent = d2.games;
-
-    const p1BonusEl = document.getElementById('p1-bonus').querySelector('.value');
-    const p2BonusEl = document.getElementById('p2-bonus').querySelector('.value');
-    if (d1.bonus_total > 0) {
-        p1BonusEl.textContent = '+' + d1.bonus + 'pts (' + d1.bonus_correct + '/' + d1.bonus_total + ' \u2705)';
-    } else {
-        p1BonusEl.textContent = '-';
-    }
-    if (d2.bonus_total > 0) {
-        p2BonusEl.textContent = '+' + d2.bonus + 'pts (' + d2.bonus_correct + '/' + d2.bonus_total + ' \u2705)';
-    } else {
-        p2BonusEl.textContent = '-';
-    }
-
-    const voceColor = getCSSVar('--voce');
-    const bolaoColor = getCSSVar('--bolao');
-    const leaderColor = getCSSVar('--leader');
-    const gridColor = getCSSVar('--card-border');
-    const axisColor = getCSSVar('--text-muted');
-    const legendTextColor = getCSSVar('--text');
-
-    // Determine if leader should be shown (neither selected player is the leader)
-    const showLeader = leaderName && leaderName !== p1 && leaderName !== p2;
-    const dLeader = showLeader ? playerData[leaderName] : null;
-
-    // Cumulative line chart
-    const cumDiv = document.getElementById('cumulative-comparison');
-    cumDiv.innerHTML = '<div style="position:relative;"><canvas id="cum-chart" width="600" height="250" style="width:100%;height:250px;cursor:crosshair;"></canvas><div id="cum-tooltip" style="display:none;position:absolute;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;pointer-events:none;z-index:100;box-shadow:0 4px 12px var(--shadow-color);"></div></div>';
-    const canvas = document.getElementById('cum-chart');
-    const tooltip = document.getElementById('cum-tooltip');
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = 250 * dpr;
-    ctx.scale(dpr, dpr);
-    const W = rect.width;
-    const H = 250;
-    const padL = 40, padR = 10, padT = 10, padB = 30;
-    const plotW = W - padL - padR;
-    const plotH = H - padT - padB;
-
-    let allCumDates = [...new Set([...d1.cumulative.map(c => c.date), ...d2.cumulative.map(c => c.date)])];
-    if (showLeader && dLeader) {
-        allCumDates = [...new Set([...allCumDates, ...dLeader.cumulative.map(c => c.date)])];
-    }
-    allCumDates.sort();
-
-    const last1 = d1.cumulative.length > 0 ? d1.cumulative[d1.cumulative.length-1].cum : 0;
-    const last2 = d2.cumulative.length > 0 ? d2.cumulative[d2.cumulative.length-1].cum : 0;
-    const lastLeader = showLeader && dLeader && dLeader.cumulative.length > 0 ? dLeader.cumulative[dLeader.cumulative.length-1].cum : 0;
-    const maxCum = Math.max(last1, last2, lastLeader, 1);
-
-    function buildSeries(data, dates) {
-        return dates.map(function(date) {
-            const entry = data.find(c => c.date === date);
-            return entry ? entry.cum : 0;
-        });
-    }
-    const s1 = buildSeries(d1.cumulative, allCumDates);
-    const s2 = buildSeries(d2.cumulative, allCumDates);
-    const sLeader = showLeader ? buildSeries(dLeader.cumulative, allCumDates) : null;
-
-    function getPointX(i) { return padL + (plotW / Math.max(allCumDates.length - 1, 1)) * i; }
-    function getPointY(val) { return padT + plotH - (val / maxCum) * plotH; }
-
-    ctx.clearRect(0, 0, W, H);
-
-    // Grid lines
-    ctx.strokeStyle = gridColor;
-    ctx.lineWidth = 0.5;
-    const gridLines = 5;
-    for (let i = 0; i <= gridLines; i++) {
-        const y = padT + (plotH / gridLines) * i;
-        ctx.beginPath();
-        ctx.moveTo(padL, y);
-        ctx.lineTo(W - padR, y);
-        ctx.stroke();
-        const val = Math.round(maxCum - (maxCum / gridLines) * i);
-        ctx.fillStyle = axisColor;
-        ctx.font = '10px sans-serif';
-        ctx.textAlign = 'right';
-        ctx.fillText(val, padL - 4, y + 3);
-    }
-
-    function drawLine(series, color, lineWidth, dotRadius) {
-        ctx.strokeStyle = color;
-        ctx.lineWidth = lineWidth || 2;
-        ctx.beginPath();
-        series.forEach(function(val, i) {
-            const x = getPointX(i);
-            const y = getPointY(val);
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-        });
-        ctx.stroke();
-        series.forEach(function(val, i) {
-            const x = getPointX(i);
-            const y = getPointY(val);
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.arc(x, y, dotRadius || 3, 0, Math.PI * 2);
-            ctx.fill();
-        });
-    }
-
-    // Draw leader line first (behind)
-    if (showLeader && sLeader) {
-        drawLine(sLeader, leaderColor, 1.5, 2);
-    }
-    drawLine(s1, voceColor);
-    drawLine(s2, bolaoColor);
-
-    // X-axis labels
-    ctx.fillStyle = axisColor;
-    ctx.font = '9px sans-serif';
-    ctx.textAlign = 'center';
-    const step = Math.max(1, Math.floor(allCumDates.length / 8));
-    allCumDates.forEach(function(date, i) {
-        if (i % step === 0 || i === allCumDates.length - 1) {
-            const x = getPointX(i);
-            ctx.fillText(date, x, H - 5);
-        }
-    });
-
-    // Legend - bottom right
-    const legendY = H - padB - 30;
-    const legendStartX = W - padR - 80;
-    const legendItemH = 14;
-    let legendIdx = 0;
-
-    if (showLeader) {
-        ctx.fillStyle = leaderColor;
-        ctx.fillRect(legendStartX, legendY + legendIdx * legendItemH, 12, 12);
-        ctx.fillStyle = legendTextColor;
-        ctx.font = '10px sans-serif';
-        ctx.textAlign = 'left';
-        ctx.fillText(leaderName, legendStartX + 16, legendY + legendIdx * legendItemH + 10);
-        legendIdx++;
-    }
-    ctx.fillStyle = voceColor;
-    ctx.fillRect(legendStartX, legendY + legendIdx * legendItemH, 12, 12);
-    ctx.fillStyle = legendTextColor;
-    ctx.fillText(p1, legendStartX + 16, legendY + legendIdx * legendItemH + 10);
-    legendIdx++;
-    ctx.fillStyle = bolaoColor;
-    ctx.fillRect(legendStartX, legendY + legendIdx * legendItemH, 12, 12);
-    ctx.fillStyle = legendTextColor;
-    ctx.fillText(p2, legendStartX + 16, legendY + legendIdx * legendItemH + 10);
-
-    // Hover tooltip
-    canvas.addEventListener('mousemove', function(e) {
-        const r = canvas.getBoundingClientRect();
-        const mx = e.clientX - r.left;
-        const my = e.clientY - r.top;
-        let closest = -1;
-        let closestDist = 20;
-        for (let i = 0; i < allCumDates.length; i++) {
-            const dx = Math.abs(mx - getPointX(i));
-            if (dx < closestDist) { closestDist = dx; closest = i; }
-        }
-        if (closest >= 0) {
-            const v1 = s1[closest];
-            const v2 = s2[closest];
-            let tipHtml = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + allCumDates[closest] + '</div>' +
-                '<div style="color:' + voceColor + ';">' + p1 + ': <strong>' + v1 + '</strong> pts</div>' +
-                '<div style="color:' + bolaoColor + ';">' + p2 + ': <strong>' + v2 + '</strong> pts</div>';
-            if (showLeader && sLeader) {
-                const vL = sLeader[closest];
-                tipHtml = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + allCumDates[closest] + '</div>' +
-                    '<div style="color:' + leaderColor + ';">' + leaderName + ': <strong>' + vL + '</strong> pts</div>' +
-                    '<div style="color:' + voceColor + ';">' + p1 + ': <strong>' + v1 + '</strong> pts</div>' +
-                    '<div style="color:' + bolaoColor + ';">' + p2 + ': <strong>' + v2 + '</strong> pts</div>';
-            }
-            tooltip.style.display = 'block';
-            tooltip.innerHTML = tipHtml;
-            let tx = mx + 12;
-            let ty = my - 10;
-            if (tx + 120 > W) tx = mx - 130;
-            if (ty < 0) ty = 10;
-            tooltip.style.left = tx + 'px';
-            tooltip.style.top = ty + 'px';
-        } else {
-            tooltip.style.display = 'none';
-        }
-    });
-    canvas.addEventListener('mouseleave', function() {
-        tooltip.style.display = 'none';
-    });
-
-    // Recent games comparison
-    const recentDiv = document.getElementById('recent-comparison');
-    const maxRecent = Math.max(...d1.recent.map(r => r.pts), ...d2.recent.map(r => r.pts), 1);
-    let recentHtml = '';
-    const allRecentKeys = [...new Set([...d1.recent.map(r => r.date + '|' + r.match), ...d2.recent.map(r => r.date + '|' + r.match)])];
-    const recentMatches = [...new Set(allRecentKeys.map(k => k.split('|')[1]))];
-    recentMatches.forEach(function(match) {
-        const r1 = d1.recent.find(r => r.match === match);
-        const r2 = d2.recent.find(r => r.match === match);
-        if (!r1 && !r2) return;
-        const pts1 = r1 ? r1.pts : 0;
-        const pts2 = r2 ? r2.pts : 0;
-        const pct1 = Math.round(pts1 / maxRecent * 100);
-        const pct2 = Math.round(pts2 / maxRecent * 100);
-        const dateLabel = r1 ? r1.date : r2.date;
-        recentHtml += '<div style="margin-bottom:0.5rem;font-size:0.75rem;">' +
-            '<div style="color:var(--text-muted);margin-bottom:0.15rem;font-size:0.7rem;">' + dateLabel + ' \u2014 ' + match + '</div>' +
-            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--voce);font-size:0.7rem;">P1</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct1 + '%;background:var(--voce);"></div></div>' +
-            '<span style="min-width:20px;text-align:right;font-size:0.75rem;">' + pts1 + '</span>' +
-            '</div>' +
-            '<div style="display:flex;align-items:center;gap:0.25rem;">' +
-            '<span style="min-width:30px;color:var(--bolao);font-size:0.7rem;">P2</span>' +
-            '<div class="bar-track" style="height:12px;flex:1;"><div class="bar-fill" style="width:' + pct2 + '%;background:var(--bolao);"></div></div>' +
-            '<span style="min-width:20px;text-align:right;font-size:0.75rem;">' + pts2 + '</span>' +
-            '</div>' +
-            '</div>';
-    });
-    recentDiv.innerHTML = recentHtml;
-}
-"""
-
-    body = f"""
-<div class="hero">
-    <h1>\u2694\ufe0f Arena</h1>
-    <div class="subtitle">Compare dois boleiros</div>
-</div>
-
-<div class="card" style="margin:1rem 0.75rem;">
-    <div class="grid-2">
-        <div>
-            <label class="arena-label" for="player1">Jogador 1</label>
-            <select id="player1" class="arena-select" onchange="updateArena()">
-                <option value="">Selecione...</option>
-                {options}
-            </select>
-        </div>
-        <div>
-            <label class="arena-label" for="player2">Jogador 2</label>
-            <select id="player2" class="arena-select" onchange="updateArena()">
-                <option value="">Selecione...</option>
-                {options}
-            </select>
-        </div>
-    </div>
-</div>
-
-<div id="arena-content" style="display:none;">
-    <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
-        <div class="stat-card" id="p1-total">
-            <div class="value" style="color:var(--voce)">-</div>
-            <div class="label">Total Jogos</div>
-        </div>
-        <div class="stat-card" style="background:var(--card-border);">
-            <div class="value" style="font-size:1.2rem;">VS</div>
-            <div class="label">Comparacao</div>
-            <div class="label"></div>
-        </div>
-        <div class="stat-card" id="p2-total">
-            <div class="value" style="color:var(--bolao)">-</div>
-            <div class="label">Total Jogos</div>
-        </div>
-    </div>
-
-    <div class="stat-row" style="grid-template-columns:repeat(4,1fr);">
-        <div class="stat-card" id="p1-avg">
-            <div class="value" style="font-size:1.1rem;color:var(--voce)">-</div>
-            <div class="label">Media/Jogo</div>
-        </div>
-        <div class="stat-card" id="p1-games">
-            <div class="value" style="font-size:1.1rem;color:var(--voce)">-</div>
-            <div class="label">Jogos</div>
-        </div>
-        <div class="stat-card" id="p2-avg">
-            <div class="value" style="font-size:1.1rem;color:var(--bolao)">-</div>
-            <div class="label">Media/Jogo</div>
-        </div>
-        <div class="stat-card" id="p2-games">
-            <div class="value" style="font-size:1.1rem;color:var(--bolao)">-</div>
-            <div class="label">Jogos</div>
-        </div>
-    </div>
-
-    <div class="stat-row" style="grid-template-columns:repeat(2,1fr);">
-        <div class="stat-card" id="p1-bonus">
-            <div class="value" style="font-size:1.1rem;color:var(--voce)">-</div>
-            <div class="label">\U0001f3c6 Bônus Times</div>
-        </div>
-        <div class="stat-card" id="p2-bonus">
-            <div class="value" style="font-size:1.1rem;color:var(--bolao)">-</div>
-            <div class="label">\U0001f3c6 Bônus Times</div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Pontos por Dia</div>
-        <div id="daily-comparison"></div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Acumulado por Dia</div>
-        <div id="cumulative-comparison"></div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Todos os Jogos</div>
-        <div id="recent-comparison"></div>
-    </div>
-</div>
-
-<script>
-{js_code.replace('DATA_PLACEHOLDER', json_str)}
-</script>
-"""
-    return _page_frame(config, f"Arena - {config.report_title}", body, back_link="index.html")
-
-
-# ------------------------------------------------------------------
-# Ranking Evolution page
-# ------------------------------------------------------------------
-
-
-def _build_ranking_evolution(config: ChampionshipConfig) -> str:
-    """Show rank position over time (toggleable per player, inverted Y-axis)."""
-    csv_path = _norm(os.path.join(config._au_first_round(), "ranking_history.csv"))
-    if not os.path.exists(csv_path):
-        return _page_frame(config, f"Evolu\u00e7\u00e3o - {config.report_title}", "<div class='hero'><h1>\U0001f4ca Evolu\u00e7\u00e3o do Ranking</h1><div class='subtitle'>Ainda não foi realizado nenhum jogo, por isso não há resultados.</div></div>")
-    df = pd.read_csv(csv_path, sep=",")
-    players = sorted(df["boleiro"].unique())
-    all_dates = sorted(df["date"].unique())
-
-    player_json = {}
-    for p in players:
-        dp = df[df["boleiro"] == p].sort_values("date")
-        player_json[p] = {
-            "ranks": [int(r) for r in dp["rank"]],
-            "cums": [int(c) for c in dp["cumulative_points"]],
-        }
-
-    import json
-    max_rank = len(players)
-    json_str = json.dumps({
-        "players": player_json,
-        "dates": all_dates,
-        "max_rank": max_rank,
-    }, ensure_ascii=False)
-
-    # Toggle buttons (sorted alphabetically)
+    # ── Toggle buttons ──
     import re as _re
     toggle_btns = ""
-    for p in sorted(players):
+    for p in players:
         safe = _re.sub(r"\s+", "_", p)
         toggle_btns += (
             f'<button id="tb-{safe}" class="toggle-btn" '
@@ -3284,26 +3012,71 @@ def _build_ranking_evolution(config: ChampionshipConfig) -> str:
         )
 
     js_code = r"""
-const data = DATA_PLACEHOLDER;
-const COLORS = ['#f5c518', '#3b82f6', '#22c55e', '#ef4444', '#a855f7', '#ec4899', '#f97316', '#14b8a6'];
+const DATA = DATA_PLACEHOLDER;
+const P = DATA.players;
+const M = DATA.matches;
+const RH = DATA.rh;
+const PHASE_ORDER = DATA.phase_order;
+const SHORT_EMOJI = DATA.short_emoji_map;
+const COLORS = ['#e6194b','#3cb44b','#4363d8','#f58231','#911eb4','#42d4f4','#f032e6','#469990','#e6beff','#9A6324'];
+const MAX_PLAYERS = 10;
 const activePlayers = new Set();
 
 function togglePlayer(name) {
     const safe = name.replace(/\s+/g, '_');
     const btn = document.getElementById('tb-' + safe);
-    if (activePlayers.has(name)) {
-        activePlayers.delete(name);
-        btn.classList.remove('active');
-    } else {
-        activePlayers.add(name);
-        btn.classList.add('active');
-    }
-    drawChart();
+    if (activePlayers.has(name)) { activePlayers.delete(name); btn.classList.remove('active'); }
+    else if (activePlayers.size >= MAX_PLAYERS) { return; }
+    else { activePlayers.add(name); btn.classList.add('active'); }
+    render();
 }
 
+function resetSelection() {
+    activePlayers.forEach(function(name) {
+        const safe = name.replace(/\s+/g, '_');
+        document.getElementById('tb-' + safe).classList.remove('active');
+    });
+    activePlayers.clear();
+    render();
+}
+
+function render() {
+    drawStats();
+    drawChart();
+    drawTable();
+}
+
+// ── STAT CARDS ──
+function drawStats() {
+    const container = document.getElementById('arena-stats');
+    if (activePlayers.size === 0) { container.innerHTML = '<div class="subtitle" style="padding:0.5rem;">Selecione jogadores acima</div>'; return; }
+    let html = '<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">';
+    let idx = 0;
+    activePlayers.forEach(function(name) {
+        const d = P[name];
+        const color = COLORS[idx % COLORS.length]; idx++;
+        html += '<div class="stat-card" style="flex:1;min-width:200px;">' +
+            '<div class="label" style="font-weight:600;font-size:0.8rem;color:' + color + ';">' + name + '</div>' +
+            '<div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.2rem;">' + d.total + ' pts | M\u00e9dia: ' + d.avg + ' | ' + d.games + ' jogos | B\u00f4nus times: +' + d.bonus + ' (' + d.bonus_correct + '/' + d.bonus_total + ')</div>' +
+            '<div style="display:flex;flex-wrap:wrap;gap:0.2rem;">';
+        PHASE_ORDER.forEach(function(ph) {
+            var pts = (d.phase_pts && d.phase_pts[ph]) ? d.phase_pts[ph] : 0;
+            var bns = (d.phase_bonus && d.phase_bonus[ph]) ? d.phase_bonus[ph] : 0;
+            if (pts + bns === 0) return;
+            var emoji = SHORT_EMOJI[ph] || '';
+            html += '<span style="font-size:0.6rem;background:var(--card-border);border-radius:4px;padding:0.1rem 0.3rem;white-space:nowrap;">' + emoji + ' ' + ph + ' ' + pts + 'pts' + (bns ? ' +' + bns + ' b\u00f4nus' : '') + '</span>';
+        });
+        html += '</div></div>';
+    });
+    container.innerHTML = html + '</div>';
+}
+
+// ── EVOLUTION CHART ──
 function drawChart() {
+    const chartDiv = document.getElementById('arena-chart');
+    if (activePlayers.size === 0) { chartDiv.innerHTML = ''; return; }
+    chartDiv.innerHTML = '<div style="position:relative;"><canvas id="rank-chart" width="600" height="250" style="width:100%;height:250px;cursor:crosshair;"></canvas><div id="rank-tooltip" style="display:none;position:absolute;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;pointer-events:none;z-index:100;box-shadow:0 4px 12px var(--shadow-color);"></div></div>';
     const canvas = document.getElementById('rank-chart');
-    if (!canvas) return;
     const tooltip = document.getElementById('rank-tooltip');
     const ctx = canvas.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
@@ -3317,34 +3090,32 @@ function drawChart() {
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
 
-    const dates = data.dates;
-    const maxRank = data.max_rank;
+    const dates = RH.dates;
+    const maxRank = RH.max_rank;
     ctx.clearRect(0, 0, W, H);
 
-    // Grid - Y axis always in steps of 5 (1, 5, 10, 15, ...)
+    // Grid - Y in steps of 5
     ctx.strokeStyle = '#30363d';
     ctx.lineWidth = 0.5;
     const yTicks = [1];
     for (let t = 5; t <= maxRank; t += 5) yTicks.push(t);
-    if (yTicks[yTicks.length - 1] !== maxRank) yTicks.push(maxRank);
+    if (yTicks[yTicks.length-1] !== maxRank) yTicks.push(maxRank);
     yTicks.forEach(function(pos) {
         const y = padT + ((pos - 1) / maxRank) * plotH;
         ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
     });
-    // Y-axis labels (left)
     ctx.fillStyle = '#8899aa';
     ctx.font = '10px sans-serif';
     ctx.textAlign = 'right';
     yTicks.forEach(function(pos) {
         const y = padT + ((pos - 1) / maxRank) * plotH;
         ctx.fillText(pos + '\u00ba', padL - 4, y + 3);
-        // Twin Y-axis labels (right)
         ctx.textAlign = 'left';
         ctx.fillText(pos + '\u00ba', W - padR + 4, y + 3);
         ctx.textAlign = 'right';
     });
 
-    // X axis - dynamic step so labels never overlap (~30px per label)
+    // X axis
     ctx.fillStyle = '#8899aa';
     ctx.font = '9px sans-serif';
     const labelW = 30;
@@ -3362,13 +3133,11 @@ function drawChart() {
     function getX(i) { return padL + (plotW / Math.max(dates.length - 1, 1)) * i; }
     function getY(rank) { return padT + ((rank - 1) / maxRank) * plotH; }
 
-    // Draw only active players
     let idx = 0;
     activePlayers.forEach(function(name) {
-        const p = data.players[name];
+        const p = RH.players[name];
         if (!p) return;
-        const color = COLORS[idx % COLORS.length];
-        idx++;
+        const color = COLORS[idx % COLORS.length]; idx++;
         ctx.strokeStyle = color;
         ctx.lineWidth = 2.5;
         ctx.beginPath();
@@ -3379,8 +3148,6 @@ function drawChart() {
             else ctx.lineTo(x, y);
         });
         ctx.stroke();
-
-        // Dots
         p.ranks.forEach(function(r, i) {
             const x = getX(i);
             const y = getY(r);
@@ -3407,10 +3174,9 @@ function drawChart() {
                 let tip = '<div style="color:var(--text-muted);margin-bottom:0.25rem;">' + dates[closest] + '</div>';
                 let cIdx = 0;
                 activePlayers.forEach(function(name) {
-                    const rank = data.players[name].ranks[closest];
-                    const cum = data.players[name].cums[closest];
-                    const color = COLORS[cIdx % COLORS.length];
-                    cIdx++;
+                    const rank = RH.players[name].ranks[closest];
+                    const cum = RH.players[name].cums[closest];
+                    const color = COLORS[cIdx % COLORS.length]; cIdx++;
                     tip += '<div style="color:' + color + ';">' + name + ': <strong>' + rank + '\u00ba</strong> (' + cum + ' pts)</div>';
                 });
                 tooltip.style.display = 'block';
@@ -3424,53 +3190,127 @@ function drawChart() {
         canvas.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
     }
 }
-document.addEventListener('DOMContentLoaded', drawChart);
-"""
 
-    # Table
-    table_rows = ""
-    for p in players:
-        dp = df[df["boleiro"] == p].sort_values("date")
-        if dp.empty:
-            continue
-        last = dp.iloc[-1]
-        table_rows += f"""
-<tr><td style="padding:0.3rem 0.5rem;"><a href="boleiros/{p}.html" style="color:var(--accent);">{p}</a></td><td style="padding:0.3rem 0.5rem;font-weight:700;">{int(last['rank'])}\u00ba</td><td style="padding:0.3rem 0.5rem;">{int(last['cumulative_points'])} pts</td><td style="padding:0.3rem 0.5rem;color:var(--text-muted);font-size:0.8rem;">{int(last['leader_distance'])} do lider</td></tr>"""
+// ── MATCH TABLE ──
+function drawTable() {
+    const container = document.getElementById('arena-table-wrap');
+    if (activePlayers.size === 0) { container.innerHTML = ''; return; }
+    const activeArr = Array.from(activePlayers);
+    let html = '<div style="font-size:0.6rem;color:var(--text-muted);padding:0.2rem 0;display:flex;align-items:flex-start;gap:0.5rem;">' +
+        '<div style="background:var(--card-border);border-radius:4px;padding:0.2rem 0.5rem;text-align:right;font-size:0.5rem;line-height:1.6;min-width:55px;font-family:var(--font-mono);">' +
+        '2x1<br>\u26bd 5<br>313 3\u00ba<br>-15</div>' +
+        '<div style="line-height:1.6;padding-top:0.05rem;">' +
+        '<span style="display:block;font-size:0.55rem;">palpite</span>' +
+        '<span style="display:block;font-size:0.55rem;">pts (\u26bd melhor do jogo)</span>' +
+        '<span style="display:block;font-size:0.55rem;">acumulado (c/ b\u00f4nus) | ranking</span>' +
+        '<span style="display:block;font-size:0.55rem;">dif. do l\u00edder dos selecionados</span>' +
+        '</div></div>';
+    html += '<div style="overflow-x:auto;"><table style="width:100%;font-size:0.7rem;border-collapse:collapse;">';
+    // Header
+    html += '<thead><tr style="border-bottom:1px solid var(--card-border);">';
+    html += '<th style="text-align:left;padding:0.25rem 0.3rem;white-space:nowrap;font-size:0.65rem;">Data / Fase</th>';
+    html += '<th style="text-align:left;padding:0.25rem 0.3rem;font-size:0.65rem;">Jogo</th>';
+    activeArr.forEach(function(name, i) {
+        const color = COLORS[i % COLORS.length];
+        html += '<th style="text-align:center;padding:0.25rem 0.15rem;color:' + color + ';white-space:nowrap;font-size:0.6rem;">\u25cf</th>';
+    });
+    html += '</tr></thead><tbody>';
+    // Rows - subtle highlight for highest score per match
+    M.forEach(function(match, mi) {
+        let rowMax = -1;
+        activeArr.forEach(function(name) {
+            const pts = P[name].match_pts[mi];
+            if (pts !== null && pts !== undefined && pts > rowMax) rowMax = pts;
+        });
+        // pre-compute max cum among selected at this match for diff
+        let maxCum = -Infinity;
+        activeArr.forEach(function(name) {
+            const c = P[name].match_cums[mi];
+            if (c !== null && c !== undefined && c > maxCum) maxCum = c;
+        });
+        html += '<tr style="border-bottom:1px solid var(--card-border);">';
+        html += '<td style="padding:0.15rem 0.3rem;white-space:nowrap;color:var(--text-muted);font-size:0.55rem;">' + match.date_phase + '</td>';
+        html += '<td style="padding:0.15rem 0.3rem;font-size:0.5rem;">' + match.match_label + '</td>';
+        activeArr.forEach(function(name, i) {
+            const color = COLORS[i % COLORS.length];
+            const pts = P[name].match_pts[mi];
+            const pick = P[name].match_picks[mi];
+            const cum = P[name].match_cums[mi];
+            const rank = P[name].match_ranks[mi];
+            if (pts !== null && pts !== undefined) {
+                const isBest = pts === rowMax && rowMax > 0;
+                const prefix = isBest ? '\u26bd ' : '';
+                const diff = cum - maxCum;
+                const diffStr = '<span style="font-size:0.4rem;color:var(--text-muted);display:block;">' + diff + '</span>';
+                html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:' + color + ';font-weight:600;font-size:0.55rem;">' +
+                    (pick ? '<span style="font-size:0.45rem;font-weight:400;color:var(--text-muted);display:block;">' + pick + '</span>' : '') +
+                    prefix + pts +
+                    (cum ? '<span style="font-size:0.4rem;font-weight:400;color:var(--text-muted);display:block;">' + cum + (rank ? ' ' + rank + '\u00ba' : '') + '</span>' : '') +
+                    diffStr +
+                    '</td>';
+            } else {
+                html += '<td style="text-align:center;padding:0.1rem 0.1rem;color:var(--text-muted);font-size:0.55rem;">' +
+                    (pick ? '<span style="font-size:0.45rem;display:block;">' + pick + '</span>' : '') +
+                    '\u2014' +
+                    (cum ? '<span style="font-size:0.4rem;display:block;">' + cum + (rank ? ' ' + rank + '\u00ba' : '') + '</span>' : '') +
+                    '</td>';
+            }
+        });
+        html += '</tr>';
+    });
+    // Totals row
+    html += '<tr style="border-top:2px solid var(--accent);font-weight:700;">';
+    html += '<td style="padding:0.25rem 0.3rem;font-size:0.65rem;"></td><td style="padding:0.25rem 0.3rem;font-size:0.65rem;">Total</td>';
+    activeArr.forEach(function(name, i) {
+        const color = COLORS[i % COLORS.length];
+        html += '<td style="text-align:center;padding:0.3rem 0.4rem;color:' + color + ';font-size:0.75rem;">' + P[name].total + '</td>';
+    });
+    html += '</tr></tbody></table></div>';
+    // Add bonus row
+    html += '<div style="display:flex;flex-wrap:wrap;gap:1rem;padding:0.5rem 0;font-size:0.75rem;color:var(--text-muted);">';
+    activeArr.forEach(function(name, i) {
+        const d = P[name];
+        if (d.bonus_total > 0) {
+            const color = COLORS[i % COLORS.length];
+            html += '<div style="color:' + color + ';">\u25cf ' + name + ' b\u00f4nus times: +' + d.bonus + 'pts (' + d.bonus_correct + '/' + d.bonus_total + ')</div>';
+        }
+    });
+    html += '</div>';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);padding-top:0.15rem;">B\u00f4nus times: acertos em palpites de sele\u00e7\u00f5es que avan\u00e7aram de fase. Ex: 46/65 = 46 acertos em 65 palpites.</div>';
+    container.innerHTML = html;
+}
+"""
 
     body = f"""
 <div class="hero">
-    <h1>\U0001f4c8 Evolucao no Ranking</h1>
-    <div class="subtitle">Clique nos jogadores abaixo para ligar/desligar</div>
+    <h1>\u2694\ufe0f Arena</h1>
+    <div class="subtitle">Clique nos jogadores para ligar/desligar</div>
 </div>
 
 <div class="card">
-    <div class="card-title">Grafico (passe o mouse sobre as linhas)</div>
-    <div style="position:relative;">
-        <canvas id="rank-chart" width="600" height="250" style="width:100%;height:250px;cursor:crosshair;"></canvas>
-        <div id="rank-tooltip" style="display:none;position:absolute;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.75rem;pointer-events:none;z-index:100;box-shadow:0 4px 12px var(--shadow-color);"></div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-title">Jogadores (clique para ligar/desligar)</div>
+    <div class="card-title">Jogadores</div>
     <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
         {toggle_btns}
     </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;padding-top:0.3rem;">
+        <span style="font-size:0.7rem;color:var(--text-muted);">M\u00e1x 10 jogadores</span>
+        <button onclick="resetSelection()" style="font-size:0.65rem;padding:0.15rem 0.5rem;border:1px solid var(--card-border);border-radius:4px;background:var(--card-bg);color:var(--text-muted);cursor:pointer;">Limpar</button>
+    </div>
 </div>
 
 <div class="card">
-    <div class="card-title">Classificacao Atual</div>
-    <table data-sortable style="width:100%;font-size:0.8rem;border-collapse:collapse;">
-        <thead>
-            <tr style="border-bottom:1px solid var(--card-border);">
-                <th style="text-align:left;padding:0.3rem 0.5rem;">Jogador</th>
-                <th style="text-align:left;padding:0.3rem 0.5rem;">#</th>
-                <th style="text-align:left;padding:0.3rem 0.5rem;">Pts</th>
-                <th style="text-align:left;padding:0.3rem 0.5rem;">Dist</th>
-            </tr>
-        </thead>
-        <tbody>{table_rows}</tbody>
-    </table>
+    <div class="card-title">Estat\u00edsticas</div>
+    <div id="arena-stats"><div class="subtitle" style="padding:0.5rem;">Selecione jogadores acima</div></div>
+</div>
+
+<div class="card">
+    <div class="card-title">Evolu\u00e7\u00e3o no Ranking</div>
+    <div id="arena-chart"></div>
+</div>
+
+<div class="card">
+    <div class="card-title">Jogos</div>
+    <div id="arena-table-wrap"><div class="subtitle" style="padding:0.5rem;">Selecione jogadores acima</div></div>
 </div>
 
 <style>
@@ -3489,13 +3329,18 @@ document.addEventListener('DOMContentLoaded', drawChart);
     color: var(--text-inverse);
     border-color: var(--accent);
 }}
+.team-flag {{
+    width: 18px;
+    height: 12px;
+    vertical-align: middle;
+}}
 </style>
 
 <script>
 {js_code.replace('DATA_PLACEHOLDER', json_str)}
 </script>
 """
-    return _page_frame(config, f"Evolucao - {config.report_title}", body, back_link="index.html")
+    return _page_frame(config, f"Arena - {config.report_title}", body, back_link="index.html")
 
 
 # ------------------------------------------------------------------
@@ -4740,7 +4585,6 @@ def _analytics_cleanup(config: ChampionshipConfig, html_base: str) -> None:
         has_results = False
     if not has_results:
         stale = [
-            "ranking_evolution.html",
             "boldometer.html",
             "bolao_xray.html",
             "day_winners.html",
@@ -4752,12 +4596,6 @@ def _analytics_cleanup(config: ChampionshipConfig, html_base: str) -> None:
             if os.path.exists(path):
                 os.remove(path)
                 print_colored(f"\tremoved stale {name}", "yellow")
-
-
-def _build_ranking_evolution_page(config: ChampionshipConfig, html_base: str) -> None:
-    path = _norm(os.path.join(html_base, "ranking_evolution.html"))
-    print_colored("generating ranking_evolution.html", "blue")
-    _save(path, _build_ranking_evolution(config))
 
 
 def _build_boldometer_page(config: ChampionshipConfig, html_base: str) -> None:
@@ -4924,6 +4762,13 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
             df_valid = df_all.copy()
     else:
         df_valid = df_all.copy()
+    # Append playoff gold data so arena/boleiro pages include all phases
+    for pr in (config.playoff_rounds or []):
+        pp = config.gold_playoff_all_path(pr.key)
+        if os.path.exists(pp):
+            df_play = pd.read_csv(pp, sep=",")
+            if not df_play.empty:
+                df_valid = pd.concat([df_valid, df_play], ignore_index=True)
     # Compute full ranking once (match + playoff + bonus - penalty) so every
     # boleiro page shows the same rank as the index page.
     full_ranking = _compute_full_player_ranking(config)
@@ -5046,7 +4891,6 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
     # with placeholder "no data" messages when CSVs are missing.
     _analytics_cleanup(config, html_base)
     # Build pages (each builder handles missing data gracefully)
-    _build_ranking_evolution_page(config, html_base)
     _build_boldometer_page(config, html_base)
     _build_bolao_xray_page(config, html_base)
     _build_day_winners_page(config, html_base)

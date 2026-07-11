@@ -987,7 +987,7 @@ def _build_bottom_nav_dashboard(prefix: str = "", config: ChampionshipConfig | N
         items = [
             ("index.html", "\U0001f3e0", "In\u00edcio"),
             ("bolao_xray.html", "\U0001f50d", "Raio-X"),
-            ("times.html", "\U0001f3c6", "Times"),
+            ("arena.html", "\u2694\ufe0f", "Arena"),
             ("zebras.html", "\U0001f993", "Zebras"),
             ("palpites.html", "\U0001f4cb", "Palpites"),
             ("boleiros.html", "\U0001f465", "Boleiros"),
@@ -1570,11 +1570,6 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <a href="rodadas.html">
         <div class="card" style="text-align:center;padding:0.75rem 0.5rem;">
             <div style="font-family:var(--font-display);font-weight:600;font-size:0.85rem;">\U0001f4ca Rodadas</div>
-        </div>
-    </a>
-    <a href="ranking_evolution.html">
-        <div class="card" style="text-align:center;padding:0.75rem 0.5rem;">
-            <div style="font-family:var(--font-display);font-weight:600;font-size:0.85rem;">\U0001f4c8 Evolu\u00e7\u00e3o</div>
         </div>
     </a>
 </div>

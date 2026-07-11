@@ -129,7 +129,7 @@ continent_order: ["europeu", "latino", "asiatico", "africano", "anfitriao", "oce
 nav_items:
   - {href: "index.html", icon: "🏠", label: "Início"}
   - {href: "bolao_xray.html", icon: "🔍", label: "Raio-X"}
-  - {href: "times.html", icon: "🏆", label: "Times"}
+  - {href: "arena.html", icon: "⚔️", label: "Arena"}
   - {href: "zebras.html", icon: "🦓", label: "Zebras"}
   - {href: "palpites.html", icon: "📋", label: "Palpites"}
   - {href: "boleiros.html", icon: "👥", label: "Boleiros"}
