@@ -2942,26 +2942,18 @@ def _build_arena(config: ChampionshipConfig, df_valid: pd.DataFrame) -> str:
             else:
                 match_pts.append(None)
                 match_picks.append(None)
-        # per-match cumulative (running sum of match pts, NO bonus)
-        # match_pts is newest-first; reverse to compute running total chronologically
-        _chrono = list(reversed(match_pts))
-        _running = 0
-        _cum_chrono = []
-        for pts in _chrono:
-            if pts is not None:
-                _running += pts
-                _cum_chrono.append(_running)
-            else:
-                _cum_chrono.append(None if _running == 0 else _running)
-        match_cums = list(reversed(_cum_chrono))
-        # per-match rank (from ranking_history, includes bonus — real standing)
+        # per-match cumulative + rank (from ranking_history, includes bonus)
         rhp = rh_data["players"].get(p, {})
         rank_by_date = {}
-        if rhp and "ranks" in rhp:
+        cum_by_date = {}
+        if rhp and "ranks" in rhp and "cums" in rhp:
             for di, d in enumerate(rh_data["dates"]):
                 if di < len(rhp["ranks"]):
                     rank_by_date[d] = rhp["ranks"][di]
+                if di < len(rhp["cums"]):
+                    cum_by_date[d] = rhp["cums"][di]
         match_ranks = [rank_by_date.get(mr["date"]) for _, mr in matches_df.iterrows()]
+        match_cums = [cum_by_date.get(mr["date"]) for _, mr in matches_df.iterrows()]
         # ── Per-phase match points ──
         phase_pts = {}
         if "phase" in df_all.columns:
@@ -3218,7 +3210,7 @@ function drawTable() {
         '<div style="line-height:1.6;padding-top:0.05rem;">' +
         '<span style="display:block;font-size:0.55rem;">palpite</span>' +
         '<span style="display:block;font-size:0.55rem;">pts (\u26bd melhor do jogo)</span>' +
-        '<span style="display:block;font-size:0.55rem;">acumulado (s\u00f3 palpites) / ranking</span>' +
+        '<span style="display:block;font-size:0.55rem;">acumulado (c/ b\u00f4nus) / ranking</span>' +
         '</div></div>';
     html += '<div style="overflow-x:auto;"><table style="width:100%;font-size:0.7rem;border-collapse:collapse;">';
     // Header
