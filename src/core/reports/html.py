@@ -3273,17 +3273,14 @@ def _build_ranking_evolution(config: ChampionshipConfig) -> str:
         "max_rank": max_rank,
     }, ensure_ascii=False)
 
-    # Toggle buttons
+    # Toggle buttons (sorted alphabetically)
     import re as _re
     toggle_btns = ""
-    for i, p in enumerate(players):
+    for p in sorted(players):
         safe = _re.sub(r"\s+", "_", p)
-        color_idx = i % 8
-        colors = ["#f5c518", "#3b82f6", "#22c55e", "#ef4444", "#a855f7", "#ec4899", "#f97316", "#14b8a6"]
         toggle_btns += (
             f'<button id="tb-{safe}" class="toggle-btn" '
-            f'onclick="togglePlayer(\'{p}\')" '
-            f'style="border-left:4px solid {colors[color_idx]};">{p}</button>\n'
+            f'onclick="togglePlayer(\'{p}\')">{p}</button>\n'
         )
 
     js_code = r"""
@@ -3316,7 +3313,7 @@ function drawChart() {
     ctx.scale(dpr, dpr);
     const W = rect.width;
     const H = 250;
-    const padL = 44, padR = 12, padT = 24, padB = 30;
+    const padL = 44, padR = 44, padT = 24, padB = 30;
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
 
@@ -3324,29 +3321,41 @@ function drawChart() {
     const maxRank = data.max_rank;
     ctx.clearRect(0, 0, W, H);
 
-    // Grid
+    // Grid - Y axis always in steps of 5 (1, 5, 10, 15, ...)
     ctx.strokeStyle = '#30363d';
     ctx.lineWidth = 0.5;
-    for (let i = 0; i <= 4; i++) {
-        const y = padT + (plotH / 4) * i;
+    const yTicks = [1];
+    for (let t = 5; t <= maxRank; t += 5) yTicks.push(t);
+    if (yTicks[yTicks.length - 1] !== maxRank) yTicks.push(maxRank);
+    yTicks.forEach(function(pos) {
+        const y = padT + ((pos - 1) / maxRank) * plotH;
         ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
-        ctx.fillStyle = '#8899aa';
-        ctx.font = '10px sans-serif';
-        ctx.textAlign = 'right';
-        // Inverted Y: position 1 at top
-        const pos = 1 + Math.round((maxRank - 1) * (i / 4));
+    });
+    // Y-axis labels (left)
+    ctx.fillStyle = '#8899aa';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'right';
+    yTicks.forEach(function(pos) {
+        const y = padT + ((pos - 1) / maxRank) * plotH;
         ctx.fillText(pos + '\u00ba', padL - 4, y + 3);
-    }
+        // Twin Y-axis labels (right)
+        ctx.textAlign = 'left';
+        ctx.fillText(pos + '\u00ba', W - padR + 4, y + 3);
+        ctx.textAlign = 'right';
+    });
 
-    // X axis
+    // X axis - dynamic step so labels never overlap (~30px per label)
     ctx.fillStyle = '#8899aa';
     ctx.font = '9px sans-serif';
-    ctx.textAlign = 'center';
-    const step = Math.max(1, Math.floor(dates.length / 7));
+    const labelW = 30;
+    const dataGap = plotW / Math.max(dates.length - 1, 1);
+    const xLabelStep = Math.max(1, Math.ceil(labelW * 1.3 / dataGap));
     dates.forEach(function(d, i) {
-        if (i % step === 0 || i === dates.length - 1) {
+        if (i % xLabelStep === 0 || i === dates.length - 1) {
             const x = padL + (plotW / Math.max(dates.length - 1, 1)) * i;
-            ctx.fillText(d.slice(5), x, H - 6);
+            if (i === 0) { ctx.textAlign = 'left'; ctx.fillText(d.slice(5), padL, H - 6); }
+            else if (i === dates.length - 1) { ctx.textAlign = 'right'; ctx.fillText(d.slice(5), W - padR, H - 6); }
+            else { ctx.textAlign = 'center'; ctx.fillText(d.slice(5), x, H - 6); }
         }
     });
 

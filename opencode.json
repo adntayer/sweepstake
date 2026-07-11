@@ -52,6 +52,9 @@
             "py": "allow",
             "Write-Output": "allow",
             "Select-String": "allow",
+            "pip": "allow",
+            "uv": "allow",
+            "where": "allow",
             "*": "ask"
         }
     }

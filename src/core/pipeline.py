@@ -786,7 +786,11 @@ def _generate_team_accuracy(df_valid: pd.DataFrame, config: ChampionshipConfig) 
 
 
 def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
-    """Daily rank position for each player (cumulative ranking)."""
+    """Daily rank position for each player (cumulative ranking).
+
+    Includes ALL bonus points (playoffs_scored.csv) from day 1 to match
+    the official dashboard ranking exactly.
+    """
     if df_valid.empty:
         print_colored("\tranking_history.csv: 0 rows (no data)", "yellow")
         return
@@ -795,16 +799,44 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
     df = df.sort_values(["who", "date"])
 
     # Pre-compute total penalty per boleiro (applied to cumulative)
-    penalty_map = {name: config.total_penalty(name) for name in df["who"].unique()}
+    all_who = set(df["who"].unique())
+    penalty_map = {name: config.total_penalty(name) for name in all_who}
+
+    # ── Load bonus points (playoffs_scored.csv) ──
+    # Include ALL correct bonus points from day 1 to match the dashboard
+    bonus_per_player: dict[str, int] = {}
+    bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
+    if os.path.exists(bonus_path):
+        df_bonus = pd.read_csv(bonus_path, sep=",")
+        for _, row in df_bonus.iterrows():
+            if int(row.get("correct", 0)) == 1:
+                b = str(row["boleiro"])
+                pts = int(row.get("points", 0))
+                if pts > 0:
+                    bonus_per_player[b] = bonus_per_player.get(b, 0) + pts
+                    all_who.add(b)
+
+    # Extend penalty map for any bonus-only players
+    for name in all_who:
+        if name not in penalty_map:
+            penalty_map[name] = config.total_penalty(name)
 
     rows = []
     for date, day_group in df.groupby("date"):
-        # Cumulative points up to this date for each player
+        # Cumulative match points up to this date
         daily_pts = day_group.groupby("who")["pontos"].sum()
-        # Get all players' cumulative up to this date
-        all_cum = df[df["date"] <= date].groupby("who")["pontos"].sum()
+        match_cum = df[df["date"] <= date].groupby("who")["pontos"].sum()
+
+        # Add ALL bonus points (from day 1, matching the dashboard)
+        for b, pts in bonus_per_player.items():
+            match_cum[b] = match_cum.get(b, 0) + pts
+
+        # Track components before penalty subtraction
+        match_pts_map = dict(match_cum - match_cum.index.map(lambda w: bonus_per_player.get(w, 0)))
+        bonus_pts_map = dict(bonus_per_player)
+
         # Subtract penalties from cumulative points
-        all_cum = all_cum - all_cum.index.map(lambda w: penalty_map.get(w, 0))
+        all_cum = match_cum - match_cum.index.map(lambda w: penalty_map.get(w, 0))
         leader_pts = int(all_cum.max()) if not all_cum.empty else 0
         leader_name = str(all_cum.idxmax()) if not all_cum.empty else ""
 
@@ -815,10 +847,16 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
             cum = int(all_cum.get(boleiro, 0))
             rank = int(all_cum.rank(ascending=False, method="min").get(boleiro, 0))
             daily_pts_val = int(daily_pts.get(boleiro, 0))
+            match_pts_val = int(match_pts_map.get(boleiro, 0))
+            bonus_pts_val = int(bonus_pts_map.get(boleiro, 0))
+            penalty_pts_val = int(penalty_map.get(boleiro, 0))
             rows.append({
                 "boleiro": boleiro,
                 "date": date,
                 "daily_points": daily_pts_val,
+                "match_points": match_pts_val,
+                "bonus_points": bonus_pts_val,
+                "penalty_points": penalty_pts_val,
                 "cumulative_points": cum,
                 "rank": rank,
                 "leader_name": leader_name,
