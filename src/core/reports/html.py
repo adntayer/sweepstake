@@ -3054,10 +3054,12 @@ function drawStats() {
     const container = document.getElementById('arena-stats');
     if (activePlayers.size === 0) { container.innerHTML = '<div class="subtitle" style="padding:0.5rem;">Selecione jogadores acima</div>'; return; }
     let html = '<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">';
+    let _idx = 0;
     activePlayers.forEach(function(name) {
         const d = P[name];
+        const _c = COLORS[_idx % COLORS.length]; _idx++;
         html += '<div class="stat-card" style="flex:1;min-width:200px;">' +
-            '<div class="label" style="font-weight:600;font-size:0.8rem;color:var(--text);">' + name + '</div>' +
+            '<div class="label" style="font-weight:600;font-size:0.8rem;color:' + _c + ';">' + name + '</div>' +
             '<div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.2rem;">' + d.total + ' pts | M\u00e9dia: ' + d.avg + ' | ' + d.games + ' jogos | B\u00f4nus times: +' + d.bonus + ' (' + d.bonus_correct + '/' + d.bonus_total + ')</div>' +
             '<div style="display:flex;flex-wrap:wrap;gap:0.2rem;">';
         PHASE_ORDER.forEach(function(ph) {
