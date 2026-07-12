@@ -20,7 +20,7 @@ from src.core.reports.html import (
     ZEBRA_MONSTRA_EMOJI,
     ZEBRA_MONSTRA_LABEL,
 )
-from src.core.reports.utils import compute_pending_matches
+from src.core.reports.utils import compute_pending_matches, get_match_href
 
 
 def _norm(path: str) -> str:
@@ -698,10 +698,12 @@ def _build_games_calendar(config: ChampionshipConfig) -> str:
                     _away_en = rev_map.get(_strip_accents(_away_raw.lower()), _away_raw) if _away_raw else ""
                     _home_l = _team_logo_tag(_home_en, config, cls="team-logo-cel", start=config.reports_dir + "/html") if _home_en else '<span style="width:8px;display:inline-block;"></span>'
                     _away_l = _team_logo_tag(_away_en, config, cls="team-logo-cel", start=config.reports_dir + "/html") if _away_en else '<span style="width:8px;display:inline-block;"></span>'
-                    _ms = str(_g.get("match", ""))
                     _ph_s = str(_g["_phase"])
-                    _hr_v = str(_g["_hour"])
-                    _ghref = f"jogos/{_ph_s}/{_g['_date_clean']}_{_hr_v}h_{_ms}.html"
+                    # Use shared function for consistent href (looks up filesystem, falls back)
+                    _ghref = get_match_href(config, _home_raw, _away_raw,
+                                            phase=_ph_s,
+                                            match_slug=str(_g.get("match", "")),
+                                            date=str(_g["_date_clean"]))
                     _ph_clr = _ph_colors.get(_ph_s, "")
                     _ph_style = f"border-left:2px solid {_ph_clr};" if _ph_clr else ""
                     _g_inner += (
@@ -1223,8 +1225,11 @@ def _build_live_games(config: ChampionshipConfig, now_str: str) -> str:
             date_part = date_parts[0] if date_parts else str(row["date"])
             hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
 
-        # Link to the per-match page
-        game_href = f"jogos/{phase_dir}/{date_part}_{hour_part}_{match_slug}.html"
+        # Link to the per-match page (shared function handles filesystem lookup + fallback)
+        game_href = get_match_href(config, home, away,
+                                   phase=phase_dir,
+                                   match_slug=match_slug,
+                                   date=date_part)
 
         home_logo = _team_logo_tag(rev_map.get(home, home), config, cls="team-logo-sm", start=config.reports_dir + "/html")
         away_logo = _team_logo_tag(rev_map.get(away, away), config, cls="team-logo-sm", start=config.reports_dir + "/html")
@@ -1291,8 +1296,11 @@ def _build_last_result(config: ChampionshipConfig) -> str:
         date_part = date_parts[0] if date_parts else date
         hour_part = date_parts[1].strip() if len(date_parts) > 1 else ""
 
-    # Link to the per-match page
-    game_href = f"jogos/{phase_dir}/{date_part}_{hour_part}_{match_slug}.html" if match_slug else ""
+    # Link to the per-match page (shared function handles filesystem lookup + fallback)
+    game_href = get_match_href(config, home, away,
+                               phase=phase_dir,
+                               match_slug=match_slug,
+                               date=date_part) if match_slug and date_part else ""
 
     # Reconstruct full date display from parts
     date = f"{date_part} {hour_part}" if hour_part else date_part
@@ -1598,7 +1606,7 @@ def _build_emoji_accordion(config: ChampionshipConfig) -> str:
             f'<div class="emoji-row">'
             f'<span class="e">{emoji}</span>'
             f'<span class="desc">{desc}</span>'
-            f'<span class="pts">+{pts}</span>'
+            f'<span class="pts">{pts}</span>'
             f'</div>\n'
         )
     rows += (

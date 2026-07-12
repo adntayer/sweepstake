@@ -13,6 +13,7 @@ import pytz
 from src.core.config import ChampionshipConfig
 from src.core.printing import print_colored
 from src.core.logo_fetcher import _team_logo_tag
+from src.core.reports.utils import get_match_href
 
 
 def _norm(path: str) -> str:
@@ -537,7 +538,9 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
             round_val = str(round_raw).strip()
             
         phase_v = round_val if round_val not in ["1", "2", "3"] else config.group_phase_label
-        game_href = f"../jogos/{phase_v}/{date_hour}_{match_slug}.html"
+        game_href = "../" + get_match_href(config, home, away,
+                                           phase=phase_v, match_slug=match_slug,
+                                           date=game_date if gold_info else str(row.get("date", "")))
 
         # Zebra indicator
         zebra_tag = ""
@@ -1216,7 +1219,7 @@ def _build_round_predictions(config: ChampionshipConfig) -> str:
                         f'<span style="font-size:0.5rem;color:var(--text-muted);">{hgr}-{agr}</span><br>'
                         f'<span style="font-weight:600;font-size:0.65rem;">'
                         f'{int(rw["home_goals_bol"]) if pd.notna(rw["home_goals_bol"]) else "?"}-{int(rw["away_goals_bol"]) if pd.notna(rw["away_goals_bol"]) else "?"}</span> '
-                        f'<span style="font-size:0.5rem;color:{crit_color};">+{pts}</span></td>\n'
+                        f'<span style="font-size:0.5rem;color:{crit_color};">{pts}</span></td>\n'
                     )
                 else:
                     hb = int(rw["home_goals_bol"]) if pd.notna(rw["home_goals_bol"]) else "?"

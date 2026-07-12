@@ -25,6 +25,10 @@ from src.core.reports.new_views import (
     build_similarity_matrix_page,
 )
 from src.core.reports.arquetipos import (
+    build_arquetipos_page,
+)
+from src.core.reports.utils import get_match_href, reset_match_href_cache
+from src.core.reports.arquetipos import (
     classificar_jogadores,
     build_arquetipos_page,
 )
@@ -1085,7 +1089,7 @@ def _build_gold_dashboard(
         ("\U0001f993", "Zebras", str(player_zebra_cnt)),
         ("\U0001f3af", "Placar Exato", str(exact_count)),
         ("\U0001f4a5", "Ousadia", boldness_label),
-        ("\U0001f3c6", "B\u00f4nus", f"+{bonus_total}"),
+        ("\U0001f3c6", "B\u00f4nus", f"{bonus_total}"),
         ("\u26bd", "Jogos", str(num_games)),
     ]
 
@@ -1335,14 +1339,16 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
                 match_slug = str(row.get("match", ""))
                 hour_p = str(row.get("hour", ""))
                 phase_v = str(row.get("phase", "")) if row.get("phase") else config.group_phase_label
-                game_href = f"../jogos/{phase_v}/{row['date'].strip()}_{hour_p}_{match_slug}.html"
+                game_href = "../" + get_match_href(config, row["home_team"], row["away_team"],
+                                                    phase=phase_v, match_slug=match_slug,
+                                                    date=row['date'].strip())
                 pending_rows += (
                     f'<div class="pred-row">'
                     f'<div class="pred-info">'
                     f'<div class="pred-name"><a href="{game_href}" style="color:var(--text);text-decoration:none;">{home_logo}{row["home_team"]} vs {away_logo}{row["away_team"]}</a> <span class="pred-date">{date_str}</span></div>'
                     f'<div class="pred-detail">Previsto: {row["resultado_bol_placar"]} | \u23f3 Aguardando resultado | <a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
                     f'</div>'
-                    f'<div class="score-pill" style="color:var(--warning);background:rgba(245,158,11,0.1);border:1px solid var(--warning)">+0 \u23f3</div>'
+                    f'<div class="score-pill" style="color:var(--warning);background:rgba(245,158,11,0.1);border:1px solid var(--warning)">0 \u23f3</div>'
                     f'</div>\n'
                 )
 
@@ -1440,7 +1446,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
             # Game link
             match_slug = str(row.get("match", ""))
             phase_v = str(phase_val) if phase_val else config.group_phase_label
-            game_href = f"../jogos/{phase_v}/{row['date']}_{hour_str}_{match_slug}.html"
+            game_href = "../" + get_match_href(config, row["home_team"], row["away_team"],
+                                                phase=phase_v, match_slug=match_slug,
+                                                date=row['date'])
             # Player rank for this match
             rank_str = ""
             if match_slug in match_ranks:
@@ -1462,7 +1470,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
                 f'<div class="pred-name"><a href="{game_href}" style="color:var(--text);text-decoration:none;">{_format_real_placar(row)}</a> <span class="pred-date">{phase_label}{date_str}</span></div>'
             f'<div class="pred-detail">{home_logo} {row["resultado_bol_placar"]} {away_logo} | {criterio_emoji} {row["criterio"]}{zebra_tag} | {rank_str}<a href="{game_href}" style="color:var(--accent);">ver jogo</a></div>'
                 f'</div>'
-                f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">+{pts} {criterio_emoji}</div>'
+                f'<div class="score-pill" style="color:{pts_color};background:{pts_bg};border:1px solid {pts_border}">{pts} {criterio_emoji}</div>'
                 f'</div>\n'
             )
         return out
@@ -1602,18 +1610,18 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
     if streak > 0:
         _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f525 {streak} seg</span>'
     if best_day_pts > 0:
-        _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f4c5 Melhor dia: +{best_day_pts} ({best_day_str})</span>'
+        _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f4c5 Melhor dia: {best_day_pts} ({best_day_str})</span>'
     if worst_day_pts > 0:
-        _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f4c5 Pior dia: +{worst_day_pts} ({worst_day_str})</span>'
+        _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f4c5 Pior dia: {worst_day_pts} ({worst_day_str})</span>'
 
     body = f"""
 <div class="hero" style="padding-bottom:1.25rem;">
     <h1 style="margin:0 0 0.1rem;font-family:var(--font-display);font-size:1.8rem;font-weight:600;letter-spacing:-0.02em;">{boleiro}</h1>
-    <div style="font-family:var(--font-mono);font-size:2.5rem;font-weight:700;color:var(--accent);letter-spacing:-0.03em;line-height:1;">+{grand_total}</div>
+    <div style="font-family:var(--font-mono);font-size:2.5rem;font-weight:700;color:var(--accent);letter-spacing:-0.03em;line-height:1;">{grand_total}</div>
     <div class="subtitle" style="margin-top:0.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
         <span>{rank}\u00ba lugar</span>
         <span>{num_games} jogos</span>
-        <span>+{bonus_total} b\u00f4nus</span>
+        <span>{bonus_total} b\u00f4nus</span>
         {f'<span style="color:var(--danger);font-weight:600;">\u26a0 -{penalty_pts}</span>' if penalty_pts > 0 else ''}
     </div>
     {_avg_bar_html}
@@ -1681,7 +1689,8 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
                             _home_l = _team_logo_tag(_home_en, config, cls="team-logo-cel", start=boleiro_dir)
                             _away_l = _team_logo_tag(_away_en, config, cls="team-logo-cel", start=boleiro_dir)
                             _ms = str(_g.get("match", ""))
-                            _ph = str(_g.get("phase", ""))
+                            _ph_val = _g.get("phase", "")
+                            _ph = "" if pd.isna(_ph_val) else str(_ph_val)
                             _ph_s = _ph if _ph else config.group_phase_label
                             _ph_colors = {
                                 config.group_phase_label: "",  # group — no border
@@ -1694,17 +1703,18 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
                             }
                             _ph_border = _ph_colors.get(_ph_s, "")
                             _ph_style = f"border-left:2px solid {_ph_border};" if _ph_border else ""
-                            _hr = str(_g.get("hour", ""))
-                            _ghref = f"../jogos/{_ph_s}/{_g['date']}_{_hr}_{_ms}.html"
+                            _ghref = "../" + get_match_href(config, _g["home_team"], _g["away_team"],
+                                                            phase=_ph_s, match_slug=_ms,
+                                                            date=_g["date"])
                             _g_inner += (
                                 f'<a href="{_ghref}" class="cg-link" style="color:{_pts_c};{_ph_style}">'
                                 f'{_home_l}<span class="cg-sc">{_real_s}</span>{_away_l}'
-                                f'<span class="cg-pts">+{_pts_g}</span>'
+                                f'<span class="cg-pts">{_pts_g}</span>'
                                 f'</a>'
                             )
                     _cells += (
                         f'<div class="cal-day" style="background:{_cbg};">'
-                        f'<div class="cal-hdr"><span class="cal-num">{_d}</span><span class="cal-pts" style="color:{_cc};">+{_pts}</span></div>'
+                        f'<div class="cal-hdr"><span class="cal-num">{_d}</span><span class="cal-pts" style="color:{_cc};">{_pts}</span></div>'
                         f'<div class="cal-games">{_g_inner}</div>'
                         f'</div>\n'
                     )
@@ -1779,7 +1789,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
                     f'{"background:var(--hover-overlay);border-radius:4px;font-weight:600;" if _is_me2 else ""}">'
                     f'<span style="min-width:2rem;color:var(--text-muted);font-family:var(--font-mono);font-size:0.7rem;">{_rank2}\u00ba</span>'
                     f'<span style="flex:1;{"color:var(--accent);" if _is_me2 else "color:var(--text);"}">{_marker2}{_name2}</span>'
-                    f'<span style="font-family:var(--font-mono);font-weight:700;">+{_pts2}</span>'
+                    f'<span style="font-family:var(--font-mono);font-weight:700;">{_pts2}</span>'
                     f'</div>\n'
                 )
             if _lb_rows:
@@ -1825,7 +1835,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
             <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);">{label}</span>
         </div>
         <div style="display:flex;align-items:baseline;gap:0.3rem;font-size:0.7rem;">
-            <span style="font-family:var(--font-mono);font-weight:700;color:{color};">+{pts_per}</span>
+            <span style="font-family:var(--font-mono);font-weight:700;color:{color};">{pts_per}</span>
             <span style="font-weight:600;">{cnt}</span>
             <span style="color:var(--text-muted);font-size:0.6rem;">{pct}%</span>
         </div>
@@ -2068,9 +2078,9 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
                 total_bonus_pts += phase_pts
                 acc_str = f'{correct_count}/{total_count}' if total_count else ''
                 if checkable and not is_first_knockout:
-                    pts_label = f'<span style="color:var(--accent);font-weight:700;">+{phase_pts}</span>'
+                    pts_label = f'<span style="color:var(--accent);font-weight:700;">{phase_pts}</span>'
                 else:
-                    pts_label = f'<span style="color:var(--warning);font-weight:700;">\u23f3 +{phase_pts}</span>'
+                    pts_label = f'<span style="color:var(--warning);font-weight:700;">\u23f3 {phase_pts}</span>'
                 phase_blocks += (
                     f'<div style="margin-bottom:0.5rem;">'
                     f'<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">'
@@ -2110,7 +2120,7 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
             legend = ""
             total_label = ""
             if phase_blocks:
-                total_label = f'<span style="color:var(--accent);margin-left:0.5rem;font-weight:700;">+{total_bonus_pts}</span>'
+                total_label = f'<span style="color:var(--accent);margin-left:0.5rem;font-weight:700;">{total_bonus_pts}</span>'
                 legend = (
                     '<div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem;'
                     'display:flex;gap:0.75rem;flex-wrap:wrap;">'
@@ -2898,7 +2908,7 @@ def _build_match(config: ChampionshipConfig, match: str, phase: str, df_match: p
         else:
             real_str = f"Real: {real_str}"
         boleiro_href = f"../../boleiros/{who_val}.html"
-        pill_display = f"+{pts}" if pts > 0 else ""
+        pill_display = f"{pts}" if pts > 0 else ""
         pred_rows += (
             f'<div class="pred-row">'
             f'<div class="pred-info">'
@@ -3228,14 +3238,14 @@ function drawStats() {
         const _c = COLORS[_idx % COLORS.length]; _idx++;
         html += '<div class="stat-card" style="flex:1;min-width:200px;">' +
             '<div class="label" style="font-weight:600;font-size:0.8rem;color:' + _c + ';">' + name + '</div>' +
-            '<div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.2rem;">' + d.total + ' pts | M\u00e9dia: ' + d.avg + ' | ' + d.games + ' jogos | B\u00f4nus times: +' + d.bonus + ' (' + d.bonus_correct + '/' + d.bonus_total + ')</div>' +
+            '<div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.2rem;">' + d.total + ' pts | M\u00e9dia: ' + d.avg + ' | ' + d.games + ' jogos | B\u00f4nus times: ' + d.bonus + ' (' + d.bonus_correct + '/' + d.bonus_total + ')</div>' +
             '<div style="display:flex;flex-wrap:wrap;gap:0.2rem;">';
         PHASE_ORDER.forEach(function(ph) {
             var pts = (d.phase_pts && d.phase_pts[ph]) ? d.phase_pts[ph] : 0;
             var bns = (d.phase_bonus && d.phase_bonus[ph]) ? d.phase_bonus[ph] : 0;
             if (pts + bns === 0) return;
             var emoji = SHORT_EMOJI[ph] || '';
-            html += '<span style="font-size:0.6rem;background:var(--card-border);border-radius:4px;padding:0.1rem 0.3rem;white-space:nowrap;">' + emoji + ' ' + ph + ' ' + pts + 'pts' + (bns ? ' +' + bns + ' b\u00f4nus' : '') + '</span>';
+            html += '<span style="font-size:0.6rem;background:var(--card-border);border-radius:4px;padding:0.1rem 0.3rem;white-space:nowrap;">' + emoji + ' ' + ph + ' ' + pts + 'pts' + (bns ? ' ' + bns + ' b\u00f4nus' : '') + '</span>';
         });
         html += '</div></div>';
     });
@@ -3437,7 +3447,7 @@ function drawTable() {
     activeArr.forEach(function(name) {
         const d = P[name];
         if (d.bonus_total > 0) {
-            html += '<div>\u25cf ' + name + ' b\u00f4nus times: +' + d.bonus + 'pts (' + d.bonus_correct + '/' + d.bonus_total + ')</div>';
+            html += '<div>\u25cf ' + name + ' b\u00f4nus times: ' + d.bonus + 'pts (' + d.bonus_correct + '/' + d.bonus_total + ')</div>';
         }
     });
     html += '</div>';
@@ -3807,7 +3817,7 @@ def _build_bolao_xray(config: ChampionshipConfig) -> str:
         pct = round(cnt / n_predictions * 100, 1) if n_predictions else 0
         bar_w = max(cnt / largest_tipo_count * 100, 1)
         name_part = t.split("-", 1)[1] if "-" in t else t
-        label = f"{name_part} (+{pts_per}p)" if pts_per > 0 else name_part
+        label = f"{name_part} ({pts_per}p)" if pts_per > 0 else name_part
         color = _rule_color(t)
         tipo_rows += f"""
         <tr>
@@ -4325,7 +4335,9 @@ def _build_zebras(config: ChampionshipConfig) -> str:
 
         # Build match page link (read phase from games.csv lookup)
         _ph_dir = match_phase_map.get(match_slug, config.group_phase_label)
-        match_href = f"jogos/{_ph_dir}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
+        match_href = get_match_href(config, home, away,
+                                    phase=_ph_dir, match_slug=match_slug,
+                                    date=match_date, hour=match_hour) if match_date and match_hour else ""
 
         # Determine upset magnitude based on how many got the winner right
         matchup_display = f"<a href=\"{match_href}\">{home} vs {away}</a>" if match_href else f"{home} vs {away}"
@@ -4382,8 +4394,10 @@ def _build_zebras(config: ChampionshipConfig) -> str:
         match_slug = str(row.get("match", ""))
         match_date = str(row.get("date", ""))
         match_hour = str(row.get("hour", ""))
-        _ph_dir2 = match_phase_map.get(match_slug, config.group_phase_label)
-        match_href = f"jogos/{_ph_dir2}/{match_date}_{match_hour}_{match_slug}.html" if match_date and match_hour else ""
+        _ph_dir = match_phase_map.get(match_slug, config.group_phase_label)
+        match_href = get_match_href(config, home, away,
+                                    phase=_ph_dir, match_slug=match_slug,
+                                    date=match_date) if match_date else ""
         matchup_display = f"<a href=\"{match_href}\">{home} vs {away}</a>" if match_href else f"{home} vs {away}"
         fav_won_cards += f"""
 <div class="zebra-card">
@@ -4450,7 +4464,9 @@ def _build_zebras(config: ChampionshipConfig) -> str:
             bar_color = "var(--danger)" if m["is_upset"] else "var(--warning)"
 
             _ph_dir3 = match_phase_map.get(m["match"], config.group_phase_label)
-            match_href = f"jogos/{_ph_dir3}/{m['date']}_{m['hour']}_{m['match']}.html" if m.get("date") and m.get("hour") else ""
+            match_href = get_match_href(config, m['home'], m['away'],
+                                        phase=_ph_dir3, match_slug=m['match'],
+                                        date=m.get('date', '')) if m.get("date") else ""
             match_display = f"<a href=\"{match_href}\">{m['home']} vs {m['away']}</a>" if match_href else f"{m['home']} vs {m['away']}"
             diff_cards += f"""
 <div style="margin-bottom:0.75rem;">
@@ -4979,9 +4995,7 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
         print_colored(f"generating match html: {match}", "blue")
         html = _build_match(config, match, config.group_phase_label, df_match)
         first = df_match.iloc[0]
-        hour = first.get('hour', '')
-        hour_str = str(int(hour)) if pd.notna(hour) and isinstance(hour, (int, float)) else str(hour)
-        filename = f"{first['date']}_{hour_str}_{match}.html"
+        filename = f"{first['date']}_{match}.html"
         path = _norm(os.path.join(html_base, "jogos", config.group_phase_label, filename))
         _save(path, html)
 
@@ -5068,11 +5082,13 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
             print_colored(f"generating match html: {phase} {match}", "blue")
             html = _build_match(config, match, pr.key, df_match)
             first = df_match.iloc[0]
-            hour = first.get('hour', '')
-            hour_str = str(int(hour)) if pd.notna(hour) and isinstance(hour, (int, float)) else str(hour)
-            filename = f"{first['date']}_{hour_str}_{match}.html"
+            filename = f"{first['date']}_{match}.html"
             path = _norm(os.path.join(html_base, "jogos", phase, filename))
             _save(path, html)
+
+        # Reset the match href cache so that subsequent pages (boleiro calendar,
+    # analytics, new views, index) rebuild with all match files on disk.
+    reset_match_href_cache()
 
     # --- Analytics-dependent pages ------------------------------------
     # If games.csv has no real results yet, delete any stale HTML files
@@ -5093,3 +5109,6 @@ def generate_html_reports(config: ChampionshipConfig) -> None:
     build_round_matrix_page(config, html_base)
     build_all_team_pages(config, html_base)
     build_arquetipos_page(config, html_base)
+    # Reset the match href cache so pages generated after this call
+    # (e.g. index.html, boleiros.html) rebuild with all files present.
+    reset_match_href_cache()
