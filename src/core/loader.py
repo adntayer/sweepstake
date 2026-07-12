@@ -26,6 +26,19 @@ _EXCEL_COLUMNS = [
 ]
 
 
+def _normalize_who(name: str, config: ChampionshipConfig) -> str:
+    """Normalize a boleiro name by case-insensitive matching against config.
+
+    Returns the canonical name from ``config.boleiros`` if a case-insensitive
+    match is found, otherwise returns the original *name* unchanged.
+    """
+    name_stripped = name.strip()
+    for canonical in config.boleiros:
+        if canonical.lower() == name_stripped.lower():
+            return canonical
+    return name_stripped
+
+
 def _extract_who(path: str, config: ChampionshipConfig) -> str:
     """Extract participant name from the Excel filename.
 
@@ -37,7 +50,7 @@ def _extract_who(path: str, config: ChampionshipConfig) -> str:
     name_no_ext = fname.replace(".xlsx", "").replace(".xls", "").strip()
     parts = name_no_ext.split(layout.playoffs.name_split_char)
     name = parts[layout.playoffs.name_split_index].strip()
-    return name
+    return _normalize_who(name, config)
 
 
 def _clean_dataframe(df: pd.DataFrame, who: str) -> pd.DataFrame:
@@ -119,7 +132,7 @@ def _extract_playoff_phase_and_who(path: str, config: ChampionshipConfig) -> tup
     for pr in config.playoff_rounds:
         prefix = pr.key + "_"
         if name_no_ext.startswith(prefix):
-            boleiro = name_no_ext[len(prefix):].strip()
+            boleiro = _normalize_who(name_no_ext[len(prefix):].strip(), config)
             return pr.key, boleiro
 
     # 2) Try the "{name} [{separator}] {round_label} [{suffix}]" format
@@ -137,13 +150,13 @@ def _extract_playoff_phase_and_who(path: str, config: ChampionshipConfig) -> tup
     for label in sorted(label_to_key, key=len, reverse=True):
         idx = name_lower.find(label)
         if idx != -1:
-            boleiro = name_no_ext[:idx].strip().rstrip("- ")
+            boleiro = _normalize_who(name_no_ext[:idx].strip().rstrip("- "), config)
             return label_to_key[label], boleiro
 
     # 3) Fallback: use first part before first '_' as phase, rest as name
     if "_" in name_no_ext:
         parts = name_no_ext.split("_", 1)
-        return parts[0].strip(), parts[1].strip()
+        return parts[0].strip(), _normalize_who(parts[1].strip(), config)
 
     raise ValueError(
         f"Cannot extract phase and boleiro from filename: {fname}. "

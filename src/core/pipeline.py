@@ -46,6 +46,7 @@ from src.core.loader import (
     parse_bonus_playoffs,
     _extract_playoff_phase_and_who as _extract_phase_who_from_path,
     _extract_who,
+    _normalize_who,
 )
 from src.core.printing import print_colored
 from src.core.scoring import score_prediction, score_playoff_bonus, score_strikers
@@ -307,7 +308,10 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
     group_paths = sorted(glob(group_pattern))
 
     for path_csv in group_paths:
-        boleiro = os.path.basename(path_csv).replace("group_phase_", "").replace(".csv", "")
+        boleiro = _normalize_who(
+            os.path.basename(path_csv).replace("group_phase_", "").replace(".csv", ""),
+            config,
+        )
         print_colored(f"\tmerging {boleiro}", "ice")
 
         df_boleiro = pd.read_csv(path_csv, sep=",")
@@ -356,6 +360,7 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
 
     for path_csv in playoff_paths:
         phase, boleiro = _extract_playoff_phase_and_boleiro(path_csv, config)
+        boleiro = _normalize_who(boleiro, config)
         print_colored(f"\tmerging {phase} {boleiro}", "ice")
 
         df_boleiro = pd.read_csv(path_csv, sep=",")
@@ -434,7 +439,10 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
     df_valid = pd.DataFrame()
 
     for path_csv in silver_paths:
-        boleiro = os.path.basename(path_csv).replace("group_phase_", "").replace(".csv", "")
+        boleiro = _normalize_who(
+            os.path.basename(path_csv).replace("group_phase_", "").replace(".csv", ""),
+            config,
+        )
         print_colored(f"\tscoring first_round {boleiro}", "ice")
 
         df_silver = pd.read_csv(path_csv, sep=",")
@@ -497,6 +505,7 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
 
         for path_csv in phase_paths:
             _, boleiro = _extract_playoff_phase_and_boleiro(path_csv, config)
+            boleiro = _normalize_who(boleiro, config)
             df_silver = pd.read_csv(path_csv, sep=",")
             if df_silver.empty:
                 continue
