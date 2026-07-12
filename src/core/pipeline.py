@@ -788,8 +788,8 @@ def _generate_team_accuracy(df_valid: pd.DataFrame, config: ChampionshipConfig) 
 def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig) -> None:
     """Daily rank position for each player (cumulative ranking).
 
-    Includes ALL bonus points (playoffs_scored.csv) from day 1 to match
-    the official dashboard ranking exactly.
+    Bonus points (playoffs_scored.csv) are phased in by each playoff
+    phase's first match date, not added retroactively from day 1.
     """
     if df_valid.empty:
         print_colored("\tranking_history.csv: 0 rows (no data)", "yellow")
@@ -798,13 +798,23 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
     df = df_valid.copy()
     df = df.sort_values(["who", "date"])
 
-    # Pre-compute total penalty per boleiro (applied to cumulative)
+    # Pre-compute total penalty per boleiro
     all_who = set(df["who"].unique())
     penalty_map = {name: config.total_penalty(name) for name in all_who}
 
-    # ── Load bonus points (playoffs_scored.csv) ──
-    # Include ALL correct bonus points from day 1 to match the dashboard
-    bonus_per_player: dict[str, int] = {}
+    # ── Bonus points, phased by playoff phase start date ──
+    bonus_by_phase: dict[str, dict[str, int]] = {}
+    phase_start_dates: dict[str, str] = {}
+
+    if config.playoff_rounds:
+        df_games = pd.read_csv(config.games_file, sep=",")
+        df_games["round"] = df_games["round"].astype(str).str.strip().str.lower()
+        for pr in config.playoff_rounds:
+            pk = pr.key.lower()
+            phase_games = df_games[df_games["round"] == pk]
+            if not phase_games.empty:
+                phase_start_dates[pk] = phase_games["date"].min()
+
     bonus_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
     if os.path.exists(bonus_path):
         df_bonus = pd.read_csv(bonus_path, sep=",")
@@ -812,43 +822,75 @@ def _generate_ranking_history(df_valid: pd.DataFrame, config: ChampionshipConfig
             if int(row.get("correct", 0)) == 1:
                 b = str(row["boleiro"])
                 pts = int(row.get("points", 0))
+                phase = str(row.get("phase", "")).lower()
                 if pts > 0:
-                    bonus_per_player[b] = bonus_per_player.get(b, 0) + pts
                     all_who.add(b)
+                    if phase not in bonus_by_phase:
+                        bonus_by_phase[phase] = {}
+                    bonus_by_phase[phase][b] = bonus_by_phase[phase].get(b, 0) + pts
+
+    # Map champion phase (campeao) to the final round's start date
+    champion_key = config.champion_phase_key.lower()
+    if champion_key in bonus_by_phase and champion_key not in phase_start_dates:
+        if phase_start_dates:
+            latest_phase = max(phase_start_dates, key=lambda p: phase_start_dates[p])
+            phase_start_dates[champion_key] = phase_start_dates[latest_phase]
 
     # Extend penalty map for any bonus-only players
     for name in all_who:
         if name not in penalty_map:
             penalty_map[name] = config.total_penalty(name)
 
+    # Build mapping: date → {player: points_added_on_this_date}
+    bonus_add_by_date: dict[str, dict[str, int]] = {}
+    for pk, start_date in phase_start_dates.items():
+        if start_date not in bonus_add_by_date:
+            bonus_add_by_date[start_date] = {}
+        for b, pts in bonus_by_phase.get(pk, {}).items():
+            bonus_add_by_date[start_date][b] = bonus_add_by_date[start_date].get(b, 0) + pts
+
+    # Phases without a mapped start date: credit from first data date
+    for pk in bonus_by_phase:
+        if pk not in phase_start_dates:
+            first_date = df["date"].min()
+            if first_date not in bonus_add_by_date:
+                bonus_add_by_date[first_date] = {}
+            for b, pts in bonus_by_phase[pk].items():
+                bonus_add_by_date[first_date][b] = bonus_add_by_date[first_date].get(b, 0) + pts
+
     rows = []
-    for date, day_group in df.groupby("date"):
-        # Cumulative match points up to this date
-        daily_pts = day_group.groupby("who")["pontos"].sum()
+    cum_bonus: dict[str, int] = {}
+
+    all_dates = sorted(set(df["date"].unique()) | set(bonus_add_by_date.keys()))
+    for date in all_dates:
+        day_group = df[df["date"] == date]
+
+        # Phase in bonus points that start today
+        if date in bonus_add_by_date:
+            for b, pts in bonus_add_by_date[date].items():
+                cum_bonus[b] = cum_bonus.get(b, 0) + pts
+
+        # Cumulative match points up to this date (no bonus)
+        daily_pts = day_group.groupby("who")["pontos"].sum() if not day_group.empty else pd.Series(dtype=int)
         match_cum = df[df["date"] <= date].groupby("who")["pontos"].sum()
 
-        # Add ALL bonus points (from day 1, matching the dashboard)
-        for b, pts in bonus_per_player.items():
-            match_cum[b] = match_cum.get(b, 0) + pts
+        # Add phased-in bonus points
+        total_cum = match_cum.copy()
+        for b, pts in cum_bonus.items():
+            total_cum[b] = total_cum.get(b, 0) + pts
 
-        # Track components before penalty subtraction
-        match_pts_map = dict(match_cum - match_cum.index.map(lambda w: bonus_per_player.get(w, 0)))
-        bonus_pts_map = dict(bonus_per_player)
-
-        # Subtract penalties from cumulative points
-        all_cum = match_cum - match_cum.index.map(lambda w: penalty_map.get(w, 0))
+        # Subtract penalties
+        all_cum = total_cum - total_cum.index.map(lambda w: penalty_map.get(w, 0))
         leader_pts = int(all_cum.max()) if not all_cum.empty else 0
         leader_name = str(all_cum.idxmax()) if not all_cum.empty else ""
 
-        # Include ALL players, not just those who bet today,
-        # so ranking history has no gaps for skipped days.
         all_players = all_cum.index.tolist()
         for boleiro in all_players:
             cum = int(all_cum.get(boleiro, 0))
             rank = int(all_cum.rank(ascending=False, method="min").get(boleiro, 0))
             daily_pts_val = int(daily_pts.get(boleiro, 0))
-            match_pts_val = int(match_pts_map.get(boleiro, 0))
-            bonus_pts_val = int(bonus_pts_map.get(boleiro, 0))
+            match_pts_val = int(match_cum.get(boleiro, 0))
+            bonus_pts_val = int(cum_bonus.get(boleiro, 0))
             penalty_pts_val = int(penalty_map.get(boleiro, 0))
             rows.append({
                 "boleiro": boleiro,

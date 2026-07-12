@@ -824,6 +824,73 @@ body { padding-bottom: 65px; }
     width:28px; height:28px;
     object-fit:contain; vertical-align:middle; border-radius:3px;
 }
+
+/* ── Calendar grid ── */
+.team-logo-cel { width:8px; height:8px; object-fit:contain; border-radius:1px; vertical-align:middle; }
+.cal-month {}
+.cal-dow {
+    display:grid; grid-template-columns:repeat(7,1fr);
+    text-align:center; font-size:0.5rem; color:var(--text-muted);
+    margin-bottom:0.1rem;
+    text-transform:uppercase; letter-spacing:0.02em;
+}
+.cal-grid {
+    display:grid; grid-template-columns:repeat(7,1fr);
+    gap:1px;
+}
+.cal-day {
+    display:flex; flex-direction:column;
+    border-radius:2px; background:var(--card-bg);
+    min-height:2.5rem; overflow:hidden;
+}
+.cal-empty { min-height:2.5rem; }
+.cal-dim { opacity:0.2; }
+.cal-hdr {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0.05rem 0.15rem; line-height:1;
+}
+.cal-num { font-size:0.45rem; font-weight:600; }
+.cal-pts { font-family:var(--font-mono); font-size:0.4rem; font-weight:700; }
+.cal-games {
+    display:flex; flex-direction:column; gap:3px;
+    flex:1; padding:0 0.1rem 0.05rem;
+}
+.cg-link {
+    display:flex; align-items:center; gap:0.05rem;
+    text-decoration:none; line-height:1;
+    padding:0.16rem 0 0.16rem 0.12rem; border-radius:2px;
+}
+.cg-link:hover { background:var(--hover-overlay); }
+.cg-sc {
+    font-family:var(--font-mono); font-weight:700;
+    font-size:0.35rem; color:var(--text-muted);
+}
+.cg-pts {
+    font-family:var(--font-mono); font-weight:700;
+    font-size:0.35rem; margin-left:auto;
+}
+
+/* ── Avg comparison bar ── */
+.avg-bar-wrap {
+    display:flex; align-items:center; gap:0.5rem;
+    padding:0.5rem 0.75rem;
+}
+.avg-bar-track {
+    flex:1; height:6px;
+    background:var(--card-border); border-radius:3px;
+    position:relative; overflow:visible;
+}
+.avg-bar-fill {
+    height:100%; border-radius:3px;
+    transition:width 0.3s;
+    position:relative;
+}
+.avg-bar-dot {
+    position:absolute; top:50%; transform:translate(-50%,-50%);
+    width:12px; height:12px; border-radius:50%;
+    border:2px solid var(--accent); background:var(--bg);
+    z-index:1;
+}
 """
 
 
@@ -1105,15 +1172,31 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
     total_pts = int(df_bol["pontos"].sum())
     penalty_pts = config.total_penalty(boleiro)
     avg_per_game = round(df_bol["pontos"].mean(), 1) if len(df_bol) > 0 else 0
+    # ── Bolão-wide average ──
+    _all_dfs = [df_valid]
+    if playoff_all_parts:
+        _all_dfs.extend(playoff_all_parts)
+    _df_all_bolao = pd.concat(_all_dfs, ignore_index=True)
+    bolao_avg = round(_df_all_bolao["pontos"].mean(), 1) if len(_df_all_bolao) > 0 else 0
+    avg_diff = round(avg_per_game - bolao_avg, 1)
+    # ── Streak ──
+    streak = 0
+    for pts in reversed(df_bol["pontos"].values):
+        if pts == 0:
+            break
+        streak += 1
     num_games = len(df_bol)
     num_days = df_bol["date"].nunique()
     avg_per_day = round(total_pts / num_days, 1) if num_days > 0 else 0
+
 
     # Striker
     striker_name = ""
     df_st = df_striker.loc[df_striker["boleiro"] == boleiro]
     if not df_st.empty:
         striker_name = str(df_st.iloc[0]["striker"])
+
+    champion_team = ""  # set later in bonus block; default empty before hero
 
     # Points by date with max possible context
     df_by_date = df_bol.groupby("date", as_index=False)["pontos"].sum()
@@ -1124,6 +1207,19 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
     df_games_count = df_bol.groupby("date").size().reset_index(name="num_games")
     df_games_count["max_possible"] = df_games_count["num_games"] * max_pts
     df_by_date = df_by_date.merge(df_games_count[["date", "max_possible"]], on="date")
+
+    # ── Best / worst day ──
+    best_day_pts = 0
+    best_day_str = ""
+    worst_day_pts = 0
+    worst_day_str = ""
+    if not df_by_date.empty:
+        _bidx = df_by_date["pontos"].idxmax()
+        best_day_pts = int(df_by_date.loc[_bidx, "pontos"])
+        best_day_str = df_by_date.loc[_bidx, "date_str"]
+        _widx = df_by_date["pontos"].idxmin()
+        worst_day_pts = int(df_by_date.loc[_widx, "pontos"])
+        worst_day_str = df_by_date.loc[_widx, "date_str"]
 
     timeline_bars = ""
     if not df_by_date.empty:
@@ -1458,56 +1554,315 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
             f'</div>{detail_rows}</div>'
         )
 
-    body = f"""
-<div class="hero">
-    <h1>\U0001f464 {boleiro}</h1>
-    <div class="subtitle">{config.report_title}</div>
-</div>
+    # ── Phase cards for hero ──
+    _phase_pts: dict[str, int] = {}
+    if not df_bol.empty and "phase" in df_bol.columns:
+        for ph, grp in df_bol.groupby("phase", dropna=False):
+            key = "1\u00aa Fase" if pd.isna(ph) else _short_name(ph, config)
+            _phase_pts[key] = int(grp["pontos"].sum())
+    else:
+        _phase_pts["1\u00aa Fase"] = total_pts
+    _phase_bonus: dict[str, int] = {}
+    for raw_key, bpts in bonus_by_phase.items():
+        label = _short_name(raw_key, config) if raw_key else raw_key
+        _phase_bonus[label] = _phase_bonus.get(label, 0) + bpts
+    _phase_order = ["1\u00aa Fase"] + [_short_name(pr.name, config) for pr in (config.playoff_rounds or [])]
+    _phase_order = [p for p in _phase_order if p in _phase_pts or p in _phase_bonus]
+    _hero_phase_cards = ""
+    for p in _phase_order:
+        pts = _phase_pts.get(p, 0)
+        bns = _phase_bonus.get(p, 0)
+        if pts + bns == 0:
+            continue
+        _hero_phase_cards += (
+            f'<span style="font-size:0.65rem;background:var(--card-border);'
+            f'border-radius:4px;padding:0.15rem 0.4rem;white-space:nowrap;">'
+            f'{p} j{pts}{f" b{bns}" if bns else ""}</span>\n'
+        )
 
-{penalty_section}
+    # ── Avg comparison bar ──
+    _avg_pct = min(100, max(0, round(avg_per_game / (bolao_avg or 1) * 100))) if bolao_avg > 0 else 50
+    _avg_color = "var(--success)" if avg_diff > 0 else ("var(--danger)" if avg_diff < 0 else "var(--text-muted)")
+    _avg_sign = "+" if avg_diff > 0 else ""
+    _diff_label = f"{_avg_sign}{avg_diff}"
+    _avg_bar_html = f"""
+<div class="avg-bar-wrap">
+    <span style="font-size:0.7rem;font-weight:600;white-space:nowrap;color:var(--text-muted);font-family:var(--font-mono);">\u00d8 {avg_per_game}</span>
+    <div class="avg-bar-track">
+        <div class="avg-bar-fill" style="width:{_avg_pct}%;background:{_avg_color};"></div>
+        <div class="avg-bar-dot" style="left:{_avg_pct}%;border-color:{_avg_color};"></div>
+    </div>
+    <span style="font-size:0.7rem;font-weight:600;white-space:nowrap;color:var(--text-muted);font-family:var(--font-mono);">Bol\u00e3o {bolao_avg}</span>
+    <span style="font-size:0.65rem;font-weight:700;white-space:nowrap;color:{_avg_color};">{_diff_label}</span>
+</div>
 """
 
-    # --- Scoring distribution per criteria (bar chart) ---
+    # ── Secondary stat chips ──
+    _stat_chips = ""
+    if streak > 0:
+        _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f525 {streak} seg</span>'
+    if best_day_pts > 0:
+        _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f4c5 Melhor dia: +{best_day_pts} ({best_day_str})</span>'
+    if worst_day_pts > 0:
+        _stat_chips += f'<span style="font-size:0.7rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.5rem;white-space:nowrap;">\U0001f4c5 Pior dia: +{worst_day_pts} ({worst_day_str})</span>'
+
+    body = f"""
+<div class="hero" style="padding-bottom:1.25rem;">
+    <h1 style="margin:0 0 0.1rem;font-family:var(--font-display);font-size:1.8rem;font-weight:600;letter-spacing:-0.02em;">{boleiro}</h1>
+    <div style="font-family:var(--font-mono);font-size:2.5rem;font-weight:700;color:var(--accent);letter-spacing:-0.03em;line-height:1;">+{grand_total}</div>
+    <div class="subtitle" style="margin-top:0.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
+        <span>{rank}\u00ba lugar</span>
+        <span>{num_games} jogos</span>
+        <span>+{bonus_total} b\u00f4nus</span>
+        {f'<span style="color:var(--danger);font-weight:600;">\u26a0 -{penalty_pts}</span>' if penalty_pts > 0 else ''}
+    </div>
+    {_avg_bar_html}
+    <div style="display:flex;flex-wrap:wrap;gap:0.35rem;justify-content:center;margin-top:0.35rem;">
+        {_stat_chips}
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.25rem;justify-content:center;margin-top:0.5rem;">
+        {_hero_phase_cards}
+    </div>
+    <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;">
+        {f'<span class="striker-badge" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:0.75rem;margin:0;"><span class="icon">\U0001f3af</span> Artilheiro: <strong>{striker_name}</strong></span>' if striker_name else ''}
+        {f'<span class="striker-badge" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:0.75rem;margin:0;"><span class="icon">\U0001f3c6</span> Campe\u00e3o: <strong>{champion_team}</strong></span>' if champion_team else ''}
+    </div>
+</div>
+"""
+
+    # ── Calendar grid with games in cells ──
+    _cal_html = ""
+    if not df_by_date.empty:
+        _cv_rev_map = {v: k for k, v in config.team_name_mapping.items()}
+        def _cal_bg(pct):
+            r = int(200 - pct * 160)
+            g = int(55 + pct * 165)
+            return f"rgba({r},{g},55,0.08)"
+        _cv_df = df_by_date.copy()
+        _cv_df["_dt"] = pd.to_datetime(_cv_df["date"])
+        _cv_df["_month"] = _cv_df["_dt"].dt.month
+        _cv_df["_day"] = _cv_df["_dt"].dt.day
+        _cv_df["_year"] = _cv_df["_dt"].dt.year
+        _month_names = {6: "Junho", 7: "Julho", 8: "Agosto"}
+        _months = sorted(_cv_df["_month"].unique())
+        _dow_labels = ["D", "S", "T", "Q", "Q", "S", "S"]
+        _cal_blocks = ""
+        for _m in _months:
+            _mname = _month_names.get(_m, f"M\u00eas {_m}")
+            _mdata = _cv_df[_cv_df["_month"] == _m]
+            _year = int(_mdata["_year"].iloc[0])
+            _first = pd.Timestamp(_year, _m, 1)
+            _last = pd.Timestamp(_year + 1, 1, 1) - pd.Timedelta(days=1) if _m == 12 else pd.Timestamp(_year, _m + 1, 1) - pd.Timedelta(days=1)
+            _start_dow = (_first.weekday() + 1) % 7
+            _cells = ""
+            for _ in range(_start_dow):
+                _cells += '<div class="cal-empty"></div>\n'
+            for _d in range(1, _last.day + 1):
+                _row = _mdata[_mdata["_day"] == _d]
+                if not _row.empty:
+                    _pts = int(_row.iloc[0]["pontos"])
+                    _maxp = int(_row.iloc[0]["max_possible"])
+                    _ratio = _pts / _maxp if _maxp > 0 else 0
+                    _cbg = _cal_bg(_ratio)
+                    _cc = "var(--success)" if _ratio >= 0.5 else ("var(--danger)" if _ratio < 0.2 else "var(--text-muted)")
+                    _date_str = _row.iloc[0]["date"]
+                    _day_games = df_bol[df_bol["date"] == _date_str]
+                    _g_inner = ""
+                    if not _day_games.empty:
+                        for _, _g in _day_games.iterrows():
+                            _hg = _g.get("home_goals_real")
+                            _ag = _g.get("away_goals_real")
+                            _real_s = f'{int(_hg)}-{int(_ag)}' if pd.notna(_hg) and pd.notna(_ag) else "–"
+                            _pts_g = int(_g["pontos"])
+                            _css_v, _, _ = config.scoring_css_var(_g.get("criterio", ""))
+                            _pts_c = _css_v if _css_v else (config.scoring_color(_g.get("criterio", "")) or "var(--text-muted)")
+                            _home_en = _cv_rev_map.get(_g["home_team"], _g["home_team"])
+                            _away_en = _cv_rev_map.get(_g["away_team"], _g["away_team"])
+                            _home_l = _team_logo_tag(_home_en, config, cls="team-logo-cel", start=boleiro_dir)
+                            _away_l = _team_logo_tag(_away_en, config, cls="team-logo-cel", start=boleiro_dir)
+                            _ms = str(_g.get("match", ""))
+                            _ph = str(_g.get("phase", ""))
+                            _ph_s = _ph if _ph else config.group_phase_label
+                            _ph_colors = {
+                                config.group_phase_label: "",  # group — no border
+                                "segunda_fase": "var(--phase-sf,#4a9eff)",
+                                "oitavas": "var(--phase-oi,#a855f7)",
+                                "quartas": "var(--phase-qt,#f97316)",
+                                "semi": "var(--phase-sm,#ec4899)",
+                                "terceiro_lugar": "var(--phase-tl,#6b7280)",
+                                "final": "var(--phase-fi,#eab308)",
+                            }
+                            _ph_border = _ph_colors.get(_ph_s, "")
+                            _ph_style = f"border-left:2px solid {_ph_border};" if _ph_border else ""
+                            _hr = str(_g.get("hour", ""))
+                            _ghref = f"../jogos/{_ph_s}/{_g['date']}_{_hr}_{_ms}.html"
+                            _g_inner += (
+                                f'<a href="{_ghref}" class="cg-link" style="color:{_pts_c};{_ph_style}">'
+                                f'{_home_l}<span class="cg-sc">{_real_s}</span>{_away_l}'
+                                f'<span class="cg-pts">+{_pts_g}</span>'
+                                f'</a>'
+                            )
+                    _cells += (
+                        f'<div class="cal-day" style="background:{_cbg};">'
+                        f'<div class="cal-hdr"><span class="cal-num">{_d}</span><span class="cal-pts" style="color:{_cc};">+{_pts}</span></div>'
+                        f'<div class="cal-games">{_g_inner}</div>'
+                        f'</div>\n'
+                    )
+                else:
+                    _cells += f'<div class="cal-day cal-dim"><div class="cal-hdr"><span class="cal-num">{_d}</span></div></div>\n'
+            _cal_blocks += (
+                f'<div class="cal-month">'
+                f'<div style="font-size:0.65rem;font-weight:700;color:var(--text-muted);margin-bottom:0.15rem;">{_mname}</div>'
+                f'<div class="cal-dow">{"".join(f"<span>{w}</span>" for w in _dow_labels)}</div>'
+                f'<div class="cal-grid">{_cells}</div>'
+                f'</div>\n'
+            )
+        if _cal_blocks:
+            _legend_html = '<div style="display:flex;flex-wrap:wrap;gap:0.25rem 0.5rem;margin-bottom:0.25rem;font-size:0.55rem;line-height:1;">'
+            for _lbl, _clr in [
+                ("1\u00aa Fase", ""),
+                ("2\u00aa Fase", "var(--phase-sf,#4a9eff)"),
+                ("Oitavas", "var(--phase-oi,#a855f7)"),
+                ("Quartas", "var(--phase-qt,#f97316)"),
+                ("Semi", "var(--phase-sm,#ec4899)"),
+                ("3\u00ba Lugar", "var(--phase-tl,#6b7280)"),
+                ("Final", "var(--phase-fi,#eab308)"),
+            ]:
+                _dot = f'<span style="display:inline-block;width:5px;height:5px;border-radius:1px;background:{_clr};margin-right:0.15rem;vertical-align:middle;"></span>' if _clr else '<span style="display:inline-block;width:5px;height:5px;margin-right:0.15rem;vertical-align:middle;"></span>'
+                _legend_html += f'<span style="color:var(--text-muted);">{_dot}{_lbl}</span>'
+            _legend_html += "</div>"
+            _cal_html = (
+                f'<div class="section">'
+                f'<div class="section-title">\U0001f4c5 Calend\u00e1rio</div>'
+                f'<div class="card" style="padding:0.25rem;"><div style="display:flex;flex-direction:column;gap:0.5rem;">{_legend_html}{_cal_blocks}</div></div>'
+                f'</div>\n'
+            )
+    body += _cal_html
+
+    # ── Mini leaderboard ──
+    _lb_html = ""
+    _rh_path = _norm(os.path.join(gold_dir, "ranking_history.csv"))
+    if os.path.exists(_rh_path):
+        df_rh2 = pd.read_csv(_rh_path, sep=",")
+        if not df_rh2.empty:
+            df_rh2 = df_rh2.sort_values("date")
+            latest2 = df_rh2["date"].iloc[-1]
+            df_latest2 = df_rh2[df_rh2["date"] == latest2].copy()
+            df_latest2 = df_latest2.sort_values("cumulative_points", ascending=False).reset_index(drop=True)
+            _pl_idx = None
+            for _i, _r in df_latest2.iterrows():
+                if _r["boleiro"] == boleiro:
+                    _pl_idx = _i
+                    break
+            _lb_rows = ""
+            _rows_to_render = []
+            for _i in range(min(3, len(df_latest2))):
+                _r2 = df_latest2.iloc[_i]
+                _is_me2 = _r2["boleiro"] == boleiro
+                _rows_to_render.append((_i, _r2, _is_me2))
+            if _pl_idx is not None and _pl_idx >= 3:
+                _rows_to_render.append(("sep", None, False))
+                _r2 = df_latest2.iloc[_pl_idx]
+                _rows_to_render.append((_pl_idx, _r2, True))
+            for _item in _rows_to_render:
+                if _item[0] == "sep":
+                    _lb_rows += '<div style="display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.75rem;color:var(--text-muted);font-size:0.7rem;">\u22ee</div>\n'
+                    continue
+                _i, _r2, _is_me2 = _item
+                _pts2 = int(_r2["cumulative_points"])
+                _name2 = _r2["boleiro"]
+                _rank2 = _i + 1
+                _marker2 = "\u25c6 " if _is_me2 else ""
+                _lb_rows += (
+                    f'<div style="display:flex;align-items:center;gap:0.5rem;'
+                    f'padding:0.3rem 0.75rem;font-size:0.8rem;'
+                    f'{"background:var(--hover-overlay);border-radius:4px;font-weight:600;" if _is_me2 else ""}">'
+                    f'<span style="min-width:2rem;color:var(--text-muted);font-family:var(--font-mono);font-size:0.7rem;">{_rank2}\u00ba</span>'
+                    f'<span style="flex:1;{"color:var(--accent);" if _is_me2 else "color:var(--text);"}">{_marker2}{_name2}</span>'
+                    f'<span style="font-family:var(--font-mono);font-weight:700;">+{_pts2}</span>'
+                    f'</div>\n'
+                )
+            if _lb_rows:
+                _lb_html = (
+                    f'<div class="section">'
+                    f'<div class="section-title">\U0001f3c6 Classifica\u00e7\u00e3o</div>'
+                    f'<div class="card" style="padding:0.5rem 0;">{_lb_rows}</div>'
+                    f'</div>\n'
+                )
+    body += _lb_html
+
+    # --- Scoring distribution per criteria (bar chart, refined) ---
     rule_order = config.scoring_rule_names()
     rule_map = config.scoring_dict()
+    _df_scored = df_bol[df_bol["pontos"] > 0]
     n_preds = len(df_bol)
+    n_scored = len(_df_scored)
     criteria_counts = df_bol["criterio"].value_counts()
     largest_cnt = max((int(criteria_counts.get(t, 0)) for t in rule_order), default=1)
-    dist_rows = ""
+    # Total points from predictions
+    _dist_total_pts = int(df_bol["pontos"].sum())
+    _dist_best_criteria = criteria_counts.idxmax() if not criteria_counts.empty else ""
+    _dist_best_criteria_short = _dist_best_criteria.split("-", 1)[1] if "-" in _dist_best_criteria else _dist_best_criteria
+    _dist_best_cnt = int(criteria_counts.max()) if not criteria_counts.empty else 0
+    # Compact criteria rows
+    # Compact criteria cards (2-column grid)
+    _dist_cards = ""
     for t in rule_order:
         cnt = int(criteria_counts.get(t, 0))
+        if cnt == 0:
+            continue
         pts_per = rule_map.get(t, 0)
         pct = round(cnt / n_preds * 100, 1) if n_preds else 0
         bar_w = max(cnt / largest_cnt * 100, 1)
         name_part = t.split("-", 1)[1] if "-" in t else t
-        label = f"{name_part} (+{pts_per}p)" if pts_per > 0 else name_part
+        label = name_part
         color = config.scoring_color(t)
         emoji = config.scoring_emoji(t)
-        dist_rows += f"""
-        <tr>
-            <td style="padding:0.3rem 0.5rem;"><span style="color:{color};font-weight:700;">{emoji}</span> {label}</td>
-            <td style="padding:0.3rem 0.5rem;text-align:right;font-weight:600;">{cnt}</td>
-            <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{pct}%</td>
-            <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{bar_w:.0f}%;background:{color};height:10px;"></div></div></td>
-        </tr>"""
-    # Zebra row in distribution
-    z_pct = round(player_zebra_cnt / n_preds * 100, 1) if n_preds else 0
-    z_bar_w = max(player_zebra_cnt / largest_cnt * 100, 1) if player_zebra_cnt else 0
-    dist_rows += f"""
-        <tr>
-            <td style="padding:0.3rem 0.5rem;"><span style="color:var(--danger);font-weight:700;">\U0001f993</span> Zebra acertada</td>
-            <td style="padding:0.3rem 0.5rem;text-align:right;font-weight:600;color:var(--danger);">{player_zebra_cnt}</td>
-            <td style="padding:0.3rem 0.5rem;text-align:right;color:var(--text-muted);">{z_pct}%</td>
-            <td style="padding:0.3rem 0.5rem;width:30%;"><div class="bar-track"><div class="bar-fill" style="width:{z_bar_w:.0f}%;background:var(--danger);height:10px;"></div></div></td>
-        </tr>"""
-    # Store scoring distribution HTML for later (show after phase table)
+        _dist_cards += f"""
+    <div style="flex:1 1 calc(50% - 0.25rem);min-width:0;background:var(--card-bg);border:1px solid var(--card-border);border-radius:4px;padding:0.4rem;display:flex;flex-direction:column;gap:0.2rem;">
+        <div style="display:flex;align-items:center;gap:0.25rem;font-size:0.6rem;line-height:1.2;">
+            <span style="flex-shrink:0;">{emoji}</span>
+            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);">{label}</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:0.3rem;font-size:0.7rem;">
+            <span style="font-family:var(--font-mono);font-weight:700;color:{color};">+{pts_per}</span>
+            <span style="font-weight:600;">{cnt}</span>
+            <span style="color:var(--text-muted);font-size:0.6rem;">{pct}%</span>
+        </div>
+        <div class="bar-track" style="height:3px;"><div class="bar-fill" style="width:{bar_w:.0f}%;background:{color};height:3px;"></div></div>
+    </div>"""
+    # Zebra card
+    if player_zebra_cnt:
+        z_pct = round(player_zebra_cnt / n_preds * 100, 1) if n_preds else 0
+        z_bar_w = max(player_zebra_cnt / largest_cnt * 100, 1) if player_zebra_cnt else 0
+        _dist_cards += f"""
+    <div style="flex:1 1 calc(50% - 0.25rem);min-width:0;background:var(--card-bg);border:1px solid var(--card-border);border-radius:4px;padding:0.4rem;display:flex;flex-direction:column;gap:0.2rem;">
+        <div style="display:flex;align-items:center;gap:0.25rem;font-size:0.6rem;line-height:1.2;">
+            <span style="flex-shrink:0;">\U0001f993</span>
+            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--danger);">Zebra</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:0.3rem;font-size:0.7rem;">
+            <span style="font-family:var(--font-mono);font-weight:700;color:var(--danger);">+10</span>
+            <span style="font-weight:600;color:var(--danger);">{player_zebra_cnt}</span>
+            <span style="color:var(--text-muted);font-size:0.6rem;">{z_pct}%</span>
+        </div>
+        <div class="bar-track" style="height:3px;"><div class="bar-fill" style="width:{z_bar_w:.0f}%;background:var(--danger);height:3px;"></div></div>
+    </div>"""
+    # Summary stat pills (after the grid, compact)
+    _dist_pills = f"""
+<div style="display:flex;gap:0.3rem;flex-wrap:wrap;margin-top:0.5rem;padding-top:0.4rem;border-top:1px solid var(--card-border);">
+    <span style="font-size:0.6rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.4rem;white-space:nowrap;"><strong>{n_scored}/{n_preds}</strong> acertados</span>
+    <span style="font-size:0.6rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.4rem;white-space:nowrap;"><strong>{_dist_total_pts}</strong> pts</span>
+    <span style="font-size:0.6rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.4rem;white-space:nowrap;">Mais: <strong>{_dist_best_criteria_short}</strong> ({_dist_best_cnt})</span>
+    {f'<span style="font-size:0.6rem;background:var(--card-border);border-radius:999px;padding:0.15rem 0.4rem;white-space:nowrap;"><span style="color:var(--danger);">\U0001f993</span> <strong>{player_zebra_cnt}</strong></span>' if player_zebra_cnt else ''}
+</div>
+"""
     _dist_html = f"""
 <div class="section">
-    <div class="section-title">\U0001f3af Distribui\u00e7\u00e3o de Acertos ({n_preds})</div>
-    <div class="card">
-        <table data-sortable style="width:100%;border-collapse:collapse;">
-            {dist_rows}
-        </table>
+    <div class="section-title">\U0001f3af Distribui\u00e7\u00e3o ({n_preds} palpites)</div>
+    <div class="card" style="padding:0.5rem;">
+        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">{_dist_cards}</div>
+        {_dist_pills}
     </div>
 </div>
 """
@@ -1779,157 +2134,24 @@ def _build_boleiro(config: ChampionshipConfig, boleiro: str, rank: int = 0) -> s
             # Since champion_team is defined in this loop, we need to make sure it's accessible
             # The variable champion_team is already in the current scope.
 
-    # ── Gold Dashboard (1st block after hero) ──
-    phase_emoji_map_local = dict(config.phase_emojis) if config.phase_emojis else {}
-    _score_names = config.scoring_rule_names()
-    _exact_col = next((c for c in _score_names if c.startswith("1-")), "")
-    _exact_count = int(df_bol[_exact_col].sum()) if _exact_col and _exact_col in df_bol.columns else 0
-    gold_dashboard_html = _build_gold_dashboard(
-        config=config,
-        boleiro=boleiro,
-        df_bol=df_bol,
-        total_pts=total_pts,
-        bonus_total=bonus_total,
-        bonus_by_phase=bonus_by_phase,
-        grand_total=grand_total,
-        avg_per_game=avg_per_game,
-        num_games=num_games,
-        max_pts=max_pts,
-        player_zebra_cnt=player_zebra_cnt,
-        phase_emoji_map=phase_emoji_map_local,
-        gold_dir=gold_dir,
-        exact_count=_exact_count,
-        avg_per_day=avg_per_day,
-        rank=rank,
-    )
-    body += gold_dashboard_html
+    # Gold dashboard removed — key stats absorbed into hero above
 
-    # --- Build top-of-page: striker + champion + bonus + timeline + compare ---
-    top_badges = ""
-    if striker_name:
-        top_badges += f'<div class="striker-badge"><span class="icon">\U0001f3af</span> Artilheiro: <strong>{striker_name}</strong></div>\n'
-    if champion_team:
-        top_badges += f'<div class="striker-badge"><span class="icon">\U0001f3c6</span> Campe\u00e3o: <strong>{champion_team}</strong></div>\n'
-    body += top_badges
+    # Striker/champion badges moved into hero above
 
     if bonus_html:
         body += bonus_html
 
-    # ------------------------------------------------------------------
-    # Phase points table
-    # ------------------------------------------------------------------
-    phase_emoji_map = dict(config.phase_emojis) if config.phase_emojis else {
-        "1afase": "\U0001f4ca",
-        "segunda_fase": "\U0001f3c6",
-        "oitavas": "\U0001f3c1",
-        "quartas": "\U0001f525",
-        "semi": "\U0001f3af",
-        "terceiro_lugar": "\U0001f949",
-        "final": "\U0001f3c6",
-    }
+    # ── Scoring distribution → detalhamento ──
+    _detalhe_parts: list[str] = []
+    _detalhe_parts.append(_dist_html)
 
-    # Group stage: use df_valid (gold group CSV) directly for accurate group-only points
-    # This avoids the round_by_round.csv catch-all bucket (round_number=0) which
-    # can inadvertently include playoff r32 / terceiro_lugar matches.
-    group_match_pts = int(df_valid.loc[df_valid["who"] == boleiro, "pontos"].sum())
-
-    phase_rows = ""
-    match_total = 0
-    # 1st phase (group stage)
-    df_group_player = df_valid[df_valid["who"] == boleiro]
-    group_total_matches = len(df_group_player)
-    group_correct_teams = (df_group_player["resultado_bol_time"] == df_group_player["resultado_real_time"]).sum()
-    group_team_str = f'{group_correct_teams}/{group_total_matches}' if group_total_matches else '-'
-    if group_match_pts > 0 or (total_pts > 0 and group_match_pts >= 0):
-        phase_rows += (
-            f'<tr><td>\U0001f4ca 1\u00aa Fase</td>'
-            f'<td style="text-align:right;">+{group_match_pts}</td>'
-            f'<td style="text-align:right;">-</td>'
-            f'<td style="text-align:right;">{group_team_str}</td>'
-            f'<td style="text-align:right;font-weight:600;color:var(--accent);">+{group_match_pts}</td></tr>\n'
-        )
-        match_total += group_match_pts
-
-    # Playoff phases
-    for pr in config.playoff_rounds or []:
-        phase_key = pr.key
-        phase_name = pr.name
-
-        phase_valid_path = config.gold_playoff_valid_path(phase_key)
-        phase_pts = 0
-        has_match_data = False
-        phase_team_str = '-'
-        if os.path.exists(phase_valid_path):
-            df_pp = pd.read_csv(phase_valid_path, sep=",")
-            df_pp_player = df_pp[df_pp["who"] == boleiro]
-            if not df_pp_player.empty:
-                phase_pts = int(df_pp_player["pontos"].sum())
-                has_match_data = True
-                pp_valido = df_pp_player[df_pp_player.get("valido", 1) == 1]
-                pp_total = len(pp_valido)
-                if pp_total:
-                    pp_correct = (pp_valido["resultado_bol_time"] == pp_valido["resultado_real_time"]).sum()
-                    phase_team_str = f'{pp_correct}/{pp_total}'
-
-        bns = bonus_by_phase.get(phase_key, 0)
-        tot = phase_pts + bns
-        if tot > 0 or phase_pts > 0 or bns > 0 or has_match_data:
-            match_total += phase_pts
-            emoji = phase_emoji_map.get(phase_key, "\u26bd")
-            bonus_str = f'+{bns}' if bns else '-'
-            phase_rows += (
-                f'<tr><td>{emoji} {phase_name}</td>'
-                f'<td style="text-align:right;">+{phase_pts}</td>'
-                f'<td style="text-align:right;">{bonus_str}</td>'
-                f'<td style="text-align:right;">{phase_team_str}</td>'
-                f'<td style="text-align:right;font-weight:600;color:var(--accent);">+{tot}</td></tr>\n'
-            )
-
-    if phase_rows:
-        # Recompute total_pts from the phase breakdown (robust against concat issues)
-        total_pts = match_total
-        grand_total = total_pts + bonus_total - penalty_pts
-        body += (
-            f'<div class="section">'
-            f'<div class="section-title">\U0001f4ca Pontos por Fase</div>'
-            f'<div class="card" style="overflow-x:auto;">'
-f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85rem;">'
-             f'<thead><tr style="color:var(--text-muted);border-bottom:1px solid var(--card-border);">'
-             f'<th style="text-align:left;padding:0.4rem;">Fase</th>'
-             f'<th style="text-align:right;padding:0.4rem;">Jogos</th>'
-             f'<th style="text-align:right;padding:0.4rem;">B\u00f4nus</th>'
-             f'<th style="text-align:right;padding:0.4rem;">Times</th>'
-             f'<th style="text-align:right;padding:0.4rem;">Total</th>'
-            f'</tr></thead><tbody>'
-            f'{phase_rows}'
-            f'<tr style="border-top:2px solid var(--accent);font-weight:700;">'
-            f'<td style="padding:0.4rem;">Total</td>'
-            f'<td style="text-align:right;">+{total_pts}</td>'
-            f'<td style="text-align:right;">+{bonus_total}</td>'
-            f'<td style="text-align:right;">-</td>'
-            f'<td style="text-align:right;color:var(--accent);">+{total_pts + bonus_total}</td></tr>'
-            f'{"<tr style=\"color:var(--danger);\"><td style=\"padding:0.4rem;\">❌ Penalidade</td><td></td><td></td><td></td><td style=\"text-align:right;\">-" + str(penalty_pts) + "</td></tr>" if penalty_pts > 0 else ""}'
-            f'<tr style="border-top:2px solid var(--card-border);font-weight:700;">'
-            f'<td style="padding:0.4rem;">\U0001f3c6 Geral</td>'
-            f'<td></td><td></td><td></td>'
-            f'<td style="text-align:right;color:var(--accent);font-size:1.1rem;">+{grand_total}</td></tr>'
-            f'</tbody></table>'
-            f'<div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;">'
-            f'Jogos = pontos dos palpites \u00b7 B\u00f4nus = pontos dos times escolhidos por fase \u00b7 Times = acertos do vencedor / total de jogos'
-            f'</div></div></div>\n'
-        )
-
-    # ── Scoring distribution ──
-    body += _dist_html
-
-    if timeline_bars:
-        body += f'<div class="card"><div class="card-title">Pontos por dia</div><div class="bar-chart">{timeline_bars}</div></div>\n'
+    # Timeline bars removed — redundant with phase cards and round data
 
     if compare_bars:
-        body += f'<div class="card"><div class="card-title">Pontos por Dia — Voce vs Bolao</div><div style="padding:0.5rem 0;">{compare_bars}</div></div>\n'
+        _detalhe_parts.append(f'<div class="card"><div class="card-title">Pontos por Dia — Voce vs Bolao</div><div style="padding:0.5rem 0;">{compare_bars}</div></div>\n')
 
     # ------------------------------------------------------------------
-    # Round-by-round performance table
+    # Round-by-round → detalhamento
     # ------------------------------------------------------------------
     rbr_html = ""
     rbr_path = _norm(os.path.join(gold_dir, "round_by_round.csv"))
@@ -1960,7 +2182,8 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
         <div style="font-size:0.65rem;color:var(--text-muted);margin-top:0.4rem;">*Rank baseado apenas em pontos dos palpites (b\u00f4nus n\u00e3o incluso)</div>
     </div>
 </div>"""
-    body += rbr_html
+    if rbr_html:
+        _detalhe_parts.append(rbr_html)
 
     # --- Best and worst teams (goal_error_by_team) → before ta_parts ---
     error_path = _norm(os.path.join(gold_dir, "goal_error_by_team.csv"))
@@ -2011,7 +2234,20 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
         {ta_parts}
     </div>
 </div>"""
-    body += ta_html
+    if ta_html:
+        _detalhe_parts.append(ta_html)
+
+
+
+    # ── Detalhamento rendered here ──
+    if _detalhe_parts:
+        body += f"""
+<details class="section">
+    <summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">
+    \U0001f4ca Detalhamento</summary>
+    {"".join(_detalhe_parts)}
+</details>
+"""
 
     # ------------------------------------------------------------------
     # Radar chart data (5 axes: Points, Precision, Boldness, Zebras, Regularity)
@@ -2144,7 +2380,7 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
 </script>
 """
 
-    body += f"""
+    _radar_html = f"""
 <style>{radar_css}</style>
 <div class="section">
     <div class="section-title">\U0001f4ca Radar do Jogador</div>
@@ -2156,15 +2392,6 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
             <span>Ousadia: {boldness_norm}%</span>
             <span>Zebras: {zebra_pct}%</span>
             <span>Regularidade: {reg_pct}%</span>
-        </div>
-        <div style="font-size:0.7rem;color:var(--text-muted);text-align:left;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--card-border);">
-            <strong style="font-size:0.75rem;">Legenda:</strong><br>
-            \u2022 <strong>Pontua\u00e7\u00e3o</strong>: % de pontos em rela\u00e7\u00e3o ao m\u00e1ximo poss\u00edvel<br>
-            \u2022 <strong>Precis\u00e3o</strong>: m\u00e9dia de pontos por jogo / pontos m\u00e1ximos por jogo<br>
-            \u2022 <strong>Ousadia</strong>: qu\u00e3o diferente suas apostas s\u00e3o da m\u00e9dia do bol\u00e3o<br>
-            \u2022 <strong>Zebras</strong>: % das surpresas que voc\u00ea acertou<br>
-            \u2022 <strong>Regularidade</strong>: consist\u00eancia dos seus palpites ao longo do tempo<br>
-            <span style="display:block;margin-top:0.3rem;">(\u00cdndices de 0% a 100%)</span>
         </div>
     </div>
 </div>
@@ -2349,75 +2576,16 @@ f'<table data-sortable style="width:100%;border-collapse:collapse;font-size:0.85
                 f'</div>\n'
             )
 
-    # --- Combine profile ---
+    # --- Combine profile (no radar) ---
     profile_parts = arq_html + badges_html + boldness_html + streak_html_inner
     profile_html = f'<div class="section"><div class="section-title">\U0001f9d0 Perfil do Jogador</div><div class="card">{profile_parts}</div></div>\n'
 
+    # ── Perfil ──
     body += profile_html
 
-    # --- Last 5 games card (between profile and jogos encerrados) ---
-    df_last5 = df_bol[df_bol.get("valido", 0) == 1].tail(5).iloc[::-1]
-    if not df_last5.empty:
-        rev_map_5 = {v: k for k, v in config.team_name_mapping.items()}
-        last5_rows = ""
-        for _, r5 in df_last5.iterrows():
-            hg5 = r5.get("home_goals_real")
-            ag5 = r5.get("away_goals_real")
-            score_5 = f'<span style="font-weight:700;color:var(--accent);">{int(hg5)}</span> - <span style="font-weight:700;color:var(--accent);">{int(ag5)}</span>' if pd.notna(hg5) and pd.notna(ag5) else " vs "
-            home_en_5 = rev_map_5.get(r5["home_team"], r5["home_team"])
-            away_en_5 = rev_map_5.get(r5["away_team"], r5["away_team"])
-            home_logo_5 = _team_logo_tag(home_en_5, config, cls="team-logo-sm", start=boleiro_dir)
-            away_logo_5 = _team_logo_tag(away_en_5, config, cls="team-logo-sm", start=boleiro_dir)
-            ms_5 = str(r5.get("match", ""))
-            phase_val_5 = str(r5.get("phase", ""))
-            phase_5 = phase_val_5 if phase_val_5 else config.group_phase_label
-            hr_5 = str(r5.get("hour", ""))
-            game_href_5 = f"../jogos/{phase_5}/{r5['date']}_{hr_5}_{ms_5}.html"
-            date_part_5 = pd.to_datetime(r5["date"]).strftime("%d/%m") + (f" {hr_5}" if hr_5 else "")
-            last5_rows += (
-                f'<a href="{game_href_5}" style="display:flex;align-items:center;justify-content:space-between;'
-                f'background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;'
-                f'padding:0.45rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text);'
-                f'text-decoration:none;transition:border-color 0.15s;" '
-                f'onmouseover="this.style.borderColor=\'var(--accent)\'" '
-                f'onmouseout="this.style.borderColor=\'var(--card-border)\'">'
-                f'<span style="display:flex;align-items:center;gap:0.3rem;">'
-                f'<span style="font-size:0.65rem;color:var(--text-muted);">{date_part_5}</span>'
-                f'{home_logo_5}{r5["home_team"]}'
-                f' {score_5} '
-                f'{away_logo_5}{r5["away_team"]}'
-                f'</span>'
-                f'</a>\n'
-            )
-        body += f'<div class="section"><div class="section-title">\U0001f4c5 Ultimos 5 Jogos</div><div class="card" style="display:flex;flex-direction:column;gap:0.25rem;padding:0.6rem 0.75rem;">{last5_rows}</div></div>\n'
+    # ── Radar ──
+    body += _radar_html
 
-    encerrados_total = n_past + n_pending
-    body += f"""
-<details class="section">
-    <summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">
-    \U0001f4cb Jogos Encerrados ({encerrados_total})</summary>
-"""
-    if n_pending:
-        body += f"""    <div class="card" style="margin-bottom:0.5rem;">
-        <div style="font-size:0.8rem;font-weight:600;color:var(--warning);margin-bottom:0.3rem;">\u23f3 Aguardando Resultado ({n_pending})</div>
-        {pending_rows}</div>
-"""
-    if history_rows_past:
-        body += f"""    <div class="card">
-        <div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">\u2705 Com Resultado ({n_past})</div>
-        {history_rows_past}</div>
-"""
-    if not encerrados_total:
-        body += """    <div class="card"><div style="color:var(--text-muted);font-size:0.85rem;padding:0.3rem 0;">Nenhum jogo encerrado.</div></div>"""
-
-    body += f"""
-</details>
-<details class="section" open>
-    <summary style="font-size:1rem;font-weight:700;padding:0 0.75rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;cursor:pointer;min-height:44px;">
-    \U0001f4cb Jogos Futuros ({n_future})</summary>
-    <div class="card">{history_rows_future}</div>
-</details>
-"""
     return _page_frame(config, f"{boleiro} - {config.report_title}", body, back_link="../index.html")
 
 
