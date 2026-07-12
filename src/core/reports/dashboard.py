@@ -536,6 +536,45 @@ body { padding-bottom: 65px; }
 }
 .rank-table th.sort-asc::after { content:" \u25b2"; font-size:0.6rem; }
 .rank-table th.sort-desc::after { content:" \u25bc"; font-size:0.6rem; }
+
+/* ── Calendar grid ── */
+.team-logo-cel { width:8px; height:8px; object-fit:contain; border-radius:1px; vertical-align:middle; }
+.cal-dow {
+    display:grid; grid-template-columns:repeat(7,1fr);
+    text-align:center; font-size:0.5rem; color:var(--text-muted);
+    margin-bottom:0.1rem;
+    text-transform:uppercase; letter-spacing:0.02em;
+}
+.cal-grid {
+    display:grid; grid-template-columns:repeat(7,1fr);
+    gap:1px;
+}
+.cal-day {
+    display:flex; flex-direction:column;
+    border-radius:2px; background:var(--card-bg);
+    min-height:2.5rem; overflow:hidden;
+}
+.cal-empty { min-height:2.5rem; }
+.cal-dim { opacity:0.2; }
+.cal-hdr {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0.05rem 0.15rem; line-height:1;
+}
+.cal-num { font-size:0.45rem; font-weight:600; }
+.cal-games {
+    display:flex; flex-direction:column; gap:3px;
+    flex:1; padding:0 0.1rem 0.05rem;
+}
+.cg-link {
+    display:flex; align-items:center; gap:0.05rem;
+    text-decoration:none; line-height:1;
+    padding:0.16rem 0 0.16rem 0.12rem; border-radius:2px;
+}
+.cg-link:hover { background:var(--hover-overlay); }
+.cg-sc {
+    font-family:var(--font-mono); font-weight:700;
+    font-size:0.35rem; color:var(--text-muted);
+}
 """
 
 
@@ -596,6 +635,117 @@ def _parse_game_file(filepath: str, config: ChampionshipConfig) -> dict | None:
     )
 
     return {"dt": dt, "teams": teams, "home_team": home_team, "away_team": away_team, "href": href, "date_str": f"{day:02d}/{month:02d} {hour:02d}h"}
+
+
+def _build_games_calendar(config: ChampionshipConfig) -> str:
+    """Build a calendar grid of all games (same visual as boleiro page, no points)."""
+    if not os.path.exists(config.games_file):
+        return ""
+    df = pd.read_csv(config.games_file, sep=",")
+    if df.empty:
+        return ""
+    # Parse date parts
+    df["_date_clean"] = df["date"].str[:10]
+    df["_dt"] = pd.to_datetime(df["_date_clean"])
+    df["_month"] = df["_dt"].dt.month
+    df["_day"] = df["_dt"].dt.day
+    df["_year"] = df["_dt"].dt.year
+    # Extract hour
+    df["_hour"] = df["date"].str.extract(r"(\d+)h", expand=False).fillna("")
+    # Determine phase dir for each game
+    playoff_keys = [pr.key for pr in (config.playoff_rounds or [])]
+    group_label = config.group_phase_label
+    df["_round"] = df["round"].astype(str).str.strip()
+    df["_phase"] = df["_round"].apply(lambda r: r if r in playoff_keys else group_label)
+    # Team name reverse mapping
+    rev_map = {_strip_accents(v.lower()): k for k, v in config.team_name_mapping.items()}
+    _month_names = {6: "Junho", 7: "Julho", 8: "Agosto"}
+    _dow_labels = ["D", "S", "T", "Q", "Q", "S", "S"]
+    # Phase color map
+    _ph_colors = {
+        group_label: "",
+        "segunda_fase": "var(--phase-sf,#4a9eff)",
+        "oitavas": "var(--phase-oi,#a855f7)",
+        "quartas": "var(--phase-qt,#f97316)",
+        "semi": "var(--phase-sm,#ec4899)",
+        "terceiro_lugar": "var(--phase-tl,#6b7280)",
+        "final": "var(--phase-fi,#eab308)",
+    }
+    _cal_blocks = ""
+    for _m in sorted(df["_month"].unique()):
+        _mname = _month_names.get(_m, f"M\u00eas {_m}")
+        _mdata = df[df["_month"] == _m]
+        _year = int(_mdata["_year"].iloc[0])
+        _first = pd.Timestamp(_year, _m, 1)
+        _last = pd.Timestamp(_year + 1, 1, 1) - pd.Timedelta(days=1) if _m == 12 else pd.Timestamp(_year, _m + 1, 1) - pd.Timedelta(days=1)
+        _start_dow = (_first.weekday() + 1) % 7
+        _cells = ""
+        for _ in range(_start_dow):
+            _cells += '<div class="cal-empty"></div>\n'
+        for _d in range(1, _last.day + 1):
+            _day_games = _mdata[_mdata["_day"] == _d]
+            if not _day_games.empty:
+                _g_inner = ""
+                for _, _g in _day_games.iterrows():
+                    _hg = _g.get("home_goals")
+                    _ag = _g.get("away_goals")
+                    _real_s = f'{int(float(_hg))}-{int(float(_ag))}' if pd.notna(_hg) and pd.notna(_ag) else "\u2013"
+                    _home_raw = str(_g["home_team"]) if pd.notna(_g.get("home_team")) else ""
+                    _away_raw = str(_g["away_team"]) if pd.notna(_g.get("away_team")) else ""
+                    _home_raw = "" if _home_raw.lower() == "nan" else _home_raw
+                    _away_raw = "" if _away_raw.lower() == "nan" else _away_raw
+                    _home_en = rev_map.get(_strip_accents(_home_raw.lower()), _home_raw) if _home_raw else ""
+                    _away_en = rev_map.get(_strip_accents(_away_raw.lower()), _away_raw) if _away_raw else ""
+                    _home_l = _team_logo_tag(_home_en, config, cls="team-logo-cel", start=config.reports_dir + "/html") if _home_en else '<span style="width:8px;display:inline-block;"></span>'
+                    _away_l = _team_logo_tag(_away_en, config, cls="team-logo-cel", start=config.reports_dir + "/html") if _away_en else '<span style="width:8px;display:inline-block;"></span>'
+                    _ms = str(_g.get("match", ""))
+                    _ph_s = str(_g["_phase"])
+                    _hr_v = str(_g["_hour"])
+                    _ghref = f"jogos/{_ph_s}/{_g['_date_clean']}_{_hr_v}h_{_ms}.html"
+                    _ph_clr = _ph_colors.get(_ph_s, "")
+                    _ph_style = f"border-left:2px solid {_ph_clr};" if _ph_clr else ""
+                    _g_inner += (
+                        f'<a href="{_ghref}" class="cg-link" style="{_ph_style}">'
+                        f'{_home_l}<span class="cg-sc">{_real_s}</span>{_away_l}'
+                        f'</a>'
+                    )
+                _cells += (
+                    f'<div class="cal-day">'
+                    f'<div class="cal-hdr"><span class="cal-num">{_d}</span></div>'
+                    f'<div class="cal-games">{_g_inner}</div>'
+                    f'</div>\n'
+                )
+            else:
+                _cells += f'<div class="cal-day cal-dim"><div class="cal-hdr"><span class="cal-num">{_d}</span></div></div>\n'
+        _cal_blocks += (
+            f'<div class="cal-month">'
+            f'<div style="font-size:0.65rem;font-weight:700;color:var(--text-muted);margin-bottom:0.15rem;">{_mname}</div>'
+            f'<div class="cal-dow">{"".join(f"<span>{w}</span>" for w in _dow_labels)}</div>'
+            f'<div class="cal-grid">{_cells}</div>'
+            f'</div>\n'
+        )
+    if not _cal_blocks:
+        return ""
+    # Legend
+    _legend_html = '<div style="display:flex;flex-wrap:wrap;gap:0.25rem 0.5rem;margin-bottom:0.25rem;font-size:0.55rem;line-height:1;">'
+    for _lbl, _clr in [
+        ("1\u00aa Fase", ""),
+        ("2\u00aa Fase", "var(--phase-sf,#4a9eff)"),
+        ("Oitavas", "var(--phase-oi,#a855f7)"),
+        ("Quartas", "var(--phase-qt,#f97316)"),
+        ("Semi", "var(--phase-sm,#ec4899)"),
+        ("3\u00ba Lugar", "var(--phase-tl,#6b7280)"),
+        ("Final", "var(--phase-fi,#eab308)"),
+    ]:
+        _dot = f'<span style="display:inline-block;width:5px;height:5px;border-radius:1px;background:{_clr};margin-right:0.15rem;vertical-align:middle;"></span>' if _clr else '<span style="display:inline-block;width:5px;height:5px;margin-right:0.15rem;vertical-align:middle;"></span>'
+        _legend_html += f'<span style="color:var(--text-muted);">{_dot}{_lbl}</span>'
+    _legend_html += "</div>"
+    return f"""
+<div class="section">
+    <div class="section-title">\U0001f4c5 Calend\u00e1rio</div>
+    <div class="card" style="padding:0.25rem;"><div style="display:flex;flex-direction:column;gap:0.5rem;">{_legend_html}{_cal_blocks}</div></div>
+</div>
+"""
 
 
 def _build_full_ranking(config: ChampionshipConfig) -> str:
@@ -1498,6 +1648,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     full_ranking = _build_full_ranking(config)
     upcoming = _build_upcoming_games(config)
     phase_buttons = _build_phase_buttons(config, slug_status)
+    games_calendar = _build_games_calendar(config)
     zebra_counter = _build_zebra_counter(config)
     badge_accordion = _build_badge_accordion(config)
     emoji_accordion = _build_emoji_accordion(config)
@@ -1583,10 +1734,7 @@ def generate_dashboard(config: ChampionshipConfig) -> None:
     <div class="card">{full_ranking}</div>
 </div>
 
-<div class="section">
-    <div class="section-title">\U0001f4c2 Jogos por Fase</div>
-    {phase_buttons}
-</div>
+{games_calendar}
 
 {_build_bottom_nav_dashboard(config=config)}
 
