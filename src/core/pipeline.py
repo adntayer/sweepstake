@@ -20,6 +20,8 @@ Structure:
     gold/first_round/{label}_valido_all.csv
     gold/first_round/striker_{boleiro}.csv
     gold/first_round/playoffs_strikers.csv
+    gold/first_round/team_state.csv          (per-team tournament state)
+    gold/first_round/phase_state.csv         (per-phase started flag)
     gold/playoffs/  (future)
 """
 
@@ -419,6 +421,10 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
     """Create gold-layer analytical datasets (per-boleiro + aggregated).
 
     Playoffs are bonus-only and do not flow to gold.
+
+    Also generates ``team_state.csv`` and ``phase_state.csv`` so that
+    reports never need to read ``games.csv`` directly for tournament
+    state (alive/eliminated/phases/champion).
     """
     print_colored("silver to gold", "sand")
 
@@ -549,6 +555,7 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
         _generate_prediction_timing(config)
         _generate_goal_error_by_team(df_valid, config)
         _generate_group_standings(config)
+        _generate_team_tournament_state(config)
 
     print_colored("silver to gold completed", "green")
 
@@ -1134,6 +1141,223 @@ def _generate_goal_error_by_team(df_valid: pd.DataFrame, config: ChampionshipCon
 
     _save_csv(df_out, _norm(os.path.join(config._au_first_round(), "goal_error_by_team.csv")))
     print_colored(f"\tgoal_error_by_team.csv: {len(df_out)} rows", "green")
+
+
+# ------------------------------------------------------------------
+# Team tournament state (gold artifact, replaces games.csv reads)
+# ------------------------------------------------------------------
+
+
+def _generate_team_tournament_state(config: ChampionshipConfig) -> None:
+    """Compute per-team tournament state and per-phase started status.
+
+    Saves two gold files so reports no longer need to read ``games.csv``
+    and reimplement elimination/champion logic.
+
+    ``team_state.csv``  — one row per team with alive/elim/champion info.
+    ``phase_state.csv`` — one row per phase with started (has results) flag.
+    """
+    print_colored("\tgenerating team tournament state", "ice")
+
+    df_games = pd.read_csv(config.games_file, sep=",")
+
+    # --- Phase helpers ---------------------------------------------------
+    phase_keys: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
+    champion_key = config.champion_phase_key
+    if champion_key and champion_key not in phase_keys:
+        phase_keys.append(champion_key)
+
+    all_phases_ordered: list[str] = []
+    all_phases_ordered.extend(config.group_round_labels)
+    all_phases_ordered.extend(phase_keys)
+    phase_order_map = {ph: i for i, ph in enumerate(all_phases_ordered)}
+
+    def _phase_started(ph: str) -> bool:
+        """True if at least one match in this phase has a score."""
+        mask = df_games["round"].astype(str).str.strip() == ph
+        for _, r in df_games[mask].iterrows():
+            if pd.notna(r.get("home_goals")):
+                return True
+        return False
+
+    # --- Per-phase started status ----------------------------------------
+    phase_started: dict[str, bool] = {}
+    for ph in phase_keys:
+        if ph == champion_key:
+            phase_started[ph] = _phase_started("final")
+        else:
+            phase_started[ph] = _phase_started(ph)
+
+    phase_rows = [
+        {"phase_key": ph, "started": 1 if phase_started.get(ph, False) else 0}
+        for ph in phase_keys
+    ]
+    _save_csv(
+        pd.DataFrame(phase_rows),
+        _norm(os.path.join(config._au_first_round(), "phase_state.csv")),
+    )
+    print_colored(f"\tphase_state.csv: {len(phase_rows)} phases", "green")
+
+    # --- Champion --------------------------------------------------------
+    champion_known = ""
+    final_key = next(
+        (pr.key for pr in (config.playoff_rounds or []) if pr.key == "final"), ""
+    )
+    if final_key and phase_started.get(final_key, False):
+        final_matches = df_games[
+            df_games["round"].astype(str).str.strip() == final_key
+        ]
+        if not final_matches.empty:
+            f_last = final_matches.iloc[-1]
+            try:
+                fhg = (
+                    int(f_last["home_goals"])
+                    if pd.notna(f_last.get("home_goals"))
+                    else None
+                )
+                fag = (
+                    int(f_last["away_goals"])
+                    if pd.notna(f_last.get("away_goals"))
+                    else None
+                )
+            except (ValueError, TypeError):
+                fhg = fag = None
+            if fhg is not None and fag is not None and fhg != fag:
+                champion_known = (
+                    str(f_last["home_team"])
+                    if fhg > fag
+                    else str(f_last["away_team"])
+                )
+
+    # --- Per-team state --------------------------------------------------
+    all_teams: set[str] = set()
+    for _, row in df_games.iterrows():
+        all_teams.add(str(row["home_team"]).strip())
+        all_teams.add(str(row["away_team"]).strip())
+
+    team_rows: list[dict] = []
+    for team in sorted(all_teams):
+        tm = df_games[
+            (df_games["home_team"] == team) | (df_games["away_team"] == team)
+        ].copy()
+
+        # Phases this team has a match in
+        team_phases: set[str] = set()
+        for _, row in tm.iterrows():
+            team_phases.add(str(row["round"]).strip())
+
+        phases_reached_str = "|".join(
+            sorted(team_phases, key=lambda ph: phase_order_map.get(ph, 999))
+        )
+
+        # Elimination logic -------------------------------------------------
+        team_alive = True
+        elim_phase_key = ""
+        elim_opponent = ""
+
+        in_group = any(team in grp.get("teams", []) for grp in config.groups)
+        has_knockout = any(
+            ph in team_phases for ph in phase_keys if ph != champion_key
+        )
+
+        if not tm.empty:
+            tm["_po"] = (
+                tm["round"]
+                .astype(str)
+                .str.strip()
+                .map(lambda r: phase_order_map.get(r, 999))
+            )
+            tm = tm.sort_values("_po")
+
+            # Last match with a definitive result
+            last_result_row = None
+            for _, row in reversed(list(tm.iterrows())):
+                try:
+                    hg = (
+                        int(row["home_goals"])
+                        if pd.notna(row.get("home_goals"))
+                        else None
+                    )
+                    ag = (
+                        int(row["away_goals"])
+                        if pd.notna(row.get("away_goals"))
+                        else None
+                    )
+                except (ValueError, TypeError):
+                    hg = ag = None
+                if hg is not None and ag is not None:
+                    last_result_row = row
+                    break
+
+            if last_result_row is not None:
+                last_phase_r = str(last_result_row["round"]).strip()
+                is_home = str(last_result_row["home_team"]) == team
+                team_goals = hg if is_home else ag
+                opp_goals = ag if is_home else hg
+                opponent = str(
+                    last_result_row["away_team"]
+                    if is_home
+                    else last_result_row["home_team"]
+                )
+
+                if team_goals < opp_goals:
+                    team_alive = False
+                    elim_phase_key = last_phase_r
+                    elim_opponent = opponent
+                elif team_goals == opp_goals:
+                    try:
+                        hp = (
+                            int(last_result_row["home_pen"])
+                            if (
+                                pd.notna(last_result_row.get("home_pen"))
+                                and str(last_result_row.get("home_pen", "")).strip()
+                            )
+                            else None
+                        )
+                        ap = (
+                            int(last_result_row["away_pen"])
+                            if (
+                                pd.notna(last_result_row.get("away_pen"))
+                                and str(last_result_row.get("away_pen", "")).strip()
+                            )
+                            else None
+                        )
+                    except (ValueError, TypeError):
+                        hp = ap = None
+                    if hp is not None and ap is not None:
+                        if (is_home and hp < ap) or (not is_home and ap < hp):
+                            team_alive = False
+                            elim_phase_key = last_phase_r
+                            elim_opponent = opponent
+
+            # Group-stage elimination (no knockout)
+            if not has_knockout and in_group and team_alive:
+                group_rounds = set(config.group_round_labels)
+                group_all_finished = all(
+                    _phase_started(gr) for gr in group_rounds
+                )
+                if group_all_finished and team_phases and not has_knockout:
+                    team_alive = False
+                    elim_phase_key = "group"
+                    elim_opponent = "Não classificou"
+
+        team_rows.append(
+            {
+                "team": team,
+                "phases_reached": phases_reached_str,
+                "alive": 1 if team_alive else 0,
+                "elim_phase": elim_phase_key,
+                "elim_opponent": elim_opponent,
+                "champion": 1 if champion_known == team else 0,
+            }
+        )
+
+    df_team = pd.DataFrame(team_rows)
+    _save_csv(
+        df_team,
+        _norm(os.path.join(config._au_first_round(), "team_state.csv")),
+    )
+    print_colored(f"\tteam_state.csv: {len(df_team)} teams", "green")
 
 
 # ------------------------------------------------------------------

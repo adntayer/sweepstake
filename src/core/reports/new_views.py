@@ -249,6 +249,295 @@ def _all_teams(config: ChampionshipConfig) -> list[str]:
     return teams
 
 
+# ------------------------------------------------------------------
+# 2b. TRAJETÓRIA DOS BOLEIROS (per-team boleiro trajectory)
+# ------------------------------------------------------------------
+
+def _build_team_boleiro_trajectory_html(config: ChampionshipConfig, team: str) -> str:
+    """Build a table showing how far each boleiro got with this team.
+
+    All tournament state (alive/eliminated/phases/champion) comes from
+    gold-layer files ``team_state.csv`` and ``phase_state.csv`` — never
+    reads ``games.csv`` directly.
+
+    Key differences from the naive ``correct`` field in playoffs_scored.csv:
+
+    * A phase is only ``❌`` if the team was *eliminated* before it.
+    * If the phase hasn't started yet (no finished matches), the cell shows
+      ``⏳`` (pending) — even if ``correct=0`` in the CSV.
+    * If the phase has started and the team isn't there → ``❌``.
+    * ``Foi até`` = furthest phase the boleiro picked that isn't ``❌``.
+    """
+    from src.core.reports.html import _short_name
+
+    # ── Phase order: playoff rounds + champion ──
+    phase_keys: list[str] = [pr.key for pr in (config.playoff_rounds or [])]
+    champion_key = config.champion_phase_key
+    if champion_key and champion_key not in phase_keys:
+        phase_keys.append(champion_key)
+
+    phase_labels: dict[str, str] = {}
+    for pr in config.playoff_rounds or []:
+        phase_labels[pr.key] = _short_name(pr.name, config)
+    if champion_key:
+        phase_labels[champion_key] = "Campeão"
+
+    # Full phase order for ordering
+    all_phases_ordered: list[str] = []
+    all_phases_ordered.extend(config.group_round_labels)
+    all_phases_ordered.extend(phase_keys)
+    phase_order_map = {ph: i for i, ph in enumerate(all_phases_ordered)}
+
+    # ── 1. Load who picked this team (bronze bonus data) ──
+    ps_path = _norm(os.path.join(config._au_first_round(), "playoffs_scored.csv"))
+    if not os.path.exists(ps_path):
+        return ""
+    try:
+        df_ps = pd.read_csv(ps_path, sep=",")
+    except (pd.errors.EmptyDataError, pd.errors.ParserError):
+        return ""
+    df_team_ps = df_ps[df_ps["team_picked"].astype(str).str.strip() == team]
+    if df_team_ps.empty:
+        return ""
+
+    # boleiro → set of phases they picked this team for
+    boleiro_picks: dict[str, set[str]] = {}
+    # boleiro → total bonus points earned from picks for this team
+    boleiro_points: dict[str, int] = {}
+    for _, row in df_team_ps.iterrows():
+        b = str(row["boleiro"])
+        ph = str(row["phase"])
+        pts = int(row.get("points", 0))
+        boleiro_picks.setdefault(b, set()).add(ph)
+        boleiro_points[b] = boleiro_points.get(b, 0) + pts
+
+    # ── 2. Tournament state from gold ──
+    phase_state_path = _norm(os.path.join(config._au_first_round(), "phase_state.csv"))
+    team_state_path = _norm(os.path.join(config._au_first_round(), "team_state.csv"))
+
+    # Which playoff/champion phases have at least one finished match
+    phase_started: dict[str, bool] = {}
+    if os.path.exists(phase_state_path):
+        try:
+            df_phase = pd.read_csv(phase_state_path, sep=",")
+            for _, r in df_phase.iterrows():
+                phase_started[str(r["phase_key"])] = bool(int(r["started"]))
+        except (pd.errors.EmptyDataError, pd.errors.ParserError):
+            pass
+
+    # Per-team tournament state
+    team_phases: set[str] = set()
+    team_alive = True
+    elim_phase_key = ""
+    elim_opponent = ""
+    champion_known = ""
+
+    if os.path.exists(team_state_path):
+        try:
+            df_team_state = pd.read_csv(team_state_path, sep=",")
+            # Find champion
+            champ_rows = df_team_state[df_team_state["champion"] == 1]
+            if not champ_rows.empty:
+                champion_known = str(champ_rows.iloc[0]["team"])
+            # This team's row
+            team_row = df_team_state[df_team_state["team"].astype(str).str.strip() == team]
+            if not team_row.empty:
+                r = team_row.iloc[0]
+                reached_raw = str(r.get("phases_reached", ""))
+                if reached_raw:
+                    team_phases = set(reached_raw.split("|"))
+                team_alive = bool(int(r.get("alive", 1)))
+                elim_phase_key = str(r.get("elim_phase", ""))
+                elim_opponent = str(r.get("elim_opponent", ""))
+        except (pd.errors.EmptyDataError, pd.errors.ParserError):
+            pass
+
+    # ── 3. Phase status table ──
+    # "reached" | "missed" | "pending"
+    phase_status: dict[str, str] = {}
+    for ph in phase_keys:
+        if ph in team_phases:
+            phase_status[ph] = "reached"
+        elif ph == champion_key:
+            if champion_known:
+                phase_status[ph] = "finished"
+            elif not team_alive and elim_phase_key != "group":
+                # Eliminated before champion could be decided → missed
+                e_idx = phase_order_map.get(elim_phase_key, -1)
+                c_idx = phase_order_map.get(champion_key, 999)
+                if e_idx >= 0 and c_idx > e_idx:
+                    phase_status[ph] = "missed"
+                else:
+                    phase_status[ph] = "pending"
+            else:
+                phase_status[ph] = "pending"
+        elif not team_alive:
+            # Team was eliminated — determine if this phase is after elimination
+            e_idx = phase_order_map.get(elim_phase_key, -1)
+            p_idx = phase_order_map.get(ph, 999)
+            if p_idx > e_idx:
+                phase_status[ph] = "missed"
+            elif phase_started.get(ph, False):
+                # Phase started but team wasn't there (shouldn't happen for pre-elim)
+                phase_status[ph] = "missed"
+            else:
+                phase_status[ph] = "pending"
+        elif phase_started.get(ph, False):
+            # Phase has started but team isn't in it
+            phase_status[ph] = "missed"
+        else:
+            phase_status[ph] = "pending"
+
+    # ── 5b. Column index of team's furthest reached phase (for highlighting) ──
+    furthest_team_col = -1
+    for i, ph in enumerate(phase_keys):
+        if ph in team_phases:
+            furthest_team_col = i
+
+    # ── 6. Build elimination header ──
+    elim_label_map: dict[str, str] = {}
+    for pr in config.playoff_rounds or []:
+        elim_label_map[pr.key] = pr.name
+    elim_label_map["group"] = "1ª Fase"
+    if champion_key:
+        elim_label_map[champion_key] = "Campeão"
+
+    elim_header = ""
+    if not team_alive and elim_phase_key:
+        elim_label = elim_label_map.get(elim_phase_key, elim_phase_key)
+        elim_header = (
+            f'<div class="card" style="margin-bottom:0.75rem;display:flex;gap:1rem;'
+            f'align-items:center;flex-wrap:wrap;padding:0.6rem 1rem;">'
+            f'<span style="font-size:0.8rem;color:var(--text-muted);">'
+            f'Eliminação: <strong style="color:var(--danger);">{elim_label}</strong></span>'
+            f'<span style="font-size:0.8rem;color:var(--text-muted);">'
+            f'Parou para: <strong style="color:var(--accent);">{elim_opponent}</strong></span>'
+            f'</div>'
+        )
+    else:
+        # Alive or champion
+        furthest_lbl = ""
+        if champion_known == team:
+            furthest_lbl = "Campeão! 👑"
+        else:
+            for ph in reversed(phase_keys):
+                if ph in team_phases:
+                    furthest_lbl = phase_labels.get(ph, ph)
+                    break
+        if furthest_lbl:
+            elim_header = (
+                f'<div class="card" style="margin-bottom:0.75rem;padding:0.6rem 1rem;">'
+                f'<span style="font-size:0.8rem;color:var(--text-muted);">'
+                f'Situação: <strong style="color:var(--success);">'
+                f'{"Campeão! 👑" if champion_known == team else "Ainda vivo em " + furthest_lbl}'
+                f'</strong></span>'
+                f'</div>'
+            )
+
+    # ── 7. Build table ──
+    def _furthest_pick_rank(b: str) -> int:
+        picks = boleiro_picks.get(b, set())
+        for i, ph in enumerate(reversed(phase_keys)):
+            if ph in picks:
+                return len(phase_keys) - i
+        return 0
+
+    sorted_boleiros = sorted(boleiro_picks.keys(), key=_furthest_pick_rank, reverse=True)
+
+    phase_col_headers = ""
+    for i, ph in enumerate(phase_keys):
+        label = phase_labels.get(ph, ph)
+        hl = 'background:rgba(21,128,61,0.12);' if i == furthest_team_col else ''
+        phase_col_headers += f'<th style="text-align:center;font-size:0.55rem;padding:0.3rem 0.2rem;{hl}">{label}</th>\n'
+
+    table_rows = ""
+    bp = "../boleiros"
+
+    for boleiro in sorted_boleiros:
+        picks = boleiro_picks.get(boleiro, set())
+        phase_cells = ""
+        furthest_valid = ""
+
+        for i, ph in enumerate(phase_keys):
+            hl = 'background:rgba(21,128,61,0.08);' if i == furthest_team_col else ''
+
+            if ph not in picks:
+                phase_cells += f'<td style="text-align:center;color:var(--text-muted);font-size:0.65rem;{hl}">—</td>\n'
+                continue
+
+            status = phase_status.get(ph, "pending")
+
+            if ph == champion_key and status == "finished":
+                # Champion is known
+                if champion_known == team:
+                    phase_cells += f'<td style="text-align:center;color:var(--accent);font-size:0.75rem;{hl}">👑</td>\n'
+                    furthest_valid = ph
+                else:
+                    phase_cells += f'<td style="text-align:center;color:var(--danger);font-size:0.75rem;{hl}">❌</td>\n'
+                continue
+
+            if status == "reached":
+                phase_cells += f'<td style="text-align:center;color:var(--success);font-size:0.75rem;{hl}">✅</td>\n'
+                furthest_valid = ph
+            elif status == "missed":
+                phase_cells += f'<td style="text-align:center;color:var(--danger);font-size:0.75rem;{hl}">❌</td>\n'
+            else:  # pending
+                phase_cells += f'<td style="text-align:center;color:var(--text-muted);font-size:0.7rem;{hl}">⏳</td>\n'
+                furthest_valid = ph
+
+        if furthest_valid:
+            fl = phase_labels.get(furthest_valid, furthest_valid)
+            furthest_display = f'<span style="color:var(--accent);font-weight:600;">{fl}</span>'
+        else:
+            furthest_display = '<span style="color:var(--text-muted);">—</span>'
+
+        pts_total = boleiro_points.get(boleiro, 0)
+        table_rows += f"""<tr>
+            <td><a href="{bp}/{boleiro}.html" style="font-weight:600;font-size:0.82rem;">{boleiro}</a></td>
+            {phase_cells}
+            <td style="text-align:center;">{furthest_display}</td>
+            <td style="text-align:center;font-family:var(--font-mono);font-size:0.75rem;font-weight:600;color:var(--accent);">{pts_total}</td>
+        </tr>
+"""
+
+    if not table_rows:
+        return ""
+
+    legend = (
+        '<div style="padding:0.4rem 0.75rem;font-size:0.6rem;color:var(--text-muted);'
+        'border-top:1px solid var(--card-border);display:flex;flex-wrap:wrap;gap:0.5rem;">'
+        '<span>✅ Certo</span>'
+        '<span>❌ Errado</span>'
+        '<span>⏳ A definir</span>'
+        '<span>— Não escolheu</span>'
+        '</div>'
+    )
+
+    html = f"""
+<div class="section">
+    <div class="section-title">\U0001f3c3 Trajet\u00f3ria dos Boleiros</div>
+    {elim_header}
+    <div class="card" style="padding:0;">
+        <div style="overflow-x:auto;">
+            <table class="rank-table" style="min-width:420px;">
+                <thead><tr>
+                    <th style="font-size:0.6rem;">Boleiro</th>
+                    {phase_col_headers}
+                    <th style="text-align:center;font-size:0.55rem;">Foi at\u00e9</th>
+                    <th style="text-align:center;font-size:0.55rem;">Pts</th>
+                </tr></thead>
+                <tbody>
+                {table_rows}
+                </tbody>
+            </table>
+        </div>
+        {legend}
+    </div>
+</div>
+"""
+    return html
+
+
 def _build_team_page(config: ChampionshipConfig, team: str) -> str:
     """Per-team analytics page."""
     from src.core.reports.html import ZEBRA_MONSTRA_EMOJI, ZEBRA_GRANDE_EMOJI
@@ -601,6 +890,8 @@ def _build_team_page(config: ChampionshipConfig, team: str) -> str:
         {stats_cells}
     </div>
 </div>
+
+{_build_team_boleiro_trajectory_html(config, team)}
 
 <div class="section">
     <div class="section-title">\U0001f4ca Aproveitamento por Jogador</div>
