@@ -367,10 +367,19 @@ def run_bronze_to_silver(config: ChampionshipConfig) -> None:
 
         df_boleiro = pd.read_csv(path_csv, sep=",")
 
-        # Filter results to only this playoff phase
-        df_results_phase = df_results[df_results["round"] == phase].copy()
+        # Merge with ALL results (unfiltered by phase) so that matches
+        # whose actual round differs from the filename-extracted phase
+        # (e.g. 3rd-place match inside a "Final" Excel) still get their
+        # real results merged in.
+        df_merged = _merge_with_results(df_boleiro, df_results)
 
-        df_merged = _merge_with_results(df_boleiro, df_results_phase)
+        # Correct the phase column from the actual match round in results.
+        # When a match from games.csv is found, its round is authoritative
+        # (e.g. "terceiro_lugar" instead of "final").  Unmatched rows keep
+        # the original phase from the filename.
+        if "round" in df_merged.columns:
+            df_merged["phase"] = df_merged["round"].fillna(df_merged["phase"])
+            df_merged.drop(columns=["round"], inplace=True)
 
         # Rename suffixed columns back to canonical names
         df_merged.rename(
@@ -498,41 +507,46 @@ def run_silver_to_gold(config: ChampionshipConfig) -> None:
     playoff_silver_pattern = _norm(os.path.join(config._ag_playoffs(), "group_phase_*"))
     playoff_silver_paths = sorted(glob(playoff_silver_pattern))
 
-    # Group paths by phase so we can aggregate per phase
-    playoff_by_phase: dict[str, list[str]] = {}
+    # Collect data grouped by the actual phase column (from the data, not the
+    # filename).  A single silver file may contain rows with different phases
+    # (e.g. 3rd-place match inside a "- Final" Excel) now correctly labelled
+    # after the bronze→silver merge corrected them.
+    playoff_data_by_phase: dict[str, list[pd.DataFrame]] = {}
     for path_csv in playoff_silver_paths:
-        phase, _ = _extract_playoff_phase_and_boleiro(path_csv, config)
-        playoff_by_phase.setdefault(phase, []).append(path_csv)
+        _, boleiro = _extract_playoff_phase_and_boleiro(path_csv, config)
+        boleiro = _normalize_who(boleiro, config)
+        df_silver = pd.read_csv(path_csv, sep=",")
+        if df_silver.empty:
+            continue
 
-    for phase, phase_paths in sorted(playoff_by_phase.items()):
-        print_colored(f"\tscoring playoff phase: {phase}", "ice")
+        # Split by the actual phase column from the data
+        for actual_phase, df_group in df_silver.groupby("phase"):
+            df_gold = _apply_scoring(df_group, config)
+
+            # Save per-boleiro gold file keyed by the actual phase
+            _save_csv(df_gold, config.gold_playoff_boleiro_path(boleiro, actual_phase))
+
+            playoff_data_by_phase.setdefault(actual_phase, []).append(df_gold)
+
+    for actual_phase, phase_parts in sorted(playoff_data_by_phase.items()):
+        print_colored(f"\tscoring playoff phase: {actual_phase}", "ice")
         all_phase_parts = []
         valid_phase_parts = []
 
-        for path_csv in phase_paths:
-            _, boleiro = _extract_playoff_phase_and_boleiro(path_csv, config)
-            boleiro = _normalize_who(boleiro, config)
-            df_silver = pd.read_csv(path_csv, sep=",")
-            if df_silver.empty:
-                continue
-            df_gold = _apply_scoring(df_silver, config)
-
-            # Save per-boleiro gold file for this phase
-            _save_csv(df_gold, config.gold_playoff_boleiro_path(boleiro, phase))
-
+        for df_gold in phase_parts:
             all_phase_parts.append(df_gold)
             valid_phase_parts.append(df_gold.query("valido == 1"))
 
-        # Aggregate per phase
+        # Aggregate per actual phase
         if all_phase_parts:
             df_all_phase = pd.concat(all_phase_parts, ignore_index=True)
             df_all_phase.sort_values(by=["date", "hour", "who"], inplace=True)
-            _save_csv(df_all_phase, config.gold_playoff_all_path(phase))
+            _save_csv(df_all_phase, config.gold_playoff_all_path(actual_phase))
             agg_parts_all.append(df_all_phase)
 
             df_valid_phase = pd.concat(valid_phase_parts, ignore_index=True)
             df_valid_phase.sort_values(by=["date", "hour", "who"], inplace=True)
-            _save_csv(df_valid_phase, config.gold_playoff_valid_path(phase))
+            _save_csv(df_valid_phase, config.gold_playoff_valid_path(actual_phase))
             agg_parts_valid.append(df_valid_phase)
 
     # Combine all aggregated data (group + playoffs) for analytics

@@ -44,7 +44,13 @@ def print_colored(text, color):
 
     reset_color = "\033[0m"
 
-    if color in colors:
-        print(f"{colors[color]}{text}{reset_color}")
-    else:
-        print(text)
+    import sys
+
+    output = f"{colors[color]}{text}{reset_color}" if color in colors else text
+    try:
+        print(output)
+    except UnicodeEncodeError:
+        # Windows console uses cp1252 which cannot encode all Unicode chars.
+        # Writing UTF-8 bytes directly to stdout.buffer bypasses the codec.
+        sys.stdout.buffer.write((output + "\n").encode("utf-8", errors="replace"))
+        sys.stdout.buffer.flush()
