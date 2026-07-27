@@ -2,11 +2,11 @@ name: Update Content and Deploy Page
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '15 3,16,18,20,22 * * *'
-  push:
-    branches:
-      - main
+  # schedule:
+  #   - cron: '15 3,16,18,20,22 * * *'
+  # push:
+  #   branches:
+  #     - main
 
 env:
   DOCS_PATH: src/championships/2026_world_cup/reports/html
